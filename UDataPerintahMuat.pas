@@ -461,10 +461,10 @@ end;
 
 procedure TFDataPerintahMuat.dtMuatChange(Sender: TObject);
 begin
-  if FDataPerintahMuat.Status=0 then
-  begin
-    Autonumber;
-  end;
+//  if FDataPerintahMuat.Status=0 then
+//  begin
+//    Autonumber;
+//  end;
 end;
 
 procedure TFDataPerintahMuat.edNama_Vendor_KendButtonClick(Sender: TObject);

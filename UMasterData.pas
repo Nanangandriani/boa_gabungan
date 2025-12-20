@@ -51,7 +51,7 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
   UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank,
-  URincianUmurPiutang;
+  URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -62,6 +62,22 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+
+
+//Nanang
+  if vcall='kolektifsuratjalan_kares' then
+  begin
+    FKolektifSuratJalan.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FKolektifSuratJalan.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+//Nanang
+  if vcall='kolektifpenjualan_kares' then
+  begin
+    FKolektifPenjualan.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FKolektifPenjualan.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+
 //Nanang
   if vcall='salesorder_gudang' then
   begin

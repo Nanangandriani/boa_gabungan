@@ -342,7 +342,6 @@ object FDataListPenjualan: TFDataListPenjualan
     object dxBarManager1Bar5: TdxBar
       Caption = 'Laporan Kolektif'
       CaptionButtons = <>
-      DockedDockingStyle = dsTop
       DockedLeft = 867
       DockedTop = 0
       FloatLeft = 786
@@ -362,10 +361,10 @@ object FDataListPenjualan: TFDataListPenjualan
           Visible = True
           ItemName = 'dxBarLargeButton14'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = False
+      Visible = True
       WholeRow = False
     end
     object dxBarButton2: TdxBarButton
@@ -1551,6 +1550,7 @@ object FDataListPenjualan: TFDataListPenjualan
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton12Click
     end
     object dxBarLargeButton13: TdxBarLargeButton
       Caption = 'Surat Jalan'
@@ -1610,12 +1610,13 @@ object FDataListPenjualan: TFDataListPenjualan
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton13Click
     end
     object dxBarLargeButton14: TdxBarLargeButton
       Caption = 'Amplop Pelanggan'
       Category = 0
       Hint = 'Amplop Pelanggan'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1895,7 +1896,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 46004.474795451390000000
+    ReportOptions.LastChange = 46009.684384201390000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2287,7 +2288,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 641.888888890000000000
           Top = 165.880127780000000000
-          Height = 503.433070870000000000
+          Height = 662.173228346457000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2659,12 +2660,14 @@ object FDataListPenjualan: TFDataListPenjualan
         DataSet = frxDBDPenjualan
         DataSetName = 'frxDBDPenjualan'
         RowCount = 0
+        Stretched = True
         object frxDBDPenjualanname_unit: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
           Left = 237.595135560000000000
           Width = 64.588847780000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_unit'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2685,6 +2688,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 194.011544440000000000
           Width = 42.804061120000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'amount'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2707,6 +2711,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 304.407957770000000000
           Width = 95.608122230000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'unit_price'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2729,6 +2734,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 402.058767890000000000
           Width = 79.327393290000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_first'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2751,6 +2757,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 486.165740000000000000
           Width = 80.590600000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_second'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2773,6 +2780,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 569.535870000000000000
           Width = 70.590600000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_third'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2792,9 +2800,10 @@ object FDataListPenjualan: TFDataListPenjualan
         object frxDBDPenjualanname_item: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 41.574830000000000000
-          Width = 155.323851110000000000
+          Left = 37.227003910000000000
+          Width = 159.671677200000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_item'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2813,6 +2822,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 3.779530000000000000
           Width = 30.236240000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2828,9 +2838,10 @@ object FDataListPenjualan: TFDataListPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 643.333333330000000000
-          Top = -0.057102220000000000
+          Top = -0.057102220000000010
           Width = 109.497011120000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
@@ -3375,9 +3386,9 @@ object FDataListPenjualan: TFDataListPenjualan
         AllowVectorExport = True
         ShiftMode = smDontShift
         Left = 2.222222220000000000
-        Top = 247.888888890000000000
+        Top = 333.975845410000000000
         Width = 751.154916670000000000
-        Height = 268.897650000000000000
+        Height = 182.810693480000000000
         Center = True
         Frame.Typ = []
         Picture.Data = {
@@ -16370,7 +16381,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45974.592917476850000000
+    ReportOptions.LastChange = 46010.351581747690000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -16439,7 +16450,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 119.795300000000000000
           Top = 63.267780000000000000
-          Width = 391.559055118110200000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -16520,7 +16531,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 0.779530000000000000
           Top = 128.889920000000000000
-          Width = 755.149606299212600000
+          Width = 755.149606299213000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -16528,7 +16539,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 0.779530000000000000
           Top = 153.566929130000000000
-          Width = 755.149606299212600000
+          Width = 755.149606299213000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -16536,7 +16547,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = -0.220470000000000000
           Top = 40.889920000000000000
-          Height = 476.220472440944900000
+          Height = 476.220472440945000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16605,7 +16616,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 143.944960000000000000
           Top = 129.149606300000000000
-          Height = 265.322834645669300000
+          Height = 265.322834645669000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16679,7 +16690,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 119.661417320000000000
           Top = 84.102350000000000000
-          Width = 391.559055118110200000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -16687,7 +16698,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 119.661417320000000000
           Top = 102.102350000000000000
-          Width = 391.559055118110200000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -16709,10 +16720,11 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 525.000000000000000000
-          Top = 66.102350000000000000
+          Left = 524.956521740000000000
+          Top = 105.841480430000000000
           Width = 61.559060000000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -16726,7 +16738,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object labelberatkosong: TfrxMemoView
           AllowVectorExport = True
           Left = 525.000000000000000000
-          Top = 86.102350000000000000
+          Top = 66.102350000000000000
           Width = 117.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16742,7 +16754,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object labelberatisi: TfrxMemoView
           AllowVectorExport = True
           Left = 525.000000000000000000
-          Top = 107.102350000000000000
+          Top = 87.102350000000000000
           Width = 94.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16758,7 +16770,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object Memo25: TfrxMemoView
           AllowVectorExport = True
           Left = 629.000000000000000000
-          Top = 86.102350000000000000
+          Top = 66.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16774,7 +16786,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object Memo26: TfrxMemoView
           AllowVectorExport = True
           Left = 629.000000000000000000
-          Top = 107.102350000000000000
+          Top = 87.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16789,10 +16801,11 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 629.000000000000000000
-          Top = 66.102350000000000000
+          Left = 628.956521740000000000
+          Top = 105.841480430000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -16823,7 +16836,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 637.000000000000000000
           Top = 45.102350000000000000
-          Width = 115.653543310000000000
+          Width = 115.653543307087000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -16838,8 +16851,8 @@ object FDataListPenjualan: TFDataListPenjualan
         object beratkosong: TfrxMemoView
           AllowVectorExport = True
           Left = 636.000000000000000000
-          Top = 86.102350000000000000
-          Width = 115.653543307086600000
+          Top = 66.102350000000000000
+          Width = 115.653543310000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -16854,8 +16867,8 @@ object FDataListPenjualan: TFDataListPenjualan
         object beratisi: TfrxMemoView
           AllowVectorExport = True
           Left = 636.000000000000000000
-          Top = 107.102350000000000000
-          Width = 115.653543307086600000
+          Top = 87.102350000000000000
+          Width = 115.653543310000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -16871,7 +16884,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 756.661417320000000000
           Top = 39.669450000000000000
-          Height = 476.220472440944900000
+          Height = 476.220472440945000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16880,7 +16893,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 47.000000000000000000
           Top = 129.102350000000000000
-          Height = 265.322834645669300000
+          Height = 265.322834645669000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16904,10 +16917,11 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object nopol: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.000000000000000000
-          Top = 66.102350000000000000
-          Width = 115.653543307086600000
+          Left = 636.956521740000000000
+          Top = 105.841480430000000000
+          Width = 115.653543310000000000
           Height = 18.897650000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12

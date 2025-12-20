@@ -978,24 +978,34 @@ begin
   strCodeHeadOffice:='';
   strJoin:='';
   strWhere:='';
-  if edKodeSumber.Text='SO003' then
+  if edNamaSumber.Text<>'' then
   begin
-    strCodeHeadOffice:=SelectRow('select code_head_office from get_customer() where customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ');
-    strJoin:=' LEFT JOIN get_customer() b on b.customer_code=a.customer_code ';
-    if (strCodeHeadOffice='0') OR (strCodeHeadOffice='') OR (strCodeHeadOffice=NULL) then
+    if edKodeSumber.Text='SO003' then
     begin
-      strWhere:=' a.customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC ';
+      strCodeHeadOffice:=SelectRow('select code_head_office from get_customer() where customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ');
+      strJoin:=' LEFT JOIN get_customer() b on b.customer_code=a.customer_code ';
+      if (strCodeHeadOffice='0') OR (strCodeHeadOffice='') OR (strCodeHeadOffice=NULL) then
+      begin
+        strWhere:=' a.customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC ';
+      end else begin
+        strWhere:=' b.code_head_office='+QuotedStr(strCodeHeadOffice)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC  ';
+      end;
     end else begin
-      strWhere:=' b.code_head_office='+QuotedStr(strCodeHeadOffice)+' AND a.deleted_at IS NULL ORDER BY wh_name ASC  ';
+      strWhere:=' category=''BARANG DAGANG'' ';
+    end;
+
+    if ((edKodeSumber.Text='SO003') AND (edNama_Pelanggan.Text<>'')) OR (edKodeSumber.Text<>'SO003') then
+    begin
+      FMasterData.Caption:='Master Data Gudang';
+      FMasterData.vcall:='salesorder_gudang';
+      FMasterData.update_grid('a.wh_code','a.wh_name','a.category',' t_wh a '+strJoin+' ','WHERE '+strWhere+' ');
+      FMasterData.ShowModal;
+    end else begin
+      MessageDlg('Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end;
   end else begin
-    strWhere:=' category=''BARANG DAGANG'' ';
+    MessageDlg('Sumber Wajib Diisi..!!',mtInformation,[mbRetry],0);
   end;
-
-  FMasterData.Caption:='Master Data Gudang';
-  FMasterData.vcall:='salesorder_gudang';
-  FMasterData.update_grid('a.wh_code','a.wh_name','a.category',' t_wh a '+strJoin+' ','WHERE '+strWhere+' ');
-  FMasterData.ShowModal;
 end;
 
 procedure TFNew_SalesOrder.edKelompokKendaraanButtonClick(Sender: TObject);
@@ -1015,6 +1025,7 @@ begin
 end;
 
 procedure TFNew_SalesOrder.edNamaSumberChange(Sender: TObject);
+var defaultKodeGudang:string;
 begin
   if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
   begin
@@ -1028,6 +1039,31 @@ begin
     edKode_Pelanggan.ReadOnly:=False;
     edNama_Pelanggan.ReadOnly:=False;
     dtTanggal_Pesan.Enabled:=True;
+  end;
+
+  if (edKodeSumber.Text<>'SO003') AND (status=0) AND (edKodeSumber.Text<>'') then
+  begin
+    defaultKodeGudang:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_warehouse'' ');
+
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select wh_name,wh_code from t_wh where wh_code='+QuotedStr(defaultKodeGudang)+' AND deleted_at is NULL';
+      open;
+    end;
+
+    if dm.Qtemp.RecordCount>0 then
+    begin
+      edGudang.Text:=dm.Qtemp.FieldByName('wh_name').AsString;
+      StrKodeGudang:=dm.Qtemp.FieldByName('wh_code').AsString;
+    end else begin
+      edGudang.Text:='';
+      StrKodeGudang:='';
+    end;
+  end else begin
+    edGudang.Text:='';
+    StrKodeGudang:='';
   end;
 end;
 

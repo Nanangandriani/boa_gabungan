@@ -99,7 +99,6 @@ type
     procedure edKodeMataUangChange(Sender: TObject);
     procedure edKode_supplierChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MemDetailAkunAfterEdit(DataSet: TDataSet);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -230,11 +229,6 @@ begin
     end;
 end;
 
-
-procedure TFDataKasKecil.MemDetailAkunAfterEdit(DataSet: TDataSet);
-begin
-  balanceRow;
-end;
 
 procedure TFDataKasKecil.Save;
 begin
@@ -811,6 +805,7 @@ begin
   MemDetailAkun.FieldByName('nm_akun').AsString :='Kas Kecil';
   MemDetailAkun.FieldByName('debit').AsFloat := 0;
   MemDetailAkun.FieldByName('kredit').AsFloat := 0;
+  MemDetailAkun.FieldByName('keterangan').AsString :='-';
   MemDetailAkun.FieldByName('kd_header_akun').AsString := headerkode;
   MemDetailAkun.Post;
 end;
@@ -829,7 +824,7 @@ begin
     // Jika kredit diisi → debit ikut otomatis
     if (MemDetailAkun.FieldByName('kredit').AsFloat > 0) then
     begin
-      MemDetailAkun.FieldByName('debet').AsFloat :=
+        MemDetailAkun.FieldByName('debit').AsFloat :=
         MemDetailAkun.FieldByName('kredit').AsFloat;
     end;
   end;

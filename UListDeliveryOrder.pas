@@ -159,7 +159,7 @@ end;
 procedure TFListDeliveryOrder.ActBaruExecute(Sender: TObject);
 begin
   FNewDeliveryOrder.Clear;
-  FNewDeliveryOrder.Autonumber;
+//  FNewDeliveryOrder.Autonumber;
   FNewDeliveryOrder.MemDataMuatan.EmptyTable;
   FNewDeliveryOrder.MemDataBiaya.EmptyTable;
   Status:=0;

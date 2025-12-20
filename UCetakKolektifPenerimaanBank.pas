@@ -70,7 +70,7 @@ begin
     dm.Qtemp.First;
     while not dm.Qtemp.Eof do
     begin
-      terbilang:= UraikanAngka(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat));
+      terbilang:= ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah';
       with dm.Qtemp1 do
       begin
         close;

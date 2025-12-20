@@ -163,6 +163,8 @@ type
       AButtonIndex: Integer);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure dxBarLargeButton12Click(Sender: TObject);
+    procedure dxBarLargeButton13Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -182,7 +184,8 @@ implementation
 
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
   UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan,
-  UPenyesuaianPenjualan, UMasterData, UNoteCancel;
+  UPenyesuaianPenjualan, UMasterData, UNoteCancel, UKolektifPenjualan,
+  UKolektifSuratJalan;
 
 var
   realfdatalistpenjualan : TFDataListPenjualan;
@@ -440,6 +443,16 @@ begin
   vkd_kares:='';
 end;
 
+procedure TFDataListPenjualan.dxBarLargeButton12Click(Sender: TObject);
+begin
+  FKolektifPenjualan.ShowModal;
+end;
+
+procedure TFDataListPenjualan.dxBarLargeButton13Click(Sender: TObject);
+begin
+  FKolektifSuratJalan.ShowModal;
+end;
+
 procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);
 var
   WatermarkMemo: TfrxMemoView;
@@ -468,7 +481,7 @@ begin
            ' LEFT JOIN t_item f ON f.item_code=b.code_item '+
            ' where '+
            ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
-           ' order by f.group_id,b.code_item ASC');
+           ' order by f.group_id ASC,b.code_item ASC');
     open;
   end;
 
@@ -568,6 +581,7 @@ begin
       Report.FindObject('Line27').Visible:=False;
      end;
 
+
      if (QCetak.FieldByName('deleted_at') <> nil) and (not QCetak.FieldByName('deleted_at').IsNull) then
      begin
         Report.FindObject('PictureBatal').Visible:=True;
@@ -575,7 +589,7 @@ begin
        Report.FindObject('PictureBatal').Visible:=False;
      end;
 
-     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+     SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat))+' Rupiah');
      //Report.DesignReport();
      //Report.ShowReport();
 
@@ -675,7 +689,7 @@ begin
     berat_isi:=FormatFloat('#,##0.##', QCetakSJ.FieldValues['gross_weight']);
     berat_kosong:=FormatFloat('#,##0.##', QCetakSJ.FieldValues['tare_weight']);
     code_unit:=QCetakSJ.FieldValues['code_unit'];
-    vehicles:=QCetakSJ.FieldByName('vehicles').AsString;
+//    vehicles:=QCetakSJ.FieldByName('vehicles').AsString;
 
     with dm.Qtemp3 do
     begin
@@ -698,7 +712,7 @@ begin
     SetMemo(Report,'alamat_pt',FHomeLogin.vAlamatPRSH);
     SetMemo(Report,'tanggal',tanggal+' '+bulan+' '+tahun);
 
-    SetMemo(Report,'nopol',vehicles);
+//    SetMemo(Report,'nopol',vehicles);
     SetMemo(Report, 'labelberatkosong', 'Berat Kosong ('+code_unit+')');
     SetMemo(Report, 'labelberatisi', 'Berat Isi ('+code_unit+')');
     SetMemo(Report, 'beratkosong', berat_kosong);
@@ -731,47 +745,53 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton5Click(Sender: TObject);
 begin
-  with QJurnal do
+  if QPenjualan.FieldValues['deleted_at']<>NULL then
   begin
-    close;
-    sql.clear;
-    sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-           ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
-           'AND ((status_dk = ''D'' AND (db <> 0 OR account_code = ''1104.01'')) '+
-           'OR (status_dk = ''K'' AND kd <> 0));');
-    open;
-  end;
+    MessageDlg('Tidak ada data yang dicetak, Penjualan sudah di batalkan..!!',mtInformation,[mbRetry],0);
+  end else begin
 
-  if QJurnal.RecordCount=0 then
-  begin
-    showmessage('Tidak ada data yang bisa dicetak !');
-    exit;
-  end;
-
-  if QJurnal.RecordCount<>0 then
-  begin
-    with dm.Qtemp3 do
+    with QJurnal do
     begin
-      Close;
-      SQl.Clear;
-      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
-                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
-                ' ''Cetak Jurnal Penjualan Untuk Pelanggan '+
-                QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
-                QPenjualan.FieldByName('trans_no').AsString+' '', '+
-                'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
-      ExecSQL;
+      close;
+      sql.clear;
+      sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
+             'AND ((status_dk = ''D'' AND (db <> 0 OR account_code = ''1104.01'')) '+
+             'OR (status_dk = ''K'' AND kd <> 0));');
+      open;
     end;
 
-   cLocation := ExtractFilePath(Application.ExeName);
+    if QJurnal.RecordCount=0 then
+    begin
+      showmessage('Tidak ada data yang bisa dicetak !');
+      exit;
+    end;
 
-   //ShowMessage(cLocation);
-   ReportJurnal.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-   SetMemo(ReportJurnal,'nm_judul','DAFTAR JURNAL PENJUALAN');
-   SetMemo(ReportJurnal,'nama_pt',FHomeLogin.vNamaPRSH);
-   //Report.DesignReport();
-   ReportJurnal.ShowReport();
- end;
+    if QJurnal.RecordCount<>0 then
+    begin
+      with dm.Qtemp3 do
+      begin
+        Close;
+        SQl.Clear;
+        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
+                  ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                  ' ''Cetak Jurnal Penjualan Untuk Pelanggan '+
+                  QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                  QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                  'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+        ExecSQL;
+      end;
+
+     cLocation := ExtractFilePath(Application.ExeName);
+
+     //ShowMessage(cLocation);
+     ReportJurnal.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+     SetMemo(ReportJurnal,'nm_judul','DAFTAR JURNAL PENJUALAN');
+     SetMemo(ReportJurnal,'nama_pt',FHomeLogin.vNamaPRSH);
+     //Report.DesignReport();
+     ReportJurnal.ShowReport();
+   end;
+  end;
 
 end;
 

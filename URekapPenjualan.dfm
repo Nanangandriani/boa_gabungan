@@ -758,6 +758,7 @@ object FRekapPenjualan: TFRekapPenjualan
     SQL.Strings = (
       'SELECT a.*,b.kabupaten,b.kecamatan from get_selling(False) a '
       'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
+    Active = True
     Left = 908
     Top = 32
   end
@@ -968,7 +969,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46007.640609849500000000
+    ReportOptions.LastChange = 46009.681445995400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1129,7 +1130,7 @@ object FRekapPenjualan: TFRekapPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 93.732283460000000000
-          Width = 138.708661417323000000
+          Width = 138.708661420000000000
           Height = 20.787401570000000000
           StretchMode = smMaxHeight
           DataField = 'trans_no'
@@ -1142,7 +1143,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDBHPenjualan."trans_no"]')
           ParentFont = False
@@ -1208,7 +1209,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDBHPenjualan."kecamatan"]')
           ParentFont = False
@@ -1230,7 +1231,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDBHPenjualan."dpp"]')
@@ -1276,7 +1277,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDBHPenjualan."grand_tot"]')
@@ -1327,7 +1328,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'TOTAL')
@@ -1337,7 +1338,7 @@ object FRekapPenjualan: TFRekapPenjualan
         object SysMemo2: TfrxSysMemoView
           AllowVectorExport = True
           Left = 733.228346460000000000
-          Width = 124.724409448819000000
+          Width = 124.724409450000000000
           Height = 37.795275590000000000
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -1346,7 +1347,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDBHPenjualan."dpp">,MasterData1)]')
@@ -1443,7 +1444,7 @@ object FRekapPenjualan: TFRekapPenjualan
         object SysMemo4: TfrxSysMemoView
           AllowVectorExport = True
           Left = 964.913385830000000000
-          Width = 119.433070866142000000
+          Width = 119.433070870000000000
           Height = 37.795275590000000000
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -1452,7 +1453,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDBHPenjualan."ppn_value">,MasterData1)]')
@@ -1496,7 +1497,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'No Nota')
@@ -1581,7 +1582,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Netto')

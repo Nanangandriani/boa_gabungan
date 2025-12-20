@@ -4,7 +4,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Cetak Kolektif Nota Penjualan'
-  ClientHeight = 102
+  ClientHeight = 106
   ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -38,7 +38,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 60
+    Top = 64
     Width = 444
     Height = 42
     Align = alBottom
@@ -281,6 +281,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     AllowKeyEdit = False
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
+    OnButtonClick = edKaresidenanButtonClick
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -418,8 +419,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
       ''
       'end.')
     OnStopReport = 'ReportOnStopReport'
-    Left = 16
-    Top = 47
+    Top = 63
     Datasets = <
       item
         DataSet = frxDBDPenjualan
@@ -1978,8 +1978,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
     DataSet = QPenjualan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 56
-    Top = 7
+    Left = 48
+    Top = 63
   end
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -2016,9 +2016,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
         'ustomer_code   LEFT JOIN t_item f ON f.item_code=b.code_item  wh' +
         'ere  a.trans_date BETWEEN '#39'2025-10-01'#39' AND '#39'2025-10-01'#39'  order b' +
         'y f.group_id,b.code_item ASC;')
-    Active = True
-    Left = 112
-    Top = 24
+    Left = 96
+    Top = 64
   end
   object DSBuktiTerima: TDataSource
     DataSet = QPenjualan

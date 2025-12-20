@@ -336,7 +336,8 @@ uses
   UUbahPassword in 'UUbahPassword.pas' {FUbahPassword},
   U_daf_pilih_detail_bayar in 'U_daf_pilih_detail_bayar.pas' {frmdafdetailbayar},
   UNoteCancel in 'UNoteCancel.pas' {FNoteCancel},
-  UKolektifPenjualan in 'UKolektifPenjualan.pas' {FKolektifPenjualan};
+  UKolektifPenjualan in 'UKolektifPenjualan.pas' {FKolektifPenjualan},
+  UKolektifSuratJalan in 'UKolektifSuratJalan.pas' {FKolektifSuratJalan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -506,6 +507,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKontrakTagihan, FListKontrakTagihan);
   Application.CreateForm(TFNoteCancel, FNoteCancel);
   Application.CreateForm(TFKolektifPenjualan, FKolektifPenjualan);
+  Application.CreateForm(TFKolektifSuratJalan, FKolektifSuratJalan);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   FMainMenu.DisableMenu;

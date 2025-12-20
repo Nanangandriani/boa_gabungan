@@ -1007,89 +1007,70 @@ object FListPerintahMuat: TFListPerintahMuat
   object QCetak: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT'
-      #9'c.notrans,'
-      #9'"notrans_do",'
-      #9'"notrans_sale",'
-      #9'A."code_cust" AS cust_vendor,'
-      #9'A."name_cust" AS cust_name_vendor,'
-      #9'b."name_cust" AS an_terima,c.number_of_vehicles,'
-      #9'"code_items",'
-      #9'"name_item",'
-      #9'"amount",'
-      #9'"unit",'
+      'SELECT '
+      '    zz.code_kabupaten,'
+      '    zz.kabupaten,'
+      '    zz.notrans,'
+      '    zz.cust_vendor,'
+      '    zz.cust_name_vendor,'
+      '    zz.number_of_vehicles,'
+      '    zz.code_items,'
+      '    zz.name_item,'
+      '    zz.amount,'
+      '    zz.unit,'
       
-        #9'concat ( "name_item", '#39' = '#39', CAST ( "amount" AS INTEGER ), '#39' '#39',' +
-        ' "unit" ) AS banyaknya '
-      'FROM'
-      #9'"public"."t_spm_det"'
+        '    CONCAT(zz.name_item, '#39' '#39', CAST(SUM(zz.amount) AS INTEGER), '#39 +
+        ' '#39', zz.unit) AS banyaknya  '
+      'FROM ('
+      '    SELECT '
+      '        b.code_kabupaten,'
+      '        b.kabupaten,'
+      '        c.notrans, '
+      '        a.code_cust AS cust_vendor,  '
+      '        a.name_cust AS cust_name_vendor, '
+      '        c.number_of_vehicles, '
+      '        a.code_items,  '
+      '        a.name_item, '
+      '        SUM(a.amount) AS amount, '
+      '        a.unit'
+      '    FROM "public"."t_spm_det" a  '
       
-        #9'A LEFT JOIN "public"."t_selling" b ON A."notrans_sale" = b."tra' +
-        'ns_no" '
-      'LEFT JOIN t_spm c on c.notrans=a.notrans '
-      'WHERE'
-      #9'A."notrans" = '#39'SPM/0001/13/VIII/2024'#39' '
-      'ORDER BY'
-      #9'A."notrans" DESC')
-    Left = 620
-    Top = 64
-    object QCetaknotrans: TStringField
-      FieldName = 'notrans'
-      ReadOnly = True
-      Required = True
-      Size = 100
-    end
-    object QCetaknotrans_do: TStringField
-      FieldName = 'notrans_do'
-      Size = 100
-    end
-    object QCetaknotrans_sale: TStringField
-      FieldName = 'notrans_sale'
-      Size = 100
-    end
-    object QCetakcust_vendor: TStringField
-      FieldName = 'cust_vendor'
-      Size = 100
-    end
-    object QCetakcust_name_vendor: TStringField
-      FieldName = 'cust_name_vendor'
-      Size = 255
-    end
-    object QCetakan_terima: TStringField
-      FieldName = 'an_terima'
-      ReadOnly = True
-      Size = 255
-    end
-    object QCetaknumber_of_vehicles: TStringField
-      FieldName = 'number_of_vehicles'
-      ReadOnly = True
-      Size = 100
-    end
-    object QCetakcode_items: TStringField
-      FieldName = 'code_items'
-      Size = 100
-    end
-    object QCetakname_item: TStringField
-      FieldName = 'name_item'
-      Size = 255
-    end
-    object QCetakamount: TFloatField
-      FieldName = 'amount'
-    end
-    object QCetakunit: TStringField
-      FieldName = 'unit'
-      Size = 100
-    end
-    object QCetakbanyaknya: TMemoField
-      FieldName = 'banyaknya'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
+        '    LEFT JOIN "public".get_selling(NULL) b ON a."notrans_sale" =' +
+        ' b."trans_no"  '
+      '    LEFT JOIN t_spm c ON c.notrans = a.notrans  '
+      '    WHERE a."notrans" = '#39'SPM/001/01/X/2025/HLJ'#39
+      '    GROUP BY '
+      '        b.code_kabupaten, '
+      '        b.kabupaten, '
+      '        c.notrans, '
+      '        a.code_cust, '
+      '        a.name_cust,  '
+      '        c.number_of_vehicles, '
+      '        a.code_items, '
+      '        a.name_item, '
+      '        a.unit'
+      ') zz  '
+      'GROUP BY '
+      '    zz.code_kabupaten,'
+      '    zz.kabupaten,'
+      '    zz.notrans,'
+      '    zz.cust_vendor,'
+      '    zz.cust_name_vendor,'
+      '    zz.number_of_vehicles,'
+      '    zz.code_items,'
+      '    zz.name_item,'
+      '    zz.amount,'
+      '    zz.unit'
+      'ORDER BY zz.notrans DESC;')
+    Left = 556
+    Top = 200
   end
   object frxDBDPerintahMuat: TfrxDBDataset
     UserName = 'frxDBDPerintahMuat'
     CloseDataSource = False
     FieldAliases.Strings = (
+      'code_kabupaten=code_kabupaten'
+      'kabupaten=kabupaten'
       'notrans=notrans'
       'notrans_do=notrans_do'
       'notrans_sale=notrans_sale'
@@ -1118,7 +1099,7 @@ object FListPerintahMuat: TFListPerintahMuat
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.413693113400000000
-    ReportOptions.LastChange = 45974.643237881940000000
+    ReportOptions.LastChange = 46010.615896550900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1293,7 +1274,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line5: TfrxLineView
           AllowVectorExport = True
           Left = 355.275590550000000000
-          Height = 303.118110236220500000
+          Height = 303.118110236220000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1301,7 +1282,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line6: TfrxLineView
           AllowVectorExport = True
           Left = 359.055118110000000000
-          Height = 303.118110236220500000
+          Height = 303.118110236220000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1762,12 +1743,11 @@ object FListPerintahMuat: TFListPerintahMuat
           Top = 71.811070000000000000
           Width = 264.567100000000000000
           Height = 18.897650000000000000
-          DataField = 'an_terima'
           DataSet = frxDBDPerintahMuat
           DataSetName = 'frxDBDPerintahMuat'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDPerintahMuat."an_terima"]')
+            '[frxDBDPerintahMuat."kabupaten"]')
         end
         object Memo28: TfrxMemoView
           IndexTag = 1

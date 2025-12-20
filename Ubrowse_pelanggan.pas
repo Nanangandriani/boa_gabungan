@@ -59,7 +59,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
   UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
-  UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang;
+  UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang, UAmplopPelanggan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares,strKabupaten: String;
@@ -86,6 +86,9 @@ begin
   end else if vcall='kartupiutang' then
   begin
     strWhere:=' and getkares.code='+QuotedStr(FKartuPiutang.vkd_kab);
+  end else if vcall='amplop_pelanggan' then
+  begin
+    strWhere:=' and getkares.code_karesidenan='+QuotedStr(FAmplopPelanggan.StrKaresidananID);
   end else begin
     strWhere:='';
     strKares:='';
@@ -323,6 +326,12 @@ begin
     FNew_UangMukaPenjualan.edNamaAkunUangMuka.Text:=SelectRow('SELECT b.account_name from t_customer  a LEFT JOIN t_ak_account_sub b  ON b.account_code2=a.account_code_uang_muka where a.customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
   end;
 
+  if vcall='amplop_pelanggan' then
+  begin
+    FAmplopPelanggan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FAmplopPelanggan.edPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
+  end;
+
   Fbrowse_data_pelanggan.Close;
   Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
 end;
@@ -358,7 +367,7 @@ begin
     GBType2.Visible:=true;
   end;
 
-  if (vcall='daftar_klasifikasi') OR (vcall='dpp') OR (vcall='kartupiutang') then
+  if (vcall='daftar_klasifikasi') OR (vcall='dpp') OR (vcall='kartupiutang') OR (vcall='amplop_pelanggan') then
   begin
     pnlfilter.Visible:=false;
     RefreshGrid;

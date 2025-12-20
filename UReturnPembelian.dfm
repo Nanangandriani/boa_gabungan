@@ -23,7 +23,6 @@ object FReturnPembelian: TFReturnPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -323,7 +322,7 @@ object FReturnPembelian: TFReturnPembelian
     object dxBarManager1Bar3: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 251
+      DockedLeft = 256
       DockedTop = 0
       FloatLeft = 850
       FloatTop = 2
@@ -781,9 +780,8 @@ object FReturnPembelian: TFReturnPembelian
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Caption = 'Delete  '
+      Action = ActDel
       Category = 0
-      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1135,7 +1133,7 @@ object FReturnPembelian: TFReturnPembelian
       Caption = 'Delete  '
     end
     object ActPrint: TAction
-      Caption = 'Print  '
+      Caption = 'Print Jurnal'
       OnExecute = ActPrintExecute
     end
     object ActApp: TAction
@@ -1162,7 +1160,7 @@ object FReturnPembelian: TFReturnPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44112.640537094900000000
-    ReportOptions.LastChange = 45715.454627928200000000
+    ReportOptions.LastChange = 45716.355056782400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1223,7 +1221,7 @@ object FReturnPembelian: TFReturnPembelian
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '( KIAT MELIANA WIDYA KUSUMA )')
+            '(                                           )')
           ParentFont = False
         end
         object Memo19: TfrxMemoView
@@ -1934,11 +1932,12 @@ object FReturnPembelian: TFReturnPembelian
           Top = 197.041743940000000000
           Width = 335.060367460000000000
           Height = 18.897650000000000000
+          DataField = 'supplier_name'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[DBPerusahaan."npwp"]')
+            '[frxDBDo."supplier_name"]')
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
@@ -1965,7 +1964,6 @@ object FReturnPembelian: TFReturnPembelian
           Top = 265.708410610000000000
           Width = 579.727034120000000000
           Height = 41.564316660000000000
-          DataField = 'address'
           DataSet = frxDBReturnPemb
           DataSetName = 'frxDBDo'
           Frame.Typ = []
@@ -2249,7 +2247,7 @@ object FReturnPembelian: TFReturnPembelian
         DataType = ftString
         Name = 'return_no'
         ParamType = ptInput
-        Value = 'RB/001/27/II/2025/HLJ'
+        Value = 'RB/001/03/X/2025/HLJ'
       end>
   end
   object DsDetail: TDataSource

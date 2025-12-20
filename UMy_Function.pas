@@ -24,6 +24,7 @@ Uses SysUtils, frxClass,uni,dxBar, RzCmboBx, StdCtrls, DB;
   procedure FillSBUBarCombo(ABarCombo: TdxBarCombo);
   procedure FillSBUBarCombo2(ACombo: TRzComboBox;ALabel: TLabel;A2Label: TLabel);
   function CheckJurnalPosting(strTransNo: string): Integer;
+  function ConvKeHuruf(inp: string): string;
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr,status_akses:string;
       strday2:TDate;
@@ -141,6 +142,7 @@ begin
     A2Label.Visible:=False;
   end;
 end;
+
 
 //Nanang
 function GetLocalIP: string;

@@ -531,6 +531,7 @@ object FDataKasKecil: TFDataKasKecil
               end>
             FieldName = 'kd_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Kode Anak Akun '
             Width = 100
           end
@@ -774,7 +775,6 @@ object FDataKasKecil: TFDataKasKecil
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
-    AfterEdit = MemDetailAkunAfterEdit
     Left = 568
     Top = 360
     object MemDetailAkunkd_akun: TStringField

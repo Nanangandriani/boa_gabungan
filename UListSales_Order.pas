@@ -259,7 +259,8 @@ begin
         isCancel:=0;
 //        memAlasanPembatalan.Text:='';
       end;
-
+      edKodeSumber.Text:=Dm.Qtemp2.FieldByName('code_source').AsString;
+      edNamaSumber.Text:=Dm.Qtemp2.FieldByName('name_source').AsString;
       edKodeOrder.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
       dtTanggal_Kirim.Date:=Dm.Qtemp2.FieldByName('sent_date').AsDateTime;
       dtTanggal_Pesan.Date:=Dm.Qtemp2.FieldByName('order_date').AsDateTime;
@@ -267,8 +268,6 @@ begin
       edNama_Pelanggan.Text:=Dm.Qtemp2.FieldByName('name_cust').AsString;
       edKode_Sales.Text:=Dm.Qtemp2.FieldByName('code_sales').AsString;
       edNama_Sales.Text:=Dm.Qtemp2.FieldByName('name_sales').AsString;
-      edKodeSumber.Text:=Dm.Qtemp2.FieldByName('code_source').AsString;
-      edNamaSumber.Text:=Dm.Qtemp2.FieldByName('name_source').AsString;
       spJatuhTempo.Text:=Dm.Qtemp2.FieldByName('payment_term').AsString;
       edPOOrder.Text:=Dm.Qtemp2.FieldByName('po_order').AsString;
       edNoReff.Text:=Dm.Qtemp2.FieldByName('no_reference').AsString;

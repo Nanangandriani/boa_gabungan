@@ -26,6 +26,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
+    procedure edKaresidenanButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,7 +71,7 @@ begin
     dm.Qtemp.First;
     while not dm.Qtemp.Eof do
     begin
-      terbilang:= UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat));
+      terbilang:= ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat))+' Rupiah';
       with dm.Qtemp1 do
       begin
         close;
@@ -92,7 +93,7 @@ begin
               'a.tot_before_piece tot_before_piece_master,a.sub_total sub_total_master,'+
               'a.tot_piece_value tot_piece_value_master,a.ppn_value ppn_value_master,'+
               'a.grand_tot grand_tot_master,a.pembulatan_value pembulatan_value_master,a.word_amount, '+
-              'a."code_cust", a."name_cust",  d."address",COALESCE(a.no_npwp,'') no_npwp, '+
+              'a."code_cust", a."name_cust",  d."address",COALESCE(a.no_npwp,'''') no_npwp, '+
               'b."code_item", b."name_item",  b."amount", b."code_unit", b."name_unit", '+
               'a."no_reference", "unit_price",  b."sub_total", b."ppn_account", b."ppn_percent", '+
               'b."ppn_value", b."pph_account",  b."pph_name", b."pph_percent", b."pph_value", '+
@@ -107,16 +108,36 @@ begin
               'from "public".get_selling(FALSE) a  '+
               'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
               'LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item  '+
-              'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"='001') d on a.code_cust=d.customer_code   '+
+              'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code   '+
               'LEFT JOIN t_item f ON f.item_code=b.code_item  '+
-              'where  a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd'),dtTanggalAwal.Date)+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd'),dtTanggalAkhir.Date)+ KodeKaresidenan+'   order by f.group_id,b.code_item ASC';
+              'where  (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.DateTime))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.DateTime))+')'+ KodeKaresidenan+' AND '+
+              'a.deleted_at is NULL order by a.trans_date ASC, a.trans_no ASC, a.code_karesidenan ASC, f.group_id  ASC,b.code_item ASC';
     Open;
+  end;
+
+  if QPenjualan.RecordCount>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+     //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_penjualan_kolektif3'+ '.fr3');
+    Report.ShowReport();
+  end else begin
+    MessageDlg('Tidak ada data yang dicetak..!!',mtInformation,[mbRetry],0);
   end;
 
 end;
 
+procedure TFKolektifPenjualan.edKaresidenanButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='kolektifpenjualan_kares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFKolektifPenjualan.FormShow(Sender: TObject);
 begin
+  strKodeKaresidenan:='';
   edKaresidenan.Text:='';
   dtTanggalAwal.Date:=NOW();
   dtTanggalAkhir.Date:=NOW();

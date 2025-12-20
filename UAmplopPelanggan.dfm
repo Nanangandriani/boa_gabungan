@@ -3,7 +3,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Amplop Pelanggan'
-  ClientHeight = 111
+  ClientHeight = 139
   ClientWidth = 322
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,21 +18,28 @@ object FAmplopPelanggan: TFAmplopPelanggan
   TextHeight = 15
   object Label1: TLabel
     Left = 16
-    Top = 14
+    Top = 41
     Width = 64
     Height = 15
     Caption = 'Karesidenan'
   end
   object Label2: TLabel
     Left = 16
-    Top = 43
+    Top = 14
     Width = 41
     Height = 15
     Caption = 'Tanggal'
   end
+  object Label3: TLabel
+    Left = 15
+    Top = 69
+    Width = 56
+    Height = 15
+    Caption = 'Pelanggan'
+  end
   object dtTanggal: TRzDateTimePicker
     Left = 104
-    Top = 40
+    Top = 9
     Width = 89
     Height = 23
     Date = 45901.000000000000000000
@@ -42,7 +49,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
   end
   object edKaresidenan: TRzButtonEdit
     Left = 104
-    Top = 11
+    Top = 38
     Width = 209
     Height = 23
     Text = ''
@@ -53,7 +60,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 70
+    Top = 98
     Width = 322
     Height = 41
     Align = alBottom
@@ -204,16 +211,27 @@ object FAmplopPelanggan: TFAmplopPelanggan
       ExplicitLeft = 233
     end
   end
+  object edPelanggan: TRzButtonEdit
+    Left = 104
+    Top = 66
+    Width = 209
+    Height = 23
+    Text = ''
+    TabOrder = 3
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = edPelangganButtonClick
+  end
   object QAmplopPelanggan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        ' select a.name_cust,b.address,b.contact_person1 from t_selling a' +
-        ' left join vcustomer b on b.customer_code=a.code_cust where a.tr' +
-        'ans_date='#39'2025-09-01'#39' and b.code_karesidenan='#39'DKI'#39' AND a.deleted' +
-        '_at is NULL;')
-    Left = 204
-    Top = 16
+        ' select a.code_cust,a.name_cust,b.address,b.contact_person1 from' +
+        ' t_selling a left join vcustomer b on b.customer_code=a.code_cus' +
+        't where a.trans_date='#39'2025-09-01'#39' and b.code_karesidenan='#39'DKI'#39' A' +
+        'ND a.deleted_at is NULL;')
+    Left = 140
+    Top = 104
   end
   object Report1: TfrxReport
     Version = '2022.1.3'
@@ -224,15 +242,15 @@ object FAmplopPelanggan: TFAmplopPelanggan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45901.594633159720000000
+    ReportOptions.LastChange = 46010.479884456020000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
     OnGetValue = Report1GetValue
-    Left = 264
-    Top = 24
+    Left = 96
+    Top = 104
     Datasets = <
       item
         DataSet = frxDBDBAmplopPelanggan
@@ -255,20 +273,21 @@ object FAmplopPelanggan: TFAmplopPelanggan
       DataSetName = 'frxdbamplop'
       Frame.Typ = []
       MirrorMode = []
-      object PageHeader1: TfrxPageHeader
+      object GroupHeader1: TfrxGroupHeader
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 355.275820000000000000
+        Height = 301.807614780000000000
         Top = 18.897650000000000000
         Width = 831.496600000000000000
+        Condition = '<frxDBDBAmplopPelanggan."code_cust">'
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 422.724800000000000000
-          Top = 151.094620000000000000
+          Left = 430.771356960000000000
+          Top = 161.805665650000000000
           Width = 181.417440000000000000
           Height = 26.354360000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -284,8 +303,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 422.551181100000000000
-          Top = 186.126160000000000000
+          Left = 430.597738060000000000
+          Top = 196.837205650000000000
           Width = 396.850650000000000000
           Height = 22.677180000000000000
           DataSetName = 'frxdbamplop'
@@ -301,8 +320,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 422.551181100000000000
-          Top = 212.905690000000000000
+          Left = 430.597738060000000000
+          Top = 223.616735650000000000
           Width = 396.850650000000000000
           Height = 34.015770000000000000
           DataSetName = 'frxdbamplop'
@@ -318,7 +337,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.779530000000000000
+          Left = 11.826086960000000000
+          Top = 10.711045650000000000
           Width = 332.598640000000000000
           Height = 26.354360000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -334,8 +354,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 27.015770000000000000
+          Left = 11.826086960000000000
+          Top = 37.726815650000000000
           Width = 332.598640000000000000
           Height = 49.031540000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -350,8 +370,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.307360000000000000
-          Top = 250.141930000000000000
+          Left = 431.353916960000000000
+          Top = 260.852975650000000000
           Width = 396.850650000000000000
           Height = 22.677180000000000000
           DataSetName = 'frxdbamplop'
@@ -366,19 +386,35 @@ object FAmplopPelanggan: TFAmplopPelanggan
           ParentFont = False
         end
       end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 14.714124350000000000
+        Top = 343.937230000000000000
+        Visible = False
+        Width = 831.496600000000000000
+        DataSet = frxDBDBAmplopPelanggan
+        DataSetName = 'frxDBDBAmplopPelanggan'
+        RowCount = 0
+      end
     end
   end
   object frxDBDBAmplopPelanggan: TfrxDBDataset
     UserName = 'frxDBDBAmplopPelanggan'
     CloseDataSource = False
     FieldAliases.Strings = (
+      'code_cust=code_cust'
       'name_cust=name_cust'
       'address=address'
       'contact_person1=contact_person1')
     DataSet = QAmplopPelanggan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 56
-    Top = 40
+    Left = 32
+    Top = 96
   end
 end

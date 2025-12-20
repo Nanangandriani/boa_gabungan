@@ -584,7 +584,7 @@ begin
    Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
-   SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat)));
+   SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah');
 
    if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
    begin

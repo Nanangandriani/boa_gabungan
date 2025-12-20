@@ -42,17 +42,21 @@ type
     Label2: TLabel;
     RzPanel2: TRzPanel;
     RzBitBtn1: TRzBitBtn;
+    edPelanggan: TRzButtonEdit;
+    Label3: TLabel;
     procedure Report1GetValue(const VarName: string; var Value: Variant);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure edPelangganButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    StrKaresidananID:String;
+    StrKaresidananID,strKodePelanggan:String;
+
   end;
 
 //  function FAmplopPelanggan: TFAmplopPelanggan;
@@ -64,7 +68,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterData, UMy_Function, UHomeLogin, UDataModule;
+uses UMasterData, UMy_Function, UHomeLogin, UDataModule, Ubrowse_pelanggan;
 //var
 //  realamploppelanggan : TFAmplopPelanggan;
 
@@ -76,6 +80,13 @@ uses UMasterData, UMy_Function, UHomeLogin, UDataModule;
 //    Application.CreateForm(TFAmplopPelanggan, Result);
 //end;
 
+
+procedure TFAmplopPelanggan.edPelangganButtonClick(Sender: TObject);
+begin
+  Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+  Fbrowse_data_pelanggan.vcall:='amplop_pelanggan';
+  Fbrowse_data_pelanggan.ShowModal;
+end;
 
 procedure TFAmplopPelanggan.FormCreate(Sender: TObject);
 begin
@@ -92,6 +103,8 @@ begin
   edKaresidenan.Text:='';
   StrKaresidananID:='';
   dtTanggal.Date:=NOW();
+  strKodePelanggan:='';
+  edPelanggan.Text:='';
 end;
 
 procedure TFAmplopPelanggan.Report1GetValue(const VarName: string;
@@ -104,19 +117,28 @@ if CompareText(VarName, 'NamaPerusahaan') = 0 then
 end;
 
 procedure TFAmplopPelanggan.RzBitBtn1Click(Sender: TObject);
+var strKdPelanggan : String;
 begin
   if edKaresidenan.Text='' then
   begin
     MessageDlg('Karesidenan wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else
   begin
+    if edPelanggan.Text<>'' then
+    begin
+      strKdPelanggan:=' AND a.code_cust='+QuotedStr(strKodePelanggan)+' ';
+    end else
+    begin
+      strKdPelanggan:='';
+    end;
+
     with QAmplopPelanggan do
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from t_selling a left join vcustomer b on b.customer_code=a.code_cust '+
+      sql.Text:='select DISTINCT a.code_cust,a.name_cust,b.address,b.contact_person1 from t_selling a left join get_customer() b on b.customer_code=a.code_cust '+
                 'where a.trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+' and '+
-                'b.code_karesidenan='+QuotedStr(StrKaresidananID)+' '+
+                'b.code_karesidenan='+QuotedStr(StrKaresidananID)+strKdPelanggan+' '+
                 'AND a.deleted_at is NULL;';
       open;
     end;

@@ -750,7 +750,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45989.616688541670000000
+    ReportOptions.LastChange = 46009.731382314810000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -769,16 +769,14 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
       '  begin'
       '    // Sembunyikan komponen SysMemo1'
       '    SysMemo1.Visible := False;'
-      
-        '    SysMemo1.Text:=IntToStr(CurrentLine);                       ' +
-        '                       '
+      '    SysMemo1.Text:=IntToStr(CurrentLine);'
       '  end'
       '  else'
       '  begin'
       '    // Pastikan SysMemo1 terlihat pada baris-baris berikutnya'
       '    SysMemo1.Visible := True;'
-      '    SysMemo1.Text:=IntToStr(CurrentLine);        '
-      '  end;  '
+      '    SysMemo1.Text:=IntToStr(CurrentLine);'
+      '  end;'
       'end;'
       ''
       'begin'
@@ -1392,6 +1390,13 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
             'Bank')
           ParentFont = False
         end
+        object Shape1: TfrxShapeView
+          Align = baClient
+          AllowVectorExport = True
+          Width = 1084.725110000000000000
+          Height = 173.181102360000000000
+          Frame.Typ = []
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1422,7 +1427,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1442,7 +1447,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           DataSetName = 'frxDBDDaftarRekeningKoran'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1461,7 +1466,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           DataSetName = 'frxDBDBHPenerimaan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1477,11 +1482,11 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Height = 18.897650000000000000
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1499,9 +1504,10 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           StretchMode = smMaxHeight
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1517,11 +1523,11 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Height = 18.897650000000000000
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1538,11 +1544,11 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Height = 18.897650000000000000
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1560,11 +1566,11 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           StretchMode = smMaxHeight
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1577,16 +1583,16 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           IndexTag = 1
           AllowVectorExport = True
           Left = 848.953310000000000000
-          Width = 86.929190000000000000
+          Width = 89.537885650000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
           DataSetName = 'frxDBDBHPenerimaan'
-          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1608,7 +1614,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1627,7 +1633,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           DataSetName = 'frxDBDBHPenerimaan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1723,7 +1729,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 332.598640000000000000
+        Top = 377.953000000000000000
         Width = 1084.725110000000000000
         object Line8: TfrxLineView
           AllowVectorExport = True
@@ -1731,6 +1737,259 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
+        end
+      end
+      object Footer1: TfrxFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 20.869565220000000000
+        Top = 294.803340000000000000
+        Width = 1084.725110000000000000
+        object Memo38: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 659.976810000000000000
+          Width = 98.267780000000000000
+          Height = 18.897650000000000000
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDDaftarRekeningKoran."kredit_bank">,MasterData1)]')
+          ParentFont = False
+        end
+        object Line33: TfrxLineView
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line37: TfrxLineView
+          AllowVectorExport = True
+          Left = 442.205010000000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line38: TfrxLineView
+          AllowVectorExport = True
+          Left = 564.661417320000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line39: TfrxLineView
+          AllowVectorExport = True
+          Left = 657.637795280000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line40: TfrxLineView
+          AllowVectorExport = True
+          Left = 761.574803150000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line46: TfrxLineView
+          AllowVectorExport = True
+          Left = 848.503937010000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line47: TfrxLineView
+          AllowVectorExport = True
+          Left = 939.102970000000000000
+          Top = 0.869565220000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Memo42: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 215.433210000000000000
+          Top = 0.869565220000000000
+          Width = 120.944960000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo32: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Top = 0.869565220000000000
+          Width = 102.047310000000000000
+          Height = 18.897650000000000000
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDDaftarRekeningKoran."hutang">,MasterData1)]')
+          ParentFont = False
+        end
+        object Memo36: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 446.984540000000000000
+          Top = 0.869565220000000000
+          Width = 113.385900000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+        end
+        object Memo37: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 569.622450000000000000
+          Top = 0.869565220000000000
+          Width = 86.929190000000000000
+          Height = 18.897650000000000000
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDDaftarRekeningKoran."rupa_jum">,MasterData1)]')
+          ParentFont = False
+        end
+        object Memo39: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 764.024120000000000000
+          Top = 0.869565220000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDDaftarRekeningKoran."setoran">,MasterData1)]')
+          ParentFont = False
+        end
+        object Memo40: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 848.953310000000000000
+          Top = 0.869565220000000000
+          Width = 90.407450870000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDDaftarRekeningKoran."saldo_akhir">,MasterData1)]')
+          ParentFont = False
+        end
+        object Memo41: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 942.662030000000000000
+          Top = 0.869565220000000000
+          Width = 139.842610000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FBHPenerimaanKasBank.frxDBDBHPenerimaan
+          DataSetName = 'frxDBDBHPenerimaan'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+        end
+        object Line48: TfrxLineView
+          AllowVectorExport = True
+          Left = -0.260869570000000000
+          Top = 20.869565220000000000
+          Width = 1084.725110000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
         end
       end
     end

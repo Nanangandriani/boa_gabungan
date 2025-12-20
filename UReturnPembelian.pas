@@ -178,9 +178,8 @@ procedure TFReturnPembelian.ActUpdateExecute(Sender: TObject);
 begin
     with FNew_returnPemb do
     begin
-      Clear;
-      Show;
       status:=1;
+      Show;
       Caption:='Update Retur Pembelian';
       Edkd_supp.Text:=MemReturn['supplier_code'];
       Ednm_supp.Text:=MemReturn['supplier_name'];
