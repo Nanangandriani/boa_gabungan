@@ -969,7 +969,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46009.681445995400000000
+    ReportOptions.LastChange = 46011.471840405090000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1314,21 +1314,21 @@ object FRekapPenjualan: TFRekapPenjualan
           AllowVectorExport = True
           Top = -0.732220000000000000
           Width = 1084.725110000000000000
+          Visible = False
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object kota_tanggal: TfrxMemoView
           AllowVectorExport = True
-          Left = 610.015748030000000000
-          Width = 123.590551180000000000
+          Width = 733.155768570000000000
           Height = 37.795275590000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'TOTAL')
@@ -1347,7 +1347,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDBHPenjualan."dpp">,MasterData1)]')
@@ -1357,7 +1357,7 @@ object FRekapPenjualan: TFRekapPenjualan
         object SysMemo3: TfrxSysMemoView
           AllowVectorExport = True
           Left = 857.574803150000000000
-          Width = 107.338582677165000000
+          Width = 107.338582680000000000
           Height = 37.795275590000000000
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -1366,7 +1366,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDBHPenjualan."ppn_value">,MasterData1)]')
@@ -1453,7 +1453,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDBHPenjualan."ppn_value">,MasterData1)]')
@@ -1565,7 +1565,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'DPP')
@@ -1599,7 +1599,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'PPN')

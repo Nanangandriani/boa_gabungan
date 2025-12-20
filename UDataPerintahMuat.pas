@@ -69,7 +69,7 @@ type
     { Public declarations }
     tot_jumlah : real;
     stat_proses : Boolean;
-    strtgl, strbulan, strtahun, trans_id_link, kd_kares: string;
+    strtgl, strbulan, strtahun, trans_id_link, kd_kares,strVehicleGroupID: string;
     Year, Month, Day: Word;
     Status,IntStatusKoreksi: Integer;
     procedure Clear;
@@ -239,7 +239,7 @@ begin
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
   Close;
-  FListPerintahMuat.Refresh;
+//  FListPerintahMuat.Refresh;
 end;
 
 procedure TFDataPerintahMuat.Update;
@@ -266,10 +266,10 @@ begin
       ExecSQL;
     end;
     InsertDetail;
-    proses_stock;
+//    proses_stock;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Close;
-    FListPerintahMuat.Refresh;
+//    FListPerintahMuat.Refresh;
 end;
 
 procedure TFDataPerintahMuat.InsertDetail;
@@ -423,6 +423,7 @@ end;
 
 procedure TFDataPerintahMuat.Clear;
 begin
+  strVehicleGroupID:='';
   edKodeMuat.Clear;
   dtMuat.Date:=now();
   dtKirim.Date:=now();

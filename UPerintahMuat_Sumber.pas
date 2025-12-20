@@ -277,10 +277,10 @@ begin
 //            ' )b ON  a.notrans=b.notrans where deleted_at  is null) deo  '+
 //            ' where notrans not in (SELECT notrans from "public"."t_spm" a  '+
 //            'where a.deleted_at  is null) ');
-    sql.Add('SELECT DISTINCT *,false as pilih from ( SELECT date_trans, a."notrans", "vendor_code_transport",  '+
+    sql.Add('SELECT DISTINCT *,false as pilih from ( SELECT vehicle_group_sort_number,date_trans, a."notrans", "vendor_code_transport",  '+
             '"vendor_name_transport",    vehicles  from "public"."t_delivery_order" a  '+
             'LEFT JOIN (SELECT a.*, vendor_code as vendor_code_transport, vendor_name  as vendor_name_transport,'+
-            'vehicles from "public"."t_delivery_order_load" a  '+
+            'vehicles,b.vehicle_group_sort_number from "public"."t_delivery_order_load" a  '+
             'LEFT JOIN "public"."t_delivery_order_services" b ON a.notrans=b.notrans  )b '+
             'ON  a.notrans=b.notrans where deleted_at  is null) deo   where notrans not in '+
             '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on b.notrans=a.notrans where b.deleted_at is null)  ');
@@ -293,7 +293,7 @@ begin
     end;
     if Length(edNoKendMuatan.Text)<>0 then
     begin
-      sql.add(' AND vehicles='+QuotedStr(edNoKendMuatan.Text)+' ');
+      sql.add(' AND vehicle_group_sort_number='+QuotedStr(edNoKendMuatan.Text)+' ');
     end;
     sql.add(' ORDER BY deo.notrans, deo.vendor_code_transport desc ');
     open;

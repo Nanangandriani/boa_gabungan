@@ -87,13 +87,16 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select DISTINCT a.vehicles,a.type_vehicles_code,a.type_vehicles_name,a.capacity '+
+    sql.Text:='select DISTINCT a.vehicle_group_id,a.vehicle_group_sort_number,a.vehicles,a.type_vehicles_code,a.type_vehicles_name,a.capacity '+
               'from t_delivery_order_services a '+
-//              'LEFT JOIN t_delivery_order b on b.notrans=a.notrans and b.deleted_at IS NULL '+
+              'LEFT JOIN t_delivery_order b on b.notrans=a.notrans '+
               'where a.notrans NOT IN '+
               '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on '+
               'b.notrans=a.notrans where b.deleted_at is null) '+
-              'AND a.vendor_code='+QuotedStr(FDataPerintahMuat.edKode_Vendor_Kend.Text)+'  AND a.vehicles<>'''' AND a.vehicles is NOT NULL ';
+              'AND a.vendor_code='+QuotedStr(FDataPerintahMuat.edKode_Vendor_Kend.Text)+' '+
+              'AND a.vehicle_group_sort_number<>'''' AND a.vehicle_group_sort_number is NOT NULL '+
+//              AND a.vehicles<>'''' AND a.vehicles is NOT NULL
+              'AND b.deleted_at is NULL;';
     open;
   end;
   MemMasterData.active:=false;
@@ -103,11 +106,12 @@ begin
   while not dm.Qtemp.Eof do
   begin
     MemMasterData.insert;
-    MemMasterData['code']:=dm.Qtemp.FieldValues['vehicles'];
+    MemMasterData['code']:=dm.Qtemp.FieldValues['vehicle_group_id'];
     MemMasterData['plate_number']:='';
     MemMasterData['type']:=dm.Qtemp.FieldValues['type_vehicles_code'];;
     MemMasterData['type_name']:=dm.Qtemp.FieldValues['type_vehicles_name'];;
-    MemMasterData['capacity']:=dm.Qtemp.FieldValues['capacity'];;
+    MemMasterData['capacity']:=dm.Qtemp.FieldValues['capacity'];
+    MemMasterData['sort_number']:=dm.Qtemp.FieldValues['vehicle_group_sort_number'];
     MemMasterData.post;
     dm.Qtemp.Next;
   end;
@@ -124,7 +128,9 @@ begin
   end;
   if vcall='perintah_muat' then
   begin
-    FDataPerintahMuat.edNoKendMuatan.Text:=MemMasterData['code'];
+    FDataPerintahMuat.edNoKendMuatan.Text:=MemMasterData['sort_number'];
+    FDataPerintahMuat.strVehicleGroupID:=MemMasterData['code'];
+    Close;
   end;
   if vcall='sales_order' then
   begin

@@ -76,15 +76,6 @@ type
     frxDBDBHPenj_det: TfrxDBDataset;
     frxDBDBHPenjualan: TfrxDBDataset;
     QCetak: TUniQuery;
-    QCetaktrans_no: TStringField;
-    QCetaktrans_date: TDateField;
-    QCetakcode_cust: TStringField;
-    QCetakname_cust: TStringField;
-    QCetakcode_region: TStringField;
-    QCetakname_region: TStringField;
-    QCetaktot_piutang: TFloatField;
-    QCetaktot_pejualan: TFloatField;
-    QCetaktot_ppn: TFloatField;
     QCetakdetail: TUniQuery;
     StringField1: TStringField;
     DateField1: TDateField;
@@ -155,24 +146,33 @@ begin
    begin
        close;
        sql.Clear;
-       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
-               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
-               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
-               ' FROM t_sales_returns a '+
-               ' LEFT JOIN ( SELECT t_customer.customer_code, t_customer.customer_name_pkp, '+
-               ' t_customer.code_region, t_customer.name_region FROM t_customer) d ON a.code_cust::text = d.customer_code::text  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at is NULL ');
+       sql.Add('select a.trans_date,a.trans_no,b.customer_code,b.customer_name,a.no_inv,a.sub_total,a.ppn_value,'+
+              'a.pph_value,a.grand_tot,b.kabupaten,UPPER(b.kecamatan) kecamatan,b.code_kabupaten,b.code_kecamatan,b.code_karesidenan from t_sales_returns a '+
+              'left join (select src.*,rs.name kecamatan,rr.name kabupaten,'+
+              'rs.code code_kecamatan,rr.code code_kabupaten,rr.code_karesidenan from t_sales_returns_customer src '+
+              'left join t_region_subdistrict rs on rs.code=src.code_region '+
+              'left join t_region_regency rr on rr.code=rs.code_regency '+
+              'where src.deleted_at is NULL ORDER BY src.created_at desc limit 1 '+
+              ') b on b.trans_no=a.trans_no '+
+              'where a.deleted_at is null');
+//       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
+//               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
+//               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
+//               ' FROM t_sales_returns a '+
+//               ' LEFT JOIN ( SELECT t_customer.customer_code, t_customer.customer_name_pkp, '+
+//               ' t_customer.code_region, t_customer.name_region FROM t_customer) d ON a.code_cust::text = d.customer_code::text  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at is NULL ');
          if edKaresidenan.EditValue<>'' then
          begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+          sql.add(' AND b.code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND b.code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY trans_date, trans_no');
        open;
@@ -186,32 +186,32 @@ begin
 
  if QCetak.RecordCount<>0 then
  begin
-   with QCetakdetail do
-   begin
-       close;
-       sql.Clear;
-       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhreturppenjualan" a  '+
-               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-               ' ON "left"(code_region, 4)=b.code_kab '+
-               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-         end;
-       sql.add(' ORDER BY trans_no, code_item');
-       open;
-   end;
+//   with QCetakdetail do
+//   begin
+//       close;
+//       sql.Clear;
+//       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhreturppenjualan" a  '+
+//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+//               ' ON "left"(code_region, 4)=b.code_kab '+
+//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+//         if edKaresidenan.EditValue<>'' then
+//         begin
+//          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+//         end;
+//         if edKabupaten.EditValue<>'' then
+//         begin
+//          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+//         end;
+//       sql.add(' ORDER BY trans_no, code_item');
+//       open;
+//   end;
 
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_rekap_ret_penjualan'+ '.fr3');
+   Report.LoadFromFile(cLocation +'report/rpt_rekap_retur_penjualan'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
     if edKaresidenan.EditValue='' then

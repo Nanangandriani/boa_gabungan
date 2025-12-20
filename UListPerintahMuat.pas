@@ -105,7 +105,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin;
+uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin, UNoteCancel;
 
 procedure TFListPerintahMuat.Refresh;
 var mm: Integer;
@@ -186,35 +186,12 @@ end;
 
 procedure TFListPerintahMuat.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi SPM Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-
   if MessageDlg('Apakah anda yakin ingin Membatalkan Muatan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_spm"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString);
-          ExecSQL;
-        end;
-        //Kembalikan Stock
-        reset_stock;
-        MessageDlg('Proses Hapus Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    FNoteCancel.vtbl:='t_spm';
+    FNoteCancel.vfieldtransno:='notrans';
+    FNoteCancel.edNoTransaksi.Text:=QListPerintahMuat.FieldByName('notrans').AsString;
+    FNoteCancel.ShowModal;
   end;
 end;
 

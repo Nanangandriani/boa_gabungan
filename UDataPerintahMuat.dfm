@@ -381,8 +381,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1070
-      ExplicitTop = 3
+      ExplicitLeft = 1072
     end
     object Edautocode: TEdit
       Left = 712
