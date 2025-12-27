@@ -1395,7 +1395,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44662.430320902800000000
-    ReportOptions.LastChange = 45920.425359965300000000
+    ReportOptions.LastChange = 46014.099922187500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1462,7 +1462,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
             'REKAP SALDO PERKARESIDENAN')
           ParentFont = False
         end
-        object nama_PT: TfrxMemoView
+        object MemPerusahaan: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
           Left = 3.779530000000000000
@@ -1476,8 +1476,6 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
-          Memo.UTF8W = (
-            'PT. HASTA KENCANA JAYA')
           ParentFont = False
         end
         object MemPeriode: TfrxMemoView

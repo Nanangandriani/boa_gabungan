@@ -417,8 +417,24 @@ end;
 
 procedure TFDataPerintahMuat.btAddDetailClick(Sender: TObject);
 begin
-  FPerintahMuat_Sumber.Clear;
-  FPerintahMuat_Sumber.ShowModal;
+  if edNama_Vendor_Kend.Text='' then
+  begin
+    MessageDlg('Jasa Transport Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end else if edNoKendMuatan.Text='' then
+  begin
+    MessageDlg('Nomor Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edNoKendMuatan.SetFocus;
+  end else
+  begin
+    FPerintahMuat_Sumber.Clear;
+    FPerintahMuat_Sumber.edKodeVendorMuatan.Text:=FDataPerintahMuat.edKode_Vendor_Kend.Text;
+    FPerintahMuat_Sumber.edNamaVendorMuatan.Text:=FDataPerintahMuat.edNama_Vendor_Kend.Text;
+    FPerintahMuat_Sumber.edNoKendMuatan.Text:=FDataPerintahMuat.edNoKendMuatan.Text;
+    FPerintahMuat_Sumber.edKodeVendorMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.edNamaVendorMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.edNoKendMuatan.ReadOnly:=True;
+    FPerintahMuat_Sumber.ShowModal;
+  end;
 end;
 
 procedure TFDataPerintahMuat.Clear;

@@ -110,7 +110,7 @@ begin
         close;
         sql.clear;
         sql.add(' SELECT outlet_code, outlet_name, distribution_code, '''' as region, '+
-                ' address,idprospek FROM "t_customer_prospect_tmp" '+
+                ' address,idprospek,wilayah_code,wilayah_name FROM "t_customer_prospect_tmp" '+
                 ' where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+'');
           if Length(Edkodewilayah.Text)<>0 then
           begin
@@ -140,8 +140,8 @@ begin
           MemMasterData.insert;
           MemMasterData['kd_prospek']:=Dm.Qtemp.fieldbyname('outlet_code').value;
           MemMasterData['nama_pelanggan']:=Dm.Qtemp.fieldbyname('outlet_name').value;
-          MemMasterData['kd_wilayah']:=Dm.Qtemp.fieldbyname('distribution_code').value;
-          MemMasterData['nama_wilayah']:=Dm.Qtemp.fieldbyname('region').value;
+          MemMasterData['kd_wilayah']:=Dm.Qtemp.fieldbyname('wilayah_code').value;
+          MemMasterData['nama_wilayah']:=Dm.Qtemp.fieldbyname('wilayah_name').value;
           MemMasterData['alamat']:=Dm.Qtemp.fieldbyname('address').value;
           MemMasterData['idprospek']:=Dm.Qtemp.fieldbyname('idprospek').value;
           MemMasterData.post;
@@ -300,6 +300,15 @@ begin
           end;
         end;
       end;
+
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_customer_details WHERE deleted_at IS NULL';
+        Open;
+      end;
+
       FNew_Pelanggan.Edkode.Enabled:=false;
       FNew_Pelanggan.btGetVA.Visible:=True;
       Status:=0;

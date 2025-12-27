@@ -56,6 +56,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
           Top = 19

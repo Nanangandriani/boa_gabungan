@@ -389,7 +389,7 @@ begin
         key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapitele''');
         vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapitele''');
         vBody := '?ticket_number=' + dm.Qtemp.FieldByName('no_tiket').AsString +
-                 '&status=4';
+                 '&status=5';
         Vpath := '/update-order';
         url := BaseUrl + Vpath + vBody;
         gNet := TIdHTTP.Create(nil);
@@ -1749,15 +1749,9 @@ begin
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
-    if edKodeDOMuatan.Text='' then
-    begin
-      MessageDlg('Pastikan Nomor Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
-      edKodeDOMuatan.SetFocus;
-    end
-    else if edKodeVendorTransMuatan.Text='' then
+    if edKodeVendorTransMuatan.Text='' then
     begin
       MessageDlg('Data Jasa Transport Tidak Lengkap..!!',mtInformation,[mbRetry],0);
-      edKodeVendorTransMuatan.SetFocus;
     end  else if (edLokasiMuat.Text='') then
     begin
       MessageDlg('Lokasi Muat Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -1768,12 +1762,10 @@ begin
     else if MemDataMuatan.RecordCount=0 then
     begin
       MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
-      edKodeDOMuatan.SetFocus;
     end
     else if MemDataBiaya.RecordCount=0 then
     begin
       MessageDlg('Pastikan Detail Biaya Sudah Lengkap..!!',mtInformation,[mbRetry],0);
-      edKodeDOMuatan.SetFocus;
     end else if (StatusCekBiaya=0) then
     begin
       MessageDlg('Silahkan melakukan Cek Biaya..!!',mtInformation,[mbRetry],0);

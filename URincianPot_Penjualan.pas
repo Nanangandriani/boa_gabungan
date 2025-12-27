@@ -202,11 +202,12 @@ begin
                     ' LEFT JOIN t_item c on a.code_item=c.item_code '+
                     ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
                     ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                    ' and c.item_code=e.code_item '+
-                    'WHERE a.trans_no='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
+                    ' and c.item_code=e.code_item and a.code_unit=e.code_unit '+
+                    'WHERE a.trans_no='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' AND a.code_item='+QuotedStr(query2.fieldbyname('kd_brg').Value)+' '+
                     ' GROUP BY a.code_item, e."unit_price", a.amount '+
                     ' -- Baca qty dalam group barang');
             open;
+
             first;
           end;
         end else begin
@@ -242,8 +243,8 @@ begin
                     ' LEFT JOIN t_item c on a.code_item=c.item_code '+
                     ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
                     ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                    ' and c.item_code=e.code_item '+
-                    ' WHERE a.id_master='+QuotedStr(get_uuid)+' '+
+                    ' and c.item_code=e.code_item and a.code_unit=e.code_unit '+
+                    ' WHERE a.id_master='+QuotedStr(get_uuid)+' AND a.code_item='+QuotedStr(query2.fieldbyname('kd_brg').Value)+' '+
                     ' GROUP BY a.code_item, e."unit_price", a.amount '+
                     ' -- Baca qty dalam group barang');
             open;

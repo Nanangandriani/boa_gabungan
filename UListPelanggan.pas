@@ -25,7 +25,9 @@ uses
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxButtonEdit, cxBarEditItem;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxButtonEdit, cxBarEditItem,
+  frxExportXLSX, frxClass, frxExportBaseDialog, frxExportXLS, frxDBSet,
+  frxExportPDF, ShellAPI;
 
 type
   TFListPelanggan = class(TForm)
@@ -74,6 +76,13 @@ type
     dxBarLargeButton3: TdxBarLargeButton;
     QPelanggankabupaten: TMemoField;
     QPelanggankaresidenan: TMemoField;
+    dxBarManager1Bar4: TdxBar;
+    dxBarLargeButton4: TdxBarLargeButton;
+    Report: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
+    frxPDFExport1: TfrxPDFExport;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -90,12 +99,14 @@ type
       AButtonIndex: Integer);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     strKaresidenanID,strKabupatenID :String;
     procedure Refresh;
+    procedure ExportToExcel;
   end;
 
   function FListPelanggan: TFListPelanggan;
@@ -119,6 +130,97 @@ begin
     FListPelanggan:= listpelanggan
   else
     Application.CreateForm(TFListPelanggan, Result);
+end;
+
+procedure TFListPelanggan.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
 end;
 
 procedure TFListPelanggan.Refresh;
@@ -454,6 +556,29 @@ begin
   cbKabupaten.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+end;
+
+procedure TFListPelanggan.dxBarLargeButton4Click(Sender: TObject);
+var strKaresidenan,strKabupaten: String;
+begin
+  if cbSBU.Text<>'' then
+  Refresh else MessageDlg('SBU Wajib Diisi..!!',mtInformation,[mbRetry],0);
+
+ if QPelanggan.RecordCount=0 then
+ begin
+  showmessage('Tidak ada data yang bisa dicetak !');
+  exit;
+ end else
+ begin
+   cLocation := ExtractFilePath(Application.ExeName);
+
+   //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_pelanggan'+ '.fr3');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+
+    Report.PrepareReport(True);
+    ExportToExcel;
+ end;
 end;
 
 procedure TFListPelanggan.dxBarLargeNewClick(Sender: TObject);

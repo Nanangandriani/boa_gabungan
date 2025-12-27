@@ -1583,7 +1583,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46010.695345844910000000
+    ReportOptions.LastChange = 46017.369985567130000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1757,11 +1757,17 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure Memo40OnAfterPrint(Sender: TfrxComponent);'
       'begin'
+      '  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and '
       
-        '  if (<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) OR (<f' +
-        'rxDBDatasetLapHarianSisaNota."amount_returns"> > 0) OR (<frxDBDa' +
-        'tasetLapHarianSisaNota."amount_jurnal_memorial"> > 0) then Count' +
-        'Pelunasan:=CountPelunasan+1;'
+        '      (<frxDBDatasetLapHarianSisaNota."amount_nota_awal"> = <frx' +
+        'DBDatasetLapHarianSisaNota."amount_bayar">)) or '
+      '     (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) or '
+      
+        '     (<frxDBDatasetLapHarianSisaNota."amount_jurnal_memorial"> >' +
+        ' 0) then'
+      '  begin'
+      '    CountPelunasan := CountPelunasan + 1;'
+      '  end;'
       'end;'
       ''
       'procedure Memo41OnAfterPrint(Sender: TfrxComponent);'
@@ -1776,20 +1782,20 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'begin'
       
         ' if (<frxDBDatasetLapHarianSisaNota."no_nota_saldo_nota"> <> '#39#39')' +
-        ' then CountSaldoNota:=CountSaldoNota+1;  '
+        ' then CountSaldoNota:=CountSaldoNota+1;'
       'end;'
       ''
       'procedure Memo57OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '  Memo57.Text := IntToStr(CountSaldoNota)+'#39' Lembar'#39';  '
+      '  Memo57.Text := IntToStr(CountSaldoNota)+'#39' Lembar'#39';'
       'end;'
       ''
       'begin'
       '  no:=1;'
       '  CountSisaNotaAwal:= 0; //'
       '  CountNotaPenjualan:=0;'
-      '  CountPelunasan:=0;     '
-      '  CountSaldoNota:=0;          '
+      '  CountPelunasan:=0;'
+      '  CountSaldoNota:=0;'
       '  TotPelunasan:=0;'
       'end.')
     OnGetValue = ReportGetValue
@@ -2906,7 +2912,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo57: TfrxMemoView
           AllowVectorExport = True
           Left = 922.750000000000000000
-          Top = 0.079160000000000010
+          Top = 0.079160000000000000
           Width = 139.420603660000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo57OnBeforePrint'
@@ -2971,7 +2977,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo56: TfrxMemoView
           AllowVectorExport = True
           Left = 756.283464570000000000
-          Top = 0.079160000000000000
+          Top = 0.079160000000000010
           Width = 59.338582680000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo56OnBeforePrint'

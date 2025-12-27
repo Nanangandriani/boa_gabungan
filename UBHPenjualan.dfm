@@ -835,7 +835,7 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 45981.501295567100000000
+    ReportOptions.LastChange = 46014.084210682870000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -853,8 +853,8 @@ object FBHPenjualan: TFBHPenjualan
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 1040
-    Top = 24
+    Left = 680
+    Top = 144
     Datasets = <
       item
         DataSet = frxDBDBHPenjualan
@@ -1435,7 +1435,7 @@ object FBHPenjualan: TFBHPenjualan
         FillGap.Right = 0
         Frame.Typ = []
         Height = 1.111111110000000000
-        Top = 253.228510000000000000
+        Top = 264.567100000000000000
         Width = 1084.725110000000000000
         DataSet = frxDBDBHPenjualan
         DataSetName = 'frxDBDBHPenjualan'
@@ -1458,7 +1458,7 @@ object FBHPenjualan: TFBHPenjualan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897637800000000000
+        Height = 30.611923510000000000
         Top = 211.653680000000000000
         Width = 1084.725110000000000000
         Condition = 'frxDBDBHPenjualan."trans_no"'
@@ -1466,6 +1466,7 @@ object FBHPenjualan: TFBHPenjualan
         object frxDBDCetakOrderOUTLET_NAME: TfrxMemoView
           AllowVectorExport = True
           Left = 26.456710000000000000
+          Top = 11.000000000000000000
           Width = 99.250154760000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
@@ -1483,6 +1484,7 @@ object FBHPenjualan: TFBHPenjualan
         object frxDBDCetakOrderNAMA_KABUPATEN: TfrxMemoView
           AllowVectorExport = True
           Left = 129.173228350000000000
+          Top = 11.000000000000000000
           Width = 98.713976670000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
@@ -1500,19 +1502,21 @@ object FBHPenjualan: TFBHPenjualan
         object Subreport1: TfrxSubreport
           AllowVectorExport = True
           Left = 345.407199100000000000
-          Top = 0.714285710000000000
+          Top = 11.714285710000000000
           Width = 94.488250000000000000
           Height = 18.897637800000000000
           Page = Report.Page2
         end
         object Line1: TfrxLineView
           AllowVectorExport = True
+          Top = 11.000000000000000000
           Width = 1084.724409450000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
+          Top = 11.000000000000000000
           Width = 26.456710000000000000
           Height = 18.897637800000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1529,6 +1533,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 230.551330000000000000
+          Top = 11.000000000000000000
           Width = 112.806370000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
@@ -1545,7 +1550,8 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Subreport2: TfrxSubreport
           AllowVectorExport = True
-          Left = 638.475864430000000000
+          Left = 637.606299210000000000
+          Top = 11.000000000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Page = Report.Page3
@@ -1553,13 +1559,15 @@ object FBHPenjualan: TFBHPenjualan
         object Subreport3: TfrxSubreport
           AllowVectorExport = True
           Left = 860.178852640000000000
+          Top = 11.000000000000000000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Page = Report.Page4
         end
         object Line51: TfrxLineView
           AllowVectorExport = True
-          Left = 26.456692913385800000
+          Left = 26.456692910000000000
+          Top = 11.000000000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -1567,7 +1575,8 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Line54: TfrxLineView
           AllowVectorExport = True
-          Left = 126.992125984252000000
+          Left = 126.992125980000000000
+          Top = 11.000000000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -1576,6 +1585,7 @@ object FBHPenjualan: TFBHPenjualan
         object Line55: TfrxLineView
           AllowVectorExport = True
           Left = 229.795275590000000000
+          Top = 11.000000000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
@@ -1583,11 +1593,105 @@ object FBHPenjualan: TFBHPenjualan
         end
         object Line56: TfrxLineView
           AllowVectorExport = True
-          Left = 344.692913385827000000
+          Left = 344.692913390000000000
+          Top = 11.000000000000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = [ftLeft]
+        end
+        object SysMemo9: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 0.869565220000000000
+          Width = 26.456710000000000000
+          Height = 11.338582677165350000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop]
+          HAlign = haCenter
+          ParentFont = False
+        end
+        object Memo43: TfrxMemoView
+          AllowVectorExport = True
+          Left = 26.956521740000000000
+          Width = 100.119719980000000000
+          Height = 11.338582680000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDCetakOrder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          ParentFont = False
+        end
+        object Memo44: TfrxMemoView
+          AllowVectorExport = True
+          Left = 127.826086960000000000
+          Top = -0.349332170000000000
+          Width = 101.858850410000000000
+          Height = 11.338582680000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDCetakOrder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          ParentFont = False
+        end
+        object Memo45: TfrxMemoView
+          AllowVectorExport = True
+          Left = 229.565217390000000000
+          Top = -0.349332170000000000
+          Width = 115.653543307086600000
+          Height = 11.338582680000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDCetakOrder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          ParentFont = False
+        end
+        object Memo46: TfrxMemoView
+          AllowVectorExport = True
+          Left = 345.217391300000000000
+          Top = -0.349332170000000000
+          Width = 87.945806940000000000
+          Height = 11.338582680000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDCetakOrder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          ParentFont = False
+        end
+        object Memo47: TfrxMemoView
+          AllowVectorExport = True
+          Left = 433.043478260000000000
+          Top = -0.349332170000000000
+          Width = 114.032763460000000000
+          Height = 11.338582680000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDCetakOrder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          ParentFont = False
         end
       end
       object Footer1: TfrxFooter
@@ -1598,7 +1702,7 @@ object FBHPenjualan: TFBHPenjualan
         FillGap.Right = 0
         Frame.Typ = []
         Height = 97.590563390000000000
-        Top = 317.480520000000000000
+        Top = 328.819110000000000000
         Width = 1084.725110000000000000
         object Shape4: TfrxShapeView
           Align = baClient
@@ -1885,7 +1989,7 @@ object FBHPenjualan: TFBHPenjualan
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 275.905690000000000000
+        Top = 287.244280000000000000
         Visible = False
         Width = 1084.725110000000000000
         OnBeforePrint = 'MasterData4OnBeforePrint'

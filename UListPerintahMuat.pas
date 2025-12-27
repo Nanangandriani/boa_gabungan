@@ -289,7 +289,7 @@ end;
 
 procedure TFListPerintahMuat.dxBarLargeButton2Click(Sender: TObject);
 begin
-   with QCetak do
+    with QCetak do
     begin
      close;
      sql.clear;

@@ -878,24 +878,23 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45890.551913078700000000
-    ReportOptions.LastChange = 45891.597427696760000000
+    ReportOptions.LastChange = 45891.597427696800000000
     ScriptLanguage = 'JScript'
     ScriptText.Strings = (
-      '  '
+      ''
       
         '    if (MasterData1.RowCount == 0) { // Or check a data source d' +
         'irectly'
       '        Page2.Visible = false;'
       '    } else {'
       '        Page2.Visible = true;'
-      '    }    '
+      '    }'
       ''
       ''
-      ''
-      '  ')
+      '')
     OnGetValue = ReportGetValue
-    Left = 424
-    Top = 8
+    Left = 240
+    Top = 208
     Datasets = <
       item
         DataSet = frxDBDatasetDpp
@@ -1078,7 +1077,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object Memo174: TfrxMemoView
           AllowVectorExport = True
           Left = 574.666666670000000000
-          Width = 62.362204720000000000
+          Width = 62.362204724409400000
           Height = 22.299212600000000000
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih

@@ -550,7 +550,7 @@ object FExportFaktur: TFExportFaktur
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 45992.592496793980000000
+    ReportOptions.LastChange = 45992.592496794000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

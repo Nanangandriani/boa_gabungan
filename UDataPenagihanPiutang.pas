@@ -386,13 +386,12 @@ begin
   begin
     close;
     sql.clear;
-    sql.add('SELECT b.customer_code,b.customer_name,case when c.total_receivables is NULL '+
-            'then 0 else c.total_receivables end total_receivables,a.no_invoice,a.date_dpp,'+
+    sql.add('SELECT b.customer_code,b.customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
             'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
             'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
             'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
-            'LEFT JOIN (SELECT no_trans,code_cust,total_receivables  FROM "public"."vget_piutang") c '+
-            'on c.code_cust=a.code_cust and c.no_trans=a.no_invoice '+
+            'LEFT JOIN (SELECT *  FROM "public".get_piutang_invoice(NOW()::date)) c '+
+            'on c.trans_no=a.no_invoice '+
             'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
             'and isdpp_prev=True  Order By "date_dpp", "no_invoice" desc');
@@ -403,13 +402,12 @@ begin
   begin
     close;
     sql.clear;
-    sql.add('SELECT b.customer_code,b.customer_name,case when c.total_receivables is NULL '+
-            'then 0 else c.total_receivables end total_receivables,a.no_invoice,a.date_dpp,'+
+    sql.add('SELECT b.customer_code,b.customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
             'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
             'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
             'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
-            'LEFT JOIN (SELECT no_trans,code_cust,total_receivables  FROM "public"."vget_piutang") c '+
-            'on c.code_cust=a.code_cust and c.no_trans=a.no_invoice '+
+            'LEFT JOIN (SELECT *  FROM "public".get_piutang_invoice(NOW()::date)) c '+
+            'on c.trans_no=a.no_invoice '+
             'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
             'and isdpp_prev=False Order By "date_dpp", "no_invoice" desc');

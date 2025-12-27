@@ -484,7 +484,8 @@ begin
                 ' ''0'' as contact_person3,	longitude as longitude,	latitude as latitude, '+
                 ' code_details_address as code_details,	'''' as name_details FROM '+
                 ' "t_customer_prospect_tmp" where idprospek='+QuotedStr(inttostr(vid_prospek))+''+
-                ' and code_details_address='+QuotedSTR(Dm.Qtemp1.FieldByName('code_details').AsString)+' '+
+//                ' and code_details_address='+QuotedSTR(Dm.Qtemp1.FieldByName('code_details').AsString)+' '+
+                ' and code_details_address=''001'' '+
                 ' Order By code_details_address desc');
         open;
       end;
@@ -1048,9 +1049,10 @@ end;
 procedure TFNew_Pelanggan.FormShow(Sender: TObject);
 begin
    //Clear;
+  RefreshGrid;
   if Status=1 then
   begin
-    RefreshGrid;
+
     btGetAkunPerkiraan.Visible:=True;
     btGetVA.Visible:=False;
   end;

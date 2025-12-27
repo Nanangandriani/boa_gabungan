@@ -234,9 +234,10 @@ begin
     begin
       close;
       sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+      SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
-                'left join t_ak_header c on b.header_code=c.header_code';
+                ' left join t_ak_header c on b.header_code=c.header_code '+
+                ' GROUP BY b.code,b.account_name,c.header_name';
       Execute;
     end;
   end;
@@ -532,12 +533,39 @@ begin
          ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
        ExecSQL;
        end;
-        with dm.Qtemp do
+
+
+        {with dm.Qtemp do
          begin
            close;
            sql.Clear;
            sql.Text:='update t_item_account set acc_persd=:acc_persd,acc_pemb=:acc_pemb,acc_penj=:acc_penj,acc_rtpemb=:acc_rtpemb,'+
            ' acc_potpemb=:acc_potpemb,acc_rtpenj=:acc_rtpenj where item_code=:item_code';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;}
+
+
+         with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='delete from t_item_account where item_code=:item_code';
+           ParamByName('item_code').Value:=EdKd.Text;
+           Execute;
+         end;
+         with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
+           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
             ParamByName('acc_persd').Value:=Edkd_akun.Text;
             ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
             ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
@@ -723,9 +751,10 @@ begin
     begin
       close;
       sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+      SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
-                'left join t_ak_header c on b.header_code=c.header_code';
+                ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' GROUP BY b.code,b.account_name,c.header_name';
       Execute;
     end;
   end;

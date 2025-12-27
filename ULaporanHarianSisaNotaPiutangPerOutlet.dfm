@@ -1413,7 +1413,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 45981.543936805550000000
+    ReportOptions.LastChange = 46016.448253831020000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1816,8 +1816,8 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           Frame.Typ = [ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'REKAP LAPORAN HARIAN SISA NOTA'
-            'PER KABUPATEN')
+            'REKAP LAPORAN PIUTANG PELANGGAN'
+            'PER TP')
           ParentFont = False
           WordBreak = True
           VAlign = vaCenter

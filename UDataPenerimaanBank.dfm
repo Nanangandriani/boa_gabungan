@@ -442,7 +442,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 950
+      ExplicitLeft = 960
+      ExplicitTop = 3
     end
     object Edautocode: TEdit
       Left = 503
@@ -472,10 +473,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1105
     Height = 249
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 1101
     ExplicitHeight = 248
@@ -506,6 +507,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
               end>
             FieldName = 'kd_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Kode Akun'
             Width = 199
           end
@@ -515,6 +517,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             EditButtons = <>
             FieldName = 'nm_akun'
             Footers = <>
+            ReadOnly = True
+            TextEditing = False
             Title.Caption = 'Nama Akun'
             Width = 250
           end
@@ -604,6 +608,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
               end>
             FieldName = 'no_tagihan'
             Footers = <>
+            TextEditing = False
             Title.Caption = 'Nomor | Tagihan'
             Width = 200
           end
@@ -613,6 +618,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             EditButtons = <>
             FieldName = 'no_faktur'
             Footers = <>
+            ReadOnly = True
+            TextEditing = False
             Title.Caption = 'Nomor | Faktur'
             Width = 200
           end
@@ -624,6 +631,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
               end>
             FieldName = 'tgl_faktur'
             Footers = <>
+            ReadOnly = True
+            TextEditing = False
             Title.Caption = 'Tanggal'
             Width = 100
           end
@@ -634,6 +643,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
             FieldName = 'jum_piutang_real'
             Footers = <>
             ReadOnly = True
+            TextEditing = False
             Title.Caption = 'Sisa Piutang'
             Width = 151
           end

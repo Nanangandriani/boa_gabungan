@@ -248,7 +248,11 @@ begin
       with QCetakdetailDebit do
       begin
         close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' ';
+        sql.Text:='SELECT trans_no, account_code, account_name, status_dk, db '+
+                  'FROM "public"."VTrans_Journal" '+
+                  'WHERE status_dk = ''D'' '+
+//                     AND db > 0
+                  'AND NOT (account_name LIKE  ''%Uang Muka%'' AND db = 0 );';
         open;
       end;
 

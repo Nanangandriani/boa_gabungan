@@ -641,6 +641,7 @@ begin
 
       cLocation := ExtractFilePath(Application.ExeName);
       Report.LoadFromFile(cLocation +'report/rpt_validasifaktur'+ '.fr3');
+      SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
       if edKaresidenan.Text<>'' then
       begin
         SetMemo(Report,'karesidenan',edKaresidenan.Text);

@@ -194,7 +194,6 @@ object FDataPerintahMuat: TFDataPerintahMuat
       Align = alCustom
       Caption = 'Ambil Muatan'
       TabOrder = 7
-      Visible = False
       OnClick = btAddDetailClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -438,6 +437,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
           item
             CellButtons = <>
             DynProps = <>
+            EditButton.Enabled = False
             EditButtons = <
               item
                 Style = ebsPlusEh

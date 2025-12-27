@@ -77,6 +77,9 @@ type
     DTP1: TDateTimePicker;
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
+    dxBarLargeButton4: TdxBarLargeButton;
+    frxDBDJurnal: TfrxDBDataset;
+    QJurnal: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -84,6 +87,8 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,8 +106,8 @@ uses UDataKasKecil, UDataModule, UHomeLogin, UMy_Function;
 
 procedure TFListKasKecil.ActBaruExecute(Sender: TObject);
 begin
-  FDataKasKecil.Clear;
   FDataKasKecil.Status:=0;
+  FDataKasKecil.Clear;
   FDataKasKecil.edNoTrans.Enabled:=true;
   FDataKasKecil.ShowModal;
 end;
@@ -178,6 +183,8 @@ end;
 
 procedure TFListKasKecil.ActUpdateExecute(Sender: TObject);
 begin
+   FDataKasKecil.status:=1;
+
    FDataKasKecil.Clear;
    with Dm.Qtemp do
    begin
@@ -313,6 +320,41 @@ begin
     SetMemo(frxReport1,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
     SetMemo(frxReport1,'memo_terbilang',UraikanAngka(floattostr(QRKasKecil.FieldByName('paid_amount').AsFloat)));
     frxReport1.ShowReport();
+end;
+
+procedure TFListKasKecil.dxBarLargeButton4Click(Sender: TObject);
+begin
+    with QJurnal do
+    begin
+     close;
+     sql.clear;
+     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+             ' where "trans_no"='+QuotedStr(DBGrid.Fields[0].AsString)+'');
+     open;
+    end;
+
+    if QRKasKecil.RecordCount=0 then
+    begin
+      showmessage('Tidak ada data yang bisa dicetak !');
+      exit;
+    end;
+
+   if QRKasKecil.RecordCount<>0 then
+   begin
+     cLocation := ExtractFilePath(Application.ExeName);
+
+     frxReport1.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+     SetMemo(frxReport1,'nm_judul','DAFTAR JURNAL PENGELUARAN');
+     SetMemo(frxReport1,'nama_pt',FHomeLogin.vNamaPRSH);
+     //Report.DesignReport();
+     frxReport1.ShowReport();
+   end;
+end;
+
+procedure TFListKasKecil.FormShow(Sender: TObject);
+begin
+   DTP1.Date:=now();
+   DTP2.Date:=now();
 end;
 
 Initialization

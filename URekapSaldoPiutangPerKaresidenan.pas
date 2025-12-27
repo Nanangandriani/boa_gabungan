@@ -124,7 +124,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterData, UDataModule, UMy_Function;
+uses UMasterData, UDataModule, UMy_Function, UHomeLogin, UMenu;
 
 var
   rekapsaldopiutangperkaresidenan : TFRekapSaldoPiutangPerKaresidenan;
@@ -150,9 +150,12 @@ begin
   end;
   if Qreport.RecordCount>0 then
   begin
+
     strReportName:='rpt_rekapsaldopiutangperkaresidenan';
     cLocation := ExtractFilePath(Application.ExeName);
     Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+    SetMemo(Report,'MemPerusahaan',Uppercase(FHomeLogin.vNamaPRSH));
+    SetMemo(Report,'MemPeriode','Rekap Saldo Piutang Periode : '+formatdatetime('dd mmmm yyyy',dtTanggal1.Date)+' s/d '+formatdatetime('dd mmmm yyyy',dtTanggal2.Date));
     Report.ShowReport();
   end else begin
     MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);

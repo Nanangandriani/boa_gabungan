@@ -24,8 +24,8 @@ object FNew_Barang: TFNew_Barang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 324
-    ExplicitWidth = 551
+    ExplicitTop = 350
+    ExplicitWidth = 552
     object BBatal: TRzBitBtn
       Left = 482
       Top = 1
@@ -86,7 +86,7 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 475
+      ExplicitLeft = 476
     end
     object BSimpan: TRzBitBtn
       Left = 407
@@ -148,7 +148,7 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 400
+      ExplicitLeft = 401
     end
     object RzBitBtn1: TRzBitBtn
       Left = 83
@@ -290,18 +290,19 @@ object FNew_Barang: TFNew_Barang
     Width = 558
     Height = 359
     Hint = ''
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
-    ExplicitWidth = 551
-    ExplicitHeight = 324
+    ExplicitWidth = 552
+    ExplicitHeight = 350
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
-      ExplicitHeight = 364
+      ExplicitWidth = 548
+      ExplicitHeight = 327
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -554,7 +555,8 @@ object FNew_Barang: TFNew_Barang
         Width = 554
         Height = 5
         Panels = <>
-        ExplicitTop = 344
+        ExplicitTop = 322
+        ExplicitWidth = 548
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -615,8 +617,6 @@ object FNew_Barang: TFNew_Barang
     object TabSheet2: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
-      ExplicitWidth = 553
-      ExplicitHeight = 310
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
@@ -697,8 +697,6 @@ object FNew_Barang: TFNew_Barang
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
-      ExplicitWidth = 553
-      ExplicitHeight = 310
       object Label19: TLabel
         Left = 27
         Top = 28
@@ -712,7 +710,6 @@ object FNew_Barang: TFNew_Barang
         Width = 48
         Height = 13
         Caption = 'Pembelian'
-        Visible = False
       end
       object Label24: TLabel
         Left = 27
@@ -778,7 +775,6 @@ object FNew_Barang: TFNew_Barang
         Color = clInfoBk
         ReadOnly = True
         TabOrder = 2
-        Visible = False
       end
       object EdNm_akunPemb: TRzButtonEdit
         Left = 275
@@ -789,7 +785,6 @@ object FNew_Barang: TFNew_Barang
         CharCase = ecUpperCase
         ReadOnlyColorOnFocus = True
         TabOrder = 3
-        Visible = False
         AltBtnNumGlyphs = 1
         ButtonNumGlyphs = 1
         OnButtonClick = EdNm_akunPembButtonClick

@@ -558,6 +558,7 @@ begin
   MemDetailAkun.EmptyTable;
   MemDetailAkun.Active:=false;
   MemDetailAkun.Active:=true;
+
   edNoTrans.Clear;
   dtTrans.date:=now();
   edKodeKepada.Clear;
@@ -776,16 +777,21 @@ end;
 
 procedure TFDataKasKecil.FormShow(Sender: TObject);
 begin
-    with dm.Qtemp do
+    if status=0 then
     begin
-      close;
-      sql.Clear;
-      sql.Text:='SELECT * FROM t_petty_cash_source where code=''KC001'' and deleted_at is null';
-      open;
-      edNamaSumberKas.Text:=fieldbyname('code').AsString;
-      edNamaSumberKas.Text:=fieldbyname('name').AsString;
-    end;
-    AddDefaultKasKecil;
+        with dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='SELECT * FROM t_petty_cash_source where code=''KC001'' and deleted_at is null';
+          open;
+          edNamaSumberKas.Text:=fieldbyname('code').AsString;
+          edNamaSumberKas.Text:=fieldbyname('name').AsString;
+        end;
+        AddDefaultKasKecil;
+    end
+    else
+    status:=1;
 end;
 
 procedure TFDataKasKecil.AddDefaultKasKecil;

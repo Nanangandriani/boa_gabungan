@@ -758,7 +758,6 @@ object FRekapPenjualan: TFRekapPenjualan
     SQL.Strings = (
       'SELECT a.*,b.kabupaten,b.kecamatan from get_selling(False) a '
       'LEFT JOIN vcustomer b on b.customer_code=a.code_cust')
-    Active = True
     Left = 908
     Top = 32
   end
@@ -909,6 +908,7 @@ object FRekapPenjualan: TFRekapPenjualan
       'id=id'
       'trans_no=trans_no'
       'no_inv_tax=no_inv_tax'
+      'no_inv_tax_coretax=no_inv_tax_coretax'
       'no_traveldoc=no_traveldoc'
       'trans_date=trans_date'
       'code_trans=code_trans'
@@ -922,6 +922,7 @@ object FRekapPenjualan: TFRekapPenjualan
       'status_correction=status_correction'
       'code_cust=code_cust'
       'name_cust=name_cust'
+      'customer_name_pkp=customer_name_pkp'
       'payment_term=payment_term'
       'code_source=code_source'
       'name_source=name_source'
@@ -931,6 +932,7 @@ object FRekapPenjualan: TFRekapPenjualan
       'trans_day=trans_day'
       'trans_month=trans_month'
       'trans_year=trans_year'
+      'tot_before_piece=tot_before_piece'
       'sub_total=sub_total'
       'dpp=dpp'
       'ppn_value=ppn_value'
@@ -939,10 +941,26 @@ object FRekapPenjualan: TFRekapPenjualan
       'pph_percent=pph_percent'
       'dpp_lain_lain=dpp_lain_lain'
       'ppn_cortex_lain=ppn_cortex_lain'
+      'pembulatan_value=pembulatan_value'
       'grand_tot=grand_tot'
       'tot_piece_value=tot_piece_value'
+      'po_order=po_order'
+      'code_karesidenan=code_karesidenan'
+      'karesidenan=karesidenan'
+      'code_kecamatan=code_kecamatan'
+      'kecamatan=kecamatan'
+      'code_kabupaten=code_kabupaten'
       'kabupaten=kabupaten'
-      'kecamatan=kecamatan')
+      'no_npwp=no_npwp'
+      'no_nik=no_nik'
+      'cancel_reason=cancel_reason'
+      'number_va=number_va'
+      'va_name=va_name'
+      'company_code_bank=company_code_bank'
+      'bank_name=bank_name'
+      'word_amount=word_amount'
+      'kabupaten_1=kabupaten_1'
+      'kecamatan_1=kecamatan_1')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
@@ -969,7 +987,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46011.471840405090000000
+    ReportOptions.LastChange = 46015.676394398150000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1155,7 +1173,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Width = 202.204724409449000000
           Height = 20.787401570000000000
           StretchMode = smMaxHeight
-          DataField = 'name_cust'
+          DataField = 'customer_name_pkp'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
           DisplayFormat.FormatStr = 'dd mmm yy'
@@ -1167,7 +1185,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDBHPenjualan."name_cust"]')
+            '[frxDBDBHPenjualan."customer_name_pkp"]')
           ParentFont = False
         end
         object Memo20: TfrxMemoView

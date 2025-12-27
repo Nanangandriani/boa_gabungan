@@ -360,7 +360,7 @@ begin
   FillSBUBarCombo2(cbSBU,LabelSBU,LabelSBU2);
 end;
 
-procedure TFExportImportTargetPenjualan.BExportClick(Sender: TObject);
+{procedure TFExportImportTargetPenjualan.BExportClick(Sender: TObject);
 var
   cell:array[1..100]of string;
   i,j,k,m : Integer;
@@ -605,6 +605,154 @@ begin
   end;
 
 
+end; }
+
+procedure TFExportImportTargetPenjualan.BExportClick(Sender: TObject);
+var
+  i, j, k: Integer;
+  strJenisUsaha, strJenisUsaha2: String;
+  LastCol: Integer;
+begin
+
+  if edKaresidenan.Text = '' then
+  begin
+    MessageDlg('TP Wajib Diisi..!!', mtInformation, [mbRetry], 0);
+    Exit;
+  end;
+
+  if (cbKategori.Text = '') or (cbKelompokBarang.Text = '') then
+  begin
+    MessageDlg('Kategori & Kelompok Barang Wajib Diisi..!!', mtInformation, [mbRetry], 0);
+    Exit;
+  end;
+
+  if cbJenisUsaha.Text <> 'SEMUA' then
+  begin
+    strJenisUsaha := 'AND b.code_type_business=' + QuotedStr(SelectRow('SELECT code from t_customer_type_business WHERE name=' + QuotedStr(cbJenisUsaha.Text) + ' AND deleted_at IS NULL'));
+    strJenisUsaha2 := 'AND e.code_type_business=' + QuotedStr(SelectRow('SELECT code from t_customer_type_business WHERE name=' + QuotedStr(cbJenisUsaha.Text) + ' AND deleted_at IS NULL'));
+  end
+  else
+  begin
+    strJenisUsaha := '';
+    strJenisUsaha2 := '';
+  end;
+
+  with dm.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'SELECT DISTINCT a.code_cust FROM t_selling a ' +
+                'LEFT JOIN get_customer() b on b.customer_code=a.code_cust ' +
+                'WHERE ((EXTRACT(YEAR FROM a.trans_date) = ' + edTahunSumberPenjualan.Text + ' ' +
+                'AND EXTRACT(MONTH FROM a.trans_date) >= ' + IntToStr(cbBulanSumberPenjualan.ItemIndex + 1) + ') ' +
+                'OR (EXTRACT(YEAR FROM a.trans_date) = ' + edTahun.Text + ' ' +
+                'AND EXTRACT(MONTH FROM a.trans_date) <= ' + IntToStr(cbBulan.ItemIndex + 1) + ')) ' +
+                strJenisUsaha;
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount = 0 then
+  begin
+    MessageDlg('Data Target Penjualan Tidak Ada..!!', mtInformation, [mbRetry], 0);
+    Exit;
+  end;
+
+//  SaveDialog1.Filter := 'Excel Workbook (*.xlsx)|*.xlsx';
+  SaveDialog1.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+  SaveDialog1.DefaultExt := 'xlsx';
+  SaveDialog1.FileName := 'Target_Penjualan_' + edTahun.Text;
+
+  if SaveDialog1.Execute then
+  begin
+    scExcelExport1.WorksheetName := 'Export Target Penjualan';
+    scExcelExport1.ExcelVisible := False;
+
+    try
+      scExcelExport1.Connect;
+
+      scExcelExport1.ExcelWorkSheet.Range['A1','A1'].Value2:='Export Target Penjualan';
+      scExcelExport1.ExcelWorkSheet.Range['A2','A2'].value2:='Tahun';
+      scExcelExport1.ExcelWorkSheet.Range['B2','B2'].value2:=edTahun.Text;
+      scExcelExport1.ExcelWorkSheet.Range['A3','A3'].value2:='Bulan';
+      scExcelExport1.ExcelWorkSheet.Range['B3','B3'].value2:=cbBulan.ItemIndex+1;
+      scExcelExport1.ExcelWorkSheet.Range['A4','A4'].value2:='Kategori Barang';
+      scExcelExport1.ExcelWorkSheet.Range['B4','B4'].value2:=cbKategori.Text;
+      scExcelExport1.ExcelWorkSheet.Range['A5','A5'].value2:='Kelompok Barang';
+      scExcelExport1.ExcelWorkSheet.Range['B5','B5'].value2:=cbKelompokBarang.Text;
+      scExcelExport1.ExcelWorkSheet.Cells.Range['A1','B5'].Borders.LineStyle:=blLine;
+
+      scExcelExport1.ExcelWorkSheet.Range['A7','A7'].value2:='Pelanggan';
+      scExcelExport1.ExcelWorkSheet.Cells.Range['A7','C7'].Merge(true);
+      scExcelExport1.ExcelWorkSheet.Cells.Range['A7','C8'].HorizontalAlignment:=haCenter;
+      scExcelExport1.ExcelWorkSheet.Range['A8','A8'].value2:='Kode';
+      scExcelExport1.ExcelWorkSheet.Range['B8','B8'].value2:='Nama';
+      scExcelExport1.ExcelWorkSheet.Range['C8','C8'].value2:='Alamat';
+
+      scExcelExport1.ExcelWorkSheet.Range['A7','C8'].Font.Bold:=true;
+
+      dm.Qtemp.Close;
+      dm.Qtemp.SQL.Text := 'SELECT DISTINCT a.code_cust customer_code, b.customer_name, b.address FROM t_selling a ' +
+                           'LEFT JOIN get_customer() b on b.customer_code=a.code_cust ' +
+                           'WHERE ((EXTRACT(YEAR FROM a.trans_date) = ' + edTahunSumberPenjualan.Text + ' ' +
+                           'AND EXTRACT(MONTH FROM a.trans_date) >= ' + IntToStr(cbBulanSumberPenjualan.ItemIndex + 1) + ') ' +
+                           'OR (EXTRACT(YEAR FROM a.trans_date) = ' + edTahun.Text + ' ' +
+                           'AND EXTRACT(MONTH FROM a.trans_date) <= ' + IntToStr(cbBulan.ItemIndex + 1) + ')) ' +
+                           strJenisUsaha + ' ORDER BY b.customer_name ASC';
+      dm.Qtemp.Open;
+
+      k := 9;
+      while not dm.Qtemp.Eof do
+      begin
+        scExcelExport1.ExcelWorkSheet.Range['A' + IntToStr(k), 'A' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('customer_code').AsString;
+        scExcelExport1.ExcelWorkSheet.Range['B' + IntToStr(k), 'B' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('customer_name').AsString;
+        scExcelExport1.ExcelWorkSheet.Range['C' + IntToStr(k), 'C' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('address').AsString;
+        Inc(k);
+        dm.Qtemp.Next;
+      end;
+
+      with dm.Qtemp do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text := 'SELECT DISTINCT item_code2 item_code FROM t_selling_det a ' +
+                    'LEFT JOIN t_item b on b.item_code=a.code_item ' +
+                    'LEFT JOIN t_selling c on c.trans_no=a.trans_no ' +
+                    'LEFT JOIN t_item_group d on d.group_id=b.group_id ' +
+                    'LEFT JOIN get_customer() e on e.customer_code=c.code_cust ' +
+                    'WHERE ((EXTRACT(YEAR FROM c.trans_date) = ' + edTahunSumberPenjualan.Text + ' ' +
+                    'AND EXTRACT(MONTH FROM c.trans_date) >= ' + IntToStr(cbBulanSumberPenjualan.ItemIndex + 1) + ') ' +
+                    'OR (EXTRACT(YEAR FROM c.trans_date) = ' + edTahun.Text + ' ' +
+                    'AND EXTRACT(MONTH FROM c.trans_date) <= ' + IntToStr(cbBulan.ItemIndex + 1) + ')) ' +
+                    'AND d.istarget=True ' + strJenisUsaha2;
+        Open;
+      end;
+
+      i := 4;
+      while not dm.Qtemp.Eof do
+      begin
+
+        scExcelExport1.ExcelWorkSheet.Cells.Item[7, i].Value2 := dm.Qtemp.FieldByName('item_code').AsString;
+        scExcelExport1.ExcelWorkSheet.Range[scExcelExport1.ExcelWorkSheet.Cells.Item[7, i], scExcelExport1.ExcelWorkSheet.Cells.Item[7, i + 1]].Merge(True);
+
+        scExcelExport1.ExcelWorkSheet.Cells.Item[8, i].Value2 := 'Qty';
+        scExcelExport1.ExcelWorkSheet.Cells.Item[8, i + 1].Value2 := 'Value';
+
+        i := i + 2;
+        dm.Qtemp.Next;
+      end;
+
+      scExcelExport1.ExcelWorkSheet.Range['A7', 'C8'].Font.Bold := True;
+      scExcelExport1.ExcelWorkSheet.Range['A1', 'A1'].Font.Size := 14;
+      scExcelExport1.ExcelWorkSheet.Columns.AutoFit;
+
+
+      scExcelExport1.SaveAs(SaveDialog1.FileName, ffXLSX);
+
+      ShowMessage('Export data ke Excel berhasil!');
+    finally
+      scExcelExport1.Disconnect;
+    end;
+  end;
 end;
 
 procedure TFExportImportTargetPenjualan.cbKategoriChange(Sender: TObject);

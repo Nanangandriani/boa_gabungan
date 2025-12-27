@@ -669,7 +669,7 @@ begin
     SisaPiutang:=StrToFloat(Selectrow('select sisa_piutang from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+') WHERE trans_no='+QuotedStr(MemDetailPiutang['no_tagihan'])));
 
     if SisaPiutang-MemDetailPiutang['jum_piutang']<=0 then strDescription:='Pelunasan Tgl Faktur. '+(formatdatetime('dd/mm/yyyy',MemDetailPiutang['tgl_faktur']))
-    else strDescription:='Angsurang Tgl Faktur. '+(formatdatetime('dd/mm/yyyy',MemDetailPiutang['tgl_faktur']));
+    else strDescription:='Angsuran Tgl Faktur. '+(formatdatetime('dd/mm/yyyy',MemDetailPiutang['tgl_faktur']));
 
     with dm.Qtemp do
     begin
