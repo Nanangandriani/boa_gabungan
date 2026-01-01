@@ -963,7 +963,6 @@ end;
 
 procedure TFMainMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Application.Terminate;
   with dm.Qtemp do
   begin
     close;
@@ -971,6 +970,7 @@ begin
     sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
     ExecSQL;
   end;
+  Application.Terminate;
   //FHomeLogin.show;
 end;
 
@@ -1007,6 +1007,7 @@ begin
 
 //  StatusVersion.Caption:=Application.show;
   DM.Koneksi.Connected:=False;
+  DM.Koneksi_PST.Connected:=False;
 end;
 
 procedure TFMainMenu.RefreshMenu1Click(Sender: TObject);

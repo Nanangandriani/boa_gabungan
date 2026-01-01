@@ -89,7 +89,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select a."trans_no", "no_inv_tax", "trans_date",a.po_order, '+
+    sql.Text:='select (SELECT company_name FROM t_company) company_name,(SELECT city FROM t_company) company_city,a."trans_no", "no_inv_tax", "trans_date",a.po_order, '+
               'a.tot_before_piece tot_before_piece_master,a.sub_total sub_total_master,'+
               'a.tot_piece_value tot_piece_value_master,a.ppn_value ppn_value_master,'+
               'a.grand_tot grand_tot_master,a.pembulatan_value pembulatan_value_master,a.word_amount, '+

@@ -13,7 +13,6 @@ object FbrowseUangMukaDibayarkan: TFbrowseUangMukaDibayarkan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnShow = FormShow
   TextHeight = 15
   object DBGridOrder: TDBGridEh
     Left = 0

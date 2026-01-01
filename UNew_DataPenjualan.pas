@@ -715,6 +715,7 @@ end;
 
 procedure TFNew_Penjualan.InsertDetailJU;
 var ppncortex:real;
+  terbilang:String;
 begin
   with dm.Qtemp do
   begin
@@ -756,6 +757,8 @@ begin
 //    ShowMessage(FloatToStr(ppncortex));
 //    ShowMessage(MemDetail['BERAT_ISI']);
 //    ShowMessage(MemDetail['BERAT_KOSONG']);
+
+    terbilang:= ConvKeHuruf(FloatToStr(MemDetail['JUMLAH']));
     with dm.Qtemp do
     begin
       close;
@@ -765,14 +768,14 @@ begin
                 ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
                 ' "pph_value", "tot_piece_value", "tot_piece_percent", "menejmen_fee", '+
                 '"menejmen_fee_value", "grand_tot",dpp_lain_lain,ppn_value_cortex,'+
-                'ppn_percent_cortex,gross_weight,tare_weight,wh_code) '+
+                'ppn_percent_cortex,gross_weight,tare_weight,wh_code,word_amount_qty) '+
                 ' Values( '+
                 ':partrans_no, :parcode_item,:parname_item, :paraccount_code, '+
                 ' :paramount, :parcode_unit, :parname_unit, :parno_reference, :parunit_price, :parsub_total, '+
                 ' :parppn_percent, :parppn_account, :parppn_value, :parpph_account, :parpph_name, :parpph_percent, '+
                 ' :parpph_value, :partot_piece_value, :partot_piece_percent, :parmenejmen_fee,'+
                 ' :parmenejmen_fee_value, :pargrand_tot,:pardpp_lain_lain,:parppn_value_cortex,'+
-                ':parppn_percent_cortex,:pargross_weight,:partare_weight,:parwh_code)';
+                ':parppn_percent_cortex,:pargross_weight,:partare_weight,:parwh_code,:parword_amount_qty)';
                 parambyname('partrans_no').Value:=edNomorTrans.Text;
                 parambyname('parcode_item').Value:=MemDetail['KD_ITEM'];
                 parambyname('parname_item').Value:=MemDetail['NM_ITEM'];
@@ -801,7 +804,7 @@ begin
                 parambyname('pargross_weight').Value:=MemDetail['BERAT_ISI'];
                 parambyname('partare_weight').Value:=MemDetail['BERAT_KOSONG'];
                 parambyname('parwh_code').Value:=strKodeGudang;
-
+                parambyname('parword_amount_qty').Value:=terbilang;
 //              ' '+QuotedStr(edNomorTrans.Text)+', '+
 //              ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
 //              ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
@@ -926,7 +929,11 @@ end;
 procedure TFNew_Penjualan.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
+  StockAda: Integer;
+  ItemNameNoStok: String;
 begin
+  ItemNameNoStok:='';
+  StockAda:=1;
   with dm.Qtemp do
   begin
     Close;
@@ -976,6 +983,37 @@ begin
     end else begin
       tot_dipotong_uang_muka:=edTotBersih.Value;
     end;
+    ItemNameNoStok:='';
+    MemDetail.First;
+    while not MemDetail.Eof do
+    begin
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from stock_card_end('+QuotedStr(strKodeGudang)+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(MemDetail['KD_ITEM'])+','+QuotedStr(MemDetail['KD_SATUAN'])+') ';
+        Open;
+      end;
+
+      if dm.Qtemp3.RecordCount=0 then
+      begin
+        StockAda:=0;
+        ItemNameNoStok:= ItemNameNoStok+','+MemDetail['NM_ITEM'];
+      end else begin
+        if ((dm.Qtemp3.FieldValues['saldo_awal_periode']-MemDetail['JUMLAH'])<0) then
+        begin
+          StockAda:=0;
+          ItemNameNoStok:= ItemNameNoStok+','+MemDetail['NM_ITEM'];
+        end;
+      end;
+      MemDetail.Next;
+    end;
+
+    if ItemNameNoStok <> '' then
+    ItemNameNoStok := Copy(ItemNameNoStok, 2, Length(ItemNameNoStok));
+
+
+
 //    UpdateDataMenejFee; //refresh kalkulasi jika ada menajmenfee
 //
     //cek balancestock
@@ -997,17 +1035,20 @@ begin
         if edKode_Pelanggan.Text='' then
         begin
           MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-          edNomorTrans.SetFocus;
         end
         {else if edNomorFaktur.Text='' then
         begin
           MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
           edNomorTrans.SetFocus;
         end }
+        else if StockAda=0 then
+        begin
+          MessageDlg(ItemNameNoStok+' Melebihi Stok..!!',mtInformation,[mbRetry],0);
+          Exit;
+        end
         else if spJatuhTempo.Value=0 then
         begin
           MessageDlg('Jumlah Tempo Wajib Diisi..!!',mtInformation,[mbRetry],0);
-          spJatuhTempo.SetFocus;
         end
         else if (edNoReff.Text='') or (edNoReff.Text='0' )then
         begin
@@ -1021,22 +1062,22 @@ begin
         begin
   //      FNew_Penjualan.Autonumber;
         //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-        if MessageDlg ('Anda Yakin Disimpan Order No. '+edNomorTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+          if MessageDlg ('Anda Yakin Disimpan Order No. '+edNomorTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+          begin
+            FNew_Penjualan.Autonumber;
+            //UpdateFakturPajak(IntToStr(Year));
+            Save;
+            Dm.Koneksi.Commit;
+          end;
+        end
+        else if FNew_Penjualan.Status = 1 then
         begin
-          FNew_Penjualan.Autonumber;
-          //UpdateFakturPajak(IntToStr(Year));
-          Save;
-          Dm.Koneksi.Commit;
+          if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+          begin
+            Update;
+            Dm.Koneksi.Commit;
+          end;
         end;
-      end
-      else if FNew_Penjualan.Status = 1 then
-      begin
-        if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-        begin
-          Update;
-          Dm.Koneksi.Commit;
-        end;
-      end;
       Except on E :Exception do
         begin
           begin
@@ -1512,11 +1553,13 @@ end;
 procedure TFNew_Penjualan.Save;
 var
 dpp,ppn,pph,netto: Real;
-Stradditional_code: String;
+Stradditional_code,terbilang: String;
 begin
   if (kd_kares='') OR (kd_kares='0') then
     Stradditional_code:='NULL'
   else Stradditional_code:=QuotedStr(kd_kares);
+
+  terbilang:= ConvKeHuruf(floattostr(edTotBersih.Value))+' Rupiah';
 
   with dm.Qtemp do
   begin
@@ -1527,14 +1570,15 @@ begin
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,'+
-            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,load_conversion,po_order) '+
+            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,load_conversion,po_order,sbu_code,word_amount) '+
             ' VALUES (  '+
             ' NOW(), :parcreated_by, :parcode_trans, '+
             ' :parno_inv_tax, :partrans_no, :parno_traveldoc, :partrans_date, :parcode_cust, '+
             ' :parname_cust, :paraccount_code, :parpayment_term, :parcode_source, :parname_source, :parno_reference, '+
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
             ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, '+
-            ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,:pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order)';
+            ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,'+
+            ':pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order,:parsbu_code,:parword_amount)';
             parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
@@ -1573,7 +1617,10 @@ begin
             parambyname('pargrand_tot_amount_down_payment').Value:=tot_dipotong_uang_muka;
             parambyname('parload_conversion').Value:=SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' ');
             parambyname('parpo_order').Value:=edPOOrder.Text;
-            //            ' NOW(), '+
+            parambyname('parsbu_code').Value:=FHomeLogin.vKodePRSH;
+            parambyname('parword_amount').Value:=terbilang;
+
+            //     parsbu_code      ' NOW(), '+
 //            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
 //            ' '+QuotedStr(edKode_Trans.Text)+', '+
 //            ' '+QuotedStr(edNomorFaktur.Text)+', '+
@@ -1618,7 +1665,9 @@ begin
 end;
 
 procedure TFNew_Penjualan.Update;
+var terbilang: String;
 begin
+  terbilang:= ConvKeHuruf(floattostr(edTotBersih.Value))+' Rupiah';
   with dm.Qtemp do
   begin
     close;
@@ -1661,6 +1710,7 @@ begin
             ' po_order='+QuotedStr(edPOOrder.Text)+','+
             ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+', '+
             ' load_conversion='+QuotedStr(SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' '))+' '+
+            ',word_amount='+QuotedStr(terbilang)+' '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');
     ExecSQL;
   end;

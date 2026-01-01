@@ -4,7 +4,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   BorderStyle = bsDialog
   Caption = 'Target Penjualan'
   ClientHeight = 518
-  ClientWidth = 430
+  ClientWidth = 485
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 430
+    Width = 485
     Height = 225
     Align = alTop
     Color = clGradientInactiveCaption
@@ -27,9 +27,9 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
-      Width = 91
+      Width = 56
       Height = 15
-      Caption = 'Nama Pelanggan'
+      Caption = 'Pelanggan'
     end
     object Label3: TLabel
       Left = 117
@@ -125,9 +125,9 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       Caption = ':'
     end
     object edNamaPelanggan: TRzButtonEdit
-      Left = 132
+      Left = 224
       Top = 16
-      Width = 277
+      Width = 233
       Height = 23
       Text = ''
       TabOrder = 0
@@ -170,13 +170,14 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       OnChange = edTahunChange
     end
     object edKodePelanggan: TRzEdit
-      Left = 279
-      Top = 98
-      Width = 121
+      Left = 132
+      Top = 16
+      Width = 86
       Height = 23
       Text = ''
+      Color = clInfoBk
+      ReadOnly = True
       TabOrder = 3
-      Visible = False
     end
     object cbKelompokBarang: TRzComboBox
       Left = 132
@@ -273,7 +274,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 225
-    Width = 430
+    Width = 485
     Height = 261
     Hint = ''
     ActivePage = TabSDetailPel
@@ -291,7 +292,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 426
+        Width = 481
         Height = 236
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh]
@@ -362,14 +363,14 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
   object Panel2: TPanel
     Left = 0
     Top = 486
-    Width = 430
+    Width = 485
     Height = 32
     Align = alBottom
     TabOrder = 3
     ExplicitTop = 485
     ExplicitWidth = 426
     object BBatal: TRzBitBtn
-      Left = 354
+      Left = 409
       Top = 1
       Height = 30
       Align = alRight
@@ -431,7 +432,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
       ExplicitLeft = 350
     end
     object BSave: TRzBitBtn
-      Left = 279
+      Left = 334
       Top = 1
       Height = 30
       Align = alRight

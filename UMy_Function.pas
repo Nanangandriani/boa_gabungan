@@ -105,11 +105,9 @@ begin
     ACombo.Visible:=True;
     ALabel.Visible:=True;
     A2Label.Visible:=True;
-    // ⭐️ CRITICAL: Check for nil before accessing properties
     if not Assigned(ACombo) then
       Exit;
 
-    // Clear the items
     ACombo.Clear;
 
     with dm.Qtemp do
@@ -117,11 +115,9 @@ begin
       Close;
       SQL.Clear;
       SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
-      // Use Open() for SELECT statement
       Open;
     end;
 
-    // Fill the TdxBarCombo
     if not Dm.Qtemp.IsEmpty then
     begin
       Dm.Qtemp.First;
@@ -132,7 +128,6 @@ begin
       end;
     end;
 
-    // Set ItemIndex if items exist
     if ACombo.Items.Count > 0 then
       ACombo.ItemIndex := 0;
   end else begin

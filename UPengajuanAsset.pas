@@ -76,7 +76,7 @@ var
 implementation
 
 uses ulkJSON, UMainMenu, uMy_Function, UDetailPengajuanAsset,
-  UMasterDataAsset, UDataModule;
+  UMasterDataAsset, UDataModule, UHomeLogin;
 
 {$R *.dfm}              
 function UpdateStatusAssetViaPost(vid_detpengajuan,vdesc,vstatus,vuser,vlpb,vpo,vspesification,vbrand:string; vqty:integer): string;
@@ -279,9 +279,9 @@ begin
   BaseUrl:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''baseurlasset''');
   key:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''keyapiasset''');
   vtoken:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''tokenapiasset''');
-  Vpath:='api/asset-submission-monitoring';
-  vBody:='?company='+loksbu+''+
-         '&start_date='+formatdatetime('yyyy-mm-dd',dtAwal.date)+''+
+  //Vpath:='api/asset-submission-monitoring';
+  Vpath:='api/submission';
+  vBody:='?company='+FHomeLogin.vKodePRSH+'&start_date='+formatdatetime('yyyy-mm-dd',dtAwal.date)+''+
          '&end_date='+formatdatetime('yyyy-mm-dd',dtAkhir.date)+''+
          '&status='+inttostr(id_status);
   //showmessage(BaseUrl+Vpath+vBody);
@@ -377,11 +377,11 @@ begin
     MemMasterPengajuan['UNIT']:=json.StringTree[row1 + 'unit'];
     MemMasterPengajuan['CATEGORY']:=json.StringTree[row1 + 'category'];
     MemMasterPengajuan['CATEGORY_NAME']:=json.StringTree[row1 + 'category_name'];
-    MemMasterPengajuan['BRAND']:=json.StringTree[row1 + 'brand'];
+    MemMasterPengajuan['BRAND']:=json.StringTree[row1 + 'brand_code'];
     MemMasterPengajuan['BRAND_NAME']:=json.StringTree[row1 + 'brand_name'];
     MemMasterPengajuan['QTY']:=json.StringTree[row1 + 'qty'];
     MemMasterPengajuan['SUBMISSION_DESCRIPTION']:='0';
-    MemMasterPengajuan['SPESIFICATION']:=json.StringTree[row1 + 'spesification'];
+    MemMasterPengajuan['SPESIFICATION']:=json.StringTree[row1 + 'specification'];
     MemMasterPengajuan['STATUS']:=json.StringTree[row1 + 'status'];
     MemMasterPengajuan['PO']:=json.StringTree[row1 + 'po'];
     MemMasterPengajuan['LPB']:=json.StringTree[row1 + 'lpb'];  

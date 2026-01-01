@@ -97,8 +97,6 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>12297</VerInfo_Locale>
-        <VerInfo_MinorVer>60</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.60.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.60.0.0;Comments=</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
@@ -1355,6 +1353,22 @@
         </DCCReference>
         <DCCReference Include="UKolektifSuratJalan.pas">
             <Form>FKolektifSuratJalan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDeliveryOrder_SumberPO.pas">
+            <Form>FDeliveryOrder_SumberPO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USetMasterTP.pas">
+            <Form>FSetMasterTP</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USetMasterKaresidenan.pas">
+            <Form>FSetMasterKaresidenan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULaporanPenjualan.pas">
+            <Form>FLaporanPenjualan</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

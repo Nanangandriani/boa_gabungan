@@ -79,6 +79,10 @@ type
     dtAwal: TcxBarEditItem;
     dtAkhir: TcxBarEditItem;
     dxBarLargeButton3: TdxBarLargeButton;
+    QDeliveryOrdertype_do_code: TStringField;
+    QDeliveryOrderpickup_location: TStringField;
+    QDeliveryOrderdelivery_location: TStringField;
+    QDeliveryOrdersbu_code: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -122,8 +126,9 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:= 'SELECT a.*,b.status_name from t_delivery_order a '+
+       sql.Text:= 'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location from t_delivery_order a '+
                   'LEFT JOIN t_delivery_order_status b on b.kode=a.status '+
+                  'LEFT JOIN t_delivery_order_services c on c.notrans=a.notrans '+
                   'WHERE (a.date_trans BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND  '+
 //                  'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
@@ -241,6 +246,9 @@ begin
   begin
     with FNewDeliveryOrder do
     begin
+      edKodeJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_code').AsString;
+      edNamaJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
+
       strLastNamaLokasi:= Dm.Qtemp.FieldByName('starting_loc_name').AsString;
       strLastNamaKabupaten:= Dm.Qtemp.FieldByName('regency_name').AsString;
       strLastTotalTitik:=Dm.Qtemp.FieldValues['number_of_points'];
@@ -249,17 +257,27 @@ begin
       edKodeDOBiaya.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
       edKodeDODok.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
       dtTanggalMuatan.Date:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
-      edKodeJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_code').AsString;
-      edNamaJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
+      if Dm.Qtemp.FieldValues['type_do_name']<>NULL then
       edNamaJenisBiaya.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
+      if Dm.Qtemp.FieldValues['type_do_name']<>NULL then
       edNamaJenisDoc.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
+      if Dm.Qtemp.FieldValues['starting_loc_regencie_id']<>NULL then
       edlokasiregencyid.Text:=Dm.Qtemp.FieldValues['starting_loc_regencie_id'];
-      edKodeLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_code').AsString;
-      edNamaLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_name').AsString;
-      edKodeProvinsi.Text:=Dm.Qtemp.FieldByName('province_code').AsString;
-      edNamaProvinsi.Text:=Dm.Qtemp.FieldByName('province_name').AsString;
-      edKodeKabupaten.Text:=Dm.Qtemp.FieldByName('regency_code').AsString;
-      edNamaKabupaten.Text:=Dm.Qtemp.FieldByName('regency_name').AsString;
+      if Dm.Qtemp.FieldValues['starting_loc_code']<>NULL then
+      begin
+        edKodeLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_code').AsString;
+        edNamaLokasi.Text:=Dm.Qtemp.FieldByName('starting_loc_name').AsString;
+      end;
+      if Dm.Qtemp.FieldValues['province_code']<>NULL then
+      begin
+        edKodeProvinsi.Text:=Dm.Qtemp.FieldByName('province_code').AsString;
+        edNamaProvinsi.Text:=Dm.Qtemp.FieldByName('province_name').AsString;
+      end;
+      if Dm.Qtemp.FieldValues['regency_code']<>NULL then
+      begin
+        edKodeKabupaten.Text:=Dm.Qtemp.FieldByName('regency_code').AsString;
+        edNamaKabupaten.Text:=Dm.Qtemp.FieldByName('regency_name').AsString;
+      end;
       spTotalTitik.Value:=Dm.Qtemp.FieldValues['number_of_points'];
       MemKeteranganBiaya.Text:=Dm.Qtemp.FieldByName('description').AsString;
       order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
@@ -465,7 +483,7 @@ begin
       sql.Clear;
       sql.Text:='select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
                 'coalesce(a.pickup_location,'''') pickup_location,coalesce(a.delivery_location) delivery_location, d.company_name,d.address address_sbu,d.telp,'+
-                'case when COALESCE(vehicles,'''')='''' then driver_name else CONCAT(vehicles,''/'',driver_name) end keterangan,'+
+                'COALESCE(vehicles,'''') keterangan,'+
                 'vehicles,dol.item_name,dol.amount,dol.unit from '+
                 't_delivery_order_load dol LEFT JOIN '+
                 't_delivery_order_services  a on a.notrans=dol.notrans '+
@@ -487,12 +505,14 @@ begin
       open;
     end;
 
+
     if (QCetak.RecordCount>0) AND (QCetak2.RecordCount>0) then
     begin
       cLocation := ExtractFilePath(Application.ExeName);
       Report.LoadFromFile(cLocation +'report/rpt_DeliveryOrder'+ '.fr3');
       Report.ShowReport();
     end;
+
   end;
 
 end;

@@ -68,6 +68,7 @@ object FDetailPengajuanAsset: TFDetailPengajuanAsset
       Lines.Strings = (
         'Memo1')
       TabOrder = 0
+      Visible = False
     end
     object dtAwal: TRzDateTimeEdit
       Left = 178
@@ -86,7 +87,7 @@ object FDetailPengajuanAsset: TFDetailPengajuanAsset
     end
     object btTampilkan: TRzBitBtn
       Left = 409
-      Top = 42
+      Top = 35
       Width = 136
       Height = 33
       Align = alCustom
@@ -205,7 +206,8 @@ object FDetailPengajuanAsset: TFDetailPengajuanAsset
     Height = 39
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 627
+    ExplicitTop = 612
+    ExplicitWidth = 1364
     object btBatal: TRzBitBtn
       Left = 1233
       Top = 1
@@ -795,7 +797,7 @@ object FDetailPengajuanAsset: TFDetailPengajuanAsset
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 560
-    Top = 80
+    Left = 576
+    Top = 64
   end
 end

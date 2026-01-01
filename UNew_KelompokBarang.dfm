@@ -343,7 +343,8 @@ object FNew_KelompokBarang: TFNew_KelompokBarang
     DataSource = DsKelompok
     DynProps = <>
     SearchPanel.Enabled = True
-    SearchPanel.CaseSensitive = True
+    SearchPanel.FilterOnTyping = True
+    SearchPanel.WholeWords = True
     TabOrder = 1
     OnDblClick = DBGridEh7DblClick
     Columns = <

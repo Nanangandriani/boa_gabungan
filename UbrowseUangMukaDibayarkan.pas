@@ -17,7 +17,6 @@ type
     DSDetail: TDataSource;
     Qdetail: TUniQuery;
     procedure DBGridOrderDblClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -96,11 +95,6 @@ begin
     end;
   end;
   Close;
-end;
-
-procedure TFbrowseUangMukaDibayarkan.FormShow(Sender: TObject);
-begin
-//  Refresh;
 end;
 
 end.

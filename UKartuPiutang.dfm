@@ -347,9 +347,9 @@ object FKartuPiutang: TFKartuPiutang
       WholeRow = False
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                   '
+      Caption = 'Karesidenan  '
       Category = 0
-      Hint = 'TP                   '
+      Hint = 'Karesidenan  '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -571,9 +571,8 @@ object FKartuPiutang: TFKartuPiutang
     object edTP: TcxBarEditItem
       Caption = 'TP                   '
       Category = 0
-      Enabled = False
       Hint = 'TP                   '
-      Visible = ivNever
+      Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item

@@ -117,6 +117,13 @@ type
     Button2: TButton;
     RzBitBtn2: TRzBitBtn;
     RzBitBtn3: TRzBitBtn;
+    Bcari: TRzBitBtn;
+    DBGridEh1: TDBGridEh;
+    DsItempo2: TDataSource;
+    MemItempo2: TMemTableEh;
+    ed_vehicle_group_id: TEdit;
+    ed_vehicle_group_sort_number: TEdit;
+    Ed_kode: TEdit;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -157,6 +164,9 @@ type
     procedure RzBitBtn3Click(Sender: TObject);
     procedure DBGridDetailColumns25EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure BcariClick(Sender: TObject);
+    procedure MemItempoBeforePost(DataSet: TDataSet);
+    procedure MemItempoAfterEdit(DataSet: TDataSet);
 
   private
     { Private declarations }
@@ -186,6 +196,8 @@ type
      procedure load_category;
      procedure load;
      procedure simpanbarang;
+     procedure HitungDetail_so;
+     procedure simpan_po_detail2;
   end;
 
 function FNew_PO: TFNew_PO;
@@ -195,14 +207,15 @@ var
   Status,kd_gd,kdsb,nopo,status_um,status_as,No_Um,ref_code:string;
   subtotal,ppn,pph,grandtotal:Real;
   StatusTr,Statustr2:integer;
-  kode_br,kd_sp:string;
+  kode_br,kd_sp,vehicles_group,vehicles_id,vehicles_no:string;
 implementation
 
 {$R *.dfm}
 
 uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
   UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset, USettingPO,
-  UListSupplier,UAkun_Perkiraan_TerimaMat,UCari_DaftarPerk;
+  UListSupplier,UAkun_Perkiraan_TerimaMat,UCari_DaftarPerk, U_List_SO_PO,
+  UListItemSo;
 
 var
   realFNew_PO: TFNew_PO;
@@ -417,6 +430,31 @@ begin
      NoTransUM.Items.Add(dm.Qtemp['no_trans']);
      dm.Qtemp.Next;
    end;
+end;
+
+procedure TFNew_PO.MemItempoAfterEdit(DataSet: TDataSet);
+begin
+  MemItemPOBeforePost(DataSet);
+end;
+
+procedure TFNew_PO.MemItempoBeforePost(DataSet: TDataSet);
+begin
+   DataSet.FieldByName('subtotal_rp').AsCurrency :=
+    DataSet.FieldByName('qty').AsFloat *
+    DataSet.FieldByName('harga_rp').AsCurrency;
+
+  DataSet.FieldByName('ppn_rp').AsCurrency :=
+    DataSet.FieldByName('subtotal_rp').AsCurrency *
+    DataSet.FieldByName('ppn').AsFloat / 100;
+
+  DataSet.FieldByName('pph_rp').AsCurrency :=
+    DataSet.FieldByName('subtotal_rp').AsCurrency *
+    DataSet.FieldByName('pph').AsFloat / 100;
+
+  DataSet.FieldByName('grandtotalrp').AsCurrency :=
+    DataSet.FieldByName('subtotal_rp').AsCurrency +
+    DataSet.FieldByName('ppn_rp').AsCurrency -
+    DataSet.FieldByName('pph_rp').AsCurrency;
 end;
 
 procedure TFNew_PO.MemItempopphChange(Sender: TField);
@@ -842,7 +880,17 @@ end;
 
 procedure TFNew_PO.loaditem5;
 begin
-    with Flistitempo.QMaterial_stok do
+//    with Flistitempo.QMaterial_stok do
+//    begin
+//      close;
+//      sql.Clear;
+//      sql.Text:=' SELECT  a.notrans,b.item_code,b.item_name,a.amount remaining_qty,b.unit,b.buy price'+
+//                ' from t_sales_order_det a INNER JOIN t_item b on a.code_item=b.item_code'+
+//                ' WHERE A.notrans='+QuotedStr(Edno_kontrak.Text)+' and '+
+//                ' GROUP BY a.notrans,b.item_code,b.item_name,a.amount,b.unit,b.buy ';
+//      Open;
+//    end;
+    {with Flistitempo.QMaterial_stok do  //old
     begin
       close;
       sql.Clear;
@@ -850,6 +898,16 @@ begin
                 ' from t_sales_order_det a INNER JOIN t_item b on a.code_item=b.item_code'+
                 ' WHERE A.notrans='+QuotedStr(Edno_kontrak.Text)+''+
                 ' GROUP BY a.notrans,b.item_code,b.item_name,a.amount,b.unit,b.buy ';
+      Open;
+    end;}
+    with FList_SO.Q_list_so do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=' SELECT notrans,order_date,vehicle_group_sort_number,vehicle_group_id,vehicles from t_sales_order '+
+                ' WHERE vehicle_group_sort_number is NOT NULL and vehicle_group_sort_number='+QuotedStr(Edno_kontrak.Text)+' '+
+                ' and order_date ='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtPO.Date))+' '+
+                ' Order By notrans ASC ';
       Open;
     end;
 end;
@@ -938,7 +996,7 @@ begin
       Exit;
     end;
 
-  if ref_code='KK' then
+  {if ref_code='KK' then
   begin
     Self.Loaditem
   end;
@@ -954,11 +1012,36 @@ begin
   begin
     Self.Loaditem5;
   end;
-    if ref_code='AS' then
+  if ref_code='AS' then
   begin
     FDetailPengajuanAsset.Show;
   end else
+    Flistitempo.Show;}
+
+  if ref_code='KK' then
+  begin
     Flistitempo.Show;
+    Self.Loaditem
+  end;
+  if ref_code='NR' then
+  begin
+    Flistitempo.Show;
+    Self.Loaditem2;
+  end;
+  if ref_code='BPB' then
+  begin
+    Flistitempo.Show;
+    Self.Loaditem3;
+  end;
+  if ref_code='SO' then
+  begin
+    //FList_SO.Show;
+    //Self.Loaditem5;
+  end;
+  if ref_code='AS' then
+  begin
+    FDetailPengajuanAsset.Show;
+  end;
 end;
 
 procedure TFNew_PO.DBGridDetailColumns1EditButtons0Click(Sender: TObject;
@@ -1351,12 +1434,26 @@ begin
     end;
     if ref_code='SO' then
     begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:='SELECT notrans,vehicle_group_sort_number,vehicle_group_id,vehicles from t_sales_order '+
+                  'WHERE vehicle_group_sort_number is NOT NULL and vehicle_group_sort_number='+Quotedstr(Edno_kontrak.Text)+' ';
+        open;
+      end;
+      vehicles_group:=dm.Qtemp.FieldByName('vehicle_group_sort_number').AsString;
+      vehicles_id:=dm.Qtemp.fieldbyname('vehicle_group_id').AsString;
+      vehicles_no:=dm.Qtemp.fieldbyname('vehicles').AsString;
+        //showmessage(dm.Qtemp.FieldByName('vehicle_group_sort_number').AsString);
+        //showmessage(dm.Qtemp.FieldByName('vehicle_group_id').AsString);
+        //showmessage(dm.Qtemp.FieldByName('vehicles').AsString);
       Edjatuh_tempo.Text:='0';
       EdCurr.Text:='IDR';
       Ednilai_curr.Text:='1';
       Edjenispo.Text:='LOKAL';
       //kategori_tr:='NON PRODUKSI';
-      CbKategori.Text:='BIAYA';
+      //CbKategori.Text:='BIAYA';
       kategori_tr:=CbKategori.Text;
       EdCurrChange(sender);
     end;
@@ -1394,7 +1491,7 @@ begin
       ref_code:=dm.Qtemp['ref_code'];
     //
     //if EdStatus.Text='NON REFERENSI' then
-    if ref_code='NR' then         //DS 
+    if ref_code='NR' then         //DS
     begin
       EdNm_supp.Enabled:=true;
       Edno_kontrak.ReadOnly:=True;
@@ -1414,11 +1511,12 @@ begin
       load_category;
     end;
     //if EdStatus.Text='KONTRAK KERJASAMA' then
-    if ref_code='KK' then  //DS        
+    if ref_code='KK' then  //DS
     begin
       EdNm_supp.Enabled:=true;
       Edno_kontrak.Text:='';
       Edno_kontrak.ReadOnly:=False;
+      Bcari.Enabled:=false;
       Edjenispo.ReadOnly:=True;
       EdCurr.ReadOnly:=True;
       Cb_bon.Enabled:=false;
@@ -1428,10 +1526,11 @@ begin
       CbKategori.Enabled:=false;
     end;
     //if EdStatus.Text='BON PERMINTAAN BARANG' then
-    if ref_code='BPB' then    
+    if ref_code='BPB' then
     begin
       EdNm_supp.Enabled:=true;
       Edno_kontrak.ReadOnly:=false;
+      Bcari.Enabled:=false;
       //Edno_kontrak.Text:='';
       Edjenispo.ReadOnly:=false;
       EdCurr.ReadOnly:=false;
@@ -1451,6 +1550,7 @@ begin
       CbKategori.Enabled:=true;
       Edno_kontrak.readonly:=false;
       Edno_kontrak.Items.Clear;
+      Bcari.Enabled:=false;
       with dm.Qtemp do
       begin
         close;
@@ -1471,7 +1571,9 @@ begin
     begin
       EdNm_supp.Enabled:=TRUE;
       CbKategori.Enabled:=true;
-      Edno_kontrak.readonly:=false;
+      //Edno_kontrak.readonly:=false;
+      Edno_kontrak.readonly:=true;
+      Bcari.Enabled:=true;
       Edno_kontrak.Items.Clear;
       Edjatuh_tempo.Text:='0';
       EdCurr.Text:='IDR';
@@ -1483,17 +1585,47 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='select notrans from t_sales_order order by notrans';
-        Execute;
+        //sql.Text:='select notrans from t_sales_order order by notrans ';
+        sql.Text:='SELECT a.vehicle_group_sort_number,a.vehicle_group_id,vehicles FROM '+
+                  '(SELECT notrans,vehicle_group_sort_number,vehicle_group_id,vehicles from t_sales_order '+
+                  'WHERE  vehicle_group_sort_number is NOT NULL GROUP BY notrans,vehicle_group_sort_number,vehicle_group_id,notrans,vehicles)a '+
+                  'GROUP BY vehicle_group_sort_number,vehicle_group_id,vehicles ';
+        open;
       end;
+
        dm.Qtemp.First;
        while not dm.Qtemp.Eof do
        begin
          //cb_bon.Items.Add(dm.Qtemp['trans_no']);
-         Edno_kontrak.Items.Add(dm.Qtemp['notrans']);
+         //Edno_kontrak.Items.Add(dm.Qtemp['notrans']);
+         Edno_kontrak.Items.Add(dm.Qtemp['vehicle_group_sort_number']);
          dm.Qtemp.Next;
        end;
       load_category;
+
+//      with dm.Qtemp do
+//      begin
+//        close;
+//        sql.clear;
+//        sql.Text:='SELECT DISTINCT notrans,vehicle_group_sort_number,vehicle_group_id,vehicles from t_sales_order '+
+//                  'WHERE vehicle_group_sort_number is NOT NULL and notrans='+Quotedstr(Edno_kontrak.Text)+' ';
+//        open;
+//        vehicles_group:=fieldbyname('vehicle_group_sort_number').AsString;
+//        vehicles_id:=fieldbyname('vehicle_group_id').AsString;
+//        vehicles_no:=fieldbyname('vehicles').AsString;
+//        showmessage(vehicles_group);
+//        showmessage(vehicles_id);
+//        showmessage(vehicles_no);
+//      end;
+//       dm.Qtemp.First;
+//       while not dm.Qtemp.Eof do
+//       begin
+//         //cb_bon.Items.Add(dm.Qtemp['trans_no']);
+//         Edno_kontrak.Items.Add(dm.Qtemp['notrans']);
+//         dm.Qtemp.Next;
+//       end;
+//      load_category;
+
     end;
     if ref_code='AS' then         //DS
     begin
@@ -1628,6 +1760,7 @@ begin
    Load;
    load_ref_po;
    if MemItempo.Active=False then  MemItempo.Active:=True;
+   if MemItempo2.Active=False then  MemItempo2.Active:=True;
    Self.Clear;
    Cb_bon.Enabled:=false;
    status_um:='0';
@@ -1710,7 +1843,8 @@ begin
           ParamByName('parbulan').Value:=Edbln.Text;
           ParamByName('partahun').Value:=Edth.Text;
           ParamByName('parstatus_as').Value:=status_as;
-          ParamByName('parkt').Value:=kategori_tr;
+          //ParamByName('parkt').Value:=kategori_tr;
+          ParamByName('parkt').Value:=CbKategori.Text;
           ParamByName('parstatus_um').Value:=status_um;
           ParamByName('parn_um').Value:=EdUM.Value;
           ParamByName('parkd_akunum').Value:=Edkd_akun.Text;
@@ -2610,6 +2744,12 @@ begin
    Close;
 end;
 
+procedure TFNew_PO.BcariClick(Sender: TObject);
+begin
+   FlistItemSo.show;
+   //FList_SO.Show;
+end;
+
 procedure TFNew_PO.BEditClick(Sender: TObject);
 begin
       MemItempo.First;
@@ -2837,6 +2977,12 @@ begin
            Simpan;
          end
          else
+         if EdStatus.Text='SALES ORDER' then
+         begin
+            Simpan;
+            simpan_po_detail2;
+         end
+         else
            Simpan2;
            dm.koneksi.Commit;
            Messagedlg(' Data Berhasil di Simpan ',MtInformation,[Mbok],0);
@@ -2978,5 +3124,97 @@ if Edit.Text='0' then Exit;
   Edit.Text := FormatCurr('#,###',AngkaRupiah);
   Edit.SelStart := length(Edit.text);
 end;
+
+
+procedure TFNew_PO.HitungDetail_so;
+begin
+  with MemItemPO do
+  begin
+    if not (State in [dsEdit, dsInsert]) then
+      Edit;
+
+    FieldByName('harga').AsCurrency:=FieldByName('harga').AsCurrency;
+    FieldByName('harga_rp').AsCurrency:=FieldByName('harga_rp').AsCurrency;
+    FieldByName('sisabayar').AsCurrency:=FieldByName('sisabayar').AsCurrency;
+    FieldByName('pemb_dpp').AsFloat:=FieldByName('pemb_dpp').AsFloat;
+    FieldByName('pemb_ppn').AsFloat:=FieldByName('pemb_dpp').AsFloat;
+
+    FieldByName('subtotal_rp').AsCurrency :=
+      FieldByName('qty').AsFloat *
+      FieldByName('harga_rp').AsCurrency;
+
+    FieldByName('ppn_rp').AsCurrency :=
+      FieldByName('subtotal_rp').AsCurrency *
+      FieldByName('ppn').AsFloat / 100;
+
+    FieldByName('pph_rp').AsCurrency :=
+      FieldByName('subtotal_rp').AsCurrency *
+      FieldByName('pph').AsFloat / 100;
+
+    FieldByName('grandtotalrp').AsCurrency :=
+      FieldByName('subtotal_rp').AsCurrency +
+      FieldByName('ppn_rp').AsCurrency -
+      FieldByName('pph_rp').AsCurrency;
+  end;
+end;
+
+procedure TFNew_PO.simpan_po_detail2;
+begin
+      MemItempo2.First;
+      while not MemItempo2.Eof do
+      begin
+          with dm.Qtemp2 do
+          begin
+            Close;
+            sql.Clear;
+            sql.Text:='insert into t_podetail2(po_no,item_stock_code,qty,price,unit,wh_code,conv_currency,'+
+            ' qty_sent,total_payment,remaining_payment,remaining_qty,"subtotal",ppn,ppn_rp,pph,pph_rp,'+
+            ' grandtotal,qty_sp,remaining_sp,item_name,pemb_ppn,Pemb_dpp, '+
+            ' account_pph_code,account_ppn_code,item_description,item_code,pemb_pph,so_no,cust_code,cust_name,sent_date,vehicle_code,vehicle_group_sort_number,vehicle_group_id)values'+
+            ' (:parnopo,:parkd_materialstok,:parqty,:parharga,:parsatuan,:pargudang,:parconv_currency,'+
+            ' :parqtyterkirim,:partotalbayar,:parsisabayar,:parsisaqty,:parsubtotal,:parppn,:parppn_rp,'+
+            ' :parpph,:parpph_rp,:pargrandtotal,:parqtysp,:parsisasp,:parnm_mat,:parpemb,:parpemb_dpp,'+
+            ' :account_pph_code,:account_ppn_code,:item_description,:item_code,:pemb_pph,:so_no,:cust_code,:cust_name,:sent_date,:vehicle_code,:vehicle_group_sort_number,:vehicle_group_id)';
+            ParamByName('parnopo').Value:=EdNopo.Text;
+            ParamByName('parkd_materialstok').Value:=MemItempo2['Kd_Material_stok'];
+            ParamByName('parqty').Value:=MemItempo2['qty'];
+            ParamByName('parharga').Value:=MemItempo2['harga'];
+            ParamByName('parsatuan').Value:=MemItempo2['satuan'];
+            //ParamByName('pargudang').Value:=MemItempo['gudang'];
+            ParamByName('pargudang').Value:=Ed_kd_wh.Text;;
+            ParamByName('parconv_currency').Value:='0';
+            ParamByName('parqtyterkirim').Value:=MemItempo2['qtyterkirim'];
+            ParamByName('partotalbayar').Value:=MemItempo2['totalbayar'];
+            ParamByName('parsisabayar').Value:=MemItempo2['sisabayar'];
+            ParamByName('parsisaqty').Value:=MemItempo2['sisaqty'];
+            ParamByName('parsubtotal').Value:=MemItempo2['subtotal']+MemItempo['pemb_dpp'];
+            ParamByName('parppn').Value:=MemItempo2['ppn'];
+            ParamByName('parppn_rp').Value:=MemItempo2['ppn_us'];
+            ParamByName('parpph').Value:=MemItempo2['pph'];
+            ParamByName('parpph_rp').Value:=MemItempo2['pph_rp'];
+            ParamByName('pargrandtotal').Value:=MemItempo2['grandtotal'];
+            ParamByName('parqtysp').Value:='0';
+            ParamByName('parsisasp').Value:=MemItempo2['qty'];
+            ParamByName('parnm_mat').Value:=MemItempo2['nm_material'];
+            ParamByName('parpemb').Value:=MemItempo2['pemb_ppn_us'];
+            ParamByName('parpemb_dpp').Value:=MemItempo2['pemb_dpp'];
+            ParamByName('account_pph_code').Value:=MemItempo2['kd_akunpph'];
+            ParamByName('account_ppn_code').Value:=MemItempo2['kd_akunppn'];
+            ParamByName('item_description').Value:=MemItempo2['item_description'];
+            ParamByName('item_code').Value:=MemItempo2['item_code'];
+            ParamByName('pemb_pph').Value:=MemItempo2['pemb_pph'];
+            ParamByName('so_no').Value:=MemItempo2['so_no'];
+            ParamByName('cust_code').Value:=MemItempo2['cust_code'];
+            ParamByName('cust_name').Value:=MemItempo2['cust_name'];
+            ParamByName('sent_date').Value:=MemItempo2['sent_date'];
+            ParamByName('vehicle_code').Value:=Ed_kode.Text;
+            ParamByName('vehicle_group_sort_number').Value:=ed_vehicle_group_sort_number.Text;
+            ParamByName('vehicle_group_id').Value:=ed_vehicle_group_id.Text;
+            ExecSQL;
+          end;
+          MemItempo2.Next;
+      end;
+end;
+
 
 end.

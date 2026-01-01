@@ -1924,7 +1924,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 1037.945580000000000000
           Top = 49.472480000000000000
           Width = 37.476922290000000000
-          Height = 23.055118110236220000
+          Height = 23.055118110000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12

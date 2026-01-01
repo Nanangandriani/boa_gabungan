@@ -122,6 +122,7 @@ type
     btExport: TdxBarLargeButton;
     frxXLSExport1: TfrxXLSExport;
     frxXLSXExport1: TfrxXLSXExport;
+    edTP: TcxBarEditItem;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -134,11 +135,13 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure btExportClick(Sender: TObject);
+    procedure cxBarEditItem1PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    vkd_kares, vkd_kab : String ;
+    vkd_kares, vkd_tp, vkd_kab : String ;
     procedure ExportToExcel;
   end;
 
@@ -240,18 +243,26 @@ begin
    Report.LoadFromFile(cLocation +'report/rpt_rekap_penjualan2'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
-    if edKaresidenan.EditValue='' then
-    begin
-      SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
-    end;
+//    if edKaresidenan.EditValue='' then
+//    begin
+//      SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
+//    end;
     if edKaresidenan.EditValue<>'' then
     begin
-      SetMemo(Report,'wilayah','Wilayah :'+edKaresidenan.EditValue);
+      SetMemo(Report,'karesidenantp',edKaresidenan.EditValue);
+    end;
+    if edTP.EditValue<>'' then
+    begin
+      SetMemo(Report,'karesidenantp',edTP.EditValue);
     end;
     if edKabupaten.EditValue<>'' then
     begin
-      SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+      SetMemo(Report,'kabupaten',edKabupaten.EditValue);
     end;
+//    if edKabupaten.EditValue<>'' then
+//    begin
+//      SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+//    end;
 //  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
 //  begin
 //   Report.DesignReport();
@@ -265,13 +276,17 @@ begin
 end;
 
 procedure TFRekapPenjualan.btSearchClick(Sender: TObject);
-var strKaresidenan,strKabupaten: String;
+var strKaresidenan,strKabupaten,strTP: String;
 begin
   strKaresidenan:='';
   strKabupaten:='';
   if edKaresidenan.EditValue<>'' then
   begin
     strKaresidenan:=' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+  end;
+  if edTP.EditValue<>'' then
+  begin
+    strTP:=' AND a.tp='+QuotedStr(edTP.EditValue)+' ';
   end;
   if edKabupaten.EditValue<>'' then
   begin
@@ -285,10 +300,10 @@ begin
    begin
        close;
        sql.Clear;
-       SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
+       SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan,a.code_tp,a.tp from get_selling(False) a '+
 //                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strTP+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
 //       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vrekap_penjualan" a  '+
 //               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
 //               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
@@ -309,6 +324,15 @@ begin
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFRekapPenjualan.cxBarEditItem1PropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='rekappenjualan_tp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
 end;
 
 procedure TFRekapPenjualan.dxBarLargeButton1Click(Sender: TObject);
@@ -406,8 +430,10 @@ begin
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edTP.EditValue:='';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
   QRekapPenjualan.Close;
   QCetak.Close;
 end;
@@ -562,8 +588,14 @@ procedure TFRekapPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Kabupaten';
   FMasterData.vcall:='rekappenjualan_kab';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
-  FMasterData.ShowModal;
+  if (edKaresidenan.EditValue<>'') AND (edTP.EditValue='') then
+  begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+    FMasterData.ShowModal;
+  end else if (edKaresidenan.EditValue='') AND (edTP.EditValue<>'') then begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(vkd_tp)+'');
+    FMasterData.ShowModal;
+  end;
 end;
 
 procedure TFRekapPenjualan.edKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -591,8 +623,10 @@ begin
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edTP.EditValue:='';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
   QRekapPenjualan.Close;
   QCetak.Close;
 

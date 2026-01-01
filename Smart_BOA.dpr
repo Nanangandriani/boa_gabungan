@@ -337,7 +337,11 @@ uses
   U_daf_pilih_detail_bayar in 'U_daf_pilih_detail_bayar.pas' {frmdafdetailbayar},
   UNoteCancel in 'UNoteCancel.pas' {FNoteCancel},
   UKolektifPenjualan in 'UKolektifPenjualan.pas' {FKolektifPenjualan},
-  UKolektifSuratJalan in 'UKolektifSuratJalan.pas' {FKolektifSuratJalan};
+  UKolektifSuratJalan in 'UKolektifSuratJalan.pas' {FKolektifSuratJalan},
+  UDeliveryOrder_SumberPO in 'UDeliveryOrder_SumberPO.pas' {FDeliveryOrder_SumberPO},
+  USetMasterTP in 'USetMasterTP.pas' {FSetMasterTP},
+  USetMasterKaresidenan in 'USetMasterKaresidenan.pas' {FSetMasterKaresidenan},
+  ULaporanPenjualan in 'ULaporanPenjualan.pas' {FLaporanPenjualan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -508,6 +512,9 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNoteCancel, FNoteCancel);
   Application.CreateForm(TFKolektifPenjualan, FKolektifPenjualan);
   Application.CreateForm(TFKolektifSuratJalan, FKolektifSuratJalan);
+  Application.CreateForm(TFDeliveryOrder_SumberPO, FDeliveryOrder_SumberPO);
+  Application.CreateForm(TFSetMasterTP, FSetMasterTP);
+  Application.CreateForm(TFSetMasterKaresidenan, FSetMasterKaresidenan);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   FMainMenu.DisableMenu;

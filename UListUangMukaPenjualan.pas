@@ -154,7 +154,9 @@ begin
     edNama_Pelanggan.Text:=QUangMukaPenjualan.FieldValues['customer_name'];
     edAkunUangMuka.Text:=QUangMukaPenjualan.FieldValues['account_code'];
     edNamaAkunUangMuka.Text:=QUangMukaPenjualan.FieldValues['account_name'];
+    ShowMessage('tes');
     edJumlah.value:=QUangMukaPenjualan.FieldValues['grand_tot'];
+    ShowMessage('tes');
     kd_kares:='0';
   end;
 

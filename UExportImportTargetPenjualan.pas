@@ -719,7 +719,7 @@ begin
                     'LEFT JOIN t_selling c on c.trans_no=a.trans_no ' +
                     'LEFT JOIN t_item_group d on d.group_id=b.group_id ' +
                     'LEFT JOIN get_customer() e on e.customer_code=c.code_cust ' +
-                    'WHERE ((EXTRACT(YEAR FROM c.trans_date) = ' + edTahunSumberPenjualan.Text + ' ' +
+                    'WHERE d.group_name='+QuotedStr(cbKelompokBarang.Text)+' AND ((EXTRACT(YEAR FROM c.trans_date) = ' + edTahunSumberPenjualan.Text + ' ' +
                     'AND EXTRACT(MONTH FROM c.trans_date) >= ' + IntToStr(cbBulanSumberPenjualan.ItemIndex + 1) + ') ' +
                     'OR (EXTRACT(YEAR FROM c.trans_date) = ' + edTahun.Text + ' ' +
                     'AND EXTRACT(MONTH FROM c.trans_date) <= ' + IntToStr(cbBulan.ItemIndex + 1) + ')) ' +
@@ -813,7 +813,9 @@ begin
     sql.Clear;
     sql.Text:='select a.group_id,a.group_name from t_item_group a '+
               'LEFT JOIN t_item_category b on b.category_id=a.category_id '+
-              'where a.istarget=True AND b.category='+QuotedStr(cbKategori.Text)+' order by a.group_name asc';
+              'where '+
+//              a.istarget=True AND
+              'b.category='+QuotedStr(cbKategori.Text)+' order by a.group_name asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;

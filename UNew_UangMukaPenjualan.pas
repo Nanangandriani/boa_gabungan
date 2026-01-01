@@ -130,6 +130,7 @@ end;
 
 procedure TFNew_UangMukaPenjualan.Clear;
 begin
+  edNoUangMuka.Text:='';
   strKodePelanggan:='';
   dtTanggal.Date:=NOW();
   edAkunUangMuka.Text:='';

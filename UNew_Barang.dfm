@@ -24,8 +24,8 @@ object FNew_Barang: TFNew_Barang
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 350
-    ExplicitWidth = 552
+    ExplicitTop = 358
+    ExplicitWidth = 554
     object BBatal: TRzBitBtn
       Left = 482
       Top = 1
@@ -86,7 +86,7 @@ object FNew_Barang: TFNew_Barang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 476
+      ExplicitLeft = 478
     end
     object BSimpan: TRzBitBtn
       Left = 407
@@ -148,7 +148,7 @@ object FNew_Barang: TFNew_Barang
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 401
+      ExplicitLeft = 403
     end
     object RzBitBtn1: TRzBitBtn
       Left = 83
@@ -295,14 +295,14 @@ object FNew_Barang: TFNew_Barang
     UseColoredTabs = True
     TabIndex = 2
     TabOrder = 1
-    ExplicitWidth = 552
-    ExplicitHeight = 350
+    ExplicitWidth = 554
+    ExplicitHeight = 358
     FixedDimension = 19
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
-      ExplicitWidth = 548
-      ExplicitHeight = 327
+      ExplicitWidth = 550
+      ExplicitHeight = 335
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -555,8 +555,8 @@ object FNew_Barang: TFNew_Barang
         Width = 554
         Height = 5
         Panels = <>
-        ExplicitTop = 322
-        ExplicitWidth = 548
+        ExplicitTop = 330
+        ExplicitWidth = 550
       end
       object ck_st_penjualan: TCheckBox
         Left = 412

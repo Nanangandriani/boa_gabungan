@@ -119,11 +119,11 @@ type
 
   public
     { Public declarations }
-    vFormSumber, vFormSumber1, kd_kares,kd_kab: string;
+    vFormSumber, vFormSumber1, kd_kares,kd_kab,val_target_sales: string;
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
     Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId,StrKodeGudang: string;
     Year, Month, Day: Word;
-    isCancel: Integer;
+    isCancel,val_bank_garansi,val_piutang: Integer;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -285,7 +285,7 @@ begin
 end;
 
 procedure TFNew_SalesOrder.CekTargetSales;
-var Strmonth,StrYear,StrKdItem,StrQuery: String;
+var Strmonth,StrYear,StrKdItem,StrQuery,strCategoryName: String;
     TotBarangSO,TotTargetBarang,TotCategorySO,QtyCategorySO: Real	;
     IntCategoryID: Integer;
 begin
@@ -312,6 +312,7 @@ begin
     begin
 
       IntCategoryID:=MemDetail['CATEGORY_id'];
+      strCategoryName:=MemDetail['CATEGORY_NAME'];
       StrKdItem:=MemDetail['KD_ITEM'];
 
       QtyCategorySO:=0;
@@ -335,7 +336,6 @@ begin
         MemDetail.Next
       end;
 
-
       //Total Jumlah Qty pada sales order berdasarkan kategori
       with dm.Qtemp do
       begin
@@ -345,7 +345,6 @@ begin
 
         Open;
       end;
-
 
       if dm.Qtemp.RecordCount=0 then
       begin
@@ -368,8 +367,9 @@ begin
       begin
 //        MessageDlg('Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan ..!!',mtInformation,[mbRetry],0);
         iserror:=1;
-        MessageDlg('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan..!!',mtInformation,[mbRetry],0);
-//        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+        MessageDlg('Barang Kategory '+strCategoryName+' belum ada target penjualan..!!',mtInformation,[mbRetry],0);
+
+        //        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
 //        begin
 //          islanjut:=1;
 //          StrKetLog:=StrKetLog+', Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan';
@@ -443,9 +443,6 @@ begin
   TotSaldoBankGaransi:=0
   else TotSaldoBankGaransi:=dm.Qtemp.FieldValues['tot_saldo'];
 
-
-
-
   TotNilaiSO:=0;
   MemDetail.First;
   while not MemDetail.Eof do
@@ -478,6 +475,7 @@ begin
     begin
       MessageDlg('Order melebihi batas quota..!!',mtInformation,[mbRetry],0);
       islanjut:=0;
+      val_bank_garansi:=1;
       Exit;
     end else
     begin
@@ -489,6 +487,7 @@ begin
     begin
       if MessageDlg ('Pelanggan masih ada sisa piutang, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
+        val_piutang:=1;
         islanjut:=1;
         iserror:=1;
         StrKetLog:=StrKetLog+', Sales Order pelanggan '+edKode_Pelanggan.Text+' masih ada sisa piutang '+FormatCurr('#,###.00', SisaPiutang);
@@ -630,6 +629,8 @@ procedure TFNew_SalesOrder.BSaveClick(Sender: TObject);
 var valKonversi,isBalanceBerat,LevelKG,LevelSatuan: Integer;
   Conversi,Qty: Real;
 begin
+  val_bank_garansi:=0;
+  val_piutang:=0;
   valKonversi:=0;
   isBalanceBerat:=0;
   iserror:=0;
@@ -1240,7 +1241,8 @@ begin
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
             'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,'+
-            'type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number) '+
+            'type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number,'+
+            'val_bank_garansi,val_piutang) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1263,7 +1265,8 @@ begin
             ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+strKonversiMuatan+','+
             ' '+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
             ' '+QuotedStr(edTypeKendaraan.Text)+','+
-            ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+' );');
+            ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+
+            ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+' );');
     ExecSQL;
   end;
   InsertDetailSO;
@@ -1389,7 +1392,9 @@ begin
               ' type_vehicles_name='+QuotedStr(edTypeKendaraan.Text)+','+
               ' vehicles='+QuotedStr(edKendaraan.Text)+','+
               ' po_order='+QuotedStr(edPOOrder.Text)+','+
-              ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+' '+
+              ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+', '+
+              ' val_bank_garansi='+IntToStr(val_bank_garansi)+','+
+              ' val_piutang='+IntToStr(val_piutang)+' '+
   //            ' order_no='+QuotedStr(order_no)+','+
   //            ' additional_code='+QuotedStr(kd_kares)+','+
   //            ' trans_day='+QuotedStr(strtgl)+','+

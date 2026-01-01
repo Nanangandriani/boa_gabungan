@@ -509,62 +509,65 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.Update;
+var terbilang :String;
 begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.add(' UPDATE "public"."t_cash_bank_acceptance" SET '+
-              ' updated_at=NOW(),'+
-              ' updated_by='+QuotedStr(Nm)+','+
-              ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
-              ' period_date1='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+
-              ' period_date2='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+
-              ' code_type_trans='+QuotedStr(edKodeJenisTrans.Text)+','+
-              ' name_type_trans='+QuotedStr(edNamaJenisTrans.Text)+','+
-              ' account_number_bank='+QuotedStr(edNoRek.Text)+','+
-              ' account_name_bank='+QuotedStr(edNamaBank.Text)+','+
-              ' code_currency='+QuotedStr(edKodeMataUang.Text)+','+
-              ' name_currency='+QuotedStr(edNamaMataUang.Text)+','+
-              ' kurs='+QuotedStr(FloatToStr(edKurs.value))+','+
-              ' paid_amount='+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+','+
-              ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
-              ' description='+QuotedStr(MemKeterangan.Text)+', '+
-              ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
-              ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+', '+
-              ' payment_code='+QuotedStr(edKodeSumberTagihan.Text)+','+
-              ' payment_name='+QuotedStr(edNMSumberTagihan.Text)+', '+
-              ' bill_code='+QuotedStr(edKodeJenisBayar.Text)+','+
-              ' bill_name='+QuotedStr(edNMJenisBayar.Text)+', '+
-              ' module_id='+QuotedStr(vid_modul)+', '+
-              ' order_no='+QuotedStr(order_no)+','+
-              ' additional_code='+QuotedStr(additional_code1)+','+
-              ' trans_day='+QuotedStr(strtgl)+','+
-              ' trans_month='+QuotedStr(strbulan)+','+
-              ' trans_year='+QuotedStr(strtahun)+', '+
-              ' status_correction=0 '+
-              ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
-      ExecSQL;
-    end;
-    if MemDetailAkun.RecordCount<>0 then
-    begin
-      InsertDetailAkun;
-    end;
+  terbilang:= ConvKeHuruf(floattostr(edJumlah.value))+' Rupiah';
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_cash_bank_acceptance" SET '+
+            ' updated_at=NOW(),'+
+            ' updated_by='+QuotedStr(Nm)+','+
+            ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
+            ' period_date1='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+
+            ' period_date2='+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+
+            ' code_type_trans='+QuotedStr(edKodeJenisTrans.Text)+','+
+            ' name_type_trans='+QuotedStr(edNamaJenisTrans.Text)+','+
+            ' account_number_bank='+QuotedStr(edNoRek.Text)+','+
+            ' account_name_bank='+QuotedStr(edNamaBank.Text)+','+
+            ' code_currency='+QuotedStr(edKodeMataUang.Text)+','+
+            ' name_currency='+QuotedStr(edNamaMataUang.Text)+','+
+            ' kurs='+QuotedStr(FloatToStr(edKurs.value))+','+
+            ' paid_amount='+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+','+
+            ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
+            ' description='+QuotedStr(MemKeterangan.Text)+', '+
+            ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
+            ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' payment_code='+QuotedStr(edKodeSumberTagihan.Text)+','+
+            ' payment_name='+QuotedStr(edNMSumberTagihan.Text)+', '+
+            ' bill_code='+QuotedStr(edKodeJenisBayar.Text)+','+
+            ' bill_name='+QuotedStr(edNMJenisBayar.Text)+', '+
+            ' module_id='+QuotedStr(vid_modul)+', '+
+            ' order_no='+QuotedStr(order_no)+','+
+            ' additional_code='+QuotedStr(additional_code1)+','+
+            ' trans_day='+QuotedStr(strtgl)+','+
+            ' trans_month='+QuotedStr(strbulan)+','+
+            ' trans_year='+QuotedStr(strtahun)+', '+
+            ' status_correction=0, '+
+            ' word_amount='+QuotedStr(terbilang)+' '+
+            ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
+    ExecSQL;
+  end;
+  if MemDetailAkun.RecordCount<>0 then
+  begin
+    InsertDetailAkun;
+  end;
 
-    if MemDetailPiutang.RecordCount<>0 then
-    begin
-      InsertDetailPiutang;
-      SimpanPelanggan;
-      if edKodeSumberTagihan.Text='2' then
-      UpdateDPP;
-    end;
-    if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
-    begin
-      InsertDetailUangMuka;
-    end;
-    MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-    FMainMenu.TampilTabForm2;
-    Close;
+  if MemDetailPiutang.RecordCount<>0 then
+  begin
+    InsertDetailPiutang;
+    SimpanPelanggan;
+    if edKodeSumberTagihan.Text='2' then
+    UpdateDPP;
+  end;
+  if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
+  begin
+    InsertDetailUangMuka;
+  end;
+  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+  FMainMenu.TampilTabForm2;
+  Close;
 //    FListPenerimaanBank.Refresh;
 end;
 
@@ -754,7 +757,7 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.Save;
-var Stradditional_code2,Stradditional_code3:String;
+var Stradditional_code2,Stradditional_code3,terbilang:String;
 begin
   if (kd_kares='') OR (kd_kares='0') then
     Stradditional_code2:='NULL'
@@ -763,6 +766,8 @@ begin
   if (additional_code3='') OR (additional_code3='0') then
   Stradditional_code3:='NULL'
   else Stradditional_code3:=QuotedStr(additional_code3);
+
+  terbilang:= ConvKeHuruf(floattostr(edJumlah.value))+' Rupiah';
 
   with dm.Qtemp do
   begin
@@ -774,7 +779,7 @@ begin
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
             ' "code_cust", "name_cust", "payment_code", "payment_name", "bill_code", "bill_name", "module_id", '+
             ' "additional_code",additional_code2,additional_code3, '+
-            ' "order_no", "trans_day", "trans_month", "trans_year") '+
+            ' "order_no", "trans_day", "trans_month", "trans_year",sbu_code,word_amount) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -805,7 +810,7 @@ begin
             ' '+QuotedStr(order_no)+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+'  );');
+            ' '+QuotedStr(strtahun)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+QuotedStr(terbilang)+'  );');
     ExecSQL;
   end;
   if MemDetailAkun.RecordCount<>0 then

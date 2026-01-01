@@ -1281,7 +1281,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45994.410137604170000000
+    ReportOptions.LastChange = 46022.415995324070000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1346,10 +1346,9 @@ object FListPenerimaanBank: TFListPenerimaanBank
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000
@@ -1736,7 +1735,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           AllowVectorExport = True
           Left = 264.567100000000000000
           Top = 161.299320000000000000
-          Height = 232.440944880000000000
+          Height = 201.826771653543300000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1745,7 +1744,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
           AllowVectorExport = True
           Left = 173.858380000000000000
           Top = 161.299320000000000000
-          Height = 232.440944881890000000
+          Height = 201.826771653543300000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2041,10 +2040,9 @@ object FListPenerimaanBank: TFListPenerimaanBank
       end
     end
     object Page2: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000

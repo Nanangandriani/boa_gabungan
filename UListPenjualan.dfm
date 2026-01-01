@@ -1711,7 +1711,6 @@ object FDataListPenjualan: TFDataListPenjualan
         'er_code  LEFT JOIN t_customer e on e.customer_code=a.code_cust  ' +
         'where a.deleted_at is null and  a.trans_no='#39'FP/001/15/X/2025/HLJ' +
         '/JKT'#39'  order by b.created_at Desc')
-    Active = True
     Left = 468
     Top = 248
     object QCetaktrans_no: TStringField
@@ -1884,8 +1883,8 @@ object FDataListPenjualan: TFDataListPenjualan
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 464
-    Top = 184
+    Left = 408
+    Top = 304
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1896,7 +1895,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 46009.684384201390000000
+    ReportOptions.LastChange = 46021.663255833340000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2480,9 +2479,9 @@ object FDataListPenjualan: TFDataListPenjualan
         object Memo46: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 152.894736850000000000
+          Left = 147.894736850000000000
           Top = 77.944455260000000000
-          Width = 287.955430060000000000
+          Width = 319.066541170000000000
           Height = 18.897650000000000000
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2499,9 +2498,9 @@ object FDataListPenjualan: TFDataListPenjualan
         object Memo47: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 152.894736840000000000
+          Left = 147.894736840000000000
           Top = 98.997086840000000000
-          Width = 297.429114270000000000
+          Width = 317.429114270000000000
           Height = 45.213439470000000000
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2518,9 +2517,9 @@ object FDataListPenjualan: TFDataListPenjualan
         object Memo48: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 153.947368420000000000
+          Left = 148.947368420000000000
           Top = 141.997086840000000000
-          Width = 303.744903740000000000
+          Width = 315.967125960000000000
           Height = 18.897650000000000000
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -2838,7 +2837,7 @@ object FDataListPenjualan: TFDataListPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 643.333333330000000000
-          Top = -0.057102220000000010
+          Top = -0.057102220000000000
           Width = 109.497011120000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -16381,7 +16380,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46010.351581747690000000
+    ReportOptions.LastChange = 46021.334454386580000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -16410,10 +16409,9 @@ object FDataListPenjualan: TFDataListPenjualan
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000
@@ -16545,9 +16543,9 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object Line6: TfrxLineView
           AllowVectorExport = True
-          Left = -0.220470000000000000
+          Left = 0.649095220000000000
           Top = 40.889920000000000000
-          Height = 476.220472440945000000
+          Height = 444.472440940000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16607,7 +16605,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 257.330860000000000000
           Top = 129.149606300000000000
-          Height = 265.322834650000000000
+          Height = 234.330708661417300000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16616,7 +16614,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 143.944960000000000000
           Top = 129.149606300000000000
-          Height = 265.322834645669000000
+          Height = 234.330708661417300000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16883,8 +16881,8 @@ object FDataListPenjualan: TFDataListPenjualan
         object Line7: TfrxLineView
           AllowVectorExport = True
           Left = 756.661417320000000000
-          Top = 39.669450000000000000
-          Height = 476.220472440945000000
+          Top = 40.818897637795280000
+          Height = 444.472440940000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16893,7 +16891,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 47.000000000000000000
           Top = 129.102350000000000000
-          Height = 265.322834645669000000
+          Height = 234.330708661417300000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -17124,7 +17122,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object Line15: TfrxLineView
           AllowVectorExport = True
           Top = 122.299010000000000000
-          Width = 757.417322830000000000
+          Width = 758.173228346456700000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

@@ -1583,7 +1583,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46017.369985567130000000
+    ReportOptions.LastChange = 46020.672080983790000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1646,7 +1646,9 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'begin'
       
         '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND ' +
-        '(<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) then'
+        '(<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) AND (<frxDB' +
+        'DatasetLapHarianSisaNota."amount_nota_awal"> = <frxDBDatasetLapH' +
+        'arianSisaNota."amount_bayar">) then'
       '  begin'
       
         '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
@@ -1757,11 +1759,11 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure Memo40OnAfterPrint(Sender: TfrxComponent);'
       'begin'
-      '  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and '
+      '  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
       
         '      (<frxDBDatasetLapHarianSisaNota."amount_nota_awal"> = <frx' +
-        'DBDatasetLapHarianSisaNota."amount_bayar">)) or '
-      '     (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) or '
+        'DBDatasetLapHarianSisaNota."amount_bayar">)) or'
+      '     (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) or'
       
         '     (<frxDBDatasetLapHarianSisaNota."amount_jurnal_memorial"> >' +
         ' 0) then'
@@ -2977,7 +2979,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo56: TfrxMemoView
           AllowVectorExport = True
           Left = 756.283464570000000000
-          Top = 0.079160000000000010
+          Top = 0.079160000000000000
           Width = 59.338582680000000000
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo56OnBeforePrint'

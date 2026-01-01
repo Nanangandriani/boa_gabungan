@@ -130,7 +130,7 @@ begin
       sql.clear;
       sql.Text:=' INSERT INTO "public"."t_customer_bank_guarantee" ("created_at", "created_by", '+
                   ' "customer_code", "bank_code", "bank_name", '+
-                  ' "first_date", "end_date", "guarantee_number", "amount" ) '+
+                  ' "first_date", "end_date", "guarantee_number", "amount",sbu_code ) '+
                   ' Values( '+
                   ' NOW(), '+
                   ' '+QuotedStr(Nm)+', '+
@@ -140,7 +140,7 @@ begin
                   ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_aktif']))+', '+
                   ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
                   ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
-                  ' '+QuotedStr(MemMaster['nilai'])+');';
+                  ' '+QuotedStr(MemMaster['nilai'])+','+QuotedStr(FHomeLogin.vKodePRSH)+');';
       ExecSQL;
     end;
     MemMaster.Next;

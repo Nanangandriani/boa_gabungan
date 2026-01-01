@@ -174,13 +174,8 @@ type
     QKaresidenancode_region_kares: TStringField;
     QKaresidenanname_region_kares: TStringField;
     QKaresidenandescription: TMemoField;
-    TabSheet1: TRzTabSheet;
+    TabSetTP: TRzTabSheet;
     QTP: TUniQuery;
-    StringField1: TStringField;
-    StringField2: TStringField;
-    StringField3: TStringField;
-    StringField4: TStringField;
-    MemoField1: TMemoField;
     dsTP: TDataSource;
     Panel7: TPanel;
     Label50: TLabel;
@@ -204,6 +199,11 @@ type
     RzBitBtn5: TRzBitBtn;
     RzBitBtn6: TRzBitBtn;
     DBGrid_setTP: TDBGridEh;
+    QTPcode_areas: TStringField;
+    QTPname_areas: TStringField;
+    QTPcode_region_tp: TStringField;
+    QTPname_region_tp: TStringField;
+    QTPdescription: TMemoField;
     procedure edArea_setkaresButtonClick(Sender: TObject);
     procedure edWilayah_setprovButtonClick(Sender: TObject);
     procedure edArea_setprovButtonClick(Sender: TObject);
@@ -268,7 +268,7 @@ implementation
 {$R *.dfm}
 
 uses UDataModule,UMasterData, UMainMenu, UHomeLogin,
-  UMasterWilayahAdministratif;
+  UMasterWilayahAdministratif, USetMasterKaresidenan, USetMasterTP;
 
 procedure TFSetMasterWilayah.btBaru_setkabClick(Sender: TObject);
 begin
@@ -650,20 +650,12 @@ end;
 
 procedure TFSetMasterWilayah.RzBitBtn1Click(Sender: TObject);
 begin
-  with FMasterWilayahAdministratif do
-  begin
-    edKode_setkares.Text:=QKaresidenancode_region_kares.AsString;
-    edNama_setkares.Text:=QKaresidenanname_region_kares.AsString;
-    edKDArea_setkares.Text:=QKaresidenancode_areas.AsString;
-    edArea_setkares.Text:=QKaresidenanname_areas.AsString;
-
-    edKodeProvinsi.Clear;
-    edNamaProvinsi.Clear;
-    edNamaKabupaten.Clear;
-    edKodeKabupaten.Clear;
-    MemMasterData.EmptyTable;
-  end;
-  FMasterWilayahAdministratif.show;
+  FSetMasterTP.Clear;
+  FSetMasterTP.strKodeArea:=QTPcode_areas.AsString;
+  FSetMasterTP.edArea.text:=QTPname_areas.AsString;
+  FSetMasterTP.strKodeTP:=QTPcode_region_tp.AsString;
+  FSetMasterTP.edTP.text:=QTPname_region_tp.AsString;
+  FSetMasterTP.ShowModal;
 end;
 
 procedure TFSetMasterWilayah.RzBitBtn3Click(Sender: TObject);
@@ -754,7 +746,7 @@ end;
 procedure TFSetMasterWilayah.RzBitBtn5Click(Sender: TObject);
 begin
   status:=0;
-  btRefresh_setkaresClick(Sender);
+  btRefresh_setTPClick(Sender);
   Clear;
 end;
 
@@ -896,13 +888,14 @@ begin
         begin
           close;
           sql.clear;
-          sql.Text:=' INSERT INTO "t_region_karesidenan" ("code", "name", "description", "code_areas",'+
+          sql.Text:=' INSERT INTO "t_region_karesidenan" ("code", "name", "description", '+
+//                    "code_areas",'+
                     ' "created_by" ) '+
                     ' Values( '+
                     ' '+QuotedStr(edKode_setkares.Text)+', '+
                     ' '+QuotedStr(edNama_setkares.Text)+', '+
                     ' '+QuotedStr(edKet_setkares.Text)+', '+
-                    ' '+QuotedStr(edKDArea_setkares.Text)+', '+
+//                    ' '+QuotedStr(edKDArea_setkares.Text)+', '+
                     ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
           ExecSQL;
         end;
@@ -920,7 +913,7 @@ begin
           sql.clear;
           sql.Text:=' UPDATE "t_region_karesidenan" SET '+
                     ' "name"='+QuotedStr(edNama_setkares.Text)+', '+
-                    ' "code_areas"='+QuotedStr(edKDArea_setkares.Text)+', '+
+//                    ' "code_areas"='+QuotedStr(edKDArea_setkares.Text)+', '+
                     ' "description"='+QuotedStr(edKet_setkares.Text)+', '+
                     ' "updated_at"=now(), '+
                     ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+

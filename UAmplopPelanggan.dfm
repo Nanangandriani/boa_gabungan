@@ -66,7 +66,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
     Align = alBottom
     Color = 15987699
     TabOrder = 2
-    ExplicitTop = 69
+    ExplicitTop = 97
     ExplicitWidth = 318
     object RzBitBtn1: TRzBitBtn
       Left = 237

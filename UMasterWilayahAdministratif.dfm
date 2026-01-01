@@ -1,6 +1,8 @@
 object FMasterWilayahAdministratif: TFMasterWilayahAdministratif
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Wilayah Administratif'
   ClientHeight = 547
   ClientWidth = 1119
@@ -118,8 +120,8 @@ object FMasterWilayahAdministratif: TFMasterWilayahAdministratif
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 506
-    ExplicitWidth = 1113
+    ExplicitTop = 514
+    ExplicitWidth = 1115
     object btBatal_setwilayah: TRzBitBtn
       Left = 1043
       Top = 1
@@ -179,7 +181,7 @@ object FMasterWilayahAdministratif: TFMasterWilayahAdministratif
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1037
+      ExplicitLeft = 1039
     end
     object btSimpan_setwilayah: TRzBitBtn
       Left = 968
@@ -241,7 +243,7 @@ object FMasterWilayahAdministratif: TFMasterWilayahAdministratif
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 962
+      ExplicitLeft = 964
     end
   end
   object pnSetKares: TPanel
@@ -253,7 +255,7 @@ object FMasterWilayahAdministratif: TFMasterWilayahAdministratif
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 1113
+    ExplicitWidth = 1115
     object Label17: TLabel
       Left = 125
       Top = 58

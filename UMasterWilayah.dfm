@@ -15,7 +15,7 @@ object FMasterWilayah: TFMasterWilayah
   OnShow = FormShow
   TextHeight = 15
   object Label25: TLabel
-    Left = 117
+    Left = 77
     Top = 49
     Width = 3
     Height = 15
@@ -29,7 +29,7 @@ object FMasterWilayah: TFMasterWilayah
     Caption = 'Area'
   end
   object btMasterArea: TSpeedButton
-    Left = 372
+    Left = 332
     Top = 46
     Width = 23
     Height = 22
@@ -44,14 +44,14 @@ object FMasterWilayah: TFMasterWilayah
     Caption = 'Wilayah'
   end
   object Label2: TLabel
-    Left = 117
+    Left = 77
     Top = 20
     Width = 3
     Height = 15
     Caption = ':'
   end
   object btMasterWilayah: TSpeedButton
-    Left = 372
+    Left = 332
     Top = 17
     Width = 23
     Height = 22
@@ -59,26 +59,48 @@ object FMasterWilayah: TFMasterWilayah
     OnClick = btMasterWilayahClick
   end
   object Label1: TLabel
-    Left = 20
-    Top = 78
+    Left = 372
+    Top = 24
     Width = 64
     Height = 15
     Caption = 'Karesidenan'
   end
   object Label3: TLabel
-    Left = 117
-    Top = 78
+    Left = 442
+    Top = 24
     Width = 3
     Height = 15
     Caption = ':'
   end
   object btMasterKaresidenan: TSpeedButton
-    Left = 372
-    Top = 75
+    Left = 697
+    Top = 21
     Width = 23
     Height = 22
     Caption = '+'
     OnClick = btMasterKaresidenanClick
+  end
+  object Label4: TLabel
+    Left = 77
+    Top = 77
+    Width = 3
+    Height = 15
+    Caption = ':'
+  end
+  object Label5: TLabel
+    Left = 20
+    Top = 77
+    Width = 13
+    Height = 15
+    Caption = 'TP'
+  end
+  object btMasterTP: TSpeedButton
+    Left = 332
+    Top = 74
+    Width = 23
+    Height = 22
+    Caption = '+'
+    OnClick = btMasterTPClick
   end
   object PageControl1: TPageControl
     Left = 0
@@ -88,8 +110,8 @@ object FMasterWilayah: TFMasterWilayah
     ActivePage = TabSDetailData
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 104
-    ExplicitWidth = 1018
+    ExplicitLeft = -16
+    ExplicitTop = 46
     object TabSDetailData: TTabSheet
       Caption = 'Data Detail'
       object DBGridCustomer: TDBGridEh
@@ -154,7 +176,7 @@ object FMasterWilayah: TFMasterWilayah
     end
   end
   object edWilayah: TRzButtonEdit
-    Left = 132
+    Left = 92
     Top = 17
     Width = 240
     Height = 23
@@ -165,7 +187,7 @@ object FMasterWilayah: TFMasterWilayah
     OnButtonClick = edWilayahButtonClick
   end
   object edArea: TRzButtonEdit
-    Left = 132
+    Left = 92
     Top = 46
     Width = 240
     Height = 23
@@ -176,8 +198,8 @@ object FMasterWilayah: TFMasterWilayah
     OnButtonClick = edAreaButtonClick
   end
   object edKaresidenan: TRzButtonEdit
-    Left = 132
-    Top = 75
+    Left = 451
+    Top = 17
     Width = 240
     Height = 23
     Text = ''
@@ -187,27 +209,46 @@ object FMasterWilayah: TFMasterWilayah
     OnButtonClick = btAmbilKaresidenanClick
   end
   object edKode_kares: TEdit
-    Left = 401
-    Top = 76
+    Left = 726
+    Top = 22
     Width = 100
     Height = 23
     TabOrder = 4
     Visible = False
   end
   object edKode_area: TEdit
-    Left = 401
-    Top = 46
+    Left = 914
+    Top = 41
     Width = 100
     Height = 23
     TabOrder = 5
     Visible = False
   end
   object edKode_wil: TEdit
-    Left = 401
-    Top = 17
+    Left = 914
+    Top = 12
     Width = 100
     Height = 23
     TabOrder = 6
+    Visible = False
+  end
+  object edTP: TRzButtonEdit
+    Left = 92
+    Top = 74
+    Width = 240
+    Height = 23
+    Text = ''
+    TabOrder = 7
+    AltBtnNumGlyphs = 1
+    ButtonNumGlyphs = 1
+    OnButtonClick = edTPButtonClick
+  end
+  object edKodeTP: TEdit
+    Left = 361
+    Top = 76
+    Width = 100
+    Height = 23
+    TabOrder = 8
     Visible = False
   end
   object MemDetailMasterWil: TMemTableEh

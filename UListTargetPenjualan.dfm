@@ -66,6 +66,15 @@ object FListTargetPenjualan: TFListTargetPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'customer_code'
+        Footers = <>
+        Title.Caption = 'Kode Pelanggan'
+        Width = 120
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'customer_name'
         Footers = <>
         ReadOnly = True
@@ -91,14 +100,6 @@ object FListTargetPenjualan: TFListTargetPenjualan
         ReadOnly = True
         Title.Caption = 'Tahun'
         Width = 156
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'customer_code'
-        Footers = <>
-        Visible = False
       end
       item
         CellButtons = <>
@@ -144,8 +145,8 @@ object FListTargetPenjualan: TFListTargetPenjualan
       object DBGridKelompok: TDBGridEh
         Left = 0
         Top = 0
-        Width = 688
-        Height = 248
+        Width = 704
+        Height = 232
         Align = alClient
         AllowedOperations = []
         DataSource = DataSource1

@@ -3,7 +3,7 @@ object FListPelanggan: TFListPelanggan
   Top = 0
   Caption = 'Pelanggan'
   ClientHeight = 424
-  ClientWidth = 822
+  ClientWidth = 964
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FListPelanggan: TFListPelanggan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 822
+    Width = 964
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -48,7 +48,7 @@ object FListPelanggan: TFListPelanggan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 127
-    Width = 822
+    Width = 964
     Height = 297
     Align = alClient
     AllowedOperations = []
@@ -135,6 +135,16 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'tp'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Karesdeinan'
+        Width = 119
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'karesidenan'
         Footers = <>
         Title.Alignment = taCenter
@@ -150,6 +160,46 @@ object FListPelanggan: TFListPelanggan
         Title.Alignment = taCenter
         Title.Caption = 'Kabupaten'
         Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_type_business'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Jenis Usaha'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_type'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Jenis Pelanggan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_selling_type'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kategori Pelanggan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'name_group'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Golongan'
+        Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -198,7 +248,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -218,7 +268,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarLargeButton1'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -252,6 +302,12 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'cbKabupaten'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 127
+          Visible = True
+          ItemName = 'edJenisUsaha'
+        end
+        item
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end
@@ -260,7 +316,7 @@ object FListPelanggan: TFListPelanggan
           ItemName = 'dxBarLargeButton3'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -268,7 +324,7 @@ object FListPelanggan: TFListPelanggan
     object dxBarManager1Bar4: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 557
+      DockedLeft = 753
       DockedTop = 0
       FloatLeft = 846
       FloatTop = 2
@@ -279,7 +335,7 @@ object FListPelanggan: TFListPelanggan
           Visible = True
           ItemName = 'dxBarLargeButton4'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -981,6 +1037,26 @@ object FListPelanggan: TFListPelanggan
         000049454E44AE426082}
       OnClick = dxBarLargeButton4Click
     end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'Jenis Usaha'
+      Category = 0
+      Hint = 'Jenis Usaha'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxComboBoxProperties'
+    end
+    object edJenisUsaha: TcxBarEditItem
+      Caption = 'Jenis Usaha'
+      Category = 0
+      Hint = 'Jenis Usaha'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = edJenisUsahaPropertiesButtonClick
+    end
   end
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
@@ -988,10 +1064,11 @@ object FListPelanggan: TFListPelanggan
       
         'select customer_code, customer_name, email, address, contact_per' +
         'son1 as telp, payment_term, customer_name_pkp,kabupaten,kareside' +
-        'nan from get_customer() WHERE deleted_at is null order by create' +
-        'd_at Desc')
-    Left = 652
-    Top = 88
+        'nan,tp,name_type,name_selling_type,name_group,name_type_business' +
+        ' from get_customer() WHERE deleted_at is null order by created_a' +
+        't Desc')
+    Left = 596
+    Top = 136
     object QPelanggancustomer_code: TMemoField
       FieldName = 'customer_code'
       ReadOnly = True
@@ -1036,6 +1113,31 @@ object FListPelanggan: TFListPelanggan
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QPelanggantp: TMemoField
+      FieldName = 'tp'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QPelangganname_type: TMemoField
+      FieldName = 'name_type'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QPelangganname_selling_type: TMemoField
+      FieldName = 'name_selling_type'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QPelangganname_group: TMemoField
+      FieldName = 'name_group'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QPelangganname_type_business: TMemoField
+      FieldName = 'name_type_business'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
@@ -1043,8 +1145,8 @@ object FListPelanggan: TFListPelanggan
     Top = 128
   end
   object ActMenu: TActionManager
-    Left = 712
-    Top = 48
+    Left = 640
+    Top = 184
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '

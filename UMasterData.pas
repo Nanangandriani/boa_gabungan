@@ -51,7 +51,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   ULaporanHarianSisaNotaPiutangPerOutlet, UStockOpnameNota, UListPelanggan,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
   UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank,
-  URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan;
+  URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan,
+  USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -62,7 +63,49 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+//Nanang
+  if vcall='lappenjualan_kares' then
+  begin
+    FLaporanPenjualan.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FLaporanPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanPenjualan.strKodeTP:='';
+    FLaporanPenjualan.edTP.EditValue:='';
+  end;
+//Nanang
+  if vcall='lappenjualan_tp' then
+  begin
+    FLaporanPenjualan.strKodeTP:=MemMasterData['KD_MASTER'];
+    FLaporanPenjualan.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanPenjualan.strKodeKaresidenan:='';
+    FLaporanPenjualan.edKaresidenan.EditValue:='';
+  end;
+//Nanang
+  if vcall='m_provinsi_master_kares' then
+  begin
+    FSetMasterKaresidenan.strKodeProvinsi:=MemMasterData['KD_MASTER'];
+    FSetMasterKaresidenan.edProvinsi.Text:=MemMasterData['NM_MASTER'];
+  end;
 
+//Nanang
+  if vcall='m_kabupaten_master_kares' then
+  begin
+    FSetMasterKaresidenan.strKodeKabupaten:=MemMasterData['KD_MASTER'];
+    FSetMasterKaresidenan.edKabupaten.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+//Nanang
+  if vcall='m_provinsi_master_tp' then
+  begin
+    FSetMasterTP.strKodeProvinsi:=MemMasterData['KD_MASTER'];
+    FSetMasterTP.edProvinsi.Text:=MemMasterData['NM_MASTER'];
+  end;
+
+//Nanang
+  if vcall='m_kabupaten_master_tp' then
+  begin
+    FSetMasterTP.strKodeKabupaten:=MemMasterData['KD_MASTER'];
+    FSetMasterTP.edKabupaten.Text:=MemMasterData['NM_MASTER'];
+  end;
 
 //Nanang
   if vcall='kolektifsuratjalan_kares' then
@@ -282,6 +325,17 @@ begin
   begin
     FRekapPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
     FRekapPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapPenjualan.vkd_kab:='';
+    FRekapPenjualan.edKabupaten.EditValue:='';
+     FRekapPenjualan.vkd_tp:='';
+    FRekapPenjualan.edTP.EditValue:='';
+  end;
+  if vcall='rekappenjualan_tp' then
+  begin
+    FRekapPenjualan.vkd_tp:=MemMasterData['KD_MASTER'];
+    FRekapPenjualan.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapPenjualan.vkd_kares:='';
+    FRekapPenjualan.edKaresidenan.EditValue:='';
     FRekapPenjualan.vkd_kab:='';
     FRekapPenjualan.edKabupaten.EditValue:='';
   end;
@@ -793,6 +847,12 @@ begin
     FDaftarKlasifikasi.edkd_jenis_pel.Text:=MemMasterData['KD_MASTER'];
     FDaftarKlasifikasi.ednm_jenis_pel.Text:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='jns_usaha_list_pelanggan' then
+  begin
+    FListPelanggan.strKodeJenisUsaha:=MemMasterData['KD_MASTER'];
+    FListPelanggan.edJenisUsaha.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
   if vcall='kategori_klasifikasi' then
   begin
     FDaftarKlasifikasi.edkd_kategori.Text:=MemMasterData['KD_MASTER'];
@@ -957,6 +1017,20 @@ begin
   begin
     FMasterWilayah.edKode_kares.Text:=MemMasterData['KD_MASTER'];
     FMasterWilayah.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+    FMasterWilayah.edKode_wil.Text:='';
+    FMasterWilayah.edWilayah.Text:='';
+    FMasterWilayah.edKode_area.Text:='';
+    FMasterWilayah.edArea.Text:='';
+    FMasterWilayah.edKodeTP.Text:='';
+    FMasterWilayah.edTP.Text:='';
+    FMasterWilayah.RefreshGrid;
+  end;
+  if vcall='m_tp' then
+  begin
+    FMasterWilayah.edKodeTP.Text:=MemMasterData['KD_MASTER'];
+    FMasterWilayah.edTP.Text:=MemMasterData['NM_MASTER'];
+    FMasterWilayah.edKode_kares.Text:='';
+    FMasterWilayah.edKaresidenan.Text:='';
     FMasterWilayah.RefreshGrid;
   end;
   if vcall='set_areakares' then

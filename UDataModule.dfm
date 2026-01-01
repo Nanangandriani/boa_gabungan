@@ -16,7 +16,7 @@ object dm: Tdm
     EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 246
+    Left = 253
     Top = 13
   end
   object Qtemp: TUniQuery
@@ -51,7 +51,7 @@ object dm: Tdm
   end
   object UniSQLMonitor1: TUniSQLMonitor
     Left = 157
-    Top = 64
+    Top = 70
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
@@ -116,8 +116,8 @@ object dm: Tdm
     MaxConnections = 500
     MultiUser = False
     SessionName = 'Default'
-    Left = 168
-    Top = 280
+    Left = 176
+    Top = 288
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
@@ -151,11 +151,23 @@ object dm: Tdm
     object ABSTable1Password: TStringField
       FieldName = 'Password'
     end
+    object ABSTable1User_db: TStringField
+      FieldName = 'User_db'
+    end
     object ABSTable1Ip_db_Pusat: TStringField
       FieldName = 'Ip_db_Pusat'
     end
-    object ABSTable1User_db: TStringField
-      FieldName = 'User_db'
+    object ABSTable1Port_db_Pusat: TStringField
+      FieldName = 'Port_db_Pusat'
+    end
+    object ABSTable1Db_Name_Pusat: TStringField
+      FieldName = 'Db_Name_Pusat'
+    end
+    object ABSTable1Password_Pusat: TStringField
+      FieldName = 'Password_Pusat'
+    end
+    object ABSTable1User_db_Pusat: TStringField
+      FieldName = 'User_db_Pusat'
     end
   end
   object frxDesigner1: TfrxDesigner
@@ -179,5 +191,28 @@ object dm: Tdm
     MemoParentFont = False
     Left = 16
     Top = 234
+  end
+  object Koneksi_PST: TUniConnection
+    AutoCommit = False
+    ProviderName = 'PostgreSQL'
+    Port = 5432
+    Database = 'db_sb_hlj'
+    Username = 'Devel'
+    Server = '10.20.99.219'
+    LoginPrompt = False
+    OnError = KoneksiError
+    Left = 368
+    Top = 13
+    EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'
+  end
+  object QtempPusat: TUniQuery
+    Connection = Koneksi_PST
+    Left = 364
+    Top = 64
+  end
+  object QtempPusat1: TUniQuery
+    Connection = Koneksi_PST
+    Left = 364
+    Top = 117
   end
 end

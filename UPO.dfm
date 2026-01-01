@@ -271,6 +271,7 @@ object FPO: TFPO
         EditButtons = <>
         FieldName = 'deleted_at'
         Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh3: TDBGridEh

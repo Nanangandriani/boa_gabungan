@@ -84,7 +84,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'type_do_name'
         Footers = <>
         Title.Caption = 'Jenis DO'
-        Width = 143
+        Width = 79
       end
       item
         CellButtons = <>
@@ -93,7 +93,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'starting_loc_name'
         Footers = <>
         Title.Caption = 'Lokasi Awal'
-        Width = 177
+        Width = 125
       end
       item
         CellButtons = <>
@@ -102,7 +102,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'province_name'
         Footers = <>
         Title.Caption = 'Tujuan | Provinsi'
-        Width = 167
+        Width = 136
       end
       item
         CellButtons = <>
@@ -117,10 +117,28 @@ object FListDeliveryOrder: TFListDeliveryOrder
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'pickup_location'
+        Footers = <>
+        Title.Caption = 'Lokasi|Muat'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'delivery_location'
+        Footers = <>
+        Title.Caption = 'Lokasi|Bongkar'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'status_name'
         Footers = <>
         Title.Caption = 'Status'
-        Width = 140
+        Width = 106
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -946,9 +964,11 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.*,b.status_name from t_delivery_order a LEFT JOIN t_del' +
-        'ivery_order_status b on b.kode=a.status ORDER BY a.created_at De' +
-        'sc')
+        'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location f' +
+        'rom t_delivery_order a LEFT JOIN t_delivery_order_status b on b.' +
+        'kode=a.status '
+      'LEFT JOIN t_delivery_order_services c on c.notrans=a.notrans'
+      ' ORDER BY a.created_at Desc')
     Left = 884
     Top = 16
     object QDeliveryOrdernotrans: TStringField
@@ -978,6 +998,24 @@ object FListDeliveryOrder: TFListDeliveryOrder
       FieldName = 'status_name'
       ReadOnly = True
       Size = 255
+    end
+    object QDeliveryOrdertype_do_code: TStringField
+      FieldName = 'type_do_code'
+      Size = 100
+    end
+    object QDeliveryOrderpickup_location: TStringField
+      FieldName = 'pickup_location'
+      ReadOnly = True
+      Size = 255
+    end
+    object QDeliveryOrderdelivery_location: TStringField
+      FieldName = 'delivery_location'
+      ReadOnly = True
+      Size = 255
+    end
+    object QDeliveryOrdersbu_code: TStringField
+      FieldName = 'sbu_code'
+      Size = 10
     end
   end
   object DsDeliveryOrder: TDataSource

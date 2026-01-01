@@ -430,6 +430,11 @@ begin
     FPerintahMuat_Sumber.edKodeVendorMuatan.Text:=FDataPerintahMuat.edKode_Vendor_Kend.Text;
     FPerintahMuat_Sumber.edNamaVendorMuatan.Text:=FDataPerintahMuat.edNama_Vendor_Kend.Text;
     FPerintahMuat_Sumber.edNoKendMuatan.Text:=FDataPerintahMuat.edNoKendMuatan.Text;
+    FPerintahMuat_Sumber.dtTanggal1.Date:=dtKirim.Date;
+    FPerintahMuat_Sumber.dtTanggal2.Date:=dtKirim.Date;
+    FPerintahMuat_Sumber.dtTanggal2.Visible:=False;
+    FPerintahMuat_Sumber.dtTanggal1.Enabled:=False;
+    FPerintahMuat_Sumber.Label1.Visible:=False;
     FPerintahMuat_Sumber.edKodeVendorMuatan.ReadOnly:=True;
     FPerintahMuat_Sumber.edNamaVendorMuatan.ReadOnly:=True;
     FPerintahMuat_Sumber.edNoKendMuatan.ReadOnly:=True;

@@ -633,7 +633,8 @@ object FPengajuanAsset: TFPengajuanAsset
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 857
+      ExplicitLeft = 864
+      ExplicitTop = 6
     end
   end
   object http: TIdHTTP
@@ -868,7 +869,7 @@ object FPengajuanAsset: TFPengajuanAsset
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 256
-    Top = 154
+    Left = 192
+    Top = 114
   end
 end

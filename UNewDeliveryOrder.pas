@@ -176,6 +176,9 @@ type
     btMasterLokasiBongkar: TSpeedButton;
     edLokasiMuat: TRzButtonEdit;
     edLokasiBongkar: TRzButtonEdit;
+    btnSubmitCorrectionMuatan: TRzBitBtn;
+    btnSaveMuatan: TRzBitBtn;
+    btnCloseMuatan: TRzBitBtn;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -222,6 +225,8 @@ type
     procedure edLokasiMuatButtonClick(Sender: TObject);
     procedure edLokasiBongkarButtonClick(Sender: TObject);
     procedure btMasterLokasiBongkarClick(Sender: TObject);
+    procedure edNamaJenisMuatanChange(Sender: TObject);
+    procedure btnSaveMuatanClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -237,12 +242,16 @@ type
     procedure RefreshGridRincianBiaya;
     procedure HitungGrid;
     procedure Clear;
+    procedure RefreshForm;
     procedure Autonumber;
     procedure Save;
     procedure Update;
+    procedure SaveOffline;
+    procedure UpdateOffline;
     procedure InsertDetailCost;
     procedure InsertDetailLoad;
     procedure InsertDetailService;
+    procedure InsertDetailLoadMuatan;
     procedure GetApiBiayaChakra;
     procedure UpdateStatusTele;
     procedure UpdateVehicleChakra;
@@ -269,7 +278,7 @@ uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
   UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan,
-  ULokasiMuat, ULokasiBongkar;
+  ULokasiMuat, ULokasiBongkar, UTambah_Barang, UDeliveryOrder_SumberPO;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -1034,6 +1043,55 @@ begin
 //  FListDeliveryOrder.Refresh;
 end;
 
+procedure TFNewDeliveryOrder.SaveOffline;
+begin
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' Insert into "public"."t_delivery_order" ("created_at", "created_by", '+
+            ' "notrans", "date_trans", "type_do_code", "type_do_name", "starting_loc_code", '+
+            ' "starting_loc_name", '+
+//            "province_code", "province_name", "regency_code", '+
+//            ' "regency_name",
+            '"number_of_points", "description", "formsumbervendor", "order_no", '+
+            //' "additional_code", '+
+            ' "trans_day", "trans_month", "trans_year",status, '+
+//            starting_loc_regencie_id,'+
+            'sbu_code) '+
+            ' VALUES ( '+
+            ' NOW(), '+
+            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+', '+
+            ' '+QuotedStr(edKodeJenisMuatan.Text)+', '+
+            ' '+QuotedStr(edNamaJenisMuatan.Text)+', '+
+            ' '+QuotedStr(edKodeLokasi.Text)+', '+
+            ' '+QuotedStr(edNamaLokasi.Text)+', '+
+//            ' '+QuotedStr(edKodeProvinsi.Text)+', '+
+//            ' '+QuotedStr(edNamaProvinsi.Text)+', '+
+//            ' '+QuotedStr(edKodeKabupaten.Text)+', '+
+//            ' '+QuotedStr(edNamaKabupaten.Text)+', '+
+            ' '+QuotedStr(IntToStr(spTotalTitik.Value))+', '+
+            ' '+QuotedStr(MemKeteranganBiaya.Text)+', '+
+            ' '+QuotedStr(vFormSumber01)+', '+
+            ' '+QuotedStr(order_no)+', '+
+            //' '+QuotedStr('0')+', '+
+            ' '+QuotedStr(strtgl)+', '+
+            ' '+QuotedStr(strbulan)+', '+
+            ' '+QuotedStr(strtahun)+',1, '+
+//            '+QuotedStr(edlokasiregencyid.Text)+','+
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+');');
+    ExecSQL;
+  end;
+  InsertDetailLoadMuatan;
+  InsertDetailService;
+  MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  Close;
+//  FListDeliveryOrder.Refresh;
+end;
+
 procedure TFNewDeliveryOrder.spTotalTitikChange(Sender: TObject);
 begin
   if (Status=1) AND (IntStatusDO=3) then
@@ -1163,6 +1221,93 @@ begin
   Close;
 //  FListDeliveryOrder.Refresh;
   FMainMenu.TampilTabForm2;
+end;
+
+procedure TFNewDeliveryOrder.UpdateOffline;
+var strStatus: String;
+begin
+
+
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "public"."t_delivery_order" SET '+
+            ' updated_at=NOW(),'+
+            ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+            ' date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+','+
+            ' type_do_code='+QuotedStr(edKodeJenisMuatan.Text)+','+
+            ' type_do_name='+QuotedStr(edNamaJenisMuatan.Text)+','+
+            ' starting_loc_code='+QuotedStr(edKodeLokasi.Text)+','+
+            ' starting_loc_name='+QuotedStr(edNamaLokasi.Text)+','+
+            ' province_code='+QuotedStr(edKodeProvinsi.Text)+','+
+            ' province_name='+QuotedStr(edNamaProvinsi.Text)+','+
+            ' regency_code='+QuotedStr(edKodeKabupaten.Text)+','+
+            ' regency_name='+QuotedStr(edNamaKabupaten.Text)+','+
+            ' number_of_points='+QuotedStr(IntToStr(spTotalTitik.Value))+','+
+            ' description='+QuotedStr(MemKeteranganBiaya.Text)+', '+
+            ' order_no='+QuotedStr(order_no)+','+
+            ' additional_code='+QuotedStr('0')+','+
+            ' trans_day='+QuotedStr(strtgl)+','+
+            ' trans_month='+QuotedStr(strbulan)+','+
+            ' trans_year='+QuotedStr(strtahun)+', '+
+            ' status_correction=0 '+
+            ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
+    ExecSQL;
+  end;
+  InsertDetailLoadMuatan;
+  InsertDetailService;
+  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
+  Close;
+//  FListDeliveryOrder.Refresh;
+  FMainMenu.TampilTabForm2;
+end;
+
+procedure TFNewDeliveryOrder.InsertDetailLoadMuatan;
+begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * from ('+
+            ' SELECT * from "public"."t_delivery_order_load"'+
+            ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
+            ' Order By notrans desc');
+    open;
+  end;
+
+  if Dm.Qtemp1.RecordCount>0 then
+  begin
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
+              ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
+    ExecSQL;
+    end;
+  end;
+
+  MemDataMuatan.First;
+  while not MemDataMuatan.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+    close;
+    sql.clear;
+    sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "item_code", '+
+              ' "item_name","amount", "unit", "source_load") '+
+              ' Values( '+
+              ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
+              ' '+QuotedStr(MemDataMuatan['kd_barang'])+', '+
+              ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
+              ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
+              ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
+              ' '+IntToStr(sumber_do)+' );';
+    ExecSQL;
+    end;
+  MemDataMuatan.Next;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.InsertDetailLoad;
@@ -1415,7 +1560,83 @@ begin
   StatusPerubahanBiaya:=0;
   StatusCekBiaya:=1;
 
+  edKelompokKendaraan.AllowKeyEdit:=False;
+  edKelompokKendaraan.ButtonVisible:=True;
+  edNamaJenisKendMuatan.ReadOnly:=True;
+  edNoKendMuatan.ReadOnly:=True;
 
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select supplier_code,supplier_name from t_supplier '+
+              'where supplier_code='+
+              '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
+              'and deleted_at is null';
+    open;
+  end;
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    edKodeVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_code'];
+    edNamaVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_name'];
+  end;
+end;
+
+procedure TFNewDeliveryOrder.RefreshForm;
+begin
+  MemDataBiaya.EmptyTable;
+  MemDataMuatan.EmptyTable;
+  strVehicleGroupId:='';
+  //Muatan
+  edKodeDOMuatan.Clear;
+  dtTanggalMuatan.Date:=NOW();
+  edKodeVendorMuatan.Clear;
+  edNamaVendorMuatan.Clear;
+  edKodeVendorTransMuatan.Clear;
+  edNamaVendorTransMuatan.Clear;
+  edPICMuatan.Clear;
+  edNoKendMuatan.Clear;
+  edKodeJenisKendMuatan.Clear;
+  edNamaJenisKendMuatan.Clear;
+  spKapasitas.Value:=0;
+  edNamaSupir.Clear;
+  edNamaKenek.Clear;
+  edNomorPIB.Clear;
+  edLokasiMuat.Clear;
+  kodelokasimuat:='';
+  kodelokasibongkar:='';
+  edLokasiBongkar.Clear;
+  edKelompokKendaraan.Clear;
+  strVehicleGroupId:='';
+
+  //Biaya
+  edKodeDOBiaya.Clear;
+  dtTanggalBiaya.Date:=NOW();
+  edNamaJenisBiaya.Clear;
+  edKodeLokasi.Clear;
+  edNamaLokasi.Clear;
+  edKodeProvinsi.Clear;
+  edNamaProvinsi.Clear;
+  edKodeKabupaten.Clear;
+  edNamaKabupaten.Clear;
+  spTotalTitik.Value:=0;
+  MemKeteranganBiaya.Clear;
+
+  //Dokumen
+  edKodeDODok.Clear;
+  dtTanggalDoc.Date:=NOW();
+  edNamaJenisDoc.Clear;
+  edNomorTagihanVendor.Clear;
+  dtTerimaTagihan.Date:=NOW();
+  edTotalBiaya.Clear;
+
+  StatusPerubahanBiaya:=0;
+  StatusCekBiaya:=1;
+
+  edKelompokKendaraan.AllowKeyEdit:=False;
+  edKelompokKendaraan.ButtonVisible:=True;
+  edNamaJenisKendMuatan.ReadOnly:=True;
+  edNoKendMuatan.ReadOnly:=True;
 
   with dm.Qtemp2 do
   begin
@@ -1563,15 +1784,24 @@ end;
 
 procedure TFNewDeliveryOrder.btAddDetailClick(Sender: TObject);
 begin
-  if (vFormSumber01='0') OR (vFormSumber01='')  then
+  if edNamaJenisMuatan.Text=''  then
   begin
     ShowMessage('Silakan Setting Form Target Sumber..');
     exit;
-  end;
-  if (vFormSumber01<>'0') AND (vFormSumber01<>'') then
+  end else if (edKodeJenisMuatan.Text='007') then
   begin
-    FDelivery_Order_Sumber.ShowModal;
+    vStatusTrans:='deliveryorder';
+    FTambah_Barang.clear;
+    FTambah_Barang.ShowModal;
+  end else if (edKodeJenisMuatan.Text='006') then
+  begin
+    FDeliveryOrder_SumberPO.ShowModal;
   end;
+
+//  if (vFormSumber01<>'0') AND (vFormSumber01<>'') then
+//  begin
+//    FDelivery_Order_Sumber.ShowModal;
+//  end;
 end;
 
 procedure TFNewDeliveryOrder.btBackStepClick(Sender: TObject);
@@ -1587,7 +1817,6 @@ end;
 
 procedure TFNewDeliveryOrder.btBatalSumberJualClick(Sender: TObject);
 begin
-  Clear;
   Close;
 end;
 
@@ -1602,6 +1831,81 @@ begin
   FNewDeliveryOrder.edNamaJenisDoc.Text:=edNamaJenisMuatan.Text;
   FNewDeliveryOrder.dtTanggalDoc.Date:=dtTanggalMuatan.Date;
   FNewDeliveryOrder.dtTerimaTagihan.Date:=dtTanggalMuatan.Date;
+end;
+
+procedure TFNewDeliveryOrder.btnSaveMuatanClick(Sender: TObject);
+var
+  Year, Month, Day: Word;
+  strMessage,strMessageBox:String;
+begin
+
+  DecodeDate(dtTanggalMuatan.Date, Year, Month, Day);
+  strtgl:=IntToStr(Day);
+  strbulan:=inttostr(Month);
+  strtahun:=inttostr(Year);
+
+  if not dm.Koneksi.Connected then
+  dm.Koneksi.Connected := True;
+
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+    MemDataMuatan.Active:=False;
+    MemDataMuatan.Active:=True;
+    if edNamaJenisMuatan.Text='' then
+    begin
+      MessageDlg('Jenis Muatan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end  else if (edLokasiMuat.Text='') then
+    begin
+      MessageDlg('Lokasi Muat Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end else if (edLokasiBongkar.Text='') then
+    begin
+      MessageDlg('Lokasi Bongkar Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end else if (edKodeVendorTransMuatan.Text='') then
+    begin
+      MessageDlg('Vendor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else if (edNamaJenisKendMuatan.Text='') then
+    begin
+      MessageDlg('Jenis Kendaraan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else if MemDataMuatan.RecordCount=0 then
+    begin
+      MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
+    end else if (MemDataMuatan.RecordCount=0) then
+    begin
+      MessageDlg('Detail Muatan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end
+    else if Status = 0 then
+    begin
+      FNewDeliveryOrder.Autonumber;
+      //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+      if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeDOMuatan.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      begin
+        SaveOffline;
+        Dm.Koneksi.Commit;
+      end;
+    end
+    else if Status = 1 then
+    begin
+
+      strMessageBox:='Apa Anda Yakin Memperbarui Data Ini ?';
+
+      if application.MessageBox(PChar(strMessageBox),'confirm',mb_yesno or mb_iconquestion)=id_yes then
+      begin
+        UpdateOffline;
+        Dm.Koneksi.Commit;
+      end;
+
+    end;
+    Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.btMasterLokasiBongkarClick(Sender: TObject);
@@ -1921,13 +2225,16 @@ begin
 //  begin
 //    Autonumber;
 //  end;
-  edKelompokKendaraan.Text:='';
-  edNamaJenisKendMuatan.Text:='';
-  edKodeJenisKendMuatan.Text:='';
-  edNoKendMuatan.Text:='';
-  strVehicleGroupId:='';
-  spKapasitas.Value:=0;
-  MemDataMuatan.EmptyTable;
+  if (edKodeJenisMuatan.Text='005') OR (edKodeJenisMuatan.Text='006') then
+  begin
+    edKelompokKendaraan.Text:='';
+    edNamaJenisKendMuatan.Text:='';
+    edKodeJenisKendMuatan.Text:='';
+    edNoKendMuatan.Text:='';
+    strVehicleGroupId:='';
+    spKapasitas.Value:=0;
+    MemDataMuatan.EmptyTable;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.edKodeJenisKendMuatanChange(Sender: TObject);
@@ -2049,9 +2356,79 @@ begin
   vFormSumber02:='0';
   FMasterData.Caption:='Master Data';
   FMasterData.vcall:='do_jenis';
-  FMasterData.update_grid('code','name','description','t_type_delivery_order','WHERE	deleted_at IS NULL ORDER BY code desc');
+  FMasterData.update_grid('code','name','description','t_type_delivery_order','WHERE	deleted_at IS NULL ORDER BY code asc');
+//  FMasterData.update_grid('code','name','description','t_type_delivery_order','WHERE	code in(''005'',''006'',''007'')');
   FMasterData.ShowModal;
   RefreshGridRincianBiaya;
+end;
+
+procedure TFNewDeliveryOrder.edNamaJenisMuatanChange(Sender: TObject);
+begin
+
+  RefreshForm;
+  if (edKodeJenisMuatan.Text='005') OR (edKodeJenisMuatan.Text='006') then
+  begin
+    TabDataBiaya.TabVisible:=True;
+    TabDataMuatan.TabVisible:=True;
+    edKelompokKendaraan.AllowKeyEdit:=False;
+    edKelompokKendaraan.ButtonVisible:=True;
+    edNamaJenisKendMuatan.ReadOnly:=True;
+    edNoKendMuatan.ReadOnly:=True;
+    DBGrid_SumberOrder.Columns[0].Visible:=True;
+    DBGrid_SumberOrder.Columns[2].Visible:=True;
+    DBGrid_SumberOrder.Columns[3].Visible:=True;
+    btNextStep.Visible:=True;
+    btnSubmitCorrectionMuatan.Visible:=False;
+    btnCloseMuatan.Visible:=False;
+    btnSaveMuatan.Visible:=False;
+  end else
+  if edKodeJenisMuatan.Text='007' then
+  begin
+    TabDataBiaya.TabVisible:=False;
+    TabDataMuatan.TabVisible:=False;
+    edKelompokKendaraan.AllowKeyEdit:=True;
+    edKelompokKendaraan.ButtonVisible:=False;
+    edNamaJenisKendMuatan.ReadOnly:=False;
+    edNoKendMuatan.ReadOnly:=False;
+    DBGrid_SumberOrder.Columns[0].Visible:=False;
+    DBGrid_SumberOrder.Columns[2].Visible:=False;
+    DBGrid_SumberOrder.Columns[3].Visible:=False;
+    btNextStep.Visible:=False;
+    btnSubmitCorrectionMuatan.Visible:=True;
+    btnCloseMuatan.Visible:=True;
+    btnSaveMuatan.Visible:=True;
+  end else begin
+    TabDataBiaya.TabVisible:=True;
+    TabDataMuatan.TabVisible:=True;
+    edKelompokKendaraan.AllowKeyEdit:=False;
+    edKelompokKendaraan.ButtonVisible:=True;
+    edNamaJenisKendMuatan.ReadOnly:=True;
+    edNoKendMuatan.ReadOnly:=True;
+    DBGrid_SumberOrder.Columns[0].Visible:=True;
+    DBGrid_SumberOrder.Columns[2].Visible:=True;
+    DBGrid_SumberOrder.Columns[3].Visible:=True;
+    btNextStep.Visible:=False;
+    btnSubmitCorrectionMuatan.Visible:=True;
+    btnCloseMuatan.Visible:=True;
+    btnSaveMuatan.Visible:=True;
+  end;
+
+  if (edKodeJenisMuatan.Text='005') then
+  begin
+    btAddDetail.Visible:=False;
+    DBGrid_SumberOrder.Columns[2].Title.Caption:='Nama Pelanggan';
+  end else if (edKodeJenisMuatan.Text='006') then
+  begin
+    btAddDetail.Visible:=True;
+    DBGrid_SumberOrder.Columns[2].Title.Caption:='Nama Supplier';
+  end else begin
+    btAddDetail.Visible:=True;
+  end;
+
+  if Status=0 then
+  begin
+    btnSubmitCorrectionMuatan.Visible:=False;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.edNamaKabupatenButtonClick(Sender: TObject);
@@ -2155,12 +2532,18 @@ end;
 
 procedure TFNewDeliveryOrder.edKelompokKendaraanButtonClick(Sender: TObject);
 begin
-  if edNamaJenisMuatan.Text<>'' then
+  if edNamaJenisMuatan.Text='' then
+  begin
+    ShowMessage('Jenis Muatan Wajib Diisi..!');
+  end else if edKodeJenisMuatan.Text='006' then
+  begin
+    FDaftarKendaraan.vcall:='delivery_order';
+    FDaftarKendaraan.GetDataViaAPI;
+    FDaftarKendaraan.show;
+  end else
   begin
     FListKelompokKendaraan.Refresh;
     FListKelompokKendaraan.show;
-  end else begin
-    ShowMessage('Jenis Muatan Wajib Diisi..!');
   end;
 end;
 
@@ -2263,6 +2646,32 @@ begin
     BCorrection.Enabled:=False;
     btSaveParameter.Enabled:=False;
   end;
+
+  //Kondisi Sumber Offline
+  if (Status = 1) and (IntStatusKoreksi = 2) AND (IntStatusDO<>99) then
+  begin
+    btnSaveMuatan.Enabled := True;
+    btnSubmitCorrectionMuatan.Visible := True;
+    btnSubmitCorrectionMuatan.Enabled := False;
+  end
+  else if Status = 0 then
+  begin
+    btnSaveMuatan.Visible := False;
+    btnSubmitCorrectionMuatan.Visible := False;
+    btnCloseMuatan.Visible:=False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (IntStatusDO<>99) then
+  begin
+    btnSaveMuatan.Enabled := False;
+    btnSubmitCorrectionMuatan.Visible := True;
+    btnSubmitCorrectionMuatan.Enabled := True;
+  end else if IntStatusDO=99 then
+  begin
+    btnSubmitCorrectionMuatan.Enabled := True;
+    btnSubmitCorrectionMuatan.Visible := False;
+    btnSubmitCorrectionMuatan.Enabled := False;
+  end;
+
 end;
 
 Initialization

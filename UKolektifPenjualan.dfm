@@ -44,7 +44,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     Align = alBottom
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 59
+    ExplicitTop = 63
     ExplicitWidth = 440
     object BBatal: TRzBitBtn
       Left = 367
@@ -293,7 +293,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46009.631130914300000000
+    ReportOptions.LastChange = 46021.347759317130000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
@@ -477,8 +477,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 64.588847780000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_unit'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -498,8 +499,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 42.804061120000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'amount'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%0.0n'
           DisplayFormat.Kind = fkNumeric
@@ -521,8 +523,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 95.608122230000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'unit_price'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
@@ -544,8 +547,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 79.327393290000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_first'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
@@ -567,8 +571,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 80.590600000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_second'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
@@ -590,8 +595,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 70.590600000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'piece_third'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
@@ -613,6 +619,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 155.323851110000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_item'
           DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
@@ -632,6 +639,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.100597780000000000
           Width = 30.236240000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -650,6 +658,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = -0.157700000000000000
           Width = 109.497011120000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataSet = FDataListPenjualan.frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
@@ -709,7 +718,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'PT HASTA LESTARI JAYA')
+            '[frxDBDPenjualan."company_name"]')
           ParentFont = False
         end
         object kota: TfrxMemoView
@@ -725,7 +734,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'TANGERANG')
+            '[frxDBDPenjualan."company_city"]')
           ParentFont = False
         end
         object Memo16: TfrxMemoView
@@ -1930,6 +1939,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
     UserName = 'frxDBDPenjualan'
     CloseDataSource = False
     FieldAliases.Strings = (
+      'company_name=company_name'
+      'company_city=company_city'
       'trans_no=trans_no'
       'no_inv_tax=no_inv_tax'
       'trans_date=trans_date'
@@ -1970,7 +1981,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
       'customer_name_pkp=customer_name_pkp'
       'deleted_at=deleted_at'
       'signature_name=signature_name'
-      'company_name=company_name'
+      'company_name_1=company_name_1'
       'va_name=va_name'
       'company_code_bank=company_code_bank'
       'number_va=number_va'
@@ -1984,7 +1995,10 @@ object FKolektifPenjualan: TFKolektifPenjualan
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select a."trans_no", "no_inv_tax", "trans_date",a.po_order, '
+      
+        'select (SELECT company_name FROM t_company) company_name,(SELECT' +
+        ' city FROM t_company) company_city,a."trans_no", "no_inv_tax", "' +
+        'trans_date",a.po_order, '
       
         'a.tot_before_piece tot_before_piece_master,a.sub_total sub_total' +
         '_master,a.tot_piece_value tot_piece_value_master,a.ppn_value ppn' +

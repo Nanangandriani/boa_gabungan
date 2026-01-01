@@ -442,8 +442,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 960
-      ExplicitTop = 3
+      ExplicitLeft = 950
     end
     object Edautocode: TEdit
       Left = 503
@@ -483,6 +482,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1097
+      ExplicitHeight = 223
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -579,8 +580,6 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1097
-      ExplicitHeight = 223
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -608,7 +607,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
               end>
             FieldName = 'no_tagihan'
             Footers = <>
-            TextEditing = False
+            ReadOnly = True
             Title.Caption = 'Nomor | Tagihan'
             Width = 200
           end
@@ -1170,7 +1169,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       ''
       'end.')
     Left = 32
-    Top = 384
+    Top = 416
     Datasets = <>
     Variables = <>
     Style = <>

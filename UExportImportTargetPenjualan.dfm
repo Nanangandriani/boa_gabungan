@@ -633,7 +633,6 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
         'EFT JOIN t_customer_sales_target b ON b.id_customer_sales_target' +
         ' = a.id_customer_sales_target WHERE b."year" = 2024 AND b.month ' +
         '= 10 ORDER BY 1')
-    Active = True
     Left = 353
     Top = 22
   end

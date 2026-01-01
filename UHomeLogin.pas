@@ -93,6 +93,17 @@ begin
 //    DM.Koneksi.SpecificOptions.Values['CommandTimeout'] := '120';
 //    DM.Koneksi.SpecificOptions.Values['LockTimeout'] := '120';
     DM.Koneksi.Connected:=True;
+
+
+    //PUSAT
+    DM.Koneksi_PST.Connected:=False;
+    DM.Koneksi_PST.Server:=dm.ABSTable1Ip_db_Pusat.AsString;
+    DM.Koneksi_PST.ProviderName:='PostgreSQL';
+    DM.Koneksi_PST.Database:=dm.ABSTable1Db_Name_Pusat.AsString;
+    DM.Koneksi_PST.Password:=dm.abstable1Password_Pusat.AsString;
+    DM.Koneksi_PST.Username:=dm.abstable1User_db_Pusat.AsString;
+    Dm.Koneksi_PST.Port:=dm.abstable1Port_db_Pusat.AsInteger;
+    DM.Koneksi_PST.Connected:=True;
   EXCEPT
     showmessage('Tidak terkoneksi dengan server !');
     exit;
@@ -330,14 +341,14 @@ begin
     end;
     Nm:=Eduser.Text;
   end;
-  with dm.Qtemp do
+  with dm.QtempPusat do
   begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM app_versions ORDER BY id DESC LIMIT 1';
     open;
   end;
-  if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=0) then
+  if (dm.QtempPusat.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.QtempPusat.FieldValues['status_must_change']=0) then
   begin
 //    ShowMessage('Aplikasi tidak update');
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
@@ -345,7 +356,7 @@ begin
     begin
       FMainMenu.UpdateVersi;
     end;
-  end else if (dm.Qtemp.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.Qtemp.FieldValues['status_must_change']=1) then
+  end else if (dm.QtempPusat.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.QtempPusat.FieldValues['status_must_change']=1) then
   begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;

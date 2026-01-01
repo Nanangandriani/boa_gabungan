@@ -36,6 +36,11 @@ type
     edKode_kares: TEdit;
     edKode_area: TEdit;
     edKode_wil: TEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    btMasterTP: TSpeedButton;
+    edTP: TRzButtonEdit;
+    edKodeTP: TEdit;
     procedure btMasterWilayahClick(Sender: TObject);
     procedure btMasterAreaClick(Sender: TObject);
     procedure btMasterProvinsiClick(Sender: TObject);
@@ -47,6 +52,8 @@ type
     procedure RefreshGrid;
     procedure DBGridCustomerDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btMasterTPClick(Sender: TObject);
+    procedure edTPButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,35 +75,57 @@ uses USetMasterWilayah, UMasterData, UDataModule, UNew_Pelanggan, UMy_Function,
 
 procedure TFMasterWilayah.RefreshGrid;
 begin
-  with Dm.Qtemp do
+  if edKodeTP.Text<>'' then
   begin
-    close;
-    sql.clear;
-    sql.add(' SELECT "code_prov", "name_prov", "code_province", "code_kab", '+
-            ' "name_kab", "code_karesidenan", "code_regency", "code_kec", "name_kec" from '+
-            ' (SELECT "code" as code_prov, "name" as name_prov '+
-            ' from t_region_province WHERE deleted_at IS NULL) prov  '+
-            ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-              ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL ) kab '+
-              ' ON prov.code_prov=kab.code_province '+
-            ' LEFT JOIN (SELECT "code_regency", "code" as code_kec, "name" as name_kec '+
-              ' from t_region_subdistrict WHERE deleted_at IS NULL) kec ON '+
-              ' kab.code_kab=kec.code_regency '+
-            ' where ("code_karesidenan"='+QuotedStr(edKode_kares.Text)+') ');
-    open;
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT "code_prov", "name_prov", "code_province", "code_kab", '+
+              ' "name_kab", "code_tp", "code_regency", "code_kec", "name_kec" from '+
+              ' (SELECT "code" as code_prov, "name" as name_prov '+
+              ' from t_region_province WHERE deleted_at IS NULL) prov  '+
+              ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+                ' "code_tp"  from t_region_regency WHERE deleted_at IS NULL ) kab '+
+                ' ON prov.code_prov=kab.code_province '+
+              ' LEFT JOIN (SELECT "code_regency", "code" as code_kec, "name" as name_kec '+
+                ' from t_region_subdistrict WHERE deleted_at IS NULL) kec ON '+
+                ' kab.code_kab=kec.code_regency '+
+              ' where ("code_tp"='+QuotedStr(edKodeTP.Text)+') ');
+      open;
+    end;
+  end else if edKode_kares.Text<>'' then
+  begin
+    with Dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT "code_prov", "name_prov", "code_province", "code_kab", '+
+              ' "name_kab", "code_karesidenan", "code_regency", "code_kec", "name_kec" from '+
+              ' (SELECT "code" as code_prov, "name" as name_prov '+
+              ' from t_region_province WHERE deleted_at IS NULL) prov  '+
+              ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
+                ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL ) kab '+
+                ' ON prov.code_prov=kab.code_province '+
+              ' LEFT JOIN (SELECT "code_regency", "code" as code_kec, "name" as name_kec '+
+                ' from t_region_subdistrict WHERE deleted_at IS NULL) kec ON '+
+                ' kab.code_kab=kec.code_regency '+
+              ' where ("code_karesidenan"='+QuotedStr(edKode_kares.Text)+') ');
+      open;
+    end;
   end;
 
-    FMasterWilayah.MemDetailMasterWil.active:=false;
-    FMasterWilayah.MemDetailMasterWil.active:=true;
-    FMasterWilayah.MemDetailMasterWil.EmptyTable;
+  FMasterWilayah.MemDetailMasterWil.active:=false;
+  FMasterWilayah.MemDetailMasterWil.active:=true;
+  FMasterWilayah.MemDetailMasterWil.EmptyTable;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      Showmessage('Maaf, Data Tidak Ditemukan..');
-    end;
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
 
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
@@ -109,7 +138,7 @@ begin
      FMasterWilayah.MemDetailMasterWil.post;
      Dm.Qtemp.next;
     end;
-    end;
+  end;
 end;
 
 
@@ -117,7 +146,7 @@ procedure TFMasterWilayah.btAmbilKaresidenanClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='m_kares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL and code_areas='+QuotedStr(edKode_area.text)+'');
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -129,6 +158,7 @@ begin
   FSetMasterWilayah.TabSetKabupaten.TabVisible:=false;
   FSetMasterWilayah.TabSetKecamatan.TabVisible:=false;
   FSetMasterWilayah.TabSetKares.TabVisible:=false;
+  FSetMasterWilayah.TabSetTP.TabVisible:=false;
   FSetMasterWilayah.QArea.Close;
   FSetMasterWilayah.QArea.Open;
   FSetMasterWilayah.RzPageControl1.ActivePage:=FSetMasterWilayah.TabSetArea;
@@ -142,6 +172,7 @@ begin
   FSetMasterWilayah.TabSetProvinsi.TabVisible:=false;
   FSetMasterWilayah.TabSetKabupaten.TabVisible:=false;
   FSetMasterWilayah.TabSetKecamatan.TabVisible:=false;
+  FSetMasterWilayah.TabSetTP.TabVisible:=false;
   FSetMasterWilayah.TabSetKares.TabVisible:=true;
   FSetMasterWilayah.QKaresidenan.Close;
   FSetMasterWilayah.QKaresidenan.Open;
@@ -157,7 +188,23 @@ begin
   FSetMasterWilayah.TabSetKabupaten.TabVisible:=true;
   FSetMasterWilayah.TabSetKecamatan.TabVisible:=true;
   FSetMasterWilayah.TabSetKares.TabVisible:=false;
+  FSetMasterWilayah.TabSetTP.TabVisible:=false;
   FSetMasterWilayah.RzPageControl1.ActivePage:=FSetMasterWilayah.TabSetProvinsi;
+  FSetMasterWilayah.ShowModal;
+end;
+
+procedure TFMasterWilayah.btMasterTPClick(Sender: TObject);
+begin
+  FSetMasterWilayah.TabSetBagianWilayah.TabVisible:=false;
+  FSetMasterWilayah.TabSetArea.TabVisible:=false;
+  FSetMasterWilayah.TabSetProvinsi.TabVisible:=false;
+  FSetMasterWilayah.TabSetKabupaten.TabVisible:=false;
+  FSetMasterWilayah.TabSetKecamatan.TabVisible:=false;
+  FSetMasterWilayah.TabSetTP.TabVisible:=true;
+  FSetMasterWilayah.TabSetKares.TabVisible:=false;
+  FSetMasterWilayah.QTP.Close;
+  FSetMasterWilayah.QTP.Open;
+  FSetMasterWilayah.RzPageControl1.ActivePage:=FSetMasterWilayah.TabSetTP;
   FSetMasterWilayah.ShowModal;
 end;
 
@@ -170,6 +217,7 @@ begin
   FSetMasterWilayah.TabSetKabupaten.TabVisible:=false;
   FSetMasterWilayah.TabSetKecamatan.TabVisible:=false;
   FSetMasterWilayah.TabSetKares.TabVisible:=false;
+  FSetMasterWilayah.TabSetTP.TabVisible:=false;
   FSetMasterWilayah.QWilayah.Close;
   FSetMasterWilayah.QWilayah.Open;
   FSetMasterWilayah.RzPageControl1.ActivePage:=FSetMasterWilayah.TabSetBagianWilayah;
@@ -224,8 +272,13 @@ begin
   end;
   if vcall='m_pelanggan' then
   begin
-    FNew_Pelanggan.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
-    FNew_Pelanggan.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+    if edTP.Text<>'' then
+    begin
+      FNew_Pelanggan.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
+      FNew_Pelanggan.Ednamawilayah.text:= edTP.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+    end else begin
+      MessageDlg('TP Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end;
   end;
   if vcall='m_jurnalPenj' then
   begin
@@ -238,16 +291,36 @@ end;
 
 procedure TFMasterWilayah.edAreaButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data Area';
-  FMasterData.vcall:='m_area';
-  FMasterData.update_grid('code','name','description','t_region_areas','WHERE	deleted_at IS NULL and code_region='+QuotedStr(edKode_wil.text)+'');
-  FMasterData.ShowModal;
+  if edWilayah.Text<>'' then
+  begin
+
+    FMasterData.Caption:='Master Data Area';
+    FMasterData.vcall:='m_area';
+    FMasterData.update_grid('code','name','description','t_region_areas','WHERE	deleted_at IS NULL and code_region='+QuotedStr(edKode_wil.text)+'');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Wilayah Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 procedure TFMasterWilayah.edProvinsiButtonClick(Sender: TObject);
 begin
   FMasterData.vcall:='m_provinsi';
   FMasterData.ShowModal;
+end;
+
+procedure TFMasterWilayah.edTPButtonClick(Sender: TObject);
+begin
+  if edArea.Text<>'' then
+  begin
+
+    FMasterData.Caption:='Master Data TP';
+    FMasterData.vcall:='m_tp';
+    FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL and code_areas='+QuotedStr(edKode_area.text)+'');
+    FMasterData.ShowModal;
+  end else begin
+    MessageDlg('Area Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 procedure TFMasterWilayah.edWilayahButtonClick(Sender: TObject);
@@ -278,6 +351,8 @@ if SelectRow('select value_parameter from t_parameter where key_parameter=''mode
   edKode_kares.Clear;
   edKode_area.Clear;
   edKode_wil.Clear;
+  edKodeTP.Clear;
+  edTP.Clear;
   MemDetailMasterWil.EmptyTable;
 end;
 

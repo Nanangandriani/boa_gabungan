@@ -60,6 +60,7 @@ type
     procedure AddReturPenjualan;
     procedure AddKlasifikasi;
     procedure AddTransferGudang;
+    procedure AddDeliveryOrder;
   end;
   function FTambah_Barang: TFTambah_Barang;
 
@@ -73,7 +74,7 @@ implementation
 uses UCari_Barang2, UMasterData, UDataModule, UNew_SalesOrder, UTemplate_Temp,
   UNew_DataPenjualan, UMy_Function, UDataReturPenjualan,
   UNew_DataTargetPenjualan, UNew_DataPenjualanPromosi, UDaftarKlasifikasi,
-  UNew_TransferBarang;
+  UNew_TransferBarang, UNewDeliveryOrder;
 
 var
 tambahbarang : TFTambah_Barang;
@@ -555,6 +556,72 @@ begin
       end;
 end;
 
+procedure TFTambah_Barang.AddDeliveryOrder;
+var
+  vKodeSama: Boolean;
+begin
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  vKodeSama:=false;
+  if edKodeBarang.Text='' then
+  begin
+    MessageDlg('Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeBarang.SetFocus;
+  end
+
+  else if edKodeSatuan.Text='' then
+  begin
+    MessageDlg('Satuan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    edKodeSatuan.SetFocus;
+  end
+  else if edJumlah.Value=0 then
+  begin
+    MessageDlg('Jumlah Mininal Order 1 (Satu)..!!',mtInformation,[mbRetry],0);
+    edJumlah.SetFocus;
+  end else
+  begin
+    FNewDeliveryOrder.MemDataMuatan.active:=false;
+    FNewDeliveryOrder.MemDataMuatan.active:=true;
+    vKodeSama:=false;
+    if FNewDeliveryOrder.MemDataMuatan.RecordCount<>0 then
+    begin
+      FNewDeliveryOrder.MemDataMuatan.First;
+      while not FNewDeliveryOrder.MemDataMuatan.Eof do
+      begin
+        if (edKodeBarang.Text=FNewDeliveryOrder.MemDataMuatan['kd_barang']) AND (edKodeSatuan.Text=FNewDeliveryOrder.MemDataMuatan['satuan']) then
+        begin
+          vKodeSama:=true;
+          MessageDlg('Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
+          exit;
+        end;
+        FNewDeliveryOrder.MemDataMuatan.Next;
+      end;
+    end;
+
+
+
+    if vKodeSama=false then
+    begin
+     FNewDeliveryOrder.MemDataMuatan.insert;
+     FNewDeliveryOrder.MemDataMuatan['kd_barang']:=edKodeBarang.Text;
+     FNewDeliveryOrder.MemDataMuatan['nm_barang']:=edNamaBarang.Text;
+     FNewDeliveryOrder.MemDataMuatan['jumlah']:=edJumlah.Value;
+     FNewDeliveryOrder.MemDataMuatan['satuan']:=edKodeSatuan.Text;
+     FNewDeliveryOrder.MemDataMuatan.post;
+
+    end;
+  end;
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
+      end;
+    end;
+  end;
+end;
+
 procedure TFTambah_Barang.AddPenjulan;
 var
   vKodeSama: Boolean;
@@ -686,7 +753,10 @@ begin
   begin
     AddTransferGudang;
   end;
-
+  if vStatusTrans='deliveryorder' then
+  begin
+    AddDeliveryOrder;
+  end;
 end;
 
 procedure TFTambah_Barang.edNamaBarangButtonClick(Sender: TObject);

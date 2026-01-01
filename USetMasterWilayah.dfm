@@ -1,6 +1,8 @@
 object FSetMasterWilayah: TFSetMasterWilayah
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Setting Master'
   ClientHeight = 520
   ClientWidth = 909
@@ -480,6 +482,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
           Top = 76
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 0
         end
         object edKet_setarea: TEdit
@@ -487,6 +490,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
           Top = 105
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 1
         end
         object cbstatus_setarea: TCheckBox
@@ -845,9 +849,9 @@ object FSetMasterWilayah: TFSetMasterWilayah
       ExplicitHeight = 494
       object DBGrid_setkares: TDBGridEh
         Left = 0
-        Top = 177
+        Top = 137
         Width = 905
-        Height = 318
+        Height = 358
         Align = alClient
         DataSource = dsKaresidenan
         DynProps = <>
@@ -862,6 +866,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'code_areas'
             Footers = <>
+            Title.Alignment = taCenter
             Visible = False
           end
           item
@@ -870,7 +875,9 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'name_areas'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Area'
+            Visible = False
             Width = 200
           end
           item
@@ -879,6 +886,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'code_region_kares'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Kode Karesidenan'
             Width = 113
           end
@@ -888,6 +896,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'name_region_kares'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Karesidenan'
             Width = 200
           end
@@ -897,6 +906,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'description'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Keterangan'
             Width = 300
           end>
@@ -907,93 +917,97 @@ object FSetMasterWilayah: TFSetMasterWilayah
         Left = 0
         Top = 0
         Width = 905
-        Height = 145
+        Height = 105
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
         ExplicitWidth = 901
         object Label16: TLabel
-          Left = 125
-          Top = 116
+          Left = 111
+          Top = 73
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label17: TLabel
-          Left = 125
-          Top = 87
+          Left = 111
+          Top = 44
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label42: TLabel
-          Left = 125
-          Top = 57
+          Left = 111
+          Top = 14
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label43: TLabel
-          Left = 125
+          Left = 581
           Top = 27
           Width = 3
           Height = 15
           Caption = ':'
+          Visible = False
         end
         object Label12: TLabel
-          Left = 28
+          Left = 484
           Top = 27
           Width = 24
           Height = 15
           Caption = 'Area'
+          Visible = False
         end
         object Label13: TLabel
-          Left = 28
-          Top = 57
+          Left = 14
+          Top = 14
           Width = 27
           Height = 15
           Caption = 'Kode'
         end
         object Label14: TLabel
-          Left = 28
-          Top = 87
+          Left = 14
+          Top = 44
           Width = 32
           Height = 15
           Caption = 'Nama'
         end
         object Label15: TLabel
-          Left = 28
-          Top = 116
+          Left = 14
+          Top = 73
           Width = 60
           Height = 15
           Caption = 'Keterangan'
         end
         object edKode_setkares: TEdit
-          Left = 140
-          Top = 54
+          Left = 126
+          Top = 11
           Width = 185
           Height = 23
           CharCase = ecUpperCase
           TabOrder = 0
         end
         object edNama_setkares: TEdit
-          Left = 140
-          Top = 84
+          Left = 126
+          Top = 41
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 1
         end
         object edKet_setkares: TEdit
-          Left = 140
-          Top = 113
+          Left = 126
+          Top = 70
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 2
         end
         object cbstatus_setkares: TCheckBox
-          Left = 331
-          Top = 53
+          Left = 317
+          Top = 10
           Width = 142
           Height = 17
           Caption = 'Aktif'
@@ -1001,18 +1015,19 @@ object FSetMasterWilayah: TFSetMasterWilayah
           Visible = False
         end
         object edArea_setkares: TRzButtonEdit
-          Left = 140
+          Left = 596
           Top = 24
           Width = 240
           Height = 23
           Text = ''
           TabOrder = 4
+          Visible = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
           OnButtonClick = edArea_setkaresButtonClick
         end
         object edKDArea_setkares: TEdit
-          Left = 386
+          Left = 842
           Top = 24
           Width = 100
           Height = 23
@@ -1022,7 +1037,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
       end
       object Panel4: TPanel
         Left = 0
-        Top = 145
+        Top = 105
         Width = 905
         Height = 32
         Align = alTop
@@ -2561,12 +2576,8 @@ object FSetMasterWilayah: TFSetMasterWilayah
         end
       end
     end
-    object TabSheet1: TRzTabSheet
+    object TabSetTP: TRzTabSheet
       Caption = 'Setting TP'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -2576,7 +2587,6 @@ object FSetMasterWilayah: TFSetMasterWilayah
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = 8
         object Label50: TLabel
           Left = 125
           Top = 116
@@ -2646,6 +2656,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
           Top = 84
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 1
         end
         object edKet_setTP: TEdit
@@ -2653,6 +2664,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
           Top = 113
           Width = 313
           Height = 23
+          CharCase = ecUpperCase
           TabOrder = 2
         end
         object cbstatus_setTP: TCheckBox
@@ -2691,7 +2703,6 @@ object FSetMasterWilayah: TFSetMasterWilayah
         Height = 32
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 153
         object RzBitBtn2: TRzBitBtn
           Left = 829
           Top = 1
@@ -2813,8 +2824,6 @@ object FSetMasterWilayah: TFSetMasterWilayah
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 685
-          ExplicitTop = 6
         end
         object btRefresh_setTP: TRzBitBtn
           Left = 754
@@ -3008,6 +3017,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
         Height = 318
         Align = alClient
         DataSource = dsTP
+        DrawMemoText = True
         DynProps = <>
         ReadOnly = True
         SearchPanel.Enabled = True
@@ -3020,6 +3030,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'code_areas'
             Footers = <>
+            Title.Alignment = taCenter
             Visible = False
           end
           item
@@ -3028,6 +3039,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'name_areas'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Nama Area'
             Width = 200
           end
@@ -3035,18 +3047,20 @@ object FSetMasterWilayah: TFSetMasterWilayah
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'code_region_kares'
+            FieldName = 'code_region_tp'
             Footers = <>
-            Title.Caption = 'Kode Karesidenan'
+            Title.Alignment = taCenter
+            Title.Caption = 'Kode TP'
             Width = 113
           end
           item
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'name_region_kares'
+            FieldName = 'name_region_tp'
             Footers = <>
-            Title.Caption = 'Nama Karesidenan'
+            Title.Alignment = taCenter
+            Title.Caption = 'Nama TP'
             Width = 200
           end
           item
@@ -3055,6 +3069,7 @@ object FSetMasterWilayah: TFSetMasterWilayah
             EditButtons = <>
             FieldName = 'description'
             Footers = <>
+            Title.Alignment = taCenter
             Title.Caption = 'Keterangan'
             Width = 300
           end>
@@ -3101,8 +3116,8 @@ object FSetMasterWilayah: TFSetMasterWilayah
       'LEFT JOIN t_region b ON a.code_region=b.code'
       'WHERE a.deleted_at IS NULL'
       'order by a.code asc')
-    Left = 152
-    Top = 376
+    Left = 288
+    Top = 384
     object QAreacode_region: TStringField
       FieldName = 'code_region'
       Size = 255
@@ -3211,9 +3226,8 @@ object FSetMasterWilayah: TFSetMasterWilayah
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT code_areas, b.name as name_areas, a.code as code_region_k' +
-        'ares, a.name as name_region_kares, a.description from t_region_t' +
-        'p a'
+        'SELECT code_areas, b.name as name_areas, a.code as code_region_t' +
+        'p, a.name as name_region_tp, a.description from t_region_tp a'
       
         'LEFT JOIN (SELECT * from t_region_areas where deleted_at IS NULL' +
         ') b ON a.code_areas=b.code'
@@ -3221,28 +3235,26 @@ object FSetMasterWilayah: TFSetMasterWilayah
       'order by a.code asc')
     Left = 520
     Top = 376
-    object StringField1: TStringField
+    object QTPcode_areas: TStringField
       FieldName = 'code_areas'
       Size = 255
     end
-    object StringField2: TStringField
+    object QTPname_areas: TStringField
       FieldName = 'name_areas'
       ReadOnly = True
       Size = 255
     end
-    object StringField3: TStringField
-      FieldName = 'code_region_kares'
+    object QTPcode_region_tp: TStringField
+      FieldName = 'code_region_tp'
       Required = True
       Size = 255
     end
-    object StringField4: TStringField
-      FieldName = 'name_region_kares'
+    object QTPname_region_tp: TStringField
+      FieldName = 'name_region_tp'
       Size = 255
     end
-    object MemoField1: TMemoField
+    object QTPdescription: TMemoField
       FieldName = 'description'
-      ReadOnly = True
-      OnGetText = QKaresidenandescriptionGetText
       BlobType = ftMemo
     end
   end

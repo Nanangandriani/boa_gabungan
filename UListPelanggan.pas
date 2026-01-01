@@ -27,7 +27,7 @@ uses
   Data.DB, MemDS, DBAccess, Uni, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxButtonEdit, cxBarEditItem,
   frxExportXLSX, frxClass, frxExportBaseDialog, frxExportXLS, frxDBSet,
-  frxExportPDF, ShellAPI;
+  frxExportPDF, ShellAPI, cxDropDownEdit;
 
 type
   TFListPelanggan = class(TForm)
@@ -83,6 +83,13 @@ type
     frxXLSExport1: TfrxXLSExport;
     frxXLSXExport1: TfrxXLSXExport;
     frxPDFExport1: TfrxPDFExport;
+    cxBarEditItem2: TcxBarEditItem;
+    edJenisUsaha: TcxBarEditItem;
+    QPelanggantp: TMemoField;
+    QPelangganname_type: TMemoField;
+    QPelangganname_selling_type: TMemoField;
+    QPelangganname_group: TMemoField;
+    QPelangganname_type_business: TMemoField;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -100,11 +107,13 @@ type
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure edJenisUsahaPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    strKaresidenanID,strKabupatenID :String;
+    strKaresidenanID,strKabupatenID,strKodeJenisUsaha :String;
     procedure Refresh;
     procedure ExportToExcel;
   end;
@@ -224,7 +233,7 @@ begin
 end;
 
 procedure TFListPelanggan.Refresh;
-var strWhereKaresidenan,strWhereKabupaten, strWhereSBU: String;
+var strWhereKaresidenan,strWhereKabupaten, strWhereSBU, strWhereJenisUsaha: String;
 begin
   DBGridcustomer.StartLoadingStatus();
   try
@@ -256,13 +265,21 @@ begin
       strWhereKabupaten:='';
     end;
 
+    if edJenisUsaha.EditValue<>'' then
+    begin
+      strWhereJenisUsaha:=' AND code_type_business='+QuotedStr(strKodeJenisUsaha);
+    end else begin
+      strWhereJenisUsaha:='';
+    end;
+
     with QPelanggan do
     begin
       Close;
       SQL.Clear;
       SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
-                'payment_term, customer_name_pkp,kabupaten,karesidenan from get_customer() '+
-                'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+' order by created_at Desc';
+                'payment_term, customer_name_pkp,kabupaten,karesidenan, '+
+                'tp,name_type,name_selling_type,name_group,name_type_business from get_customer() '+
+                'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+strWhereJenisUsaha+' order by created_at Desc';
       Open;
     end;
   finally
@@ -467,6 +484,15 @@ begin
   FNew_Pelanggan.Show;
 end;
 
+procedure TFListPelanggan.edJenisUsahaPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Jenis Usaha';
+  FMasterData.vcall:='jns_usaha_list_pelanggan';
+  FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFListPelanggan.FormCreate(Sender: TObject);
 begin
   listpelanggan:=Self;
@@ -483,6 +509,8 @@ begin
   cbKabupaten.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+  edJenisUsaha.EditValue:='';
+  strKodeJenisUsaha:='';
 
 //  if FHomeLogin.vStatOffice=0 then
 //  begin
@@ -554,8 +582,10 @@ procedure TFListPelanggan.dxBarLargeButton3Click(Sender: TObject);
 begin
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
+  edJenisUsaha.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+  strKodeJenisUsaha:='';
 end;
 
 procedure TFListPelanggan.dxBarLargeButton4Click(Sender: TObject);

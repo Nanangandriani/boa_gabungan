@@ -321,7 +321,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 45994.409253321760000000
+    ReportOptions.LastChange = 46022.417839398150000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -385,10 +385,9 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000
@@ -1070,7 +1069,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           AllowVectorExport = True
           Left = 265.445562110000000000
           Top = 155.839192110000000000
-          Height = 237.354330708661000000
+          Height = 207.118110236220500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1079,7 +1078,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           AllowVectorExport = True
           Left = 174.736842110000000000
           Top = 155.839192110000000000
-          Height = 237.354330708661000000
+          Height = 207.118110236220500000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1104,10 +1103,9 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       end
     end
     object Page2: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000

@@ -54,7 +54,7 @@ begin
     close;
     sql.clear;
     sql.text:='Insert into t_selling_receivables (customer_code, trans_no_nota, '+
-              'amount, date_nota, note, created_by, created_at) '+
+              'amount, date_nota, note, created_by, created_at, sbu_code) '+
             ' VALUES ( '+
             ' '+QuotedStr(strKodePelanggan)+', '+
             ' '+QuotedStr(edNoNota.Text)+', '+
@@ -62,7 +62,7 @@ begin
             ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTglNota.Date))+', '+
             ' '+QuotedStr(MemKet.Text)+', '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-            ' NOW()  );';
+            ' NOW(),'+QuotedStr(FHomeLogin.vKodePRSH)+'  );';
     ExecSQL;
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);

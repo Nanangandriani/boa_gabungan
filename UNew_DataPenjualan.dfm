@@ -754,6 +754,8 @@ object FNew_Penjualan: TFNew_Penjualan
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
+      ExplicitWidth = 862
+      ExplicitHeight = 229
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -1014,8 +1016,6 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object TabUangMuka: TRzTabSheet
       Caption = 'Uang Muka'
-      ExplicitWidth = 862
-      ExplicitHeight = 229
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0

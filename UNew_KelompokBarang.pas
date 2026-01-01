@@ -135,6 +135,31 @@ end;
 
 procedure TFNew_KelompokBarang.BSimpanClick(Sender: TObject);
 begin
+  if Length(EdJenis.Text)=0 then
+  begin
+    MessageDlg('jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edjenis.SetFocus;
+    Exit;
+  end;
+  if Length(cbKategori.Text)=0 then
+  begin
+    MessageDlg('kategori Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    cbKategori.SetFocus;
+    Exit;
+  end;
+  if Length(EdKelompok.Text)=0 then
+  begin
+    MessageDlg('kelompok Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdKelompok.SetFocus;
+    Exit;
+  end;
+  if Length(Edkd_akun.Text)=0 then
+  begin
+    MessageDlg('akun Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edkd_akun.SetFocus;
+    Exit;
+  end;
+
   if statustr='0' then
   begin
     with dm.Qtemp do
@@ -235,7 +260,7 @@ begin
     begin
       close;
       sql.Clear;
-      SQL.Text:='SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+      SQL.Text:='SELECT DISTINCT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
                 'left join t_ak_header c on b.header_code=c.header_code';
       Execute;

@@ -59,7 +59,8 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UDataPenagihanPiutang, UNewKontrakTagihan, UDaftarKontrak,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
   UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
-  UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang, UAmplopPelanggan;
+  UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang, UAmplopPelanggan,
+  ULaporanPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares,strKabupaten: String;
@@ -89,6 +90,16 @@ begin
   end else if vcall='amplop_pelanggan' then
   begin
     strWhere:=' and getkares.code_karesidenan='+QuotedStr(FAmplopPelanggan.StrKaresidananID);
+  end else if (vcall='laporanpenjualan') then
+  begin
+    if FLaporanPenjualan.edKaresidenan.EditValue<>'' then
+    begin
+      strWhere:=' and getkares.code_karesidenan='+QuotedStr(FLaporanPenjualan.strKodeKaresidenan) ;
+    end;
+    if FLaporanPenjualan.edTP.EditValue<>'' then
+    begin
+      strWhere:=' and getkares.code_tp='+QuotedStr(FLaporanPenjualan.strKodeTP) ;
+    end;
   end else begin
     strWhere:='';
     strKares:='';
@@ -105,7 +116,7 @@ begin
             ' from t_customer a '+
             ' LEFT JOIN (select customer_code, address, contact_person1 '+
             ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
-            ' LEFT JOIN (SELECT code, name, code_karesidenan from t_region_regency) getkares '+
+            ' LEFT JOIN (SELECT code, name, code_karesidenan, code_tp from t_region_regency) getkares '+
             ' ON "left"(a.code_region,4)=getkares.code '+
             ' where deleted_at is null '+strWhere);
     if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
@@ -332,6 +343,12 @@ begin
     FAmplopPelanggan.edPelanggan.Text:=MemMasterData['NM_PELANGGAN'];
   end;
 
+  if vcall='laporanpenjualan' then
+  begin
+    FLaporanPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FLaporanPenjualan.edPelanggan.EditValue:=MemMasterData['NM_PELANGGAN'];
+  end;
+
   Fbrowse_data_pelanggan.Close;
   Fbrowse_data_pelanggan.MemMasterData.EmptyTable;
 end;
@@ -367,7 +384,7 @@ begin
     GBType2.Visible:=true;
   end;
 
-  if (vcall='daftar_klasifikasi') OR (vcall='dpp') OR (vcall='kartupiutang') OR (vcall='amplop_pelanggan') then
+  if (vcall='daftar_klasifikasi') OR (vcall='dpp') OR (vcall='kartupiutang') OR (vcall='amplop_pelanggan') OR (vcall='laporanpenjualan') then
   begin
     pnlfilter.Visible:=false;
     RefreshGrid;

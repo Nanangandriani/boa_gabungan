@@ -1225,11 +1225,11 @@ begin
             ' '+QuotedStr(KodeHeaderRetur)+','+QuotedStr(edAkunRetur.Text)+','+QuotedStr(edVAatasNama.Text)+',');
       if cbpkp.Checked=true then
       begin
-        sql.add(' true);');
+        sql.add('true);');
       end;
       if cbpkp.Checked=false then
       begin
-        sql.add(' false);');
+        sql.add('false);');
       end;
     ExecSQL;
   end;

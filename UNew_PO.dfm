@@ -25,7 +25,8 @@ object FNew_PO: TFNew_PO
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1202
+    ExplicitLeft = 1
+    ExplicitTop = -5
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -242,7 +243,7 @@ object FNew_PO: TFNew_PO
       Visible = False
     end
     object Label42: TLabel
-      Left = 368
+      Left = 389
       Top = 68
       Width = 50
       Height = 15
@@ -383,7 +384,7 @@ object FNew_PO: TFNew_PO
     object EdNm_supp: TRzButtonEdit
       Left = 269
       Top = 36
-      Width = 268
+      Width = 283
       Height = 23
       Text = ''
       TabOrder = 12
@@ -684,7 +685,7 @@ object FNew_PO: TFNew_PO
       TabOrder = 38
     end
     object CbKategori: TComboBox
-      Left = 424
+      Left = 445
       Top = 65
       Width = 107
       Height = 23
@@ -708,6 +709,40 @@ object FNew_PO: TFNew_PO
       TabOrder = 41
       Visible = False
       OnClick = Button2Click
+    end
+    object Bcari: TRzBitBtn
+      Left = 356
+      Top = 65
+      Width = 25
+      Height = 23
+      Caption = '...'
+      Enabled = False
+      TabOrder = 42
+      OnClick = BcariClick
+    end
+    object ed_vehicle_group_id: TEdit
+      Left = 832
+      Top = 169
+      Width = 121
+      Height = 23
+      TabOrder = 43
+      Visible = False
+    end
+    object ed_vehicle_group_sort_number: TEdit
+      Left = 705
+      Top = 169
+      Width = 121
+      Height = 23
+      TabOrder = 44
+      Visible = False
+    end
+    object Ed_kode: TEdit
+      Left = 624
+      Top = 169
+      Width = 75
+      Height = 23
+      TabOrder = 45
+      Visible = False
     end
   end
   object Panel2: TPanel
@@ -1079,8 +1114,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 976
-      ExplicitHeight = 24
+      ExplicitLeft = 870
+      ExplicitTop = 6
     end
     object RzBitBtn2: TRzBitBtn
       Left = 1
@@ -1617,6 +1652,458 @@ object FNew_PO: TFNew_PO
       object RowDetailData: TRowDetailPanelControlEh
       end
     end
+    object DBGridEh1: TDBGridEh
+      Left = 1
+      Top = 112
+      Width = 1207
+      Height = 129
+      DataSource = DsItempo2
+      DynProps = <>
+      FooterRowCount = 1
+      HorzScrollBar.ExtraPanel.Visible = True
+      IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+      Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
+      OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
+      SumList.Active = True
+      TabOrder = 1
+      TitleParams.MultiTitle = True
+      Visible = False
+      OnCellClick = DBGridDetailCellClick
+      OnColEnter = DBGridDetailColEnter
+      OnColExit = DBGridDetailColEnter
+      OnKeyPress = DBGridDetailKeyPress
+      Columns = <
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <
+            item
+              Style = ebsEllipsisEh
+            end>
+          FieldName = 'kd_material'
+          Footers = <>
+          Title.Caption = 'Kode Barang'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'Nm_material'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Nama Barang'
+          Width = 150
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'qtykontrak'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Sisa Kuantum Referensi'
+          Width = 90
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'Qty'
+          Footers = <>
+          Title.Caption = 'Kuantum'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'satuan'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Satuan'
+          Width = 64
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.0000'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'harga'
+          Footers = <>
+          Title.Caption = 'USD|Harga'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.0000'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'subtotal'
+          Footer.DisplayFormat = '#,##0.00'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'USD|Sub Total'
+          Width = 90
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'ppn'
+          Footers = <>
+          Title.Caption = 'USD|PPN|%'
+          Width = 30
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.0000'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'ppn_us'
+          Footer.DisplayFormat = '#,##0.0000'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'USD|PPN|Nominal'
+          Width = 70
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.0000'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'pemb_ppn_us'
+          Footers = <>
+          Title.Caption = 'USD|PPN|Pembulatan'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.0000'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'grandtotal'
+          Footer.DisplayFormat = '0.00#,##'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'USD|Grand Total'
+          Width = 110
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'harga_rp'
+          Footers = <>
+          Title.Caption = 'Rupiah|Harga'
+          Width = 90
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'subtotal_rp'
+          Footer.DisplayFormat = '#,##0.00'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'Rupiah|Sub Total'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'pemb_dpp'
+          Footers = <>
+          Title.Caption = 'Rupiah|Pembulatan'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'ppn'
+          Footers = <>
+          Title.Caption = 'Rupiah|PPN|%'
+          Width = 30
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'ppn_rp'
+          Footer.DisplayFormat = '#,##'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'Rupiah|PPN|Nominal'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'pemb_ppn'
+          Footers = <>
+          Title.Caption = 'Rupiah|PPN|Pembulatan'
+          Width = 70
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'pph'
+          Footers = <>
+          Title.Caption = 'Rupiah|PPH|%'
+          Width = 30
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'pph_rp'
+          Footer.DisplayFormat = '#,##0.00'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'Rupiah|PPH|Nominal'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.00'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'grandtotalrp'
+          Footer.DisplayFormat = '#,##0.00'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          Title.Caption = 'Rupiah|Grand Total'
+          Width = 130
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '0.00#,##'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'qtyterkirim'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Terkirim|Kuantum'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '0.00#,##'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'totalbayar'
+          Footer.DisplayFormat = '0.00#,##'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Terkirim|Total Bayar'
+          Visible = False
+          Width = 112
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '0.00#,##'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'sisaqty'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Belum Dikirim|Kuantum'
+          Width = 100
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '0.00#,##'
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'sisabayar'
+          Footer.DisplayFormat = '0.00#,##'
+          Footer.ValueType = fvtSum
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Belum Dikirim|Total Belum Dibayar'
+          Visible = False
+          Width = 111
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'gudang'
+          Footers = <>
+          LookupParams.KeyFieldNames = 'gudang'
+          LookupParams.LookupDisplayFieldName = 'nm_gudang'
+          LookupParams.LookupKeyFieldNames = 'nm_gudang'
+          Title.Caption = 'Lokasi Gudang'
+          Visible = False
+          Width = 200
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <
+            item
+            end>
+          FieldName = 'kd_akunpph'
+          Footers = <>
+          Title.Caption = 'Akun PPH'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <
+            item
+              Glyph.Data = {
+                36090000424D3609000000000000360000002800000018000000180000000100
+                2000000000000009000000000000000000000000000000000000FFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFDADADAFF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDADA
+                DAFF000000FF000000FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD5D5D5FF0000
+                00FF000000FF000000FFD5D5D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFCF
+                CFFFC5C5C5FFEDEDEDFFFFFFFFFFFFFFFFFFFFFFFFFFCBCBCBFF000000FF0000
+                00FF000000FFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDDDDDDFF2D2D2DFF000000FF0000
+                00FF000000FF000000FF000000FF909090FFFFFFFFFF000000FF000000FF0000
+                00FFE4E4E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFF8A8A8AFF000000FF000000FF000000FF4545
+                45FF535353FF1A1A1AFF000000FF000000FF1A1A1AFFFFFFFFFF000000FFE4E4
+                E4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFA3A3A3FF000000FF000000FF9D9D9DFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFECECECFF121212FF000000FF191919FFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFF000000FF000000FFD3D3D3FFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF121212FF000000FF8F8F8FFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF848484FF000000FF5D5D5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFECECECFF000000FF000000FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF2D2D2DFF000000FFDFDFDFFFFDFDFDFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF191919FF000000FFEFEF
+                EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF0A0A0AFF000000FFFFFFFFFF181818FFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF505050FF000000FFC7C7
+                C7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF131313FF000000FFFFFFFFFF2D2D2DFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF434343FF000000FFD1D1
+                D1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFF4B4B4BFF000000FFBEBEBEFFB2B2B2FF616161FFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFBABABAFF000000FF121212FFFFFFFFFF282828FF898989FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF989898FF000000FF313131FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFF141414FF000000FF4D4D4DFFFFFFFFFFC1C1C1FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFD0D0D0FF000000FF000000FFE1E1E1FFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFEFEFEFF000000FF000000FF111111FFB9B9B9FFFFFF
+                FFFFFFFFFFFFDADADAFF5B5B5BFF000000FF000000FF8F8F8FFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF161616FF000000FF000000FF0000
+                00FF000000FF000000FF000000FF000000FFA6A6A6FFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBCBCBCFF4D4D4DFF1515
+                15FF0C0C0CFF303030FF868686FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+              ShortCut = 113
+              Style = ebsEllipsisEh
+            end>
+          FieldName = 'Kd_Material_stok'
+          Footers = <>
+          ReadOnly = True
+          Title.Caption = 'Kode Barang'
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'satuankonversi'
+          Footers = <>
+          Title.Caption = 'Satuan Konversi'
+          Visible = False
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'qtykonversi'
+          Footers = <>
+          Title.Caption = 'Qty Konversi'
+          Visible = False
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_pengajuan_asset'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'no_pengajuan_asset'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'id_detail_asset'
+          Footers = <>
+          Width = 0
+        end
+        item
+          CellButtons = <>
+          DynProps = <>
+          EditButtons = <>
+          FieldName = 'spesifikasi_asset'
+          Footers = <>
+          Width = 0
+        end>
+      object RowDetailData: TRowDetailPanelControlEh
+      end
+    end
   end
   object DsGudang: TDataSource
     DataSet = QGudang
@@ -1637,6 +2124,8 @@ object FNew_PO: TFNew_PO
   end
   object MemItempo: TMemTableEh
     Params = <>
+    AfterEdit = MemItempoAfterEdit
+    BeforePost = MemItempoBeforePost
     Left = 1041
     Top = 16
     object MemTableData: TMemTableDataEh
@@ -1880,6 +2369,310 @@ object FNew_PO: TFNew_PO
         end
         object kd_akunpph: TMTStringDataFieldEh
           FieldName = 'kd_akunpph'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DsItempo2: TDataSource
+    DataSet = MemItempo2
+    Left = 1097
+    Top = 208
+  end
+  object MemItempo2: TMemTableEh
+    Params = <>
+    AfterEdit = MemItempoAfterEdit
+    BeforePost = MemItempoBeforePost
+    Left = 1097
+    Top = 152
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object id_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'id_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object no_pengajuan_asset: TMTStringDataFieldEh
+          FieldName = 'no_pengajuan_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object id_detail_asset: TMTStringDataFieldEh
+          FieldName = 'id_detail_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object spesifikasi_asset: TMTStringDataFieldEh
+          FieldName = 'spesifikasi_asset'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object kd_material: TMTStringDataFieldEh
+          FieldName = 'kd_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object Kd_Material_stok: TMTStringDataFieldEh
+          FieldName = 'Kd_Material_stok'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object Nm_material: TMTStringDataFieldEh
+          FieldName = 'Nm_material'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object satuan: TMTStringDataFieldEh
+          FieldName = 'satuan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object Qty: TMTNumericDataFieldEh
+          FieldName = 'Qty'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object harga: TMTNumericDataFieldEh
+          FieldName = 'harga'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = True
+          Precision = 50
+        end
+        object gudang: TMTStringDataFieldEh
+          FieldName = 'gudang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object qtyperkonversi: TMTNumericDataFieldEh
+          FieldName = 'qtyperkonversi'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object qtykonversi: TMTNumericDataFieldEh
+          FieldName = 'qtykonversi'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object satuankonversi: TMTStringDataFieldEh
+          FieldName = 'satuankonversi'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object totalbayar: TMTNumericDataFieldEh
+          FieldName = 'totalbayar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object sisabayar: TMTNumericDataFieldEh
+          FieldName = 'sisabayar'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object sisaqty: TMTNumericDataFieldEh
+          FieldName = 'sisaqty'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object qtyterkirim: TMTNumericDataFieldEh
+          FieldName = 'qtyterkirim'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object qtykontrak: TMTNumericDataFieldEh
+          FieldName = 'qtykontrak'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object ppn: TMTNumericDataFieldEh
+          FieldName = 'ppn'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object ppn_rp: TMTNumericDataFieldEh
+          FieldName = 'ppn_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+        object pph: TMTNumericDataFieldEh
+          FieldName = 'pph'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 20
+        end
+        object pph_rp: TMTNumericDataFieldEh
+          FieldName = 'pph_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object subtotal: TMTNumericDataFieldEh
+          FieldName = 'subtotal'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = True
+          Precision = 100
+        end
+        object grandtotal: TMTNumericDataFieldEh
+          FieldName = 'grandtotal'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = True
+          Precision = 100
+        end
+        object subtotal_rp: TMTNumericDataFieldEh
+          FieldName = 'subtotal_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 100
+          currency = False
+          Precision = 100
+        end
+        object harga_rp: TMTNumericDataFieldEh
+          FieldName = 'harga_rp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object grandtotalrp: TMTNumericDataFieldEh
+          FieldName = 'grandtotalrp'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
+        object ppn_us: TMTNumericDataFieldEh
+          FieldName = 'ppn_us'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = True
+          Precision = 50
+        end
+        object pemb_ppn: TMTNumericDataFieldEh
+          FieldName = 'pemb_ppn'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pemb_ppn_us: TMTNumericDataFieldEh
+          FieldName = 'pemb_ppn_us'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pemb_dpp: TMTNumericDataFieldEh
+          FieldName = 'pemb_dpp'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object kd_gudang: TMTStringDataFieldEh
+          FieldName = 'kd_gudang'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object kd_akunpph: TMTStringDataFieldEh
+          FieldName = 'kd_akunpph'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object so_no: TMTStringDataFieldEh
+          FieldName = 'so_no'
+          StringDataType = fdtStringEh
+          DisplayWidth = 150
+          Size = 150
+        end
+        object cust_name: TMTStringDataFieldEh
+          FieldName = 'cust_name'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object cust_code: TMTStringDataFieldEh
+          FieldName = 'cust_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object sent_date: TMTStringDataFieldEh
+          FieldName = 'sent_date'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object item_description: TMTStringDataFieldEh
+          FieldName = 'item_description'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object pemb_pph: TMTNumericDataFieldEh
+          FieldName = 'pemb_pph'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object kd_akunppn: TMTStringDataFieldEh
+          FieldName = 'kd_akunppn'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object item_code: TMTStringDataFieldEh
+          FieldName = 'item_code'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

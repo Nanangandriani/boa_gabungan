@@ -2,25 +2,27 @@ object FSingkronisasi: TFSingkronisasi
   Left = 0
   Top = 0
   Caption = 'Singkronisasi'
-  ClientHeight = 554
-  ClientWidth = 1038
+  ClientHeight = 442
+  ClientWidth = 794
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1038
-    Height = 137
+    Width = 794
+    Height = 129
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 788
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -63,48 +65,13 @@ object FSingkronisasi: TFSingkronisasi
       Height = 15
       Caption = ':'
     end
-    object gbPeriode: TGroupBox
-      Left = 319
-      Top = 19
-      Width = 434
-      Height = 71
-      Caption = 'Periode'
-      TabOrder = 0
-      object Label4: TLabel
-        Left = 207
-        Top = 28
-        Width = 19
-        Height = 15
-        Caption = 'S/D'
-      end
-      object dtAwal: TRzDateTimePicker
-        Left = 20
-        Top = 24
-        Width = 181
-        Height = 23
-        Date = 45405.000000000000000000
-        Format = ''
-        Time = 0.597438842589326700
-        TabOrder = 0
-      end
-      object dtAkhir: TRzDateTimePicker
-        Left = 232
-        Top = 24
-        Width = 181
-        Height = 23
-        Date = 45405.000000000000000000
-        Format = ''
-        Time = 0.597438842589326700
-        TabOrder = 1
-      end
-    end
-    object RzBitBtn1: TRzBitBtn
-      Left = 125
-      Top = 101
-      Width = 109
+    object btTampilkan: TRzBitBtn
+      Left = 462
+      Top = 70
+      Width = 132
       Caption = 'Tampilkan'
-      TabOrder = 1
-      OnClick = RzBitBtn1Click
+      TabOrder = 0
+      OnClick = btTampilkanClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000830E0000830E00000001000000000000000000003300
@@ -163,57 +130,115 @@ object FSingkronisasi: TFSingkronisasi
       Top = 16
       Width = 180
       Height = 23
-      TabOrder = 2
+      TabOrder = 1
       OnChange = cbModulChange
       Items.Strings = (
         'Barang'
         'Jasa')
     end
-    object cbServerData: TRzComboBox
-      Left = 125
-      Top = 43
-      Width = 180
-      Height = 23
-      TabOrder = 3
-      Items.Strings = (
-        'Barang'
-        'Jasa')
-    end
-    object cbServerPenerima: TRzComboBox
+    object edServerPenerima: TEdit
       Left = 125
       Top = 72
-      Width = 180
+      Width = 331
       Height = 23
+      ReadOnly = True
+      TabOrder = 2
+    end
+    object ChTandai: TCheckBox
+      Left = 126
+      Top = 101
+      Width = 97
+      Height = 17
+      Caption = 'Tandai Semua'
+      TabOrder = 3
+      OnClick = ChTandaiClick
+    end
+    object btProses: TRzBitBtn
+      Left = 600
+      Top = 70
+      Width = 132
+      Caption = 'Proses'
       TabOrder = 4
-      Items.Strings = (
-        'Barang'
-        'Jasa')
+      OnClick = btProsesClick
+      Glyph.Data = {
+        36060000424D3606000000000000360400002800000020000000100000000100
+        08000000000000020000630B0000630B00000001000000000000000000003300
+        00006600000099000000CC000000FF0000000033000033330000663300009933
+        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+        000000990000339900006699000099990000CC990000FF99000000CC000033CC
+        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+        330000333300333333006633330099333300CC333300FF333300006633003366
+        33006666330099663300CC663300FF6633000099330033993300669933009999
+        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+        66006600660099006600CC006600FF0066000033660033336600663366009933
+        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+        660000996600339966006699660099996600CC996600FF99660000CC660033CC
+        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+        990000339900333399006633990099339900CC339900FF339900006699003366
+        99006666990099669900CC669900FF6699000099990033999900669999009999
+        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+        000000808000800000008000800080800000C0C0C00080808000191919004C4C
+        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8180C
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8E8E8E8E8E8181212
+        0CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8E8E8E818121212
+        120CE8E8E8E8E8E8E8E8E8E8E281818181DFE8E8E8E8E8E8E8E8E81812121212
+        12120CE8E8E8E8E8E8E8E8E2818181818181DFE8E8E8E8E8E8E8E81812120C18
+        1212120CE8E8E8E8E8E8E8E28181DFE2818181DFE8E8E8E8E8E8E818120CE8E8
+        181212120CE8E8E8E8E8E8E281DFE8E8E2818181DFE8E8E8E8E8E8180CE8E8E8
+        E8181212120CE8E8E8E8E8E2DFE8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8E8
+        E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8E8
+        E8E8E8181212120CE8E8E8E8E8E8E8E8E8E8E8E2818181DFE8E8E8E8E8E8E8E8
+        E8E8E8E81812120CE8E8E8E8E8E8E8E8E8E8E8E8E28181DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E818120CE8E8E8E8E8E8E8E8E8E8E8E8E8E281DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8180CE8E8E8E8E8E8E8E8E8E8E8E8E8E8E2DFE8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
+      NumGlyphs = 2
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 137
-    Width = 1038
-    Height = 417
+    Top = 129
+    Width = 794
+    Height = 313
     Hint = ''
     ActivePage = TabSData
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 305
-    ExplicitHeight = 249
+    ExplicitWidth = 788
+    ExplicitHeight = 304
     FixedDimension = 21
     object TabSData: TRzTabSheet
       Caption = 'Data'
-      ExplicitWidth = 1075
-      ExplicitHeight = 273
+      ExplicitWidth = 784
+      ExplicitHeight = 279
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1034
-        Height = 392
+        Width = 790
+        Height = 288
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DataSource1
         DynProps = <>
         FooterRowCount = 1
@@ -228,68 +253,49 @@ object FSingkronisasi: TFSingkronisasi
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
-            FieldName = 'nama_task'
+            FieldName = 'kode'
             Footers = <>
-            Width = 250
+            Title.Caption = 'Kode'
           end
           item
             CellButtons = <>
-            DisplayFormat = 'dd/mm/yyyy hh:nn:ss'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'nama'
+            Footers = <>
+            Title.Caption = 'Nama'
+            Width = 196
+          end
+          item
+            CellButtons = <>
             DynProps = <>
             EditButtons = <>
             FieldName = 'last_sync'
             Footers = <>
-            Width = 200
+            Title.Caption = 'Terakhir Singkronisasi'
+            Width = 149
           end
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <
-              item
-                Glyph.Data = {
-                  36040000424D3604000000000000360000002800000010000000100000000100
-                  2000000000000004000000000000000000000000000000000000000000000000
-                  00000000000000000001000000020000000400000007000000080000000A0000
-                  000B0000000B0000000A00000008000000060000000400000002000000000000
-                  000000000000000000010000000305100C331F5D43FF05100C390F2C20831847
-                  33CA1E5940F8184833C90F2C2082040C08290000000700000004000000000000
-                  000000000000000000020000000414392A9A4EA78CFF2A7055FF40977AFF53B7
-                  99FF60CEAFFF53B799FF41987BFF2C7157FF0817114300000005000000020000
-                  000400000005000000080000000B26694EFF80DBC0FF62C4A3FF76D7B9FF8CE0
-                  C9FF9DE8D6FF97E5D1FF83DDC3FF60B397FF34795FFF050D0A25000000060000
-                  000B0000000F00000012000000152B7055FFADE9D6FF9AE4CDFF99DCC7FF639F
-                  89FF35785EFF6BA18DFF9DD2C0FFA9E8D4FF6FAC96FF1536297E64483F9BA97A
-                  6AFFA97A6AFFA87A6AFFA77969FF358063FFD8F6EDFFD3F4EAFFD5F5EBFF98C6
-                  B5FF368064FF142F256474AC98FFD7F5ECFFB5DCCFFF29634DC7AA7B6BFFFEFD
-                  FCFFFBF6F4FFFBF6F4FFF9F4F2FF2F5E4CA43C8C6EFF3C8C6EFF3C8C6EFF2352
-                  41990B19133200000007235241993C8C6EFF2E6C55C816332860AB7D6DFFFBF6
-                  F4FFE4C191FFE4C191FFF5ECE7FF0605050B0000000700000009000000090000
-                  0008000000090000000A0000000B0000000B0000000900000006AC7E6FFFFBF6
-                  F4FFE4C191FFE3C090FFF4EBE6FF1D332973184733C81F5C42FF1236279B0000
-                  000D05100C391236279C1F5C42FF1F5C42FF1F5C42FF12362799AD8071FFFBF6
-                  F4FFE4C191FFE3C090FFF4EBE6FF31624CDE64C3ADFF63D2B3FF3C8C71FF0D25
-                  1B6A226348FF4FA88EFF5CCDABFF55C8A3FF64D3B5FF226247FFAF8273FFFBF6
-                  F4FFE4C191FFE4C191FFF5ECE7FF809D8DEF66A994FF90E2CCFF6BC2A6FF4693
-                  77FF2B7055FF469378FF73CFB3FF7BD9BDFF8ADFC8FF26694EFFB08475FFFBF6
-                  F4FFF7EEE9FFF7EEE9FFF6EDE8FFDADBD3FF428168FF94C4B3FFB7ECDBFFA6E7
-                  D3FFA0E6D0FFA6E7D3FFB5EBDAFFA8DBCAFFC3EFE1FF2B7055FFB28778FFFBF6
-                  F4FFE4C191FFE4C191FFF6EDE8FFF5ECE7FFC6D1C6FF4B8F75FF87B9A7FFB4DC
-                  CEFFD1F2E7FFB4DCCEFF87B9A7FF4B9075FF9AC7B7FF1F4B3A98B58B7DFFFBF6
-                  F4FFE4C191FFE4C191FFF7EEE9FFF6EDE8FFF6EDE8FFDDDFD7FF9BBDACFF65A1
-                  88FF418F72FF568B71FF1D4435800B1913303D8C6FFF0B19132FB88F81FFFEFD
-                  FCFFFBF6F4FFFBF6F4FFFBF6F4FFFBF6F4FFFBF6F4FFFAF5F3FFFAF5F3FFFAF5
-                  F3FFFCFBFAFFB78E80FF000000030000000100010002000000006E564E97BA92
-                  84FFBA9284FFBA9284FFBA9284FFBA9284FFBA9284FFBA9284FFBA9284FFBA92
-                  84FFBA9284FF6E564E9700000001000000000000000000000000}
-                Style = ebsGlyphEh
-              end>
+            EditButtons = <>
             FieldName = 'aksi'
             Footers = <>
+            Title.Caption = 'Pilih'
+            Width = 50
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
     end
+  end
+  object edServerPusat: TEdit
+    Left = 125
+    Top = 43
+    Width = 331
+    Height = 23
+    ReadOnly = True
+    TabOrder = 2
   end
   object DataSource1: TDataSource
     DataSet = MemTableEh1
@@ -297,22 +303,31 @@ object FSingkronisasi: TFSingkronisasi
     Top = 280
   end
   object MemTableEh1: TMemTableEh
+    Active = True
     Params = <>
     Left = 592
     Top = 280
-    object MemTableEh1nama_task: TStringField
-      FieldName = 'nama_task'
+    object MemTableEh1kode: TStringField
+      FieldName = 'kode'
+    end
+    object MemTableEh1nama: TStringField
+      FieldName = 'nama'
     end
     object MemTableEh1last_sync: TDateField
       FieldName = 'last_sync'
     end
-    object MemTableEh1aksi: TStringField
+    object MemTableEh1aksi: TBooleanField
       FieldName = 'aksi'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
-        object nama_task: TMTStringDataFieldEh
-          FieldName = 'nama_task'
+        object kode: TMTStringDataFieldEh
+          FieldName = 'kode'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object nama: TMTStringDataFieldEh
+          FieldName = 'nama'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
@@ -321,9 +336,8 @@ object FSingkronisasi: TFSingkronisasi
           DateTimeDataType = fdtDateEh
           DisplayWidth = 20
         end
-        object aksi: TMTStringDataFieldEh
+        object aksi: TMTBooleanDataFieldEh
           FieldName = 'aksi'
-          StringDataType = fdtStringEh
           DisplayWidth = 20
         end
       end

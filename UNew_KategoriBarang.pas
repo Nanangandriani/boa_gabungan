@@ -133,6 +133,19 @@ end;
 
 procedure TFNew_KategoriBarang.ActAppExecute(Sender: TObject);
 begin
+  if Length(EdJenis.Text)=0 then
+  begin
+    MessageDlg('jenis Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    Edjenis.SetFocus;
+    Exit;
+  end;
+  if Length(EdKategori.Text)=0 then
+  begin
+    MessageDlg('kategori Tidak boleh Kosong ',MtWarning,[MbOk],0);
+    EdKategori.SetFocus;
+    Exit;
+  end;
+
   if statustr=0 then
   begin
     with dm.Qtemp do

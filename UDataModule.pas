@@ -43,6 +43,13 @@ type
     ABSTable1Ip_db_Pusat: TStringField;
     ABSTable1User_db: TStringField;
     frxDesigner1: TfrxDesigner;
+    Koneksi_PST: TUniConnection;
+    ABSTable1Port_db_Pusat: TStringField;
+    ABSTable1Db_Name_Pusat: TStringField;
+    ABSTable1Password_Pusat: TStringField;
+    ABSTable1User_db_Pusat: TStringField;
+    QtempPusat: TUniQuery;
+    QtempPusat1: TUniQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure KoneksiError(Sender: TObject; E: EDAError; var Fail: Boolean);
   private

@@ -71,7 +71,7 @@ var
 implementation
 
 uses uLkJSON, UMainMenu, UMy_Function, UPengajuanAsset,
-  UMasterDataAsset, UDataModule, UNew_PO, UCari_Barang2;//off 24-05-2025, UMasterPurchaseOrder, u_daf_barang;
+  UMasterDataAsset, UDataModule, UNew_PO, UCari_Barang2, UHomeLogin;//off 24-05-2025, UMasterPurchaseOrder, u_daf_barang;
 
 {$R *.dfm}
 function UpdateStatusAssetViaPost(vid_detpengajuan,vdesc,vstatus,vuser,vlpb,vpo,vspesification,vbrand:string; vqty:integer): string;
@@ -443,10 +443,9 @@ begin
   key:=SelectRow('SELECT  value_parameter FROM t_parameter where key_parameter=''keyapiasset''');
   vtoken:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''tokenapiasset''');
   Vpath:='api/submission';//'api/submission';//'api/asset-submission';
-  //ShowMessage('test 2');
-  vBody:='?company='+loksbu+''+
-         '&start_date='+formatdatetime('yyyy-mm-dd',dtAwal.date)+''+
-         '&end_date='+formatdatetime('yyyy-mm-dd',dtAkhir.date);
+  //ShowMessage(FHomeLogin.vKodePRSH);
+  vBody:='?company='+FHomeLogin.vKodePRSH+'&start_date=' + FormatDateTime('yyyy-mm-dd', dtAwal.Date)+
+         '&end_date=' + FormatDateTime('yyyy-mm-dd', dtAkhir.Date);
   //showmessage(BaseUrl+Vpath+vBody);
   url:= BaseUrl+Vpath+vBody;
  // url:='https://devapiaset.hastaprimasolusi.com/api/submission?company=hkj&start_date=2024-01-01&end_date=2025-01-01';
@@ -567,7 +566,7 @@ begin
     MemDetailAsset['BRAND_NAME']:=json.StringTree[row1 + 'brand_name'];
     MemDetailAsset['QTY']:=json.StringTree[row1 + 'qty'];
     MemDetailAsset['SUBMISSION_DESCRIPTION']:='0';
-    MemDetailAsset['SPESIFICATION']:=json.StringTree[row1 + 'spesification'];
+    MemDetailAsset['SPESIFICATION']:=json.StringTree[row1 + 'specification'];
     MemDetailAsset['STAT_APPRV']:=ckTandai.Checked;
     MemDetailAsset.Post;
 

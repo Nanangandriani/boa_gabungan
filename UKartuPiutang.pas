@@ -235,7 +235,7 @@ begin
             ') AS sq '+
             ') trx '+
             'LEFT JOIN ( '+
-            'SELECT "code_province", "code" AS code_kab, "name" AS name_kab, "code_karesidenan" '+
+            'SELECT "code_province", "code" AS code_kab, "name" AS name_kab, "code_karesidenan",code_tp '+
             'FROM t_region_regency '+
             'WHERE deleted_at IS NULL '+
             ') b ON "left"(trx.code_region, 4) = b.code_kab '+
@@ -244,6 +244,10 @@ begin
     if edKaresidenan.EditValue<>'' then
     begin
       sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
+    end;
+    if edTP.EditValue<>'' then
+    begin
+      sql.add(' AND code_tp='+QuotedStr(vkd_tp)+' ');
     end;
     if edKabupaten.EditValue<>'' then
     begin
@@ -305,16 +309,24 @@ begin
     sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from ('+
            ' select * from "public"."get_piutang_saldoawal"('+QuotedStr(formatdatetime('yyyy-mm-dd',bln_akhir))+')) a  '+
            ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-           ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
+           ' "code_karesidenan",code_tp  from t_region_regency WHERE deleted_at IS NULL)b  '+
            ' ON "left"(code_region, 4)=b.code_kab '+
            ' where customer_code<>''0'' ');
      if edKaresidenan.EditValue<>'' then
      begin
       sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
      end;
+     if edTP.EditValue<>'' then
+     begin
+      sql.add(' AND code_tp='+QuotedStr(vkd_tp)+' ');
+     end;
      if edKabupaten.EditValue<>'' then
      begin
       sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
+     end;
+     if edNama_Pelanggan.EditValue<>'' then
+     begin
+      sql.add(' AND customer_code='+QuotedStr(strKodePelanggan)+' ');
      end;
    sql.add(' ORDER BY customer_code, customer_name_pkp asc');
    open;
@@ -408,14 +420,21 @@ end;
 procedure TFKartuPiutang.edKabupatenPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
-  if edKaresidenan.EditValue<>'' then
+  if (edKaresidenan.EditValue<>'') OR (edTP.EditValue<>'') then
   begin
     FMasterData.Caption:='Master Data Kabupaten';
     FMasterData.vcall:='kartupiutang_kab';
-    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
-    FMasterData.ShowModal;
+    if (edKaresidenan.EditValue<>'') AND (edTP.EditValue='') then
+    begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+      FMasterData.ShowModal;
+    end else if (edKaresidenan.EditValue='') AND (edTP.EditValue<>'') then begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(vkd_tp)+'');
+      FMasterData.ShowModal;
+    end;
+
   end else begin
-    MessageDlg('Karesidenan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Karesidenan atau TP Wajib Diisi..!!',mtInformation,[mbRetry],0);
   end;
 end;
 

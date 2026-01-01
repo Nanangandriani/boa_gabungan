@@ -197,6 +197,7 @@ begin
 
   dtTanggalAwal.Date:=NOW();
   dtTanggalAkhir.Date:=NOW();
+  cbNoRek.Text:='';
   RefreshBank;
   cbBank.ItemIndex:=-1;
   cbBank.Enabled:=False;

@@ -180,7 +180,7 @@ begin
   CbMaterial.Items.Add(Dm.Qtemp.FieldByName('nm_material').AsString);
   Dm.Qtemp.Next;
   end;     }
-  if loksbu='' then
+  if FHomeLogin.vKodePRSH='' then
   begin
   CbGudang.Clear;
   with Dm.Qtemp do
@@ -197,13 +197,13 @@ begin
   Dm.Qtemp.Next;
   end;
   end;
-    if loksbu<>'' then
+    if FHomeLogin.vKodePRSH<>'' then
   begin
   CbGudang.Clear;
   with Dm.Qtemp do
   begin
     close;
-    sql.Text:='select * from t_wh where sbu_code='+QuotedStr(loksbu)+' or sbu_code='''' order by wh_name asc';
+    sql.Text:='select * from t_wh where sbu_code='+QuotedStr(FHomeLogin.vKodePRSH)+' or sbu_code='''' order by wh_name asc';
     ExecSQL;
   end;
   Dm.Qtemp.First;

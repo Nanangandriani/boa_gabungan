@@ -45,7 +45,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     Color = 15987699
     TabOrder = 0
     ExplicitTop = 59
-    ExplicitWidth = 440
+    ExplicitWidth = 433
     object BBatal: TRzBitBtn
       Left = 360
       Top = 2
@@ -106,7 +106,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 367
+      ExplicitLeft = 356
     end
     object BPrint: TRzBitBtn
       Left = 273
@@ -248,7 +248,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 280
+      ExplicitLeft = 269
     end
   end
   object dtTanggalAwal: TRzDateTimePicker
@@ -293,7 +293,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46010.455022986110000000
+    ReportOptions.LastChange = 46021.338520520830000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'function TglIndo(Tanggal: TDateTime): String;'
@@ -302,7 +302,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       '  namaBln: String;'
       'begin'
       '  bln := StrToInt(FormatDateTime('#39'mm'#39', Tanggal));'
-      '  '
+      ''
       '  case bln of'
       '    1: namaBln := '#39'Januari'#39';'
       '    2: namaBln := '#39'Februari'#39';'
@@ -321,7 +321,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       
         '  Result := FormatDateTime('#39'dd'#39', Tanggal) + '#39' '#39' + namaBln + '#39' '#39' ' +
         '+ FormatDateTime('#39'yyyy'#39', Tanggal);'
-      'end;  '
+      'end;'
       ''
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
@@ -329,11 +329,11 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       ''
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '    Line16.Height:=270;'
-      '    Line11.Height:=270;'
-      '    Line10.Height:=270;'
-      '    Line26.Height:=521;'
-      '    Line24.Height:=521;        '
+      '    Line16.Height:=238;'
+      '    Line11.Height:=238;'
+      '    Line10.Height:=238;'
+      '    Line26.Height:=490;'
+      '    Line24.Height:=490;'
       'end;'
       ''
       'procedure ReportOnStopReport(Sender: TfrxComponent);'
@@ -353,18 +353,18 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       '    beratisi.Visible := True;'
       '    beratkosong.Visible := True;'
       '    Memo25.Visible := True;'
-      '    Memo26.Visible := True;      '
-      '  end '
-      '  else '
-      '  begin   '
+      '    Memo26.Visible := True;'
+      '  end'
+      '  else'
+      '  begin'
       '    labelberatisi.Visible := False;'
       '    labelberatkosong.Visible := False;'
       '    beratisi.Visible := False;'
       '    beratkosong.Visible := False;'
       '    Memo25.Visible := False;'
-      '    Memo26.Visible := False;                        '
+      '    Memo26.Visible := False;'
       '  end;'
-      '  tanggal.Text:=TglIndo(<frxDBDSuratJalan."trans_date">);      '
+      '  tanggal.Text:=TglIndo(<frxDBDSuratJalan."trans_date">);'
       'end;'
       ''
       'procedure ReportTitle1OnBeforePrint(Sender: TfrxComponent);'
@@ -378,7 +378,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       ''
       'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
       'begin'
-      '  Memo29.Text:= <frxDBDSuratJalan."address2">;      '
+      '  Memo29.Text:= <frxDBDSuratJalan."address2">;'
       'end;'
       ''
       'procedure MemPOOnBeforePrint(Sender: TfrxComponent);'
@@ -392,13 +392,13 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       '  memo52.Visible := IsHasPO;'
       '  Line10.Visible := IsHasPO;'
       '  Line11.Visible := IsHasPO;'
-      '  Line27.Visible := IsHasPO;       }  '
+      '  Line27.Visible := IsHasPO;       }'
       ''
       'end;'
       ''
       'procedure tanggalOnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '      '
+      ''
       'end;'
       ''
       'begin'
@@ -432,7 +432,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
+      PaperHeight = 140.000000000000000000
       PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000

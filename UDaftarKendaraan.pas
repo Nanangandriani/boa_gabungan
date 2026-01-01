@@ -93,7 +93,8 @@ begin
               'where a.notrans NOT IN '+
               '(select DISTINCT a.notrans_do from t_spm_det a left join t_spm b on '+
               'b.notrans=a.notrans where b.deleted_at is null) '+
-              'AND a.vendor_code='+QuotedStr(FDataPerintahMuat.edKode_Vendor_Kend.Text)+' '+
+              'AND a.vendor_code='+QuotedStr(FDataPerintahMuat.edKode_Vendor_Kend.Text)+' AND '+
+              'b.date_trans='+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPerintahMuat.dtKirim.Date))+'  '+
               'AND a.vehicle_group_sort_number<>'''' AND a.vehicle_group_sort_number is NOT NULL '+
 //              AND a.vehicles<>'''' AND a.vehicles is NOT NULL
               'AND b.deleted_at is NULL;';
@@ -121,10 +122,39 @@ procedure TFDaftarKendaraan.DBGridDblClick(Sender: TObject);
 begin
   if vcall='delivery_order' then
   begin
-//    FNewDeliveryOrder.edNoKendMuatan.Text:=MemMasterData['code'];
-    FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
-    FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
-    FNewDeliveryOrder.spKapasitas.value:=MemMasterData['capacity'];
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select DISTINCT sent_date from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL';
+      open;
+    end;
+
+    with dm.Qtemp1 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select notrans from t_delivery_order_services where vehicle_group_id='+QuotedStr(MemMasterData['code']);
+      open;
+    end;
+
+    if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])<>FormatDateTime('dd-mm-yyyy',FNew_SalesOrder.dtTanggal_Kirim.Date)) then
+    begin
+      MessageDlg('Kelompok Kendaraan sudah ada Order dengan Pengiriman Tanggal '+FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])+' ..!!',mtInformation,[mbRetry],0);
+    end else if (dm.Qtemp1.RecordCount>0) then
+    begin
+      MessageDlg('Kelompok Kendaraan sudah ada Delivery Order di No. '+dm.Qtemp1.FieldValues['notrans']+' ..!!',mtInformation,[mbRetry],0);
+    end else begin
+
+      FNewDeliveryOrder.strVehicleGroupId:=MemMasterData['code'];
+      FNewDeliveryOrder.edKelompokKendaraan.Text :=MemMasterData['sort_number'];
+      FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
+      FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
+      FNewDeliveryOrder.spKapasitas.Text :=MemMasterData['capacity'];
+//      FNewDeliveryOrder.edKendaraan.Text :=MemMasterData['plate_number'];
+      FDaftarKendaraan.Close;
+      FDaftarKendaraan.MemMasterData.EmptyTable;
+    end;
   end;
   if vcall='perintah_muat' then
   begin

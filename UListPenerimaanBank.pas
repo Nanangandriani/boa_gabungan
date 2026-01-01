@@ -26,7 +26,7 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
-  cxCalendar, cxBarEditItem;
+  cxCalendar, cxBarEditItem, Printers;
 
 type
   TFListPenerimaanBank = class(TForm)
@@ -134,6 +134,7 @@ type
     { Public declarations }
 
     procedure Refresh;
+    procedure SetReportToPortrait(frxReport: TfrxReport);
   end;
 
 var
@@ -146,6 +147,28 @@ implementation
 uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin,
   UCetakKolektifPenerimaanBank, UNoteCancel;
 
+procedure TFListPenerimaanBank.SetReportToPortrait(frxReport: TfrxReport);
+var
+  i: Integer;
+  Page: TfrxReportPage;
+begin
+  // Loop through all pages in the report template
+  for i := 0 to frxReport.PagesCount - 1 do
+  begin
+    // Check if the current page is a report design page
+    if frxReport.Pages[i] is TfrxReportPage then
+    begin
+      Page := TfrxReportPage(frxReport.Pages[i]);
+
+      // Set orientation to Portrait (requires Vcl.Printers in uses)
+      Page.Orientation := poPortrait;
+
+      // Important: FastReport uses millimeters for PaperWidth/Height.
+      // Changing orientation manually may require resetting dimensions
+      // if you are using custom paper sizes.
+    end;
+  end;
+end;
 procedure TFListPenerimaanBank.Refresh;
 var mm: Integer;
     strTransaksi: String;
@@ -521,6 +544,8 @@ begin
 end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton1Click(Sender: TObject);
+var i:Integer;
+Page: TfrxReportPage;
 begin
   with QBukti_Terima do
   begin
@@ -581,7 +606,9 @@ begin
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
+
    Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
+   SetReportToPortrait(Report);
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
    SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah');
@@ -599,6 +626,9 @@ begin
 
    end;
 
+
+//   Page := Report.FindObject('Page1') as TfrxReportPage;
+//   Page.Orientation := poPortrait;
    //Report.DesignReport();
    Report.ShowReport();
  end;
