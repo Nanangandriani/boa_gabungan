@@ -104,6 +104,7 @@ type
     procedure dxBarButton8Click(Sender: TObject);
     procedure dxBarButton9Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -129,6 +130,31 @@ begin
       //Refresh;
       Caption:='New Retur Pembelian';
       status:=0;
+    end;
+end;
+
+procedure TFReturnPembelian.ActDelExecute(Sender: TObject);
+begin
+   //FNew_Pembelian.iserror:=0;
+   if CheckJurnalPosting(DBGridReturnPemb.Fields[3].AsString)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan hapus..!!',mtInformation,[mbRetry],0);
+      //FNew_Pembelian.iserror:=1;
+      exit;
+   end;
+
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridReturnPemb.Fields[3].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update t_purchase_return set deleted_at=now(),deleted_by='+QuotedStr(Nm)+' '+
+                'where return_no='+QuotedStr(DBGridReturnPemb.Fields[3].AsString);
+      ExecSQL;
+    end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
     end;
 end;
 

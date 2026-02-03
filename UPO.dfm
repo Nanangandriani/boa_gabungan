@@ -44,10 +44,11 @@ object FPO: TFPO
   end
   object DBGridPO: TDBGridEh
     Left = 0
-    Top = 169
+    Top = 201
     Width = 1002
-    Height = 432
+    Height = 400
     Align = alClient
+    AutoFitColWidths = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_16_trans_year'
@@ -523,8 +524,9 @@ object FPO: TFPO
     Left = 0
     Top = 127
     Width = 1002
-    Height = 42
+    Height = 74
     Align = alTop
+    BorderSides = [sdLeft, sdTop, sdRight]
     Color = 15987699
     TabOrder = 2
     ExplicitWidth = 996
@@ -536,33 +538,40 @@ object FPO: TFPO
       Caption = 'Periode'
     end
     object Label2: TLabel
-      Left = 167
-      Top = 13
+      Left = 191
+      Top = 14
       Width = 19
       Height = 15
       Caption = 'S/D'
     end
+    object Label3: TLabel
+      Left = 20
+      Top = 40
+      Width = 68
+      Height = 15
+      Caption = 'Jenis Hutang'
+    end
     object DTP1: TDateTimePicker
-      Left = 75
+      Left = 98
       Top = 10
-      Width = 81
+      Width = 84
       Height = 23
       Date = 45224.000000000000000000
       Time = 0.399360370371141500
       TabOrder = 0
     end
     object DTP2: TDateTimePicker
-      Left = 194
+      Left = 217
       Top = 10
-      Width = 81
+      Width = 84
       Height = 23
       Date = 45224.000000000000000000
       Time = 0.399360370371141500
       TabOrder = 1
     end
     object Cari: TRzBitBtn
-      Left = 291
-      Top = 9
+      Left = 307
+      Top = 6
       Width = 70
       Caption = 'Cari'
       TabOrder = 2
@@ -619,6 +628,17 @@ object FPO: TFPO
         5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+    end
+    object RzComboBox1: TRzComboBox
+      Left = 98
+      Top = 39
+      Width = 84
+      Height = 23
+      TabOrder = 3
+      Items.Strings = (
+        'DAGANG'
+        'BIAYA'
+        'AKTIVA')
     end
   end
   object ActMenu: TActionManager
@@ -722,6 +742,10 @@ object FPO: TFPO
         item
           Visible = True
           ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton3'
         end>
       OneOnRow = False
       Row = 0
@@ -732,7 +756,7 @@ object FPO: TFPO
     object dxBarManager1Bar3: TdxBar
       Caption = 'Proses'
       CaptionButtons = <>
-      DockedLeft = 178
+      DockedLeft = 234
       DockedTop = 0
       FloatLeft = 783
       FloatTop = 2
@@ -1361,6 +1385,67 @@ object FPO: TFPO
         FE96F174BA2A6759F9A269C2A09F685C7B30DCC070DD0AFD2AA8E2F39A0C415A
         E1F81F3371F891D17E230E0000000049454E44AE426082}
     end
+    object dxBarLargeButton3: TdxBarLargeButton
+      Caption = 'Print Kolektif'
+      Category = 0
+      Hint = 'Print Kolektif'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000001974455874536F6674776172650041646F626520496D616765526561
+        647971C9653C00000018744558745469746C65005072696E74417265613B5072
+        696E7465723B15F0EBCC000005FE49444154785EAD965DA85DD511C77F6B9F73
+        6EEEB937F891BC24ADFD8814436892B61492078DD76092068C52A462420AD5D2
+        561A695A0B7D2906853E081662C5121F0246F1A32A82FD80B692D43449A5C5D0
+        2631166A5B0858A5366DD2C47BCEF1ECBDD79A290C6BAFBD7738E8453AB0587B
+        669F3DF39FFFCC9A751C50AD2C2EC7FF4F04088002AAAA5C2ADDB8674FBCF8A7
+        4359D6995314D4011A1728516D5A3499EA67D5A4E394E0C391AF6F5FBF19F024
+        990CA0E35C36B763DB6A2A3974ECAF6CDA700D9345271275F0E81B6CBE7E6502
+        70E08513730D56950952BD7497D2331CE575765A67A7D4BADAAA6D83518ED912
+        435AC5E0831840B44DB7DAB2542274D7AA8526BB82807315280780738A040560
+        21009C8A1A858398F9A9FFC089A75F4F016B700EA559EB08D401E2D05F9F32E3
+        4CBF8744E40B01604E366D58694C38E0C433A7F9DCBA15ADB24B8DA266CDD58C
+        9D7CF50CB76C5D6B4A9639F6FFE4F8821940441B8E4D4723A535EDA6A78CAD4C
+        12EBED4054508D8A1AC00533E02C2044072002C10CD16E46489A6DB41A512475
+        690217C52DA8041AA904CBC69AC808A8C0D1080A2DC00A04D1D4CCE022ABB030
+        062A47B629C680080A2DBBE262507BAEC144CA55303D0344A495BD736E2200B3
+        4A0089F5276613A4CE52A998D0140C550B12DF1242C08BE050028E20A1356B00
+        7D9F63283190A0B1097D1000B41EB5066C510796F633A63245C441ACBF5EB518
+        F125E0D00C3EF191CB00A68002104CD0490008AA3130B8D8035E1A134D416C09
+        CB673B9C3BF316F9E0BDD870F56F9EFAD9C9041A94870E1CFDB72F8BDF7CEF1B
+        9B6E02CA8900E2286ED75320D40CD49D1E04098EF973EFB26BE7B56D6FEDCB2A
+        C9C38F1DB931C6F2A9142D00D1B1128F8E8360255000D2119560A0CA3290E71E
+        51655C847454810623A6D09FEE31CE8B2A5627E18CAB7D1748235B51423056B8
+        A2EF98ED4246862F857C9C938F4B03E023705781B0DD8126F00616E86342007C
+        5CA175178892467150A50C8125D319332E70F1ED738C2F0ED120BCFA87437C72
+        C5E731903E95A9392F9B6C18D81D77DDF7CF4FAFB90E09F2CE68F4EEB3BF78EE
+        911FFCF9E4D1F9AC6640D2A762C8B1ECFA5DB8F0F659AEBA7C9A8DEBAEE66BB7
+        AF67341C91E725A2B15422041B5C42102184F81CD418288AD2BEF9F657E7D832
+        B76AD967D77CEA3B5B6FDD753FD06B3180282A009823EF05F525A30B0396AD5C
+        8673CE9C17E331AF9F38C297BE7C84854AA7AB06ACD3C9F8E8F22BF96336B513
+        D8D3BA8CA471E1587621507A47917B5495BCB426A4BF688AE9A54B9859BC9899
+        D959007ABD29BABD2EAAE07D892F3DA08C8723068379C683F3C65651069C03EF
+        C312C3554D29A97A4000048993508227F860C1013B199B36AEE3859FFE965EAF
+        877319B53840D38673A80A659173EBCD7378F3E30147693B9D0603C2AF5E3E1D
+        3BD66AC7DF5F7B93FEC7165114DE90AB421184EDB76D231F17BC74F015CE9DBF
+        6081501A8135E94B975CC1CD5BAF65E7F65B18E642510A8A92171EC0D50050B6
+        DEB09A321E2BF43536DFB08A221FB1FFD9E3144530C7A50F5C0C813BEFB88D6F
+        7D73279DCCF13E62B40FDF2B383F3F0685C27B006BCC1600AD6640842E663066
+        280B4FE16309BC8083B3FF1DF1AFF3A3943CDAAC8233B0498D3B40590AB6FBC4
+        409CBE71DA75B30CEC7C74AD633330006519CC6FE1853B77EDE5C3C8817DDFB5
+        A38D9A4F80AC62C0E7797EF8E1FD8737D68352F8CBDFDEE1E3CB67C88B224DBC
+        323271D3173670F757AEE7D15325AA0AAD19EB903884EE5EDBE391C70F73F0E5
+        DF9B0F6310C5C7A6EE0202140FDEFBC56D40AF31AF5D7C7FF91DF71C78A38CC8
+        BD28FB1EDACD8B3F3F6E0EF3A0D000E0C5E844AB6126624DBCEF47BBADBF8C01
+        874D5940AB12F80A08B5B80826BCF58F378F3DF5E4D90D69BC026B565F634772
+        EC05119268BAB6D576EFAD87F8FE9EC75A97A42FC7C780DCD1964BF52CB2D207
+        A623A02EB078F79EE74FDF73D7164893DF2570666B8C83BD8FBEC4BE07767C06
+        18342EA23130EA36EB0768FBFF5B62C503C3465946C3C1FCEF7EF8E35F5E17FF
+        1726E49A584A0AE3F1E815E06C0D205D39C1B501401B40AD4E6065B6C18AE352
+        A9090831DB614C46A845FF07DB53B9A7908EAFDA0000000049454E44AE426082}
+      OnClick = dxBarLargeButton3Click
+    end
   end
   object RptPO: TfrxReport
     Version = '2022.1.3'
@@ -1371,7 +1456,7 @@ object FPO: TFPO
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 45988.058564722200000000
+    ReportOptions.LastChange = 46043.950712152780000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1399,12 +1484,12 @@ object FPO: TFPO
     Top = 82
     Datasets = <
       item
-        DataSet = Dbrpt
-        DataSetName = 'Dbrpt'
-      end
-      item
         DataSet = dm.DBPerusahaan
         DataSetName = 'DBPerusahaan'
+      end
+      item
+        DataSet = Dbrpt
+        DataSetName = 'Dbrpt'
       end>
     Variables = <>
     Style = <>
@@ -1547,7 +1632,7 @@ object FPO: TFPO
         object frxDBDPOKolektiffketbarang: TfrxMemoView
           AllowVectorExport = True
           Left = 678.315400000000000000
-          Top = -0.960830080000000000
+          Top = 0.039169920000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           StretchMode = smActualHeight
@@ -1888,44 +1973,6 @@ object FPO: TFPO
           ParentFont = False
           VAlign = vaCenter
         end
-        object SysMemo1: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 103.267780000000000000
-          Top = 56.692950000000000000
-          Width = 117.165430000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.DecimalSeparator = '0'
-          DisplayFormat.FormatStr = '%2.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[SUM(<Dbrpt."PPh_Rp">,MasterData1)]')
-          ParentFont = False
-        end
-        object SysMemo6: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 143.622140000000000000
-          Top = 37.795300000000000000
-          Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.DecimalSeparator = '0'
-          DisplayFormat.FormatStr = '%2.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[SUM(<Dbrpt."pemb_ppn">,MasterData1)]')
-          ParentFont = False
-        end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
@@ -1998,6 +2045,42 @@ object FPO: TFPO
           HAlign = haRight
           Memo.UTF8W = (
             '[Dbrpt."um_value"]')
+          ParentFont = False
+        end
+        object SysMemo8: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 139.842610000000000000
+          Top = 37.795300000000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[SUM(<Dbrpt."pemb_ppn">,MasterData1)]')
+          ParentFont = False
+        end
+        object SysMemo6: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 98.267780000000000000
+          Top = 56.692950000000000000
+          Width = 124.724490000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[SUM(<Dbrpt."PPh_Rp">,MasterData1)]')
           ParentFont = False
         end
       end
@@ -2487,6 +2570,23 @@ object FPO: TFPO
           Diagonal = True
         end
       end
+      object Memo37: TfrxMemoView
+        AllowVectorExport = True
+        Left = 674.666666670000000000
+        Top = 259.666666670000000000
+        Width = 78.488250000000000000
+        Height = 18.897650000000000000
+        StretchMode = smMaxHeight
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = []
+        Memo.UTF8W = (
+          '[Dbrpt."remarks"]')
+        ParentFont = False
+      end
     end
   end
   object Qrptdetailpo2: TUniQuery
@@ -2639,7 +2739,6 @@ object FPO: TFPO
       ' ,d.um_value,a.pemb_ppn--,c."type"'
       ',d.due_date'
       'order by a.po_no desc')
-    Active = True
     Left = 504
     Top = 32
   end
@@ -2654,11 +2753,14 @@ object FPO: TFPO
       
         'SELECT'#9'c.item_name,a.detail_id,a.po_no,a.item_stock_code,c.item_' +
         'code,a.qty,a.price,a.unit,a.wh_code,d.wh_name,a.conv_currency,a.' +
-        'qty_sent,a.total_payment,a.remaining_payment,a.remaining_qty,a.p' +
-        'pn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,a.pemb_dpp,a.pemb_ppn,a.st' +
-        'atus,a.grandtotal,sum(a.qty)as qtysum, sum(a.subtotal)as subtota' +
-        'lsum,a.id_pengajuan_asset,a.no_pengajuan_asset,a.id_detail_asset' +
-        ',a.spesifikasi_asset'
+        'qty_sent,a.total_payment,'
+      
+        'a.remaining_payment,a.remaining_qty,a.ppn,a.ppn_rp,a.pph,a.pph_r' +
+        'p,a.account_pph_code,a.subtotal,a.pemb_dpp,a.pemb_ppn,a.status,a' +
+        '.grandtotal,sum(a.qty)as qtysum, '
+      
+        'sum(a.subtotal)as subtotalsum,a.id_pengajuan_asset,a.no_pengajua' +
+        'n_asset,a.id_detail_asset,a.spesifikasi_asset,a.account_pph_code'
       'FROM t_podetail AS "a" '
       
         'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stock' +
@@ -2671,7 +2773,9 @@ object FPO: TFPO
       
         '         a.qty_sent,a.total_payment,a.remaining_payment,a.remain' +
         'ing_qty,a.ppn,a.ppn_rp,a.pph,a.pph_rp,a.subtotal,'
-      '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal'#9#9#9)
+      
+        '         a.pemb_dpp,a.pemb_ppn,a.status,a.grandtotal,a.account_p' +
+        'ph_code'#9#9#9)
     MasterSource = DsPo
     MasterFields = 'po_no'
     DetailFields = 'po_no'

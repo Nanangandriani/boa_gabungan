@@ -257,7 +257,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNomorTrans.Text) ;
+    sql.Text:='UPDATE t_selling_customer SET deleted_at=NOW() where trans_no ='+QuotedStr(edNomorTrans.Text) ;
     ExecSQL;
   end;
 
@@ -932,6 +932,7 @@ var
   StockAda: Integer;
   ItemNameNoStok: String;
 begin
+
   ItemNameNoStok:='';
   StockAda:=1;
   with dm.Qtemp do
@@ -984,29 +985,32 @@ begin
       tot_dipotong_uang_muka:=edTotBersih.Value;
     end;
     ItemNameNoStok:='';
-    MemDetail.First;
-    while not MemDetail.Eof do
+    if Status=0 then
     begin
-      with dm.Qtemp3 do
+      MemDetail.First;
+      while not MemDetail.Eof do
       begin
-        close;
-        sql.Clear;
-        sql.Text:='select * from stock_card_end('+QuotedStr(strKodeGudang)+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(MemDetail['KD_ITEM'])+','+QuotedStr(MemDetail['KD_SATUAN'])+') ';
-        Open;
-      end;
+        with dm.Qtemp3 do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='select * from stock_card_end('+QuotedStr(strKodeGudang)+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(MemDetail['KD_ITEM'])+','+QuotedStr(MemDetail['KD_SATUAN'])+') ';
+          Open;
+        end;
 
-      if dm.Qtemp3.RecordCount=0 then
-      begin
-        StockAda:=0;
-        ItemNameNoStok:= ItemNameNoStok+','+MemDetail['NM_ITEM'];
-      end else begin
-        if ((dm.Qtemp3.FieldValues['saldo_awal_periode']-MemDetail['JUMLAH'])<0) then
+        if dm.Qtemp3.RecordCount=0 then
         begin
           StockAda:=0;
           ItemNameNoStok:= ItemNameNoStok+','+MemDetail['NM_ITEM'];
+        end else begin
+          if ((dm.Qtemp3.FieldValues['saldo_awal_periode']-MemDetail['JUMLAH'])<0) then
+          begin
+            StockAda:=0;
+            ItemNameNoStok:= ItemNameNoStok+','+MemDetail['NM_ITEM'];
+          end;
         end;
+        MemDetail.Next;
       end;
-      MemDetail.Next;
     end;
 
     if ItemNameNoStok <> '' then
@@ -1835,9 +1839,11 @@ begin
       MemUangMuka.post;
       Dm.Qtemp2.next;
     end;
+    TabUangMuka.TabVisible:=True;
   end else
   begin
     cbUangMuka.Checked:=False;
+    TabUangMuka.TabVisible:=False;
   end;
 end;
 
@@ -1952,8 +1958,14 @@ begin
       TabUangMuka.TabVisible:=True;
     end else begin
       TabUangMuka.TabVisible:=False;
-      MessageDlg('Tidak Ada Data Uang Muka Yang Dibayarkan..!!',mtInformation,[mbRetry],0);
-      cbUangMuka.Checked:=False;
+
+      if cbUangMuka.Focused then
+      begin
+        MessageDlg('Tidak Ada Data Uang Muka Yang Dibayarkan..!!', mtInformation, [mbOK], 0);
+        cbUangMuka.Checked := False;
+      end;
+//      MessageDlg('Tidak Ada Data Uang Muka Yang Dibayarkan..!!',mtInformation,[mbRetry],0);
+//      cbUangMuka.Checked:=False;
     end;
   end else
   begin

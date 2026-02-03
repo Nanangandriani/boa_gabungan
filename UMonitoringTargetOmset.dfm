@@ -84,7 +84,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'karesidenan'
+        FieldName = 'tp'
         Footer.Alignment = taRightJustify
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
@@ -1603,7 +1603,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 46007.714041990740000000
+    ReportOptions.LastChange = 46041.603501481480000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1611,8 +1611,8 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       'var PreviousValue:String;'
       'begin'
       
-        '  if (<frxDBDatasetRekapMonitoringTargetOmset."karesidenan"> = P' +
-        'reviousValue) then'
+        '  if (<frxDBDatasetRekapMonitoringTargetOmset."tp"> = PreviousVa' +
+        'lue) then'
       '  begin'
       '    Memo15.Visible := False;'
       '  end'
@@ -1620,8 +1620,8 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       '  begin'
       '    Memo15.Visible := True;'
       
-        '    PreviousValue :=<frxDBDatasetRekapMonitoringTargetOmset."kar' +
-        'esidenan">;'
+        '    PreviousValue :=<frxDBDatasetRekapMonitoringTargetOmset."tp"' +
+        '>;'
       '  end;'
       'end;'
       ''
@@ -1662,7 +1662,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       
         '    PreviousValue :=<frxDBDatasetRekapMonitoringTargetOmset."kec' +
         'amatan">;'
-      '  end; }  '
+      '  end; }'
       'end;'
       ''
       'begin'
@@ -1702,7 +1702,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         Frame.Typ = []
         Top = 249.448980000000000000
         Width = 1306.205568000000000000
-        Condition = '<frxDBDatasetRekapMonitoringTargetOmset."karesidenan">'
+        Condition = '<frxDBDatasetRekapMonitoringTargetOmset."tp">'
         Stretched = True
         object Line1: TfrxLineView
           AllowVectorExport = True
@@ -1724,7 +1724,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         Width = 1306.205568000000000000
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Width = 1306.582677165354000000
+          Width = 1306.582677165350000000
           Height = 44.521954290000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1741,7 +1741,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object nama_kategori: TfrxMemoView
           AllowVectorExport = True
           Top = 44.581941910000000000
-          Width = 1306.582677165354000000
+          Width = 1306.582677165350000000
           Height = 32.141001910000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1773,7 +1773,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 72.188976377952760000
+        Height = 72.188976377952800000
         Top = 117.165430000000000000
         Width = 1306.205568000000000000
         object Memo10: TfrxMemoView
@@ -1781,7 +1781,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 353.029041830000000000
           Top = 22.832395950000000000
           Width = 149.935586300000000000
-          Height = 49.889763779527560000
+          Height = 49.889763779527600000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1799,7 +1799,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 590.551421780000000000
           Top = 22.832395950000000000
           Width = 220.319018700000000000
-          Height = 49.889763779527560000
+          Height = 49.889763779527600000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1817,7 +1817,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 172.724409450000000000
           Top = 22.832395950000000000
           Width = 180.482508530000000000
-          Height = 49.889763779527560000
+          Height = 49.889763779527600000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1888,7 +1888,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 811.173780000000000000
           Top = 49.472480000000000000
           Width = 114.160693420000000000
-          Height = 23.055118110236220000
+          Height = 23.055118110236200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1906,7 +1906,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 925.519039890000000000
           Top = 49.472480000000000000
           Width = 112.255931520000000000
-          Height = 23.055118110236220000
+          Height = 23.055118110236200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1924,7 +1924,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 1037.945580000000000000
           Top = 49.472480000000000000
           Width = 37.476922290000000000
-          Height = 23.055118110000000000
+          Height = 23.055118110236200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1942,7 +1942,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 1075.289081970000000000
           Top = 49.472480000000000000
           Width = 102.984626920000000000
-          Height = 23.055118110236220000
+          Height = 23.055118110236200000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1986,7 +1986,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Left = 502.857142860000000000
           Top = 22.960629920000000000
           Width = 88.062992130000000000
-          Height = 49.511811023622050000
+          Height = 49.511811023622000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -2003,7 +2003,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Top = 22.995052380000000000
           Width = 171.911079960000000000
-          Height = 49.511811023622050000
+          Height = 49.511811023622000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -2225,7 +2225,6 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Height = 18.897650000000000000
           OnBeforePrint = 'Memo15OnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'karesidenan'
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
@@ -2235,7 +2234,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Font.Style = []
           Frame.Typ = [ftRight]
           Memo.UTF8W = (
-            '[frxDBDatasetRekapMonitoringTargetOmset."karesidenan"]')
+            '[frxDBDatasetRekapMonitoringTargetOmset."tp"]')
           ParentFont = False
           SuppressRepeated = True
         end
@@ -2268,7 +2267,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Width = 220.780652420000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
-          DataField = 'kecamatan'
+          DataField = 'customer_name'
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
@@ -2278,7 +2277,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDatasetRekapMonitoringTargetOmset."kecamatan"]')
+            '[frxDBDatasetRekapMonitoringTargetOmset."customer_name"]')
           ParentFont = False
         end
         object Memo19: TfrxMemoView
@@ -2413,7 +2412,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 172.724409448818900000
+          Left = 172.724409448819000000
           Top = 0.755905510000000000
           Width = 180.916821440000000000
           Height = 18.897650000000000000
@@ -2502,7 +2501,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     UserName = 'frxDBDatasetRekapMonitoringTargetOmset'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'karesidenan=karesidenan'
+      'code_tp=code_tp'
+      'tp=tp'
+      'code_kabupaten=code_kabupaten'
       'kabupaten=kabupaten'
       'code_kecamatan=code_kecamatan'
       'kecamatan=kecamatan'
@@ -2530,7 +2531,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
   object QMonitoringTargetOmset: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from vmonitoring_target_omset')
+      
+        'SELECT * FROM get_monitoring_target_omset(2026,1,'#39'OBAT NYAMUK BA' +
+        'KAR'#39','#39#39','#39#39','#39#39')')
     Left = 296
     Top = 344
   end

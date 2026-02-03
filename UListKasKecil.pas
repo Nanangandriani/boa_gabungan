@@ -77,9 +77,7 @@ type
     DTP1: TDateTimePicker;
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
-    dxBarLargeButton4: TdxBarLargeButton;
-    frxDBDJurnal: TfrxDBDataset;
-    QJurnal: TUniQuery;
+    QKasKecildeleted_at: TDateTimeField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -87,8 +85,10 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
-    procedure dxBarLargeButton4Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DBGridAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -106,8 +106,8 @@ uses UDataKasKecil, UDataModule, UHomeLogin, UMy_Function;
 
 procedure TFListKasKecil.ActBaruExecute(Sender: TObject);
 begin
-  FDataKasKecil.Status:=0;
   FDataKasKecil.Clear;
+  FDataKasKecil.Status:=0;
   FDataKasKecil.edNoTrans.Enabled:=true;
   FDataKasKecil.ShowModal;
 end;
@@ -173,7 +173,8 @@ begin
        close;
        sql.Clear;
        sql.Text:=' select * from "public"."t_petty_cash"   '+
-                 ' where deleted_at is null order by created_at Desc ';
+                 //' where deleted_at is null '+
+                 ' order by created_at Desc ';
        open;
    end;
   finally
@@ -183,8 +184,6 @@ end;
 
 procedure TFListKasKecil.ActUpdateExecute(Sender: TObject);
 begin
-   FDataKasKecil.status:=1;
-
    FDataKasKecil.Clear;
    with Dm.Qtemp do
    begin
@@ -195,6 +194,11 @@ begin
                  ' AND deleted_at is null order by created_at Desc ';
        open;
    end;
+  if not QKasKecil.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
@@ -294,12 +298,35 @@ begin
        close;
        sql.Clear;
        sql.Text:=' select * from "public"."t_petty_cash"   '+
-                 ' where deleted_at is null and trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' order by trans_date Desc ';
+                 //' where deleted_at is null and '+
+                 ' where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+                 ' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                 ' order by trans_date Desc ';
        open;
    end;
   finally
   DBGrid.FinishLoadingStatus();
   end;
+end;
+
+procedure TFListKasKecil.DBGridAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+  AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+
 end;
 
 procedure TFListKasKecil.dxBarLargeButton1Click(Sender: TObject);
@@ -322,39 +349,10 @@ begin
     frxReport1.ShowReport();
 end;
 
-procedure TFListKasKecil.dxBarLargeButton4Click(Sender: TObject);
-begin
-    with QJurnal do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-             ' where "trans_no"='+QuotedStr(DBGrid.Fields[0].AsString)+'');
-     open;
-    end;
-
-    if QRKasKecil.RecordCount=0 then
-    begin
-      showmessage('Tidak ada data yang bisa dicetak !');
-      exit;
-    end;
-
-   if QRKasKecil.RecordCount<>0 then
-   begin
-     cLocation := ExtractFilePath(Application.ExeName);
-
-     frxReport1.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-     SetMemo(frxReport1,'nm_judul','DAFTAR JURNAL PENGELUARAN');
-     SetMemo(frxReport1,'nama_pt',FHomeLogin.vNamaPRSH);
-     //Report.DesignReport();
-     frxReport1.ShowReport();
-   end;
-end;
-
 procedure TFListKasKecil.FormShow(Sender: TObject);
 begin
-   DTP1.Date:=now();
-   DTP2.Date:=now();
+  DTP1.date:=now;
+  DTP2.date:=now;
 end;
 
 Initialization

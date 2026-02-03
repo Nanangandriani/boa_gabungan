@@ -194,8 +194,8 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
     end
   end
   object ActMenu: TActionManager
-    Left = 600
-    Top = 32
+    Left = 672
+    Top = 56
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -239,7 +239,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 600
+    Left = 640
     Top = 24
     PixelsPerInch = 96
     object dxBarManager1Bar3: TdxBar
@@ -257,6 +257,12 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           UserWidth = 196
           Visible = True
           ItemName = 'cbKaresidenan'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 196
+          Visible = True
+          ItemName = 'cbTP'
         end
         item
           UserDefine = [udWidth]
@@ -315,7 +321,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 503
+      DockedLeft = 684
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1088,7 +1094,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
       Caption = 'Karesidenan   '
       Category = 0
       Hint = 'Karesidenan   '
-      Visible = ivAlways
+      Visible = ivNever
       OnChange = cbKaresidenanChange
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -1386,6 +1392,19 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton7Click
     end
+    object cbTP: TcxBarEditItem
+      Caption = 'TP                    '
+      Category = 0
+      Hint = 'TP                    '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cbTPPropertiesButtonClick
+    end
   end
   object DsLaporanHarianSisaNotaPerKabupaten: TDataSource
     DataSet = QLaporanHarianSisaNotaPerKabupaten
@@ -1401,7 +1420,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46007.382977615740000000
+    ReportOptions.LastChange = 46042.581922546300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1423,7 +1442,6 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 215.900000000000000000
       PaperHeight = 330.000000000000000000
       PaperSize = 256
@@ -1962,7 +1980,7 @@ object FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'Karesidenan')
+            'TP')
           ParentFont = False
           VAlign = vaCenter
         end

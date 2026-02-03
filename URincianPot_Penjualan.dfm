@@ -3,8 +3,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
-  ClientHeight = 439
-  ClientWidth = 1242
+  ClientHeight = 438
+  ClientWidth = 1238
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,18 +12,19 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1242
+    Width = 1238
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1238
+    ExplicitWidth = 1234
     object Label39: TLabel
       Left = 14
       Top = 28
@@ -99,8 +100,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 1242
-    Height = 326
+    Width = 1238
+    Height = 325
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -271,15 +272,15 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 407
-    Width = 1242
+    Top = 406
+    Width = 1238
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 406
-    ExplicitWidth = 1238
+    ExplicitTop = 405
+    ExplicitWidth = 1234
     object BBatal: TRzBitBtn
-      Left = 1166
+      Left = 1162
       Top = 1
       Height = 30
       Align = alRight
@@ -338,10 +339,10 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1162
+      ExplicitLeft = 1158
     end
     object BSave: TRzBitBtn
-      Left = 1091
+      Left = 1087
       Top = 1
       Height = 30
       Align = alRight
@@ -400,7 +401,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1087
+      ExplicitLeft = 1083
     end
   end
   object dsMasterData: TDataSource

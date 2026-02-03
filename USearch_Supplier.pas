@@ -41,7 +41,8 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UDataPengeluaranKasBank, U_daftar_hutang, u_rencana_lunas_hutang,
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
   UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang,
-  UNew_Pembelian, U_Kartu_Hutang_UM, ULap_Rencana_Pelunasan_Hutang;
+  UNew_Pembelian, U_Kartu_Hutang_UM, ULap_Rencana_Pelunasan_Hutang,
+  UDaftar_UM_Pemb;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -137,6 +138,11 @@ begin
       FApproval_Keluar_Kas_Bank.txtnmsupp.Text:=QSupplier['supplier_name'];
       //showmessage(QSupplier['supplier_code']);
     end;
+    if vcall='pengajuan_um' then
+    begin
+      FDaftar_UM_Pemb.cbsupp.text:=QSupplier['supplier_code'];
+      FDaftar_UM_Pemb.txtnmsupp.Text:=QSupplier['supplier_name'];
+    end;
     if vcall='Datarencanalunashutangajuan' then
     begin
       FDataRencanaLunasHutangPengajuan.cbsupp.text:=QSupplier['supplier_code'];
@@ -178,11 +184,15 @@ begin
        FNewDeliveryOrder.MemDataBiaya.post;
     end;
 
-    with FNew_PO do
+    if vcall='PO' then
     begin
-      EdKd_supp.Text:=QSupplier['supplier_code'];
-      ednm_supp.Text:=QSupplier['supplier_name'];
-      MemItempo.EmptyTable;
+      with FNew_PO do
+      begin
+        EdKd_supp.Text:=QSupplier['supplier_code'];
+        ednm_supp.Text:=QSupplier['supplier_name'];
+        CbKategori.Text:=SelectRow('select DISTINCT type from t_item_type  where acc_code_pemb='+QuotedStr(QSupplier['header_code'])+' and deleted_at isnull');
+        MemItempo.EmptyTable;
+      end;
     end;
     with FNewKontrak_ks do
     begin

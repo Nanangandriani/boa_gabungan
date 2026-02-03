@@ -25,8 +25,7 @@ object FNew_PO: TFNew_PO
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = -5
+    ExplicitWidth = 1202
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -128,7 +127,7 @@ object FNew_PO: TFNew_PO
     object Label20: TLabel
       Left = 564
       Top = 71
-      Width = 67
+      Width = 68
       Height = 15
       Caption = 'Jatuh Tempo'
     end
@@ -149,7 +148,7 @@ object FNew_PO: TFNew_PO
     object Label29: TLabel
       Left = 564
       Top = 10
-      Width = 41
+      Width = 42
       Height = 15
       Caption = 'Tanggal'
     end
@@ -339,6 +338,7 @@ object FNew_PO: TFNew_PO
       CharCase = ecUpperCase
       TabOrder = 8
       Text = 'EDSTATUS'
+      OnChange = EdStatusChange
       OnSelect = EdStatusSelect
       Items.Strings = (
         '')
@@ -489,8 +489,8 @@ object FNew_PO: TFNew_PO
       Visible = False
     end
     object DateTimePicker1: TDateTimePicker
-      Left = 383
-      Top = 131
+      Left = 1119
+      Top = 229
       Width = 121
       Height = 23
       Date = 45238.000000000000000000
@@ -535,6 +535,7 @@ object FNew_PO: TFNew_PO
       Top = 102
       Width = 121
       Height = 23
+      ItemIndex = 0
       TabOrder = 23
       Visible = False
       Items.Strings = (
@@ -788,7 +789,7 @@ object FNew_PO: TFNew_PO
     object Label21: TLabel
       Left = 832
       Top = 16
-      Width = 48
+      Width = 49
       Height = 15
       Caption = 'Sub Total'
       Visible = False
@@ -812,7 +813,7 @@ object FNew_PO: TFNew_PO
     object Label24: TLabel
       Left = 832
       Top = 110
-      Width = 60
+      Width = 61
       Height = 15
       Caption = 'Grand Total'
       Visible = False
@@ -1114,8 +1115,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 870
-      ExplicitTop = 6
+      ExplicitLeft = 976
+      ExplicitHeight = 24
     end
     object RzBitBtn2: TRzBitBtn
       Left = 1
@@ -1201,8 +1202,9 @@ object FNew_PO: TFNew_PO
       Left = 1
       Top = 1
       Width = 1206
-      Height = 263
+      Height = 127
       Align = alClient
+      AutoFitColWidths = True
       DataSource = DsItempo
       DynProps = <>
       FooterRowCount = 1
@@ -1213,9 +1215,8 @@ object FNew_PO: TFNew_PO
       SumList.Active = True
       TabOrder = 0
       TitleParams.MultiTitle = True
-      OnCellClick = DBGridDetailCellClick
       OnColEnter = DBGridDetailColEnter
-      OnColExit = DBGridDetailColEnter
+      OnColExit = DBGridDetailColExit
       OnKeyPress = DBGridDetailKeyPress
       Columns = <
         item
@@ -1250,6 +1251,7 @@ object FNew_PO: TFNew_PO
           Footers = <>
           ReadOnly = True
           Title.Caption = 'Sisa Kuantum Referensi'
+          Visible = False
           Width = 90
         end
         item
@@ -1274,7 +1276,7 @@ object FNew_PO: TFNew_PO
         end
         item
           CellButtons = <>
-          DisplayFormat = '#,##0.0000'
+          DisplayFormat = '#,##0.00'
           DynProps = <>
           EditButtons = <>
           FieldName = 'harga'
@@ -1288,7 +1290,7 @@ object FNew_PO: TFNew_PO
           DynProps = <>
           EditButtons = <>
           FieldName = 'subtotal'
-          Footer.DisplayFormat = '#,##0.00'
+          Footer.DisplayFormat = '#,##0'
           Footer.ValueType = fvtSum
           Footers = <>
           Title.Caption = 'USD|Sub Total'
@@ -1368,10 +1370,12 @@ object FNew_PO: TFNew_PO
           FieldName = 'pemb_dpp'
           Footers = <>
           Title.Caption = 'Rupiah|Pembulatan'
+          Visible = False
           Width = 80
         end
         item
           CellButtons = <>
+          DisplayFormat = '#,##0.##'
           DynProps = <>
           EditButtons = <>
           FieldName = 'ppn'
@@ -1381,7 +1385,7 @@ object FNew_PO: TFNew_PO
         end
         item
           CellButtons = <>
-          DisplayFormat = '#,##'
+          DisplayFormat = '#,##0.##'
           DynProps = <>
           EditButtons = <>
           FieldName = 'ppn_rp'
@@ -1403,6 +1407,19 @@ object FNew_PO: TFNew_PO
         end
         item
           CellButtons = <>
+          DynProps = <>
+          EditButtons = <
+            item
+              OnClick = DBGridDetailColumns17EditButtons0Click
+            end>
+          FieldName = 'kd_akunpph'
+          Footers = <>
+          Title.Caption = 'Rupiah|PPH|Akun'
+          Width = 80
+        end
+        item
+          CellButtons = <>
+          DisplayFormat = '#,##0.##'
           DynProps = <>
           EditButtons = <>
           FieldName = 'pph'
@@ -1496,18 +1513,6 @@ object FNew_PO: TFNew_PO
           Title.Caption = 'Lokasi Gudang'
           Visible = False
           Width = 200
-        end
-        item
-          CellButtons = <>
-          DynProps = <>
-          EditButtons = <
-            item
-              OnClick = DBGridDetailColumns25EditButtons0Click
-            end>
-          FieldName = 'kd_akunpph'
-          Footers = <>
-          Title.Caption = 'Akun PPH'
-          Width = 80
         end
         item
           CellButtons = <>
@@ -1654,9 +1659,11 @@ object FNew_PO: TFNew_PO
     end
     object DBGridEh1: TDBGridEh
       Left = 1
-      Top = 112
-      Width = 1207
-      Height = 129
+      Top = 128
+      Width = 1206
+      Height = 136
+      Align = alBottom
+      AutoFitColWidths = True
       DataSource = DsItempo2
       DynProps = <>
       FooterRowCount = 1
@@ -1668,7 +1675,6 @@ object FNew_PO: TFNew_PO
       TabOrder = 1
       TitleParams.MultiTitle = True
       Visible = False
-      OnCellClick = DBGridDetailCellClick
       OnColEnter = DBGridDetailColEnter
       OnColExit = DBGridDetailColEnter
       OnKeyPress = DBGridDetailKeyPress
@@ -1704,6 +1710,7 @@ object FNew_PO: TFNew_PO
           Footers = <>
           ReadOnly = True
           Title.Caption = 'Sisa Kuantum Referensi'
+          Visible = False
           Width = 90
         end
         item
@@ -1738,7 +1745,7 @@ object FNew_PO: TFNew_PO
         end
         item
           CellButtons = <>
-          DisplayFormat = '#,##0.0000'
+          DisplayFormat = '#,##0.###'
           DynProps = <>
           EditButtons = <>
           FieldName = 'subtotal'
@@ -2114,7 +2121,7 @@ object FNew_PO: TFNew_PO
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_wh')
-    Left = 1112
+    Left = 1136
     Top = 16
   end
   object DsItempo: TDataSource
@@ -2123,11 +2130,14 @@ object FNew_PO: TFNew_PO
     Top = 72
   end
   object MemItempo: TMemTableEh
+    Active = True
     Params = <>
     AfterEdit = MemItempoAfterEdit
     BeforePost = MemItempoBeforePost
+    AfterPost = MemItempoAfterPost
+    OnCalcFields = MemItempoCalcFields
     Left = 1041
-    Top = 16
+    Top = 12
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object id_pengajuan_asset: TMTStringDataFieldEh
@@ -2385,7 +2395,7 @@ object FNew_PO: TFNew_PO
   object MemItempo2: TMemTableEh
     Params = <>
     AfterEdit = MemItempoAfterEdit
-    BeforePost = MemItempoBeforePost
+    BeforePost = MemItempo2BeforePost
     Left = 1097
     Top = 152
     object MemTableData: TMemTableDataEh
@@ -2648,9 +2658,9 @@ object FNew_PO: TFNew_PO
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object sent_date: TMTStringDataFieldEh
+        object sent_date: TMTDateTimeDataFieldEh
           FieldName = 'sent_date'
-          StringDataType = fdtStringEh
+          DateTimeDataType = fdtDateEh
           DisplayWidth = 20
         end
         object item_description: TMTStringDataFieldEh

@@ -76,6 +76,7 @@ type
     DTP1: TDateTimePicker;
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
+    dxBarLargeButton3: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -86,6 +87,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure CariClick(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure DBGridTerima1GetCellParams(Sender: TObject; Column: TColumnEh;
+      AFont: TFont; var Background: TColor; State: TGridDrawState);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,7 +103,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_Pembelian, UMy_Function, UMainMenu, UHomeLogin, UDataModule;
+uses UNew_Pembelian, UMy_Function, UMainMenu, UHomeLogin, UDataModule,
+  UCetak_LPBKolektif;
 var
   RealFPembelian: TFPembelian;
 // implementasi function
@@ -119,12 +125,63 @@ begin
       load_currency;
       BSimpan.Visible:=true;
       BEdit.Visible:=false;
+      Status:=0;
+      isCancel:=0;
+      BCorrection.Visible:=False;
       Caption:='New Faktur Pembelian';
+    end;
+end;
+
+procedure TFPembelian.ActDelExecute(Sender: TObject);
+begin
+   FNew_Pembelian.iserror:=0;
+   if CheckJurnalPosting(DBGridTerima1.Fields[1].AsString)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+      FNew_Pembelian.iserror:=1;
+   end;
+
+    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='update t_purchase_invoice set deleted_at=now(),deleted_by='+QuotedStr(Nm)+' '+
+                'where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString);
+      {//sql.Text:='Delete From t_purchase_invoice where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString);
+      sql.Text:='update t_purchase_invoice set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                'where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString);
+      //parambyname('deleted_at').AsDateTime:=Now();
+      parambyname('deleted_at').AsString :=FormatDateTime('yyyy-mm-dd hh:nn:ss', Now);
+      parambyname('deleted_by').AsString:=Nm; }
+      ExecSQL;
+    end;
+    {with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      //sql.Text:='Delete From t_purchase_invoice_det where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString);
+      sql.Text:=' Update t_purchase_invoice_det set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+                ' where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString);
+      //parambyname('deleted_at').AsDateTime:=Now;
+      parambyname('deleted_at').AsString:=FormatDateTime('yyyy-mm-dd hh:nn:ss', Now);
+      parambyname('deleted_by').AsString:=Nm;
+      Execute;
+    end;}
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
     end;
 end;
 
 procedure TFPembelian.ActPrintExecute(Sender: TObject);
 begin
+    if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
   WITH QReportLPB do
   begin
     close;
@@ -162,7 +219,7 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''approved'' '+
                 ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln,e.ref_name from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref  from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
                 ' left join t_ref_item_receive e on a.ref_code=e.ref_code order by a.id desc';
@@ -177,7 +234,7 @@ begin
       sql.Clear;
       sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN''else ''APPROVE'' '+
                 ' END) AS status_app,a.*, b.supplier_name, c.account_name,d.account_name as nm_perk,to_char(trans_date,''dd'') tgl '+
-                ' ,to_char(trans_date,''mm'') bln,e.ref_name from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                ' ,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref  from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
                 ' left join t_ref_item_receive e on a.ref_code=e.ref_code'+
@@ -197,24 +254,56 @@ begin
        QTerimaDet.Active:=true;
        QTerimaDet.Open;
 
+    if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
     if Memterima_material['purchase_type']='' then
     begin
     ShowMessage('Maaf data kosong');
     Exit;
     end else
-
     with FNew_Pembelian do
     begin
       Clear;
-      Show;
+
+        //baca status koreksi
+        with dm.Qtemp do
+        begin
+          Close;
+          Sql.Clear;
+          sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''approved'' '+
+                    ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
+                    ' ,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+                    ' left join t_ak_account c on a.account_code=c.code '+
+                    ' left join t_ak_account d on a.account_um_code=d.code '+
+                    ' left join t_ref_item_receive e on a.ref_code=e.ref_code '+
+                    ' where trans_no='+QuotedStr(DBGridTerima1.Fields[1].AsString)+'';
+          Open;
+        end;
+        IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+        if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+        begin
+          isCancel := 1;
+        end else begin
+          isCancel := 0;
+        end;
+        // baca status koreksi
+
+
+      status:=1;
       Load;
+      Load_Currency;
+      Show;
       Caption:='Update Faktur Pembelian';
-      BSimpan.Visible:=False;
-      BEdit.Visible:=True;
+      //BSimpan.Visible:=False;
+      //BEdit.Visible:=True;
       BEdit.Caption:='Simpan';
       MemterimaDet.EmptyTable;
       EdNoSPB.ReadOnly:=false;
-      status:=1;
     end;
     with Memterima_material do
     begin
@@ -243,6 +332,7 @@ begin
         EdValas.Text:=Memterima_material.FieldByName('valas').AsString;
         Edkd_sumber.Text:=Memterima_material.FieldByName('ref_code').AsString;
         Cb_Sumber.Text:=Memterima_material.FieldByName('ref_name').AsString;
+        Cb_Sumber.ItemIndex:=Memterima_material.FieldByName('id_ref').AsInteger-1;
         Ednilai_valas.Text:=Memterima_material.FieldByName('valas_value').AsString;
         if Memterima_material['sj_status']=0 then
            Cksj.Checked:=False
@@ -265,6 +355,7 @@ begin
         else
            GBDok.Enabled:=True;
         Edum.Value:=Memterima_material.FieldByName('um_value').AsFloat;
+
       end;
     end;
     QTerimaDet.First;
@@ -274,7 +365,8 @@ begin
       begin
         with FNew_Pembelian do
         begin
-          MemterimaDet.insert;
+        //ShowMessage(QTerimaDet.FieldByName('wh_code').AsString);
+        MemterimaDet.insert;
           MemterimaDet['nopo']:=QTerimaDet.FieldByName('po_no').AsString;
           MemterimaDet['kd_material']:=QTerimaDet.FieldByName('item_code').AsString;
           MemterimaDet['item_stock_code']:=QTerimaDet.FieldByName('item_stock_code').AsString;
@@ -282,7 +374,8 @@ begin
           MemterimaDet['kd_stok']:=QTerimaDet.FieldByName('stock_code').AsString;
           MemterimaDet['qty']:=QTerimaDet.FieldByName('qty').AsString;
           MemterimaDet['satuan']:=QTerimaDet.FieldByName('unit').AsString;
-          MemterimaDet['gudang']:=QTerimaDet.FieldByName('wh_name').AsString;
+          MemterimaDet['gudang']:=QTerimaDet.FieldByName('wh_code').AsString;
+          MemterimaDet['wh_code']:=QTerimaDet.FieldByName('wh_code').AsString;
           MemterimaDet['tahun']:=QTerimaDet.FieldByName('trans_year').AsString;
           MemterimaDet['qtypo']:=QTerimaDet.FieldByName('qty_po').AsString;
           MemterimaDet['satuanpo']:=QTerimaDet.FieldByName('unit_po').AsString;
@@ -303,6 +396,8 @@ begin
           MemterimaDet['nourut']:=QTerimaDet.FieldByName('order_no').AsString;
           MemterimaDet['pemb_dpp']:=QTerimaDet.FieldByName('pemb_dpp').AsString;
           MemterimaDet['ref_no']:=Memterima_material.FieldByName('ref_code').AsString;
+          MemterimaDet['header_code']:=QTerimaDet.FieldByName('header_code').AsString;
+          MemterimaDet['nourut']:='0' ;
           MemterimaDet.Post;
           QTerimaDet.Next;
         end;
@@ -315,13 +410,14 @@ end;
 
 procedure TFPembelian.CariClick(Sender: TObject);
 begin
+   ActRoExecute(sender);
    DBGridTerima1.StartLoadingStatus();
    with Qterima_material do
    begin
        close;
        sql.Clear;
        sql.Text:='select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''REJECT'' END) AS status_app,a.*, b.supplier_name, '+
-                 'c.account_name, d.account_name as nm_perk,to_char(trans_date,''dd'') tgl,to_char(trans_date,''mm'') bln,e.ref_name from '+
+                 'c.account_name, d.account_name as nm_perk,to_char(trans_date,''dd'') tgl,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref  from '+
                  't_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                  'left join t_ak_account c on a.account_code=c.code '+
                  'left join t_ak_account d on a.account_um_code=d.code '+
@@ -337,8 +433,25 @@ begin
    DBGridTerima1.FinishLoadingStatus();
 end;
 
+procedure TFPembelian.DBGridTerima1GetCellParams(Sender: TObject;
+  Column: TColumnEh; AFont: TFont; var Background: TColor;
+  State: TGridDrawState);
+begin
+
+    if not Memterima_material.FieldByName('deleted_at').IsNull then
+    begin
+      AFont.Color := clRed;
+    end;
+end;
+
 procedure TFPembelian.dxBarLargeButton2Click(Sender: TObject);
 begin
+    if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
   dm.refreshPerusahaan;
    with FMainMenu.QJurnal do
     begin
@@ -363,6 +476,11 @@ begin
      //Report.DesignReport();
      FMainMenu.Report.ShowReport();
    end;
+end;
+
+procedure TFPembelian.dxBarLargeButton3Click(Sender: TObject);
+begin
+  FCetak_LPbKolektif.Show;
 end;
 
 procedure TFPembelian.FormClose(Sender: TObject; var Action: TCloseAction);

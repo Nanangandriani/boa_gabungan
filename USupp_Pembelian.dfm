@@ -2,7 +2,7 @@ object FSupp_Pembelian: TFSupp_Pembelian
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  Caption = 'FSupp_Pembelian'
+  Caption = 'Form Data Supplier'
   ClientHeight = 256
   ClientWidth = 422
   Color = clBtnFace
@@ -20,8 +20,10 @@ object FSupp_Pembelian: TFSupp_Pembelian
     Width = 422
     Height = 256
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsSupplier
     DynProps = <>
+    ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 0
     OnDblClick = DBGridEh1DblClick
@@ -50,7 +52,9 @@ object FSupp_Pembelian: TFSupp_Pembelian
   object Qsupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'Select supplier_code, supplier_name from t_supplier'
+      
+        'Select supplier_code, supplier_name from t_supplier where delete' +
+        'd_at is null'
       'order by supplier_code ASC')
     Left = 208
     Top = 64

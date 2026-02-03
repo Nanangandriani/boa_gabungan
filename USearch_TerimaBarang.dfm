@@ -148,6 +148,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 423
+      ExplicitTop = 6
     end
     object BSelectAll: TRzBitBtn
       Left = 114
@@ -299,7 +300,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'item_stock_code'
         Footers = <>
-        Width = 0
+        Width = 100
       end
       item
         CellButtons = <>
@@ -307,7 +308,20 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'wh_code'
         Footers = <>
-        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_code'
+        Footers = <>
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'header_code'
+        Footers = <>
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -378,7 +392,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'item_stock_code'
         Footers = <>
-        Width = 0
+        Title.Caption = 'Kode Stok'
+        Width = 100
       end
       item
         CellButtons = <>
@@ -386,7 +401,15 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'wh_code'
         Footers = <>
-        Width = 0
+        Title.Caption = 'Kode Gudang'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_code'
+        Footers = <>
+        Title.Caption = 'Kode Akun'
       end
       item
         CellButtons = <>
@@ -394,7 +417,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'header_code'
         Footers = <>
-        Width = 0
+        Title.Caption = 'Kode Header'
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -409,11 +432,12 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     SQL.Strings = (
       
         'select a.item_stock_code,a.item_code, a.item_name, a.order_no,b.' +
-        'price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,b.' +
+        'price,b.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,b.' +
         'pph,'
+      'b.po_no, c.supplier_code,d.spb_no,'
       
-        'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code,c.du' +
-        'e_date,e.header_code'
+        'e.account_code,f.wh_code,c.due_date,e.header_code,b.pph_rp,b.acc' +
+        'ount_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal'
       'from t_item_stock a '
       'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
       'inner join t_po C on b.po_no=c.po_no'
@@ -422,11 +446,12 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       'inner join t_wh f on b.wh_code=f.wh_code '
       
         'GROUP BY a.item_stock_code,a.item_code, a.item_name, a.order_no,' +
-        'b.price,d.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,' +
+        'b.price,b.qty, b.unit,b.wh_code,f.wh_name,b.remaining_qty,b.ppn,' +
         'b.pph,'
+      'b.po_no, c.supplier_code, d.spb_no,'
       
-        'b.po_no, c.supplier_code, d.spb_no,e.account_code,f.wh_code,c.du' +
-        'e_date,e.header_code')
+        'e.account_code,f.wh_code,c.due_date,e.header_code,b.account_pph_' +
+        'code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal')
     Left = 259
     Top = 104
   end
@@ -435,14 +460,15 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     SQL.Strings = (
       
         'select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.p' +
-        'rice,d.qty,  '
+        'rice,b.qty,  '
       
         'b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.su' +
         'pplier_code,d.spb_no,e.account_code,b.subtotal,b.grandtotal,b.pe' +
         'mb_dpp,b.subtotalrp,'
       
         'b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.va' +
-        'las,c.valas_value,e.header_code'
+        'las,c.valas_value,e.header_code,b.account_pph_code,b.ppn_rp,b.pp' +
+        'h_rp,b.subtotal,b.grandtotal'
       'from t_item_stock a  '
       
         'inner join t_item_receive_det b on a.item_stock_code=b.item_stoc' +
@@ -456,12 +482,13 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'k_code   '
       
         'GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b' +
-        '.price,d.qty, b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pp' +
+        '.price,b.qty, b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pp' +
         'h,b.po_no, c.supplier_code, d.spb_no,e.account_code,b.subtotal,b' +
         '.grandtotal,b.pemb_dpp,'
       
         'b.subtotalrp,b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,f.' +
-        'wh_code,b.pemb_dpp,e.header_code;')
+        'wh_code,b.pemb_dpp,e.header_code,b.account_pph_code,b.ppn_rp,b.p' +
+        'ph_rp,b.subtotal,b.grandtotal;')
     Left = 355
     Top = 120
   end

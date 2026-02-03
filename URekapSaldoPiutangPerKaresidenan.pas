@@ -145,7 +145,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE)';
+    sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE,NULL) ORDER BY karesidenan ASC';
     Open;
   end;
   if Qreport.RecordCount>0 then
@@ -170,7 +170,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE)';
+    sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE,NULL) ORDER BY karesidenan ASC ';
     Open;
   end;
 end;

@@ -26,7 +26,7 @@ uses
   dxRibbon, dxBar, cxClasses, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan,
   Vcl.StdCtrls, RzButton, Vcl.ComCtrls, Vcl.ExtCtrls, RzPanel, Data.DB, MemDS,
-  DBAccess, Uni;
+  DBAccess, Uni, MemTableDataEh, MemTableEh, RzCmboBx;
 
 type
   TFList_Rencana_Lunas_Hutang = class(TForm)
@@ -99,6 +99,36 @@ type
     QRencanabank_name: TStringField;
     QRencanasource_plan_id: TIntegerField;
     QRencanabank_code: TStringField;
+    QRencana_det: TUniQuery;
+    DSRencana_det: TDataSource;
+    QRencana_detjumlah: TFloatField;
+    QRencana_detid: TLargeintField;
+    QRencana_detfaktur_no: TStringField;
+    QRencana_detinv_no: TStringField;
+    QRencana_detsj_no: TStringField;
+    QRencana_detfaktur_date: TDateField;
+    QRencana_detperiode1: TDateField;
+    QRencana_detperiode2: TDateField;
+    QRencana_detbank: TStringField;
+    QRencana_detcek_no: TStringField;
+    QRencana_detplan_to: TSmallintField;
+    QRencana_detsupplier_code: TStringField;
+    QRencana_detsupplier_name: TStringField;
+    QRencana_detpaid_date: TDateField;
+    QRencana_detperiodetempo1: TDateField;
+    QRencana_detperiodetempo2: TDateField;
+    QRencana_detpaid_status: TSmallintField;
+    QRencana_detapprove_status: TBooleanField;
+    QRencana_detdebt_type: TIntegerField;
+    QRencana_detsource_plan_id: TIntegerField;
+    QRencana_detaccount_code: TStringField;
+    QRencana_detaccount_name: TStringField;
+    QRencana_dettrans_date: TDateField;
+    QRencana_dettrans_no: TStringField;
+    QRencana_detbank_name: TStringField;
+    QRencana_detbank_code: TStringField;
+    Label8: TLabel;
+    CbRencanake: TRzComboBox;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure BCariClick(Sender: TObject);
@@ -107,10 +137,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure load_rencanake;
   end;
 
 //var
@@ -136,7 +170,38 @@ end;
 
 procedure TFList_Rencana_Lunas_Hutang.ActBaruExecute(Sender: TObject);
 begin
+   FRencana_Lunas_Hutang.vcall:='new';
    FRencana_Lunas_Hutang.Show;
+end;
+
+procedure TFList_Rencana_Lunas_Hutang.ActDelExecute(Sender: TObject);
+begin
+    if Qrencana.FieldByName('stat_lunas').AsInteger=1 then
+    begin
+      MessageDlg('Rencana sudah lunas, tidak dapat dihapus!!',mtInformation,[mbRetry],0);
+    end
+    else
+    begin
+      if application.MessageBox('Yakin data akan dihapus?','confirm',mb_yesno or MB_ICONQUESTION)=id_yes then
+      begin
+        with Qrencana do
+        begin
+          close;
+          sql.Clear;
+          sql.text:=' delete from t_paid_debt_det '+
+                    ' where periode1=:periode1 and periode2=:periode2 and supplier_code=:kd_sup '+
+                    ' and plan_to=:rencanake';
+          params.ParamByName('periode1').asstring:=Qrencana.fieldbyname('periode1').asstring;
+          params.ParamByName('periode2').asstring:=Qrencana.fieldbyname('periode2').asstring;
+          params.ParamByName('kd_sup').asstring:=Qrencana.fieldbyname('kd_sup').asstring;
+          params.ParamByName('rencanake').asstring:=Qrencana.fieldbyname('rencanake').asstring;
+          params.ParamByName('stat_approve').asstring:=Qrencana.fieldbyname('stat_approve').asstring;
+          Execute;
+        end;
+        Qrencana.close;
+        Qrencana.open;
+      end;
+    end;
 end;
 
 procedure TFList_Rencana_Lunas_Hutang.ActROExecute(Sender: TObject);
@@ -147,6 +212,84 @@ begin
     txtnmsupp.Text:='';
     BCariClick(sender);
     DBGrid_List_Rencana.FinishLoadingStatus();
+end;
+
+procedure TFList_Rencana_Lunas_Hutang.ActUpdateExecute(Sender: TObject);
+begin
+
+  with dm.Qtemp do
+  begin
+    Close;
+    Sql.Clear;
+    Sql.Text:=' SELECT bank,supplier_code,inv_no,faktur_no,faktur_date,cek_no,cek_date,'+
+              ' paid_date,periode1,periode2,periodetempo1,periodetempo2,amount,debt_type,'+
+              ' username,npph,pph_account,pph_name ,paid_status,exchange_rate,dolar_amount,'+
+              ' approve_status,sj_no,factory_code,plan_to,source_plan_id '+
+              ' from t_paid_debt_det  '+
+              ' where paid_status='+IntToStr(CBstatus.ItemIndex)+' and  '+
+              ' periode1 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+
+              ' periode2 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
+              ' plan_to='+QuotedStr(CbRencanake.Text)+' and '+
+              ' supplier_code='+QuotedStr(txtkdsupp.Text)+'';
+    Open;
+  end;
+
+  if dm.Qtemp.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Data') ;
+    Exit;
+  end;
+  if dm.Qtemp.RecordCount<>0 then
+  begin
+  with FRencana_Lunas_Hutang do
+  begin
+
+    if dm.Qtemp.FieldByName('bank').asstring='' then
+    begin
+      cbbank.Text:='';
+      rbbank.Checked:=false;
+    end else
+    begin
+      cbbank.Text:=dm.Qtemp.FieldByName('bank').asstring;
+      rbbank.Checked:=true;
+    end;
+    txtnocek.Text:=dm.Qtemp.FieldByName('cek_no').asstring;
+    dptglcek.Date:=Dm.Qtemp.FieldByName('cek_date').AsDateTime;
+    dptgllunas.Date:=Dm.Qtemp.FieldByName('paid_date').AsDateTime;
+    dpperiode1.Date:=Dm.Qtemp.FieldByName('periode1').AsDateTime;
+    dpperiode2.Date:=Dm.Qtemp.FieldByName('periode2').AsDateTime;
+    dpperiodetmp1.Date:=Dm.Qtemp.FieldByName('periodetempo1').AsDateTime;
+    dpperiodetmp2.Date:=Dm.Qtemp.FieldByName('periodetempo2').AsDateTime;
+    CBrencanake.Text:=dm.Qtemp.FieldByName('plan_to').asstring;
+    id_source.Text:=dm.Qtemp.FieldByName('source_plan_id').asstring;
+    CbSumber.Text:='Hutang';
+
+  MemRencana.active:=false;
+  MemRencana.active:=true;
+  MemRencana.EmptyTable;
+
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+    MemRencana.insert;
+    MemRencana['kd_sup']:=dm.Qtemp.FieldByName('supplier_code').asstring;
+    MemRencana['noinv']:=dm.Qtemp.FieldByName('inv_no').asstring;
+    MemRencana['nosj']:=dm.Qtemp.FieldByName('inv_no').asstring;
+    MemRencana['nofaktur']:=dm.Qtemp.FieldByName('faktur_no').asstring;
+    MemRencana['tglfaktur']:=dm.Qtemp.FieldByName('faktur_date').AsDateTime;
+    MemRencana['akun_pph']:=dm.Qtemp.FieldByName('pph_account').asstring;
+    MemRencana['npph']:=dm.Qtemp.FieldByName('npph').asstring;
+    MemRencana['jumlah']:=dm.Qtemp.FieldByName('amount').value;
+    MemRencana['source_id']:=dm.Qtemp.FieldByName('source_plan_id').asstring;
+    MemRencana.post;
+    dm.Qtemp.Next;
+  end;
+
+
+  end;
+
+  FRencana_Lunas_Hutang.Show;
+  end;
 end;
 
 procedure TFList_Rencana_Lunas_Hutang.BCariClick(Sender: TObject);
@@ -162,7 +305,7 @@ begin
           close;
           sql.clear;
           sql.text:='select * from v_plan_paid_debt '+
-                    'where paid_status=0 and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date)) ;
+                    'where paid_status=0 and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
           open;
         end;
       end
@@ -173,7 +316,7 @@ begin
           close;
           sql.clear;
           sql.text:='select * from v_plan_paid_debt '+
-                    'where paid_status=0 and '+
+                    'where paid_status=0 and  periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' and '+
                     'supplier_code='+QuotedStr(txtkdsupp.Text) ;
           open;
         end;
@@ -189,7 +332,7 @@ begin
           sql.clear;
           sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=1 and '+
-                    'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date)) ;
+                    'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
           open;
         end;
       end
@@ -202,7 +345,7 @@ begin
           sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=1 and '+
                     'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
-                    'supplier_code='+QuotedStr(txtkdsupp.Text) ;
+                    'supplier_code='+QuotedStr(txtkdsupp.Text)+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
 
           open;
         end;
@@ -242,7 +385,28 @@ procedure TFList_Rencana_Lunas_Hutang.FormShow(Sender: TObject);
 begin
    DateTimePicker1.Date:=Now;
    DateTimePicker2.Date:=Now;
+   load_rencanake;
 end;
+
+
+procedure TFList_Rencana_Lunas_Hutang.load_rencanake;
+begin
+   with Dm.Qtemp do
+   begin
+     close;
+     sql.Text:='SELECT * from t_plan_to ';
+     Open;
+   end;
+   Dm.Qtemp.First;
+   CbRencanake.Items.Clear;
+   while not dm.Qtemp.Eof do
+   begin
+     CbRencanake.Items.Add(Dm.Qtemp.FieldByName('plan_to').AsString);
+     Dm.Qtemp.Next;
+   end;
+end;
+
+
 
 initialization
 RegisterClass(TFList_Rencana_Lunas_Hutang);

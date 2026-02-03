@@ -27,6 +27,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
+    procedure ReportGetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
   public
@@ -41,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses UCari_Modul, UDataModule, UMy_Function, UMasterData;
+uses UCari_Modul, UDataModule, UMy_Function, UMasterData, UHomeLogin;
 
 procedure TFKolektifPenjualan.BBatalClick(Sender: TObject);
 begin
@@ -94,7 +95,7 @@ begin
               'a.tot_piece_value tot_piece_value_master,a.ppn_value ppn_value_master,'+
               'a.grand_tot grand_tot_master,a.pembulatan_value pembulatan_value_master,a.word_amount, '+
               'a."code_cust", a."name_cust",  d."address",COALESCE(a.no_npwp,'''') no_npwp, '+
-              'b."code_item", b."name_item",  b."amount", b."code_unit", b."name_unit", '+
+              'b."code_item", b."name_item",  b."amount", b."code_unit", UPPER(b."name_unit") name_unit, '+
               'a."no_reference", "unit_price",  b."sub_total", b."ppn_account", b."ppn_percent", '+
               'b."ppn_value", b."pph_account",  b."pph_name", b."pph_percent", b."pph_value", '+
               'b."tot_piece_value",  b."tot_piece_percent", b."grand_tot",   '+
@@ -108,16 +109,28 @@ begin
               'from "public".get_selling(FALSE) a  '+
               'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
               'LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item  '+
-              'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code   '+
+              'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''002'') d on a.code_cust=d.customer_code   '+
               'LEFT JOIN t_item f ON f.item_code=b.code_item  '+
               'where  (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.DateTime))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.DateTime))+')'+ KodeKaresidenan+' AND '+
-              'a.deleted_at is NULL order by a.trans_date ASC, a.trans_no ASC, a.code_karesidenan ASC, f.group_id  ASC,b.code_item ASC';
+              'a.deleted_at is NULL '+
+              'order by a.trans_date, a.trans_no, '+
+              'f.group_id  ASC';
     Open;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.clear;
+    sql.Text:='select * from get_user_signature(2) ';
+    open;
   end;
 
   if QPenjualan.RecordCount>0 then
   begin
     cLocation := ExtractFilePath(Application.ExeName);
+
+
      //ShowMessage(cLocation);
     Report.LoadFromFile(cLocation +'report/rpt_penjualan_kolektif3'+ '.fr3');
     Report.ShowReport();
@@ -141,6 +154,22 @@ begin
   edKaresidenan.Text:='';
   dtTanggalAwal.Date:=NOW();
   dtTanggalAkhir.Date:=NOW();
+end;
+
+procedure TFKolektifPenjualan.ReportGetValue(const VarName: string;
+  var Value: Variant);
+begin
+  if CompareText(VarName, 'vtglFooter') = 0 then
+  begin
+    status_pakai_terbilang:= 2;
+    Value := FHomeLogin.vKotaPRSH+', '+FormatDateTime('dd mmmm yyyy',QPenjualan.FieldValues['trans_date']);
+  end;
+  if CompareText(VarName, 'vsignature_name') = 0 then
+  begin
+    status_pakai_terbilang:= 2;
+    Value := dm.Qtemp2.FieldValues['full_name'];
+  end;
+
 end;
 
 end.

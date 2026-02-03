@@ -2,8 +2,8 @@ object FKontrakkerjasama: TFKontrakkerjasama
   Left = 0
   Top = 0
   Caption = 'Form Kontrak Kerjasama'
-  ClientHeight = 432
-  ClientWidth = 822
+  ClientHeight = 431
+  ClientWidth = 818
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 822
+    Width = 818
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -26,6 +26,7 @@ object FKontrakkerjasama: TFKontrakkerjasama
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 822
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -39,8 +40,8 @@ object FKontrakkerjasama: TFKontrakkerjasama
   object DBGridKontrak: TDBGridEh
     Left = 0
     Top = 127
-    Width = 822
-    Height = 305
+    Width = 818
+    Height = 304
     Align = alClient
     DataGrouping.GroupLevels = <
       item

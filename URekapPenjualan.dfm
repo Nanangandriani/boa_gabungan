@@ -527,7 +527,7 @@ object FRekapPenjualan: TFRekapPenjualan
       Caption = 'Rincian Faktur'
       Category = 0
       Hint = 'Rincian Faktur'
-      Visible = ivAlways
+      Visible = ivNever
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A

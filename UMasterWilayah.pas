@@ -333,8 +333,8 @@ end;
 
 procedure TFMasterWilayah.FormShow(Sender: TObject);
 begin
-MemDetailMasterWil.EmptyTable;
-if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
+  MemDetailMasterWil.EmptyTable;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
     btMasterWilayah.Visible:=false;
     btMasterArea.Visible:=false;

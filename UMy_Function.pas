@@ -993,7 +993,6 @@ begin
 end;
 
 
-
  // Fucntion Untuk Bahasa Inggris
 const
   Digits: array [1 .. 9] of string = (
@@ -1067,9 +1066,9 @@ Angka : array [1..20] of string =
 ('', 'Satu', 'Dua', 'Tiga', 'Empat',
 'Lima', 'Enam', 'Tujuh', 'Delapan',
 'Sembilan', 'Sepuluh', 'Sebelas',
-'Duabelas', 'Tigabelas', 'Empatbelas',
-'Limabelas', 'Enambelas', 'Tujuhbelas',
-'Delapanbelas', 'Sembilanbelas');
+'Dua Belas', 'Tiga Belas', 'Empat Belas',
+'Lima Belas', 'Enam Belas', 'Tujuh Belas',
+'Delapan Belas', 'Sembilan Belas');
 sPattern: string = '000000000000000';
 var
 S,kata : string;

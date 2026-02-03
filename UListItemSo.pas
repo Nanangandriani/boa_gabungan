@@ -77,6 +77,7 @@ end;
 procedure TFlistItemSo.BEditClick(Sender: TObject);
 var i:integer;
 begin
+  //ShowMessage('2');
    if DBGridMaterial.SelectedRows.Count > 0 then
    begin
     with DBGridMaterial.DataSource.DataSet do
@@ -226,9 +227,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select DISTINCT type_vehicles_code,vehicle_group_sort_number,vehicle_group_id,vehicles,type_vehicles_name,capacity,sent_date,deleted_at FROM '+
-                '(SELECT notrans,order_date,sent_date,vehicle_group_sort_number,vehicle_group_id,vehicles,type_vehicles_code,type_vehicles_name,capacity,deleted_at from t_sales_order WHERE vehicle_group_sort_number is NOT NULL)a '+
-                'WHERE sent_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',FlistItemSo.DT_tgl_kirim.Date))+' and deleted_at IS NULL '+
+      sql.Text:='select DISTINCT type_vehicles_code,vehicle_group_sort_number,vehicle_group_id,vehicles,type_vehicles_name,capacity,sent_date FROM '+
+                '(SELECT notrans,order_date,sent_date,vehicle_group_sort_number,vehicle_group_id,vehicles,type_vehicles_code,type_vehicles_name,capacity,deleted_at from t_sales_order WHERE vehicle_group_sort_number is NOT NULL '+
+                'and notrans not in(SELECT no_reference FROM t_selling WHERE deleted_at is null )  and deleted_at IS NULL )a '+
+                'WHERE sent_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',FlistItemSo.DT_tgl_kirim.Date))+' '+
                 'ORDER BY type_vehicles_code ASC ';
       open;
     end;
@@ -292,6 +294,7 @@ procedure TFlistItemSo.BEdit2Click(Sender: TObject);
 var
   i: Integer;
 begin
+  //ShowMessage('1');
   if DBGridMaterial.SelectedRows.Count = 0 then Exit;
 
   FNew_PO.Show;
@@ -345,6 +348,7 @@ begin
             end;
             // === HITUNG ULANG DETAIL ===
             FNew_PO.HitungDetail_so;
+            //FNew_PO.HitungDet;
 
 
             Post;
@@ -352,7 +356,8 @@ begin
 
           with FNew_PO.Memitempo2 do
           begin
-              FNew_PO.MemItempo2.Insert;
+              //FNew_PO.MemItempo2.Insert;
+              Insert;
               FNew_PO.MemItempo2['kd_material_stok']:=QMaterial['item_stock_code'];
               FNew_PO.MemItempo2['kd_material']:=QMaterial['code_item'];
               FNew_PO.MemItempo2['nm_material']:=QMaterial['name_item'];
@@ -393,7 +398,7 @@ begin
     end;
   end;
 
-  Close;
+  FlistItemSo.Close;
 end;
 
 

@@ -324,7 +324,7 @@ begin
   key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapiprospek''');
   vtoken:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''tokenapiprospek''');
   vBody:='?idProspek='+inttostr(vid_prospek)+'&approve=1';
-  Vpath:='outlet/update';
+  Vpath:='outlet/update/smartboa';
   url:= BaseUrl+Vpath+vBody;
   try
   gNet :=  TIdHTTP.Create(nil);

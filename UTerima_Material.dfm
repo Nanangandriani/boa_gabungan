@@ -61,6 +61,7 @@ object FTerima_Material: TFTerima_Material
     RowDetailPanel.Height = 200
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnGetCellParams = DBGridTerimaGetCellParams
     Columns = <
       item
         CellButtons = <>
@@ -195,7 +196,7 @@ object FTerima_Material: TFTerima_Material
         Left = 0
         Top = 0
         Width = 776
-        Height = 184
+        Height = 180
         Align = alClient
         DataSource = DsTerimaDet
         DynProps = <>
@@ -425,7 +426,7 @@ object FTerima_Material: TFTerima_Material
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 809
+    ExplicitWidth = 807
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -460,7 +461,7 @@ object FTerima_Material: TFTerima_Material
     end
     object Cari: TRzBitBtn
       Left = 291
-      Top = 9
+      Top = 6
       Width = 70
       Caption = 'Cari'
       TabOrder = 2
@@ -697,7 +698,7 @@ object FTerima_Material: TFTerima_Material
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 45978.126378576400000000
+    ReportOptions.LastChange = 46044.605638263890000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -740,10 +741,9 @@ object FTerima_Material: TFTerima_Material
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = []
-      Orientation = poLandscape
       PaperWidth = 210.000000000000000000
-      PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
       TopMargin = 5.000000000000000000
@@ -823,7 +823,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 475.951987880000000000
           Top = -0.666666670000000000
-          Width = 100.939197270000000000
+          Width = 123.616377270000000000
           Height = 18.897650000000000000
           DataSet = DbLPB
           DataSetName = 'DbLPB'
@@ -833,6 +833,7 @@ object FTerima_Material: TFTerima_Material
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
+          HAlign = haCenter
           Memo.UTF8W = (
             '     [DbLPB."unit"]')
           ParentFont = False
@@ -841,7 +842,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 602.896441820000000000
           Top = -0.333333330000000000
-          Width = 113.723730910000000000
+          Width = 151.519030910000000000
           Height = 18.897650000000000000
           DataField = 'qty'
           DataSet = DbLPB
@@ -858,38 +859,6 @@ object FTerima_Material: TFTerima_Material
           Memo.UTF8W = (
             '[DbLPB."qty"]')
           ParentFont = False
-        end
-        object Line9: TfrxLineView
-          AllowVectorExport = True
-          Left = 32.333333330000000000
-          Top = -0.525046670000000000
-          Height = 243.779527559055000000
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line12: TfrxLineView
-          AllowVectorExport = True
-          Left = 345.333333330000000000
-          Top = -0.525046670000000000
-          Height = 243.779527560000000000
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line13: TfrxLineView
-          AllowVectorExport = True
-          Left = 475.333333330000000000
-          Top = -1.191713330000000000
-          Height = 243.779527560000000000
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line14: TfrxLineView
-          AllowVectorExport = True
-          Left = 602.666666670000000000
-          Top = 0.808286670000000000
-          Height = 243.779527560000000000
-          Color = clBlack
-          Frame.Typ = [ftLeft]
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1170,7 +1139,7 @@ object FTerima_Material: TFTerima_Material
         Height = 133.160583430000000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
-        Condition = '<DbLPB."receive_no">'
+        Condition = 'DbLPB."receive_no"'
         StartNewPage = True
         object Memo14: TfrxMemoView
           AllowVectorExport = True
@@ -1386,7 +1355,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 31.891523180000000000
           Top = 90.402950880000000000
-          Height = 41.978102550000000000
+          Height = 260.787399130000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1395,7 +1364,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 345.358680980000000000
           Top = 90.307081730000000000
-          Height = 38.198572550000000000
+          Height = 260.787401574803000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1404,7 +1373,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 474.982180940000000000
           Top = 91.973748400000000000
-          Height = 38.198572550000000000
+          Height = 260.787401570000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1413,7 +1382,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 474.159172110000000000
           Top = 111.380094230000000000
-          Width = 283.464566929134000000
+          Width = 283.464566930000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1422,7 +1391,7 @@ object FTerima_Material: TFTerima_Material
           AllowVectorExport = True
           Left = 602.815500710000000000
           Top = 110.713427560000000000
-          Height = 21.221429200000000000
+          Height = 241.889763779528000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

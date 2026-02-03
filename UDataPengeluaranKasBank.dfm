@@ -30,7 +30,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object LabelPelanggan: TLabel
       Left = 20
       Top = 109
-      Width = 69
+      Width = 70
       Height = 15
       Caption = 'No. Transaksi'
     end
@@ -44,7 +44,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object Label39: TLabel
       Left = 587
       Top = 27
-      Width = 75
+      Width = 76
       Height = 15
       Caption = 'Jenis Transaksi'
       Visible = False
@@ -60,7 +60,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object Label12: TLabel
       Left = 20
       Top = 135
-      Width = 91
+      Width = 93
       Height = 15
       Caption = 'Tanggal Transaksi'
     end
@@ -193,7 +193,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object Label27: TLabel
       Left = 19
       Top = 80
-      Width = 75
+      Width = 76
       Height = 15
       Caption = 'Jenis Transaksi'
     end
@@ -228,7 +228,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     object Label46: TLabel
       Left = 971
       Top = 241
-      Width = 48
+      Width = 49
       Height = 15
       Caption = 'Daftar TP'
     end
@@ -990,14 +990,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       object Label36: TLabel
         Left = 34
         Top = 137
-        Width = 108
+        Width = 110
         Height = 15
         Caption = 'Tgl.Jatuh Tempo Cek'
       end
       object Label32: TLabel
         Left = 34
         Top = 110
-        Width = 84
+        Width = 85
         Height = 15
         Caption = 'Tanggal Cek/BG'
       end
@@ -1135,10 +1135,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Width = 1108
     Height = 268
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 259
@@ -1171,6 +1171,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             EditButtons = <>
             FieldName = 'kd_header_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Kode Akun'
             Width = 100
           end
@@ -1185,6 +1186,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
               end>
             FieldName = 'kd_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Kode Akun Detail'
             Width = 100
           end
@@ -1194,6 +1196,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             EditButtons = <>
             FieldName = 'nm_akun'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Nama Akun'
             Width = 250
           end
@@ -1253,6 +1256,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 1104
         Height = 243
         Align = alClient
+        AutoFitColWidths = True
         DataSource = dsDetailHutang
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
@@ -1319,7 +1323,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             FieldName = 'keterangan'
             Footers = <>
             Title.Caption = 'Keterangan'
-            Width = 250
+            Width = 300
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
@@ -1483,7 +1487,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     end
   end
   object MemDetailHutang: TMemTableEh
-    Active = True
     Params = <>
     Left = 648
     Top = 512
@@ -1495,8 +1498,9 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       FieldName = 'tgl_faktur'
     end
     object MemDetailHutangketerangan: TStringField
-      DisplayWidth = 200
+      DisplayWidth = 300
       FieldName = 'keterangan'
+      Size = 300
     end
     object MemDetailHutangno_faktur: TStringField
       FieldName = 'no_faktur'
@@ -1558,8 +1562,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 200
-          Size = 200
+          DisplayWidth = 300
+          Size = 300
         end
       end
       object RecordsList: TRecordsListEh
@@ -1934,7 +1938,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   end
   object DSKKasBank: TDataSource
     DataSet = MemKKasBank
-    Left = 896
+    Left = 904
     Top = 528
   end
   object DSTP: TDataSource
@@ -1945,7 +1949,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 944
+    Left = 936
     Top = 184
   end
 end

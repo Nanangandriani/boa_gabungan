@@ -341,7 +341,13 @@ uses
   UDeliveryOrder_SumberPO in 'UDeliveryOrder_SumberPO.pas' {FDeliveryOrder_SumberPO},
   USetMasterTP in 'USetMasterTP.pas' {FSetMasterTP},
   USetMasterKaresidenan in 'USetMasterKaresidenan.pas' {FSetMasterKaresidenan},
-  ULaporanPenjualan in 'ULaporanPenjualan.pas' {FLaporanPenjualan};
+  ULaporanPenjualan in 'ULaporanPenjualan.pas' {FLaporanPenjualan},
+  U_List_SO_PO in 'U_List_SO_PO.pas' {FList_SO},
+  UlistItemDo in 'UlistItemDo.pas' {FListDo},
+  UListItemSo in 'UListItemSo.pas' {FlistItemSo},
+  UDaftarPenggunaanFakturPajak in 'UDaftarPenggunaanFakturPajak.pas' {FDaftarPenggunaanFakturPajak},
+  UBatalTransaksi in 'UBatalTransaksi.pas' {FBatalTransaksi},
+  UDaftar_UM_Pemb in 'UDaftar_UM_Pemb.pas' {FDaftar_UM_Pemb};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -515,6 +521,12 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFDeliveryOrder_SumberPO, FDeliveryOrder_SumberPO);
   Application.CreateForm(TFSetMasterTP, FSetMasterTP);
   Application.CreateForm(TFSetMasterKaresidenan, FSetMasterKaresidenan);
+  Application.CreateForm(TFList_SO, FList_SO);
+  Application.CreateForm(TFListDo, FListDo);
+  Application.CreateForm(TFlistItemSo, FlistItemSo);
+  Application.CreateForm(TFBatalTransaksi, FBatalTransaksi);
+  Application.CreateForm(TFDaftar_UM_Pemb, FDaftar_UM_Pemb);
+  //  Application.CreateForm(TFDaftarPenggunaanFakturPajak, FDaftarPenggunaanFakturPajak);
   FHomeSreen.Hide;
   FHomeSreen.Free;
   FMainMenu.DisableMenu;

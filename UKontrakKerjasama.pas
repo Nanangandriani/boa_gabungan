@@ -775,3 +775,4 @@ Initialization
   RegisterClass(TFKontrakkerjasama);
 
 end.
+

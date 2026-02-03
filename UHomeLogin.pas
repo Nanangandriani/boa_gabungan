@@ -336,7 +336,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(Eduser.Text)+','+QuotedStr(GetLocalIP)+',True,False,''2.0'');';
+      sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(Eduser.Text)+','+QuotedStr(GetLocalIP)+',True,False,'+QuotedStr(FMainMenu.RzVersionInfoStatus1.VersionInfo.ProductVersion)+');';
       ExecSQL;
     end;
     Nm:=Eduser.Text;

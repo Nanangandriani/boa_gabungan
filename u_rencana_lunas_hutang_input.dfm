@@ -766,7 +766,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       OnClick = rbbankClick
     end
     object Bdaftar: TRzBitBtn
-      Left = 661
+      Left = 645
       Top = 93
       Width = 185
       Height = 34
@@ -902,8 +902,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   object MemRencana: TMemTableEh
     Active = True
     Params = <>
-    Left = 672
-    Top = 288
+    Left = 680
+    Top = 304
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object kd_sup: TMTStringDataFieldEh
@@ -920,7 +920,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         object nofaktur: TMTStringDataFieldEh
           FieldName = 'nofaktur'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object tglfaktur: TMTDateTimeDataFieldEh
           FieldName = 'tglfaktur'
@@ -967,12 +968,14 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         object nosj: TMTStringDataFieldEh
           FieldName = 'nosj'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object nm_akun_pph: TMTStringDataFieldEh
           FieldName = 'nm_akun_pph'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
         object source_id: TMTNumericDataFieldEh
           FieldName = 'source_id'

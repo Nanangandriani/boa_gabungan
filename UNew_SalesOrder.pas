@@ -369,7 +369,7 @@ begin
         iserror:=1;
         MessageDlg('Barang Kategory '+strCategoryName+' belum ada target penjualan..!!',mtInformation,[mbRetry],0);
 
-        //        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+//        if MessageDlg ('Barang Kategory '+MemDetail['CATEGORY_NAME']+' belum ada target penjualan, Apa mau lanjut?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
 //        begin
 //          islanjut:=1;
 //          StrKetLog:=StrKetLog+', Barang kategori '+MemDetail['CATEGORY_NAME']+' belum memiliki target penjualan';
@@ -413,7 +413,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT a.code_cust, (SUM(debit)-SUM(kredit)) sisa_piutang  FROM get_selling(NULL) a '+
+    sql.Text:='SELECT a.code_cust, (SUM(COALESCE(debit,0))-SUM(COALESCE(kredit,0))) sisa_piutang  FROM get_selling(NULL) a '+
               'LEFT JOIN t_selling_general b ON b.no_invoice=a.trans_no AND b.deleted_at IS NULL '+
               'WHERE a.code_cust='+QuotedStr(edKode_Pelanggan.Text)+' '+
               'GROUP  BY a.code_cust';
@@ -436,7 +436,7 @@ begin
               'GROUP BY customer_code;';
     open;
   end;
-
+  //
   IntCountBankGaransi:=dm.Qtemp.RecordCount;
 
   if dm.Qtemp.RecordCount=0 then
@@ -1103,6 +1103,7 @@ begin
     edKode_Sales.Text:=Nm;
     edNama_Sales.Text:=NmFull;
   end;
+//  Autonumber;
 end;
 
 procedure TFNew_SalesOrder.edNama_SalesButtonClick(Sender: TObject);

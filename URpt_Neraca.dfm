@@ -785,7 +785,7 @@ object FRpt_Neraca: TFRpt_Neraca
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Width = 98.267716540000000000
-          Height = 17.007874020000000000
+          Height = 17.007874015748000000
           DataField = 'kd_akun'
           DataSet = DbRpt_Neraca
           DataSetName = 'DbRpt_Neraca'

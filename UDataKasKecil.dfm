@@ -41,7 +41,7 @@ object FDataKasKecil: TFDataKasKecil
     object Label12: TLabel
       Left = 18
       Top = 44
-      Width = 91
+      Width = 93
       Height = 15
       Caption = 'Tanggal Transaksi'
     end
@@ -69,7 +69,7 @@ object FDataKasKecil: TFDataKasKecil
     object Label1: TLabel
       Left = 18
       Top = 15
-      Width = 69
+      Width = 70
       Height = 15
       Caption = 'No. Transaksi'
     end
@@ -119,7 +119,9 @@ object FDataKasKecil: TFDataKasKecil
       Top = 129
       Width = 344
       Height = 82
+      CharCase = ecUpperCase
       TabOrder = 2
+      OnKeyPress = MemKeteranganKeyPress
     end
     object edNoTrans: TEdit
       Left = 140
@@ -135,6 +137,7 @@ object FDataKasKecil: TFDataKasKecil
       Width = 344
       Height = 23
       Text = ''
+      CharCase = ecUpperCase
       TabOrder = 4
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -146,6 +149,7 @@ object FDataKasKecil: TFDataKasKecil
       Width = 344
       Height = 23
       Text = ''
+      CharCase = ecUpperCase
       TabOrder = 5
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -161,8 +165,8 @@ object FDataKasKecil: TFDataKasKecil
       Visible = False
     end
     object gbDataBON: TGroupBox
-      Left = 504
-      Top = 16
+      Left = 524
+      Top = 38
       Width = 497
       Height = 107
       Caption = 'Data BON'
@@ -217,8 +221,8 @@ object FDataKasKecil: TFDataKasKecil
       end
     end
     object BtnAmbil_Data: TRzBitBtn
-      Left = 522
-      Top = 10
+      Left = 524
+      Top = 14
       Width = 186
       Caption = 'AMBIL DATA PENGAJUAN'
       Font.Charset = DEFAULT_CHARSET
@@ -284,8 +288,8 @@ object FDataKasKecil: TFDataKasKecil
       NumGlyphs = 2
     end
     object GbHutang: TGroupBox
-      Left = 504
-      Top = 100
+      Left = 524
+      Top = 122
       Width = 497
       Height = 111
       TabOrder = 9
@@ -454,6 +458,7 @@ object FDataKasKecil: TFDataKasKecil
         Width = 1233
         Height = 217
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DSDetailAkun
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
@@ -531,8 +536,8 @@ object FDataKasKecil: TFDataKasKecil
               end>
             FieldName = 'kd_akun'
             Footers = <>
-            ReadOnly = True
             Title.Caption = 'Kode Anak Akun '
+            Visible = False
             Width = 100
           end
           item
@@ -881,7 +886,7 @@ object FDataKasKecil: TFDataKasKecil
   object MemDetailHutang: TMemTableEh
     Active = True
     Params = <>
-    Left = 800
+    Left = 784
     Top = 319
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'

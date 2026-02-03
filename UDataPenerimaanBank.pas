@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls, RzCmboBx, frxClass;
+  Vcl.ExtCtrls, RzCmboBx, frxClass, RzPanel;
 
 type
   TFDataPenerimaanBank = class(TForm)
@@ -112,6 +112,14 @@ type
     edNamaPKP: TEdit;
     Label31: TLabel;
     Label32: TLabel;
+    edNamaPKPSumber: TEdit;
+    Label33: TLabel;
+    Label34: TLabel;
+    RzPanel1: TRzPanel;
+    RzButton1: TRzButton;
+    Label35: TLabel;
+    Label36: TLabel;
+    edKaresidenan: TRzButtonEdit;
     procedure edKode_PelangganButtonClick(Sender: TObject);
     procedure edNamaMataUangButtonClick(Sender: TObject);
     procedure edNamaJenisTransButtonClick(Sender: TObject);
@@ -139,7 +147,6 @@ type
     procedure edJumlahExit(Sender: TObject);
     procedure edNMSumberTagihanChange(Sender: TObject);
     procedure edNoRefSumberPenerimaanButtonClick(Sender: TObject);
-    procedure edNamaPelangganSumberChange(Sender: TObject);
     procedure cbSumberPenerimaanChange(Sender: TObject);
     procedure edKode_PelangganChange(Sender: TObject);
     procedure DBGridTagihanCellClick(Column: TColumnEh);
@@ -148,6 +155,11 @@ type
     procedure DBGridTagihanCellMouseClick(Grid: TCustomGridEh; Cell: TGridCoord;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
       var Processed: Boolean);
+    procedure DBGridTagihanExit(Sender: TObject);
+    procedure edKodePelangganSumberChange(Sender: TObject);
+    procedure MemDetailPiutangAfterPost(DataSet: TDataSet);
+    procedure RzButton1Click(Sender: TObject);
+    procedure edKaresidenanButtonClick(Sender: TObject);
   private
     vtotal_debit, vtotal_kredit,vpiutang_kredit, vtotal_piutang : real;
     const
@@ -161,6 +173,7 @@ type
     strtgl, strbulan, strtahun: string;
     Year, Month, Day: Word;
     next_proses:boolean;
+    UangMuka: Currency;
     { Public declarations }
     procedure Autonumber;
     procedure Save;
@@ -241,6 +254,57 @@ begin
     end;
   end;
   cbSumberPenerimaan.ItemIndex:=0;
+end;
+
+procedure TFDataPenerimaanBank.RzButton1Click(Sender: TObject);
+begin
+
+  if (edKode_Pelanggan.Text='0') OR (Length(edKode_Pelanggan.Text)=0) then
+  begin
+    ShowMessage('Silahkan Pilih Pelanggan...!!!');
+    Exit;
+  end;
+
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '0' then
+  begin
+    if (vid_modul='3') AND ((edKodeSumberTagihan.Text='0') OR (Length(edKodeSumberTagihan.Text)=0)) then
+    begin
+      ShowMessage('Silkan Pilih Sumber Tagihan...!!!');
+      Exit;
+    end;
+    if (edKodeSumberTagihan.Text='1') OR (vid_modul='4') then  //Kas Piutang Auto Ambil Piutang
+    begin
+      FDaftarTagihan.vcall:='terima_bank';
+      FDaftarTagihan.kd_outlet:=edKode_Pelanggan.Text;
+      FDaftarTagihan.RefreshGrid;
+      FDaftarTagihan.show;
+    end;
+    if edKodeSumberTagihan.Text='2' then
+    begin
+      FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
+      FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
+      FDaftarPenagihanPiutang.tglTagih1:=dtPeriode1.Date;
+      FDaftarPenagihanPiutang.tglTagih2:=dtPeriode2.Date;
+      FDaftarPenagihanPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
+      FDaftarPenagihanPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
+      FDaftarPenagihanPiutang.dtTagih.Date:=dtPeriode1.Date;
+      FDaftarPenagihanPiutang.RefreshGrid;
+      FDaftarPenagihanPiutang.show;
+    end;
+  end;
+  if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '1' then
+  begin
+    FDaftarRencanaLunasPiutang.vcall:='rencana_lunas_piutang';
+    FDaftarRencanaLunasPiutang.kd_outlet:=edKode_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.periode1:=dtPeriode1.Date;
+    FDaftarRencanaLunasPiutang.periode2:=dtPeriode2.Date;
+    FDaftarRencanaLunasPiutang.edKode_Pelanggan.Text:=edKode_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.edNama_Pelanggan.Text:=edNama_Pelanggan.Text;
+    FDaftarRencanaLunasPiutang.dtPeriode1.Date:=dtPeriode1.Date;
+    FDaftarRencanaLunasPiutang.dtPeriode2.Date:=dtPeriode2.Date;
+    FDaftarRencanaLunasPiutang.RefreshGrid;
+    FDaftarRencanaLunasPiutang.show;
+  end;
 end;
 
 procedure TFDataPenerimaanBank.Enable;
@@ -328,6 +392,8 @@ begin
       open;
     end;
 
+    edKaresidenan.Text:='';
+    kd_kares:='';
     MemDetailAkun.EmptyTable;
     MemDetailPiutang.EmptyTable;
     edNoTrans.Clear;
@@ -340,8 +406,11 @@ begin
     edNoRek.Clear;
     edKode_Pelanggan.Clear;
     edNama_Pelanggan.Clear;
+    edNamaPKP.Clear;
     edKodeSumberTagihan.Clear;
     edNMSumberTagihan.Clear;
+    edNamaPelangganSumber.Clear;
+    edNamaPKPSumber.Clear;
     edKodeJenisBayar.Clear;
     edNMJenisBayar.Clear;
     edKodeMataUang.Clear;
@@ -367,12 +436,24 @@ begin
     FDataPenerimaanBank.gbDataBank.Visible:=True;
     gbDataSumberPenerimaan.Visible:=True; //Harus True
     cbSumberPenerimaan.ItemIndex:=0;
+    edJumlah.Enabled:=True;
+    label33.Visible:=False;
+    label34.Visible:=False;
+    edNamaPKPSumber.Visible:=False;
+    Label29.Caption:='Diterima Dari';
+    edNamaPelangganSumber.ReadOnly:=False;
   end;
   if vid_modul='4' then // Kas
   begin
     FDataPenerimaanBank.gbDataBank.Visible:=False;
     gbDataSumberPenerimaan.Visible:=True;  //Harus True
     cbSumberPenerimaan.ItemIndex:=0;
+    label33.Visible:=False;
+    label34.Visible:=False;
+    edNamaPKPSumber.Visible:=False;
+    Label29.Caption:='Diterima Dari';
+    edNamaPelangganSumber.ReadOnly:=False;
+    edJumlah.Enabled:=True;
   end;
 
 
@@ -407,7 +488,7 @@ begin
     end;
   end;
 
-  if (vid_modul='3') AND (cbJenisTransaksi.Text='NON PIUTANG') then
+  if (cbJenisTransaksi.Text='NON PIUTANG') then
   begin
     lbSumberTagihan.Visible:=False;
     lbSumberTagihann.Visible:=False;
@@ -415,11 +496,13 @@ begin
     lbJenisBayarr.Visible:=False;
     edNMSumberTagihan.Visible:=False;
     edNMJenisBayar.Visible:=False;
+    edKaresidenan.Enabled:=True;
   end;
 
   if (cbJenisTransaksi.Text='PIUTANG') then
   begin
     edUntukPengiriman.Text:='PIUTANG DAGANG';
+    edKaresidenan.Enabled:=False;
   end;
 
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '0' then
@@ -509,9 +592,19 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.Update;
-var terbilang :String;
+var terbilang,sCustCode,sCustName :String;
 begin
   terbilang:= ConvKeHuruf(floattostr(edJumlah.value))+' Rupiah';
+  if (cbJenisTransaksi.Text = 'NON PIUTANG') then
+  begin
+    sCustCode := edKodePelangganSumber.Text;
+    sCustName := edNamaPelangganSumber.Text;
+  end else
+  begin
+    sCustCode := edKode_Pelanggan.Text;
+    sCustName := edNama_Pelanggan.Text;
+  end;
+
   with dm.Qtemp do
   begin
     close;
@@ -532,8 +625,8 @@ begin
             ' paid_amount='+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+','+
             ' for_acceptance='+QuotedStr(edUntukPengiriman.Text)+','+
             ' description='+QuotedStr(MemKeterangan.Text)+', '+
-            ' code_cust='+QuotedStr(edKode_Pelanggan.Text)+','+
-            ' name_cust='+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' code_cust='+QuotedStr(sCustCode)+','+
+            ' name_cust='+QuotedStr(sCustName)+', '+
             ' payment_code='+QuotedStr(edKodeSumberTagihan.Text)+','+
             ' payment_name='+QuotedStr(edNMSumberTagihan.Text)+', '+
             ' bill_code='+QuotedStr(edKodeJenisBayar.Text)+','+
@@ -545,7 +638,8 @@ begin
             ' trans_month='+QuotedStr(strbulan)+','+
             ' trans_year='+QuotedStr(strtahun)+', '+
             ' status_correction=0, '+
-            ' word_amount='+QuotedStr(terbilang)+' '+
+            ' word_amount='+QuotedStr(terbilang)+', '+
+            ' code_karesidenan='+QuotedStr(kd_kares)+' '+
             ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
     ExecSQL;
   end;
@@ -564,6 +658,7 @@ begin
   if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
   begin
     InsertDetailUangMuka;
+    SimpanPelanggan;
   end;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
   FMainMenu.TampilTabForm2;
@@ -709,9 +804,12 @@ end;
 
 procedure TFDataPenerimaanBank.InsertDetailUangMuka;
 var
-  strDescription :String;
+  strDescription,KodePelangganUM :String;
   SisaPiutang,Bayar: Currency;
 begin
+//  if edKodePelangganSumber.Text<>'' then KodePelangganUM:=edKodePelangganSumber.Text;
+//  if edKode_Pelanggan.Text<>'' then KodePelangganUM:=edKode_Pelanggan.Text;
+
 
   with Dm.Qtemp1 do
   begin
@@ -747,7 +845,7 @@ begin
               ' '+QuotedStr(edNoTrans.Text)+', '+
               ' '+QuotedStr(edNoRefSumberPenerimaan.Text)+', '+
               ' '+QuotedStr(edKodePelangganSumber.Text)+', '+
-              ' '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
+              ' '+QuotedStr(StringReplace(FloatToStr(UangMuka),',','.',[]))+', '+
               ' '+QuotedStr(strDescription)+', '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
               ' '+QuotedStr(edNamaPelangganSumber.Text)+' ) ';
@@ -756,18 +854,33 @@ begin
 
 end;
 
-procedure TFDataPenerimaanBank.Save;
-var Stradditional_code2,Stradditional_code3,terbilang:String;
+procedure TFDataPenerimaanBank.MemDetailPiutangAfterPost(DataSet: TDataSet);
 begin
-  if (kd_kares='') OR (kd_kares='0') then
-    Stradditional_code2:='NULL'
-  else Stradditional_code2:=QuotedStr(kd_kares);
+  GetKeterangan;
+end;
+
+procedure TFDataPenerimaanBank.Save;
+var Stradditional_code2,Stradditional_code3,terbilang,sCustCode, sCustName:String;
+begin
+//  if (kd_kares='') OR (kd_kares='0') then
+    Stradditional_code2:='NULL';
+//  else Stradditional_code2:=QuotedStr(kd_kares);
 
   if (additional_code3='') OR (additional_code3='0') then
   Stradditional_code3:='NULL'
   else Stradditional_code3:=QuotedStr(additional_code3);
 
   terbilang:= ConvKeHuruf(floattostr(edJumlah.value))+' Rupiah';
+
+  if (cbJenisTransaksi.Text='NON PIUTANG') then
+  begin
+    sCustCode := edKodePelangganSumber.Text;
+    sCustName := edNamaPelangganSumber.Text;
+  end else
+  begin
+    sCustCode := edKode_Pelanggan.Text;
+    sCustName := edNama_Pelanggan.Text;
+  end;
 
   with dm.Qtemp do
   begin
@@ -779,7 +892,7 @@ begin
             ' "name_currency", "kurs", "paid_amount", "for_acceptance", "description", '+
             ' "code_cust", "name_cust", "payment_code", "payment_name", "bill_code", "bill_name", "module_id", '+
             ' "additional_code",additional_code2,additional_code3, '+
-            ' "order_no", "trans_day", "trans_month", "trans_year",sbu_code,word_amount) '+
+            ' "order_no", "trans_day", "trans_month", "trans_year",sbu_code,word_amount,code_karesidenan) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -797,8 +910,8 @@ begin
             ' '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
             ' '+QuotedStr(edUntukPengiriman.Text)+', '+
             ' '+QuotedStr(MemKeterangan.Text)+', '+
-            ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
-            ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
+            ' '+QuotedStr(sCustCode)+', '+
+            ' '+QuotedStr(sCustName)+', '+
             ' '+QuotedStr(edKodeSumberTagihan.Text)+', '+
             ' '+QuotedStr(edNMSumberTagihan.Text)+', '+
             ' '+QuotedStr(edKodeJenisBayar.Text)+', '+
@@ -810,7 +923,7 @@ begin
             ' '+QuotedStr(order_no)+', '+
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
-            ' '+QuotedStr(strtahun)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+QuotedStr(terbilang)+'  );');
+            ' '+QuotedStr(strtahun)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+QuotedStr(terbilang)+','+QuotedStr(kd_kares)+'  );');
     ExecSQL;
   end;
   if MemDetailAkun.RecordCount<>0 then
@@ -828,6 +941,7 @@ begin
   if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
   begin
     InsertDetailUangMuka;
+    SimpanPelanggan;
   end;
 
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -858,7 +972,15 @@ begin
   idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
   strday2:=dtTrans.Date;
   additional_code2:='';
-  if cbJenisTransaksi.Text='PIUTANG' then
+  {if (cbJenisTransaksi.Text='PIUTANG') then
+  begin
+    additional_code2:=kd_kares;
+  end;
+  if (edNoRefSumberPenerimaan.Text<>'') AND (kd_kares<>'') then
+  begin
+    additional_code2:=kd_kares;
+  end;   }
+  if kd_kares<>'' then
   begin
     additional_code2:=kd_kares;
   end;
@@ -870,7 +992,7 @@ begin
 
   if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3<>'')  then
   begin
-    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,additional_code2,additional_code3,'0')+'/'+additional_code2+'/'+additional_code3;
+    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0',additional_code3,'0')+'/'+additional_code2+'/'+additional_code3;
   end;
   if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3='')  then
   begin
@@ -884,6 +1006,23 @@ begin
   begin
     edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0',additional_code3,'0')+'/'+additional_code3;
   end;
+
+//  if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3<>'')  then
+//  begin
+//    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,additional_code2,additional_code3,'0')+'/'+additional_code2+'/'+additional_code3;
+//  end;
+//  if (additional_code1<>'') AND (additional_code2<>'') AND (additional_code3='')  then
+//  begin
+//    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,additional_code2,'0','0')+'/'+additional_code2;
+//  end;
+//  if (additional_code1<>'') AND (additional_code2='') AND (additional_code3='')  then
+//  begin
+//    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0','0','0');
+//  end;
+//  if (additional_code1<>'') AND (additional_code2='') AND (additional_code3<>'')  then
+//  begin
+//    edNoTrans.Text:=getNourut2(strday2,'public.t_cash_bank_acceptance',additional_code1,'0',additional_code3,'0')+'/'+additional_code3;
+//  end;
 
 end;
 
@@ -1052,13 +1191,26 @@ end;
 procedure TFDataPenerimaanBank.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
-  UangMuka: Currency;
+  FoundUangMuka: Integer;
+  TsUangMuka: Currency;
 begin
+  UangMuka:=0;
   //Rferesh hasil Kurs, cek posisi DK
+//  if (cbJenisTransaksi.Text='PIUTANG') AND (MemDetailPiutang.RecordCount>0) then
+//  begin
+//    GetKeterangan;
+//  end;
+  FoundUangMuka:=0;
   KetemuCekPosisiDK:=0;
   MemDetailAkun.First;
   while not MemDetailAkun.Eof do
   begin
+    if MemDetailAkun['kd_akun'] = '2103.01' then
+    begin
+      FoundUangMuka:=1;
+      UangMuka:=MemDetailAkun['kredit'];
+    end;
+
     HitungKurs;
     CekPosisiDK;
     MemDetailAkun.Next;
@@ -1067,6 +1219,17 @@ begin
   if KetemuCekPosisiDK<>0 then
   begin
     Exit;
+  end;
+
+  if FoundUangMuka=0 then
+  begin
+    edNoRefSumberPenerimaan.Text := '';
+    cbSumberPenerimaan.Text := '';
+    edKodePelangganSumber.Text:='';
+    if (cbJenisTransaksi.Text='PIUTANG') then
+    begin
+      edNamaPelangganSumber.Text:='';
+    end;
   end;
 
   if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
@@ -1078,7 +1241,7 @@ begin
       sql.Text:='SELECT grand_tot FROM t_down_payment_sales WHERE no_trans='+QuotedStr(edNoRefSumberPenerimaan.Text)+' AND deleted_at IS NULL';
       open;
     end;
-    UangMuka:=dm.Qtemp3.FieldValues['grand_tot'];
+    TsUangMuka:=dm.Qtemp3.FieldValues['grand_tot'];
   end;
 
   VCekBalance;
@@ -1117,15 +1280,15 @@ begin
       begin
         MessageDlg('Pastikan Akun Anda Sudah Lengkap..!!',mtInformation,[mbRetry],0);
       end
-      else if (MemDetailPiutang.RecordCount=0) and (Length(edKode_Pelanggan.Text)<>0) then
+      else if (MemDetailPiutang.RecordCount=0) and (Length(edKode_Pelanggan.Text)<>0) and (cbJenisTransaksi.Text='PIUTANG') then
       begin
         MessageDlg('Pastikan Detail Piutang Sudah Lengkap..!!',mtInformation,[mbRetry],0);
       end
       else if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text='') then
       begin
-        MessageDlg('No Referensi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+        MessageDlg('No Uang Muka Wajib Diisi..!!',mtInformation,[mbRetry],0);
       end
-      else if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') AND (UangMuka<>edJumlah.Value) then
+      else if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') AND (UangMuka<>TsUangMuka) then
       begin
         MessageDlg('Jumlah Penerimaan Harus Sama Dengan Uang Muka..!!',mtInformation,[mbRetry],0);
       end
@@ -1159,12 +1322,24 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.SimpanPelanggan;
+var KodePelanggan: String;
 begin
-  with dm.Qtemp do
+  KodePelanggan:='';
+  if (MemDetailPiutang.RecordCount>0) then
+  begin
+    KodePelanggan:=edKode_Pelanggan.Text;
+  end;
+  if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
+  begin
+    KodePelanggan:=edKodePelangganSumber.Text;
+  end;
+
+
+  with dm.Qtemp1 do
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_cash_bank_acceptance_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNoTrans.Text) ;
+    sql.Text:='UPDATE t_cash_bank_acceptance_customer SET deleted_at=NOW() where trans_no ='+QuotedStr(edNoTrans.Text) ;
     ExecSQL;
   end;
 
@@ -1186,7 +1361,7 @@ begin
                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
                 'FROM t_customer ' +
-                'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
+                'WHERE customer_code = '+QuotedStr(KodePelanggan)+' ';
     ExecSQL;
   end;
 end;
@@ -1200,15 +1375,29 @@ procedure TFDataPenerimaanBank.cbSumberPenerimaanChange(Sender: TObject);
 begin
   if cbSumberPenerimaan.Text='TIDAK ADA SUMBER' then
   begin
+    label33.Visible:=False;
+    label34.Visible:=False;
+    edNamaPKPSumber.Visible:=False;
+    Label29.Caption:='Diterima Dari';
+    edNamaPelangganSumber.ReadOnly:=False;
+    edNoRefSumberPenerimaan.Text:='';
     edKodePelangganSumber.Text:='';
     edNamaPelangganSumber.Text:='';
-    edNoRefSumberPenerimaan.Text:='';
+    edNamaPKPSumber.Text:='';
     RefreshGridDetailAkun;
     edJumlah.Enabled:=True;
     edJumlah.value:=0.00;
+    edKaresidenan.Enabled:=True;
   end else if cbSumberPenerimaan.Text='UANG MUKA PENJUALAN' then
   begin
-    edUntukPengiriman.Text:='UANG MUKA PENJUALAN '+edNamaPelangganSumber.Text;
+    label33.Visible:=True;
+    label34.Visible:=True;
+    edNamaPKPSumber.Visible:=True;
+    Label29.Caption:='Nama Pelanggan';
+    edNamaPelangganSumber.ReadOnly:=True;
+    edKaresidenan.Enabled:=False;
+
+    edUntukPengiriman.Text:='UANG MUKA PENJUALAN '+edNamaPKPSumber.Text;
     edJumlah.Enabled:=False;
     edJumlah.value:=0.00;
   end;
@@ -1276,6 +1465,7 @@ end;
 
 procedure TFDataPenerimaanBank.Clear;
 begin
+  edJumlah.Enabled:=True;
   with dm.Qtemp do
   begin
     close;
@@ -1302,7 +1492,8 @@ begin
               'where key_parameter=''default_jenis_pembayaran'' ';
     open;
   end;
-
+  kd_kares:='';
+  edKaresidenan.Text:='';
   MemDetailAkun.EmptyTable;
   MemDetailPiutang.EmptyTable;
   edNoTrans.Clear;
@@ -1341,6 +1532,7 @@ begin
   edKodePelangganSumber.Clear;
   edNamaPelangganSumber.Clear;
   edNoRefSumberPenerimaan.Clear;
+  edNamaPKPSumber.Clear;
 
   RefreshSumberPenerimaan;
 end;
@@ -1399,14 +1591,14 @@ end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanCellClick(Column: TColumnEh);
 begin
-  GetKeterangan;
+//  GetKeterangan;
 end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanCellMouseClick(Grid: TCustomGridEh;
   Cell: TGridCoord; Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
   var Processed: Boolean);
 begin
-  GetKeterangan;
+//  GetKeterangan;
 end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanColEnter(Sender: TObject);
@@ -1424,7 +1616,7 @@ procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
 begin
   if (edKode_Pelanggan.Text='0') OR (Length(edKode_Pelanggan.Text)=0) then
   begin
-    ShowMessage('Silkan Pilih Pelanggan...!!!');
+    ShowMessage('Silahkan Pilih Pelanggan...!!!');
     Exit;
   end;
 
@@ -1437,14 +1629,14 @@ begin
     end;
     if (edKodeSumberTagihan.Text='1') OR (vid_modul='4') then  //Kas Piutang Auto Ambil Piutang
     begin
-      FDaftarTagihan.vcall:='terima_bank';
+      FDaftarTagihan.vcall:='edit_terima_bank';
       FDaftarTagihan.kd_outlet:=edKode_Pelanggan.Text;
       FDaftarTagihan.RefreshGrid;
       FDaftarTagihan.show;
     end;
     if edKodeSumberTagihan.Text='2' then
     begin
-      FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
+      FDaftarPenagihanPiutang.vcall:='edit_PenagihanPiutang';
       FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
       FDaftarPenagihanPiutang.tglTagih1:=dtPeriode1.Date;
       FDaftarPenagihanPiutang.tglTagih2:=dtPeriode2.Date;
@@ -1457,7 +1649,7 @@ begin
   end;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''sumber_terima_bank'' ')= '1' then
   begin
-    FDaftarRencanaLunasPiutang.vcall:='rencana_lunas_piutang';
+    FDaftarRencanaLunasPiutang.vcall:='edit_rencana_lunas_piutang';
     FDaftarRencanaLunasPiutang.kd_outlet:=edKode_Pelanggan.Text;
     FDaftarRencanaLunasPiutang.periode1:=dtPeriode1.Date;
     FDaftarRencanaLunasPiutang.periode2:=dtPeriode2.Date;
@@ -1468,6 +1660,11 @@ begin
     FDaftarRencanaLunasPiutang.RefreshGrid;
     FDaftarRencanaLunasPiutang.show;
   end;
+end;
+
+procedure TFDataPenerimaanBank.DBGridTagihanExit(Sender: TObject);
+begin
+  GetKeterangan;
 end;
 
 procedure TFDataPenerimaanBank.dtPeriode1Change(Sender: TObject);
@@ -1528,6 +1725,44 @@ begin
   end;
 end;
 
+procedure TFDataPenerimaanBank.edKaresidenanButtonClick(Sender: TObject);
+begin
+  if cbJenisTransaksi.Text='NON PIUTANG' then
+  begin
+    FMasterData.Caption:='Master Data Karesidenan';
+    FMasterData.vcall:='penerimaankas_bank_kares';
+    FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+    FMasterData.ShowModal;
+  end;
+end;
+
+procedure TFDataPenerimaanBank.edKodePelangganSumberChange(Sender: TObject);
+begin
+  if edKodePelangganSumber.Text<>'' then
+  begin
+    with dm.Qtemp3 do
+    begin
+      Close;
+      Sql.Clear;
+      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(karesidenan,'''') karesidenan FROM get_customer() WHERE customer_code='+QuotedStr(edKodePelangganSumber.Text)+' ';
+      Open;
+    end;
+    if dm.Qtemp3.FieldValues['karesidenan']='' then
+    begin
+      edNamaPelangganSumber.Text:='';
+      edNamaPKPSumber.Text:='';
+      edKodePelangganSumber.Text:='';
+      edNoRefSumberPenerimaan.Text:='';
+      MessageDlg('Wilayah Pelanggan tersebut belum di setting Karesidenan..!!',mtInformation,[mbRetry],0);
+    end else begin
+      kd_kares:=dm.Qtemp3.FieldValues['code_karesidenan'];
+      edKaresidenan.Text:=dm.Qtemp3.FieldValues['karesidenan'];
+//      ShowMessage(kd_kares);
+    end;
+//    RefreshGridDetailAkun;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.edKode_PelangganButtonClick(Sender: TObject);
 begin
   if edJumlah.Text='0,00' then
@@ -1548,16 +1783,19 @@ begin
     begin
       Close;
       Sql.Clear;
-      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan FROM vcustomer WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
+      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(karesidenan,'''') karesidenan FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
       Open;
     end;
     if dm.Qtemp1.FieldValues['karesidenan']='' then
     begin
       edNama_Pelanggan.Text:='';
+      edNamaPKP.Text:='';
       edKode_Pelanggan.Text:='';
       MessageDlg('Wilayah Pelanggan tersebut belum di setting Karesidenan..!!',mtInformation,[mbRetry],0);
+
     end else begin
       kd_kares:=dm.Qtemp1.FieldValues['code_karesidenan'];
+      edKaresidenan.Text:=dm.Qtemp1.FieldValues['karesidenan'];
     end;
 //    RefreshGridDetailAkun;
   end;
@@ -1615,35 +1853,6 @@ begin
   FMasterData.ShowModal;
 end;
 
-procedure TFDataPenerimaanBank.edNamaPelangganSumberChange(Sender: TObject);
-begin
-//  if edNamaPelangganSumber.Text<>'' then
-//  begin
-//    RefreshGridDetailAkun;
-//    with dm.Qtemp2 do
-//    begin
-//      close;
-//      sql.Clear;
-//      sql.Text:='SELECT a.header_code_uang_muka,a.account_code_uang_muka,b.account_name FROM t_customer a '+
-//                'LEFT JOIN t_ak_account_sub b ON b.account_code2=a.account_code_uang_muka '+
-//                'WHERE a.customer_code='+QuotedStr(edKodePelangganSumber.Text)+' AND a.deleted_at is NULL';
-//      Open;
-//    end;
-//
-//    MemDetailAkun.insert;
-//    MemDetailAkun['kd_akun']:=dm.Qtemp2.FieldValues['account_code_uang_muka'];
-//    MemDetailAkun['kd_header_akun']:=dm.Qtemp2.FieldValues['header_code_uang_muka'];
-//    MemDetailAkun['nm_akun']:=Dm.Qtemp2.fieldbyname('account_name').value;
-//    MemDetailAkun['kredit']:=edJumlah.Value;
-//    MemDetailAkun['debit']:=0;
-//    MemDetailAkun.Post;
-//  end else
-//  begin
-//    RefreshGridDetailAkun;
-//  end;
-
-end;
-
 procedure TFDataPenerimaanBank.edNMSumberTagihanButtonClick(Sender: TObject);
 begin
   if Length(edKodeJenisTrans.Text)=0 then
@@ -1683,27 +1892,30 @@ procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
   if Status = 0 then
   begin
-    //showmessage('Baru');
-    Panel5.Visible:=false;
-    gbDataPiutang.Visible:=false;
-    TabDetailFaktur.TabVisible:=false;
-  end;
+    Panel5.Visible := False;
+    gbDataPiutang.Visible := False;
+    TabDetailFaktur.TabVisible := False;
 
-  if (Status=1) AND (IntStatusKoreksi=2) then
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+
+    dtTrans.Enabled := True;
+    edKaresidenan.Enabled := True;
+  end
+  else if (Status = 1) and (IntStatusKoreksi = 2) then
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=False;
-  end else if Status=0 then
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=False;
-    dtTrans.Enabled:=True;
-  end else begin
-    BSave.Enabled:=False;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=True;
-    dtTrans.Enabled:=False;
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+
+    dtTrans.Enabled := False;
+    edKaresidenan.Enabled := False;
   end;
 end;
 

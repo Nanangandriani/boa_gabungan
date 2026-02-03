@@ -5,7 +5,7 @@ object FDaftarTagihan: TFDaftarTagihan
   BorderStyle = bsDialog
   Caption = 'Daftar Tagihan'
   ClientHeight = 492
-  ClientWidth = 997
+  ClientWidth = 1041
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,11 +13,12 @@ object FDaftarTagihan: TFDaftarTagihan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 997
+    Width = 1041
     Height = 460
     Hint = ''
     ActivePage = TabDetailFaktur
@@ -25,26 +26,55 @@ object FDaftarTagihan: TFDaftarTagihan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 0
-    ExplicitWidth = 993
+    ExplicitWidth = 1037
     ExplicitHeight = 459
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 989
+      ExplicitWidth = 1033
       ExplicitHeight = 434
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 993
+        Width = 1037
         Height = 435
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
+        FrozenCols = 3
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnDblClick = DBGridEh1DblClick
         Columns = <
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'code_cust'
+            Footers = <>
+            Title.Caption = 'Kode Pelanggan'
+            Width = 89
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_cust'
+            Footers = <>
+            Title.Caption = 'Nama Pelanggan'
+            Width = 224
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'customer_name_pkp'
+            Footers = <>
+            Title.Caption = 'Nama PKP'
+            Width = 224
+          end
           item
             CellButtons = <>
             DynProps = <>
@@ -70,7 +100,7 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'no_tagihan'
             Footers = <>
             Title.Caption = 'Nomor | Tagihan'
-            Width = 200
+            Width = 168
           end
           item
             CellButtons = <>
@@ -79,7 +109,7 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'no_faktur'
             Footers = <>
             Title.Caption = 'Nomor | Faktur'
-            Width = 200
+            Width = 167
           end
           item
             CellButtons = <>
@@ -88,7 +118,7 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'jum_piutang'
             Footers = <>
             Title.Caption = 'Jumlah Piutang'
-            Width = 200
+            Width = 152
           end
           item
             CellButtons = <>
@@ -107,14 +137,14 @@ object FDaftarTagihan: TFDaftarTagihan
   object Panel2: TPanel
     Left = 0
     Top = 460
-    Width = 997
+    Width = 1041
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 459
-    ExplicitWidth = 993
+    ExplicitWidth = 1037
     object BBatal: TRzBitBtn
-      Left = 921
+      Left = 965
       Top = 1
       Height = 30
       Align = alRight
@@ -173,10 +203,10 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 917
+      ExplicitLeft = 961
     end
     object BSave: TRzBitBtn
-      Left = 846
+      Left = 890
       Top = 1
       Height = 30
       Align = alRight
@@ -235,7 +265,7 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 842
+      ExplicitLeft = 886
     end
   end
   object dsDetailPiutang: TDataSource
@@ -267,8 +297,38 @@ object FDaftarTagihan: TFDaftarTagihan
     object MemDetailPiutangtgl_tempo: TDateField
       FieldName = 'tgl_tempo'
     end
+    object MemDetailPiutangcode_cust: TStringField
+      FieldName = 'code_cust'
+      Size = 100
+    end
+    object MemDetailPiutangname_cust: TStringField
+      FieldName = 'name_cust'
+      Size = 100
+    end
+    object MemDetailPiutangcustomer_name_pkp: TStringField
+      FieldName = 'customer_name_pkp'
+      Size = 100
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
+        object code_cust: TMTStringDataFieldEh
+          FieldName = 'code_cust'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object customer_name_pkp: TMTStringDataFieldEh
+          FieldName = 'customer_name_pkp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object name_cust: TMTStringDataFieldEh
+          FieldName = 'name_cust'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
         object tgl_faktur: TMTDateTimeDataFieldEh
           FieldName = 'tgl_faktur'
           DateTimeDataType = fdtDateEh

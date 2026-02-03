@@ -145,9 +145,13 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from  vdpp where '+
-              'date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
-              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan;
+    sql.Text:='select code_regency,name_regency,code_karesidenan,code_collector,'+
+              'name_collector,wilayah,SUM(tot_lmbr_invoice) tot_lmbr_invoice, '+
+              'sum(jum_tagihan) jum_tagihan,sum(nota_tertagih) nota_tertagih, '+
+              'sum(total_tertagih) total_tertagih from  vdpp where date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
+              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan+' '+
+              'GROUP BY code_regency,name_regency,code_karesidenan,code_collector,'+
+              'name_collector,wilayah ORDER BY name_collector ASC';
     open;
   end;
 end;
@@ -178,9 +182,13 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from  vdpp where '+
-              'date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
-              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan;
+    sql.Text:='select code_regency,name_regency,code_karesidenan,code_collector,'+
+              'name_collector,wilayah,SUM(tot_lmbr_invoice) tot_lmbr_invoice, '+
+              'sum(jum_tagihan) jum_tagihan,sum(nota_tertagih) nota_tertagih, '+
+              'sum(total_tertagih) total_tertagih from  vdpp where date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
+              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan+' '+
+              'GROUP BY code_regency,name_regency,code_karesidenan,code_collector,'+
+              'name_collector,wilayah ORDER BY name_collector ASC';
     open;
   end;
 
@@ -189,7 +197,7 @@ begin
     MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
   end else
   begin
-    ActSearchClick(sender);
+//    ActSearchClick(sender);
     cLocation := ExtractFilePath(Application.ExeName);
     Report.LoadFromFile(cLocation +'report/rpt_rekaptagihankolektor'+ '.fr3');
     Report.ShowReport();

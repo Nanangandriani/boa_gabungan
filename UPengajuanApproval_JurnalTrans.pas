@@ -109,6 +109,22 @@ type
     procedure btSelectMemoClick(Sender: TObject);
     procedure btApprovMemoClick(Sender: TObject);
     procedure btCetakMemorialClick(Sender: TObject);
+    procedure DBGridEh1AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure MemPembelianAfterPost(DataSet: TDataSet);
+    procedure DBGridEh2AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure DBGridEh5AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure DBGridEh7AdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure MemPenjualanAfterPost(DataSet: TDataSet);
+    procedure MemKasAfterPost(DataSet: TDataSet);
+    procedure MemMemorialAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -145,7 +161,9 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn,status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status approval_status,trans_date from ('+
+    sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn, '+
+    ' status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk, '+
+    ' tgl,bln,approved_status approval_status,trans_date, stat_balance from ('+
     //Pembelian
     ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
     ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
@@ -167,8 +185,18 @@ begin
     ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY '+
     ' approved_status,trans_no) g on a.return_no=g.trans_no'+
     //' order by a.id desc'+
-    ') a where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
-    ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk,tgl,bln,approved_status,trans_date';
+    ') a '+
+    ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+    ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+    ' GROUP BY trans_no) a '+
+    ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+    ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+    ' on a.trans_no=cek_balance.jurnal_no'+
+    ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
+    ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name, '+
+    ' nm_perk,tgl,bln,approved_status,trans_date,stat_balance';
     Execute;
   end;
   dm.Qtemp.First;
@@ -184,6 +212,7 @@ begin
     MemPembelian['approval_status']:=dm.Qtemp['approval_status'];
     MemPembelian['trans_date']:=dm.Qtemp['trans_date'];
     MemPembelian['approval_status']:=dm.Qtemp['approval_status'];
+    MemPembelian['stat_balance']:=dm.Qtemp['stat_balance'];
     MemPembelian.Post;
     dm.Qtemp.Next;
   end;
@@ -200,19 +229,40 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM public.t_selling AS "a" left JOIN t_general_ledger AS b'+
-    '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
+    sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,'+
+    ' "a".sub_total,"a".grand_tot,'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status, cek_balance.stat_balance '+
+    ' FROM public.t_selling AS "a" '+
+    ' left JOIN t_general_ledger AS b ON "a".trans_no = b.trans_no '+
+    ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+    ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+    ' GROUP BY trans_no) a '+
+    ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+    ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+    ' on a.trans_no=cek_balance.jurnal_no '+
+    ' WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status '+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status,cek_balance.stat_balance '+
     ' UNION ALL '+
     'SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status FROM public.t_sales_returns AS "a" left JOIN t_general_ledger AS b'+
-    '	ON "a".trans_no = b.trans_no WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status,cek_balance.stat_balance '+
+    ' FROM public.t_sales_returns AS "a" '+
+    ' left JOIN t_general_ledger AS b ON "a".trans_no = b.trans_no '+
+    ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+    ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+    ' GROUP BY trans_no) a '+
+    ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+    ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+    ' on a.trans_no=cek_balance.jurnal_no '+
+    ' WHERE "a".deleted_at IS NULL  and  b.deleted_at IS NULL and'+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
-    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status '+
+    '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status,cek_balance.stat_balance '+
     ' ORDER BY created_at DESC ';
     Execute;
   end;
@@ -228,6 +278,7 @@ begin
     MemPenjualan['grand_tot']:=dm.Qtemp['grand_tot'];
     MemPenjualan['trans_date']:=dm.Qtemp['trans_date'];
     MemPenjualan['approval_status']:=dm.Qtemp['approved_status'];
+    MemPenjualan['stat_balance']:=dm.Qtemp['stat_balance'];
     MemPenjualan.Post;
     dm.Qtemp.Next;
   end;
@@ -325,14 +376,23 @@ begin
     close;
     sql.Clear;
     sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
-              ' a.notes,b.approved_status,b.module_id  FROM	(SELECT memo_no,trans_date,'+
+              ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
               ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
               ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
+              ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+              ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+              ' GROUP BY trans_no) a '+
+              ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+              ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+              ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+              ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+              ' on a.memo_no=cek_balance.jurnal_no'+
               ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
               ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
               ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
               ' and status_dk=''D'' GROUP BY a.memo_no, a.trans_date, a.notes, '+
-              ' b.approved_status,b.module_id ORDER BY "a".trans_date DESC ';
+              ' b.approved_status,b.module_id,cek_balance.stat_balance '+
+              ' ORDER BY "a".trans_date DESC ';
     execute;
   end;
   dm.Qtemp.First;
@@ -344,6 +404,7 @@ begin
     MemMemorial['jumlah']:=dm.Qtemp['amount'];
     MemMemorial['trans_date']:=dm.Qtemp['trans_date'];
     MemMemorial['status_app']:=dm.Qtemp['approved_status'];
+    MemMemorial['stat_balance']:=dm.Qtemp['stat_balance'];
     MemMemorial.Post;
     dm.Qtemp.Next;
   end;
@@ -362,6 +423,89 @@ begin
   end;
   module_id:=dm.Qtemp['id'];
 end;
+
+procedure TFPengajuan_AppJurnal_Trans.DBGridEh1AdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('stat_balance');
+  if F = nil then Exit;
+
+  if F.AsInteger <> 0 then
+    Params.Font.Color := clRed;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.DBGridEh2AdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('stat_balance');
+  if F = nil then Exit;
+
+  if F.AsInteger <> 0 then
+    Params.Font.Color := clRed;
+end;
+
+
+procedure TFPengajuan_AppJurnal_Trans.DBGridEh5AdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('stat_balance');
+  if F = nil then Exit;
+
+  if F.AsInteger <> 0 then
+    Params.Font.Color := clRed;
+end;
+
+
+procedure TFPengajuan_AppJurnal_Trans.DBGridEh7AdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('stat_balance');
+  if F = nil then Exit;
+
+  if F.AsInteger <> 0 then
+    Params.Font.Color := clRed;
+end;
+
 
 procedure TFPengajuan_AppJurnal_Trans.EdkodewilayahButtonClick(Sender: TObject);
 begin
@@ -389,6 +533,19 @@ procedure TFPengajuan_AppJurnal_Trans.FormShow(Sender: TObject);
 begin
   mempembelian.emptytable;
   mempenjualan.emptytable;
+  MemKas.emptytable;
+  MemMemorial.emptytable;
+
+  dtmulai.Date:=now;
+  dtselesai.Date:=now;
+  dtmulaipenj.Date:=now;
+  dtselesaipenj.Date:=now;
+  Dtmulai_kas.Date:=now;
+  Dtselesai_kas.Date:=now;
+  dtAwalMemorial.Date:=now;
+  dtAkhirMemorial.Date:=now;
+
+
   with dm.Qtemp do
   begin
     close;
@@ -403,6 +560,94 @@ begin
     dm.Qtemp.Next;
   end;
   module_id:='';
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.MemKasAfterPost(DataSet: TDataSet);
+begin
+  if MemKas.FieldByName('status_app').AsBoolean then
+  begin
+    if MemKas.FieldByName('stat_balance').AsInteger <> 0 then
+    begin
+//      if MessageDlg('PERINGATAN!' + #13#10 + #13#10 +
+//                    'Data ini tidak balance!' + #13#10 +
+//                    'Tetap ingin mencentang?',
+//                    mtWarning, [mbOK, mbNo], 0) = mrNo then
+//      begin
+        // Batalkan centang
+        ShowMessage(' Data tidak dapat diproses'+ #13#10 +
+                    ' '+MemKas.FieldByName('trans_no').AsString+' data tidak balance!');
+        MemKas.Edit;
+        MemKas.FieldByName('status_app').AsBoolean := False;
+        MemKas.Post;
+//      end;
+    end;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.MemMemorialAfterPost(DataSet: TDataSet);
+begin
+  if MemMemorial.FieldByName('status_app').AsBoolean then
+  begin
+    if MemMemorial.FieldByName('stat_balance').AsInteger <> 0 then
+    begin
+//      if MessageDlg('PERINGATAN!' + #13#10 + #13#10 +
+//                    'Data ini tidak balance!' + #13#10 +
+//                    'Tetap ingin mencentang?',
+//                    mtWarning, [mbOK, mbNo], 0) = mrNo then
+//      begin
+        // Batalkan centang
+        ShowMessage(' Data tidak dapat diproses'+ #13#10 +
+                    ' '+MemMemorial.FieldByName('trans_no').AsString+' data tidak balance!');
+        MemMemorial.Edit;
+        MemMemorial.FieldByName('status_app').AsBoolean := False;
+        MemMemorial.Post;
+//      end;
+    end;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.MemPembelianAfterPost(DataSet: TDataSet);
+begin
+  if MemPembelian.FieldByName('approval_status').AsBoolean then
+  begin
+    if MemPembelian.FieldByName('stat_balance').AsInteger <> 0 then
+    begin
+//      if MessageDlg('PERINGATAN!' + #13#10 + #13#10 +
+//                    'Data ini tidak balance!' + #13#10 +
+//                    'Tetap ingin mencentang?',
+//                    mtWarning, [mbOK, mbNo], 0) = mrNo then
+//      begin
+        // Batalkan centang
+        ShowMessage(' Data tidak dapat diproses'+ #13#10 +
+                    ' '+MemPembelian.FieldByName('trans_no').AsString+' data tidak balance!');
+        MemPembelian.Edit;
+        MemPembelian.FieldByName('approval_status').AsBoolean := False;
+        MemPembelian.Post;
+//      end;
+    end;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.MemPenjualanAfterPost(DataSet: TDataSet);
+begin
+  if MemPenjualan.FieldByName('approval_status').AsBoolean then
+  begin
+    if MemPenjualan.FieldByName('stat_balance').AsInteger <> 0 then
+    begin
+//      if MessageDlg('PERINGATAN!' + #13#10 + #13#10 +
+//                    'Data ini tidak balance!' + #13#10 +
+//                    'Tetap ingin mencentang?',
+//                    mtWarning, [mbOK, mbNo], 0) = mrNo then
+//      begin
+        // Batalkan centang
+        ShowMessage(' Data tidak dapat diproses'+ #13#10 +
+                    ' '+MemPenjualan.FieldByName('trans_no').AsString+' data tidak balance!');
+        MemPenjualan.Edit;
+        MemPenjualan.FieldByName('approval_status').AsBoolean := False;
+        MemPenjualan.Post;
+//      end;
+    end;
+  end;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.RzBitBtn11Click(Sender: TObject);
@@ -654,13 +899,24 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,b.approved_status,b.module_id '+
+    sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,'+
+    ' b.approved_status,b.module_id, cek_balance.stat_balance '+
     ' FROM	(select voucher_no,trans_date,created_at,paid_amount,description,deleted_at from t_cash_bank_acceptance   '+
     ' UNION select voucher_no,trans_date,created_at,amount,to_ ,deleted_at from t_cash_bank_expenditure'+
-    ' UNION select voucher_no,trans_date,created_at,amount as paid_amount,description,deleted_at from t_petty_cash)  AS "a" left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' UNION select voucher_no,trans_date,created_at,amount as paid_amount,description,deleted_at from t_petty_cash)  AS "a" '+
+    ' left join t_general_ledger b on a.voucher_no=b.trans_no '+
+    ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+    ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+    ' GROUP BY trans_no) a '+
+    ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+    ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+    ' on a.voucher_no=cek_balance.jurnal_no'+
     ' where "a".deleted_at IS NULL and b.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
-    ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, a.description,b.approved_status,b.module_id'+
+    ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, '+
+    ' a.description,b.approved_status,b.module_id, cek_balance.stat_balance'+
     ' ORDER BY "a".created_at DESC ';
     execute;
   end;
@@ -674,6 +930,7 @@ begin
     Memkas['jumlah']:=dm.Qtemp['paid_amount'];
     Memkas['trans_date']:=dm.Qtemp['trans_date'];
     Memkas['status_app']:=dm.Qtemp['approved_status'];
+    Memkas['stat_balance']:=dm.Qtemp['stat_balance'];
     Memkas.Post;
     dm.Qtemp.Next;
   end;

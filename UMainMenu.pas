@@ -71,6 +71,7 @@ type
     RzVersionInfo1: TRzVersionInfo;
     StatusPerusahaan: TRzStatusPane;
     RzStatusVersion: TRzStatusPane;
+    RzStatusPane2: TRzStatusPane;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

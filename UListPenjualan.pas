@@ -67,19 +67,6 @@ type
     dxBarLargeButton4: TdxBarLargeButton;
     QCetakSJ: TUniQuery;
     frxDBDCetakSJ: TfrxDBDataset;
-    QCetakSJno_traveldoc: TStringField;
-    QCetakSJcode_cust: TStringField;
-    QCetakSJname_cust: TStringField;
-    QCetakSJaddress: TMemoField;
-    QCetakSJcode_item: TStringField;
-    QCetakSJname_item: TStringField;
-    QCetakSJamount: TFloatField;
-    QCetakSJcode_unit: TStringField;
-    QCetakSJname_unit: TStringField;
-    QCetakSJno_reference: TStringField;
-    QCetakSJket: TStringField;
-    QCetakSJtrans_no: TStringField;
-    QCetakSJtrans_date: TDateField;
     QJurnal: TUniQuery;
     frxDBDJurnal: TfrxDBDataset;
     dxBarLargeButton5: TdxBarLargeButton;
@@ -124,10 +111,6 @@ type
     ReportJurnal: TfrxReport;
     dxBarManager1Bar4: TdxBar;
     dxBarLargeButton9: TdxBarLargeButton;
-    QCetakSJgross_weight: TFloatField;
-    QCetakSJtare_weight: TFloatField;
-    QCetakSJvehicles: TMemoField;
-    QCetakSJaddress2: TMemoField;
     QCetakdeleted_at: TDateTimeField;
     dxBarDateCombo1: TdxBarDateCombo;
     cxBarEditItem1: TcxBarEditItem;
@@ -142,6 +125,23 @@ type
     dxBarLargeButton12: TdxBarLargeButton;
     dxBarLargeButton13: TdxBarLargeButton;
     dxBarLargeButton14: TdxBarLargeButton;
+    QCetakSJtrans_no: TStringField;
+    QCetakSJno_traveldoc: TStringField;
+    QCetakSJtrans_date: TDateField;
+    QCetakSJcode_cust: TStringField;
+    QCetakSJname_cust: TStringField;
+    QCetakSJaddress: TMemoField;
+    QCetakSJaddress2: TMemoField;
+    QCetakSJcode_item: TStringField;
+    QCetakSJname_item: TStringField;
+    QCetakSJamount: TFloatField;
+    QCetakSJcode_unit: TStringField;
+    QCetakSJname_unit: TMemoField;
+    QCetakSJno_reference: TStringField;
+    QCetakSJket: TStringField;
+    QCetakSJgross_weight: TFloatField;
+    QCetakSJtare_weight: TFloatField;
+    QCetakSJvehicles: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -165,6 +165,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure dxBarLargeButton12Click(Sender: TObject);
     procedure dxBarLargeButton13Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -326,6 +327,7 @@ begin
 //  month :=FormatDateTime('m', NOW());
 //  edTahun.Text:=(year);
 //  cbBulan.ItemIndex:=StrToInt(month)-1;
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -336,7 +338,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from t_selling '+
+       sql.Text:=' select * from get_selling(false) '+
                  ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString);
        open;
    end;
@@ -352,7 +354,7 @@ begin
       if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
       begin
         isCancel := 1;
-//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;;
+//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;
       end else begin
         isCancel:=0;
 //        memAlasanPembatalan.Text:='';
@@ -437,6 +439,7 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton10Click(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';
@@ -476,12 +479,12 @@ begin
            ' from "public"."t_selling" a '+
            ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
            ' LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item '+
-           ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on a.code_cust=d.customer_code '+
+           ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''002'') d on a.code_cust=d.customer_code '+
            ' LEFT JOIN t_customer e on e.customer_code=a.code_cust '+
            ' LEFT JOIN t_item f ON f.item_code=b.code_item '+
            ' where '+
            ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' '+
-           ' order by f.group_id ASC,b.code_item ASC');
+           ' order by f.group_id ASC');
     open;
   end;
 
@@ -652,24 +655,26 @@ begin
     close;
     sql.clear;
     sql.add(' select a."trans_no", "no_traveldoc", "trans_date", a."code_cust", '+
-         ' a."name_cust",  d."address",e."address" AS address2, b."code_item", b."name_item",  b."amount", '+
-         ' b."code_unit", b."name_unit", a."no_reference", b."code_unit" as ket, '+
+         ' sc.customer_name_pkp "name_cust",  d."address",e."address" AS address2, b."code_item", b."name_item",  b."amount", '+
+         ' b."code_unit", UPPER(b."name_unit") name_unit, a."no_reference", b."code_unit" as ket, '+
          '(SELECT SUM(gross_weight) FROM t_selling_det WHERE trans_no=a.trans_no AND '+
          'code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_weight) FROM t_selling_det '+
          'WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare_weight, '+
          'COALESCE((SELECT vehicles FROM t_delivery_order_services '+
          'WHERE notrans=(SELECT DISTINCT notrans '+
          'from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles '+
-         ' from "public"."t_selling" a  '+
+         'from "public"."t_selling" a  '+
+         'left join t_selling_customer sc on sc.trans_no=a.trans_no and sc.deleted_at is null '+
          ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
     //             ' LEFT JOIN "public"."t_selling_piece" c ON a.trans_no=c.trans_no  '+
          ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
-         ' where "code_details"=''003'') d on a.code_cust=d.customer_code  '+
-          ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
-         ' where "code_details"=''002'') e on a.code_cust=e.customer_code  '+
+         ' where "code_details"=''002'') d on a.code_cust=d.customer_code  '+
+         ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" '+
+         ' where "code_details"=''003'') e on a.code_cust=e.customer_code  '+
+         ' LEFT JOIN t_item f on f.item_code=b.code_item '+
          ' where a.deleted_at is null and  '+
          ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+'  '+
-         ' order by b.created_at Desc');
+         ' order by f.group_id ASC');
     open;
   end;
 
@@ -797,6 +802,7 @@ end;
 
 procedure TFDataListPenjualan.dxBarLargeButton6Click(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -816,6 +822,15 @@ begin
   FPenyesuaianPenjualan.ShowModal;
 end;
 
+procedure TFDataListPenjualan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QPenjualan.Close;
+  QCetak.Close;
+  QCetakSJ.Close;
+  QJurnal.Close;
+end;
+
 procedure TFDataListPenjualan.FormCreate(Sender: TObject);
 begin
   realfdatalistpenjualan:=self;
@@ -828,6 +843,7 @@ end;
 
 procedure TFDataListPenjualan.FormShow(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';

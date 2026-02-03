@@ -3,7 +3,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
   Top = 0
   Caption = 'Rekap Pembelian'
   ClientHeight = 409
-  ClientWidth = 752
+  ClientWidth = 1107
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -68,16 +68,16 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
   object RzPanel2: TRzPanel
     Left = 0
     Top = 368
-    Width = 752
+    Width = 1107
     Height = 41
     Align = alBottom
     Color = 15987699
     TabOrder = 0
     OnClick = RzPanel2Click
-    ExplicitTop = 367
-    ExplicitWidth = 748
+    ExplicitTop = 359
+    ExplicitWidth = 1101
     object RzBitBtn1: TRzBitBtn
-      Left = 564
+      Left = 919
       Top = 2
       Width = 93
       Height = 37
@@ -87,10 +87,10 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       TabOrder = 0
       OnClick = RzBitBtn1Click
       Kind = bkYes
-      ExplicitLeft = 560
+      ExplicitLeft = 913
     end
     object RzBitBtn2: TRzBitBtn
-      Left = 657
+      Left = 1012
       Top = 2
       Width = 93
       Height = 37
@@ -152,7 +152,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 653
+      ExplicitLeft = 1006
     end
   end
   object DTdari: TRzDateTimePicker
@@ -238,7 +238,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 752
+    Width = 1107
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -259,7 +259,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 752
+    Width = 1107
     Height = 241
     Align = alClient
     DataSource = DsRekap_Pembelian
@@ -308,6 +308,14 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'unit'
+        Footers = <>
+        Title.Caption = 'Satuan'
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'faktur_no'
         Footers = <>
         Title.Caption = 'No Faktur'
@@ -348,6 +356,16 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
         Footers = <>
         Title.Caption = 'PPN'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'pph_rp'
+        Footers = <>
+        Title.Caption = 'Pph'
+        Width = 80
       end
       item
         CellButtons = <>
@@ -1031,7 +1049,10 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       'trans_no=trans_no'
       'valas=valas'
       'price=price'
-      'item_code=item_code')
+      'item_code=item_code'
+      'unit=unit'
+      'pph_rp=pph_rp'
+      'purchase_type=purchase_type')
     DataSet = Qrekap_pemb
     BCDToCurrency = False
     DataSetOptions = []
@@ -1042,7 +1063,6 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from "V_RekapPembelian"')
-    Active = True
     Left = 328
     Top = 213
   end
@@ -1084,11 +1104,18 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
         item
           BeginGroup = True
           UserDefine = [udWidth]
+          UserWidth = 170
+          Visible = True
+          ItemName = 'CbKategori'
+        end
+        item
+          UserDefine = [udWidth]
           UserWidth = 176
           Visible = True
           ItemName = 'CbSupplier'
         end
         item
+          BeginGroup = True
           UserDefine = [udWidth]
           UserWidth = 176
           Visible = True
@@ -1100,7 +1127,6 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
           ItemName = 'Cxppn'
         end
         item
-          BeginGroup = True
           Visible = True
           ItemName = 'DxRefresh'
         end
@@ -1129,7 +1155,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
+        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -1189,7 +1215,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -1249,7 +1275,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -1317,7 +1343,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E9E8FFFEFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1415,7 +1441,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -1476,7 +1502,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1568,7 +1594,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1675,7 +1701,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1773,7 +1799,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
+        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1871,7 +1897,7 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D260900000000000036000000280000001A00000016000000010020000000
-        000000000000C40E0000C40E00000000000000000000F7F7F7FFF7F7F7FFF7F7
+        00000000000074120000741200000000000000000000F7F7F7FFF7F7F7FFF7F7
         F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFFBFBFBFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFBFBFFF7F7F7FFF7F7
         F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7F7FFF7F7
@@ -2050,9 +2076,9 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object CbSupplier: TcxBarEditItem
-      Caption = 'Supplier'
+      Caption = 'Supplier            '
       Category = 0
-      Hint = 'Supplier'
+      Hint = 'Supplier            '
       Visible = ivAlways
       Width = 150
       PropertiesClassName = 'TcxButtonEditProperties'
@@ -2242,6 +2268,13 @@ object FRptRekap_Pembelian: TFRptRekap_Pembelian
         36AD89D204300949404464E87FC7E024C0850487269E9F29433C4E700ADABF01
         BF46B5E2A37F9ED00000000049454E44AE426082}
       OnClick = BPrintAccClick
+    end
+    object CbKategori: TcxBarEditItem
+      Caption = 'Jenis Pembelian'
+      Category = 0
+      Hint = 'Jenis Pembelian'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxComboBoxProperties'
     end
   end
   object DsRekap_Pembelian: TDataSource

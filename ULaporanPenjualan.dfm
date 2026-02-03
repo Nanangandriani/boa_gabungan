@@ -25,8 +25,6 @@ object FLaporanPenjualan: TFLaporanPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -746
-    ExplicitWidth = 1374
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -56,7 +54,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
     RowDetailPanel.Active = True
     SearchPanel.Enabled = True
     SearchPanel.FilterOnTyping = True
-    TabOrder = 5
+    TabOrder = 1
     Columns = <
       item
         CellButtons = <>
@@ -870,7 +868,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 46023.997136250000000000
+    ReportOptions.LastChange = 46036.556909328700000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1024,7 +1022,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           DataField = 'sub_total'
           DataSet = frxDBLapPenjualan
           DataSetName = 'frxDBLapPenjualan'
-          DisplayFormat.FormatStr = '%0.n'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1046,7 +1044,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           DataField = 'unit_price'
           DataSet = frxDBLapPenjualan
           DataSetName = 'frxDBLapPenjualan'
-          DisplayFormat.FormatStr = '%0.n'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1219,7 +1217,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBLapPenjualan."name_cust"]')
+            '[frxDBLapPenjualan."customer_name_pkp"]')
           ParentFont = False
         end
         object Line7: TfrxLineView
@@ -1498,7 +1496,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
         object Memo17: TfrxMemoView
           AllowVectorExport = True
           Left = 192.071120000000000000
-          Top = 2.779529999999990000
+          Top = 2.779530000000000000
           Width = 164.771800000000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1509,7 +1507,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NAMA TOKO')
+            'NAMA PELANGGAN')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1686,7 +1684,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           Width = 136.417440000000000000
           Height = 15.118120000000000000
           DataSetName = 'frxdbdafjual'
-          DisplayFormat.FormatStr = '%0.n'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1696,7 +1694,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[sum(<frxDBLapPenjualan."sub_total">)]')
+            '[Round(Sum(<frxDBLapPenjualan."sub_total">))]')
           ParentFont = False
         end
         object Memo25: TfrxMemoView

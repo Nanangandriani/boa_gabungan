@@ -3,8 +3,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Form Input Uang Muka'
-  ClientHeight = 269
-  ClientWidth = 512
+  ClientHeight = 294
+  ClientWidth = 514
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,38 +20,38 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 512
-    Height = 236
+    Width = 514
+    Height = 261
     Align = alClient
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 0
     ExplicitWidth = 506
-    ExplicitHeight = 227
+    ExplicitHeight = 214
     object Label1: TLabel
       Left = 34
-      Top = 81
+      Top = 51
       Width = 37
       Height = 15
       Caption = 'No. Trx'
     end
     object Label2: TLabel
       Left = 136
-      Top = 81
+      Top = 51
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label3: TLabel
       Left = 34
-      Top = 110
-      Width = 41
+      Top = 80
+      Width = 42
       Height = 15
       Caption = 'Tanggal'
     end
     object Label4: TLabel
       Left = 136
-      Top = 110
+      Top = 80
       Width = 3
       Height = 15
       Caption = ':'
@@ -72,59 +72,87 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Label7: TLabel
       Left = 34
-      Top = 140
-      Width = 88
+      Top = 166
+      Width = 90
       Height = 15
-      Caption = 'Nilai Uang Muka'
+      Caption = 'Total Uang Muka'
     end
     object Label8: TLabel
       Left = 136
-      Top = 140
+      Top = 166
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label38: TLabel
       Left = 34
-      Top = 201
+      Top = 227
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
     end
     object Label9: TLabel
       Left = 136
-      Top = 200
+      Top = 226
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
-      Left = 34
-      Top = 52
+      Left = 26
+      Top = 276
       Width = 38
       Height = 15
       Caption = 'No. PO'
     end
     object Label11: TLabel
-      Left = 136
-      Top = 52
+      Left = 128
+      Top = 276
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 34
-      Top = 169
+      Top = 195
       Width = 50
       Height = 15
       Caption = 'Curenccy'
     end
     object Label13: TLabel
       Left = 136
-      Top = 169
+      Top = 195
       Width = 3
       Height = 15
       Caption = ':'
+    end
+    object Label14: TLabel
+      Left = 136
+      Top = 110
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label15: TLabel
+      Left = 34
+      Top = 110
+      Width = 49
+      Height = 15
+      Caption = 'Nilai DPP'
+    end
+    object Label16: TLabel
+      Left = 136
+      Top = 138
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label17: TLabel
+      Left = 34
+      Top = 138
+      Width = 48
+      Height = 15
+      Caption = 'Nilai PPn'
     end
     object EdNm_supp: TRzButtonEdit
       Left = 222
@@ -138,7 +166,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       OnButtonClick = EdNm_suppButtonClick
     end
     object EdKd_supp: TEdit
-      Left = 143
+      Left = 145
       Top = 19
       Width = 73
       Height = 23
@@ -150,7 +178,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object DTP_UM: TRzDateTimeEdit
       Left = 143
-      Top = 108
+      Top = 78
       Width = 138
       Height = 23
       EditType = etDate
@@ -159,7 +187,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Ed_No_trans: TRzEdit
       Left = 143
-      Top = 78
+      Top = 48
       Width = 170
       Height = 23
       Text = ''
@@ -169,7 +197,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Edurut: TEdit
       Left = 320
-      Top = 78
+      Top = 48
       Width = 97
       Height = 23
       TabOrder = 4
@@ -177,17 +205,19 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object EdUM: TRzNumericEdit
       Left = 143
-      Top = 137
+      Top = 163
       Width = 138
       Height = 23
+      Color = clInfoBk
       DisabledColor = clWindow
+      ReadOnly = True
       TabOrder = 5
       OnKeyPress = EdUMKeyPress
       DisplayFormat = '#,##0.00'
     end
     object Ednm_akun: TRzButtonEdit
       Left = 222
-      Top = 197
+      Top = 223
       Width = 235
       Height = 23
       Text = ''
@@ -197,8 +227,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       OnButtonClick = Ednm_akunButtonClick
     end
     object Edkd_akun: TRzEdit
-      Left = 287
-      Top = 166
+      Left = 143
+      Top = 252
       Width = 130
       Height = 23
       Text = ''
@@ -233,8 +263,8 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       Visible = False
     end
     object CbPo: TRzComboBox
-      Left = 143
-      Top = 48
+      Left = 135
+      Top = 272
       Width = 170
       Height = 23
       TabOrder = 11
@@ -242,7 +272,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Cb_Curr: TRzComboBox
       Left = 143
-      Top = 166
+      Top = 192
       Width = 45
       Height = 23
       TabOrder = 12
@@ -252,15 +282,15 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Ed_kurs: TRzNumericEdit
       Left = 199
-      Top = 166
+      Top = 192
       Width = 82
       Height = 23
       TabOrder = 13
       DisplayFormat = ',0;(,0)'
     end
     object ednilai_po: TRzNumericEdit
-      Left = 319
-      Top = 48
+      Left = 311
+      Top = 272
       Width = 138
       Height = 23
       Color = clInfoBk
@@ -272,25 +302,47 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
     end
     object Edheader: TEdit
       Left = 143
-      Top = 197
+      Top = 223
       Width = 73
       Height = 23
       TabOrder = 15
     end
+    object edDPP: TRzNumericEdit
+      Left = 143
+      Top = 107
+      Width = 138
+      Height = 23
+      DisabledColor = clWindow
+      TabOrder = 16
+      OnChange = edDPPChange
+      OnKeyPress = EdUMKeyPress
+      DisplayFormat = '#,##0.00'
+    end
+    object edPPN: TRzNumericEdit
+      Left = 143
+      Top = 135
+      Width = 138
+      Height = 23
+      DisabledColor = clWindow
+      TabOrder = 17
+      OnChange = edPPNChange
+      OnKeyPress = EdUMKeyPress
+      DisplayFormat = '#,##0.00'
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 236
-    Width = 512
+    Top = 261
+    Width = 514
     Height = 33
     Align = alBottom
     BorderOuter = fsFlat
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 227
+    ExplicitTop = 214
     ExplicitWidth = 506
     object BBatal: TRzBitBtn
-      Left = 436
+      Left = 438
       Top = 1
       Height = 31
       Align = alRight
@@ -352,7 +404,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       ExplicitLeft = 430
     end
     object BSimpan: TRzBitBtn
-      Left = 361
+      Left = 363
       Top = 1
       Height = 31
       Align = alRight
@@ -415,7 +467,7 @@ object FNew_UM_Pembelian: TFNew_UM_Pembelian
       ExplicitLeft = 355
     end
     object BEdit: TRzBitBtn
-      Left = 286
+      Left = 288
       Top = 1
       Height = 31
       Align = alRight

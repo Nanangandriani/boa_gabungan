@@ -116,6 +116,9 @@ type
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
     frxPDFExport1: TfrxPDFExport;
+    cbTP: TcxBarEditItem;
+    QReportPrev: TUniQuery;
+    frxDBDatasetLapHarianSisaNotaPrev: TfrxDBDataset;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -131,11 +134,13 @@ type
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure cxBarEditItem12PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    strKaresidenanID,strKabupatenID,strKecamatanID :String;
+    strTpID,strKaresidenanID,strKabupatenID,strKecamatanID :String;
   end;
 
   function FLaporanHarianSisaNota: TFLaporanHarianSisaNota;
@@ -147,7 +152,7 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterData, UMy_Function, UHomeLogin;
+uses UMasterData, UMy_Function, UHomeLogin, UDataModule;
 
 var
   laporanhariansisanota : TFLaporanHarianSisaNota;
@@ -172,14 +177,20 @@ end;
 procedure TFLaporanHarianSisaNota.cbKabupatenPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
     FMasterData.Caption:='Master Data Kabupaten';
     FMasterData.vcall:='laporanhariansisanotakab';
-    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
-    FMasterData.ShowModal;
+    if (cbKaresidenan.EditValue<>'') AND (cbTp.EditValue='') then
+    begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+      FMasterData.ShowModal;
+    end else if (cbKaresidenan.EditValue='') AND (cbTp.EditValue<>'') then begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(strTpID)+'');
+      FMasterData.ShowModal;
+    end;
   end;
 end;
 
@@ -218,6 +229,15 @@ begin
   end;
 end;
 
+procedure TFLaporanHarianSisaNota.cxBarEditItem12PropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='laporanhariansisanotatp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFLaporanHarianSisaNota.dxBarLargeButton5Click(Sender: TObject);
 var strReportName: String;
 begin
@@ -231,13 +251,21 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+',NULL'+
-                ','+QuotedStr(cbKaresidenan.EditValue)+','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
+                ','+QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+
+                ''+QuotedStr(strKecamatanID)+','+QuotedStr(strTpID)+')';
       Open;
     end;
     if Qreport.RecordCount=0 then
     begin
       MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
     end else begin
+      with QReportPrev do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM get_lhsn_weekly_prev('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(strKecamatanID)+')';
+        open;
+      end;
 
       strReportName:='rpt_laporanhariansisanota';
 
@@ -261,7 +289,8 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+',NULL'+
-                ','+QuotedStr(cbKaresidenan.EditValue)+','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
+                ','+QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+
+                ''+QuotedStr(strKecamatanID)+','+QuotedStr(strTpID)+')';
       Open;
     end;
     previous:='';
@@ -336,9 +365,11 @@ end;
 
 procedure TFLaporanHarianSisaNota.dxBarLargeButton7Click(Sender: TObject);
 begin
+  strTpID:='';
   strKaresidenanID:='';
   strKabupatenID:='';
   strKecamatanID:='';
+  cbTP.EditValue:='';
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
   cbKecamatan.EditValue:='';
@@ -360,9 +391,11 @@ end;
 
 procedure TFLaporanHarianSisaNota.FormShow(Sender: TObject);
 begin
+  strTpID:='';
   strKaresidenanID:='';
   strKabupatenID:='';
   strKecamatanID:='';
+  cbTP.EditValue:='';
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
   cbKecamatan.EditValue:='';
@@ -387,7 +420,7 @@ begin
   if CompareText(VarName, 'SBU') = 0 then
   Value := 'PT. '+UpperCase(FHomeLogin.vKodePRSH);
   if CompareText(VarName, 'TP') = 0 then
-  Value := UpperCase(cbKaresidenan.EditValue);
+  Value := UpperCase(cbTP.EditValue);
   if CompareText(VarName, 'KABUPATEN') = 0 then
   Value := UpperCase(cbKabupaten.EditValue) ;
   if CompareText(VarName, 'KECAMATAN') = 0 then

@@ -64,6 +64,22 @@ begin
         ExecSQL;
       end;
 
+      if vtbl='t_selling' then
+      begin
+        with dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.Text:=' UPDATE t_selling_det SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(Nm)+' '+
+                    ' WHERE '+vfieldtransno+'='+QuotedStr(edNoTransaksi.Text);
+          ExecSQL;
+        end;
+
+      end;
+
+
       MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
       Dm.Koneksi.Commit;
       Close;

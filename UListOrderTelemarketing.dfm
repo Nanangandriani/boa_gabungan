@@ -238,6 +238,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
+    FrozenCols = 3
     ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
@@ -251,17 +252,17 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Nomor Tiket'
-        Width = 200
+        Width = 173
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'order_date'
+        FieldName = 'outlet_code'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Tanggal'
-        Width = 100
+        Title.Caption = 'Kode Pelanggan Tele'
+        Width = 140
       end
       item
         CellButtons = <>
@@ -271,6 +272,29 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
+        Width = 286
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd-mm-yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'order_date'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal'
+        Width = 89
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd-mm-yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sent_date'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal Kirim'
+        Width = 90
       end
       item
         CellButtons = <>
@@ -280,12 +304,53 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Status Pesanan'
-        Width = 300
+        Width = 217
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'address'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Alamat'
+        Width = 519
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tp'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'TP'
+        Width = 173
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kabupaten'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kabupaten'
+        Width = 175
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kecamatan'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kecamatan'
+        Width = 127
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object MemMasterData: TMemTableEh
+    Active = True
     Params = <>
     Left = 488
     Top = 256
@@ -309,6 +374,25 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
     end
     object MemMasterDatapayment_term: TSmallintField
       FieldName = 'payment_term'
+    end
+    object MemMasterDatasent_date: TDateField
+      FieldName = 'sent_date'
+    end
+    object MemMasterDataaddress: TStringField
+      FieldName = 'address'
+      Size = 255
+    end
+    object MemMasterDatatp: TStringField
+      FieldName = 'tp'
+      Size = 255
+    end
+    object MemMasterDatakabupaten: TStringField
+      FieldName = 'kabupaten'
+      Size = 255
+    end
+    object MemMasterDatakecamatan: TStringField
+      FieldName = 'kecamatan'
+      Size = 255
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -347,6 +431,35 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object sent_date: TMTDateTimeDataFieldEh
+          FieldName = 'sent_date'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 20
+        end
+        object address: TMTStringDataFieldEh
+          FieldName = 'address'
+          StringDataType = fdtStringEh
+          DisplayWidth = 255
+          Size = 255
+        end
+        object tp: TMTStringDataFieldEh
+          FieldName = 'tp'
+          StringDataType = fdtStringEh
+          DisplayWidth = 255
+          Size = 255
+        end
+        object kabupaten: TMTStringDataFieldEh
+          FieldName = 'kabupaten'
+          StringDataType = fdtStringEh
+          DisplayWidth = 255
+          Size = 255
+        end
+        object kecamatan: TMTStringDataFieldEh
+          FieldName = 'kecamatan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 255
+          Size = 255
         end
       end
       object RecordsList: TRecordsListEh

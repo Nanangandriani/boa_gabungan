@@ -750,7 +750,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46009.731382314810000000
+    ReportOptions.LastChange = 46030.413462187500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1959,8 +1959,6 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDDaftarRekeningKoran."saldo_akhir">,MasterData1)]')
           ParentFont = False
         end
         object Memo41: TfrxMemoView
@@ -2088,62 +2086,6 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
         'x ORDER BY nomor ASC')
     Left = 804
     Top = 48
-    object QCetaknomor: TLargeintField
-      FieldName = 'nomor'
-      ReadOnly = True
-    end
-    object QCetakno_cek: TIntegerField
-      FieldName = 'no_cek'
-      ReadOnly = True
-    end
-    object QCetakvoucher_no: TMemoField
-      FieldName = 'voucher_no'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QCetaktrans_date: TDateField
-      FieldName = 'trans_date'
-      ReadOnly = True
-    end
-    object QCetaknm_ak_debet: TMemoField
-      FieldName = 'nm_ak_debet'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QCetakhutang: TIntegerField
-      FieldName = 'hutang'
-      ReadOnly = True
-    end
-    object QCetakrupa_nama_ak: TMemoField
-      FieldName = 'rupa_nama_ak'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QCetakrupa_jum: TIntegerField
-      FieldName = 'rupa_jum'
-      ReadOnly = True
-    end
-    object QCetakcatatan: TMemoField
-      FieldName = 'catatan'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QCetaksaldo_awal: TFloatField
-      FieldName = 'saldo_awal'
-      ReadOnly = True
-    end
-    object QCetakkredit_bank: TFloatField
-      FieldName = 'kredit_bank'
-      ReadOnly = True
-    end
-    object QCetaksetoran: TFloatField
-      FieldName = 'setoran'
-      ReadOnly = True
-    end
-    object QCetaksaldo_akhir: TFloatField
-      FieldName = 'saldo_akhir'
-      ReadOnly = True
-    end
   end
   object frxPDFExport1: TfrxPDFExport
     UseFileCache = True

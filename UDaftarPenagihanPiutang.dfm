@@ -172,7 +172,18 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnDblClick = DBGridEh1DblClick
         Columns = <
+          item
+            CellButtons = <>
+            DisplayFormat = 'dd/mm/yyyy'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'tgltagih'
+            Footers = <>
+            Title.Caption = 'Tanggal DPP'
+            Width = 99
+          end
           item
             CellButtons = <>
             DynProps = <>

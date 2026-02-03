@@ -22,7 +22,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = -4
+    ExplicitWidth = 1024
     object Label3: TLabel
       Left = 475
       Top = 13
@@ -1427,8 +1427,8 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'where yy.voucher_no is null and f.approval_status=1 and f.invoic' +
         'e_status=1 and f.sj_status=1 and f.fk_status=1 and xx.saldo>0  o' +
         'rder by tglref,noref,akun_um')
-    Left = 720
-    Top = 293
+    Left = 752
+    Top = 285
   end
   object Qmemorial: TUniQuery
     Connection = dm.Koneksi

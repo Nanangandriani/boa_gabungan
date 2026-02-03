@@ -82,7 +82,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'karesidenan'
+        FieldName = 'tp'
         Footer.Alignment = taRightJustify
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
@@ -1498,7 +1498,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45912.337677256950000000
+    ReportOptions.LastChange = 46041.436237881940000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1628,7 +1628,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Left = 33.692950000000000000
           Width = 90.708720000000000000
           Height = 26.456710000000000000
-          DataField = 'karesidenan'
+          DataField = 'tp'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1638,7 +1638,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDatasetRekapUmurPiutang."karesidenan"]')
+            '[frxDBDatasetRekapUmurPiutang."tp"]')
           ParentFont = False
         end
         object Line13: TfrxLineView
@@ -1705,9 +1705,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 411.542053330000000000
+          Left = 408.208720000000000000
           Top = 0.228200000000000000
-          Width = 64.252010000000000000
+          Width = 67.585343330000000000
           Height = 26.456710000000000000
           DataField = 'saldo_satu_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
@@ -1801,7 +1801,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 378.425480000000000000
+          Left = 376.425480000000000000
           Width = 26.811070000000000000
           Height = 26.456710000000000000
           DataField = 'satu_minggu'
@@ -2013,7 +2013,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Line24: TfrxLineView
           AllowVectorExport = True
-          Left = 408.023622050000000000
+          Left = 405.921259842520000000
           Height = 30.236225350000000000
           Color = clBlack
           Frame.Typ = []
@@ -2420,7 +2420,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Memo92: TfrxMemoView
           AllowVectorExport = True
           Left = 34.354360000000000000
-          Top = 3.779529999999990000
+          Top = 3.779530000000000000
           Width = 90.708720000000000000
           Height = 68.031540000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2431,7 +2431,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Karesidenan')
+            'TP')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3297,9 +3297,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 410.661410000000000000
+          Left = 407.328076670000000000
           Top = 0.755905510000000000
-          Width = 64.252010000000000000
+          Width = 67.585343330000000000
           Height = 22.677180000000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
@@ -3381,8 +3381,8 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Line22: TfrxLineView
           AllowVectorExport = True
-          Left = 232.818897637795000000
-          Top = 0.897649999999999000
+          Left = 232.818897640000000000
+          Top = -0.102350000000000000
           Height = 26.456710000000000000
           Color = clBlack
           Frame.Typ = []
@@ -3410,7 +3410,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 378.378170000000000000
+          Left = 376.378170000000000000
           Top = 0.755905510000000000
           Width = 26.811070000000000000
           Height = 22.677180000000000000
@@ -3430,8 +3430,8 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Line28: TfrxLineView
           AllowVectorExport = True
-          Left = 408.188976377953000000
-          Top = 0.897649999999999000
+          Left = 405.921259842520000000
+          Top = 0.897650000000000000
           Height = 26.456710000000000000
           Color = clBlack
           Frame.Typ = []
@@ -3601,8 +3601,8 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Line48: TfrxLineView
           AllowVectorExport = True
-          Left = 332.976377952756000000
-          Height = 28.133890000000000000
+          Left = 332.976377950000000000
+          Height = 26.456692913385800000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3618,9 +3618,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Line50: TfrxLineView
           AllowVectorExport = True
-          Left = 476.220472440945000000
-          Top = 0.125850000000014000
-          Height = 28.133890000000000000
+          Left = 476.220472440000000000
+          Top = 0.125850000000000000
+          Height = 26.456692913385800000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3915,7 +3915,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     UserName = 'frxDBDatasetRekapUmurPiutang'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'karesidenan=karesidenan'
+      'tp=tp'
       'baru=baru'
       'satu_minggu=satu_minggu'
       'dua_minggu=dua_minggu'
@@ -3929,7 +3929,21 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
       'saldo_empat_minggu=saldo_empat_minggu'
       'saldo_tiga_bulan=saldo_tiga_bulan'
       'jum_nota_bermasalah=jum_nota_bermasalah'
-      'saldo_nota_bermasalah=saldo_nota_bermasalah')
+      'saldo_nota_bermasalah=saldo_nota_bermasalah'
+      
+        'saldo_tiga_bulan_kurang_saldo_nota_bermasalah=saldo_tiga_bulan_k' +
+        'urang_saldo_nota_bermasalah'
+      
+        'tiga_bulan_dikurang_nota_bermasalah=tiga_bulan_dikurang_nota_ber' +
+        'masalah'
+      'saldo_baru_percent=saldo_baru_percent'
+      'saldo_satu_minggu_percent=saldo_satu_minggu_percent'
+      'saldo_dua_minggu_percent=saldo_dua_minggu_percent'
+      'saldo_tiga_minggu_percent=saldo_tiga_minggu_percent'
+      'saldo_empat_minggu_percent=saldo_empat_minggu_percent'
+      'saldo_tiga_bulan_percent=saldo_tiga_bulan_percent'
+      'tot_saldo=tot_saldo'
+      'tot_nota=tot_nota')
     DataSet = QRekapUmurPiutang
     BCDToCurrency = False
     DataSetOptions = []

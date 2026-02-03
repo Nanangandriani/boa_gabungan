@@ -102,6 +102,7 @@ type
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
     frxPDFExport1: TfrxPDFExport;
+    cbTP: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -111,10 +112,12 @@ type
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure cbTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
+    strKaresidenanID,strTPID:String;
   end;
 
   function FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPerOutlet;
@@ -143,17 +146,26 @@ end;
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.cbKaresidenanPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
-  FMasterData.Caption:='Master Data TP';
+  FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='laporanhariansisanotapiutangperoutletkares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
+end;
+
+procedure TFLaporanHarianSisaNotaPiutangPerOutlet.cbTPPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='laporanhariansisanotapiutangperoutlettp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
 end;
 
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.dxBarLargeButton5Click(
   Sender: TObject);
 var strReportName: String;
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
@@ -161,7 +173,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,TRUE,FALSE)';
+      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,TRUE,FALSE,'+QuotedStr(strTPID)+')';
       Open;
     end;
     if Qreport.RecordCount>0 then
@@ -179,7 +191,7 @@ end;
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.dxBarLargeButton6Click(
   Sender: TObject);
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
@@ -187,7 +199,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,TRUE,FALSE)';
+      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+
+                ''+QuotedStr(strKaresidenanID)+',NULL,TRUE,FALSE,'+QuotedStr(strTPID)+') ORDER BY kabupaten ASC,kecamatan ASC,customer_name ASC';
       Open;
     end;
   end;
@@ -196,6 +209,9 @@ end;
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.dxBarLargeButton7Click(
   Sender: TObject);
 begin
+  strKaresidenanID:='';
+  strTPID:='';
+  cbTP.EditValue:='';
   cbKaresidenan.EditValue:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
@@ -215,6 +231,9 @@ end;
 
 procedure TFLaporanHarianSisaNotaPiutangPerOutlet.FormShow(Sender: TObject);
 begin
+  strKaresidenanID:='';
+  strTPID:='';
+  cbTP.EditValue:='';
   cbKaresidenan.EditValue:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
@@ -238,7 +257,7 @@ begin
   if CompareText(VarName, 'SBU') = 0 then
   Value := 'PT. '+FHomeLogin.vKodePRSH;
   if CompareText(VarName, 'TP') = 0 then
-  Value := cbKaresidenan.EditValue;
+  Value := cbTP.EditValue;
   if CompareText(VarName, 'PERIODE') = 0 then
   Value := strPeriode
 end;

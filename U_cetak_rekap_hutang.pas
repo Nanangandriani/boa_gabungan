@@ -555,7 +555,7 @@ begin
     load_tgl_hutang;
 
     DBGridRekapHutang.StartLoadingStatus();
-    if Jenis_Hutang.Text='BIAYA' then
+    if Jenis_Hutang.Text='BIAYAA' then
     begin
       with QRekapHutang do
       begin

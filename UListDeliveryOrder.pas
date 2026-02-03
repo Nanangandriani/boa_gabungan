@@ -26,7 +26,8 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems, cxDropDownEdit,
-  cxBarEditItem, frxClass, frxDBSet, cxCalendar;
+  cxBarEditItem, frxClass, frxDBSet, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, uJSON, cxCalendar, Vcl.StdCtrls;
 
 type
   TFListDeliveryOrder = class(TForm)
@@ -83,6 +84,11 @@ type
     QDeliveryOrderpickup_location: TStringField;
     QDeliveryOrderdelivery_location: TStringField;
     QDeliveryOrdersbu_code: TStringField;
+    Memo1: TMemo;
+    QDeliveryOrderno_spm: TMemoField;
+    QDeliveryOrderstatus: TSmallintField;
+    QDeliveryOrderdeleted_at: TDateTimeField;
+    QDeliveryOrderdeleted_by: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -91,9 +97,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure DBGridListAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure GetStatus;
+    procedure DeleteDOChakra;
   public
     { Public declarations }
     procedure Refresh;
@@ -101,6 +112,7 @@ type
 
 var
   FListDeliveryOrder: TFListDeliveryOrder;
+  json: TMyJSON;
 
 implementation
 
@@ -126,14 +138,16 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:= 'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location from t_delivery_order a '+
+       sql.Text:= 'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location,COALESCE(d.notrans,'''') no_spm from t_delivery_order a '+
                   'LEFT JOIN t_delivery_order_status b on b.kode=a.status '+
                   'LEFT JOIN t_delivery_order_services c on c.notrans=a.notrans '+
+                  'LEFT JOIN (SELECT DISTINCT spm_det.notrans,spm_det.notrans_do FROM t_spm_det spm_det '+
+                  'left join t_spm spm on spm.notrans=spm_det.notrans where spm.deleted_at is null)d on d.notrans_do=a.notrans '+
                   'WHERE (a.date_trans BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND  '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+
 //                  'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
 //                  'EXTRACT(MONTH FROM a.date_trans)='+(IntToStr(mm))+' AND '+
-                  'a.deleted_at is null'+strStatus+' ORDER BY a.date_trans Desc, a.notrans DESC ';
+                  ''+strStatus+' ORDER BY a.date_trans Desc, a.notrans DESC ';
        open;
    end;
   finally
@@ -178,35 +192,112 @@ begin
   FNewDeliveryOrder.ShowModal;
 end;
 
+procedure TFListDeliveryOrder.DBGridListAdvDrawDataCell(Sender: TCustomDBGridEh;
+  Cell, AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+end;
+
+procedure TFListDeliveryOrder.DeleteDOChakra;
+var
+  key, url, BaseUrl, Vpath, Vtoken, res: string;
+  gNet: TIdHTTP;
+  jsonBody: TStringStream;
+  TotPPH,PPHPercent: Currency;
+begin
+  Application.ProcessMessages; // agar UI tetap responsif
+  try
+
+    // Ambil konfigurasi API
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlchakra''');
+    key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
+    Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
+    Vpath := '/api/delete-do';
+    url := BaseUrl + Vpath;
+
+    jsonBody := TStringStream.Create(
+      '{"notrans": "'+QDeliveryOrder.FieldByName('notrans').AsString+'"}',
+      TEncoding.UTF8
+    );
+
+
+    Memo1.Text := jsonBody.DataString;
+
+    gNet := TIdHTTP.Create(nil);
+    try
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.ContentType := 'application/json';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      // PUT request
+      res := gNet.Put(url, jsonBody);
+      memo1.Text:=res;
+//      ShowMessage('tes');
+//      Exit;
+      memo1.Lines.Add('Response: ' + res); // tampilkan hasil
+    except
+      on E: EIdHTTPProtocolException do
+        memo1.Lines.Add('Data tidak ditemukan: ' + E.Message);
+      on E: Exception do
+        memo1.Lines.Add('Kesalahan saat update: ' + E.Message);
+    end;
+  finally
+    jsonBody.Free;
+    gNet.Free;
+  end;
+end;
+
 procedure TFListDeliveryOrder.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-
-  if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+//  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
+  if QDeliveryOrder.FieldByName('no_spm').AsString<>'' then
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_delivery_order"  SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "notrans"='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Hapus Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
+    MessageDlg('DO Sudah jadi SPM tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
+  end else if QDeliveryOrder.FieldByName('status').AsInteger>4 then
+  begin
+    MessageDlg('Status DO Sudah '+QDeliveryOrder.FieldByName('status_name').AsString+', tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
+  end else begin
+
+    if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+        if not dm.Koneksi.InTransaction then
+         dm.Koneksi.StartTransaction;
+        try
+          with dm.Qtemp do
           begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
+            close;
+            sql.clear;
+            sql.Text:=' UPDATE "public"."t_delivery_order"  SET '+
+                      ' "deleted_at"=now(), '+
+                      ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+                      ' WHERE "notrans"='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString);
+            ExecSQL;
+          end;
+
+          DeleteDOChakra;
+          MessageDlg('Proses Hapus Berhasil, Pastikan kordinasi dengan Pihak Chakra..!!',mtInformation,[MBOK],0);
+          Dm.Koneksi.Commit;
+        Except on E :Exception do
+          begin
+            begin
+              MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+              Dm.koneksi.Rollback ;
+            end;
           end;
         end;
-      end;
+    end;
   end;
 end;
 
@@ -218,6 +309,7 @@ begin
 //  edTahun.Text:=(year);
 //  cbBulan.ItemIndex:=StrToInt(month)-1;
 //  GetStatus;
+  DBGridList.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -233,17 +325,18 @@ begin
        sql.Clear;
        sql.Text:= 'select * from "public"."t_delivery_order" '+
                   'WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
-                  'AND deleted_at is null order by created_at Desc ';
+                  ' order by created_at Desc ';
        open;
    end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
     exit;
-  end;
-
-  if Dm.Qtemp.RecordCount<>0 then
+  end else if Dm.Qtemp.FieldValues['deleted_at']<>NULL then
   begin
+    ShowMessage('Data DO sudah di batalkan...!!!');
+    exit;
+  end else begin
     with FNewDeliveryOrder do
     begin
       edKodeJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_code').AsString;
@@ -289,7 +382,11 @@ begin
       IntStatusDO:=Dm.Qtemp.FieldByName('status').AsInteger;
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
 
-    end;
+      if Dm.Qtemp.FieldByName('add_pool_points').IsNull then
+        chktambahpool.Checked := False
+      else
+        chktambahpool.Checked := Dm.Qtemp.FieldByName('add_pool_points').AsBoolean;
+      end;
 
   //biaya
     if FNewDeliveryOrder.IntStatusDO >3 then FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false
@@ -469,6 +566,7 @@ end;
 
 procedure TFListDeliveryOrder.dxBarLargeButton1Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -484,13 +582,17 @@ begin
       sql.Text:='select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
                 'coalesce(a.pickup_location,'''') pickup_location,coalesce(a.delivery_location) delivery_location, d.company_name,d.address address_sbu,d.telp,'+
                 'COALESCE(vehicles,'''') keterangan,'+
-                'vehicles,dol.item_name,dol.amount,dol.unit from '+
+                'vehicles,dol.item_name,sum(dol.amount) amount,dol.unit from '+
                 't_delivery_order_load dol LEFT JOIN '+
                 't_delivery_order_services  a on a.notrans=dol.notrans '+
                 'left join t_supplier b on b.supplier_code=a.vendor_code '+
                 'left join t_delivery_order c on c.notrans=a.notrans '+
                 'left join t_company d on d.company_code=c.sbu_code '+
-                'WHERE a.notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans']);
+                'WHERE a.notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans'])+' '+
+                'GROUP BY a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
+                'coalesce(a.pickup_location,'''') ,coalesce(a.delivery_location) ,'+
+                'd.company_name,d.address,d.telp,COALESCE(vehicles,'''') ,'+
+                'vehicles,dol.item_name,dol.unit ORDER BY item_name ASC';
       open;
     end;
 
@@ -519,14 +621,24 @@ end;
 
 procedure TFListDeliveryOrder.dxBarLargeButton3Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   cbStatus.ItemIndex:=0;
 end;
 
+procedure TFListDeliveryOrder.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QDeliveryOrder.Close;
+  QCetak.Close;
+  QCetak2.Close;
+end;
+
 procedure TFListDeliveryOrder.FormShow(Sender: TObject);
 begin
 //  dxBarManager1Bar3.Visible:=False;
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   GetStatus;

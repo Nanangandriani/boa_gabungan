@@ -21,8 +21,8 @@ object FlistItemSo: TFlistItemSo
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 318
-    ExplicitWidth = 622
+    ExplicitTop = 456
+    ExplicitWidth = 911
     object BBatal: TRzBitBtn
       Left = 841
       Top = 1
@@ -83,7 +83,7 @@ object FlistItemSo: TFlistItemSo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 546
+      ExplicitLeft = 835
     end
     object BEdit: TRzBitBtn
       Left = 766
@@ -146,7 +146,7 @@ object FlistItemSo: TFlistItemSo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 471
+      ExplicitLeft = 760
     end
     object Cb_All: TCheckBox
       Left = 8
@@ -217,7 +217,7 @@ object FlistItemSo: TFlistItemSo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitTop = 6
+      ExplicitLeft = 685
     end
   end
   object DBGridMaterial: TDBGridEh
@@ -321,24 +321,23 @@ object FlistItemSo: TFlistItemSo
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitLeft = 8
-    ExplicitTop = -6
+    ExplicitWidth = 911
     object Label1: TLabel
-      Left = 40
+      Left = 33
       Top = 18
-      Width = 87
+      Width = 124
       Height = 15
-      Caption = 'Tanggal Kirim    :'
+      Caption = 'Tanggal Kirim                :'
     end
     object Label2: TLabel
-      Left = 40
+      Left = 33
       Top = 50
-      Width = 87
+      Width = 125
       Height = 15
-      Caption = 'No. Kendaraan  :'
+      Caption = 'Kelompok. Kendaraan  :'
     end
     object DT_tgl_kirim: TRzDateTimePicker
-      Left = 133
+      Left = 165
       Top = 15
       Width = 121
       Height = 23
@@ -348,15 +347,16 @@ object FlistItemSo: TFlistItemSo
       TabOrder = 0
     end
     object Ed_no_Kendaraan: TRzEdit
-      Left = 133
-      Top = 47
+      Left = 439
+      Top = 15
       Width = 121
       Height = 23
       Text = ''
       TabOrder = 1
+      Visible = False
     end
     object Cari: TRzBitBtn
-      Left = 260
+      Left = 292
       Top = 46
       Width = 30
       Height = 23
@@ -365,7 +365,7 @@ object FlistItemSo: TFlistItemSo
       OnClick = CariClick
     end
     object Ed_kode: TEdit
-      Left = 320
+      Left = 352
       Top = 15
       Width = 81
       Height = 23
@@ -373,15 +373,14 @@ object FlistItemSo: TFlistItemSo
       Visible = False
     end
     object ed_vehicle_group_sort_number: TEdit
-      Left = 407
-      Top = 15
+      Left = 165
+      Top = 46
       Width = 121
       Height = 23
       TabOrder = 4
-      Visible = False
     end
     object ed_vehicle_group_id: TEdit
-      Left = 534
+      Left = 566
       Top = 15
       Width = 121
       Height = 23
@@ -389,7 +388,7 @@ object FlistItemSo: TFlistItemSo
       Visible = False
     end
     object BCari: TRzBitBtn
-      Left = 320
+      Left = 352
       Top = 46
       Caption = 'Cari'
       TabOrder = 6
@@ -470,8 +469,8 @@ object FlistItemSo: TFlistItemSo
       
         'LEFT JOIN t_item_stock b on a.code_item=b.item_code WHERE b.supp' +
         'lier_code='#39'SP10009'#39)
-    Left = 604
-    Top = 219
+    Left = 612
+    Top = 211
     object QMaterialnotrans: TStringField
       FieldName = 'notrans'
       Required = True

@@ -81,6 +81,8 @@ type
     procedure ActPrintExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DBGridTerimaGetCellParams(Sender: TObject; Column: TColumnEh;
+      AFont: TFont; var Background: TColor; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -120,7 +122,7 @@ procedure TFTerima_Material.ActDelExecute(Sender: TObject);
 var
   OldNo, NewNo: string;
 begin
-    OldNo := DBGridTerima.Fields[0].AsString;
+    OldNo := DBGridTerima.Fields[1].AsString;
     NewNo := OldNo + '-DEL';
 
     if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
@@ -175,6 +177,12 @@ end;
 
 procedure TFTerima_Material.ActPrintExecute(Sender: TObject);
 begin
+    if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
    with QReportLPB do
    begin
       close;
@@ -234,6 +242,11 @@ end;
 
 procedure TFTerima_Material.ActUpdateExecute(Sender: TObject);
 begin
+  if not Memterima_material.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
     FNew_TerimaMaterial.Clear;
     FNew_TerimaMaterial.Show;
     FNew_TerimaMaterial.Caption:='Update Terima Material';
@@ -305,6 +318,7 @@ end;
 
 procedure TFTerima_Material.CariClick(Sender: TObject);
 begin
+   ActRoExecute(sender);
    DBGridTerima.StartLoadingStatus();
    with Qterima_material do
    begin
@@ -324,6 +338,16 @@ begin
    Memterima_material.Close;
    Memterima_material.Open;
    DBGridTerima.FinishLoadingStatus();
+end;
+
+procedure TFTerima_Material.DBGridTerimaGetCellParams(Sender: TObject;
+  Column: TColumnEh; AFont: TFont; var Background: TColor;
+  State: TGridDrawState);
+begin
+   if not Memterima_material.FieldByName('deleted_at').IsNull then
+    begin
+      AFont.Color := clRed;
+    end;
 end;
 
 procedure TFTerima_Material.FormShow(Sender: TObject);

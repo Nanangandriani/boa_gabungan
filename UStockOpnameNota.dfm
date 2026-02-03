@@ -38,7 +38,7 @@ object FStockOpnameNota: TFStockOpnameNota
       Caption = 'Tanggal'
     end
     object RzLabel3: TRzLabel
-      Left = 157
+      Left = 181
       Top = 37
       Width = 19
       Height = 15
@@ -52,7 +52,7 @@ object FStockOpnameNota: TFStockOpnameNota
       Caption = 'SBU'
     end
     object edKaresidenan: TRzButtonEdit
-      Left = 62
+      Left = 86
       Top = 5
       Width = 209
       Height = 23
@@ -63,7 +63,7 @@ object FStockOpnameNota: TFStockOpnameNota
       OnButtonClick = edKaresidenanButtonClick
     end
     object dtTanggal1: TRzDateTimePicker
-      Left = 62
+      Left = 86
       Top = 34
       Width = 89
       Height = 23
@@ -74,7 +74,7 @@ object FStockOpnameNota: TFStockOpnameNota
       OnChange = dtTanggal1Change
     end
     object dtTanggal2: TRzDateTimePicker
-      Left = 182
+      Left = 206
       Top = 34
       Width = 89
       Height = 23
@@ -85,7 +85,7 @@ object FStockOpnameNota: TFStockOpnameNota
       OnChange = dtTanggal2Change
     end
     object btTampilkan: TRzBitBtn
-      Left = 300
+      Left = 324
       Top = 14
       Width = 116
       Height = 30
@@ -146,14 +146,14 @@ object FStockOpnameNota: TFStockOpnameNota
       end
     end
     object cbSBU: TRzComboBox
-      Left = 62
+      Left = 86
       Top = 65
       Width = 145
       Height = 23
       TabOrder = 5
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 422
+      Left = 446
       Top = 14
       Width = 116
       Height = 30
@@ -675,7 +675,7 @@ object FStockOpnameNota: TFStockOpnameNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45924.356467280090000000
+    ReportOptions.LastChange = 46042.696104641200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -757,7 +757,7 @@ object FStockOpnameNota: TFStockOpnameNota
           AllowVectorExport = True
           Left = 8.559060000000000000
           Top = 56.354360000000000000
-          Width = 90.708720000000000000
+          Width = 75.056546090000000000
           Height = 18.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -766,7 +766,7 @@ object FStockOpnameNota: TFStockOpnameNota
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'LAMPIRAN        :')
+            'LAMPIRAN ')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -774,7 +774,7 @@ object FStockOpnameNota: TFStockOpnameNota
           AllowVectorExport = True
           Left = 8.338590000000000000
           Top = 79.370130000000000000
-          Width = 90.708720000000000000
+          Width = 74.186980870000000000
           Height = 18.795300000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -783,7 +783,7 @@ object FStockOpnameNota: TFStockOpnameNota
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'KARESIDENAN :')
+            'TP')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -801,6 +801,40 @@ object FStockOpnameNota: TFStockOpnameNota
           Frame.Typ = []
           Memo.UTF8W = (
             '[KARESIDENAN]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo74: TfrxMemoView
+          AllowVectorExport = True
+          Left = 84.283464570000000000
+          Top = 56.314960629921260000
+          Width = 15.926111310000000000
+          Height = 18.795300000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo75: TfrxMemoView
+          AllowVectorExport = True
+          Left = 84.347826090000000000
+          Top = 79.370078740157480000
+          Width = 15.926111310000000000
+          Height = 18.795300000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3110,8 +3144,8 @@ object FStockOpnameNota: TFStockOpnameNota
       
         'LEFT JOIN  vstock_opname_nota_sum b on b.karesidenan=a.karesiden' +
         'an and date='#39'2025-09-22'#39)
-    Left = 624
-    Top = 224
+    Left = 424
+    Top = 264
   end
   object ReportStokOpname: TfrxReport
     Version = '2022.1.3'
@@ -3122,7 +3156,7 @@ object FStockOpnameNota: TFStockOpnameNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44260.432679409700000000
-    ReportOptions.LastChange = 45924.391731261570000000
+    ReportOptions.LastChange = 46042.697168935180000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -3441,7 +3475,7 @@ object FStockOpnameNota: TFStockOpnameNota
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 9.826771653543310000
+          Left = 9.826771650000000000
           Top = 103.657905560000000000
           Width = 112.948464440000000000
           Height = 18.897650000000000000
@@ -3452,7 +3486,7 @@ object FStockOpnameNota: TFStockOpnameNota
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'TP / KABUPATEN')
+            'TP')
           ParentFont = False
         end
         object Memo58: TfrxMemoView

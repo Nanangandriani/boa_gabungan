@@ -252,6 +252,7 @@ end;
 procedure TFListReturPenjualan.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
+  DBGridList.SearchPanel.SearchingText:='';
 //  year :=FormatDateTime('yyyy', NOW());
 //  month :=FormatDateTime('m', NOW());
 //  edTahun.Text:=(year);
@@ -458,11 +459,13 @@ end;
 
 procedure TFListReturPenjualan.dxBarLargeButton3Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
 procedure TFListReturPenjualan.dxBarLargeButton4Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';
@@ -490,6 +493,7 @@ end;
 
 procedure TFListReturPenjualan.FormShow(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';

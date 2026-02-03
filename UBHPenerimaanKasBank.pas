@@ -116,6 +116,46 @@ type
     dxBarLargeButton3: TdxBarLargeButton;
     frxXLSExport1: TfrxXLSExport;
     frxXLSXExport1: TfrxXLSXExport;
+    frxReport1: TfrxReport;
+    QCetakExport: TUniQuery;
+    frxDBDBHExport: TfrxDBDataset;
+    edTP: TcxBarEditItem;
+    QBHPenerimaanKasBankExportTotal: TUniQuery;
+    QBHPenerimaanKasBankExportKredit: TUniQuery;
+    QBHPenerimaanKasBankExportDebit: TUniQuery;
+    QBHPenerimaanKasBankExport: TUniQuery;
+    frxDBDBHPenerimaanKasBankExport: TfrxDBDataset;
+    frxDBDBHPenerimaanKasBankExportDebit: TfrxDBDataset;
+    frxDBDBHPenerimaanKasBankExportKredit: TfrxDBDataset;
+    frxDBDBHPenerimaanKasBankExportTotal: TfrxDBDataset;
+    ExportReport: TfrxReport;
+    DSBHPenerimaanKasBankExport: TDataSource;
+    QBHPenerimaanKasBankExportvoucher_no: TStringField;
+    QBHPenerimaanKasBankExporttrans_date: TDateField;
+    QBHPenerimaanKasBankExportdescription: TMemoField;
+    QBHPenerimaanKasBankExportcode_cust: TMemoField;
+    QBHPenerimaanKasBankExportname_cust: TMemoField;
+    QBHPenerimaanKasBankExportacoount_code_bank: TStringField;
+    QBHPenerimaanKasBankExportacoount_name_bank: TMemoField;
+    QBHPenerimaanKasBankExportamount_bank: TFloatField;
+    QBHPenerimaanKasBankExportacoount_code_piutang: TStringField;
+    QBHPenerimaanKasBankExportacoount_name_piutang: TMemoField;
+    QBHPenerimaanKasBankExportamount_piutang: TFloatField;
+    QBHPenerimaanKasBankExportfor_acceptance: TStringField;
+    QBHPenerimaanKasBankExportcode_kecamatan: TMemoField;
+    QBHPenerimaanKasBankExportcode_kabupaten: TMemoField;
+    QBHPenerimaanKasBankExportcode_tp: TMemoField;
+    QBHPenerimaanKasBankExportcode_karesidenan: TMemoField;
+    QBHPenerimaanKasBankExportDebittrans_no: TStringField;
+    QBHPenerimaanKasBankExportDebitaccount_code: TStringField;
+    QBHPenerimaanKasBankExportDebitaccount_name: TMemoField;
+    QBHPenerimaanKasBankExportDebitstatus_dk: TStringField;
+    QBHPenerimaanKasBankExportDebitdb: TFloatField;
+    QBHPenerimaanKasBankExportKredittrans_no: TStringField;
+    QBHPenerimaanKasBankExportKreditaccount_code: TStringField;
+    QBHPenerimaanKasBankExportKreditaccount_name: TMemoField;
+    QBHPenerimaanKasBankExportKreditstatus_dk: TStringField;
+    QBHPenerimaanKasBankExportKreditkd: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -136,11 +176,12 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure edTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    vkd_kares, vkd_kab : String ;
+    vkd_tp,vkd_kares, vkd_kab : String ;
     procedure ExportToExcel;
   end;
 
@@ -262,9 +303,9 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan,cust.code_kabupaten,cust.kabupaten '+
+       sql.Add('SELECT zz.*,cust.code_tp,cust.tp,cust.code_karesidenan,cust.karesidenan,cust.code_kabupaten,cust.kabupaten '+
               'FROM ( '+
-              'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,a.name_cust, '+
+              'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,d.customer_name_pkp name_cust, '+
               'a.for_acceptance, a.description,a.account_name_bank,a.account_number_bank, '+
               'CASE WHEN a.module_id = ''4'' THEN COALESCE(bb.paid_amount, 0) ELSE 0 END AS jum_kas, '+
               'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
@@ -287,12 +328,14 @@ begin
               'WHERE ac.header_code = ''1101'' '+
               'GROUP BY bcd.voucher_no, bcd.position '+
               ') bb ON bb.voucher_no = a.voucher_no AND bb.position = ''D''  '+
-              'INNER JOIN '+
+              'LEFT JOIN '+
               't_cash_bank_acceptance_receivable c '+
               'ON c.voucher_no = a.voucher_no '+
+              'LEFT JOIN t_cash_bank_acceptance_customer d  ON d.trans_no=a.voucher_no '+
+              'and a.code_cust=d.customer_code AND d.deleted_at IS NULL '+
               'WHERE a.deleted_at IS NULL '+
               'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
-              'a.name_cust, a.for_acceptance,a.description, '+
+              'd.customer_name_pkp, a.for_acceptance,a.description, '+
               'a.account_name_bank,a.account_number_bank,b.paid_amount,bb.paid_amount , a.module_id ) AS zz '+
               'LEFT JOIN '+
               'get_customer() AS cust ON cust.customer_code = zz.code_cust '+
@@ -329,9 +372,13 @@ begin
          begin
           sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
+         if edTp.EditValue<>'' then
+         begin
+          sql.add(' AND cust.code_tp='+QuotedStr(vkd_tp)+' ');
+         end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND cust.code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
        open;
@@ -354,7 +401,7 @@ begin
    Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank2'+ '.fr3');
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
-    if edKaresidenan.EditValue='' then
+    if (edKabupaten.EditValue='') then
     begin
       SetMemo(Report,'wilayah','Wilayah : Semua Wilayah');
     end;
@@ -362,9 +409,17 @@ begin
     begin
       SetMemo(Report,'wilayah','Wilayah :'+edKaresidenan.EditValue);
     end;
-    if edKabupaten.EditValue<>'' then
+    if edTP.EditValue<>'' then
+    begin
+      SetMemo(Report,'wilayah','Wilayah :'+edTP.EditValue);
+    end;
+    if (edKabupaten.EditValue<>'') AND (edKaresidenan.EditValue<>'') then
     begin
       SetMemo(Report,'wilayah','Wilayah : '+edKaresidenan.EditValue+'-'+edKabupaten.EditValue);
+    end;
+    if (edKabupaten.EditValue<>'') AND (edTP.EditValue<>'') then
+    begin
+      SetMemo(Report,'wilayah','Wilayah : '+edTP.EditValue+'-'+edKabupaten.EditValue);
     end;
 //  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
 //  begin
@@ -386,12 +441,12 @@ begin
    begin
        close;
        sql.Clear;
-      sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
+      sql.Add('SELECT zz.*,cust.code_tp,cust.tp,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
               'FROM '+
               '( '+
               'SELECT '+
               'a.voucher_no,a.trans_date,a.module_id,a.code_cust, '+
-              'a.name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
+              'd.customer_name_pkp name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
               'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
               'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
               'COALESCE(c.paid_amount, 0) AS jum_piutang '+
@@ -399,9 +454,13 @@ begin
               't_cash_bank_acceptance a '+
               'INNER JOIN '+
               't_cash_bank_acceptance_det b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
-              'INNER JOIN '+
+              'LEFT JOIN '+
               't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
-              'WHERE a.deleted_at is NULL) AS zz '+
+              'LEFT JOIN t_cash_bank_acceptance_customer d  ON d.trans_no=a.voucher_no '+
+              'and a.code_cust=d.customer_code AND d.deleted_at IS NULL '+
+              'WHERE a.deleted_at is NULL '+
+
+              ') AS zz '+
               'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
               'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
 //       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
@@ -417,9 +476,13 @@ begin
          begin
           sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
+         if edTp.EditValue<>'' then
+         begin
+          sql.add(' AND cust.code_tp='+QuotedStr(vkd_tp)+' ');
+         end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND cust.code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
           sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
        open;
@@ -509,91 +572,121 @@ begin
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edTP.EditValue:='';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
 end;
 
 procedure TFBHPenerimaanKasBank.dxBarLargeButton3Click(Sender: TObject);
 begin
-   with QCetak do
+   with QBHPenerimaanKasBankExport do
    begin
        close;
        sql.Clear;
-       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan,cust.code_kabupaten,cust.kabupaten '+
-              'FROM ( '+
-              'SELECT a.voucher_no,a.trans_date,a.module_id,a.code_cust,a.name_cust, '+
-              'a.for_acceptance, a.description,a.account_name_bank,a.account_number_bank, '+
-              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
-              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
-              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
-              'FROM t_cash_bank_acceptance a INNER JOIN '+
-              '(SELECT voucher_no, position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det GROUP BY voucher_no, position) b '+
-              'ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
-              'INNER JOIN '+
-              't_cash_bank_acceptance_receivable c '+
-              'ON c.voucher_no = a.voucher_no '+
-              'WHERE a.deleted_at IS NULL '+
-              'GROUP BY a.voucher_no, a.trans_date, a.module_id, a.code_cust, '+
-              'a.name_cust, a.for_acceptance,a.description, '+
-              'a.account_name_bank,a.account_number_bank,b.paid_amount, a.module_id ) AS zz '+
-              'LEFT JOIN '+
-              'get_customer() AS cust ON cust.customer_code = zz.code_cust '+
-              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
+       sql.Add('SELECT a.voucher_no,a.trans_date,a.description,COALESCE(c.code_cust,d.customer_code) code_cust,COALESCE(c.customer_name_pkp,d.customer_name_pkp) name_cust, '+
+                'e.account_code acoount_code_bank,e.account_name acoount_name_bank,e.db amount_bank,f.account_code acoount_code_piutang,'+
+                'f.account_name acoount_name_piutang,f.kd amount_piutang,a.for_acceptance,COALESCE(c.code_kecamatan,d.code_kecamatan)  code_kecamatan,'+
+                ' COALESCE(c.code_kabupaten,d.code_kabupaten)  code_kabupaten,COALESCE(c.code_tp,d.code_tp)  code_tp,'+
+                'COALESCE(c.code_karesidenan,d.code_karesidenan)  code_karesidenan '+
+                'FROM '+
+                't_cash_bank_acceptance a '+
+                'LEFT JOIN t_cash_bank_acceptance_receivable b on b.voucher_no=a.voucher_no '+
+                'LEFT JOIN get_selling(False) c on c.trans_no=b.no_invoice and c.deleted_at is NULL '+
+                'LEFT JOIN  (SELECT a.*,a.code_region code_kecamatan,c.code code_kabupaten,c.code_karesidenan,c.code_tp from t_cash_bank_acceptance_customer a '+
+                'LEFT JOIN t_region_subdistrict b on b.code=a.code_region '+
+                'LEFT JOIN t_region_regency c on c.code=b.code_regency WHERE a.deleted_at is NULL) d on d.trans_no=a.voucher_no '+
+                'left join (SELECT b.header_code,a.* from public."VTrans_Journal" a left join t_ak_account b on b.code=a.account_code) e ON e.trans_no=a.voucher_no AND (e.header_code=''1102''  OR e.header_code=''1101'' )  '+
+                'left join (SELECT b.header_code,a.* from public."VTrans_Journal" a left join t_ak_account b on b.code=a.account_code) f ON f.trans_no=a.voucher_no AND f.account_code=''1104.01''  '+
+                'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+'  and a.deleted_at is NULL');
+//                'where a.voucher_no in(''BM/002/02/I/2026/NPA/SBY/MDI'',''BM/014/02/I/2026/NPA/BSK/MDI'',''BM/017/02/I/2026/NPA/SBY/MDI'')  and a.deleted_at is NULL');
 
-//       sql.Add('SELECT zz.*,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
-//              'FROM '+
-//              '( '+
-//              'SELECT '+
-//              'a.voucher_no,a.trans_date,a.module_id,a.code_cust, '+
-//              'a.name_cust,a.for_acceptance,a.description,a.account_name_bank,a.account_number_bank, '+
-//              'CASE WHEN a.module_id = ''4'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_kas, '+
-//              'CASE WHEN a.module_id = ''3'' THEN COALESCE(b.paid_amount, 0) ELSE 0 END AS jum_bank, '+
-//              'COALESCE(SUM(c.paid_amount), 0) AS jum_piutang '+
-//              'FROM '+
-//              't_cash_bank_acceptance a '+
-//              'INNER JOIN '+
-//              '(SELECT voucher_no,position, SUM(paid_amount) paid_amount FROM t_cash_bank_acceptance_det group by voucher_no,position) b ON b.voucher_no = a.voucher_no AND b.position = ''D'' '+
-//              'INNER JOIN '+
-//              't_cash_bank_acceptance_receivable c ON c.voucher_no = a.voucher_no '+
-//              ') AS zz '+
-//              'LEFT JOIN get_customer() AS cust ON cust.customer_code = zz.code_cust '+
-//              'WHERE zz.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-//       sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab,description ket_faktur from "public"."vbhpenerimaan_kas_bank" a  '+
-//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-//               ' ON "left"(code_region, 4)=b.code_kab '+
-////               ' LEFT JOIN (SELECT voucher_no, '+
-////               ' STRING_AGG( '+QuotedStr(' No. Faktur ')+' || no_invoice_tax || '+QuotedStr(' Tgl. ')+' || date_invoice_tax, E'+QuotedStr(',\n')+') AS ket_faktur '+
-////               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
-//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
          if edKaresidenan.EditValue<>'' then
          begin
-          sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
+          sql.add(' AND COALESCE(c.code_karesidenan,d.code_karesidenan)='+QuotedStr(vkd_kares)+' ');
+         end;
+         if edTp.EditValue<>'' then
+         begin
+          sql.add(' AND COALESCE(c.code_tp,d.code_tp)='+QuotedStr(vkd_tp)+' ');
          end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND cust.karesidenan='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND  COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
          end;
-       sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
+       sql.add(' ORDER BY a.trans_date, a.voucher_no');
        open;
-   end;
+  end;
 
- if QCetak.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if QBHPenerimaanKasBankExport.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QCetak.RecordCount<>0 then
+ if QBHPenerimaanKasBankExport.RecordCount<>0 then
  begin
-  QCetakKredit.Close;
-  QCetakKredit.Open;
+// QBHPenerimaanKasBankExportTotal.close;
+// QBHPenerimaanKasBankExportTotal.Open;
+  with QBHPenerimaanKasBankExportTotal do
+  begin
+    close;
+    sql.Clear;
+    sql.Add('WITH detail_trans AS ( '+
+            'SELECT '+
+            'a.voucher_no, '+
+            'SUM(CASE WHEN b.header_code = ''1102'' THEN b.db WHEN b.header_code = ''1101'' THEN b.db ELSE 0 END) AS tot_bank, '+
+            'SUM(CASE WHEN b.status_dk = ''D'' AND b.db > 0 AND b.header_code <> ''1102''  AND b.header_code <> ''1101'' '+
+            'THEN b.db ELSE 0 END) AS tot_d_lain, '+
+            'SUM(CASE WHEN b.account_code = ''1104.01'' THEN b.kd ELSE 0 END) AS tot_piutang, '+
+            'SUM(CASE WHEN b.status_dk = ''K'' AND b.kd > 0 AND b.account_code <> ''1104.01'' THEN b.kd ELSE 0 END) AS tot_k_lain  '+
+            'FROM t_cash_bank_acceptance a '+
+            ' LEFT JOIN t_cash_bank_acceptance_receivable bb on bb.voucher_no=a.voucher_no '+
+            'LEFT JOIN get_selling(False) c on c.trans_no=bb.no_invoice and c.deleted_at is NULL '+
+             'LEFT JOIN  (SELECT a.*,a.code_region code_kecamatan,c.code code_kabupaten,c.code_karesidenan,c.code_tp from t_cash_bank_acceptance_customer a '+
+             'LEFT JOIN t_region_subdistrict b on b.code=a.code_region '+
+             'LEFT JOIN t_region_regency c on c.code=b.code_regency WHERE a.deleted_at is NULL) d on d.trans_no=a.voucher_no '+
+
+            'LEFT JOIN (SELECT bb.header_code,aa.* from public."VTrans_Journal" aa left join t_ak_account bb on bb.code=aa.account_code) b ON b.trans_no=a.voucher_no '+
+            'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' '+
+            'AND a.deleted_at IS NULL ');
+     if edKaresidenan.EditValue<>'' then
+     begin
+      sql.add(' AND COALESCE(c.code_karesidenan,d.code_karesidenan)='+QuotedStr(vkd_kares)+' ');
+     end;
+     if edTp.EditValue<>'' then
+     begin
+      sql.add(' AND COALESCE(c.code_tp,d.code_tp)='+QuotedStr(vkd_tp)+' ');
+     end;
+     if edKabupaten.EditValue<>'' then
+     begin
+      sql.add(' AND  COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
+     end;
+
+     sql.Add('GROUP BY a.voucher_no, a.trans_date  '+
+            'ORDER BY a.trans_date ASC, a.voucher_no ASC '+
+            ') '+
+            'SELECT '+
+            'SUM(tot_bank) AS total_bank, '+
+            'SUM(tot_d_lain) AS total_debit_lain,'+
+            'SUM(tot_piutang) AS total_piutang, '+
+            'SUM(tot_k_lain) AS total_kredit_lain '+
+            'FROM detail_trans');
+     Open;
+  end;
+
+
+  QBHPenerimaanKasBankExportDebit.Close;
+  QBHPenerimaanKasBankExportDebit.Open;
+
+  QBHPenerimaanKasBankExportKredit.Close;
+  QBHPenerimaanKasBankExportKredit.Open;
 
   cLocation := ExtractFilePath(Application.ExeName);
 
   //ShowMessage(cLocation);
-  Report.LoadFromFile(cLocation +'report/rpt_bh_penerimaankasbank2'+ '.fr3');
+  Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenerimaanBankKasExport'+ '.fr3');
   SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
   SetMemo(Report,'periode','Periode '+formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue));
   if edKaresidenan.EditValue='' then
@@ -621,8 +714,14 @@ procedure TFBHPenerimaanKasBank.edKabupatenPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data Kabupaten';
   FMasterData.vcall:='bhpenerimaankas_bank_kab';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
-  FMasterData.ShowModal;
+  if (edKaresidenan.EditValue<>'') AND (edTP.EditValue='') then
+  begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+    FMasterData.ShowModal;
+  end else if (edKaresidenan.EditValue='') AND (edTP.EditValue<>'') then begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(vkd_tp)+'');
+    FMasterData.ShowModal;
+  end;
 end;
 
 procedure TFBHPenerimaanKasBank.edKaresidenanPropertiesButtonClick(
@@ -631,6 +730,15 @@ begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='bhpenerimaankas_bank_kares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFBHPenerimaanKasBank.edTPPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='bhpenerimaankas_bank_tp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 
@@ -650,8 +758,10 @@ begin
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edTP.EditValue:='';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
   FillSBUBarCombo(cbSBU);
 end;
 

@@ -61,19 +61,6 @@ type
     frxDBDDaftarRekeningKoran: TfrxDBDataset;
     QCetak: TUniQuery;
     edRekeningBank: TcxBarEditItem;
-    QCetaknomor: TLargeintField;
-    QCetakno_cek: TIntegerField;
-    QCetakvoucher_no: TMemoField;
-    QCetaktrans_date: TDateField;
-    QCetaknm_ak_debet: TMemoField;
-    QCetakhutang: TIntegerField;
-    QCetakrupa_nama_ak: TMemoField;
-    QCetakrupa_jum: TIntegerField;
-    QCetakcatatan: TMemoField;
-    QCetaksaldo_awal: TFloatField;
-    QCetakkredit_bank: TFloatField;
-    QCetaksetoran: TFloatField;
-    QCetaksaldo_akhir: TFloatField;
     QDaftarRekeningKorannomor: TLargeintField;
     QDaftarRekeningKoranno_cek: TIntegerField;
     QDaftarRekeningKoranvoucher_no: TMemoField;
@@ -140,7 +127,7 @@ begin
     begin
        close;
        sql.Clear;
-       sql.add(' select *, round(cast(sum(saldo_awal+setoran-kredit_bank) over (ORDER BY nomor asc ) as '+
+      { sql.add(' select *, round(cast(sum(saldo_awal+setoran-kredit_bank) over (ORDER BY nomor asc ) as '+
                ' numeric),2) saldo_akhir from (select "row_number"() over (order by "trans_date", '+
                ' urutan_trans, urutan_vouch)+1 nomor,  "no_cek", "voucher_no", "trans_date", "nm_ak_debet", '+
                ' "hutang", "rupa_nama_ak", "rupa_jum", "catatan", "saldo_awal" , "kredit_bank", "setoran" '+
@@ -191,7 +178,9 @@ begin
                ' '''' as "catatan", saldo_akhir as saldo_awal, 0 as "kredit_bank", 0 as "setoran" '+
                ' FROM (select saldo_akhir from '+
                ' "public"."get_bank_saldoakhir"('+QuotedStr(vRekeningBank)+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue-1))+'))x)xx '+
-               ' ORDER BY nomor ASC ');
+               ' ORDER BY nomor ASC ');    }
+       sql.Text:='SELECT * from get_daftar_cek_bulan('+QuotedStr(vRekeningBank)+', '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' ,'+
+                  ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+')';
        open;
     end;
   end;

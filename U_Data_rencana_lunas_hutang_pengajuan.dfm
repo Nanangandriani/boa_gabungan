@@ -2,8 +2,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   Left = 0
   Top = 0
   Caption = 'Daftar  Rencana Pelunasan Hutang'
-  ClientHeight = 536
-  ClientWidth = 879
+  ClientHeight = 527
+  ClientWidth = 873
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 879
+    Width = 873
     Height = 121
     Align = alTop
     Color = 15987699
@@ -89,7 +89,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       Left = 249
       Top = 19
       Width = 293
-      Height = 24
+      Height = 21
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -107,7 +107,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       Left = 160
       Top = 19
       Width = 83
-      Height = 24
+      Height = 21
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -237,14 +237,11 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   object RzPanel2: TRzPanel
     Left = 0
     Top = 121
-    Width = 879
-    Height = 415
+    Width = 873
+    Height = 406
     Align = alClient
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 97
-    ExplicitWidth = 873
-    ExplicitHeight = 336
     object PGC1: TRzPageControl
       Left = 2
       Top = 2
@@ -256,12 +253,15 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       TabIndex = 0
       TabOrder = 0
       ExplicitWidth = 869
-      ExplicitHeight = 332
+      ExplicitHeight = 402
       FixedDimension = 21
       object TabSheet1: TRzTabSheet
         Color = 15987699
         Caption = 'Data Rencana'
-        ExplicitHeight = 316
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 865
+        ExplicitHeight = 377
         object DBGridEh1: TDBGridEh
           Left = 0
           Top = 0
@@ -417,7 +417,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
           Align = alBottom
           Color = 15987699
           TabOrder = 1
-          ExplicitTop = 272
+          ExplicitTop = 333
+          ExplicitWidth = 865
           object btn_proses: TRzBitBtn
             Left = 744
             Top = 2
@@ -479,6 +480,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 738
           end
         end
       end
@@ -486,8 +488,10 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         Color = 15987699
         TabVisible = False
         Caption = 'Data Rencana'
-        ExplicitWidth = 865
-        ExplicitHeight = 307
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridEh2: TDBGridEh
           Left = 0
           Top = 0
@@ -650,8 +654,6 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
           Align = alBottom
           Color = 15987699
           TabOrder = 1
-          ExplicitTop = 263
-          ExplicitWidth = 865
           object btn_proses2: TRzBitBtn
             Left = 744
             Top = 2
@@ -713,7 +715,6 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 738
           end
         end
       end
@@ -721,7 +722,10 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         Color = 15987699
         TabVisible = False
         Caption = 'TabSheet3'
-        ExplicitHeight = 316
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGridEh3: TDBGridEh
           Left = 0
           Top = 0
@@ -1019,6 +1023,11 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         end
         object source_id: TMTStringDataFieldEh
           FieldName = 'source_id'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object rek_no: TMTStringDataFieldEh
+          FieldName = 'rek_no'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end

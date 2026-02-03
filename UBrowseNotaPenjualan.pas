@@ -26,6 +26,7 @@ type
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure edPelangganButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -73,6 +74,12 @@ begin
     end;
   end;
   Close;
+end;
+
+procedure TFBrowseNotaPenjualan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Qselling.Close;
 end;
 
 procedure TFBrowseNotaPenjualan.FormShow(Sender: TObject);

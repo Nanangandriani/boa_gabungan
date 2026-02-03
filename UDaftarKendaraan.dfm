@@ -77,6 +77,15 @@ object FDaftarKendaraan: TFDaftarKendaraan
         Title.Alignment = taCenter
         Title.Caption = 'Kapasitas'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'code'
+        Footers = <>
+        Visible = False
+        Width = 116
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -99,13 +108,13 @@ object FDaftarKendaraan: TFDaftarKendaraan
     Top = 272
   end
   object MemMasterData: TMemTableEh
-    Active = True
     Params = <>
     SortOrder = 'sort_number ASC'
     Left = 488
     Top = 256
     object MemMasterDatacode: TStringField
       FieldName = 'code'
+      Size = 200
     end
     object MemMasterDataplate_number: TStringField
       FieldName = 'plate_number'
@@ -126,7 +135,7 @@ object FDaftarKendaraan: TFDaftarKendaraan
     end
     object MemMasterDatasort_number: TStringField
       FieldName = 'sort_number'
-      Size = 100
+      Size = 200
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -164,8 +173,8 @@ object FDaftarKendaraan: TFDaftarKendaraan
         object sort_number: TMTStringDataFieldEh
           FieldName = 'sort_number'
           StringDataType = fdtStringEh
-          DisplayWidth = 100
-          Size = 100
+          DisplayWidth = 200
+          Size = 200
         end
       end
       object RecordsList: TRecordsListEh

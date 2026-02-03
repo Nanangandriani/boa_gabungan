@@ -57,6 +57,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Height = 250
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <

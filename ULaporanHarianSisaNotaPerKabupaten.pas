@@ -102,6 +102,7 @@ type
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
     frxPDFExport1: TfrxPDFExport;
+    cbTP: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -114,11 +115,12 @@ type
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure cbTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    strKaresidenanID: String;
+    strKaresidenanID,strKabupatenID,strTPID: String;
   end;
 
   function FLaporanHarianSisaNotaPerKabupaten: TFLaporanHarianSisaNotaPerKabupaten;
@@ -146,15 +148,22 @@ end;
 procedure TFLaporanHarianSisaNotaPerKabupaten.cbKabupatenPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
     FMasterData.Caption:='Master Data Kabupaten';
     FMasterData.vcall:='laporanhariansisanotaperkabkab';
-    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
-    FMasterData.ShowModal;
+    if (cbKaresidenan.EditValue<>'') AND (cbTP.EditValue='') then
+    begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+      FMasterData.ShowModal;
+    end else if (cbKaresidenan.EditValue='') AND (cbTP.EditValue<>'') then begin
+      FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(strTPID)+'');
+      FMasterData.ShowModal;
+    end;
   end;
+
 end;
 
 procedure TFLaporanHarianSisaNotaPerKabupaten.cbKaresidenanChange(
@@ -172,11 +181,20 @@ begin
   FMasterData.ShowModal
 end;
 
+procedure TFLaporanHarianSisaNotaPerKabupaten.cbTPPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='laporanhariansisanotaperkabtp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFLaporanHarianSisaNotaPerKabupaten.dxBarLargeButton5Click(
   Sender: TObject);
 var strReportName: String;
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else if cbKabupaten.EditValue='' then
@@ -189,7 +207,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+
-                QuotedStr(cbKaresidenan.EditValue)+','+QuotedStr(cbKabupaten.EditValue)+')';
+                QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+QuotedStr(strTPID)+')';
       Open;
     end;
     if Qreport.RecordCount>0 then
@@ -207,7 +225,7 @@ end;
 procedure TFLaporanHarianSisaNotaPerKabupaten.dxBarLargeButton6Click(
   Sender: TObject);
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else if cbKabupaten.EditValue='' then
@@ -220,7 +238,7 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+
-                QuotedStr(cbKaresidenan.EditValue)+','+QuotedStr(cbKabupaten.EditValue)+')';
+                QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+QuotedStr(strTPID)+')';
       Open;
     end;
   end;
@@ -231,7 +249,10 @@ procedure TFLaporanHarianSisaNotaPerKabupaten.dxBarLargeButton7Click(
 begin
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
+  cbTP.EditValue :='';
   strKaresidenanID:='';
+  strKabupatenID:='';
+  strTPID:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
 end;
@@ -250,7 +271,10 @@ procedure TFLaporanHarianSisaNotaPerKabupaten.FormShow(Sender: TObject);
 begin
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
+  cbTP.EditValue :='';
   strKaresidenanID:='';
+  strKabupatenID:='';
+  strTPID:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
   FillSBUBarCombo(cbSBU);
@@ -271,7 +295,7 @@ begin
   if CompareText(VarName, 'SBU') = 0 then
   Value := 'PT. '+FHomeLogin.vKodePRSH;
   if CompareText(VarName, 'TP') = 0 then
-  Value := cbKaresidenan.EditValue;
+  Value := cbTP.EditValue;
   if CompareText(VarName, 'KABUPATEN') = 0 then
   Value := cbKabupaten.EditValue;
   if CompareText(VarName, 'PERIODE') = 0 then

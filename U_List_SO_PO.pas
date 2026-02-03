@@ -86,6 +86,7 @@ begin
     Break; // ambil satu saja
   end;
   Close;
+  FlistItemSo.BCariClick(Sender);
 
   {if DBGrid_SO.SelectedRows.Count = 0 then Exit;
 

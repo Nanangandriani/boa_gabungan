@@ -24,7 +24,9 @@ object FSearch_Supplier: TFSearch_Supplier
     Width = 482
     Height = 283
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsSupplier
+    DrawMemoText = True
     DynProps = <>
     SearchPanel.Enabled = True
     TabOrder = 0
@@ -63,8 +65,8 @@ object FSearch_Supplier: TFSearch_Supplier
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 282
-    ExplicitWidth = 478
+    ExplicitTop = 274
+    ExplicitWidth = 476
     object BBatal: TRzBitBtn
       Left = 406
       Top = 1
@@ -124,7 +126,7 @@ object FSearch_Supplier: TFSearch_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 402
+      ExplicitLeft = 400
     end
     object BSimpan: TRzBitBtn
       Left = 331
@@ -185,16 +187,25 @@ object FSearch_Supplier: TFSearch_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 327
+      ExplicitLeft = 325
     end
   end
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.*,b.header_name from t_supplier  a left JOIN t_ak_heade' +
-        'r b on a.header_code_um=b.header_code where a.deleted_at is null' +
-        ' order by supplier_code asc')
+        '(SELECT a.*,b.header_name from t_supplier  a left JOIN t_ak_head' +
+        'er b on a.header_code_um=b.header_code where a.deleted_at is nul' +
+        'l order by supplier_code asc)'
+      
+        'UNION ALL (SELECT company_code supplier_code,company_name suppli' +
+        'er_name,'#39#39' address,'#39#39' telp,'#39#39' supplier1_name,'#39#39' npwp,'#39#39'contact_p' +
+        'erson,'#39#39' pph,null id,null created_at,created_by,null updated_at,' +
+        'null updated_by,null deleted_at,null deleted_by,'#39#39' supplier_code' +
+        '2,'#39#39' header_code,'#39#39' account_code,'#39#39' header_code_um,'#39#39' account_co' +
+        'de_um,1 status_id,'#39#39' up_npwp,company_code supplier_initial,compa' +
+        'ny_code sbu_code,'#39#39' header_code2,'#39#39' account_code2,null tempo,nul' +
+        'l,null header_name from t_company)')
     Left = 232
     Top = 72
   end

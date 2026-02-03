@@ -368,7 +368,8 @@ procedure TFDataKasBon.edNamaKepadaButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Pelaku Biaya';
   FMasterData.vcall:='kasbon_pelaku_biaya';
-  FMasterData.update_grid('code','name','nik_employee','"t_cost_actors"','WHERE	deleted_at is null ORDER BY name desc');
+  FMasterData.update_grid('code','name','name_tp','(SELECT a.*,b.name as name_tp  from "public"."t_cost_actors" a '+
+                          ' LEFT JOIN t_region_TP b on a.karesidenan_code=b.code)aa','WHERE	deleted_at is null ORDER BY name desc');
   FMasterData.ShowModal;
 end;
 

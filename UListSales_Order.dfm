@@ -54,6 +54,7 @@ object FSalesOrder: TFSalesOrder
     SearchPanel.Enabled = True
     SearchPanel.FilterOnTyping = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     OnAdvDrawDataCell = DBGridOrderAdvDrawDataCell
     OnDrawColumnCell = DBGridOrderDrawColumnCell
     Columns = <
@@ -64,7 +65,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'notrans'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'No Transaksi'
         Width = 200
       end
@@ -75,8 +75,16 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'order_date'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'Tanggal Order'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'sent_date'
+        Footers = <>
+        Title.Caption = 'Tanggal Kirim'
         Width = 100
       end
       item
@@ -86,7 +94,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'name_source'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'Sumber'
         Width = 150
       end
@@ -97,7 +104,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'name_cust'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'Pelanggan'
         Width = 200
       end
@@ -108,7 +114,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'name_sales'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'Nama Sales'
         Width = 200
       end
@@ -119,7 +124,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'no_reference'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'No Reference'
         Width = 200
       end
@@ -130,7 +134,6 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'payment_term'
         Footers = <>
         ReadOnly = True
-        Title.Alignment = taCenter
         Title.Caption = 'Jatuh Tempo (Hari)'
         Width = 150
       end
@@ -146,9 +149,26 @@ object FSalesOrder: TFSalesOrder
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'vehicle_group_sort_number'
+        Footers = <>
+        Title.Caption = 'Kendaraan|Kelompok Kendaraan'
+        Width = 144
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'capacity'
+        Footers = <>
+        Title.Caption = 'Kendaraan|Kapasitas'
+        Width = 65
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'cancel_reason'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Alasan Pembatalan'
         Width = 500
       end
@@ -159,7 +179,6 @@ object FSalesOrder: TFSalesOrder
         EditButtons = <>
         FieldName = 'deleted_at'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Tanggal Pembatalan'
         Width = 119
       end>
@@ -235,7 +254,7 @@ object FSalesOrder: TFSalesOrder
   end
   object ActMenu: TActionManager
     Left = 464
-    Top = 144
+    Top = 192
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -707,9 +726,9 @@ object FSalesOrder: TFSalesOrder
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                    '
+      Caption = 'Karesidenan   '
       Category = 0
-      Hint = 'TP                    '
+      Hint = 'Karesidenan   '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -781,13 +800,13 @@ object FSalesOrder: TFSalesOrder
         'SELECT * FROM get_sales_order(1) where EXTRACT(YEAR FROM order_d' +
         'ate)=2025 AND EXTRACT(MONTH FROM order_date)=9 '
       ' order by created_at Desc')
-    Left = 588
-    Top = 120
+    Left = 204
+    Top = 192
   end
   object DsSalesOrder: TDataSource
     DataSet = QSalesOrder
-    Left = 513
-    Top = 136
+    Left = 521
+    Top = 208
   end
   object Qdetail: TUniQuery
     Connection = dm.Koneksi

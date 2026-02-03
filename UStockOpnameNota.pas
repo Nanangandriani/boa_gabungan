@@ -59,6 +59,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    strKaresidenanID: String;
     procedure SaveStockOpname;
     procedure RefreshSBU;
   end;
@@ -171,14 +172,14 @@ begin
   end else
   begin
     if edKaresidenan.Text<>'' then
-    strKaresidenan:=QuotedStr(edKaresidenan.Text) else strKaresidenan:='NULL';
+    strKaresidenan:=QuotedStr(strKaresidenanID) else strKaresidenan:='NULL';
 
     with QReport do
     begin
       close;
       sql.Clear;
       sql.Text:='SELECT a.*,b.* FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+
-                QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+strKaresidenan+',NULL,FALSE,TRUE) a '+
+                QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE,'+strKaresidenan+') a '+
                 'LEFT JOIN  vstock_opname_nota_sum b on COALESCE(b.karesidenan,'''') = COALESCE(a.karesidenan,'''') '+
                 'and date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date));
       open
@@ -204,13 +205,13 @@ begin
   end else
   begin
     if edKaresidenan.Text<>'' then
-    strKaresidenan:=QuotedStr(edKaresidenan.Text) else strKaresidenan:='NULL';
+    strKaresidenan:=QuotedStr(strKaresidenanID) else strKaresidenan:='NULL';
 
     with QReport do
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+strKaresidenan+') '+
+      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,'+strKaresidenan+') '+
                 'ORDER BY karesidenan,kabupaten,kecamatan,customer_name ASC';
       open
     end;
@@ -259,13 +260,13 @@ begin
   end else
   begin
     if edKaresidenan.Text<>'' then
-    strKaresidenan:=QuotedStr(edKaresidenan.Text) else strKaresidenan:='NULL';
+    strKaresidenan:=QuotedStr(strKaresidenanID) else strKaresidenan:='NULL';
 
     with dm.Qtemp do
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+','+strKaresidenan+')';
+      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+',NULL,'+strKaresidenan+')';
       open;
     end;
     if  Dm.Qtemp.RecordCount<>0 then
@@ -347,8 +348,8 @@ procedure TFStockOpnameNota.edKaresidenanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='stockopnamenota';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
-  FMasterData.ShowModal
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
 end;
 
 procedure TFStockOpnameNota.FormCreate(Sender: TObject);
@@ -363,6 +364,7 @@ end;
 
 procedure TFStockOpnameNota.FormShow(Sender: TObject);
 begin
+  strKaresidenanID:='';
   edKaresidenan.Text:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
@@ -409,6 +411,7 @@ end;
 
 procedure TFStockOpnameNota.RzBitBtn1Click(Sender: TObject);
 begin
+  strKaresidenanID:='';
   edKaresidenan.Text:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;

@@ -316,7 +316,7 @@ procedure TFExportFaktur.ExportTaxInvoiceXML1;
 var
   XMLDoc: IXMLDocument;
   RootNode, InvoiceNode, GoodsNode, GoodServiceNode, GoodNode: IXMLNode;
-  TempFileName,SQLText: string;
+  TempFileName,SQLText,NPWPPembeli: string;
   SaveDialog: TSaveDialog;
   j: Integer;
   SelectedTransNo: TStringList;
@@ -361,7 +361,7 @@ begin
                  'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
                  'left join t_selling_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
                  'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''002'' '+
-                 'where a.trans_no in ('+SQLText+')  ';
+                 'where a.trans_no in ('+SQLText+') AND a.deleted_at IS NULL ORDER BY a.trans_date ASC, a.trans_no ASC ';
       Open;
     end;
 
@@ -451,9 +451,14 @@ begin
             GoodsNode.AddChild('SellerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_penjual').Value;
 
           if Length(dm.Qtemp.FieldByName('npwp_nik_pembeli').Value) = 0 then
+          begin
             GoodsNode.AddChild('BuyerTin') // Biarkan kosong untuk menghasilkan <BuyerTin />
-          else
-            GoodsNode.AddChild('BuyerTin').Text := dm.Qtemp.FieldByName('npwp_nik_pembeli').Value;
+          end else begin
+            NPWPPembeli:=dm.Qtemp.FieldByName('npwp_nik_pembeli').Value;
+            NPWPPembeli := StringReplace(NPWPPembeli, '.', '', [rfReplaceAll]);
+            NPWPPembeli := StringReplace(NPWPPembeli, '-', '', [rfReplaceAll]);
+            GoodsNode.AddChild('BuyerTin').Text :=  NPWPPembeli;
+          end;
 
           if Length(dm.Qtemp.FieldByName('jnis_id_pembeli').Value) = 0 then
             GoodsNode.AddChild('BuyerDocument') // Biarkan kosong untuk menghasilkan <BuyerDocument />
@@ -526,19 +531,19 @@ begin
             GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
             GoodNode.AddChild('Unit').Text := dm.Qtemp1.FieldByName('kd_satuan_pajak').AsString;
 //            GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
-            GoodNode.AddChild('Price').Text := FormatFloat('0.00', Price);
+            GoodNode.AddChild('Price').Text := StringReplace(FormatFloat('0.00', Price), ',', '.', [rfReplaceAll]);
             //FormatFloat('0.00', FMainMenu.qexec2.FieldByName('harga_satuan').Value);
             GoodNode.AddChild('Qty').Text := dm.Qtemp1.FieldByName('jml_brg').Value;
-            GoodNode.AddChild('TotalDiscount').Text := FormatFloat('0.00', TotPot);
+            GoodNode.AddChild('TotalDiscount').Text := StringReplace(FormatFloat('0.00', TotPot), ',', '.', [rfReplaceAll]);
 //            GoodNode.AddChild('TaxBase').Text := stringreplace(dm.Qtemp1.FieldByName('dpp_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
-            GoodNode.AddChild('TaxBase').Text := FormatFloat('0.00', TaxBase);
+            GoodNode.AddChild('TaxBase').Text := StringReplace(FormatFloat('0.00', TaxBase), ',', '.', [rfReplaceAll]);
             //GoodNode.AddChild('TaxBase').Text := FMainMenu.qexec2.FieldByName('dpp').Value;
 //            GoodNode.AddChild('OtherTaxBase').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('dpp_lain_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
-            GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', OtherTaxBase);
+            GoodNode.AddChild('OtherTaxBase').Text := StringReplace(FormatFloat('0.00', OtherTaxBase), ',', '.', [rfReplaceAll]);
             //GoodNode.AddChild('OtherTaxBase').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('dpp_lain').Value);
             GoodNode.AddChild('VATRate').Text := dm.Qtemp1.FieldByName('tarif_ppn').Value;
 //            GoodNode.AddChild('VAT').Text := stringreplace(FloatToStr(RoundTo(dm.Qtemp1.FieldByName('ppn_coretax').Value,-2)), ',', '.',[rfReplaceAll, rfIgnoreCase]);
-            GoodNode.AddChild('VAT').Text := FormatFloat('0.00', Vat);
+            GoodNode.AddChild('VAT').Text := StringReplace(FormatFloat('0.00', Vat), ',', '.', [rfReplaceAll]);
             //GoodNode.AddChild('VAT').Text := FormatFloat('0.00', FMainMenu.qexec2.FieldByName('ppn').Value);
             GoodNode.AddChild('STLGRate').Text := dm.Qtemp1.FieldByName('tarif_PPnBM').Value;
             GoodNode.AddChild('STLG').Text := dm.Qtemp1.FieldByName('PPnBM').Value;
@@ -602,7 +607,7 @@ begin
                 'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
                 'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
                 'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') order by a.trans_date ASC,a.trans_no ASC ';
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND a.deleted_at is NULL AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') order by a.trans_date ASC,a.trans_no ASC ';
       open;
     end;
     cbTandai.Checked:=False;
@@ -617,9 +622,9 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='select trans_no,no_inv_tax,customer_name_pkp,trans_date,coalesce(no_npwp,no_nik)no_npwp from get_selling(NULL) '+
+      sql.Text:='select trans_no,no_inv_tax,customer_name_pkp,trans_date,coalesce(no_npwp,no_nik)no_npwp,ppn_value from get_selling(NULL) '+
                 'WHERE trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' ';
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND deleted_at is NULL order by trans_date ASC, trans_no ASC ';
       Open;
     end;
 

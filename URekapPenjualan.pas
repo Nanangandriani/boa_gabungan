@@ -182,7 +182,7 @@ begin
    begin
        close;
        sql.Clear;
-       SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
+       SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,Upper(a.kecamatan) kecamatan from get_selling(False) a '+
 //                 'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strKabupaten +'Order by a.trans_date,a.trans_no ASC' ;

@@ -2,8 +2,8 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   Left = 0
   Top = 0
   Caption = 'Data PeLaku Biaya'
-  ClientHeight = 317
-  ClientWidth = 564
+  ClientHeight = 308
+  ClientWidth = 558
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Label6: TLabel
     Left = 33
@@ -29,14 +30,12 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 564
-    Height = 285
+    Width = 558
+    Height = 276
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 558
-    ExplicitHeight = 255
     object Label1: TLabel
       Left = 25
       Top = 75
@@ -82,7 +81,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
     object Label9: TLabel
       Left = 25
       Top = 104
-      Width = 43
+      Width = 44
       Height = 15
       Caption = 'No. Telp'
     end
@@ -120,6 +119,21 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       Width = 3
       Height = 15
       Caption = ':'
+    end
+    object Labelsbu2: TLabel
+      Left = 412
+      Top = 15
+      Width = 3
+      Height = 15
+      Caption = ':'
+      Visible = False
+    end
+    object Labelsbu: TLabel
+      Left = 361
+      Top = 15
+      Width = 21
+      Height = 15
+      Caption = 'SBU'
     end
     object edNama: TEdit
       Left = 115
@@ -180,16 +194,30 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       Visible = False
       OnChange = kd_karesidenanChange
     end
+    object Cb_sbu: TRzComboBox
+      Left = 420
+      Top = 13
+      Width = 85
+      Height = 23
+      TabOrder = 7
+      OnSelect = Cb_sbuSelect
+    end
+    object Ed_serial: TEdit
+      Left = 514
+      Top = 13
+      Width = 34
+      Height = 23
+      TabOrder = 8
+      Visible = False
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 285
-    Width = 564
+    Top = 276
+    Width = 558
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 255
-    ExplicitWidth = 558
     object btSimpan: TRzBitBtn
       Left = 413
       Top = 1

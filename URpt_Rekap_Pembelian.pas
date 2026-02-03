@@ -27,7 +27,7 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, dxRibbon, dxBar, cxBarEditItem, cxClasses,
   cxCheckBox, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh,
-  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh;
+  EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, cxDropDownEdit;
 
 type
   TFRptRekap_Pembelian = class(TForm)
@@ -78,6 +78,7 @@ type
     DsRekap_Pembelian: TDataSource;
     BtnClear: TdxBarLargeButton;
     BPrintAcc: TdxBarLargeButton;
+    CbKategori: TcxBarEditItem;
     procedure Ednm_spButtonClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -183,7 +184,7 @@ begin
   subquery:='select * from "V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
             ' and trans_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.EditValue));
   // kode Barang 0 dan ppn false
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
     begin
@@ -202,8 +203,28 @@ begin
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
     Rpt.ShowReport();
   end;
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=subquery+' and purchase_type='+QuotedStr(CbKategori.EditValue);
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_Pembelian2.Fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
   // ppn true
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue=null) then
   begin
   with Qrekap_pemb do
   begin
@@ -222,8 +243,28 @@ begin
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
     Rpt.ShowReport();
   end;
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue<>null) then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and ppn > 0 and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_Pembelian2.Fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
   // supplier > 1
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue=null) then
   begin
   with Qrekap_pemb do
   begin
@@ -243,7 +284,28 @@ begin
     Rpt.ShowReport();
   end;
 
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) then
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue<>null) then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and ppn > 0 and supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_Pembelian.Fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
+
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue=null) then
   begin
   with Qrekap_pemb do
   begin
@@ -262,8 +324,27 @@ begin
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
     Rpt.ShowReport();
   end;
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue<>null) then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_Pembelian.Fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',Dtmulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    Rpt.ShowReport();
+  end;
   // Barang > 0
-  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue= null)  then
   begin
     with Qrekap_pemb do
   begin
@@ -280,9 +361,31 @@ begin
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
     SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
     Rpt.ShowReport();
   end;
-  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) then
+   if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue<> null)  then
+  begin
+    with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:= subquery + ' and  item_name='+QuotedStr(CbBarang.EditValue)+' and supplier_code='+QuotedStr(Edkd_sp.Text) +''+
+    ' and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
+  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue= null) then
   begin
     with Qrekap_pemb do
   begin
@@ -301,7 +404,28 @@ begin
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
     Rpt.ShowReport();
   end;
-  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue<> null) then
+  begin
+    with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:= subquery + ' and ppn > 0 and  item_name='+QuotedStr(CbBarang.EditValue)+' and '+
+    ' supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
+  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
     begin
@@ -320,7 +444,27 @@ begin
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
     Rpt.ShowReport();
   end;
-  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) then
+    if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:= subquery + ' and  item_name='+QuotedStr(CbBarang.EditValue)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
+    Rpt.ShowReport();
+  end;
+  if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
     begin
@@ -337,6 +481,27 @@ begin
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
     SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
     SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    Rpt.ShowReport();
+  end;
+    if (CbBarang.EditValue<> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:= subquery + ' and ppn > 0 and  item_name='+QuotedStr(CbBarang.EditValue)+''+
+      ' and purchase_type='+QuotedStr(CbKategori.Editvalue) ;
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end else
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekap_PembelianPerBarang.fr3');
+    SetMemo(Rpt,'MPeriode','Periode: '+FormatDateTime('dd/MM/yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd/MM/yyyy',DtSelesai.EditValue));
+    SetMemo(Rpt,'msbu',' '+dm.qperusahaan['company_name']);
+    SetMemo(Rpt,'memo1',' REKAP PEMBELIAN '+CbKategori.EditValue);
     Rpt.ShowReport();
   end;
 end;
@@ -397,7 +562,7 @@ begin
   subquery:='select * from "V_RekapPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyy-mm-dd',DtMulai.EditValue))+''+
             ' and trans_date<='+QuotedStr(FormatDateTime('yyy-mm-dd',dtselesai.EditValue));
   // kode Barang 0 dan ppn false
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue= null)  then
   begin
     with Qrekap_pemb do
     begin
@@ -412,8 +577,23 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue<> null)  then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=subquery +' and purchase_type='+QuotedStr(CbKategori.EditValue);
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
   // ppn true
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue= null) then
   begin
   with Qrekap_pemb do
   begin
@@ -428,8 +608,23 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue<> null) then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and ppn > 0 and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
   // supplier > 1
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true)  and (CbKategori.EditValue= null)  then
   begin
   with Qrekap_pemb do
   begin
@@ -445,7 +640,23 @@ begin
     end;
   end;
 
-  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true)  and (CbKategori.EditValue<> null)  then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and ppn > 0 and supplier_code='+QuotedStr(Edkd_sp.Text)+ ' and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
+
+  if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue =null) then
   begin
   with Qrekap_pemb do
   begin
@@ -460,8 +671,24 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
+
+    if (CbBarang.EditValue= NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue <>null) then
+  begin
+  with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=subquery+' and supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue);
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
   // Barang > 0
-  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) then
+  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
   begin
@@ -476,7 +703,22 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
-  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) then
+    if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=false) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:= subquery + ' and  item_name='+QuotedStr(CbBarang.EditValue)+' and supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
+  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
   begin
@@ -491,7 +733,23 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
-  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) then
+    if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text<>'') and (Ckppn.Checked=true) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:= subquery + ' and ppn > 0 and  item_name='+QuotedStr(CbBarang.EditValue)+' and '+
+    ' supplier_code='+QuotedStr(Edkd_sp.Text)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
+    ExecSQL;
+  end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
+  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
     begin
@@ -506,13 +764,43 @@ begin
       ShowMessage('Data Kosong');
     end;
   end;
-  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) then
+    if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=false) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:= subquery + ' and  item_name='+QuotedStr(CbBarang.EditValue)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
+  if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue=null) then
   begin
     with Qrekap_pemb do
     begin
       close;
       sql.Clear;
       sql.Text:= subquery + ' and ppn > 0 and  item_name='+QuotedStr(CbBarang.EditValue) ;
+      ExecSQL;
+    end;
+    Qrekap_pemb.Open;
+    if Qrekap_pemb.RecordCount=0 then
+    begin
+      ShowMessage('Data Kosong');
+    end;
+  end;
+    if (CbBarang.EditValue <> NULL) and (Edkd_sp.Text='') and (Ckppn.Checked=true) and (CbKategori.EditValue<>null) then
+  begin
+    with Qrekap_pemb do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:= subquery + ' and ppn > 0 and  item_name='+QuotedStr(CbBarang.EditValue)+' and purchase_type='+QuotedStr(CbKategori.EditValue) ;
       ExecSQL;
     end;
     Qrekap_pemb.Open;
@@ -557,7 +845,26 @@ realfrpt_rekappemb:=nil;
 end;
 
 procedure TFRptRekap_Pembelian.FormShow(Sender: TObject);
+var
+  comboProps: TcxComboBoxProperties;
 begin
+  if not (CbKategori.Properties is TcxComboBoxProperties) then
+    raise Exception.Create('Properties harus bertipe TcxComboBoxProperties!');
+  comboProps := TcxComboBoxProperties(CbKategori.Properties);
+  comboProps.Items.Clear;
+  with dm.qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select DISTINCT type from t_item_type order by type';
+    Execute;
+  end;
+  dm.Qtemp.First;
+  while not dm.Qtemp.eof do
+  begin
+    comboProps.items.add(dm.Qtemp['type']);
+    dm.Qtemp.Next;
+  end;
   DTdari.Date:=now;
   DTsampai.Date:=now;
   DtMulai.EditValue:=date;

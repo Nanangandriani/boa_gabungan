@@ -21,10 +21,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 896
     Height = 441
     Hint = ''
-    ActivePage = TabPenjualan
+    ActivePage = TabPembelian
     Align = alClient
     HotTrackStyle = htsTabBar
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 890
     ExplicitHeight = 432
@@ -43,6 +43,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnAdvDrawDataCell = DBGridEh1AdvDrawDataCell
         Columns = <
           item
             CellButtons = <>
@@ -482,6 +483,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
+      ExplicitWidth = 886
+      ExplicitHeight = 407
       object DBGridEh2: TDBGridEh
         Left = 0
         Top = 106
@@ -494,6 +497,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnAdvDrawDataCell = DBGridEh2AdvDrawDataCell
         Columns = <
           item
             CellButtons = <>
@@ -631,6 +635,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 886
         object Label3: TLabel
           Left = 27
           Top = 30
@@ -705,6 +710,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 4
+          ExplicitWidth = 884
           object BTampil_Penj: TRzBitBtn
             Left = 518
             Top = 1
@@ -766,6 +772,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 512
           end
           object Bselect_Penj: TRzBitBtn
             Left = 612
@@ -828,6 +835,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 606
           end
           object BApp_Penj: TRzBitBtn
             Left = 710
@@ -890,6 +898,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 704
           end
           object BPrint_Penj: TRzBitBtn
             Left = 795
@@ -952,6 +961,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 789
           end
         end
       end
@@ -1281,6 +1291,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
         TabOrder = 1
+        OnAdvDrawDataCell = DBGridEh5AdvDrawDataCell
         Columns = <
           item
             CellButtons = <>
@@ -1395,8 +1406,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabMemorial: TRzTabSheet
       Caption = 'Memorial'
-      ExplicitWidth = 886
-      ExplicitHeight = 407
       object DBGridEh7: TDBGridEh
         Left = 0
         Top = 89
@@ -1410,6 +1419,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
         TabOrder = 0
+        OnAdvDrawDataCell = DBGridEh7AdvDrawDataCell
         Columns = <
           item
             CellButtons = <>
@@ -1530,7 +1540,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 886
         object Label5: TLabel
           Left = 40
           Top = 24
@@ -1568,7 +1577,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
-          ExplicitWidth = 884
           object btTampilMemorial: TRzBitBtn
             Left = 518
             Top = 1
@@ -1630,7 +1638,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 512
           end
           object btSelectMemo: TRzBitBtn
             Left = 612
@@ -1693,7 +1700,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 606
           end
           object btApprovMemo: TRzBitBtn
             Left = 710
@@ -1756,7 +1762,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 704
           end
           object btCetakMemorial: TRzBitBtn
             Left = 795
@@ -1819,7 +1824,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 789
           end
         end
       end
@@ -1829,6 +1833,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Active = True
     FetchAllOnOpen = True
     Params = <>
+    AfterPost = MemPembelianAfterPost
     Left = 40
     Top = 264
     object MemTableData: TMemTableDataEh
@@ -1939,6 +1944,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           DisplayLabel = 'approval_status'
           DisplayWidth = 5
         end
+        object stat_balance: TMTNumericDataFieldEh
+          FieldName = 'stat_balance'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
         Data = (
@@ -1956,7 +1969,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             '04'
             '11'
             nil
-            False)
+            False
+            nil)
           (
             3500000.000000000000000000
             3885000.000000000000000000
@@ -1971,7 +1985,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             '28'
             '10'
             nil
-            False))
+            False
+            nil))
       end
     end
   end
@@ -1989,6 +2004,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Active = True
     FetchAllOnOpen = True
     Params = <>
+    AfterPost = MemPenjualanAfterPost
     Left = 184
     Top = 328
     object MemTableData: TMemTableDataEh
@@ -2099,6 +2115,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           DisplayLabel = 'approval_status'
           DisplayWidth = 5
         end
+        object stat_balance: TMTNumericDataFieldEh
+          FieldName = 'stat_balance'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
         Data = (
@@ -2116,7 +2140,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             '04'
             '11'
             nil
-            False)
+            False
+            nil)
           (
             3500000.000000000000000000
             3885000.000000000000000000
@@ -2131,7 +2156,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             '28'
             '10'
             nil
-            False))
+            False
+            nil))
       end
     end
   end
@@ -2146,7 +2172,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
       
         'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  ' +
-        'from t_general_ledger) A left JOIN t_ak_account b '
+        'from t_general_ledger where amount<>0 ) A left JOIN t_ak_account' +
+        ' b '
       
         'on LEFT(a.account_code,7)=b.code where a.deleted_at is null and ' +
         'a.account_code is not null '
@@ -2182,8 +2209,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
       
         'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  ' +
-        'from t_general_ledger) A INNER JOIN t_ak_account b on LEFT(a.acc' +
-        'ount_code,7)=b.code '
+        'from t_general_ledger where amount<>0 ) A INNER JOIN t_ak_accoun' +
+        't b on LEFT(a.account_code,7)=b.code '
       'where a.deleted_at is null and a.account_code is not null '
       
         'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
@@ -2210,6 +2237,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Active = True
     FetchAllOnOpen = True
     Params = <>
+    AfterPost = MemKasAfterPost
     Left = 360
     Top = 328
     object MemTableData: TMemTableDataEh
@@ -2249,12 +2277,21 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           DateTimeDataType = fdtDateEh
           DisplayWidth = 20
         end
+        object stat_balance: TMTNumericDataFieldEh
+          FieldName = 'stat_balance'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
         Data = (
           (
             600000c
             False
+            nil
             nil
             nil
             nil))
@@ -2281,7 +2318,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       
         'case when status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,case when st' +
         'atus_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  from t_gener' +
-        'al_ledger) A'
+        'al_ledger where amount<>0 ) A'
       
         ' INNER JOIN t_ak_account b on LEFT(a.account_code,7)=b.code wher' +
         'e a.deleted_at is null and  a.account_code is not null '
@@ -2305,7 +2342,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Active = True
     FetchAllOnOpen = True
     Params = <>
-    Left = 544
+    AfterPost = MemMemorialAfterPost
+    Left = 536
     Top = 328
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -2344,12 +2382,21 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           DateTimeDataType = fdtDateEh
           DisplayWidth = 20
         end
+        object stat_balance: TMTNumericDataFieldEh
+          FieldName = 'stat_balance'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
       end
       object RecordsList: TRecordsListEh
         Data = (
           (
             nil
             False
+            nil
             nil
             nil
             nil))

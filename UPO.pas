@@ -27,7 +27,7 @@ uses
   DBAxisGridsEh, DBGridEh, dxBar, cxClasses, DataDriverEh, frxClass, frxDBSet,
   MemDS, DBAccess, Uni, MemTableEh, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.ExtCtrls, RzPanel,
-  Vcl.ComCtrls, Vcl.StdCtrls, RzButton;
+  Vcl.ComCtrls, Vcl.StdCtrls, RzButton, RzCmboBx;
 
 type
   TFPO = class(TForm)
@@ -79,6 +79,9 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarManager1Bar3: TdxBar;
     dxBarLargeButton2: TdxBarLargeButton;
+    Label3: TLabel;
+    RzComboBox1: TRzComboBox;
+    dxBarLargeButton3: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
@@ -92,6 +95,7 @@ type
     procedure CariClick(Sender: TObject);
     procedure DBGridPOGetCellParams(Sender: TObject; Column: TColumnEh;
       AFont: TFont; var Background: TColor; State: TGridDrawState);
+    procedure dxBarLargeButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,7 +116,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PO, UDataModule,UMainMenu;
+uses UNew_PO, UDataModule,UMainMenu, UCetak_POkoletif;
 // implementasi function
 function FPO: TFPO;
 begin
@@ -637,6 +641,11 @@ end;
 
 procedure TFPO.ActPrintExecute(Sender: TObject);
 begin
+      if not Mempo.FieldByName('deleted_at').IsNull  then
+      begin
+        ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+        exit;
+      end;
   PrintPodmlt;
 end;
 
@@ -660,6 +669,11 @@ end;
 procedure TFPO.ActUpdateExecute(Sender: TObject);
 begin
     try
+      if not Mempo.FieldByName('deleted_at').IsNull  then
+      begin
+        ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+        exit;
+      end;
       with FNew_PO do
       begin
         Show;
@@ -678,6 +692,11 @@ begin
         begin
           Statustr2:=0;
         end;
+        if ref_code='SO' then
+        begin
+         CbKategori.Enabled:=true;
+        end;
+
         with Mempo do
         begin
           FNew_PO.EdNopo.Text:=Mempo.FieldByName('po_no').AsString;
@@ -737,6 +756,7 @@ begin
                 FNew_PO.MemItempo['pemb_dpp']:=Qdetailpo.FieldByName('pemb_dpp').Value;
                 FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
                 FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+                FNew_PO.MemItempo['kd_akunpph']:=Qdetailpo.FieldByName('account_pph_code').AsString;
                 //FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').AsString;
                 FNew_PO.MemItempo['grandtotal']:=Qdetailpo.FieldByName('Grandtotal').Value;
                 FNew_PO.MemItempo['pemb_ppn_us']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
@@ -779,6 +799,7 @@ begin
                 FNew_PO.MemItempo['ppn_rp']:=Qdetailpo.FieldByName('ppn_rp').AsString;
                 FNew_PO.MemItempo['pph']:=Qdetailpo.FieldByName('pph').AsString;
                 FNew_PO.MemItempo['pph_rp']:=Qdetailpo.FieldByName('pph_rp').AsString;
+                FNew_PO.MemItempo['kd_akunpph']:=Qdetailpo.FieldByName('account_pph_code').AsString;
                 //FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').AsString;
                 FNew_PO.MemItempo['grandtotalrp']:=Qdetailpo.FieldByName('Grandtotal').Value;
                 FNew_PO.MemItempo['pemb_ppn']:=Qdetailpo.FieldByName('pemb_ppn').AsString;
@@ -865,11 +886,14 @@ begin
                'from t_po A '+
                'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
                'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
-               'WHERE a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' Order by a.po_date,A.po_no ASC ';
+               'WHERE a.trans_category='+QuotedStr(RzComboBox1.Text)+' '+
+               'and a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+               'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+               'Order by a.po_date,A.po_no ASC ';
      open;
    end;
-   Qpo.Close;
-   Qpo.Open;
+   //Qpo.Close;
+   //Qpo.Open;
    mempo.Close;
    mempo.Open;
    DBGridPO.FinishLoadingStatus();
@@ -912,6 +936,12 @@ begin
 //    end;
 end;
 
+procedure TFPO.dxBarLargeButton3Click(Sender: TObject);
+begin
+  FCetak_POKolektif.show;
+  FCetak_POKolektif.jenis_po:=DBGridPO.Fields[15].AsString;
+end;
+
 procedure TFPO.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  action:=caFree;
@@ -950,6 +980,8 @@ begin
       StatusTr:=0;
       load_currency;
       EdJenisAngkut.Text:='SUPPLIER';
+      cb_gudang.ItemIndex:=0;
+      cb_gudangSelect(Sender);
     //  load_ref_po;
     end;
 end;

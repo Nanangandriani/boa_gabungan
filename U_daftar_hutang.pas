@@ -266,12 +266,12 @@ begin
 
            'UNION ALL ' + // saldo awal rincian Faktur
 
-           ' SELECT  date tanggal,supplier_code kodesup,supplier_name nasup,'''' no_inv,faktur_no nofakturpajak,'''' sj_no,tglfaktur,tgltempo,''IDR'' valas,1 valas_value,0 jum_dolar,0 ppn_rp,debt_amount as jumlah '+
+           ' SELECT  date tanggal,supplier_code kodesup,supplier_name nasup,faktur_no no_inv,faktur_no nofakturpajak,faktur_no sj_no,tglfaktur,tgltempo,''IDR'' valas,1 valas_value,0 jum_dolar,0 ppn_rp,debt_amount as jumlah '+
            ',0 npph,'''' akun_pph,''1'' plan_stat,''1'' status,0 urutan,''1'' approval_status,0 bayar,''0'' rencanake,debt_amount-bayar as sisa,1 as source_id '+
            ' FROM '+
            ' (select a.date ,a.supplier_code ,b.supplier_name,a.faktur_no,a.date tglfaktur,b.tempo,(a.date+b.tempo)tgltempo,a.debt_amount,0 bayar FROM t_initial_balance_debt_det a '+
            ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
-           ' WHERE date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')A '+
+           ' WHERE (a.date+b.tempo) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')A '+
 
            'ORDER BY tglfaktur,nofakturpajak,urutan ASC)qqq';
 

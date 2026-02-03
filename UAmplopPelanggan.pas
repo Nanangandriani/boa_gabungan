@@ -136,10 +136,27 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select DISTINCT a.code_cust,a.name_cust,b.address,b.contact_person1 from t_selling a left join get_customer() b on b.customer_code=a.code_cust '+
+      {sql.Text:='select DISTINCT a.code_cust,a.name_cust,b.address,b.contact_person1 '+
+                'from get_selling(FALSE) a '+
+                ' LEFT JOIN (SELECT "customer_code", "address",contact_person1 from "public"."t_customer_address" '+
+                ' where "code_details"=''003'') b on a.code_cust=b.customer_code  '+
                 'where a.trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+' and '+
-                'b.code_karesidenan='+QuotedStr(StrKaresidananID)+strKdPelanggan+' '+
-                'AND a.deleted_at is NULL;';
+                'a.code_karesidenan='+QuotedStr(StrKaresidananID)+strKdPelanggan+' '+
+                'AND a.deleted_at is NULL ORDER BY a.trans_date,a.trans_no ASC;';  }
+
+      sql.Text:='SELECT DISTINCT a.code_cust,a.name_cust,a.customer_name_pkp, '+
+                'b.address,b.contact_person1,a.trans_date,a.trans_no '+
+                'FROM ( '+
+                'SELECT * FROM get_selling(FALSE) '+
+                ') a '+
+                'LEFT JOIN ( '+
+                'SELECT "customer_code", "address", "contact_person1" '+
+                'from "public"."t_customer_address" '+
+                'where "code_details"=''003'') b ON a.code_cust = b.customer_code '+
+                'WHERE a.trans_date = '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+' '+
+                'AND a.code_karesidenan = '+QuotedStr(StrKaresidananID)+strKdPelanggan+' '+
+                'AND a.deleted_at IS NULL '+
+                'ORDER BY a.trans_date, a.trans_no ASC;';
       open;
     end;
     if QAmplopPelanggan.RecordCount=0 then

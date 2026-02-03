@@ -123,6 +123,8 @@ begin
      EdKd_supp.Text:=QUM.fieldbyname('supplier_code').AsString;
      Ednm_supp.Text:=QUM.fieldbyname('supplier_name').AsString;
      EdUM.Value:=QUM.fieldbyname('um_value').Value;
+     Eddpp.Value:=QUM.fieldbyname('dpp_value').Value;
+     Edppn.Value:=QUM.fieldbyname('ppn_value').Value;
      Edkd_akun.Text:=QUM.fieldbyname('um_account_code').Asstring;
      Edhari.Text:=QUM.fieldbyname('trans_day').Value;
      Edbln.Text:=QUM.fieldbyname('trans_month').Value;

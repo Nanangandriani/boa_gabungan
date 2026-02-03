@@ -458,7 +458,7 @@ procedure TFRpt_Kartu_Gudang.cxkategori_barangPropertiesButtonClick(
 begin
     FMasterData.Caption:='Master Data Kategori';
     FMasterData.vcall:='kartu_gudang';
-    FMasterData.update_grid('group_id','group_name','0','t_item_group','WHERE	deleted_at IS NULL Order By group_id Asc');
+    FMasterData.update_grid('category_id','category','0','t_item_category','WHERE	deleted_at IS NULL Order By category_id Asc');
     FMasterData.ShowModal;
 end;
 

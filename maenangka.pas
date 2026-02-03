@@ -6,6 +6,8 @@ Uses SysUtils, frxClass,math;
 Function UraikanAngka(S:String):String;
 function CustomRound(Value: Double): Integer;
 procedure SetMemo(aReport: TfrxReport; aMemoName: string; aText: string);
+function DoTriplet(TheNumber: Integer): string;           // cr ds 03-20-2026
+function NumberInWords(TheNumber: Integer): string;       // cr ds 03-20-2026
 
 
 implementation
@@ -237,6 +239,73 @@ begin
        Inc(i);
     end;
     UraikanAngka:=Hasil+'Rupiah';
+end;
+
+// Fucntion Untuk Bahasa Inggris           // cr ds 03-20-2026
+const
+  Digits: array [1 .. 9] of string = (
+    'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
+
+  Teens: array [1 .. 9] of string = (
+    'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
+
+  TenTimes: array [1 .. 9] of string = (
+    'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety');
+
+function DoTriplet(TheNumber: Integer): string;               // cr ds 03-20-2026
+var
+  Digit, Num: Integer;
+begin
+  Result := '';
+  Num := TheNumber mod 100;
+  if (Num > 10) and (Num < 20) then
+  begin
+    Result := Teens[Num - 10];
+    Num := TheNumber div 100;
+  end
+  else
+  begin
+    Num := TheNumber;
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := Digits[Digit];
+    Digit := Num mod 10;
+    Num := Num div 10;
+    if Digit > 0 then Result := TenTimes[Digit] + ' ' + Result;
+    Result := Trim(Result);
+  end;
+  Digit := Num mod 10;
+ // if (Result <> '') and (Digit > 0) then Result := '- ' + Result;
+  if Digit > 0 then Result := Digits[Digit] + ' hundred ' + Result;
+  Result := Trim(Result);
+end;
+
+function NumberInWords(TheNumber: Integer): string;             // cr ds 03-20-2026
+var
+  Num, Triplet, Pass: Integer;
+begin
+  if TheNumber < 0 then Result := 'Minus ' + NumberInWords(-TheNumber)
+  else
+  begin
+    Result := '';
+    Num := TheNumber;
+    if Num > 999999999 then
+        raise Exception.Create('Can''t express more than 999,999,999 in words');
+    for Pass := 1 to 3 do
+    begin
+      Triplet := Num mod 1000;
+      Num := Num div 1000;
+      if Triplet > 0 then
+      begin
+        if (Pass > 1) and (Result <> '') then Result := ' ' + Result;
+        case Pass of
+          2: Result := ' thousand' + Result;
+          3: Result := ' million' + Result;
+        end;
+        Result := Trim(DoTriplet(Triplet) + Result);
+      end;
+    end;
+  end;
 end;
 
 end.

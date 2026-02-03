@@ -10,6 +10,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
@@ -50,6 +51,7 @@ object FListPenagihanPiutang: TFListPenagihanPiutang
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     ReadOnly = True
     SearchPanel.Enabled = True
+    SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <

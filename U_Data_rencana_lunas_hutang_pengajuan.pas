@@ -127,7 +127,7 @@ implementation
 {$R *.dfm}
 
 uses UDataKolektor, UDataModule, USearch_Supplier,
-  UDataPengajuanPengeluaranKasBank, UMainMenu;
+  UDataPengajuanPengeluaranKasBank, UMainMenu, UMy_Function;
 
 //var
   //RealFDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan;
@@ -144,8 +144,9 @@ procedure TFDataRencanaLunasHutangPengajuan.BCariClick(Sender: TObject);
 var query :string;
     URUTAN_KE : Integer;
 begin
-    query:='SELECT a.*,b.supplier_name FROM t_paid_debt_det A '+
-               'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code ';
+    query:=' SELECT a.*,b.supplier_name, c.rek_no FROM t_paid_debt_det A '+
+           ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+           ' LEFT JOIN t_nocek c on a.cek_no=c.cek_no ';
 
     if vcall='Pelunasan_Hutang' then
     begin
@@ -199,6 +200,7 @@ begin
              MemDataRencana['plan_to']:=Dm.Qtemp.FieldByName('plan_to').AsString;
              MemDataRencana['pilih']:=0;
              MemDataRencana['bank']:=Dm.Qtemp.FieldByName('bank').AsString;
+             MemDataRencana['rek_no']:=Dm.Qtemp.FieldByName('rek_no').AsString;
              MemDataRencana['cek_no']:=Dm.Qtemp.FieldByName('cek_no').AsString;
              MemDataRencana['cek_date']:=Dm.Qtemp.FieldByName('cek_date').AsString;
              MemDataRencana.post;
@@ -424,10 +426,12 @@ begin
              FDataPengajuanPengeluaranKasBank.Ed_kepada.Text:=MemDataRencana['supplier_name'];
              FDataPengajuanPengeluaranKasBank.edKodeSumberPengeluaran.Text:=MemDataRencana['source_id'];
              FDataPengajuanPengeluaranKasBank.EdNamaBank.Text:=MemDataRencana['bank'];
+             FDataPengajuanPengeluaranKasBank.edNoRek.Text:=MemDataRencana['rek_no'];
              FDataPengajuanPengeluaranKasBank.Ed_nocek.Text:=MemDataRencana['cek_no'];
              FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
              FDataPengajuanPengeluaranKasBank.edUntukPengeluaran.Text:='PELUNASAN HUTANG';
              FDataPengajuanPengeluaranKasBank.MemKeterangan.Text:='PELUNASAN HUTANG';
+
            end;
       {end
       Except on E :Exception do

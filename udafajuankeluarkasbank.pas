@@ -150,6 +150,24 @@ type
     Qdaf_PengajuanKasBankcheque_no: TStringField;
     QTP_Ajuan: TUniQuery;
     DSTP_Ajuan: TDataSource;
+    QBukti_Ajuan_Keluar_Faktur: TUniQuery;
+    frxDBDBuktiAjuan_Faktur: TfrxDBDataset;
+    QBukti_Ajuan_Keluar_Fakturvoucher_no: TStringField;
+    QBukti_Ajuan_Keluar_Fakturinvoice_no: TStringField;
+    QBukti_Ajuan_Keluar_Faktursj_no: TStringField;
+    QBukti_Ajuan_Keluar_Fakturfaktur_no: TStringField;
+    QBukti_Ajuan_Keluar_Fakturfaktur_date: TDateField;
+    QBukti_Ajuan_Keluar_Fakturtrans_date: TDateField;
+    QBukti_Ajuan_Keluar_Faktursupplier_code: TStringField;
+    QBukti_Ajuan_Keluar_Faktursupplier_name: TStringField;
+    QBukti_Ajuan_Keluar_Fakturtrans_type_code: TStringField;
+    QBukti_Ajuan_Keluar_Fakturtrans_type_name: TStringField;
+    QBukti_Ajuan_Keluar_Fakturbank_number_account: TStringField;
+    QBukti_Ajuan_Keluar_Fakturbank_name_account: TStringField;
+    QBukti_Ajuan_Keluar_Fakturpaid_amount: TFloatField;
+    QBukti_Ajuan_Keluar_Fakturdescription: TMemoField;
+    QBukti_Ajuan_Keluar_Fakturaccount_acc: TStringField;
+    QBukti_Ajuan_Keluar_Fakturid: TLargeintField;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BCariClick(Sender: TObject);
@@ -263,7 +281,6 @@ begin
         MemDetailAkun.Open;
         MemDetailHutang.Close;
         MemDetailHutang.Open;
-        show;
         code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
         Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
         if Ed_id_modul.Text='5' then
@@ -271,6 +288,7 @@ begin
         if Ed_id_modul.Text='6' then
            cbsumberdata.Text:='KAS';
 
+        show;
         edNoTrans.Text:=Qdaf_PengajuanKasBank.fieldbyname('voucher_no').AsString;
         dtTrans.Date:=Qdaf_PengajuanKasBank.fieldbyname('trans_date').asdatetime;
         dtperiode1.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode1').asdatetime;
@@ -630,6 +648,7 @@ begin
         QDetail_Hutang_Ajuan.First;
         while not QDetail_Hutang_Ajuan.Eof do
         begin
+            //showmessage(QDetail_Hutang_Ajuan.FieldByName('description').AsString);
             MemDetailHutang.Insert;
             MemDetailHutang['no_tagihan']:=QDetail_Hutang_Ajuan.fieldbyname('invoice_no').AsString;
             MemDetailHutang['no_faktur']:=QDetail_Hutang_Ajuan.fieldbyname('faktur_no').AsString;
@@ -812,22 +831,95 @@ begin
      //ShowMessage(cLocation);
      if QBukti_Ajuan_Keluar.FieldByName('module_id').AsString='6' then//kas
      begin
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='6.001' then //Hutang
+       begin
+       with QBukti_Ajuan_Keluar_Faktur do
+       begin
+         close;
+         sql.clear;
+         sql.add(' select *  from t_cash_bank_expenditure_submission_payable  a '+
+                 ' where a.voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' ');
+         open;
+       end;
+
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Kas_Hutang'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='6.002' then //Non Hutang
+       begin
          Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Kas'+'.fr3');
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
-         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
-         SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
+       end;
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='6.003' then //Pengisian Kas Kecil
+       begin
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Kas'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
      end;
      //Report.DesignReport();
      //Report.ShowReport();
 
      if QBukti_Ajuan_Keluar.FieldByName('module_id').AsString='5' then//bank
      begin
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='5.001' then //Hutang
+       begin
+       //cari Detail Faktur
+       with QBukti_Ajuan_Keluar_Faktur do
+       begin
+         close;
+         sql.clear;
+         sql.add(' select *  from t_cash_bank_expenditure_submission_payable  a '+
+                 ' where a.voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' ');
+         open;
+       end;
+
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Cheque_Hutang'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='5.002' then //nonhutang
+       begin
          Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Cheque'+'.fr3');
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
-         SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
+       end;
+       if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='5.003' then //Uang Muka
+       begin
+       //cari Detail Faktur
+       with QBukti_Ajuan_Keluar_Faktur do
+       begin
+         close;
+         sql.clear;
+         sql.add(' select *  from t_cash_bank_expenditure_submission_payable  a '+
+                 ' where a.voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' ');
+         open;
+       end;
+
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Cheque_Uang_Muka'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
      end;
      //Report.DesignReport();
      //Report.ShowReport();

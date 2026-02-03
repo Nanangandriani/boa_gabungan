@@ -550,7 +550,7 @@ object FExportFaktur: TFExportFaktur
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 45992.592496794000000000
+    ReportOptions.LastChange = 46031.446499803200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -890,7 +890,7 @@ object FExportFaktur: TFExportFaktur
         end
         object frxDBDCetakDetailCoretaxnofaktur_coretax: TfrxMemoView
           AllowVectorExport = True
-          Left = 462.992125984252000000
+          Left = 462.992125980000000000
           Width = 154.960629920000000000
           Height = 18.897650000000000000
           DataField = 'no_inv_tax'
@@ -1732,29 +1732,6 @@ object FExportFaktur: TFExportFaktur
               'rDet."sub_total">,MasterData2)))]')
           ParentFont = False
         end
-        object SysMemo5: TfrxSysMemoView
-          AllowVectorExport = True
-          Left = 588.118430000000000000
-          Width = 94.488179210000000000
-          Height = 22.677165350000000000
-          DisplayFormat.FormatStr = '#,###,###,###0.00'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[IIf(((SUM(<frxDBDatasetValidasiFakturDet."ppn_value">,MasterDat' +
-              'a2)) - TRUNC(SUM(<frxDBDatasetValidasiFakturDet."ppn_value">,Mas' +
-              'terData2))) >= 0.50, TRUNC(SUM(<frxDBDatasetValidasiFakturDet."p' +
-              'pn_value">,MasterData2))+1, TRUNC(SUM(<frxDBDatasetValidasiFaktu' +
-              'rDet."ppn_value">,MasterData2)))]')
-          ParentFont = False
-        end
         object Line31: TfrxLineView
           AllowVectorExport = True
           Left = 477.598425200000000000
@@ -1771,6 +1748,26 @@ object FExportFaktur: TFExportFaktur
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 586.153846150000000000
+          Width = 99.576014540000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDatasetValidasiFaktur
+          DataSetName = 'frxDBDatasetValidasiFaktur'
+          DisplayFormat.FormatStr = '#,###,###,###0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDatasetValidasiFaktur."ppn_value"]')
+          ParentFont = False
+        end
       end
     end
   end
@@ -1782,7 +1779,8 @@ object FExportFaktur: TFExportFaktur
       'no_inv_tax=no_inv_tax'
       'customer_name_pkp=customer_name_pkp'
       'trans_date=trans_date'
-      'no_npwp=no_npwp')
+      'no_npwp=no_npwp'
+      'ppn_value=ppn_value')
     DataSet = QReport
     BCDToCurrency = False
     DataSetOptions = []
@@ -1794,7 +1792,7 @@ object FExportFaktur: TFExportFaktur
     SQL.Strings = (
       
         'select trans_no,no_inv_tax,customer_name_pkp,trans_date,coalesce' +
-        '(no_npwp,no_nik)no_npwp from get_selling(NULL)')
+        '(no_npwp,no_nik)no_npwp,ppn_value from get_selling(NULL)')
     Left = 832
     Top = 104
   end
@@ -1803,13 +1801,14 @@ object FExportFaktur: TFExportFaktur
     SQL.Strings = (
       
         'select trans_no,code_item,name_item,amount,name_unit,unit_price,' +
-        'sub_total,ppn_percent,ppn_value from t_selling_det '
+        'sub_total,ppn_percent,ppn_value_cortex ppn_value from t_selling_' +
+        'det '
       '')
     MasterSource = DSReport
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 832
-    Top = 184
+    Left = 744
+    Top = 104
     ParamData = <
       item
         DataType = ftMemo

@@ -337,13 +337,13 @@ end;
 procedure TFRekapPenjualanPerPelanggan.cbKabupatenPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
-                           if cbKaresidenan.EditValue='' then
+  if cbKaresidenan.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
     FMasterData.Caption:='Master Data Kabupaten';
     FMasterData.vcall:='rekappenjualanpercustomerkab';
-    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(strKaresidenanID)+'');
     FMasterData.ShowModal;
   end;
 end;
@@ -365,7 +365,7 @@ procedure TFRekapPenjualanPerPelanggan.cbKaresidenanPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='rekappenjualanpercustomerkares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal;
 end;
 
@@ -417,12 +417,12 @@ begin
     MessageDlg('Jenis Usaha wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else
   begin
-    strKaresidenan:=' nama_karesidenan='+QuotedStr(cbKaresidenan.EditValue);
+    strKaresidenan:=' code_tp='+QuotedStr(strKaresidenanID);
     if cbKabupaten.EditValue<>'' then
-      strKabupaten:=' AND nama_kabupaten='+QuotedStr(cbKabupaten.EditValue)
+      strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-      strKecamatan:=' AND nama_kecamatan='+QuotedStr(cbKecamatan.EditValue)
+      strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
     if UpperCase(cbJenisUsaha.Text)<>'SEMUA' then
       strJenisUsaha:=' AND kode_jenis_usaha='+QuotedStr(strKodeJenisUsaha)
@@ -472,13 +472,13 @@ begin
     LastDay := EndOfAMonth(StrToInt(edTahun2.Text),cbBulan2.ItemIndex+1) ;
     strTglAwal:=edTahun1.Text+'-'+IntToStr(cbBulan1.ItemIndex+1)+'-01';
     strTglAkhir:=edTahun2.Text+'-'+IntToStr(cbBulan2.ItemIndex+1)+'-'+(FormatDateTime('dd',LastDay));
-    strKaresidenan:=' nama_karesidenan='+QuotedStr(cbKaresidenan.EditValue);
+    strKaresidenan:=' code_tp='+QuotedStr(strKaresidenanID);
 
     if cbKabupaten.EditValue<>'' then
-      strKabupaten:=' AND nama_kabupaten='+QuotedStr(cbKabupaten.EditValue)
+      strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-      strKecamatan:=' AND nama_kecamatan='+QuotedStr(cbKecamatan.EditValue)
+      strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
     if UpperCase(cbJenisUsaha.Text)<>'SEMUA' then
       strJenisUsaha:=' AND kode_jenis_usaha='+QuotedStr(strKodeJenisUsaha)
@@ -623,12 +623,12 @@ begin
     MessageDlg('Jenis Usaha wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else
   begin
-    strKaresidenan:=' nama_karesidenan='+QuotedStr(cbKaresidenan.EditValue);
+    strKaresidenan:=' code_tp='+QuotedStr(strKaresidenanID);
     if cbKabupaten.EditValue<>'' then
-      strKabupaten:=' AND nama_kabupaten='+QuotedStr(cbKabupaten.EditValue)
+      strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-      strKecamatan:=' AND nama_kecamatan='+QuotedStr(cbKecamatan.EditValue)
+      strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
     if UpperCase(cbJenisUsaha.Text)<>'SEMUA' then
       strJenisUsaha:=' AND kode_jenis_usaha='+QuotedStr(strKodeJenisUsaha)
@@ -727,10 +727,10 @@ begin
     strWilayah:='TP '+cbKaresidenan.EditValue+' - KABUPATEN '+cbKabupaten.EditValue+' - KECAMATAN '+cbKecamatan.EditValue
   end else if (cbKecamatan.EditValue='') and (cbKabupaten.EditValue<>'') then
   begin
-    strWilayah:='KARESIDENAN '+cbKaresidenan.EditValue+' - KABUPATEN '+cbKabupaten.EditValue
+    strWilayah:='TP '+cbKaresidenan.EditValue+' - KABUPATEN '+cbKabupaten.EditValue
   end else if cbKabupaten.EditValue='' then
   begin
-    strWilayah:='KARESIDENAN '+cbKaresidenan.EditValue;
+    strWilayah:='TP '+cbKaresidenan.EditValue;
   end;
 
   if CompareText(VarName, 'lap') = 0 then

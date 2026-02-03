@@ -12,6 +12,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object RzPageControl1: TRzPageControl
@@ -647,6 +648,16 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           ButtonNumGlyphs = 1
           OnButtonClick = edLokasiBongkarButtonClick
         end
+        object chktambahpool: TRzCheckBox
+          Left = 655
+          Top = 132
+          Width = 117
+          Height = 19
+          Caption = 'Tambah Titik Pool'
+          State = cbUnchecked
+          TabOrder = 9
+          OnClick = chktambahpoolClick
+        end
       end
       object Panel2: TPanel
         Left = 0
@@ -857,8 +868,11 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
+        HorzScrollBar.ExtraPanel.NavigatorButtons = [nbDeleteEh, nbCancelEh, nbRefreshEh]
+        HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
         TabOrder = 2
+        OnNavigatorPanelButtonClick = DBGrid_SumberOrderNavigatorPanelButtonClick
         Columns = <
           item
             CellButtons = <>
@@ -982,21 +996,21 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = ':'
         end
         object Label7: TLabel
-          Left = 28
+          Left = 26
           Top = 27
           Width = 27
           Height = 15
           Caption = 'Kode'
         end
         object Label10: TLabel
-          Left = 28
+          Left = 26
           Top = 57
           Width = 41
           Height = 15
           Caption = 'Tanggal'
         end
         object Label11: TLabel
-          Left = 28
+          Left = 26
           Top = 86
           Width = 45
           Height = 15
@@ -1024,21 +1038,21 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = ':'
         end
         object Label45: TLabel
-          Left = 28
+          Left = 26
           Top = 174
-          Width = 57
+          Width = 90
           Height = 15
-          Caption = 'Kabupaten'
+          Caption = 'Kab. Lokasi Akhir'
         end
         object Label46: TLabel
-          Left = 28
+          Left = 26
           Top = 146
           Width = 42
           Height = 15
           Caption = 'Provinsi'
         end
         object Label47: TLabel
-          Left = 28
+          Left = 26
           Top = 116
           Width = 62
           Height = 15
@@ -1052,7 +1066,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = ':'
         end
         object Label49: TLabel
-          Left = 28
+          Left = 26
           Top = 203
           Width = 67
           Height = 15
@@ -1097,6 +1111,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Date = 45405.000000000000000000
           Format = ''
           Time = 0.597438842589326700
+          Enabled = False
           TabOrder = 1
         end
         object edNamaLokasi: TRzButtonEdit
@@ -1169,6 +1184,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Height = 24
           MaxValue = 0
           MinValue = 0
+          ReadOnly = True
           TabOrder = 9
           Value = 0
           OnChange = spTotalTitikChange
@@ -1694,6 +1710,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object TabDokumenPendukung: TRzTabSheet
       Caption = 'Dokumen Pendukung'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
         Top = 583
@@ -1934,6 +1954,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Date = 45405.000000000000000000
           Format = ''
           Time = 0.597438842589326700
+          Enabled = False
           TabOrder = 1
         end
         object edNamaJenisDoc: TEdit
@@ -1980,8 +2001,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 728
-    Top = 88
+    Left = 752
+    Top = 56
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end

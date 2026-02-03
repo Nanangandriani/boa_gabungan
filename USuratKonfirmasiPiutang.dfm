@@ -653,7 +653,7 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 672
+    Left = 704
     Top = 40
   end
   object QDetail: TUniQuery
@@ -669,8 +669,8 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from get_piutang_invoice('#39'2025-08-23'#39')')
-    Left = 552
-    Top = 104
+    Left = 672
+    Top = 112
   end
   object dsCetakRincianBarang: TDataSource
     DataSet = QCetak

@@ -17,11 +17,13 @@ type
     DSDetail: TDataSource;
     Qdetail: TUniQuery;
     procedure DBGridOrderDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     vcall: String;
+    vuang_muka: Currency;
     procedure Refresh;
   end;
 
@@ -33,7 +35,21 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UNew_DataPenjualan, UMy_Function;
+uses UDataModule, UNew_DataPenjualan, UMy_Function, UDataPenerimaanBank;
+
+procedure TFbrowseUangMukaDibayarkan.FormShow(Sender: TObject);
+begin
+  vuang_muka:=0;
+  if vcall='terima_bank' then
+  begin
+    DBGridOrder.Columns[1].Visible:=False;
+    DBGridOrder.Columns[5].Visible:=False;
+  end else begin
+    DBGridOrder.Columns[1].Visible:=True;
+    DBGridOrder.Columns[5].Visible:=True;
+  end;
+
+end;
 
 procedure TFbrowseUangMukaDibayarkan.Refresh;
 var strCodeHeadOffice, strWhere:String;
@@ -64,36 +80,49 @@ end;
 procedure TFbrowseUangMukaDibayarkan.DBGridOrderDblClick(Sender: TObject);
 var isValidasi: Integer;
 begin
-  isValidasi:=0 ;
-  with FNew_Penjualan do
+  if vcall='penjualan' then
   begin
-
-    MemUangMuka.First;
-    while not MemUangMuka.Eof do
+    isValidasi:=0 ;
+    with FNew_Penjualan do
     begin
-      if MemUangMuka['voucher_no']=Qdetail.FieldByName('voucher_no').AsString then
+
+      MemUangMuka.First;
+      while not MemUangMuka.Eof do
       begin
-        isValidasi:=1;
+        if MemUangMuka['voucher_no']=Qdetail.FieldByName('voucher_no').AsString then
+        begin
+          isValidasi:=1;
+        end;
+
+        MemUangMuka.Next;
       end;
 
-      MemUangMuka.Next;
-    end;
+      if isValidasi=0 then
+      begin
 
-    if isValidasi=0 then
-    begin
-
-      MemUangMuka.insert;
-      MemUangMuka['no_trans_down_payment']:=Qdetail.FieldByName('no_trans_down_payment').AsString;
-  //    MemUangMuka['trans_date']:=Qdetail.FieldByName('trans_date').AsString;
-      MemUangMuka['voucher_no']:=Qdetail.FieldByName('voucher_no').AsString;
-      MemUangMuka['sisa_uang_muka']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
-      MemUangMuka['uang_muka_dipakai']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
-      MemUangMuka.Post;
-    end else
-    begin
-      MessageDlg('Uang Muka Sudah Ada Di Order..!!',mtInformation,[mbRetry],0);
+        MemUangMuka.insert;
+        MemUangMuka['no_trans_down_payment']:=Qdetail.FieldByName('no_trans_down_payment').AsString;
+    //    MemUangMuka['trans_date']:=Qdetail.FieldByName('trans_date').AsString;
+        MemUangMuka['voucher_no']:=Qdetail.FieldByName('voucher_no').AsString;
+        MemUangMuka['sisa_uang_muka']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
+        MemUangMuka['uang_muka_dipakai']:=Qdetail.FieldByName('sisa_uang_muka').AsString;
+        MemUangMuka.Post;
+      end else
+      begin
+        MessageDlg('Uang Muka Sudah Ada Di Order..!!',mtInformation,[mbRetry],0);
+      end;
     end;
   end;
+
+  if vcall='terima_bank' then
+  begin
+    FDataPenerimaanBank.cbSumberPenerimaan.Text:='UANG MUKA PENJUALAN';
+    FDataPenerimaanBank.edNoRefSumberPenerimaan.Text:=Qdetail.FieldByName('no_trans_down_payment').AsString;
+    FDataPenerimaanBank.edKodePelangganSumber.Text:=FDataPenerimaanBank.edKode_Pelanggan.Text;
+    FDataPenerimaanBank.edNamaPelangganSumber.Text:=FDataPenerimaanBank.edNama_Pelanggan.Text;
+    vuang_muka:=Qdetail['sisa_uang_muka'];
+  end;
+
   Close;
 end;
 

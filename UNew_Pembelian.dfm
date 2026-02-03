@@ -312,8 +312,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Height = 217
     Align = alTop
     TabOrder = 1
-    ExplicitLeft = 23
-    ExplicitTop = 18
+    ExplicitWidth = 1111
     object Label1: TLabel
       Left = 27
       Top = 256
@@ -324,7 +323,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label3: TLabel
       Left = 28
       Top = 159
-      Width = 49
+      Width = 50
       Height = 15
       Caption = 'No. Trans'
     end
@@ -338,7 +337,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label6: TLabel
       Left = 26
       Top = 285
-      Width = 79
+      Width = 81
       Height = 15
       Caption = 'Tanggal Terima'
     end
@@ -359,14 +358,14 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label9: TLabel
       Left = 528
       Top = 74
-      Width = 108
+      Width = 110
       Height = 15
       Caption = 'Tgl.Terima Dokumen'
     end
     object Label15: TLabel
       Left = 528
       Top = 45
-      Width = 67
+      Width = 68
       Height = 15
       Caption = 'Jatuh Tempo'
     end
@@ -425,7 +424,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label7: TLabel
       Left = 27
       Top = 130
-      Width = 54
+      Width = 55
       Height = 15
       Caption = 'Tgl. Faktur'
     end
@@ -461,7 +460,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label31: TLabel
       Left = 763
       Top = 45
-      Width = 88
+      Width = 90
       Height = 15
       Caption = 'Tgl. Jatuh Tempo'
     end
@@ -534,7 +533,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Edkd_supp: TRzEdit
       Left = 175
-      Top = 15
+      Top = 14
       Width = 53
       Height = 23
       Text = ''
@@ -560,6 +559,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 210
       Height = 23
       CharCase = ecUpperCase
+      Enabled = False
       TabOrder = 10
       OnChange = EdjenisSelect
       OnSelect = EdjenisSelect
@@ -775,6 +775,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 28
+      Visible = False
       OnChange = Edkd_akunChange
     end
     object Edkd_akunum: TRzEdit
@@ -786,6 +787,7 @@ object FNew_Pembelian: TFNew_Pembelian
       Color = clInfoBk
       ReadOnly = True
       TabOrder = 29
+      Visible = False
     end
     object tgl_jatuhtempo: TRzDateTimeEdit
       Left = 872
@@ -830,7 +832,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Label11: TLabel
       Left = 0
       Top = 129
-      Width = 89
+      Width = 90
       Height = 15
       Caption = 'Total Uang Muka'
     end
@@ -917,8 +919,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitWidth = 1103
-        ExplicitHeight = 211
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -938,6 +938,7 @@ object FNew_Pembelian: TFNew_Pembelian
           OnCellClick = DBGridDetailpoCellClick
           OnColEnter = DBGridDetailpoColEnter
           OnColExit = DBGridDetailpoColEnter
+          OnKeyPress = DBGridDetailpoKeyPress
           Columns = <
             item
               CellButtons = <>
@@ -968,6 +969,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'nopo'
               Footers = <>
+              ReadOnly = True
               Title.Caption = 'No. Ref'
               Width = 150
             end
@@ -977,6 +979,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'kd_stok'
               Footers = <>
+              ReadOnly = True
               Title.Caption = 'No. Kedatangan'
               Width = 147
             end
@@ -1002,11 +1005,12 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##0.00'
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'qtypo'
               Footers = <>
+              ReadOnly = True
               Title.Caption = 'PO|Kuantum'
               Width = 80
             end
@@ -1016,6 +1020,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'satuanpo'
               Footers = <>
+              ReadOnly = True
               Title.Caption = 'PO|Satuan'
               Width = 67
             end
@@ -1031,7 +1036,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##0.00'
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'qty'
@@ -1050,11 +1055,12 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##'
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'qtyselisih'
               Footers = <>
+              ReadOnly = True
               Title.Caption = 'Terima|Selisih'
               Width = 58
             end
@@ -1068,7 +1074,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##0.0000'
+              DisplayFormat = '#,##0.00'
               DynProps = <>
               EditButtons = <>
               FieldName = 'Harga'
@@ -1114,6 +1120,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'ppn'
@@ -1123,7 +1130,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##'
+              DisplayFormat = '#,##0.00'
               DynProps = <>
               EditButtons = <>
               FieldName = 'ppn_rp'
@@ -1135,7 +1142,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##'
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'ppn_rp_pembulatan'
@@ -1147,6 +1154,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
+              DisplayFormat = '#,##0.##'
               DynProps = <>
               EditButtons = <>
               FieldName = 'pph'
@@ -1156,7 +1164,7 @@ object FNew_Pembelian: TFNew_Pembelian
             end
             item
               CellButtons = <>
-              DisplayFormat = '#,##'
+              DisplayFormat = '#,##0.00'
               DynProps = <>
               EditButtons = <
                 item
@@ -1192,6 +1200,7 @@ object FNew_Pembelian: TFNew_Pembelian
               Footer.ValueType = fvtSum
               Footers = <>
               Title.Caption = 'Bea Masuk|Nominal'
+              Visible = False
               Width = 78
             end
             item
@@ -1205,6 +1214,7 @@ object FNew_Pembelian: TFNew_Pembelian
               Footer.FieldName = 'kd_akunbea'
               Footers = <>
               Title.Caption = 'Bea Masuk|Kode Akun'
+              Visible = False
               Width = 77
             end
             item
@@ -1213,7 +1223,8 @@ object FNew_Pembelian: TFNew_Pembelian
               DynProps = <>
               EditButtons = <>
               FieldName = 'grandtotal'
-              Footer.DisplayFormat = '#,##0.0000'
+              Footer.DisplayFormat = '#,##0.00'
+              Footer.FieldName = 'grandtotal'
               Footer.ValueType = fvtSum
               Footers = <>
               Title.Caption = 'Grand Total'
@@ -1226,6 +1237,7 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'gudang'
               Footers = <>
               Title.Caption = 'Lokasi Gudang'
+              Visible = False
               Width = 130
             end
             item
@@ -1263,6 +1275,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'id_pengajuan_asset'
               Footers = <>
+              Visible = False
               Width = 0
             end
             item
@@ -1271,6 +1284,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'id_detail_asset'
               Footers = <>
+              Visible = False
               Width = 0
             end
             item
@@ -1279,6 +1293,7 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'no_pengajuan_asset'
               Footers = <>
+              Visible = False
               Width = 0
             end
             item
@@ -1287,7 +1302,18 @@ object FNew_Pembelian: TFNew_Pembelian
               EditButtons = <>
               FieldName = 'Spesifikasi_asset'
               Footers = <>
+              Visible = False
               Width = 0
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'header_code'
+              Footers = <>
+              Title.Caption = 'Akun Header'
+              Visible = False
+              Width = 100
             end>
           object RowDetailData: TRowDetailPanelControlEh
           end
@@ -1296,6 +1322,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitWidth = 1103
+        ExplicitHeight = 211
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1932,7 +1960,7 @@ object FNew_Pembelian: TFNew_Pembelian
       object Label29: TLabel
         Left = 526
         Top = 22
-        Width = 68
+        Width = 69
         Height = 15
         Caption = 'Total Hutang'
       end
@@ -1987,8 +2015,8 @@ object FNew_Pembelian: TFNew_Pembelian
     SQL.Strings = (
       'Select * from t_material_stok'
       ' order by kd_material_stok desc')
-    Left = 1042
-    Top = 221
+    Left = 1066
+    Top = 173
   end
   object DsTerimadet: TDataSource
     DataSet = MemterimaDet
@@ -1996,14 +2024,13 @@ object FNew_Pembelian: TFNew_Pembelian
     Top = 91
   end
   object DsMaterial: TDataSource
-    Left = 986
-    Top = 213
+    Left = 1010
+    Top = 181
   end
   object MemterimaDet: TMemTableEh
-    Active = True
     Params = <>
-    Left = 1034
-    Top = 32
+    Left = 1042
+    Top = 16
     object MemterimaDetnm_material: TStringField
       FieldName = 'nm_material'
     end
@@ -2080,7 +2107,9 @@ object FNew_Pembelian: TFNew_Pembelian
       Size = 100
     end
     object MemterimaDetkd_akun: TStringField
+      DisplayWidth = 50
       FieldName = 'kd_akun'
+      Size = 50
     end
     object MemterimaDetkd_akunbea: TStringField
       FieldName = 'kd_akunbea'
@@ -2136,6 +2165,9 @@ object FNew_Pembelian: TFNew_Pembelian
     object MemterimaDetSpesifikasi_asset: TStringField
       FieldName = 'Spesifikasi_asset'
       Size = 50
+    end
+    object MemterimaDetheader_code: TStringField
+      FieldName = 'header_code'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -2417,6 +2449,11 @@ object FNew_Pembelian: TFNew_Pembelian
           StringDataType = fdtStringEh
           DisplayWidth = 50
           Size = 50
+        end
+        object header_code: TMTStringDataFieldEh
+          FieldName = 'header_code'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

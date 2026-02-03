@@ -85,7 +85,6 @@ type
     QBukti_Terimavoucher_no: TStringField;
     QBukti_Terimatrans_date: TDateField;
     QBukti_Terimacode_cust: TStringField;
-    QBukti_Terimaname_cust: TStringField;
     QBukti_Terimaaccount_number_bank: TStringField;
     QBukti_Terimaaccount_name_bank: TStringField;
     QBukti_Terimafor_acceptance: TStringField;
@@ -113,6 +112,8 @@ type
     LaporanKolektif: TdxBar;
     dxBarLargeButton5: TdxBarLargeButton;
     QPenerimaanBankdeleted_at: TDateTimeField;
+    QBukti_Terimatot_paid_amount: TFloatField;
+    QBukti_Terimaname_cust: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -128,6 +129,7 @@ type
     procedure DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -240,7 +242,7 @@ begin
 end;
 
 procedure TFListPenerimaanBank.ActUpdateExecute(Sender: TObject);
-var strPaymentCode:String;
+var strPaymentCode,strDiterimaDari:String;
 begin
   strPaymentCode:='';
   FDataPenerimaanBank.Clear;
@@ -248,10 +250,11 @@ begin
   begin
      close;
      sql.Clear;
-     sql.Text:='select a.*,b.customer_name,b.customer_name_pkp from "public"."t_cash_bank_acceptance"  a  '+
+     sql.Text:='select a.*,b.customer_name,b.customer_name_pkp,c.name karesidenan from "public"."t_cash_bank_acceptance"  a  '+
                'left join t_cash_bank_acceptance_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
-               ' WHERE a.voucher_no='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
-               ' AND a.deleted_at is null order by a.created_at Desc ';
+               'left join t_region_karesidenan c on c.code=a.code_karesidenan '+
+               'WHERE a.voucher_no='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+               'AND a.deleted_at is null order by a.created_at Desc ';
      open;
   end;
   if Dm.Qtemp.RecordCount=0 then
@@ -262,7 +265,9 @@ begin
   if Dm.Qtemp.RecordCount<>0 then
   begin
 
-
+    if (not dm.Qtemp.FieldByName('name_cust').IsNull) and
+   ((dm.Qtemp.FieldByName('code_type_trans').AsString = '3.002') or
+    (dm.Qtemp.FieldByName('code_type_trans').AsString = '4.001')) then strDiterimaDari:=dm.Qtemp.FieldValues['name_cust'];
 
     if dm.Qtemp.FieldValues['payment_code']<>NULL then
     strPaymentCode:=dm.Qtemp.FieldValues['payment_code'];
@@ -342,6 +347,12 @@ begin
       additional_code4:='0';
       additional_code5:='0';
 
+      if dm.Qtemp.FieldValues['code_karesidenan']<>NULL then
+      FDataPenerimaanBank.kd_kares:=dm.Qtemp.FieldValues['code_karesidenan'];
+
+      if dm.Qtemp.FieldValues['karesidenan']<>NULL then
+      FDataPenerimaanBank.edKaresidenan.Text:=dm.Qtemp.FieldValues['karesidenan'];
+
       //Refresh Form
       if FDataPenerimaanBank.vid_modul='3' then // Bank
       begin
@@ -351,7 +362,6 @@ begin
       begin
         FDataPenerimaanBank.gbDataBank.Visible:=False;
       end;
-
 
       if SelectRow('select value_parameter from t_parameter where key_parameter='+QuotedStr('sumber_terima_bank')+' ')= '0' then
       begin
@@ -417,7 +427,6 @@ begin
         edNMSumberTagihan.Visible:=False;
         edNMJenisBayar.Visible:=False;
       end;
-
 
       //detailakun
       with Dm.Qtemp1 do
@@ -492,28 +501,63 @@ begin
           Dm.Qtemp1.Next;
         end;
       end;
+      gbDataSumberPenerimaan.Visible:=False;
+      if cbJenisTransaksi.Text='NON PIUTANG' then
+      begin
+//        ShowMessage(strDiterimaDari);
+        edJumlah.Enabled:=False;
+        gbDataSumberPenerimaan.Visible:=True;
+        label33.Visible:=False;
+        label34.Visible:=False;
+        edNamaPKPSumber.Visible:=False;
+        Label29.Caption:='Diterima Dari';
+        edNamaPelangganSumber.ReadOnly:=False;
+        edNamaPelangganSumber.Text:=strDiterimaDari;
+        edNoRefSumberPenerimaan.Text:='';
+        edNamaPKPSumber.Text:='';
+        cbSumberPenerimaan.Text:='TIDAK ADA SUMBER';
+      end;
+
+      //UANG MUKA
 
       with Dm.Qtemp1 do
       begin
         close;
         sql.clear;
-        sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a '+
+        sql.Text:='select a.*,b.customer_name,b.customer_name_pkp from t_cash_bank_acceptance_down_payment a '+
+                  'LEFT JOIN t_cash_bank_acceptance_customer b on b.trans_no=a.voucher_no and b.customer_code=a.code_cust AND b.deleted_at is null '+
                   'where a.voucher_no='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString);
         open;
       end;
 
       if dm.Qtemp1.RecordCount>0 then
       begin
-        edJumlah.Enabled:=False;
-        gbDataSumberPenerimaan.Visible:=True;
+        label33.Visible:=True;
+        label34.Visible:=True;
+        edNamaPKPSumber.Visible:=True;
+        Label29.Caption:='Nama Pelanggan';
+        edNamaPelangganSumber.ReadOnly:=True;
+        if cbJenisTransaksi.Text='NON PIUTANG' then
+        begin
+          edJumlah.Enabled:=False;
+          gbDataSumberPenerimaan.Visible:=True;
+        end else begin
+          gbDataSumberPenerimaan.Visible:=False;
+          edJumlah.Enabled:=True;
+        end;
+          
         edKodePelangganSumber.Text:=Dm.Qtemp1.FieldValues['code_cust'];
-        edNamaPelangganSumber.Text:=Dm.Qtemp1.FieldValues['name_cust'];
-        edNoRefSumberPenerimaan.Text:=Dm.Qtemp1.FieldValues['no_trans_down_payment'];;
+        edNamaPelangganSumber.Text:=Dm.Qtemp1.FieldValues['customer_name'];
+        edNoRefSumberPenerimaan.Text:=Dm.Qtemp1.FieldValues['no_trans_down_payment'];
+        edNamaPKPSumber.Text:=Dm.Qtemp1.FieldValues['customer_name_pkp'];
         cbSumberPenerimaan.Text:=SelectRow('select name from t_cash_bank_acceptance_source where code=''CB001'' ');
-      end else begin
-        gbDataSumberPenerimaan.Visible:=False;
-        edJumlah.Enabled:=True;
+          
       end;
+//       else begin
+//        gbDataSumberPenerimaan.Visible:=False;
+//        edJumlah.Enabled:=True;
+//      end;
+    
 
 
     end;
@@ -551,9 +595,9 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT a.*, "code_account_header",b.name_account  "account_name", "paid_amount", "desc_akun" from ('+
+    sql.add(' SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust, a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from ('+
            ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
-           ' "account_name_bank", "for_acceptance", "description", "module_id" '+
+           ' "account_name_bank", "for_acceptance", "description", "module_id", paid_amount tot_paid_amount '+
            ' from "public"."t_cash_bank_acceptance"  a  '+
            ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
            ' AND deleted_at is null) a '+
@@ -563,9 +607,11 @@ begin
            'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
            'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON '+
            'a."voucher_no"=b."voucher_no" '+
+           'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
+           'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
            ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
            ' and "position"=''K'' '+
-           ' order by position asc');
+           ' order by position asc, account_name=''PIUTANG'' ');
     open;
   end;
 
@@ -610,7 +656,7 @@ begin
    Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
    SetReportToPortrait(Report);
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
-   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBukti_Terima.FieldValues['trans_date']));
    SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah');
 
    if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
@@ -682,6 +728,15 @@ end;
 procedure TFListPenerimaanBank.dxBarLargeButton5Click(Sender: TObject);
 begin
   FCetakKolektifPenerimaanBank.ShowModal;
+end;
+
+procedure TFListPenerimaanBank.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QPenerimaanBank.Close;
+  QJurnal.Close;
+  QBukti_Terima.Close;
+  QBukti_Terima_det.Close;
 end;
 
 procedure TFListPenerimaanBank.FormShow(Sender: TObject);

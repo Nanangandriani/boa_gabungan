@@ -85,11 +85,6 @@ type
     QCetakdetailKreditaccount_name: TMemoField;
     QCetakdetailKreditstatus_dk: TStringField;
     QCetakdetailKreditkd: TFloatField;
-    QCetakRincianBarangtrans_no: TStringField;
-    QCetakRincianBarangcode_item: TStringField;
-    QCetakRincianBarangname_item: TStringField;
-    QCetakRincianBarangamount: TFloatField;
-    QCetakRincianBarangname_unit: TStringField;
     cbSBU: TdxBarCombo;
     QCetak2: TUniQuery;
     QCetakRincianBarang2: TUniQuery;
@@ -116,6 +111,69 @@ type
     dxBarLargeButton3: TdxBarLargeButton;
     frxXLSXExport1: TfrxXLSXExport;
     frxXLSExport1: TfrxXLSExport;
+    frxDBDBHExport: TfrxDBDataset;
+    QCetakExport: TUniQuery;
+    ExportBH: TfrxReport;
+    frxDBDBHPenjualanExport: TfrxDBDataset;
+    DSBHPenjualanExport: TDataSource;
+    QBHPenjualanExport: TUniQuery;
+    MemoField1: TMemoField;
+    MemoField2: TMemoField;
+    DateField1: TDateField;
+    MemoField3: TMemoField;
+    MemoField4: TMemoField;
+    frxDBDataset3: TfrxDBDataset;
+    DSBHPenjualanExportBarang: TDataSource;
+    QBHPenjualanExportBarang: TUniQuery;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    FloatField1: TFloatField;
+    StringField4: TStringField;
+    QCetakRincianBarangtrans_no: TStringField;
+    QCetakRincianBarangcode_item: TStringField;
+    QCetakRincianBarangname_item: TStringField;
+    QCetakRincianBarangamount: TFloatField;
+    QCetakRincianBarangname_unit: TMemoField;
+    edTP: TcxBarEditItem;
+    frxDBDBHPenjualanExportDebit: TfrxDBDataset;
+    DSBHPenjualanExportDebit: TDataSource;
+    QBHPenjualanExportDebit: TUniQuery;
+    QBHPenjualanExportDebittrans_no: TStringField;
+    QBHPenjualanExportDebitaccount_code: TStringField;
+    QBHPenjualanExportDebitaccount_name: TMemoField;
+    QBHPenjualanExportDebitstatus_dk: TStringField;
+    QBHPenjualanExportDebitdb: TFloatField;
+    frxDBBHQBHPenjualanExportDebitPiutang: TfrxDBDataset;
+    DSBHQBHPenjualanExportDebitPiutang: TDataSource;
+    QBHPenjualanExportDebitPiutang: TUniQuery;
+    QBHPenjualanExportDebitPiutangtrans_no: TStringField;
+    QBHPenjualanExportDebitPiutangakun_piutang: TStringField;
+    QBHPenjualanExportDebitPiutangakun_piutang_name: TMemoField;
+    QBHPenjualanExportDebitPiutangamount_piutang: TFloatField;
+    frxDBDBHPenjualanExportKreditPenjualan: TfrxDBDataset;
+    DSBHPenjualanExportKreditPenjualan: TDataSource;
+    QBHPenjualanExportKreditPenjualan: TUniQuery;
+    QBHPenjualanExportKredit: TUniQuery;
+    DSQBHPenjualanExportKredit: TDataSource;
+    frxDBDBHPenjualanExportKredit: TfrxDBDataset;
+    QBHPenjualanExportKreditPenjualantrans_no: TStringField;
+    QBHPenjualanExportKreditPenjualanakun_penjualan: TStringField;
+    QBHPenjualanExportKreditPenjualanakun_penjualan_name: TMemoField;
+    QBHPenjualanExportKreditPenjualankd: TFloatField;
+    QBHPenjualanExportKredittrans_no: TStringField;
+    QBHPenjualanExportKreditaccount_code: TStringField;
+    QBHPenjualanExportKreditaccount_name: TMemoField;
+    QBHPenjualanExportKreditstatus_dk: TStringField;
+    QBHPenjualanExportKreditkd: TFloatField;
+    frxDBDBHPenjualanExportTotal: TfrxDBDataset;
+    QBHPenjualanExportTotal: TUniQuery;
+    QBHPenjualanExportakun_piutang: TStringField;
+    QBHPenjualanExportakun_piutang_name: TMemoField;
+    QBHPenjualanExportamount_piutang: TFloatField;
+    QBHPenjualanExportakun_penjualan: TStringField;
+    QBHPenjualanExportakun_penjualan_name: TMemoField;
+    QBHPenjualanExportamount_penjualan: TFloatField;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -133,11 +191,13 @@ type
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure edTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
     { Public declarations }
-    vkd_kares, vkd_kab : String ;
+    vkd_kares, vkd_kab, vkd_tp : String ;
     procedure ExportToExcel;
   end;
 
@@ -162,17 +222,22 @@ begin
 end;
 
 procedure TFBHPenjualan.btPreviewClick(Sender: TObject);
-var strKab,strKaresidenan: String;
+var strKab,strTP,strKaresidenan: String;
 begin
 //  if edKaresidenan.EditValue='' then
 //  begin
 //    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
 //  end else begin
+    strKaresidenan:='';
     strKab:='';
+    strTP:='';
     if edKabupaten.EditValue<>'' then
-    strKab:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+    strKab:=' AND a.code_kabupaten='+QuotedStr(vkd_kab)+' ';
 
-    if edKaresidenan.EditValue<>'' then strKaresidenan:='AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue) else strKaresidenan:='';
+    if edKaresidenan.EditValue<>'' then strKaresidenan:='AND a.code_karesidenan='+QuotedStr(vkd_kares);
+
+    if edTp.EditValue<>'' then strTP:='AND a.code_tp='+QuotedStr(vkd_tp);
+
 
     with QCetak do
     begin
@@ -203,8 +268,8 @@ begin
       Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
 //            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL '+strKaresidenan+' '+
-            ''+strKab+'order by a.trans_date,trans_no asc';
+            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL '+strTP+strKaresidenan+' '+
+            ''+strKab+'order by a.trans_date asc,trans_no asc';
 
       Open;
     end;
@@ -241,7 +306,7 @@ begin
       with QCetakRincianBarang do
       begin
         close;
-        sql.Text:='select trans_no,code_item,name_item,amount,name_unit from t_selling_det';
+        sql.Text:='select trans_no,code_item,name_item,amount,Upper(name_unit) name_unit from t_selling_det order by name_item ';
         open;
       end;
 
@@ -252,14 +317,15 @@ begin
                   'FROM "public"."VTrans_Journal" '+
                   'WHERE status_dk = ''D'' '+
 //                     AND db > 0
-                  'AND NOT (account_name LIKE  ''%Uang Muka%'' AND db = 0 );';
+                  'AND NOT (account_name LIKE  ''%Uang Muka%'' AND db = 0 ) ORDER BY account_name ASC;';
         open;
       end;
 
       with QCetakdetailKredit do
       begin
         close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' ';
+        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd '+
+                  'FROM "public"."VTrans_Journal"  where status_dk=''K'' ORDER BY account_name ASC; ';
         open;
       end;
 
@@ -299,10 +365,11 @@ begin
 end;
 
 procedure TFBHPenjualan.btSearchClick(Sender: TObject);
-var strKaresidenan,strKabupaten :String;
+var strKaresidenan,strTP,strKabupaten :String;
 begin
   strKaresidenan:='';
   strKabupaten:='';
+  strTP:='';
 //  if edKaresidenan.EditValue='' then
 //  begin
 //    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
@@ -310,13 +377,16 @@ begin
 //  begin
     if edKaresidenan.EditValue<>'' then
     begin
-      strKaresidenan:=' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' ';
+      strKaresidenan:=' AND a.code_karesidenan='+QuotedStr(vkd_kares)+' ';
     end;
     if edKabupaten.EditValue<>'' then
     begin
-      strKabupaten:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+      strKabupaten:=' AND a.code_kabupaten='+QuotedStr(vkd_kab)+' ';
     end;
-
+    if edTP.EditValue<>'' then
+    begin
+      strTP:=' AND a.code_tp='+QuotedStr(vkd_tp)+' ';
+    end;
 
     DBGrid.StartLoadingStatus();
     try
@@ -327,7 +397,7 @@ begin
          SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
 //                   'LEFT JOIN vcustomer b on b.customer_code=a.code_cust '+
                    'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                   ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
+                   ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND a.deleted_at IS NULL '+strTP+strKaresidenan+strKabupaten+' Order by a.trans_date,a.trans_no ASC' ;
          open;
      end;
 
@@ -434,8 +504,10 @@ begin
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
   edKabupaten.EditValue := '';
+  edTP.EditValue:='';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
 end;
 
 procedure TFBHPenjualan.ExportToExcel;
@@ -530,113 +602,190 @@ begin
 end;
 
 procedure TFBHPenjualan.dxBarLargeButton3Click(Sender: TObject);
-var strKab: String;
+var strKab,strTP,strKaresidenan,
+  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2: STRING;
 begin
-  if edKaresidenan.EditValue='' then
-  begin
-    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
-  end else begin
-    strKab:='';
-    if edKabupaten.EditValue<>'' then
-    strKab:=' AND a.kabupaten='+QuotedStr(edKabupaten.EditValue)+' ';
+  tgl1:=FormatDateTime('DD', dtAwal.EditValue);
+  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
+  tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
 
-    with QCetak do
+  tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
+  bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
+  tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else begin
+    strKaresidenan:='';
+    strKab:='';
+    strTP:='';
+    if edKabupaten.EditValue<>'' then
+    strKab:=' AND a.code_kabupaten='+QuotedStr(vkd_kab)+' ';
+
+    if edKaresidenan.EditValue<>'' then strKaresidenan:='AND a.code_karesidenan='+QuotedStr(vkd_kares);
+
+    if edTp.EditValue<>'' then strTP:='AND a.code_tp='+QuotedStr(vkd_tp);
+
+    with QBHPenjualanExport do
     begin
       close;
-      sql.Clear;
-//       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
-//               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
-//               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+
-//               ' FROM t_selling a '+
-//               ' LEFT JOIN ( SELECT t_customer.customer_code, t_customer.customer_name_pkp, '+
-//               ' t_customer.code_region, t_customer.name_region FROM t_customer) d ON a.code_cust::text = d.customer_code::text  '+
-//               ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-//               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-//               ' ON "left"(code_region, 4)=b.code_kab '+
-//               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-//               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-
-//       if edKaresidenan.EditValue<>'' then
-//       begin
-//        sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-//       end;
-//       if edKabupaten.EditValue<>'' then
-//       begin
-//        sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-//       end;
-//       sql.add(' ORDER BY trans_date, trans_no');
-//       open;
-      Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
-//            'LEFT JOIN vcustomer b ON b.customer_code=a.code_cust '+
-            'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
-            ''+strKab+'order by a.trans_date,trans_no asc';
-
+      sql.Text:='SELECT a.trans_no,a.no_inv_tax,a.trans_date,a.code_cust,a.customer_name_pkp name_cust '+
+                 ',b.account_code akun_piutang, '+
+                  'b.account_name akun_piutang_name,b.db amount_piutang '+
+                  ',c.account_code akun_penjualan, '+
+                  'c.account_name akun_penjualan_name,c.kd amount_penjualan '+
+                   'from get_selling(FALSE) a '+
+                  'left join public."VTrans_Journal" b ON b.trans_no=a.trans_no AND b.account_code=''1104.01'' '+
+                  'left join public."VTrans_Journal" c on c.trans_no=a.trans_no AND c.account_code=''4101.01''  '+
+                 'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL '+strTP+strKaresidenan+strKab+' '+
+            'order by a.trans_date asc,trans_no asc';
       Open;
     end;
 
+//    with QBHPenjualanExport do
+//    begin
+//      close;
+//      sql.Clear;
+//      Sql.Text:= 'SELECT trans_no,no_inv_tax,trans_date,code_cust,a.customer_name_pkp name_cust from get_selling(FALSE) a '+
+//            'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+//            ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.karesidenan='+QuotedStr(edKaresidenan.EditValue)+' '+
+//            ''+strKab+'order by a.trans_date,trans_no asc';
 
-    if QCetak.RecordCount=0 then
+//      Open;
+//    end;
+
+
+    if QBHPenjualanExport.RecordCount=0 then
     begin
       showmessage('Tidak ada data yang bisa dicetak !');
       exit;
     end;
 
-    if QCetak.RecordCount<>0 then
+    if QBHPenjualanExport.RecordCount<>0 then
     begin
-    //       with QCetakdetail do
-    //       begin
-    //           close;
-    //           sql.Clear;
-    //           sql.add(' SELECT a.*,code_karesidenan,code_kab,name_kab from "public"."vbhpenjualan" a  '+
-    //                   ' LEFT JOIN (SELECT "code_province", "code" as code_kab, "name" as name_kab, '+
-    //                   ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b  '+
-    //                   ' ON "left"(code_region, 4)=b.code_kab '+
-    //                   ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
-    //                   ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-    //             if edKaresidenan.EditValue<>'' then
-    //             begin
-    //              sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
-    //             end;
-    //             if edKabupaten.EditValue<>'' then
-    //             begin
-    //              sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
-    //             end;
-    //           sql.add(' ORDER BY trans_no, code_item');
-    //           open;
-      with QCetakRincianBarang do
+      with QBHPenjualanExportTotal do
       begin
         close;
-        sql.Text:='select trans_no,code_item,name_item,amount,name_unit from t_selling_det';
+        sql.Clear;
+        sql.Text:='WITH detail_trans AS ( '+
+                  'SELECT '+
+                  'a.trans_no, '+
+                  'SUM(CASE WHEN j.account_code = ''1104.01'' THEN j.db ELSE 0 END) AS piutang, '+
+                  'SUM(CASE WHEN j.status_dk = ''D'' AND j.db > 0 AND j.account_code <> ''1104.01'' '+
+                  'AND NOT (j.account_name LIKE ''%Uang Muka%'' AND j.db = 0) THEN j.db ELSE 0 END) AS d_lain, '+
+                  'SUM(CASE WHEN j.account_code = ''4101.01'' THEN j.kd ELSE 0 END) AS penjualan, '+
+                  'SUM(CASE WHEN j.status_dk = ''K'' AND j.kd > 0 AND j.account_code <> ''4101.01'' THEN j.kd ELSE 0 END) AS k_lain '+
+                  'FROM get_selling(FALSE) a '+
+                  'LEFT JOIN public."VTrans_Journal" j ON a.trans_no = j.trans_no  '+
+                  'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                  ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' '+
+                  'AND a.deleted_at IS NULL '+strTP+strKaresidenan+' '+
+                  'GROUP BY a.trans_no, a.trans_date '+
+                  'ORDER BY a.trans_date ASC, a.trans_no ASC '+
+                  ') '+
+                  'SELECT SUM(piutang) AS total_piutang, '+
+                  'SUM(d_lain) AS total_debit_lain, '+
+                  'SUM(penjualan) AS total_penjualan, '+
+                  'SUM(k_lain) AS total_kredit_lain '+
+                  'FROM detail_trans;';
         open;
       end;
 
-      with QCetakdetailDebit do
-      begin
-        close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' ';
-        open;
-      end;
+      QBHPenjualanExportBarang.Close;
+      QBHPenjualanExportBarang.Open;
 
-      with QCetakdetailKredit do
-      begin
-        close;
-        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' ';
-        open;
-      end;
+//      QBHPenjualanExportDebitPiutang.Close;
+//      QBHPenjualanExportDebitPiutang.Open;
+
+      QBHPenjualanExportDebit.Close;
+      QBHPenjualanExportDebit.Open;
+
+      QBHPenjualanExportKredit.Close;
+      QBHPenjualanExportKredit.Open;
+
+//      QBHPenjualanExportKreditPenjualan.Close;
+//      QBHPenjualanExportKreditPenjualan.Open;
+
+
+
+//      with QBHPenjualanExportBarang do
+//      begin
+//        close;
+//        sql.Text:='select trans_no,code_item,name_item,amount,name_unit from t_selling_det';
+//        open;
+//      end;
+
+//      with QCetakdetailDebit do
+//      begin
+//        close;
+//        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,db FROM "public"."VTrans_Journal"  where status_dk=''D'' ';
+//        open;
+//      end;
+//
+//      with QCetakdetailKredit do
+//      begin
+//        close;
+//        sql.Text:='SELECT trans_no,account_code,account_name,status_dk,kd FROM "public"."VTrans_Journal"  where status_dk=''K'' ';
+//        open;
+//      end;
 
       cLocation := ExtractFilePath(Application.ExeName);
 
 
-      Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualan2'+ '.fr3');
+      Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanExport'+ '.fr3');
       SetMemo(Report,'kodeprsh',FHomeLogin.vKodePRSH);
+      SetMemo(Report,'periode',FHomeLogin.vKodePRSH);
+
+      SetMemo(Report,'kabupaten',FHomeLogin.vKodePRSH);
+
+
+
+      if (edKaresidenan.EditValue<>'') AND (edTP.editValue='') then
+      begin
+    //    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    //    Value := 'Karesidenan: '+edKaresidenan.EditValue;
+        SetMemo(Report,'karesidenan','Karesidenan: '+edKaresidenan.EditValue);
+      end else if (edKaresidenan.EditValue='') AND (edTP.editValue<>'') then
+      begin
+    //    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    //    Value := 'TP: '+edTp.EditValue;
+        SetMemo(Report,'karesidenan','TP: '+edTp.EditValue);
+      end else if (edKaresidenan.EditValue='') AND (edTP.editValue='') then
+      begin
+    //    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    //    Value := 'TP/Karesidenan: Semua Wilayah';
+        SetMemo(Report,'karesidenan','TP/Karesidenan: Semua Wilayah');
+      end;
+
+      if edKabupaten.EditValue<>'' then
+      begin
+    //    if CompareText(VarName, 'KOTA_KAB') = 0 then
+    //    Value := 'Kota/Kodya : '+edKabupaten.EditValue;
+        SetMemo(Report,'kabupaten','Kota/Kodya : '+edKabupaten.EditValue);
+      end else begin
+    //    if CompareText(VarName, 'KOTA_KAB') = 0 then
+    //    Value := 'Kota/Kodya : ';
+        SetMemo(Report,'kabupaten','Kota/Kodya :');
+      end;
+
+      if dtAwal.EditValue<>dtAkhir.EditValue then
+      begin
+    //    if CompareText(VarName, 'PERIODE') = 0 then
+    //    Value := UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1+' S/D '+tgl2+' '+bulan2+' '+tahun2);
+        SetMemo(Report,'periode',UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1+' S/D '+tgl2+' '+bulan2+' '+tahun2));
+      end else begin
+    //    if CompareText(VarName, 'PERIODE') = 0 then
+    //    Value := UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1);
+         SetMemo(Report,'periode',UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1));
+      end;
 
       Report.PrepareReport(True);
       // Baru export
       ExportToExcel;
 
     end;
-  end;
+//  end;
 end;
 
 procedure TFBHPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
@@ -644,8 +793,14 @@ procedure TFBHPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Kabupaten';
   FMasterData.vcall:='bhpenjualan_kab';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
-  FMasterData.ShowModal;
+  if (edKaresidenan.EditValue<>'') AND (edTP.EditValue='') then
+  begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+    FMasterData.ShowModal;
+  end else if (edKaresidenan.EditValue='') AND (edTP.EditValue<>'') then begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(vkd_tp)+'');
+    FMasterData.ShowModal;
+  end;
 end;
 
 procedure TFBHPenjualan.edKaresidenanPropertiesButtonClick(Sender: TObject;
@@ -655,6 +810,27 @@ begin
   FMasterData.vcall:='bhpenjualan_kares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
+end;
+
+procedure TFBHPenjualan.edTPPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='bhpenjualan_tp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFBHPenjualan.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  QBHPenjualan.Close;
+  QBHPenjualanExport.Close;
+  QBHPenjualanExportBarang.Close;
+  QBHPenjualanExportDebit.Close;
+  QBHPenjualanExportKredit.Close;
+  QCetakRincianBarang.Close;
+  QCetakdetailDebit.Close;
+  QCetakdetailKredit.Close;
 end;
 
 procedure TFBHPenjualan.FormCreate(Sender: TObject);
@@ -672,9 +848,11 @@ begin
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue := '';
+  edTP.EditValue:='';
   edKabupaten.EditValue := '';
   vkd_kares:='';
   vkd_kab:='';
+  vkd_tp:='';
 
   FillSBUBarCombo(cbSBU);
 end;
@@ -704,13 +882,18 @@ begin
   bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
   tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
 
-  if edKaresidenan.EditValue<>'' then
+  if (edKaresidenan.EditValue<>'') AND (edTP.editValue='') then
   begin
     if CompareText(VarName, 'KARESIDENAN') = 0 then
-    Value := edKaresidenan.EditValue;
-  end else begin
+    Value := 'Karesidenan: '+edKaresidenan.EditValue;
+  end else if (edKaresidenan.EditValue='') AND (edTP.editValue<>'') then
+  begin
     if CompareText(VarName, 'KARESIDENAN') = 0 then
-    Value := 'Semua';
+    Value := 'TP: '+edTp.EditValue;
+  end else if (edKaresidenan.EditValue='') AND (edTP.editValue='') then
+  begin
+    if CompareText(VarName, 'KARESIDENAN') = 0 then
+    Value := 'TP/Karesidenan: Semua Wilayah';
   end;
 
   if edKabupaten.EditValue<>'' then

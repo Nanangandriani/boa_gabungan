@@ -146,6 +146,11 @@ type
     frxDBDBukti_Keluar_det: TfrxDBDataset;
     QTP_Real: TUniQuery;
     DSTP_Real: TDataSource;
+    QDaf_Pengeluaran_Kas_Bankcheque_no: TStringField;
+    QDaf_Pengeluaran_Kas_Bankcheque_date: TDateField;
+    QDaf_Pengeluaran_Kas_Bankcheque_due_date: TDateField;
+    QBukti_Keluar_Faktur: TUniQuery;
+    frxDBDBuktiKeluar_Faktur: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
@@ -156,6 +161,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure BCariClick(Sender: TObject);
+    procedure DBGridKasBankAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -186,6 +195,7 @@ end;}
 
 procedure TFdaf_pengeluaran_kas_bank.ActBaruExecute(Sender: TObject);
 begin
+   FDataPengeluaranKasBank.Status := 0;
    FDataPengeluaranKasBank.Show;
    //FDataPengeluaranKasBank.BSave.Visible:=True;
    //FDataPengeluaranKasBank.BEdit.Visible:=False;
@@ -232,7 +242,8 @@ begin
        close;
        sql.Clear;
        sql.Text:=' select * from "public"."t_cash_bank_expenditure" '+
-                 ' where deleted_at is null order by created_at Desc ';
+                 //' where deleted_at is null '+
+                 ' order by created_at Desc ';
        open;
    end;
   finally
@@ -242,8 +253,16 @@ end;
 
 procedure TFdaf_pengeluaran_kas_bank.ActUpdateExecute(Sender: TObject);
 begin
+  if not QDaf_Pengeluaran_Kas_Bank.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
+
+
       with FDataPengeluaranKasBank do
       begin
+        Status := 1;
         MemDetailAkun.EmptyTable;
         MemDetailHutang.EmptyTable;
         MemDetailAkun.Close;
@@ -281,6 +300,7 @@ begin
         Edhari.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_day').AsString;
         Edbln.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_month').AsString;
         Edth.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_year').AsString;
+        Ed_nocek.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('cheque_no').AsString;
         //Ed_voucher_ajuan.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_tmp').AsString;
 
         //detail akun
@@ -409,20 +429,80 @@ begin
       //FDataPengeluaranKasBank.BEdit.Visible:=true;
 end;
 
+procedure TFdaf_pengeluaran_kas_bank.BCariClick(Sender: TObject);
+begin
+    DBGridkasBank.StartLoadingStatus();
+    with QDaf_Pengeluaran_Kas_Bank do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.* FROM t_cash_bank_expenditure a '+
+                'LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
+                'LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
+                'LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
+                'LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
+                'WHERE a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.DateTime))+'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.DateTime)) +' '+
+                'GROUP BY a.voucher_no,a.voucher_tmp,a.subvoucher,a.remark,a.entry_date, '+
+                'a.trans_date,a.periode1,a.periode2,a.amount,a.account_code,a.group_code, '+
+                'a.group_name,a.tp_code,a.account_name,a.dk,a.perpetrator_id,a.debit,a.kredit, '+
+                'a.header_code,a.ref_no,a.posting,a.customer_code,a.supplier_code,a.cash_type, '+
+                'a.job_no,a.company_code,a.trans_year,a.trans_month,a.trans_day,a.order_no, '+
+                'a.giro_no,a.bank_giro_name,a.giro_due_date,a.customer_name,a.supplier_name, '+
+                'a.to_,a.deposit,a.deposit_date,a.tgup,a.voucher_code,a.to_getout,a.stat, '+
+                'a.time_lock,a.update_time,a.stat_lock,a.currency,a.kurs,a.bon_no,a.post_status, '+
+                'a.created_at,a.created_by,a.updated_at,a.updated_by,a.deleted_at,a.deleted_by, '+
+                'a.bank_norek,a.bank_name,a.cek_no,a.trans_type_code,a.trans_type_name,a.bank_number_account, '+
+                'a.bank_name_account,a.additional_code,a."id",a.module_id, '+
+                'a.cheque_no,a.cheque_date,a.cheque_due_date '+
+                'ORDER BY entry_date,voucher_no,trans_date,order_no ASC ';
+      Open;
+    end;
+    //QDaf_Pengeluaran_Kas_Bank.Close;
+    //QDaf_Pengeluaran_Kas_Bank.Open;
+    DBGridkasBank.FinishLoadingStatus();
+end;
+
+procedure TFdaf_pengeluaran_kas_bank.DBGridKasBankAdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+end;
+
+
 procedure TFdaf_pengeluaran_kas_bank.dxBarLargeButton1Click(Sender: TObject);
 begin
+  if not QDaf_Pengeluaran_Kas_Bank.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
+
   with QBukti_Keluar do
   begin
      close;
      sql.clear;
-     sql.Add('SELECT A.*,"code_account_header","name_account","paid_amount","ket","module_id" FROM '+
+     sql.Add('SELECT x.*,zz.code_account as kode FROM ('+
+             'SELECT A.*,"code_account_header","name_account","paid_amount","ket","module_id" FROM '+
              '(SELECT voucher_no,voucher_tmp,subvoucher,remark,	entry_date,	trans_date,	periode1,	periode2, '+
              'amount,account_code, group_code, group_name,tp_code,account_name,dk, perpetrator_id,debit,kredit, '+
              'header_code,ref_no,posting,customer_code,supplier_code,cash_type,job_no,company_code,trans_year,'+
              'trans_month,trans_day,order_no,giro_no,bank_giro_name,giro_due_date,customer_name,supplier_name,to_,'+
              'deposit,deposit_date,tgup,voucher_code,to_getout,stat,time_lock,update_time,stat_lock,currency,'+
              'kurs,bon_no,post_status,created_at,created_by,updated_at,updated_by,deleted_at,deleted_by,bank_norek,'+
-             'bank_name,cek_no,trans_type_code,trans_type_name,bank_number_account,bank_name_account,additional_code '+
+             'bank_name,cek_no,trans_type_code,trans_type_name,bank_number_account,bank_name_account,additional_code,cheque_no '+
              'FROM "public"."t_cash_bank_expenditure" A WHERE "voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
              'AND deleted_at IS NULL) A '+
              'LEFT JOIN '+
@@ -430,7 +510,12 @@ begin
              'amount_rate_results,module_id,trans_date,no_voucher_sub FROM "public"."t_cash_bank_expenditure_det" aa '+
              'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.code) b ON A."voucher_no" = b."no_voucher" '+
              'WHERE A."voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
-             'AND "position" = ''D'' ');
+             'AND "position" = ''D'' '+
+             ')x LEFT JOIN (SELECT no_voucher,code_account,"position" FROM '+
+             '(SELECT no_voucher,code_account,"position" FROM "public"."t_cash_bank_expenditure_det" '+
+             'x LEFT JOIN t_ak_account y ON x."code_account_header" = y.code) C WHERE '+
+             'c."no_voucher"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+             'AND c."position" =''K'')zz on x.voucher_no=zz.no_voucher ');
      open;
   end;
 
@@ -472,6 +557,80 @@ begin
      //ShowMessage(cLocation);
      if QBukti_Keluar.FieldByName('module_id').AsString='6' then//kas
      begin
+       if QBukti_Keluar.FieldByName('trans_type_code').AsString='6.001' then //Hutang
+       begin
+       with QBukti_Keluar_Faktur do
+       begin
+         close;
+         sql.clear;
+         sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+                 ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
+         open;
+       end;
+
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Kas_Hutang'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+       if QBukti_Keluar.FieldByName('trans_type_code').AsString='6.002' then //Non Hutang
+       begin
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Kas'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+       if QBukti_Keluar.FieldByName('trans_type_code').AsString='6.003' then //Pengisian Kas Kecil
+       begin
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Kas'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+     end;
+
+     if QBukti_Keluar.FieldByName('module_id').AsString='5' then//bank
+     begin
+       if QBukti_Keluar.FieldByName('trans_type_code').AsString='5.001' then //Hutang
+       begin
+       //cari Detail Faktur
+       with QBukti_Keluar_Faktur do
+       begin
+         close;
+         sql.clear;
+         sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+                 ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
+         open;
+       end;
+
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Cheque_Hutang'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+       if QBukti_Keluar.FieldByName('trans_type_code').AsString='5.002' then //nonhutang
+       begin
+         Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Cheque'+'.fr3');
+         SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+         //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.ShowReport();
+       end;
+     end;
+
+
+     //ShowMessage(cLocation);
+     {if QBukti_Keluar.FieldByName('module_id').AsString='6' then//kas
+     begin
          Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_kas_1'+'.fr3');
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
@@ -485,7 +644,7 @@ begin
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
          Report.ShowReport();
-     end;
+     end; }
 
      //Report.DesignReport();
      //Report.ShowReport();
@@ -517,6 +676,12 @@ end;
 
 procedure TFdaf_pengeluaran_kas_bank.dxBarLargeButton2Click(Sender: TObject);
 begin
+  if not QDaf_Pengeluaran_Kas_Bank.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
+
     with QJurnal do
     begin
      close;

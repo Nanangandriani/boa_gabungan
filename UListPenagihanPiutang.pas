@@ -81,6 +81,7 @@ type
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dtTanggal1Change(Sender: TObject);
     procedure dtTanggal2Change(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -168,12 +169,14 @@ end;
 
 procedure TFListPenagihanPiutang.ActROExecute(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
 procedure TFListPenagihanPiutang.ActUpdateExecute(Sender: TObject);
 begin
   FDataPenagihanPiutang.Clear;
+  FDataPenagihanPiutang.Status := 1;
 //  ShowMessage(QListPenagihanPiutang.FieldByName('code_collector').AsString);
   FDataPenagihanPiutang.dtTagih.Date:=QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime;
   FDataPenagihanPiutang.dtCetak.Date:=QListPenagihanPiutang.FieldByName('date_print').AsDateTime;
@@ -181,7 +184,7 @@ begin
   FDataPenagihanPiutang.edKdWilayah.Text:=QListPenagihanPiutang.FieldByName('code_regency').AsString;
   FDataPenagihanPiutang.edKabupaten.Text:=QListPenagihanPiutang.FieldByName('name_regency').AsString;
   FDataPenagihanPiutang.strKabupatenID:=QListPenagihanPiutang.FieldByName('code_regency').AsString;
-   FDataPenagihanPiutang.edKodeKolektor.Text:=QListPenagihanPiutang.FieldByName('code_collector').AsString;
+  FDataPenagihanPiutang.edKodeKolektor.Text:=QListPenagihanPiutang.FieldByName('code_collector').AsString;
   FDataPenagihanPiutang.edNamaKolektor.Text:=QListPenagihanPiutang.FieldByName('name_collector').AsString;
   FDataPenagihanPiutang.dtCetak.Enabled:=False;
   FDataPenagihanPiutang.dtTagih.Enabled:=False;
@@ -191,10 +194,8 @@ begin
   FDataPenagihanPiutang.btTampilkan.Enabled:=False;
   FDataPenagihanPiutang.DBGridDetail.Columns[1].EditButton.Enabled:=False;
   FDataPenagihanPiutang.DBGridDetail.Columns[2].EditButton.Enabled:=False;
-
-  FDataPenagihanPiutang.RefreshGrid;
+  FDataPenagihanPiutang.RefreshGrid2;
   FDataPenagihanPiutang.Show;
-  FDataPenagihanPiutang.Status := 1;
 end;
 
 procedure TFListPenagihanPiutang.dtTanggal1Change(Sender: TObject);
@@ -209,11 +210,19 @@ end;
 
 procedure TFListPenagihanPiutang.dxBarLargeButton1Click(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
+end;
+
+procedure TFListPenagihanPiutang.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QListPenagihanPiutang.Close;
 end;
 
 procedure TFListPenagihanPiutang.FormShow(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
   Refresh;

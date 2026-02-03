@@ -261,6 +261,12 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         item
           UserDefine = [udWidth]
+          UserWidth = 196
+          Visible = True
+          ItemName = 'cbTP'
+        end
+        item
+          UserDefine = [udWidth]
           UserWidth = 81
           Visible = True
           ItemName = 'dtTanggal1'
@@ -309,7 +315,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 462
+      DockedLeft = 495
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1134,7 +1140,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
       Caption = 'Karesidenan   '
       Category = 0
       Hint = 'Karesidenan   '
-      Visible = ivAlways
+      Visible = ivNever
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item
@@ -1345,7 +1351,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
       Caption = 'Cetak'
       Category = 0
       Hint = 'Cetak'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1535,6 +1541,19 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton7Click
     end
+    object cbTP: TcxBarEditItem
+      Caption = 'TP                    '
+      Category = 0
+      Hint = 'TP                    '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cbTPPropertiesButtonClick
+    end
   end
   object DsLaporanHarianSisaNotaPerTP: TDataSource
     DataSet = QLaporanHarianSisaNotaPerTP
@@ -1550,7 +1569,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46007.381886053240000000
+    ReportOptions.LastChange = 46036.670761921300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1572,7 +1591,6 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
       PaperWidth = 215.900000000000000000
       PaperHeight = 330.000000000000000000
       PaperSize = 256
@@ -2087,7 +2105,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 473.498687670000000000
+          Left = 474.498687670000000000
           Top = 33.455380570000000000
           Width = 79.130434780000000000
           Height = 16.666666670000000000
@@ -2278,7 +2296,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 473.166666660000000000
+          Left = 474.166666660000000000
           Top = 5.269016670000000000
           Width = 45.000000000000000000
           Height = 16.666666670000000000
@@ -2295,7 +2313,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 473.166666670000000000
+          Left = 474.166666670000000000
           Top = 63.602350000000000000
           Width = 87.009803910000000000
           Height = 16.666666670000000000

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, MemDS, DBAccess, Uni, frxClass,
   frxDBSet, Vcl.StdCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.ComCtrls, RzDTP,
-  RzButton, Vcl.ExtCtrls, RzPanel, RzLabel;
+  RzButton, Vcl.ExtCtrls, RzPanel, RzLabel, RzRadChk;
 
 type
   TFKolektifSuratJalan = class(TForm)
@@ -23,10 +23,14 @@ type
     frxDBDSuratJalan: TfrxDBDataset;
     QSuratJalan: TUniQuery;
     DSBuktiTerima: TDataSource;
+    RbAlamat1: TRzRadioButton;
+    RbAlamat2: TRzRadioButton;
     procedure BBatalClick(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
+    procedure RbAlamat1Click(Sender: TObject);
+    procedure RbAlamat2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,9 +66,11 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT a.* from t_selling_det a left join t_selling b on b.trans_no=a.trans_no WHERE '+
-              'a.word_amount_qty IS NULL and '+
-              'b.trans_no is NOT NULL';
+    sql.Text:='SELECT a.* from t_selling_det a '+
+              'left join t_selling b on b.trans_no=a.trans_no '+
+              'left join t_item c on c.item_code=a.code_item '+
+              'WHERE a.word_amount_qty IS NULL and '+
+              'b.trans_no is NOT NULL Order by c.group_id asc';
     open;
   end;
   terbilang:='';
@@ -92,9 +98,9 @@ begin
     close;
     sql.Clear;
     sql.Text:='select (SELECT company_code FROM t_company) company_code,a."trans_no",'+
-            ' "no_traveldoc", "trans_date", a."code_cust",  a."name_cust",  d."address",'+
+            ' "no_traveldoc", "trans_date", a."code_cust", a.customer_name_pkp "name_cust",  d."address",'+
             'e."address" AS address2, b."code_item", b."name_item",  b."amount",  b."code_unit",'+
-            ' b."name_unit",b.word_amount_qty, a."no_reference", b."code_unit" as ket, '+
+            ' Upper(b."name_unit") name_unit,b.word_amount_qty, a."no_reference", b."code_unit" as ket, '+
             '(SELECT SUM(gross_weight) FROM t_selling_det WHERE trans_no=a.trans_no '+
             'AND code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_weight) '+
             'FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare_weight, '+
@@ -102,12 +108,15 @@ begin
             '(SELECT DISTINCT notrans from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles  '+
             'from "public".get_selling(False) a   '+
             'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
-            'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address"  where "code_details"=''003'') d '+
-            'on a.code_cust=d.customer_code   LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address"  '+
-            'where "code_details"=''002'') e on a.code_cust=e.customer_code '+
+            'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address"  where "code_details"=''002'') d '+
+            'on a.code_cust=d.customer_code '+
+            'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address"  '+
+            'where "code_details"=''003'') e on a.code_cust=e.customer_code '+
+            'LEFT JOIN t_item f ON f.item_code=b.code_item  '+
             'where (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.DateTime))+' AND '+
             ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.DateTime))+')'+ KodeKaresidenan+' '+
-            ' AND a.deleted_at is null   order by a.trans_date ASC,a.trans_no ASC,a.code_karesidenan ASC, b.created_at Desc';
+            ' AND a.deleted_at is null '+
+            'order by a.trans_date,a.trans_no,f.group_id ASC';
     Open;
   end;
 
@@ -116,6 +125,15 @@ begin
     cLocation := ExtractFilePath(Application.ExeName);
      //ShowMessage(cLocation);
     Report.LoadFromFile(cLocation +'report/rpt_suratjalan_kolektif'+ '.fr3');
+    if RbAlamat2.Checked=True then
+    begin
+      TfrxMemoView(Report.FindObject('Memo29')).Visible := True;
+      TfrxMemoView(Report.FindObject('Memo30')).Visible := True;
+    end else begin
+      TfrxMemoView(Report.FindObject('Memo29')).Visible := False;
+      TfrxMemoView(Report.FindObject('Memo30')).Visible := False;
+    end;
+
     Report.ShowReport();
   end else begin
     MessageDlg('Tidak ada data yang dicetak..!!',mtInformation,[mbRetry],0);
@@ -136,6 +154,18 @@ begin
   edKaresidenan.Text:='';
   dtTanggalAwal.Date:=NOW();
   dtTanggalAkhir.Date:=NOW();
+  RbAlamat1.Checked:=True;
+  RbAlamat2.Checked:=False;
+end;
+
+procedure TFKolektifSuratJalan.RbAlamat1Click(Sender: TObject);
+begin
+  RbAlamat2.Checked:=False;
+end;
+
+procedure TFKolektifSuratJalan.RbAlamat2Click(Sender: TObject);
+begin
+  RbAlamat1.Checked:=False;
 end;
 
 end.

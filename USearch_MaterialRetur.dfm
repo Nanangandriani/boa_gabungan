@@ -3,8 +3,8 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Form Search Material Retur'
-  ClientHeight = 331
-  ClientWidth = 628
+  ClientHeight = 441
+  ClientWidth = 730
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,9 +20,10 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 628
-    Height = 331
+    Width = 730
+    Height = 441
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsMaterial
     DynProps = <>
     SearchPanel.Enabled = True
@@ -63,16 +64,16 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         EditButtons = <>
         FieldName = 'po_no'
         Footers = <>
-        Title.Caption = 'nopo'
+        Title.Caption = 'Nomor PO'
         Width = 113
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'stock_code'
+        FieldName = 'item_name'
         Footers = <>
-        Title.Caption = 'Kode Stok'
+        Title.Caption = 'Nama Barang'
         Width = 150
       end
       item
@@ -82,6 +83,8 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         EditButtons = <>
         FieldName = 'price'
         Footers = <>
+        Title.Caption = 'Harga'
+        Width = 91
       end
       item
         CellButtons = <>
@@ -108,7 +111,8 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
     SQL.Strings = (
       
         'SELECT a.stock_code,a.item_stock_code,b.price,c.faktur_date,c.fa' +
-        'ktur_no,b.po_no,d.item_name,b.unit,d.supplier_code,c.trans_no'
+        'ktur_no,b.po_no,d.item_name,b.unit,d.supplier_code,c.trans_no,b.' +
+        'item_code,b.wh_code'
       ' FROM t_item_stock_det A '
       
         'INNER JOIN t_purchase_invoice_det b ON a.item_stock_code=b.item_' +
@@ -121,9 +125,8 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
         'LEFT JOIN  t_item_receive_det e on  b.receive_no=e.po_no AND a.s' +
         'tock_code=e.stock_code'
       '')
-    Active = True
-    Left = 224
-    Top = 88
+    Left = 232
+    Top = 80
   end
   object DsMaterial: TDataSource
     DataSet = Qmaterial

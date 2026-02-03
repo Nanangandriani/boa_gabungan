@@ -225,12 +225,12 @@ begin
       end;
       //end;
       Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Neraca.fr3');
+      //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
+      //Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
+      TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text:='Periode : '+CbBulan2.Text+' - '+VarToStr(SpTahun.editvalue);
+      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vKodePRSH ;
       Rpt.ShowReport();
     end;
-  //  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
- //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
-
   //end;
     if CbBulan2.Text='' then
     begin
@@ -305,11 +305,13 @@ begin
       //Rpt.ShowReport();
 
       Rpt.PrepareReport(True);
+      TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text:='Periode : '+CbBulan2.Text+' - '+VarToStr(SpTahun.editvalue);
+      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vKodePRSH ;
       ExportToExcel;
     end;
   //  Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
-  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
- //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
+  //  Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
+  //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
 
   //end;
     if CbBulan2.Text='' then

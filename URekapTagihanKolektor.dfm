@@ -1671,7 +1671,7 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
     PdfA = False
     PDFStandard = psNone
     PDFVersion = pv17
-    Left = 376
-    Top = 224
+    Left = 360
+    Top = 184
   end
 end

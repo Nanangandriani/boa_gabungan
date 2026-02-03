@@ -5616,7 +5616,7 @@ object FMainMenu: TFMainMenu
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 408
+      ExplicitLeft = 465
       ExplicitTop = 2
     end
     object RzClockStatus1: TRzClockStatus
@@ -5668,8 +5668,16 @@ object FMainMenu: TFMainMenu
       Height = 19
       Align = alRight
       Caption = ''
-      ExplicitLeft = 524
       ExplicitTop = 2
+    end
+    object RzStatusPane2: TRzStatusPane
+      Left = 559
+      Top = 0
+      Height = 19
+      Align = alLeft
+      Caption = ''
+      ExplicitLeft = 1027
+      ExplicitHeight = 20
     end
   end
   object dxRibbon1: TdxRibbon
@@ -6462,7 +6470,7 @@ object FMainMenu: TFMainMenu
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Left = 332
+    Left = 333
     Top = 136
   end
   object frxDBDJurnal: TfrxDBDataset
@@ -6481,7 +6489,7 @@ object FMainMenu: TFMainMenu
     DataSet = QJurnal
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 408
+    Left = 412
     Top = 136
   end
   object Report: TfrxReport
@@ -6562,7 +6570,7 @@ object FMainMenu: TFMainMenu
     end
   end
   object RzVersionInfo1: TRzVersionInfo
-    Left = 504
-    Top = 117
+    Left = 251
+    Top = 137
   end
 end

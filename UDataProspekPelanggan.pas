@@ -90,7 +90,7 @@ var
   max,min : Integer;
   strSBU: String;
 begin
-
+  DBGridCustomer.SearchPanel.SearchingText:='';
   if FHomeLogin.vStatOffice=0 then
   begin
     strSBU:=cbSBU.Text;
@@ -327,7 +327,7 @@ end;
 procedure TFDataProspekPelanggan.FormShow(Sender: TObject);
 begin
   json := TMyJSON.Create(Self);
-
+  DBGridCustomer.SearchPanel.SearchingText:='';
   MemMasterData.EmptyTable;
   if FHomeLogin.vKodePRSH='PST' then
   begin
@@ -368,7 +368,7 @@ begin
     key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapiprospek''');
     Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapiprospek''');
     vBody := '?sbu_code=' + strsbu;
-    Vpath := 'outlet/prospek';
+    Vpath := 'outlet/prospek/smartboa';
     url := BaseUrl + Vpath + vBody;
     gNet := TIdHTTP.Create(nil);
     try

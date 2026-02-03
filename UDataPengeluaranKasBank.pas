@@ -179,11 +179,12 @@ type
     procedure Ed_kd_bankChange(Sender: TObject);
   private
     { Private declarations }
-    vtotal_debit, vtotal_kredit, vtotal_hutang : real;
+    vtotal_debit, vtotal_kredit, vtotal_hutang : Currency;
   public
     { Public declarations }
     Status,KetemuCekPosisiDK : Integer;
-    akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya : String;
+    next_proses:boolean;
+    akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya,id_module : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5,nobk_tmp,no_bon : String;
     { Public declarations }
     procedure Clear;
@@ -362,7 +363,79 @@ end;
 
 procedure TFDataPengeluaranKasBank.update;
 begin
-   with dm.Qtemp do
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' UPDATE "t_cash_bank_expenditure" SET '+
+            ' "voucher_tmp" = '+QuotedStr(Ed_voucher_ajuan.Text)+', '+
+            ' "subvoucher" = NULL, '+
+            ' "remark" = '+QuotedStr(MemKeterangan.Text)+', '+
+            ' "entry_date" = NOW(), '+
+            ' "trans_date" = '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
+            ' "periode1" = '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+', '+
+            ' "periode2" = '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+', '+
+            //' "amount" = '+QuotedStr(FloatToStr(edJumlah.value))+', '+
+            ' "amount" = '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
+            ' "account_code" = NULL, '+
+            ' "group_code" = NULL, '+
+            ' "group_name" = NULL, '+
+            ' "tp_code" = NULL, '+
+            ' "account_name" = NULL, '+
+            ' "dk" = NULL, '+
+            ' "perpetrator_id" = NULL, '+
+            ' "debit" = NULL, '+
+            ' "kredit" = NULL, '+
+            ' "header_code" = NULL, '+
+            ' "ref_no" = '+QuotedStr(edKodeSumberPengeluaran.Text)+', '+
+            ' "posting" = NULL, '+
+            ' "customer_code" = NULL, '+
+            ' "supplier_code" = '+QuotedStr(edKode_supplier.Text)+', '+
+            ' "cash_type" = NULL, '+
+            ' "job_no" = NULL, '+
+            ' "company_code" = NULL, '+
+            ' "trans_year" = '+QuotedStr(Edth.Text)+', '+
+            ' "trans_month" = '+QuotedStr(Edbln.Text)+', '+
+            ' "trans_day" = '+QuotedStr(Edhari.Text)+', '+
+            ' "giro_no" = NULL, '+
+            ' "bank_giro_name" = NULL, '+
+            ' "giro_due_date" = NULL, '+
+            ' "customer_name" = NULL, '+
+            ' "supplier_name" = '+QuotedStr(edNama_Supplier.Text)+', '+
+            ' "to_" = '+QuotedStr(Ed_kepada.Text)+', '+
+            ' "deposit" = NULL, '+
+            ' "deposit_date" = NULL, '+
+            ' "tgup" = NULL, '+
+            ' "voucher_code" = NULL, '+
+            ' "to_getout" = '+QuotedStr(edUntukPengeluaran.Text)+', '+
+            ' "stat" = 0, '+
+            ' "time_lock" = NULL, '+
+            ' "update_time" = NULL, '+
+            ' "stat_lock" = NULL, '+
+            ' "currency" = '+QuotedStr(edKodeMataUang.Text)+', '+
+            ' "kurs" = '+QuotedStr(FloatToStr(edKurs.value))+', '+
+            ' "bon_no" = NULL, '+
+            ' "post_status" = 0, '+
+            ' "updated_at" = NOW(), '+
+            ' "updated_by" = '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
+            ' "deleted_at" = NULL, '+
+            ' "deleted_by" = NULL, '+
+            ' "bank_norek" = '+QuotedStr(edNoRek.Text)+', '+
+            ' "bank_name" = '+QuotedStr(edNamaBank.Text)+', '+
+            ' "cek_no" = NULL, '+
+            ' "trans_type_code" = '+QuotedStr(code_Trans.Text)+', '+
+            ' "trans_type_name" = '+QuotedStr(Cb_Jenis_Trans.Text)+', '+
+            ' "bank_number_account" = NULL, '+
+            ' "bank_name_account" = NULL, '+
+            ' "additional_code" = '+QuotedStr(Ed_Additional.Text)+', '+
+            ' "module_id" = '+QuotedStr(Ed_id_modul.Text)+', '+
+            ' "cheque_no" = '+QuotedStr(Ed_nocek.Text)+', '+
+            ' "cheque_date" = '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cek.Date))+', '+
+            ' "cheque_due_date" = '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_tempo_cek.Date))+' '+
+            ' WHERE "voucher_no" = '+QuotedStr(edNoTrans.Text)+';');
+    ExecSQL;
+  end;
+   {with dm.Qtemp do
    begin
       close;
       sql.Clear;
@@ -381,7 +454,7 @@ begin
               ' "group_name"=NULL,'+
               ' "tp_code"=NULL,'+
               ' "account_name"=NULL,'+
-              ' "dk"=NULL,'+
+              //' "dk"=NULL,'+
               ' "perpetrator_id"=NULL,'+
               ' "debit"=NULL,'+
               ' "kredit"NULL,'+
@@ -417,7 +490,7 @@ begin
               //' "bon_no"=NULL,'+
               //' "post_status"=0,'+
               //' "created_at"=now(),'+
-              ' "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+','+
+              //' "created_by"='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               ' "updated_at"=Now(),'+
               ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+','+
               //' "deleted_at"=NULL,'+
@@ -432,7 +505,7 @@ begin
               ' "additional_code"='+QuotedStr(Ed_Additional.Text)+' '+
               ' WHERE voucher_no='+QuotedStr(edNoTrans.Text)+'');
       ExecSQL;
-   end;
+   end; }
    if MemDetailAkun.RecordCount<>0 then
    begin
       InsertDetailAkun;
@@ -601,7 +674,10 @@ begin
             ' "bank_number_account","bank_name_account","additional_code","module_id",cheque_no,cheque_date,cheque_due_date) '+
             ' VALUES ( '+
             ' '+QuotedStr(edNoTrans.Text)+','+QuotedStr(Ed_voucher_ajuan.Text)+',NULL,'+QuotedStr(MemKeterangan.Text)+',Now(),'+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+','+QuotedStr(FloatToStr(edJumlah.value))+',NULL, NULL,NULL, '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+', '+
+            //' '+QuotedStr(FloatToStr(edJumlah.value))+','+
+            ' '+QuotedStr(StringReplace(FloatToStr(edJumlah.value),',','.',[]))+', '+
+            ' NULL, NULL,NULL, '+
             ' NULL,NULL,NULL,NULL,NULL,NULL, '+
             ' NULL,'+QuotedStr(edKodeSumberPengeluaran.Text)+', NULL, NULL,'+QuotedStr(edKode_supplier.Text)+',NULL, '+
             ' NULL,NULL,'+QuotedStr(Edth.Text)+','+QuotedStr(Edbln.Text)+','+QuotedStr(Edhari.Text)+','+QuotedStr(order_no)+', '+
@@ -632,6 +708,24 @@ begin
   Clear;
   Close;
   Fdaf_pengeluaran_kas_bank.Refresh;
+
+  with Fdaf_pengeluaran_kas_bank do
+  begin
+    DBGridKasBank.StartLoadingStatus();
+    try
+     with QDaf_Pengeluaran_Kas_Bank do
+     begin
+         close;
+         sql.Clear;
+         sql.Text:=' select * from "public"."t_cash_bank_expenditure" '+
+                   //' where deleted_at is null '+
+                   ' order by created_at Desc ';
+         open;
+     end;
+    finally
+    DBGridKasBank.FinishLoadingStatus();
+    end;
+  end;
 
   {MemDetailAkun.First;     //Ok
   while not MemDetailAkun.Eof do
@@ -826,7 +920,15 @@ begin
       Exit;
     end;
 
+
+    next_proses:=true;
     VCekBalance;
+
+    if next_proses=false then
+    begin
+      Exit;
+    end;
+
 
     //if next_proses=true then
     //begin
@@ -936,6 +1038,7 @@ procedure TFDataPengeluaranKasBank.cbsumberdataSelect(Sender: TObject);
 begin
    if cbsumberdata.Text='KAS' then
    begin
+    id_module:='6';
     load_trans_type;
     with dm.Qtemp do
     begin
@@ -950,6 +1053,7 @@ begin
    end;
    if cbsumberdata.Text='BANK' then
    begin
+    id_module:='5';
     load_trans_type2;
     with dm.Qtemp do
     begin
@@ -1027,14 +1131,31 @@ begin
     vpanggil:='keluar_kasbank_show_header';
     with QDaftar_Perk do
     begin
-       close;
+        sql.Clear;
+        SQL.Text:=' SELECT b.header_code,b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
+                  ' left join t_ak_account b on a.account_code=b.code  '+
+                  ' left join t_ak_header c on b.header_code=c.header_code'+
+                  ' where a.module_id='+quotedSTR(id_module)+' and b.code is not null  '+
+                  ' GROUP BY b.code,b.account_name,c.header_name '+
+                  ' ORDER BY b.code,b.account_name,c.header_name';
+         Open;
+
+        {SQL.Text:='SELECT DISTINCT b.header_code,b.code,b.account_code2,b.account_name,c.header_name FROM t_ak_account_det a '+
+                  'LEFT JOIN v_ak_account b ON a.account_code = b.account_code2 '+
+                  'LEFT JOIN t_ak_header c ON b.header_code = c.header_code '+
+                  'WHERE account_code2 is not NULL '+
+                  'UNION ALL '+
+                  'SELECT header_code,code,code AS account_code2,account_name,'''' AS header_name FROM t_ak_account '+
+                  'WHERE code is not null and code <> '''' '+
+                  'ORDER BY code, account_name,header_name  ';}
+       {close;
        sql.Clear;
        SQL.Text:=' SELECT b.header_code,b.code,b.account_code2,b.account_name,c.header_name FROM t_ak_account_det a'+
                  ' left join v_ak_account b on a.account_code=b.account_code2  '+
                  ' left join t_ak_header c on b.header_code=c.header_code'+
                  ' GROUP BY b.code,b.account_name,c.header_name,b.header_code,b.account_code2 '+
                  ' ORDER BY b.code,b.account_name,c.header_name';
-       Open;
+       Open;}
 
       {close;
       sql.Clear;
@@ -1443,7 +1564,8 @@ begin
           FDataPengeluaranKasBank.MemDetailAkun['kredit']:=edJumlah.Value;
           FDataPengeluaranKasBank.MemDetailAkun['debit']:=0;
         end;
-       FDataPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+       FDataPengeluaranKasBank.MemDetailAkun['keterangan']:=Dm.Qtemp1.fieldbyname('name_account').value;
+       //FDataPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
        FDataPengeluaranKasBank.MemDetailAkun.post;
       end;
 
@@ -1592,7 +1714,7 @@ with Dm.Qtemp do
     end;
 end;
 
-procedure TFDataPengeluaranKasBank. VCekBalance;
+procedure TFDataPengeluaranKasBank.VCekBalance;
 begin
     //Cek Balance Debit Kredit
   vtotal_debit:=0;
@@ -1609,6 +1731,7 @@ begin
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Anda Sudah Benar...!!!');
     //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    next_proses:=false;
     exit;
   end;
 
@@ -1616,6 +1739,7 @@ begin
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
     //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    next_proses:=false;
     exit;
   end;
 
@@ -1635,6 +1759,7 @@ begin
     begin
       ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Dengan Total Hutang Anda Sudah Benar...!!!');
       //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+      next_proses:=false;
       exit;
     end;
   end;

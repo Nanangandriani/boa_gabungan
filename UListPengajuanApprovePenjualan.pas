@@ -27,7 +27,7 @@ uses
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, Winapi.WebView2, Winapi.ActiveX,
   Vcl.OleCtrls, SHDocVw, Vcl.Edge, Vcl.ExtCtrls, RzTabs, MemTableDataEh,
-  MemTableEh, DataDriverEh;
+  MemTableEh, DataDriverEh, RzButton, RzRadChk;
 
 type
   TFListPengajuanApprovePenjualan = class(TForm)
@@ -156,6 +156,10 @@ type
     QSalesOrderno_invoice: TMemoField;
     QSalesOrdernote_pengajuan: TMemoField;
     QSalesOrderpilih: TBooleanField;
+    Panel1: TPanel;
+    cbApprovePenjAll: TRzCheckBox;
+    Panel2: TPanel;
+    cbApproveKlasifikasiAll: TRzCheckBox;
     procedure ActROExecute(Sender: TObject);
     procedure ActAppExecute(Sender: TObject);
     procedure ActRejectExecute(Sender: TObject);
@@ -176,6 +180,8 @@ type
     procedure QAppKlasifikasiname_type_countGetText(Sender: TField;
       var Text: string; DisplayText: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure cbApprovePenjAllClick(Sender: TObject);
+    procedure cbApproveKlasifikasiAllClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -251,6 +257,49 @@ begin
   end;
 end;
 
+procedure TFListPengajuanApprovePenjualan.cbApproveKlasifikasiAllClick(
+  Sender: TObject);
+begin
+  if QAppKlasifikasi.RecordCount>0 then
+  begin
+    QAppKlasifikasi.DisableControls;
+    try
+      QAppKlasifikasi.First;
+      while not QSalesOrder.Eof do
+      begin
+        QAppKlasifikasi.Edit;
+        QAppKlasifikasi.FieldByName('pilih').AsBoolean := cbApproveKlasifikasiAll.Checked;
+        QAppKlasifikasi.Post;
+
+        QAppKlasifikasi.Next;
+      end;
+    finally
+      QAppKlasifikasi.EnableControls;
+    end;
+  end;
+end;
+
+procedure TFListPengajuanApprovePenjualan.cbApprovePenjAllClick(Sender: TObject);
+begin
+  if QSalesOrder.RecordCount>0 then
+  begin
+    QSalesOrder.DisableControls;
+    try
+      QSalesOrder.First;
+      while not QSalesOrder.Eof do
+      begin
+        QSalesOrder.Edit;
+        QSalesOrder.FieldByName('pilih').AsBoolean := cbApprovePenjAll.Checked;
+        QSalesOrder.Post;
+
+        QSalesOrder.Next;
+      end;
+    finally
+      QSalesOrder.EnableControls;
+    end;
+  end;
+end;
+
 procedure TFListPengajuanApprovePenjualan.RejectSalesOrder;
 var notrans: String;
 begin
@@ -284,6 +333,7 @@ end;
 
 procedure TFListPengajuanApprovePenjualan.FormShow(Sender: TObject);
 begin
+  cbApprovePenjAll.Checked:=False;
   ActROExecute(sender);
 end;
 
@@ -567,7 +617,7 @@ begin
   //Baca Status Tab Yang Aktif
   ActiveIndex := PageControl1.ActivePageIndex;
   //ShowMessage('Indeks tab aktif: ' + IntToStr(ActiveIndex));
-
+  cbApprovePenjAll.Checked:=False;
   if ActiveIndex=0 then
   begin
     //RefreshKlasifikasi;

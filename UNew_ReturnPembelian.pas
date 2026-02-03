@@ -71,6 +71,7 @@ type
   private
     { Private declarations }
   public
+    status :integer;
     { Public declarations }
     procedure Autonumber;
     Procedure Totalretur;
@@ -80,7 +81,6 @@ type
 
 var
  FNew_ReturnPemb: TFNew_ReturnPemb;
- status:integer;
  kdstok,thn,bln,tgl,nourut,jenis_tr,akunHut,AkunRetur,AkunPpn:string;
  subtotal,ppn_rp,grandtotal:real;
 
@@ -173,7 +173,7 @@ begin
               close;
               sql.Clear;
               sql.Text:='select * from t_purchase_return';
-              ExecSQL;
+              Open;
             end;
             with dm.Qtemp do
             begin
@@ -183,7 +183,7 @@ begin
                         ' ppn, supplier_code,receive_no,valas,valas_value,trans_year,trans_month,trans_day,order_no,ppn_rp,pic,account_code,account_code2,account_ppn)values(:parno,:partgl,:parnofk,:parharga,:partotal,'+
                         ' :parppn,:parkdsp,:parnotr,:parvls,:parnvls,:parthn,:parbln,:partglno,:parnourut,:parppnrp,:parpic,:account_code,:account_code2,:account_ppn)';
                         ParamByName('parno').Value:=Edno.Text;
-                        ParamByName('partgl').Value:= FormatDateTime('yyy-mm-dd',DtReturn.Date);
+                        ParamByName('partgl').Value:= FormatDateTime('yyyy-mm-dd',DtReturn.Date);
                         ParamByName('parnofk').Value:=EdNoFaktur.Text;
                         ParamByName('parharga').Value:=FloatToStr(subtotal);
                         ParamByName('partotal').Value:=FloatToStr(grandtotal);
@@ -213,7 +213,7 @@ begin
                   sql.Clear;
                   sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no,item_stock_code,'+
                             ' qty,unit,stock_code,price,total_price,receive_no,account_code,account_ppn,code_item,code_wh)values(:parno,:parnofk,:parnopo, '+
-                            ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:wh_code)';
+                            ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:code_wh)';
                             ParamByName('parno').Value:=Edno.Text;
                             ParamByName('parnofk').Value:=MemDetail['nofaktur'];
                             ParamByName('parnopo').value:=MemDetail['nopo'];
@@ -227,7 +227,7 @@ begin
                             ParamByName('account_code').Value:=AkunRetur;
                             ParamByName('account_ppn').Value:=Akunppn;
                             ParamByName('item_code').Value:=MemDetail['item_code'];
-                            ParamByName('wh_code').Value:=MemDetail['wh_code'];
+                            ParamByName('code_wh').Value:=MemDetail['wh_code'];
                   ExecSQL;
                 end;
                 MemDetail.Next;
@@ -236,7 +236,8 @@ begin
             Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
             BBatalClick(sender);
           end;
-        end;
+        end
+        else
         if status=1 then
         begin
           with dm.Qtemp do
@@ -247,7 +248,7 @@ begin
                       ' total_price=:partotal,ppn=:parppn,supplier_code=:parkdsp,valas=:parvls,valas_value=:parnvls,'+
                       ' receive_no=:parnotr,ppn_rp=:parppnrp,pic_update=:parpic,account_code=:account_code,account_code2=:account_code2,account_ppn=:account_ppn where return_no=:parno';
                       ParamByName('parno').Value:=Edno.Text;
-                      ParamByName('partgl').Value:= FormatDateTime('yyy-mm-dd',DtReturn.Date);
+                      ParamByName('partgl').Value:= FormatDateTime('yyyy-mm-dd',DtReturn.Date);
                       ParamByName('parnofk').Value:=EdNoFaktur.Text;
                       ParamByName('parharga').Value:=FloatToStr(subtotal);
                       ParamByName('partotal').Value:=FloatToStr(grandtotal);
@@ -269,7 +270,9 @@ begin
           begin
             Close;
             sql.Clear;
-            sql.Text:='	delete from t_purchase_return_det where return_no='+QuotedStr(Edno.Text);
+            //sql.Text:='	delete from t_purchase_return_det where return_no='+QuotedStr(Edno.Text);
+            sql.Text:='	delete from t_purchase_return_det where return_no=:parno ';
+            ParamByName('parno').AsString := Trim(EdNo.Text);
             ExecSQL;
           end;
           MemDetail.First;
@@ -281,7 +284,7 @@ begin
                 sql.Clear;
                 sql.Text:='	insert into t_purchase_return_det(return_no,faktur_no,po_no, item_stock_code,'+
                           ' qty,unit,stock_code,price,total_price,receive_no,account_code,account_ppn,code_item,code_wh)values(:parno,:parnofk,:parnopo, '+
-                          ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:wh_code)';
+                          ' :parkdmat,:parqty,:parsatuan,:parkd_stok,:parharga,:partotal,:parnotr,:account_code,:account_ppn,:item_code,:code_wh)';
                           ParamByName('parno').Value:=Edno.Text;
                           ParamByName('parnofk').Value:=MemDetail['nofaktur'];
                           ParamByName('parnopo').value:=MemDetail['nopo'];
@@ -295,7 +298,7 @@ begin
                           ParamByName('account_code').Value:=AkunRetur;
                           ParamByName('account_ppn').Value:=Akunppn;
                           ParamByName('item_code').Value:=MemDetail['item_code'];
-                          ParamByName('wh_code').Value:=MemDetail['wh_code'];
+                          ParamByName('code_wh').Value:=MemDetail['wh_code'];
 
                 ExecSQL;
               end;
@@ -471,6 +474,7 @@ begin
       edvls.text:=Dm.Qtemp['valas'];
       AkunHut:=Dm.Qtemp['account_code'];
       AkunRetur:=Dm.Qtemp['account_return'];
+      ednilai_vls.text:='1';
       //showmessage(AkunHut);
       //showmessage(AkunRetur);
 end;
@@ -500,7 +504,7 @@ begin
   Ednm_supp.Text:='';
   Edppnrp.Text:='0';
   EdNoFaktur.Text:='';
-  edppn.Text:='10';
+  edppn.Text:='11';
   Edgrandtotal.Text:='';
   MemDetail.EmptyTable;
 end;

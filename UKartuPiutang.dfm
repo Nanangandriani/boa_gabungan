@@ -889,20 +889,32 @@ object FKartuPiutang: TFKartuPiutang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        ' SELECT *,  ROUND(SUM(saldo_awal + debet - kredit) OVER (ORDER B' +
-        'Y nomor),2) AS saldo FROM (SELECT * from (  SELECT ROW_NUMBER() ' +
-        'OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC)' +
-        ' AS nomor,   *  FROM (SELECT customer_code, customer_name_pkp, c' +
-        'ode_region, name_region, trans_no, tgltrans,  saldo_awal, no_uru' +
-        't, keterangan2, debet, kredit FROM  "public"."get_piutang_trx2" ' +
-        '('#39'2025-11-01'#39', '#39'2025-11-30'#39')  ORDER BY customer_code, no_urut, t' +
-        'gltrans ASC) AS subquery  ORDER BY customer_code, nomor) trx  LE' +
-        'FT JOIN (SELECT "code_province", "code" as code_kab, "name" as n' +
-        'ame_kab,  "code_karesidenan"  from t_region_regency WHERE delete' +
-        'd_at IS NULL)b    ON "left"(code_region, 4)=b.code_kab  where cu' +
-        'stomer_code<> '#39'0'#39' '
-      ' AND code_karesidenan='#39'JKT'#39'  AND customer_code='#39'PL01287'#39
-      ' ORDER BY customer_code,nomor asc) zz')
+        'WITH RankedData AS (  SELECT *, ROUND(SUM(saldo_awal + debet - k' +
+        'redit) OVER (PARTITION BY customer_code ORDER BY nomor), 2) AS s' +
+        'aldo FROM (SELECT trx.*,b."code_province", b.code_kab,b.name_kab' +
+        ', b."code_karesidenan"'
+      ',c.code code_kecamatan,UPPER(c.name) kecamatan '
+      
+        'FROM ( SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDE' +
+        'R BY no_urut, tgltrans ASC) AS nomor,sq.* FROM ( SELECT customer' +
+        '_code, customer_name_pkp, code_region, name_region, trans_no, tg' +
+        'ltrans, COALESCE(saldo_awal,0) saldo_awal, no_urut, keterangan2,' +
+        ' debet, kredit FROM "public"."get_piutang_trx2" ('#39'2026-01-01'#39', '#39 +
+        '2026-01-31'#39') ORDER BY customer_code, no_urut, created_at ASC ) A' +
+        'S sq ) trx LEFT JOIN  (SELECT rg.code_province, rg.code as code_' +
+        'kab, rg.name as name_kab,  rg.code_karesidenan from t_region_reg' +
+        'ency rg )b ON "left"(code_region, 4)=b.code_kab '
+      'LEFT JOIN t_region_subdistrict c on c.code=trx.code_region'
+      'WHERE customer_code <> '#39'0'#39' '
+      ' ORDER BY customer_code asc,nomor asc) zz ),'
+      
+        'FilteredCustomerCount AS (SELECT *,COUNT(*) OVER (PARTITION BY c' +
+        'ustomer_code) AS TotalRows, CASE WHEN (COUNT(*) OVER (PARTITION ' +
+        'BY customer_code) = 1) AND (MAX(CASE WHEN nomor = 1 THEN saldo_a' +
+        'wal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) THEN 0' +
+        ' ELSE 1 END AS KeepCustomer FROM RankedData) SELECT * FROM Filte' +
+        'redCustomerCount WHERE KeepCustomer = 1 ORDER BY customer_code A' +
+        'SC, nomor ASC;')
     Left = 804
     Top = 128
     object QCetaknomor: TLargeintField
@@ -984,6 +996,16 @@ object FKartuPiutang: TFKartuPiutang
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QCetakcode_kecamatan: TStringField
+      FieldName = 'code_kecamatan'
+      ReadOnly = True
+      Size = 255
+    end
+    object QCetakkecamatan: TMemoField
+      FieldName = 'kecamatan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object frxDBDKartuPiutang: TfrxDBDataset
     UserName = 'frxDBDKartuPiutang'
@@ -1005,17 +1027,19 @@ object FKartuPiutang: TFKartuPiutang
       'code_kab=code_kab'
       'name_kab=name_kab'
       'code_karesidenan=code_karesidenan'
-      'keterangan2=keterangan2')
+      'keterangan2=keterangan2'
+      'code_kecamatan=code_kecamatan'
+      'kecamatan=kecamatan')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 944
-    Top = 72
+    Left = 872
+    Top = 128
   end
   object dsCetak: TDataSource
     DataSet = QCetak
-    Left = 1041
-    Top = 72
+    Left = 953
+    Top = 128
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1027,14 +1051,14 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 45994.635450243050000000
+    ReportOptions.LastChange = 46036.945372106480000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       
         'procedure frxDBDKartuPiutangtanggalOnBeforePrint(Sender: TfrxCom' +
         'ponent);'
-      'begin                           '
+      'begin'
       '  if (<frxDBDKartuPiutang."keterangan2"> = '#39'Saldo Awal'#39') then'
       '  begin'
       '    frxDBDKartuPiutangnofakturpajak.Text:='#39#39';'
@@ -1392,10 +1416,11 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 15.118120000000000000
-          Top = 79.456710000000000000
+          Left = 306.027210910000000000
+          Top = 130.365800910000000000
           Width = 128.504020000000000000
           Height = 22.677180000000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1409,7 +1434,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo5: TfrxMemoView
           AllowVectorExport = True
           Left = 15.118120000000000000
-          Top = 111.133890000000000000
+          Top = 79.370078740157480000
           Width = 128.504020000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1457,7 +1482,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo8: TfrxMemoView
           AllowVectorExport = True
           Left = 814.094930000000000000
-          Top = 111.133890000000000000
+          Top = 108.133890000000000000
           Width = 128.504020000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1488,10 +1513,11 @@ object FKartuPiutang: TFKartuPiutang
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 147.401670000000000000
-          Top = 79.196866670000000000
+          Left = 438.310760910000000000
+          Top = 130.105957580000000000
           Width = 7.559060000000000000
           Height = 21.417336670000000000
+          Visible = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1505,7 +1531,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo11: TfrxMemoView
           AllowVectorExport = True
           Left = 147.401670000000000000
-          Top = 109.614203330000000000
+          Top = 79.370078740157480000
           Width = 7.559060000000000000
           Height = 21.417336670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1553,7 +1579,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo14: TfrxMemoView
           AllowVectorExport = True
           Left = 946.378480000000000000
-          Top = 108.614203330000000000
+          Top = 105.614203330000000000
           Width = 7.559060000000000000
           Height = 21.417336670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1754,10 +1780,11 @@ object FKartuPiutang: TFKartuPiutang
         end
         object frxDBDKartuPiutangnama_kecamatan: TfrxMemoView
           AllowVectorExport = True
-          Left = 158.740260000000000000
-          Top = 81.590600000000000000
+          Left = 449.649350910000000000
+          Top = 132.499690910000000000
           Width = 482.035393850000000000
           Height = 18.897650000000000000
+          Visible = False
           DataSet = frxDBDKartuPiutang
           DataSetName = 'frxDBDKartuPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1773,7 +1800,7 @@ object FKartuPiutang: TFKartuPiutang
         object frxDBDKartuPiutangnama_kabupaten: TfrxMemoView
           AllowVectorExport = True
           Left = 158.740260000000000000
-          Top = 113.267780000000000000
+          Top = 79.370078740157480000
           Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
@@ -1810,7 +1837,7 @@ object FKartuPiutang: TFKartuPiutang
         object periode: TfrxMemoView
           AllowVectorExport = True
           Left = 957.717070000000000000
-          Top = 110.488250000000000000
+          Top = 107.488250000000000000
           Width = 211.653680000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2073,6 +2100,56 @@ object FKartuPiutang: TFKartuPiutang
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
+        end
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 15.118110240000000000
+          Top = 108.094488188976400000
+          Width = 128.504020000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Kecamatan')
+          ParentFont = False
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 147.401574800000000000
+          Top = 108.094488188976400000
+          Width = 7.559060000000000000
+          Height = 21.417336670000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 158.740157480000000000
+          Top = 108.094488188976400000
+          Width = 482.035393850000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDKartuPiutang
+          DataSetName = 'frxDBDKartuPiutang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuPiutang."kecamatan"]')
+          ParentFont = False
         end
       end
       object GroupFooter1: TfrxGroupFooter

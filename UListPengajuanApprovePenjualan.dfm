@@ -58,24 +58,27 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         TabOrder = 0
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
-          Top = 1
+          Top = 26
           Width = 1100
-          Height = 421
+          Height = 396
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
+          ExplicitTop = 1
+          ExplicitHeight = 421
         end
         object WebBrowser1: TWebBrowser
           Left = 1
-          Top = 1
+          Top = 26
           Width = 1100
-          Height = 421
+          Height = 396
           Align = alClient
           TabOrder = 1
+          ExplicitTop = 1
           ExplicitWidth = 1096
           ExplicitHeight = 420
           ControlData = {
-            4C000000B0710000832B00000000000000000000000000000000000000000000
+            4C000000B0710000EE2800000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -83,10 +86,9 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         end
         object DBGridList: TDBGridEh
           Left = 1
-          Top = 1
+          Top = 41
           Width = 1100
           Height = 421
-          Align = alClient
           DataSource = dsAppKlasifikasii
           DynProps = <>
           IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
@@ -342,6 +344,28 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
             end
           end
         end
+        object Panel2: TPanel
+          Left = 1
+          Top = 1
+          Width = 1100
+          Height = 25
+          Align = alTop
+          TabOrder = 6
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 1102
+          object cbApproveKlasifikasiAll: TRzCheckBox
+            Left = 14
+            Top = 3
+            Width = 85
+            Height = 19
+            AlignmentVertical = avCenter
+            Caption = 'Pilih Semua'
+            State = cbUnchecked
+            TabOrder = 0
+            OnClick = cbApproveKlasifikasiAllClick
+          end
+        end
       end
     end
     object TabSheet1: TRzTabSheet
@@ -350,9 +374,9 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
       ExplicitHeight = 422
       object DBGridOrder: TDBGridEh
         Left = 0
-        Top = 0
+        Top = 25
         Width = 1102
-        Height = 423
+        Height = 398
         Align = alClient
         DataSource = DsSalesOrder
         DrawMemoText = True
@@ -462,7 +486,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
             Top = 0
             Width = 1054
             Height = 168
-            Align = alClient
+            Align = alBottom
             DataSource = DsSalesOrderDetail
             DynProps = <>
             TabOrder = 0
@@ -519,6 +543,25 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
             object RowDetailData: TRowDetailPanelControlEh
             end
           end
+        end
+      end
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 1102
+        Height = 25
+        Align = alTop
+        TabOrder = 1
+        object cbApprovePenjAll: TRzCheckBox
+          Left = 14
+          Top = 3
+          Width = 85
+          Height = 19
+          AlignmentVertical = avCenter
+          Caption = 'Pilih Semua'
+          State = cbUnchecked
+          TabOrder = 0
+          OnClick = cbApprovePenjAllClick
         end
       end
     end

@@ -64,6 +64,7 @@ type
     edKabupaten: TRzButtonEdit;
     Label5: TLabel;
     Label6: TLabel;
+    RzBitBtn2: TRzBitBtn;
     procedure edNamaKolektorButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailColumns1EditButtons0Click(Sender: TObject;
@@ -80,6 +81,8 @@ type
     procedure edKaresidenanChange(Sender: TObject);
     procedure edKabupatenChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure RzBitBtn2Click(Sender: TObject);
+    procedure edNamaKolektorChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -90,6 +93,7 @@ type
     procedure Save;
     procedure Update;
     procedure RefreshGrid;
+    procedure RefreshGrid2;
   end;
 
 var
@@ -110,16 +114,32 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT *,customer_name from ('+
-            ' SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
-            ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
-            ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
-            ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
-            ' FROM  "public"."t_dpp") a '+
-            ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
-            ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
-            ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
-            ' Order By "date_dpp", "no_invoice" desc');
+    sql.Text:=' SELECT * from get_dpp_prev('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+','+QuotedStr(edKodeKolektor.Text)+')';
+//    sql.Text:='SELECT *,customer_name from ( '+
+//               'SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
+//               '"code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
+//               '"paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
+//               '"name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
+//               'FROM  "public"."t_dpp" '+
+//               'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+//               '"date_dpp"= (SELECT MAX("date_dpp")'+
+//               'FROM "public"."t_dpp" '+
+//               'WHERE "code_collector" = '+QuotedStr(edKodeKolektor.Text)+' AND '+
+//              '"date_dpp" < '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+') '+
+//               ') a '+
+//               'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+//               'Order By "date_dpp", "no_invoice" desc';
+
+//    sql.add(' SELECT *,customer_name from ('+
+//            ' SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
+//            ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
+//            ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
+//            ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
+//            ' FROM  "public"."t_dpp") a '+
+//            ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+//            ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+//            ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
+//            ' Order By "date_dpp", "no_invoice" desc');
     open;
   end;
 
@@ -132,7 +152,7 @@ begin
       FDataPenagihanPiutang.MemDetail.active:=false;
       FDataPenagihanPiutang.MemDetail.active:=true;
       FDataPenagihanPiutang.MemDetail.EmptyTable;
-      ShowMessage('Tidak Ditemukan Data...');
+      ShowMessage('Tidak Ditemukan Data Pada Tanggal Sebelumnya...');
     end;
 
     if  Dm.Qtemp.RecordCount<>0 then
@@ -164,6 +184,78 @@ begin
      FDataPenagihanPiutang.MemDetail['nilai_cek']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
      FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
      FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
+     FDataPenagihanPiutang.MemDetail['isdpp_prev']:=1;
+
+     FDataPenagihanPiutang.MemDetail.post;
+     Dm.Qtemp.next;
+    end;
+    end;
+end;
+
+procedure TFDataPenagihanPiutang.RefreshGrid2;
+var
+URUTAN_KE : Integer;
+begin
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT *,customer_name from ('+
+            ' SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
+            ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
+            ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
+            ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
+            ' FROM  "public"."t_dpp") a '+
+            ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+            ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
+            ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
+            ' Order By "date_dpp", "no_invoice" desc');
+    open;
+  end;
+
+    FDataPenagihanPiutang.MemDetail.active:=false;
+    FDataPenagihanPiutang.MemDetail.active:=true;
+    FDataPenagihanPiutang.MemDetail.EmptyTable;
+
+    if  Dm.Qtemp.RecordCount=0 then
+    begin
+      FDataPenagihanPiutang.MemDetail.active:=false;
+      FDataPenagihanPiutang.MemDetail.active:=true;
+      FDataPenagihanPiutang.MemDetail.EmptyTable;
+      ShowMessage('Tidak Ditemuka...');
+    end;
+
+    if  Dm.Qtemp.RecordCount<>0 then
+    begin
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
+    begin
+     FDataPenagihanPiutang.MemDetail.insert;
+     FDataPenagihanPiutang.MemDetail['kode_pel']:=Dm.Qtemp.FieldByName('code_cust').AsString;
+     FDataPenagihanPiutang.MemDetail['nama_pel']:=Dm.Qtemp.FieldByName('customer_name').AsString;
+     FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
+     FDataPenagihanPiutang.MemDetail['no_invoice_tax']:=Dm.Qtemp.FieldByName('no_invoice_tax').AsString;
+     FDataPenagihanPiutang.MemDetail['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+     FDataPenagihanPiutang.MemDetail['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
+     FDataPenagihanPiutang.MemDetail['jum_piutang']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;
+     FDataPenagihanPiutang.MemDetail['tunai']:=Dm.Qtemp.FieldByName('cash').AsFloat;
+     FDataPenagihanPiutang.MemDetail['bank_resi']:=Dm.Qtemp.FieldByName('bank_receipt').AsString;
+     if (formatdatetime('yyyy-mm-dd',Dm.Qtemp.FieldByName('date_receipt').AsDateTime)='1899-12-30') OR (Dm.Qtemp.FieldByName('date_receipt').AsDateTime=null) then
+      FDataPenagihanPiutang.MemDetail['tgl_resi']:=null
+      else
+      FDataPenagihanPiutang.MemDetail['tgl_resi']:=Dm.Qtemp.FieldByName('date_receipt').AsDateTime;
+     FDataPenagihanPiutang.MemDetail['resi']:=Dm.Qtemp.FieldByName('receipt').AsFloat;
+     FDataPenagihanPiutang.MemDetail['nama_bank_cek']:=Dm.Qtemp.FieldByName('name_bank_cheque').AsString;
+     FDataPenagihanPiutang.MemDetail['no_cek']:=Dm.Qtemp.FieldByName('no_cheque').AsString;
+     if (formatdatetime('yyyy-mm-dd',Dm.Qtemp.FieldByName('date_tempo_cheque').AsDateTime)='1899-12-30') OR (Dm.Qtemp.FieldByName('date_tempo_cheque').AsDateTime=null) then
+      FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:=null
+      else
+     FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:=Dm.Qtemp.FieldByName('date_tempo_cheque').AsDateTime;
+     FDataPenagihanPiutang.MemDetail['nilai_cek']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
+     FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
+     FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
+     FDataPenagihanPiutang.MemDetail['isdpp_prev']:=1;
+
      FDataPenagihanPiutang.MemDetail.post;
      Dm.Qtemp.next;
     end;
@@ -247,7 +339,7 @@ begin
     sql.clear;
     sql.Text:=' DELETE FROM "public"."t_dpp"'+
               ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
-              ' "date_trans"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
+              ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
     ExecSQL;
   end;
 
@@ -290,10 +382,16 @@ begin
                 ' '+QuotedStr(MemDetail['no_invoice_tax'])+', '+
                 ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_faktur']))+', '+
                 ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo']))+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['jum_piutang']))+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['tunai']))+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
+
+                ' '+QuotedStr(StringReplace(MemDetail['jum_piutang'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemDetail['tunai'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemDetail['resi'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemDetail['kontra_bon'],',','.',[]))+','+
+
+//                ' '+QuotedStr(FloatToStr(MemDetail['jum_piutang']))+', '+
+//                ' '+QuotedStr(FloatToStr(MemDetail['tunai']))+', '+
+//                ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
+//                ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
                 ' '+QuotedStr(MemDetail['bank_resi'])+', ');
                 if not VarIsNull(MemDetail['tgl_resi']) then
                 sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ')
@@ -306,8 +404,10 @@ begin
 //                  sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
       sql.add(  ' '+QuotedStr(MemDetail['nama_bank_cek'])+', '+
                 ' '+QuotedStr(MemDetail['no_cek'])+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
-                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
+                ' '+QuotedStr(StringReplace(MemDetail['nilai_cek'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemDetail['nilai_cek'],',','.',[]))+',');
+//                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
+//                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
 
                 if not VarIsNull(MemDetail['tgl_tempo_cek']) then
                 sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+',')
@@ -366,8 +466,10 @@ begin
   begin
   if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
   begin
-    Update;
+    Save;
     Dm.Koneksi.Commit;
+//    Update;
+//    Dm.Koneksi.Commit;
   end;
   end;
   Except on E :Exception do
@@ -386,7 +488,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add('SELECT b.customer_code,b.customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
+    sql.add('SELECT b.customer_code,b.customer_name_pkp customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
             'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
             'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
             'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
@@ -402,7 +504,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.add('SELECT b.customer_code,b.customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
+    sql.add('SELECT b.customer_code,b.customer_name_pkp customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
             'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
             'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
             'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
@@ -418,6 +520,11 @@ begin
 
   //ShowMessage(cLocation);
   Report.LoadFromFile(cLocation +'report/rpt_daftar_penagihan_piutang'+ '.fr3');
+
+  if Report.FindObject('Page2') <> nil then
+    TfrxReportPage(Report.FindObject('Page2')).Visible := (QdppSudahTagih.RecordCount > 0);
+  if Report.FindObject('Page1') <> nil then
+    TfrxReportPage(Report.FindObject('Page1')).Visible := (Qdppbelumditagih.RecordCount > 0);
 //  SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
 //  SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
 //  SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
@@ -437,14 +544,26 @@ end;
 
 procedure TFDataPenagihanPiutang.btTampilkanClick(Sender: TObject);
 begin
-  if edNamaKolektor.Text='' then
+  if (status=0) then
   begin
-    MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
-  end else begin
-    MemDetail.EmptyTable;
-    MemDetail.Active:=true;
-    RefreshGrid;
+    if (edNamaKolektor.Text<>'') then
+    begin
+      MemDetail.EmptyTable;
+      MemDetail.Active:=true;
+      RefreshGrid;
+    end else begin
+      MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end;
   end;
+
+//  if (edNamaKolektor.Text='') AND (status=0) then
+//  begin
+//    MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+//  end else begin
+//    MemDetail.EmptyTable;
+//    MemDetail.Active:=true;
+//    RefreshGrid;
+//  end;
 end;
 
 procedure TFDataPenagihanPiutang.Clear;
@@ -478,9 +597,13 @@ procedure TFDataPenagihanPiutang.DBGridDetailColumns1EditButtons0Click(
 begin
   if edNamaKolektor.Text<>'' then
   begin
-    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
-    Fbrowse_data_pelanggan.vcall:='dpp';
-    Fbrowse_data_pelanggan.ShowModal;
+//    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+//    Fbrowse_data_pelanggan.vcall:='dpp';
+//    Fbrowse_data_pelanggan.ShowModal;
+    FDaftarTagihan.vcall:='dpp';
+//    FDaftarTagihan.kd_outlet:=MemDetail['kode_pel'];
+    FDaftarTagihan.RefreshGrid;
+    FDaftarTagihan.show;
   end else
   begin
     MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -559,15 +682,42 @@ begin
   end;
 end;
 
+procedure TFDataPenagihanPiutang.edNamaKolektorChange(Sender: TObject);
+begin
+  if (edNamaKolektor.Text<>'') AND (status=0) then
+  begin
+    MemDetail.EmptyTable;
+    MemDetail.Active:=true;
+    RefreshGrid;
+  end;
+end;
+
 procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
 begin
 //  if edKodeKolektor.Text<>'' then RefreshGrid;
-
+  if Status=0 then btTampilkan.Enabled:=True else btTampilkan.Enabled:=False;
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);
 begin
   FMovingDPP.show;
+end;
+
+procedure TFDataPenagihanPiutang.RzBitBtn2Click(Sender: TObject);
+begin
+  if edNamaKolektor.Text<>'' then
+  begin
+//    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
+//    Fbrowse_data_pelanggan.vcall:='dpp';
+//    Fbrowse_data_pelanggan.ShowModal;
+    FDaftarTagihan.vcall:='dpp';
+//    FDaftarTagihan.kd_outlet:=MemDetail['kode_pel'];
+    FDaftarTagihan.RefreshGrid;
+    FDaftarTagihan.show;
+  end else
+  begin
+    MessageDlg('Kolektor Wajib Diisi..!!',mtInformation,[mbRetry],0);
+  end;
 end;
 
 end.

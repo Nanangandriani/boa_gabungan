@@ -12,6 +12,7 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object DBGridEh1: TDBGridEh
@@ -169,7 +170,7 @@ object FBrowseNotaPenjualan: TFBrowseNotaPenjualan
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 901
+    ExplicitWidth = 1061
     object RzLabel1: TRzLabel
       Left = 16
       Top = 40

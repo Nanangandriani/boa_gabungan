@@ -299,14 +299,14 @@ object FSingkronisasi: TFSingkronisasi
   end
   object DataSource1: TDataSource
     DataSet = MemTableEh1
-    Left = 512
-    Top = 280
+    Left = 552
+    Top = 256
   end
   object MemTableEh1: TMemTableEh
     Active = True
     Params = <>
-    Left = 592
-    Top = 280
+    Left = 616
+    Top = 264
     object MemTableEh1kode: TStringField
       FieldName = 'kode'
     end

@@ -18,7 +18,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     Left = 0
     Top = 0
     Width = 1370
-    Height = 161
+    Height = 193
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -102,6 +102,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       Text = ''
       Color = clInfoBk
       TabOrder = 0
+      OnChange = edNamaKolektorChange
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -301,6 +302,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKabupatenButtonClick
+    end
+    object RzBitBtn2: TRzBitBtn
+      Left = 31
+      Top = 162
+      Width = 127
+      Align = alCustom
+      Caption = 'Tambah Detail'
+      TabOrder = 10
+      OnClick = RzBitBtn2Click
+      NumGlyphs = 2
     end
   end
   object Panel2: TPanel
@@ -502,9 +513,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 161
+    Top = 193
     Width = 1370
-    Height = 357
+    Height = 325
     Hint = ''
     ActivePage = TabSDetail
     Align = alClient
@@ -512,17 +523,17 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 1366
-    ExplicitHeight = 356
+    ExplicitHeight = 324
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data'
       ExplicitWidth = 1362
-      ExplicitHeight = 331
+      ExplicitHeight = 299
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 1366
-        Height = 332
+        Height = 300
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -545,23 +556,28 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             EditButtons = <
               item
                 Style = ebsPlusEh
+                Visible = False
                 OnClick = DBGridDetailColumns1EditButtons0Click
               end>
             FieldName = 'nama_pel'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Pelanggan'
             Width = 150
           end
           item
             CellButtons = <>
             DynProps = <>
+            EditButton.Enabled = False
             EditButtons = <
               item
                 Style = ebsPlusEh
+                Visible = False
                 OnClick = DBGridDetailColumns2EditButtons0Click
               end>
             FieldName = 'no_invoice'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Nomor | Tagihan'
             Width = 150
           end
@@ -571,6 +587,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             EditButtons = <>
             FieldName = 'no_invoice_tax'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Nomor | Faktur'
             Width = 150
           end
@@ -580,6 +597,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             EditButtons = <>
             FieldName = 'tgl_faktur'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Tanggal | Faktur'
             Width = 100
           end
@@ -589,6 +607,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             EditButtons = <>
             FieldName = 'tgl_tempo'
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'Tanggal | Tempo'
             Width = 100
           end
@@ -878,23 +897,40 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45890.551913078700000000
-    ReportOptions.LastChange = 45891.597427696800000000
-    ScriptLanguage = 'JScript'
+    ReportOptions.LastChange = 46051.604539259260000000
+    ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
-      
-        '    if (MasterData1.RowCount == 0) { // Or check a data source d' +
-        'irectly'
-      '        Page2.Visible = false;'
-      '    } else {'
-      '        Page2.Visible = true;'
-      '    }'
+      'procedure MasterData4OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '{  if MasterData4.RowCount > 0 then'
+      '  begin'
+      '    Page1.Visible := True;'
+      '  end'
+      '  else'
+      '  begin'
+      '    Page1.Visible := False;'
+      '  end;     }'
+      'end;'
       ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '{  if MasterData1.RowCount > 0 then'
+      '  begin'
+      '    Page2.Visible := True;'
+      '  end'
+      '  else'
+      '  begin'
+      '    Page2.Visible := False;'
+      '  end;   }'
+      'end;'
       ''
-      '')
+      'begin'
+      ''
+      'end.')
     OnGetValue = ReportGetValue
-    Left = 240
-    Top = 208
+    Left = 360
+    Top = 248
     Datasets = <
       item
         DataSet = frxDBDatasetDpp
@@ -912,15 +948,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object Page1: TfrxReportPage
       Orientation = poLandscape
-      PaperWidth = 297.000000000000000000
+      PaperWidth = 279.400000000000000000
       PaperHeight = 210.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
+      OnAfterPrint = 'Page1OnAfterPrint'
       OnBeforePrint = 'Page1OnBeforePrint'
       object MasterData4: TfrxMasterData
         FillType = ftBrush
@@ -929,9 +966,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
         Height = 22.677180000000000000
+        ParentFont = False
         Top = 222.992270000000000000
-        Width = 1046.929810000000000000
+        Width = 1018.205382000000000000
+        OnBeforePrint = 'MasterData4OnBeforePrint'
         DataSet = frxDBDatasetDPPBlmDitagih
         DataSetName = 'frxDBDatasetDPPBlmDitagih'
         RowCount = 0
@@ -942,7 +986,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -953,8 +997,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo168: TfrxMemoView
           AllowVectorExport = True
-          Left = 26.479440070000000000
-          Width = 153.716535430000000000
+          Left = 27.431821020000000000
+          Width = 142.020247470000000000
           Height = 22.299212600000000000
           DataField = 'customer_name'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -962,7 +1006,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -972,34 +1016,39 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo169: TfrxMemoView
           AllowVectorExport = True
-          Left = 179.062117240000000000
-          Width = 61.984251970000000000
+          Left = 169.347831530000000000
+          Width = 67.698537680000000000
           Height = 22.299212600000000000
+          DataField = 'date_trans'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
-            ' [frxDBDatasetDPPBlmDitagih."date_trans"]')
+            '[frxDBDatasetDPPBlmDitagih."date_trans"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo170: TfrxMemoView
           AllowVectorExport = True
-          Left = 241.401574800000000000
-          Width = 56.692913390000000000
+          Left = 234.734908140000000000
+          Width = 67.517060360000000000
           Height = 22.299212600000000000
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1010,7 +1059,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object Memo171: TfrxMemoView
           AllowVectorExport = True
           Left = 299.111111110000000000
-          Width = 101.669291338583000000
+          Width = 86.173228346456700000
           Height = 22.299212600000000000
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1020,7 +1069,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1031,8 +1080,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo172: TfrxMemoView
           AllowVectorExport = True
-          Left = 401.333333330000000000
-          Top = 0.007730000000000000
+          Left = 385.333333330000000000
           Width = 64.251968500000000000
           Height = 22.299212600000000000
           DataField = 'cash'
@@ -1043,7 +1091,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1054,8 +1102,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo173: TfrxMemoView
           AllowVectorExport = True
-          Left = 466.000000000000000000
-          Width = 108.094488190000000000
+          Left = 449.238095240000000000
+          Width = 92.856392950000000000
           Height = 22.299212600000000000
           DataField = 'receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1065,7 +1113,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1076,8 +1124,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo174: TfrxMemoView
           AllowVectorExport = True
-          Left = 574.666666670000000000
-          Width = 62.362204724409400000
+          Left = 542.666666670000000000
+          Width = 62.362204720000000000
           Height = 22.299212600000000000
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1085,7 +1133,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1095,8 +1143,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo175: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.375000000000000000
-          Width = 60.341535430000000000
+          Left = 604.041666670000000000
+          Width = 65.008202100000000000
           Height = 22.299212600000000000
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1104,7 +1152,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1114,9 +1162,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo176: TfrxMemoView
           AllowVectorExport = True
-          Left = 698.000000000000000000
-          Top = 0.007730000000000000
-          Width = 58.293963250000000000
+          Left = 669.333333330000000000
+          Width = 54.960629920000000000
           Height = 22.299212600000000000
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1124,7 +1171,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1134,7 +1181,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo177: TfrxMemoView
           AllowVectorExport = True
-          Left = 755.333333330000000000
+          Left = 723.333333330000000000
           Width = 71.433070870000000000
           Height = 22.299212600000000000
           DataField = 'no_cheque'
@@ -1143,7 +1190,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1153,7 +1200,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo178: TfrxMemoView
           AllowVectorExport = True
-          Left = 826.750000000000000000
+          Left = 794.750000000000000000
           Width = 62.478346460000000000
           Height = 22.299212600000000000
           DataField = 'date_tempo_cheque'
@@ -1162,7 +1209,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1172,8 +1219,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo179: TfrxMemoView
           AllowVectorExport = True
-          Left = 889.333333330000000000
-          Top = 0.028563330000000000
+          Left = 857.333333330000000000
           Width = 72.944881890000000000
           Height = 22.299212600000000000
           DataField = 'cheque_amount1'
@@ -1184,7 +1230,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1195,9 +1241,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo180: TfrxMemoView
           AllowVectorExport = True
-          Left = 962.562500000000000000
-          Top = 0.341063330000000000
-          Width = 83.915190290000000000
+          Left = 930.562500000000000000
+          Width = 87.724714100000000000
           Height = 22.299212600000000000
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1207,7 +1252,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haRight
@@ -1226,17 +1271,17 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Frame.Typ = []
         Height = 143.376190770000000000
         Top = 18.897650000000000000
-        Width = 1046.929810000000000000
+        Width = 1018.205382000000000000
         object Memo181: TfrxMemoView
           AllowVectorExport = True
           Left = 851.333333330000000000
-          Top = 2.102350010000000000
-          Width = 194.821583330000000000
-          Height = 27.897650000000000000
+          Top = 0.377952760000000000
+          Width = 167.055118110000000000
+          Height = 29.858267720000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
@@ -1248,12 +1293,12 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 851.149606300000000000
           Top = 29.435683330000000000
-          Width = 195.401574803150000000
+          Width = 167.055118110000000000
           Height = 30.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
@@ -1270,7 +1315,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
@@ -1287,7 +1332,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
@@ -1303,7 +1348,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1316,12 +1361,12 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 25.777777780000000000
           Top = 60.435683330000000000
-          Width = 154.582677170000000000
+          Width = 143.532058490000000000
           Height = 82.918635170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1332,14 +1377,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo187: TfrxMemoView
           AllowVectorExport = True
-          Left = 180.809479690000000000
+          Left = 169.380908260000000000
           Top = 60.102350000000000000
-          Width = 220.346456690000000000
+          Width = 215.584551930000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1350,14 +1395,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo188: TfrxMemoView
           AllowVectorExport = True
-          Left = 180.000000000000000000
+          Left = 170.285714290000000000
           Top = 80.102350010000000000
-          Width = 60.850393700787400000
+          Width = 66.564679410000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1368,14 +1413,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo189: TfrxMemoView
           AllowVectorExport = True
-          Left = 241.444444440000000000
-          Top = 79.880127780000000000
-          Width = 56.912153650000000000
-          Height = 63.496062990000000000
+          Left = 237.634920630000000000
+          Top = 80.125984250000000000
+          Width = 64.629921259842500000
+          Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1386,14 +1431,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo190: TfrxMemoView
           AllowVectorExport = True
-          Left = 298.666666670000000000
+          Left = 301.523809530000000000
           Top = 79.748031500000000000
-          Width = 102.425196850394000000
+          Width = 83.377577800000000000
           Height = 63.496062990000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1411,7 +1456,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -24
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
@@ -1430,7 +1475,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -21
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = [fsBold]
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -1440,14 +1485,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo193: TfrxMemoView
           AllowVectorExport = True
-          Left = 400.888888890000000000
+          Left = 384.888888890000000000
           Top = 60.102350000000000000
-          Width = 561.854822830000000000
+          Width = 545.664346640000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -1458,14 +1503,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo194: TfrxMemoView
           AllowVectorExport = True
-          Left = 962.384359910000000000
+          Left = 930.384359910000000000
           Top = 60.213461110000000000
-          Width = 84.064133450000000000
+          Width = 86.921276310000000000
           Height = 83.149606300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
@@ -1476,14 +1521,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo195: TfrxMemoView
           AllowVectorExport = True
-          Left = 401.111111110000000000
+          Left = 385.111111110000000000
           Top = 80.102350000000000000
           Width = 64.251968500000000000
-          Height = 63.118110236220500000
+          Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1494,14 +1539,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo196: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.555555560000000000
-          Top = 80.102350000000000000
-          Width = 232.245486980000000000
+          Left = 449.746031750000000000
+          Top = 79.149969050000000000
+          Width = 220.055010790000000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1512,14 +1557,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo197: TfrxMemoView
           AllowVectorExport = True
-          Left = 698.111111110000000000
-          Top = 80.125984250000000000
-          Width = 264.115540240000000000
+          Left = 670.111111110000000000
+          Top = 78.992125980000000000
+          Width = 260.115540240000000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -1530,14 +1575,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo198: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.555555560000000000
+          Left = 448.793650800000000000
           Top = 111.102350000000000000
-          Width = 108.159940940000000000
+          Width = 92.921845700000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1548,14 +1593,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo199: TfrxMemoView
           AllowVectorExport = True
-          Left = 574.444444440000000000
+          Left = 542.444444440000000000
           Top = 111.102350000000000000
           Width = 62.547681540000000000
-          Height = 32.125984251968500000
+          Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1566,14 +1611,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo200: TfrxMemoView
           AllowVectorExport = True
-          Left = 636.777777780000000000
+          Left = 604.777777780000000000
           Top = 111.213461110000000000
-          Width = 60.992125980000000000
-          Height = 32.125984251968500000
+          Width = 64.992125980000000000
+          Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1584,14 +1629,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo201: TfrxMemoView
           AllowVectorExport = True
-          Left = 698.222222220000000000
+          Left = 668.888888890000000000
           Top = 111.102350000000000000
-          Width = 58.204724410000000000
-          Height = 32.125984251968500000
+          Width = 55.538057740000000000
+          Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1602,14 +1647,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo202: TfrxMemoView
           AllowVectorExport = True
-          Left = 756.555555550000000000
+          Left = 724.555555550000000000
           Top = 111.102350000000000000
           Width = 70.325459310000000000
-          Height = 32.125984251968500000
+          Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1620,14 +1665,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo203: TfrxMemoView
           AllowVectorExport = True
-          Left = 827.444444440000000000
+          Left = 795.444444440000000000
           Top = 111.213461110000000000
           Width = 61.606299210000000000
-          Height = 32.125984251968500000
+          Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1639,14 +1684,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo204: TfrxMemoView
           AllowVectorExport = True
-          Left = 889.333333330000000000
+          Left = 857.333333330000000000
           Top = 111.102350000000000000
           Width = 73.207403760000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -1665,16 +1710,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Frame.Typ = []
         Height = 108.495361820000000000
         Top = 268.346630000000000000
-        Width = 1046.929810000000000000
+        Width = 1018.205382000000000000
         object SysMemo8: TfrxSysMemoView
           AllowVectorExport = True
-          Left = -0.377952760000000000
-          Width = 26.710472220000000000
+          Width = 26.834645669291300000
           Height = 22.230983330000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -1683,15 +1727,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo205: TfrxMemoView
           AllowVectorExport = True
-          Left = 26.456692910000000000
-          Width = 153.716535430000000000
+          Left = 27.590551181102400000
+          Width = 142.110236220000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1699,15 +1743,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo206: TfrxMemoView
           AllowVectorExport = True
-          Left = 179.149606300000000000
-          Width = 61.606299210000000000
+          Left = 167.721034870000000000
+          Width = 69.603299590000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1715,15 +1759,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo207: TfrxMemoView
           AllowVectorExport = True
-          Left = 241.511811020000000000
-          Width = 56.692913390000000000
+          Left = 236.749906260000000000
+          Width = 65.385826771653500000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -1733,8 +1777,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo208: TfrxMemoView
           AllowVectorExport = True
-          Left = 298.611309950000000000
-          Width = 102.425196850000000000
+          Left = 299.563690900000000000
+          Width = 85.598800150000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1743,7 +1787,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1754,8 +1798,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo209: TfrxMemoView
           AllowVectorExport = True
-          Left = 400.768890730000000000
-          Width = 64.251968503937000000
+          Left = 384.768890730000000000
+          Width = 64.251968500000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1764,7 +1808,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1775,8 +1819,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo210: TfrxMemoView
           AllowVectorExport = True
-          Left = 464.488188980000000000
-          Width = 109.606299210000000000
+          Left = 448.678665170000000000
+          Width = 93.415823020000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1785,7 +1829,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1796,15 +1840,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo211: TfrxMemoView
           AllowVectorExport = True
-          Left = 574.154855650000000000
-          Width = 62.740157480000000000
+          Left = 542.154855650000000000
+          Width = 63.118110236220500000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1812,15 +1856,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo212: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.488188980000000000
-          Width = 60.850393700787400000
+          Left = 605.488188980000000000
+          Width = 63.139107610000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1828,15 +1872,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo213: TfrxMemoView
           AllowVectorExport = True
-          Left = 697.488188980000000000
-          Width = 58.293963250000000000
+          Left = 667.488188980000000000
+          Width = 56.960629920000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1844,15 +1888,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo214: TfrxMemoView
           AllowVectorExport = True
-          Left = 754.821522310000000000
-          Width = 72.566929133858300000
+          Left = 722.821522310000000000
+          Width = 71.811023622047200000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1860,15 +1904,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo215: TfrxMemoView
           AllowVectorExport = True
-          Left = 827.124552620000000000
-          Width = 62.347888330000000000
+          Left = 795.124552620000000000
+          Width = 61.984251968503900000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
@@ -1876,7 +1920,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo216: TfrxMemoView
           AllowVectorExport = True
-          Left = 889.821522310000000000
+          Left = 857.821522310000000000
           Width = 72.720114530000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1886,7 +1930,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -1897,8 +1941,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo217: TfrxMemoView
           AllowVectorExport = True
-          Left = 963.124552620000000000
-          Width = 83.023144830000000000
+          Left = 931.124552620000000000
+          Width = 87.785049590000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1907,7 +1951,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haRight
@@ -1927,7 +1971,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -1944,7 +1988,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -1961,7 +2005,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -1978,7 +2022,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -1995,7 +2039,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -2012,7 +2056,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -2024,13 +2068,13 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object Page2: TfrxReportPage
       Orientation = poLandscape
-      PaperWidth = 297.000000000000000000
+      PaperWidth = 279.400000000000000000
       PaperHeight = 210.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       OnBeforePrint = 'Page2OnBeforePrint'
@@ -2043,58 +2087,59 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Frame.Typ = []
         Height = 22.677180000000000000
         Top = 222.992270000000000000
-        Width = 1046.929810000000000000
+        Width = 1018.205382000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDatasetDpp
         DataSetName = 'frxDBDatasetDpp'
         RowCount = 0
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
-          Left = -0.488188980000000000
           Width = 26.710472220000000000
           Height = 22.230983330000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[LINE]')
           ParentFont = False
+          VAlign = vaCenter
         end
-        object Memo224: TfrxMemoView
+        object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 26.479440070000000000
-          Width = 153.716535430000000000
+          Left = 27.431821020000000000
+          Width = 142.020247470000000000
           Height = 22.299212600000000000
-          DataField = 'total_receivables'
-          DataSet = frxDBDatasetDpp
-          DataSetName = 'frxDBDatasetDpp'
+          DataSet = frxDBDatasetDPPBlmDitagih
+          DataSetName = 'frxDBDatasetDPPBlmDitagih'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDatasetDpp."total_receivables"]')
+            '[frxDBDatasetDpp."customer_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo225: TfrxMemoView
+        object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 179.062117240000000000
-          Width = 61.984251970000000000
+          Left = 169.347831530000000000
+          Width = 67.698537680000000000
           Height = 22.299212600000000000
           DataField = 'date_trans'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2102,18 +2147,20 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo226: TfrxMemoView
+        object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 241.401574800000000000
-          Width = 56.692913385826800000
+          Left = 234.734908140000000000
+          Width = 67.517060360000000000
           Height = 22.299212600000000000
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2121,10 +2168,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo227: TfrxMemoView
+        object Memo28: TfrxMemoView
           AllowVectorExport = True
           Left = 299.111111110000000000
-          Width = 102.047244090000000000
+          Width = 86.173228350000000000
           Height = 22.299212600000000000
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDpp
@@ -2134,7 +2181,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -2143,10 +2190,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo228: TfrxMemoView
+        object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 401.333333330000000000
-          Top = 0.007730000000000000
+          Left = 385.333333330000000000
           Width = 64.251968500000000000
           Height = 22.299212600000000000
           DataField = 'cash'
@@ -2157,7 +2203,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -2166,10 +2212,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo229: TfrxMemoView
+        object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 466.000000000000000000
-          Width = 108.094488190000000000
+          Left = 449.238095240000000000
+          Width = 92.856392950000000000
           Height = 22.299212600000000000
           DataField = 'receipt'
           DataSet = frxDBDatasetDpp
@@ -2179,7 +2225,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -2188,10 +2234,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo230: TfrxMemoView
+        object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 574.666666670000000000
-          Width = 62.362204724409400000
+          Left = 542.666666670000000000
+          Width = 59.716535433070870000
           Height = 22.299212600000000000
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDpp
@@ -2199,7 +2245,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2207,10 +2253,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo231: TfrxMemoView
+        object Memo32: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.375000000000000000
-          Width = 60.341535430000000000
+          Left = 600.170698930000000000
+          Width = 68.833121670000000000
           Height = 22.299212600000000000
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDpp
@@ -2218,7 +2264,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2226,11 +2272,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo232: TfrxMemoView
+        object Memo33: TfrxMemoView
           AllowVectorExport = True
-          Left = 698.000000000000000000
-          Top = 0.007730000000000000
-          Width = 58.293963250000000000
+          Left = 668.000000000000000000
+          Width = 56.293963250000000000
           Height = 22.299212600000000000
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDpp
@@ -2238,7 +2283,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2246,9 +2291,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo233: TfrxMemoView
+        object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 755.333333330000000000
+          Left = 723.333333330000000000
           Width = 71.433070870000000000
           Height = 22.299212600000000000
           DataField = 'no_cheque'
@@ -2257,7 +2302,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2265,9 +2310,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo234: TfrxMemoView
+        object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 826.750000000000000000
+          Left = 794.750000000000000000
           Width = 62.478346460000000000
           Height = 22.299212600000000000
           DataField = 'date_tempo_cheque'
@@ -2276,7 +2321,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
@@ -2284,10 +2329,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo235: TfrxMemoView
+        object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Left = 889.333333330000000000
-          Top = 0.028563330000000000
+          Left = 857.333333330000000000
           Width = 72.944881890000000000
           Height = 22.299212600000000000
           DataField = 'cheque_amount1'
@@ -2298,7 +2342,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
@@ -2307,11 +2351,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo236: TfrxMemoView
+        object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 962.562500000000000000
-          Top = 0.341063330000000000
-          Width = 83.915190290000000000
+          Left = 930.562500000000000000
+          Width = 87.724714100000000000
           Height = 22.299212600000000000
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDpp
@@ -2321,7 +2364,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haRight
@@ -2340,17 +2383,17 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Frame.Typ = []
         Height = 142.940507430000000000
         Top = 18.897650000000000000
-        Width = 1046.929810000000000000
+        Width = 1018.205382000000000000
         object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Left = 852.222222220000000000
-          Top = 1.889763779527560000
-          Width = 194.821583330000000000
-          Height = 27.897650000000000000
+          Left = 851.285498820000000000
+          Top = 0.051731330000000000
+          Width = 167.055118110000000000
+          Height = 29.858267720000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
@@ -2360,14 +2403,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 852.038495190000000000
-          Top = 28.724409448818900000
-          Width = 195.401574800000000000
+          Left = 851.101771790000000000
+          Top = 29.109461900000000000
+          Width = 167.055118110000000000
           Height = 30.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
@@ -2377,14 +2420,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 778.888888890000000000
-          Top = 30.666666660000000000
+          Left = 777.952165490000000000
+          Top = 30.776128570000000000
           Width = 78.934446670000000000
           Height = 28.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
@@ -2394,13 +2437,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 778.888888890000000000
+          Left = 777.952165490000000000
+          Top = 0.109461910000000000
           Width = 74.821583330000000000
           Height = 29.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
@@ -2410,14 +2454,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 0.888888890000000000
-          Top = 59.999999990000000000
+          Left = -0.047834510000000000
+          Top = 60.109461900000000000
           Width = 27.356598100000000000
           Height = 82.918635170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2428,14 +2472,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 26.666666670000000000
-          Top = 59.999999990000000000
-          Width = 154.582677170000000000
+          Left = 25.729943270000000000
+          Top = 60.109461900000000000
+          Width = 143.532058490000000000
           Height = 82.918635170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2446,14 +2490,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 181.698368580000000000
-          Top = 59.666666660000000000
-          Width = 220.346456690000000000
+          Left = 169.333073750000000000
+          Top = 59.776128570000000000
+          Width = 215.584551930000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2464,14 +2508,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 180.888888890000000000
-          Top = 79.666666670000000000
-          Width = 60.850393700000000000
+          Left = 170.237879780000000000
+          Top = 79.776128580000000000
+          Width = 66.564679410000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2482,14 +2526,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 242.333333330000000000
-          Top = 79.444444440000000000
-          Width = 56.912153650000000000
-          Height = 63.496062990000000000
+          Left = 237.587086120000000000
+          Top = 79.799762820000000000
+          Width = 64.629921260000000000
+          Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2500,14 +2544,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.555555560000000000
-          Top = 79.312348160000000000
-          Width = 102.425196850000000000
+          Left = 301.475975020000000000
+          Top = 79.421810070000000000
+          Width = 83.377577800000000000
           Height = 63.496062990000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2518,13 +2562,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Top = 0.111111100000000000
+          Left = -0.936723400000000000
+          Top = 0.220573010000000000
           Width = 773.821583320000000000
           Height = 28.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -24
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
@@ -2534,8 +2579,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 1.111111110000000000
-          Top = 27.444444430000000000
+          Left = 0.174387710000000000
+          Top = 27.553906340000000000
           Width = 777.599361110000000000
           Height = 32.230983330000000000
           DataSet = frxDBDatasetDpp
@@ -2543,7 +2588,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -21
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = [fsBold]
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -2553,14 +2598,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 401.777777780000000000
-          Top = 59.666666660000000000
-          Width = 561.854822830000000000
+          Left = 384.841054380000000000
+          Top = 59.776128570000000000
+          Width = 545.664346640000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -2571,14 +2616,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 963.273248800000000000
-          Top = 59.777777770000000000
-          Width = 84.064133450000000000
+          Left = 930.336525400000000000
+          Top = 59.887239680000000000
+          Width = 86.921276310000000000
           Height = 83.149606300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
@@ -2589,14 +2634,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 402.000000000000000000
-          Top = 79.666666660000000000
+          Left = 385.063276600000000000
+          Top = 79.776128570000000000
           Width = 64.251968500000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2607,14 +2652,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 466.444444450000000000
-          Top = 79.666666660000000000
-          Width = 232.245486980000000000
+          Left = 449.698197240000000000
+          Top = 78.823747620000000000
+          Width = 219.212598425196900000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2625,14 +2670,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 699.000000000000000000
-          Top = 79.690300910000000000
+          Left = 666.063276600000000000
+          Top = 78.992125984252000000
           Width = 264.115540240000000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -2643,14 +2688,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 466.444444450000000000
-          Top = 110.666666660000000000
-          Width = 108.159940940000000000
+          Left = 448.745816290000000000
+          Top = 110.776128570000000000
+          Width = 92.921845700000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2661,14 +2706,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 575.333333330000000000
-          Top = 110.666666660000000000
-          Width = 62.547681540000000000
+          Left = 542.396609930000000000
+          Top = 110.776128570000000000
+          Width = 59.716535433070870000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2679,14 +2724,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.666666670000000000
-          Top = 110.777777770000000000
-          Width = 60.992125980000000000
+          Left = 602.794459400000000000
+          Top = 110.887239680000000000
+          Width = 66.141732283464570000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2697,14 +2742,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 699.111111110000000000
-          Top = 110.666666660000000000
+          Left = 666.174387710000000000
+          Top = 110.776128570000000000
           Width = 58.204724410000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2715,14 +2760,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 757.444444440000000000
-          Top = 110.666666660000000000
+          Left = 724.507721040000000000
+          Top = 110.776128570000000000
           Width = 70.325459310000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2733,14 +2778,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 828.333333330000000000
-          Top = 110.777777770000000000
+          Left = 795.396609930000000000
+          Top = 110.887239680000000000
           Width = 61.606299210000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
@@ -2752,14 +2797,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 890.222222220000000000
-          Top = 110.666666660000000000
+          Left = 857.285498820000000000
+          Top = 110.776128570000000000
           Width = 73.207403760000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haCenter
@@ -2778,75 +2823,75 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Frame.Typ = []
         Height = 108.495361820000000000
         Top = 268.346630000000000000
-        Width = 1046.929810000000000000
-        object SysMemo9: TfrxSysMemoView
+        Width = 1018.205382000000000000
+        object SysMemo2: TfrxSysMemoView
           AllowVectorExport = True
-          Left = -0.377952760000000000
-          Width = 26.710472220000000000
+          Width = 27.212598430000000000
           Height = 22.230983330000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           ParentFont = False
+          VAlign = vaCenter
         end
-        object Memo261: TfrxMemoView
+        object Memo38: TfrxMemoView
           AllowVectorExport = True
-          Left = 26.456692910000000000
-          Width = 153.716535430000000000
+          Left = 26.189484380000000000
+          Width = 142.866141730000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo262: TfrxMemoView
+        object Memo39: TfrxMemoView
           AllowVectorExport = True
-          Left = 179.149606300000000000
-          Width = 61.606299210000000000
+          Left = 168.098987630000000000
+          Width = 69.603299590000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo263: TfrxMemoView
+        object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 241.511811020000000000
-          Width = 56.692913390000000000
+          Left = 237.127859020000000000
+          Width = 65.385826770000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[COUNT(MasterData1)] Lembar')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo264: TfrxMemoView
+        object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 298.611309950000000000
-          Width = 102.425196850000000000
+          Left = 299.941643660000000000
+          Width = 85.598800150000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2855,8 +2900,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
@@ -2864,10 +2909,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo265: TfrxMemoView
+        object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 401.821522310000000000
-          Width = 63.874015750000000000
+          Left = 385.146843490000000000
+          Width = 64.251968500000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2876,8 +2921,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
@@ -2885,10 +2930,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo266: TfrxMemoView
+        object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 464.488188980000000000
-          Width = 109.606299210000000000
+          Left = 449.056617930000000000
+          Width = 93.415823020000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2897,8 +2942,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
@@ -2906,90 +2951,90 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo267: TfrxMemoView
+        object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 574.154855650000000000
-          Width = 62.740157480000000000
+          Left = 541.887647120000000000
+          Width = 59.716535430000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo268: TfrxMemoView
+        object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 637.488188980000000000
-          Width = 60.850393700787400000
+          Left = 603.285496580000000000
+          Width = 65.719752760000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo269: TfrxMemoView
+        object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 697.488188980000000000
-          Width = 58.293963250000000000
+          Left = 665.866141740000000000
+          Width = 58.960629920000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo270: TfrxMemoView
+        object Memo47: TfrxMemoView
           AllowVectorExport = True
-          Left = 754.821522310000000000
-          Width = 72.566929133858300000
+          Left = 723.199475070000000000
+          Width = 71.811023620000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo271: TfrxMemoView
+        object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 827.124552620000000000
-          Width = 62.347888330000000000
+          Left = 795.502505380000000000
+          Width = 61.984251970000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo272: TfrxMemoView
+        object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 889.821522310000000000
-          Width = 72.720114530000000000
+          Left = 858.199475070000000000
+          Width = 71.811023622047240000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2998,8 +3043,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
@@ -3007,20 +3052,20 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo273: TfrxMemoView
+        object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Left = 963.124552620000000000
-          Width = 83.023144830000000000
+          Left = 930.212182800000000000
+          Width = 89.075372170000000000
           Height = 22.299212600000000000
-          DataSet = frxDBDatasetDpp
-          DataSetName = 'frxDBDatasetDpp'
+          DataSet = frxDBDatasetDPPBlmDitagih
+          DataSetName = 'frxDBDatasetDPPBlmDitagih'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Name = 'Verdana'
+          Font.Style = []
           Frame.Typ = [ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
@@ -3028,16 +3073,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo274: TfrxMemoView
+        object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 60.363636370000000000
-          Top = 32.744279090000000000
+          Left = 60.741589130000000000
+          Top = 32.969077660000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3045,16 +3090,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             'KASIR')
           ParentFont = False
         end
-        object Memo275: TfrxMemoView
+        object Memo52: TfrxMemoView
           AllowVectorExport = True
-          Left = 60.000000000000000000
-          Top = 84.835188180000000000
+          Left = 60.377952760000000000
+          Top = 85.059986750000000000
           Width = 149.760977270000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3062,16 +3107,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             '(                                           )')
           ParentFont = False
         end
-        object Memo276: TfrxMemoView
+        object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.363636370000000000
-          Top = 31.653370000000000000
+          Left = 423.741589130000000000
+          Top = 31.878168570000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3079,16 +3124,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             'PIUTANG')
           ParentFont = False
         end
-        object Memo277: TfrxMemoView
+        object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.000000000000000000
-          Top = 83.744279090000000000
+          Left = 423.377952760000000000
+          Top = 83.969077660000000000
           Width = 149.760977270000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3096,16 +3141,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             '(                                           )')
           ParentFont = False
         end
-        object Memo278: TfrxMemoView
+        object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 801.363636370000000000
-          Top = 29.653370000000000000
+          Left = 801.741589130000000000
+          Top = 29.878168570000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3113,16 +3158,16 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             'PENAGIH')
           ParentFont = False
         end
-        object Memo279: TfrxMemoView
+        object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 801.000000000000000000
-          Top = 81.744279090000000000
+          Left = 801.377952760000000000
+          Top = 81.969077660000000000
           Width = 149.760977270000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
@@ -3157,7 +3202,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     DataSet = QdppSudahTagih
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 504
+    Left = 472
     Top = 8
   end
   object QdppSudahTagih: TUniQuery

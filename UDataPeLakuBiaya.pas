@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, RzEdit,
-  RzBtnEdt, Vcl.ExtCtrls, RzButton;
+  RzBtnEdt, Vcl.ExtCtrls, RzButton, RzCmboBx;
 
 type
   TFDataPeLakuBiaya = class(TForm)
@@ -34,10 +34,17 @@ type
     Label14: TLabel;
     EdKaresidenan: TRzButtonEdit;
     kd_karesidenan: TEdit;
+    Cb_sbu: TRzComboBox;
+    Ed_serial: TEdit;
+    Labelsbu2: TLabel;
+    Labelsbu: TLabel;
     procedure btBatalClick(Sender: TObject);
     procedure btSimpanClick(Sender: TObject);
     procedure EdKaresidenanButtonClick(Sender: TObject);
     procedure kd_karesidenanChange(Sender: TObject);
+    procedure Cb_sbuSelect(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -45,6 +52,8 @@ type
     { Public declarations }
     procedure Clear;
     procedure Autocode;
+    procedure Autocode_perkiraan;
+    procedure load_sbu_code;
   end;
 
 var
@@ -54,7 +63,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UHomeLogin, UDataListPelakuBiaya,UMasterData;
+uses UDataModule, UHomeLogin, UDataListPelakuBiaya,UMasterData, UMy_Function;
+
 procedure TFDataPeLakuBiaya.Autocode;
 var
   kode : String;
@@ -85,24 +95,29 @@ begin
   kode := inttostr(urut);
   if Length(kode)=1 then
   begin
-    kode := '000'+kode;
+    kode := '0000'+kode;
   end
   else
   if Length(kode)=2 then
   begin
-    kode := '00'+kode;
+    kode := '000'+kode;
   end
   else
   if Length(kode)=3 then
   begin
-    kode := '0'+kode;
+    kode := '00'+kode;
   end
   else
   if Length(kode)=4 then
   begin
+    kode := '0'+kode;
+  end
+  else
+  if Length(kode)=5 then
+  begin
     kode := kode;
   end;
-  Edkode.Text := 'PB.'+Kode;
+  Edkode.Text := 'PB'+(ed_serial.Text)+Kode;
 end;
 
 procedure TFDataPeLakuBiaya.btBatalClick(Sender: TObject);
@@ -183,6 +198,19 @@ begin
       FDataPeLakuBiaya.Close;
 end;
 
+procedure TFDataPeLakuBiaya.Cb_sbuSelect(Sender: TObject);
+begin
+   with dm.Qtemp do
+   begin
+     close;
+     sql.Clear;
+     sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_code='+QuotedStr(Cb_sbu.Text)+' ';
+     Open;
+   end;
+   ed_serial.Text:=dm.Qtemp.FieldByName('company_serial').AsString;
+   Autocode;
+end;
+
 procedure TFDataPeLakuBiaya.Clear;
 begin
   Edkode.Clear;
@@ -197,8 +225,13 @@ procedure TFDataPeLakuBiaya.EdKaresidenanButtonClick(Sender: TObject);
 begin
     FMasterData.Caption:='Master Data Karesidenan';
     FMasterData.vcall:='pelaku_biaya';
-    FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+    FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
     FMasterData.ShowModal;
+end;
+
+procedure TFDataPeLakuBiaya.FormShow(Sender: TObject);
+begin
+    FillSBUBarCombo2(CB_SBU,labelsbu, labelsbu2);
 end;
 
 procedure TFDataPeLakuBiaya.kd_karesidenanChange(Sender: TObject);
@@ -207,10 +240,34 @@ begin
    begin
      close;
      sql.Clear;
-     sql.Text:='select * from t_region_karesidenan where code='+QuotedStr(kd_karesidenan.Text)+' ';
+     sql.Text:='select * from t_region_tp where code='+QuotedStr(kd_karesidenan.Text)+' ';
      Open;
      EdKaresidenan.Text:=fieldbyname('name').AsString;
    end;
+end;
+
+procedure TFDataPeLakuBiaya.load_sbu_code;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT company_code,company_serial FROM t_company WHERE company_serial<>0';
+    Open;
+  end;
+  cb_sbu.items.clear;
+  dm.Qtemp.First;
+  while not dm.Qtemp.Eof do
+  begin
+     cb_sbu.Items.Add(dm.Qtemp['company_code']);
+     dm.Qtemp.Next;
+  end;
+end;
+
+procedure TFDataPeLakuBiaya.Autocode_perkiraan;
+begin
+
+
 end;
 
 end.

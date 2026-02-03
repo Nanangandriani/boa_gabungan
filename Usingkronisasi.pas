@@ -42,8 +42,11 @@ type
     { Private declarations }
     procedure Load;
     procedure RefreshGrid;
+    //Supplier
     procedure SyncSupplierBatch(AKodeList: TStringList);
     procedure SyncItemStockBatch(AKodeList: TStringList);
+    //Barang
+    procedure SyncMasterItemBatch(AKodeList: TStringList);
   public
     table_task: string;
     { Public declarations }
@@ -57,12 +60,172 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMy_Function, UHomeLogin;
+
+procedure TFSingkronisasi.SyncMasterItemBatch(AKodeList: TStringList);
+var
+  i: Integer;
+begin
+  if (AKodeList = nil) or (AKodeList.Count = 0) then Exit;
+  with dm.QtempPusat do
+  begin
+    Close;
+    SQL.Text :=
+      'SELECT order_no, item_code, item_code2, item_name, '+
+      'category_id, unit, merk, account_code, created_by, description, group_id, '+
+      'sell_status, buy, disc_buy, sell, disc_sell, lot_status, header_code, sbu_code, '+
+      'item_code_coretax, item_name_coretax, '+
+      'created_at, updated_at, updated_by, deleted_at, deleted_by '+
+      'FROM t_item '+
+      'WHERE item_code = :kode';
+    Prepare;
+  end;
+  with dm.Qtemp do
+  begin
+    Close;
+    SQL.Text :=
+      'INSERT INTO t_item ( '+
+      'order_no, item_code, item_code2, item_name, '+
+      'category_id, unit, merk, account_code, created_by, description, group_id, '+
+      'sell_status, buy, disc_buy, sell, disc_sell, lot_status, header_code, sbu_code, '+
+      'item_code_coretax, item_name_coretax, '+
+      'created_at, updated_at, updated_by, deleted_at, deleted_by) '+
+      'VALUES ( '+
+      ':order_no, :item_code, :item_code2, :item_name, '+
+      ':category_id, :unit, :merk, :account_code, :created_by, :description, :group_id, '+
+      ':sell_status, :buy, :disc_buy, :sell, :disc_sell, :lot_status, :header_code, :sbu_code, '+
+      ':item_code_coretax, :item_name_coretax, '+
+      ':created_at, :updated_at, :updated_by, :deleted_at, :deleted_by) '+
+      'ON CONFLICT (item_code) DO UPDATE SET '+
+      'order_no          = EXCLUDED.order_no, '+
+      'item_code2        = EXCLUDED.item_code2, '+
+      'item_name         = EXCLUDED.item_name, '+
+      'category_id       = EXCLUDED.category_id, '+
+      'unit              = EXCLUDED.unit, '+
+      'merk              = EXCLUDED.merk, '+
+      'account_code      = EXCLUDED.account_code, '+
+      'description       = EXCLUDED.description, '+
+      'group_id          = EXCLUDED.group_id, '+
+      'sell_status       = EXCLUDED.sell_status, '+
+      'buy               = EXCLUDED.buy, '+
+      'disc_buy          = EXCLUDED.disc_buy, '+
+      'sell              = EXCLUDED.sell, '+
+      'disc_sell         = EXCLUDED.disc_sell, '+
+      'lot_status        = EXCLUDED.lot_status, '+
+      'header_code       = EXCLUDED.header_code, '+
+      'sbu_code          = EXCLUDED.sbu_code, '+
+      'item_code_coretax = EXCLUDED.item_code_coretax, '+
+      'item_name_coretax = EXCLUDED.item_name_coretax, '+
+      'updated_at        = EXCLUDED.updated_at, '+
+      'updated_by        = EXCLUDED.updated_by, '+
+      'deleted_at        = EXCLUDED.deleted_at, '+
+      'deleted_by        = EXCLUDED.deleted_by';
+    Prepare;
+  end;
+  for i := 0 to AKodeList.Count - 1 do
+  begin
+    dm.QtempPusat.Close;
+    dm.QtempPusat.ParamByName('kode').AsString := AKodeList[i];
+    dm.QtempPusat.Open;
+    if dm.QtempPusat.IsEmpty then Continue;
+    with dm.Qtemp do
+    begin
+      // String fields
+      ParamByName('item_code').AsString := dm.QtempPusat.FieldByName('item_code').AsString;
+      ParamByName('item_code2').AsString := dm.QtempPusat.FieldByName('item_code2').AsString;
+      ParamByName('item_name').AsString := dm.QtempPusat.FieldByName('item_name').AsString;
+      ParamByName('unit').AsString := dm.QtempPusat.FieldByName('unit').AsString;
+      ParamByName('merk').AsString := dm.QtempPusat.FieldByName('merk').AsString;
+      ParamByName('account_code').AsString := dm.QtempPusat.FieldByName('account_code').AsString;
+      ParamByName('description').AsString := dm.QtempPusat.FieldByName('description').AsString;
+      ParamByName('header_code').AsString := dm.QtempPusat.FieldByName('header_code').AsString;
+      ParamByName('sbu_code').AsString := dm.QtempPusat.FieldByName('sbu_code').AsString;
+      ParamByName('item_code_coretax').AsString := dm.QtempPusat.FieldByName('item_code_coretax').AsString;
+      ParamByName('item_name_coretax').AsString := dm.QtempPusat.FieldByName('item_name_coretax').AsString;
+      { order_no (NULL SAFE - Integer) }
+      if dm.QtempPusat.FieldByName('order_no').IsNull then
+        ParamByName('order_no').Clear
+      else
+        ParamByName('order_no').AsInteger := dm.QtempPusat.FieldByName('order_no').AsInteger;
+      { category_id (NULL SAFE - Integer) }
+      if dm.QtempPusat.FieldByName('category_id').IsNull then
+        ParamByName('category_id').Clear
+      else
+        ParamByName('category_id').AsInteger := dm.QtempPusat.FieldByName('category_id').AsInteger;
+      { group_id (NULL SAFE - String/Integer) }
+      if dm.QtempPusat.FieldByName('group_id').IsNull then
+        ParamByName('group_id').Clear
+      else
+        ParamByName('group_id').AsString := dm.QtempPusat.FieldByName('group_id').AsString;
+      { sell_status (NULL SAFE - String) }
+      if dm.QtempPusat.FieldByName('sell_status').IsNull then
+        ParamByName('sell_status').Clear
+      else
+        ParamByName('sell_status').AsString := dm.QtempPusat.FieldByName('sell_status').AsString;
+      { buy (NULL SAFE - Float/Decimal) }
+      if dm.QtempPusat.FieldByName('buy').IsNull then
+        ParamByName('buy').Clear
+      else
+        ParamByName('buy').AsFloat := dm.QtempPusat.FieldByName('buy').AsFloat;
+      { disc_buy (NULL SAFE - Float/Decimal) }
+      if dm.QtempPusat.FieldByName('disc_buy').IsNull then
+        ParamByName('disc_buy').Clear
+      else
+        ParamByName('disc_buy').AsFloat := dm.QtempPusat.FieldByName('disc_buy').AsFloat;
+      { sell (NULL SAFE - Float/Decimal) }
+      if dm.QtempPusat.FieldByName('sell').IsNull then
+        ParamByName('sell').Clear
+      else
+        ParamByName('sell').AsFloat := dm.QtempPusat.FieldByName('sell').AsFloat;
+      { disc_sell (NULL SAFE - Float/Decimal) }
+      if dm.QtempPusat.FieldByName('disc_sell').IsNull then
+        ParamByName('disc_sell').Clear
+      else
+        ParamByName('disc_sell').AsFloat := dm.QtempPusat.FieldByName('disc_sell').AsFloat;
+      { lot_status (NULL SAFE - String) }
+      if dm.QtempPusat.FieldByName('lot_status').IsNull then
+        ParamByName('lot_status').Clear
+      else
+        ParamByName('lot_status').AsString := dm.QtempPusat.FieldByName('lot_status').AsString;
+      { created_at (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('created_at').IsNull then
+        ParamByName('created_at').Clear
+      else
+        ParamByName('created_at').AsDateTime := dm.QtempPusat.FieldByName('created_at').AsDateTime;
+      { updated_at (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('updated_at').IsNull then
+        ParamByName('updated_at').Clear
+      else
+        ParamByName('updated_at').AsDateTime := dm.QtempPusat.FieldByName('updated_at').AsDateTime;
+      { deleted_at (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('deleted_at').IsNull then
+        ParamByName('deleted_at').Clear
+      else
+        ParamByName('deleted_at').AsDateTime := dm.QtempPusat.FieldByName('deleted_at').AsDateTime;
+      { created_by (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('created_by').IsNull then
+        ParamByName('created_by').Clear
+      else
+        ParamByName('created_by').AsString := dm.QtempPusat.FieldByName('created_by').AsString;
+      { updated_by (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('updated_by').IsNull then
+        ParamByName('updated_by').Clear
+      else
+        ParamByName('updated_by').AsString := dm.QtempPusat.FieldByName('updated_by').AsString;
+      { deleted_by (NULL SAFE) }
+      if dm.QtempPusat.FieldByName('deleted_by').IsNull then
+        ParamByName('deleted_by').Clear
+      else
+        ParamByName('deleted_by').AsString := dm.QtempPusat.FieldByName('deleted_by').AsString;
+      ExecSQL;
+    end;
+  end;
+end;
+
 procedure TFSingkronisasi.SyncSupplierBatch(AKodeList: TStringList);
 var
   i: Integer;
 begin
   if (AKodeList = nil) or (AKodeList.Count = 0) then Exit;
-
   with dm.QtempPusat do
   begin
     Close;
@@ -76,7 +239,6 @@ begin
       'where supplier_code = :kode';
     Prepare;
   end;
-
   with dm.Qtemp do
   begin
     Close;
@@ -119,15 +281,12 @@ begin
       ' deleted_by       = EXCLUDED.deleted_by';
     Prepare;
   end;
-
   for i := 0 to AKodeList.Count - 1 do
   begin
     dm.QtempPusat.Close;
     dm.QtempPusat.ParamByName('kode').AsString := AKodeList[i];
     dm.QtempPusat.Open;
-
     if dm.QtempPusat.IsEmpty then Continue;
-
     with dm.Qtemp do
     begin
       ParamByName('supplier_code').AsString :=dm.QtempPusat.FieldByName('supplier_code').AsString;
@@ -145,7 +304,6 @@ begin
       ParamByName('sbu_code').AsString :=dm.QtempPusat.FieldByName('sbu_code').AsString;
       ParamByName('header_code2').AsString :=dm.QtempPusat.FieldByName('header_code2').AsString;
       ParamByName('account_code2').AsString :=dm.QtempPusat.FieldByName('account_code2').AsString;
-
       { created_at (NULL SAFE) }
       if dm.QtempPusat.FieldByName('created_at').IsNull then
         ParamByName('created_at').Clear
@@ -164,7 +322,6 @@ begin
       else
         ParamByName('deleted_at').AsDateTime :=
           dm.QtempPusat.FieldByName('deleted_at').AsDateTime;
-
       { created_by }
       if dm.QtempPusat.FieldByName('created_by').IsNull then
         ParamByName('created_by').Clear
@@ -183,17 +340,14 @@ begin
       else
         ParamByName('deleted_by').AsString :=
           dm.QtempPusat.FieldByName('deleted_by').AsString;
-
       { tempo (NULL SAFE) }
       if dm.QtempPusat.FieldByName('tempo').IsNull then
         ParamByName('tempo').Clear
       else
         ParamByName('tempo').AsInteger :=
           dm.QtempPusat.FieldByName('tempo').AsInteger;
-
       ExecSQL;
     end;
-
   end;
 end;
 
@@ -202,7 +356,6 @@ var
   i: Integer;
 begin
   if (AKodeList = nil) or (AKodeList.Count = 0) then Exit;
-
   for i := 0 to AKodeList.Count - 1 do
   begin
     dm.Qtemp.Close;
@@ -211,7 +364,6 @@ begin
       'where supplier_code = :supplier_code';
     dm.Qtemp.ParamByName('supplier_code').AsString := AKodeList[i];
     dm.Qtemp.ExecSQL;
-
     dm.QtempPusat.Close;
     dm.QtempPusat.SQL.Text :=
       'select item_stock_code, item_code, supplier_code, qty, unit, '+
@@ -223,7 +375,6 @@ begin
       'where supplier_code = :supplier_code';
     dm.QtempPusat.ParamByName('supplier_code').AsString := AKodeList[i];
     dm.QtempPusat.Open;
-
     dm.Qtemp.Close;
     dm.Qtemp.SQL.Text :=
       'insert into t_item_stock ('+
@@ -239,76 +390,61 @@ begin
       ':updated_at, :updated_by, '+
       ':deleted_at, :deleted_by)';
     dm.Qtemp.Prepare;
-
     while not dm.QtempPusat.Eof do
     begin
       dm.Qtemp.ParamByName('item_stock').AsString :=
         dm.QtempPusat.FieldByName('item_stock_code').AsString;
-
       dm.Qtemp.ParamByName('item_code').AsString :=
         dm.QtempPusat.FieldByName('item_code').AsString;
-
       dm.Qtemp.ParamByName('supplier_code').AsString :=
         dm.QtempPusat.FieldByName('supplier_code').AsString;
-
       dm.Qtemp.ParamByName('qty').AsFloat :=
         dm.QtempPusat.FieldByName('qty').AsFloat;
-
       dm.Qtemp.ParamByName('unit').AsString :=
         dm.QtempPusat.FieldByName('unit').AsString;
-
       dm.Qtemp.ParamByName('order_no').AsString :=
         dm.QtempPusat.FieldByName('order_no').AsString;
-
       dm.Qtemp.ParamByName('item_name').AsString :=
         dm.QtempPusat.FieldByName('item_name').AsString;
-
       {===== created_at =====}
       if dm.QtempPusat.FieldByName('created_at').IsNull then
         dm.Qtemp.ParamByName('created_at').Clear
       else
         dm.Qtemp.ParamByName('created_at').AsDateTime :=
           dm.QtempPusat.FieldByName('created_at').AsDateTime;
-
       {===== created_by =====}
       if dm.QtempPusat.FieldByName('created_by').IsNull then
         dm.Qtemp.ParamByName('created_by').Clear
       else
         dm.Qtemp.ParamByName('created_by').AsString :=
           dm.QtempPusat.FieldByName('created_by').AsString;
-
       {===== updated_at =====}
       if dm.QtempPusat.FieldByName('updated_at').IsNull then
         dm.Qtemp.ParamByName('updated_at').Clear
       else
         dm.Qtemp.ParamByName('updated_at').AsDateTime :=
           dm.QtempPusat.FieldByName('updated_at').AsDateTime;
-
       {===== updated_by =====}
       if dm.QtempPusat.FieldByName('updated_by').IsNull then
         dm.Qtemp.ParamByName('updated_by').Clear
       else
         dm.Qtemp.ParamByName('updated_by').AsString :=
           dm.QtempPusat.FieldByName('updated_by').AsString;
-
       {===== deleted_at =====}
       if dm.QtempPusat.FieldByName('deleted_at').IsNull then
         dm.Qtemp.ParamByName('deleted_at').Clear
       else
         dm.Qtemp.ParamByName('deleted_at').AsDateTime :=
           dm.QtempPusat.FieldByName('deleted_at').AsDateTime;
-
       {===== deleted_by =====}
       if dm.QtempPusat.FieldByName('deleted_by').IsNull then
         dm.Qtemp.ParamByName('deleted_by').Clear
       else
         dm.Qtemp.ParamByName('deleted_by').AsString :=
           dm.QtempPusat.FieldByName('deleted_by').AsString;
-
       dm.Qtemp.ExecSQL;
       dm.QtempPusat.Next;
     end;
-
     dm.QtempPusat.Close;
   end;
 end;
@@ -383,7 +519,6 @@ var
   ListKode: TStringList;
 begin
   if MemTableEh1.RecordCount = 0 then Exit;
-
   DBGridDetail.StartLoadingStatus;
   ListKode := TStringList.Create;
   try
@@ -394,10 +529,8 @@ begin
         ListKode.Add(MemTableEh1.FieldByName('kode').AsString);
       MemTableEh1.Next;
     end;
-
     if ListKode.Count = 0 then
       Exit;
-
     if not dm.koneksi.InTransaction then
       dm.koneksi.StartTransaction;
     try
@@ -406,7 +539,21 @@ begin
         SyncSupplierBatch(ListKode);
         SyncItemStockBatch(ListKode);
       end;
-
+      if cbModul.Text = 'MASTER PELANGGAN' then
+      begin
+        MessageDlg('Modul Dalam Maintenance', mtInformation, [mbOK], 0);
+      end;
+      if cbModul.Text = 'MASTER BARANG' then
+      begin
+        //master kategori
+        //master kelompok
+        SyncMasterItemBatch(ListKode);
+        //t_item_account
+      end;
+      if cbModul.Text = 'MASTER AKUN PERKIRAAN' then
+      begin
+        MessageDlg('Modul Dalam Maintenance', mtInformation, [mbOK], 0);
+      end;
       dm.koneksi.Commit;
       MessageDlg('Data berhasil diproses', mtInformation, [mbOK], 0);
     except

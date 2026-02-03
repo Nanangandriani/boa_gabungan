@@ -225,7 +225,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.full_name from t_user  a left join t_position b on b.position_code=a.position_code where b.level=2';
+    sql.Text:='select a.full_name from t_user  a left join t_position b on b.position_code=a.position_code where b.level=2 and status_signature=true';
     open;
   end;
   StrNonOp:=dm.Qtemp.FieldValues['full_name'] ;

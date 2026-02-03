@@ -27,7 +27,7 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
-  dxRibbon, cxButtonEdit, cxTextEdit;
+  dxRibbon, cxButtonEdit, cxTextEdit, cxDropDownEdit;
 
 type
   TFRpt_BukuHarianPembelian = class(TForm)
@@ -69,6 +69,8 @@ type
     dxRibbon1Tab1: TdxRibbonTab;
     dxBarLargeButton2: TdxBarLargeButton;
     CB_SBU: TdxBarCombo;
+    CbKategori: TcxBarEditItem;
+    DBGridEh1: TDBGridEh;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BBatalClick(Sender: TObject);
@@ -83,10 +85,12 @@ type
       AButtonIndex: Integer);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure DxRefreshClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure queryreport;
   end;
 
 
@@ -128,6 +132,156 @@ for i:=1 to High(namaBulan) do
 longmonthnames[i]:=namaBulan[i];
 end;                    }
 
+procedure TFRpt_BukuHarianPembelian.queryreport;
+begin
+    if dtmulai.EditValue = null then
+    begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtMulai.SetFocus;
+      Exit;
+    end;
+    if DtSelesai.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DtSelesai.SetFocus;
+      Exit;
+    end;
+    dm.QPerusahaan.Close;
+    dm.QPerusahaan.Open;
+if Length(CbKategori.EditValue)<>0 then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+    {sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,b.qty,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp, b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
+    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
+    ' c.group_name,h.supplier_name '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where purchase_type='+QuotedStr(CbKategori.EditValue)+' '+
+    ' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+    ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+' '+
+    ' ORDER BY a.trans_date,a.faktur_no ASC ';  }
+    //update ds 30-01-2026
+    sql.Text:=' /*Uang muka*/'  +
+    ' select  pi.trans_no,pi.trans_date,pi.faktur_no,'''' po_no,0 debt_remaining,'+
+    ' '''' item_code,0 qty,'''' unit,''''item_stock_code,'''' item_name,'''' ppn_account,0 subtotalrp,0 ppn_rp,'+
+    ' '''' account_pph_code,pi.um_value pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,'''' ak_pemb,'''' ak_pemb_name,'''''+
+    ' ak_ppn,'''' ak_ppn_name,pi.account_um_code ak_pph,ac.account_name ak_pph_name,'+
+    ' '''' group_name,sp.supplier_name,pi.supplier_code from t_purchase_invoice pi '+
+    ' inner join (select ac.code,ac.account_name,acs.account_code2 account_code from t_ak_account ac '+
+    ' inner join t_ak_account_sub acs on ac.code=acs.account_code) ac on pi.account_um_code=ac.account_code '+
+    ' inner join t_supplier sp on pi.supplier_code=sp.supplier_code where um_value >0  '+
+    ' union all'+
+    '/*pembelian*/'  +
+    ' select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,c.item_code,b.qty,'+
+    ' c.unit,c.item_stock_code,c.item_name,b.ppn_account,b.subtotal subtotalrp, b.ppn_rp,b.account_pph_code,b.pph_rp,'+
+    ' b.grandtotal,d.code ak_htng,d.account_name ak_ht_name,e.code ak_pemb,e.account_name ak_pemb_name,'+
+    ' case when b.ppn_account <> '''' then b.ppn_account else '''' end ak_ppn,          '+
+    ' case when b.ppn_account <> '''' then f.account_name else '''' end ak_ppn_name,    '+
+    ' case when b.account_pph_code <>'''' then b.account_pph_code else '''' end ak_pph, '+
+    ' case when b.account_pph_code <>'''' then j.account_name else '''' end ak_pph_name,'+
+    ' c.group_name,h.supplier_name,a.supplier_code '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where purchase_type='+QuotedStr(CbKategori.EditValue)+' '+
+    ' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+    ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+' '+
+    ' ORDER BY trans_date,faktur_no ASC ';
+    Execute;
+  end;
+end;
+if Length(CbKategori.EditValue)=0 then
+begin
+  with QRptBHP do
+  begin
+    close;
+    sql.Clear;
+   { sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,b.qty,a.um_value,'+
+    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
+    ' b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
+    ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
+    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
+    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
+    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
+    ' c.group_name,h.supplier_name '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+    ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+' '+
+    ' ORDER BY a.trans_date,a.faktur_no ASC ';  }
+    // cr ds 30-01-2026
+    sql.Text:=' /*Uang muka*/'  +
+    ' select  pi.trans_no,pi.trans_date,pi.faktur_no,'''' po_no,0 debt_remaining,'+
+    ' '''' item_code,0 qty,'''' unit,''''item_stock_code,'''' item_name,'''' ppn_account,0 subtotalrp,0 ppn_rp,'+
+    ' '''' account_pph_code,pi.um_value pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,'''' ak_pemb,'''' ak_pemb_name,'''''+
+    ' ak_ppn,'''' ak_ppn_name,pi.account_um_code ak_pph,ac.account_name ak_pph_name,'+
+    ' '''' group_name,sp.supplier_name,pi.supplier_code from t_purchase_invoice pi '+
+    ' inner join (select ac.code,ac.account_name,acs.account_code2 account_code from t_ak_account ac '+
+    ' inner join t_ak_account_sub acs on ac.code=acs.account_code) ac on pi.account_um_code=ac.account_code '+
+    ' inner join t_supplier sp on pi.supplier_code=sp.supplier_code where um_value >0  '+
+    ' union all'+
+    '/*pembelian*/'  +
+    ' select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,c.item_code,b.qty,'+
+    ' c.unit,c.item_stock_code,c.item_name,b.ppn_account,b.subtotal subtotalrp, b.ppn_rp,b.account_pph_code,b.pph_rp,'+
+    ' b.grandtotal,d.code ak_htng,d.account_name ak_ht_name,e.code ak_pemb,e.account_name ak_pemb_name,'+
+    ' case when b.ppn_account <> '''' then b.ppn_account else '''' end ak_ppn,          '+
+    ' case when b.ppn_account <> '''' then f.account_name else '''' end ak_ppn_name,    '+
+    ' case when b.account_pph_code <>'''' then b.account_pph_code else '''' end ak_pph, '+
+    ' case when b.account_pph_code <>'''' then j.account_name else '''' end ak_pph_name,'+
+    ' c.group_name,h.supplier_name,a.supplier_code '+
+    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
+    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
+    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
+    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
+    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
+    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
+    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
+    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
+    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
+    ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+    ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+' '+
+    ' ORDER BY trans_date,faktur_no ASC ';
+    Execute;
+  end;
+end;
+end;
+
 procedure TFRpt_BukuHarianPembelian.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -146,7 +300,28 @@ begin
 end;
 
 procedure TFRpt_BukuHarianPembelian.FormShow(Sender: TObject);
+var
+  comboProps: TcxComboBoxProperties;
 begin
+  if not (CbKategori.Properties is TcxComboBoxProperties) then
+    raise Exception.Create('Properties harus bertipe TcxComboBoxProperties!');
+  comboProps := TcxComboBoxProperties(CbKategori.Properties);
+  comboProps.Items.Clear;
+  with dm.qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select DISTINCT type from t_item_type order by type';
+    Execute;
+  end;
+  dm.Qtemp.First;
+  while not dm.Qtemp.eof do
+  begin
+    comboProps.items.add(dm.Qtemp['type']);
+    dm.Qtemp.Next;
+  end;
+
+
   edkd_akun1.Clear;
   Ednm_akun1.Clear;
   DtMulai1.Clear;
@@ -165,7 +340,7 @@ MemBHP.Open;
   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BHPemb.Fr3');
 // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
-  SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
+ // SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
   Rpt.DesignReport();
 end;
 
@@ -288,82 +463,16 @@ end;
 
 procedure TFRpt_BukuHarianPembelian.dxBarLargeButton1Click(Sender: TObject);
 begin
-    if dtmulai.EditValue = null then
-    begin
-      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtMulai.SetFocus;
-      Exit;
-    end;
-    if DtSelesai.EditValue= null then
-    begin
-      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-      DtSelesai.SetFocus;
-      Exit;
-    end;
-if EdAkun.EditValue<> null then
-begin
-  with QRptBHP do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
-    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
-    ' b.ppn_rp, b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
-    ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
-    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
-    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
-    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
-    ' c.group_name,h.supplier_name '+
-    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
-    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
-    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
-    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
-    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
-    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
-    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
-    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
-    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
-    ' where d.code='+QuotedStr(edakun.EditValue)+' and a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
-    Execute;
-  end;
-end;
-if EdAkun.EditValue=null then
-begin
-  with QRptBHP do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select a.trans_no,a.trans_date,a.faktur_no,b.po_no,debt_remaining,a.um_value,'+
-    ' a.account_code ak_htng,c.item_stock_code,c.item_name,b.account_code,b.ppn_account,b.subtotalrp,'+
-    ' b.ppn_rp,b.account_pph_code,b.pph_rp,b.grandtotal,concat(d.code,'' ('',d.account_name,'')'') ak_ht_name,'+
-    ' concat(e.code,'' ('',e.account_name,'')'') ak_detail,case when b.ppn_account <> '''' then'+
-    ' concat(b.ppn_account,'' ('',f.account_name,'')'') else '''' end ak_ppn,case when a.account_um_code <> '''''+
-    ' then concat(a.account_um_code,'' ('',g.account_name,'')'') else '''' end ak_um, '+
-    ' case when b.account_pph_code <>'''' then concat(b.account_pph_code,'' ('',j.account_name,'')'') else '''' end ak_pph, '+
-    ' c.group_name,h.supplier_name '+
-    ' from t_purchase_invoice a INNER JOIN  t_purchase_invoice_det b on a.trans_no=b.trans_no  '+
-    ' INNER JOIN (select a.*,c.group_name from t_item_stock a INNER JOIN t_item b on a.item_code=b.item_code'+
-    ' INNER JOIN t_item_group c on b.group_id=c.group_id ) c on b.item_stock_code=c.item_stock_code '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) d on a.account_code=d.account_code2 '+
-    //' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_code=e.account_code2 '+
-    ' INNER JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) E on b.account_pemb=e.account_code2 '+
-    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) F on b.ppn_account=f.account_code2   '+
-    ' LEFT JOIN (select d1.code,d1.account_name,d2.account_code2 from t_ak_account d1 INNER JOIN t_ak_account_sub d2 on d1.code=d2.account_code GROUP BY d1.code,d1.account_name,d2.account_code2) g on a.account_um_code=g.account_code2 '+
-    ' LEFT JOIN (select d1.code,d1.account_name from t_ak_account d1 '+
-    ' GROUP BY d1.code,d1.account_name) j on b.account_pph_code=j.code '+
-    ' INNER JOIN t_supplier h on a.supplier_code=h.supplier_code'+
-    ' where a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue));
-    Execute;
-  end;
-end;
-    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DK.Fr3');
+  queryreport;
+  //  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DK.Fr3');
+    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DK2.Fr3');
   // Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptBukuHarianPembelianProduksi.Fr3');
-    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+    //SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+    SetMemo(Rpt,'jns_hutang',' BUKU HARIAN PEMBELIAN '+CbKategori.EditValue);
+    SetMemo(Rpt,'MPeriode',' Tanggal  : '+FormatDateTime('dd mmmm yyyy',DtMulai.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTSelesai.EditValue));
   //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
   //  SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
-    rpt.ShowReport();
+    Rpt.ShowReport();
 end;
 
 procedure TFRpt_BukuHarianPembelian.dxBarLargeButton2Click(Sender: TObject);
@@ -435,6 +544,11 @@ end;
 //  TfrxMemoView(Rpt.FindObject('Mpt')).Memo.Text:=' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.Date));
   //  SetMemo(Rpt,'nmsbu',' '+Kd_SBU);
     rpt.ShowReport();
+end;
+
+procedure TFRpt_BukuHarianPembelian.DxRefreshClick(Sender: TObject);
+begin
+  queryreport;
 end;
 
 procedure TFRpt_BukuHarianPembelian.EdAkunPropertiesButtonClick(Sender: TObject;

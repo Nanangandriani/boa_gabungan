@@ -256,7 +256,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_item_type order by type';
+    sql.Text:='select DISTINCT type from t_item_type order by type';
     Execute;
   end;
   dm.Qtemp.First;

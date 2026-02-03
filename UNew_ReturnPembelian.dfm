@@ -40,7 +40,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object Label14: TLabel
     Left = 640
     Top = 411
-    Width = 60
+    Width = 61
     Height = 15
     Caption = 'Grand Total'
   end
@@ -61,7 +61,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object Label11: TLabel
     Left = 558
     Top = 52
-    Width = 77
+    Width = 78
     Height = 15
     Caption = 'Tanggal Faktur'
   end
@@ -124,7 +124,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object Label2: TLabel
     Left = 321
     Top = 19
-    Width = 41
+    Width = 42
     Height = 15
     Caption = 'Tanggal'
   end
@@ -189,9 +189,9 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 3
   end
   object DBGridEh3: TDBGridEh
-    Left = 8
+    Left = 0
     Top = 140
-    Width = 905
+    Width = 933
     Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -240,9 +240,9 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'kd_stok'
+        FieldName = 'nm_material'
         Footers = <>
-        Title.Caption = 'Kode Stok'
+        Title.Caption = 'Nama Barang'
         Width = 157
       end
       item
@@ -295,8 +295,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
           end>
         FieldName = 'wh_code'
         Footers = <>
-        Title.Caption = 'Kd Gudang'
-        Width = 0
+        Title.Caption = 'Kode Gudang'
+        Width = 80
       end
       item
         CellButtons = <>
@@ -584,7 +584,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object MemDetail: TMemTableEh
     Active = True
     Params = <>
-    Left = 192
+    Left = 216
     Top = 379
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh

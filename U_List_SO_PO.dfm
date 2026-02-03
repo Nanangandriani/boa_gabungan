@@ -19,8 +19,8 @@ object FList_SO: TFList_SO
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 376
-    ExplicitWidth = 501
+    ExplicitTop = 411
+    ExplicitWidth = 613
     object BBatal: TRzBitBtn
       Left = 543
       Top = 1
@@ -81,7 +81,7 @@ object FList_SO: TFList_SO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 425
+      ExplicitLeft = 537
     end
     object BEdit: TRzBitBtn
       Left = 468
@@ -143,7 +143,7 @@ object FList_SO: TFList_SO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 350
+      ExplicitLeft = 462
     end
     object Cb_All: TCheckBox
       Left = 8
@@ -257,10 +257,10 @@ object FList_SO: TFList_SO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'vehicles'
+        FieldName = 'vehicle_group_sort_number'
         Footers = <>
-        Title.Caption = 'No. Kendaraan'
-        Width = 100
+        Title.Caption = 'Kelompok Kendaraan'
+        Width = 150
       end
       item
         CellButtons = <>
@@ -283,8 +283,9 @@ object FList_SO: TFList_SO
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'vehicle_group_sort_number'
+        FieldName = 'vehicles'
         Footers = <>
+        Title.Caption = 'No. Kendaraan'
         Width = 0
       end
       item

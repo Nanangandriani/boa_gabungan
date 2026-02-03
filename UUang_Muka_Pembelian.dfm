@@ -22,6 +22,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
     Width = 755
     Height = 315
     Align = alClient
+    AutoFitColWidths = True
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
@@ -78,6 +79,7 @@ object FUang_Muka_Pembelian: TFUang_Muka_Pembelian
         FieldName = 'po_no'
         Footers = <>
         Title.Caption = 'No.PO'
+        Visible = False
         Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh

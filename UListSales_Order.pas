@@ -209,6 +209,7 @@ begin
 //  month :=FormatDateTime('m', NOW());
 //  edTahun.Text:=(year);
 //  cbBulan.ItemIndex:=StrToInt(month)-1;
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -287,9 +288,10 @@ begin
 
       if Dm.Qtemp2.FieldByName('vehicles').AsString<>NULL then
       begin
-        edKelompokKendaraan.Text:=Dm.Qtemp2.FieldByName('vehicle_group_id').AsString;
+        edKelompokKendaraan.Text:=Dm.Qtemp2.FieldByName('vehicle_group_sort_number').AsString;
         edKodeTypeKendaraan.Text:=Dm.Qtemp2.FieldByName('type_vehicles_code').AsString;
         edTypeKendaraan.Text:=Dm.Qtemp2.FieldByName('type_vehicles_name').AsString;
+        strVehicleGroupId:=Dm.Qtemp2.FieldByName('vehicle_group_id').AsString;
         edKendaraan.Text:=Dm.Qtemp2.FieldByName('vehicles').AsString;
         edKapasitas.Value:=Dm.Qtemp2.FieldByName('capacity').Value;
       end;
@@ -366,11 +368,13 @@ end;
 
 procedure TFSalesOrder.dxBarLargeButton1Click(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
 procedure TFSalesOrder.dxBarLargeButton4Click(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';
@@ -416,6 +420,7 @@ end;
 
 procedure TFSalesOrder.FormShow(Sender: TObject);
 begin
+  DBGridOrder.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   edKaresidenan.EditValue:='';

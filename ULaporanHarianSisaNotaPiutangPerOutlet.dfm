@@ -278,6 +278,12 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         item
           UserDefine = [udWidth]
+          UserWidth = 196
+          Visible = True
+          ItemName = 'cbTP'
+        end
+        item
+          UserDefine = [udWidth]
           UserWidth = 94
           Visible = True
           ItemName = 'cbSBU'
@@ -329,7 +335,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 455
+      DockedLeft = 494
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1099,10 +1105,10 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
       Visible = ivAlways
     end
     object cbKaresidenan: TcxBarEditItem
-      Caption = 'TP     '
+      Caption = 'Karesidenan '
       Category = 0
-      Hint = 'TP     '
-      Visible = ivAlways
+      Hint = 'Karesidenan '
+      Visible = ivNever
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item
@@ -1338,9 +1344,9 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end>
     end
     object cbSBU: TdxBarCombo
-      Caption = 'SBU  '
+      Caption = 'SBU               '
       Category = 0
-      Hint = 'SBU  '
+      Hint = 'SBU               '
       Visible = ivAlways
       ItemIndex = -1
     end
@@ -1398,6 +1404,19 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton7Click
     end
+    object cbTP: TcxBarEditItem
+      Caption = 'TP                  '
+      Category = 0
+      Hint = 'TP                  '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cbTPPropertiesButtonClick
+    end
   end
   object DsLaporanHarianSisaNotaPiutangPerOutlet: TDataSource
     DataSet = QLaporanHarianSisaNotaPiutangPerOutlet
@@ -1413,7 +1432,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46016.448253831020000000
+    ReportOptions.LastChange = 46037.469789826390000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1435,14 +1454,13 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      Orientation = poLandscape
-      PaperWidth = 215.900000000000000000
-      PaperHeight = 330.000000000000000000
-      PaperSize = 256
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 7.000000000000000000
+      RightMargin = 7.000000000000000000
+      TopMargin = 7.000000000000000000
+      BottomMargin = 7.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       object MasterData1: TfrxMasterData
@@ -1454,7 +1472,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Frame.Typ = []
         Height = 23.361553020000000000
         Top = 336.378170000000000000
-        Width = 740.409927000000000000
+        Width = 740.787880000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
         DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
@@ -1511,7 +1529,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           DataField = 'jumlah_nota_awal'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1560,7 +1578,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           DataField = 'jumlah_nota_penjualan'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1609,7 +1627,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           DataField = 'jumlah_nota_bayar'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1658,7 +1676,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           DataField = 'jumlah_nota_saldo_nota'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1741,8 +1759,8 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Line30: TfrxLineView
           AllowVectorExport = True
-          Left = 460.724409450000000000
-          Top = 0.021830000000000000
+          Left = 461.102362204724400000
+          Top = 0.021829999999999990
           Width = 0.000000010000000000
           Height = 23.433070870000000000
           StretchMode = smMaxHeight
@@ -1799,9 +1817,9 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 164.787401574803000000
+        Height = 164.787401570000000000
         Top = 18.897650000000000000
-        Width = 740.409927000000000000
+        Width = 740.787880000000000000
         object Memo2: TfrxMemoView
           AllowVectorExport = True
           Left = 1.225490190000000000
@@ -1817,7 +1835,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           HAlign = haCenter
           Memo.UTF8W = (
             'REKAP LAPORAN PIUTANG PELANGGAN'
-            'PER TP')
+            'PER KARESIDENAN')
           ParentFont = False
           WordBreak = True
           VAlign = vaCenter
@@ -1894,9 +1912,9 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.228346460000000000
+          Left = 236.598425200000000000
           Top = 113.435683330000000000
-          Width = 93.850393700000000000
+          Width = 94.850393700000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1983,7 +2001,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           AllowVectorExport = True
           Left = 203.344537820000000000
           Top = 133.935683330000000000
-          Width = 33.690046100000000000
+          Width = 33.637795280000000000
           Height = 30.833333340000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1998,7 +2016,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.499999990000000000
+          Left = 236.598425200000000000
           Top = 133.102350000000000000
           Width = 95.439632540000000000
           Height = 31.875328090000000000
@@ -2049,8 +2067,8 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.166666670000000000
-          Top = 113.102349990000000000
+          Left = 330.330708660000000000
+          Top = 113.385826771653500000
           Width = 35.352786790000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2085,7 +2103,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.086614170000000000
+          Left = 330.330708661417300000
           Top = 87.864254760000000000
           Width = 131.389454990000000000
           Height = 25.238095240000000000
@@ -2103,7 +2121,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 331.203412080000000000
+          Left = 330.330708660000000000
           Top = 133.769016660000000000
           Width = 35.314497450000000000
           Height = 31.041994750000000000
@@ -2138,7 +2156,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         object Memo31: TfrxMemoView
           AllowVectorExport = True
           Left = 461.000000000000000000
-          Top = 113.102349990000000000
+          Top = 113.385826771653500000
           Width = 40.627296590000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2226,7 +2244,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         object Memo44: TfrxMemoView
           AllowVectorExport = True
           Left = 608.333333330000000000
-          Top = 113.102349990000000000
+          Top = 113.385826771653500000
           Width = 37.795275590000000000
           Height = 20.833333340000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2394,11 +2412,11 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           Frame.Typ = []
           Diagonal = True
         end
-        object Line13: TfrxLineView
+        object Line46: TfrxLineView
           AllowVectorExport = True
-          Left = 740.607843140000000000
-          Top = 86.808232350000000000
-          Width = -279.685039370079000000
+          Left = 740.000000000000000000
+          Top = 86.929133858267720000
+          Width = -279.685039370000000000
           Height = -0.061139420000000000
           Color = clBlack
           Frame.Typ = []
@@ -2414,7 +2432,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Frame.Typ = []
         Height = 22.230983330000000000
         Top = 245.669450000000000000
-        Width = 740.409927000000000000
+        Width = 740.787880000000000000
         Condition = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."kabupaten"'
         object Memo54: TfrxMemoView
           AllowVectorExport = True
@@ -2501,7 +2519,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Frame.Typ = []
         Height = 22.757854800000000000
         Top = 291.023810000000000000
-        Width = 740.409927000000000000
+        Width = 740.787880000000000000
         Condition = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."kecamatan"'
         object Memo56: TfrxMemoView
           AllowVectorExport = True
@@ -2599,7 +2617,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 330.714285720000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181102362000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2609,17 +2627,17 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 366.428571430000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
       end
       object Line24: TfrxLineView
         AllowVectorExport = True
-        Left = 460.724409450000000000
+        Left = 461.102362200000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2629,7 +2647,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 501.428571430000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2639,17 +2657,17 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 608.500000000000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
       end
       object Line16: TfrxLineView
         AllowVectorExport = True
-        Left = 647.055118110000000000
+        Left = 647.055118110236200000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2658,7 +2676,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         AllowVectorExport = True
         Left = 30.236220470000000000
         Top = 360.500000000000000000
-        Height = 787.653543307087000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2668,7 +2686,7 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 203.716535430000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
@@ -2678,24 +2696,34 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         Left = 236.976377950000000000
         Top = 360.566929130000000000
         Width = 0.000000010000000000
-        Height = 811.086614173228000000
+        Height = 710.551181100000000000
         Color = clBlack
         Frame.Typ = []
         Diagonal = True
       end
-      object PageFooter1: TfrxPageFooter
+      object ReportSummary1: TfrxReportSummary
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 24.581479870000000000
-        Top = 419.527830000000000000
-        Width = 740.409927000000000000
+        Top = 472.441250000000000000
+        Width = 740.787880000000000000
+      end
+      object Footer1: TfrxFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 31.145498120000000000
+        Top = 381.732530000000000000
+        Width = 740.787880000000000000
         object Line36: TfrxLineView
           AllowVectorExport = True
-          Left = 741.176470590000000000
+          Left = 740.031496060000000000
           Width = -740.714285720000000000
           Height = 0.181664800000000000
           Color = clBlack
@@ -2704,9 +2732,9 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
         end
         object Memo60: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.529411770000000000
-          Top = 1.511811023622050000
-          Width = 192.695604230000000000
+          Left = 7.529411770000000000
+          Top = 2.338651020000000000
+          Width = 188.695604230000000000
           Height = 21.756368690000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
@@ -2724,125 +2752,21 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo61: TfrxMemoView
-          AllowVectorExport = True
-          Left = 238.823529410000000000
-          Top = 1.511811020000000000
-          Width = 91.519133640000000000
-          Height = 21.756368690000000000
-          OnAfterPrint = 'Memo33OnAfterPrint'
-          OnBeforePrint = 'Memo33OnBeforePrint'
-          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
-          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
-              'amount_nota_awal">,MasterData1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo62: TfrxMemoView
-          AllowVectorExport = True
-          Left = 367.058823530000000000
-          Top = 1.511811020000000000
-          Width = 91.519133640000000000
-          Height = 21.756368690000000000
-          OnAfterPrint = 'Memo33OnAfterPrint'
-          OnBeforePrint = 'Memo33OnBeforePrint'
-          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
-          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
-              'amount_penjualan">,MasterData1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo63: TfrxMemoView
-          AllowVectorExport = True
-          Left = 504.705882350000000000
-          Top = 1.511811020000000000
-          Width = 102.107368930000000000
-          Height = 21.756368690000000000
-          OnAfterPrint = 'Memo33OnAfterPrint'
-          OnBeforePrint = 'Memo33OnBeforePrint'
-          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
-          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
-              'amount_bayar">,MasterData1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo64: TfrxMemoView
-          AllowVectorExport = True
-          Left = 647.058823530000000000
-          Top = 1.511811020000000000
-          Width = 91.519133640000000000
-          Height = 21.756368690000000000
-          OnAfterPrint = 'Memo33OnAfterPrint'
-          OnBeforePrint = 'Memo33OnBeforePrint'
-          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
-          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
-              'amount_saldo_nota">,MasterData1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Memo65: TfrxMemoView
           AllowVectorExport = True
           Left = 205.882352940000000000
-          Top = 1.511811020000000000
+          Top = 2.338651020000000000
           Width = 30.342663050000000000
           Height = 21.756368690000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -2854,21 +2778,47 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           ParentFont = False
           VAlign = vaCenter
         end
+        object Memo61: TfrxMemoView
+          AllowVectorExport = True
+          Left = 238.823529410000000000
+          Top = 2.338651020000000000
+          Width = 91.519133640000000000
+          Height = 21.756368690000000000
+          OnAfterPrint = 'Memo33OnAfterPrint'
+          OnBeforePrint = 'Memo33OnBeforePrint'
+          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
+          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
+              'amount_nota_awal">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
         object Memo66: TfrxMemoView
           AllowVectorExport = True
           Left = 332.941176470000000000
-          Top = 1.511811020000000000
+          Top = 2.338651020000000000
           Width = 30.342663050000000000
           Height = 21.756368690000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -2880,21 +2830,47 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           ParentFont = False
           VAlign = vaCenter
         end
+        object Memo62: TfrxMemoView
+          AllowVectorExport = True
+          Left = 367.058823530000000000
+          Top = 2.338651020000000000
+          Width = 91.519133640000000000
+          Height = 21.756368690000000000
+          OnAfterPrint = 'Memo33OnAfterPrint'
+          OnBeforePrint = 'Memo33OnBeforePrint'
+          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
+          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
+              'amount_penjualan">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
         object Memo67: TfrxMemoView
           AllowVectorExport = True
           Left = 463.529411760000000000
-          Top = 1.511811020000000000
+          Top = 2.338651020000000000
           Width = 35.048545400000000000
           Height = 21.756368690000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -2906,21 +2882,47 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
           ParentFont = False
           VAlign = vaCenter
         end
+        object Memo63: TfrxMemoView
+          AllowVectorExport = True
+          Left = 504.705882350000000000
+          Top = 2.338651020000000000
+          Width = 102.107368930000000000
+          Height = 21.756368690000000000
+          OnAfterPrint = 'Memo33OnAfterPrint'
+          OnBeforePrint = 'Memo33OnBeforePrint'
+          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
+          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
+              'amount_bayar">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
         object Memo68: TfrxMemoView
           AllowVectorExport = True
           Left = 611.764705880000000000
-          Top = 1.511811020000000000
+          Top = 2.338651020000000000
           Width = 33.872074810000000000
           Height = 21.756368690000000000
           OnAfterPrint = 'Memo33OnAfterPrint'
           OnBeforePrint = 'Memo33OnBeforePrint'
           DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
           DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
-          DisplayFormat.FormatStr = '#,##0.##'
+          DisplayFormat.FormatStr = '#,##0'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -2931,6 +2933,122 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
               'nota_saldo_nota">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
+        end
+        object Memo64: TfrxMemoView
+          AllowVectorExport = True
+          Left = 647.058823530000000000
+          Top = 2.338651020000000000
+          Width = 91.519133640000000000
+          Height = 21.756368690000000000
+          OnAfterPrint = 'Memo33OnAfterPrint'
+          OnBeforePrint = 'Memo33OnBeforePrint'
+          DataSet = frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet
+          DataSetName = 'frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLaporanHarianSisaNotaPiutangPerOutlet."jumlah_' +
+              'amount_saldo_nota">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line42: TfrxLineView
+          AllowVectorExport = True
+          Left = 501.543307090000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line43: TfrxLineView
+          AllowVectorExport = True
+          Left = 608.503937010000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line44: TfrxLineView
+          AllowVectorExport = True
+          Left = 647.055118110236200000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line39: TfrxLineView
+          AllowVectorExport = True
+          Left = 331.000000000000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line38: TfrxLineView
+          AllowVectorExport = True
+          Left = 237.000000000000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line37: TfrxLineView
+          AllowVectorExport = True
+          Left = 203.716535430000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line40: TfrxLineView
+          AllowVectorExport = True
+          Left = 366.614173230000000000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line41: TfrxLineView
+          AllowVectorExport = True
+          Left = 461.102362204724400000
+          Width = 0.000000010000000000
+          Height = 24.188976380000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line45: TfrxLineView
+          AllowVectorExport = True
+          Left = 740.031496062992100000
+          Top = 30.708720000000000000
+          Width = -740.714285720000000000
+          Height = 0.181664800000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
         end
       end
     end

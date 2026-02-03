@@ -339,7 +339,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNama_Sales: TRzButtonEdit
       Left = 132
-      Top = 150
+      Top = 148
       Width = 344
       Height = 23
       Text = ''
@@ -776,8 +776,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 903
-      ExplicitTop = 3
+      ExplicitLeft = 900
     end
     object Edautocode: TEdit
       Left = 712

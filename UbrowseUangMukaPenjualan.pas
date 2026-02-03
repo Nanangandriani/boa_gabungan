@@ -23,6 +23,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -45,7 +46,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT a.*,b.customer_name FROM t_down_payment_sales a '+
+    sql.Text:='SELECT a.*,b.customer_name,b.customer_name_pkp FROM t_down_payment_sales a '+
               'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
               'WHERE a.deleted_at is NULL AND '+
               'a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',DTTanggal1.Date)) +'AND '+
@@ -64,10 +65,17 @@ procedure TFbrowseUangMukaPenjualan.DBGridEh1DblClick(Sender: TObject);
 begin
   FDataPenerimaanBank.edNoRefSumberPenerimaan.Text:=QListUangMuka.FieldValues['no_trans'];
   FDataPenerimaanBank.edNamaPelangganSumber.Text:=QListUangMuka.FieldValues['customer_name'];
+  FDataPenerimaanBank.edNamaPKPSumber.Text:=QListUangMuka.FieldValues['customer_name_pkp'];
   FDataPenerimaanBank.edJumlah.Value:=QListUangMuka.FieldValues['grand_tot'];
   FDataPenerimaanBank.edKodePelangganSumber.Text:=QListUangMuka.FieldValues['customer_code'];
   FDataPenerimaanBank.edJumlahExit(sender);
   Close;
+end;
+
+procedure TFbrowseUangMukaPenjualan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QListUangMuka.Close;
 end;
 
 procedure TFbrowseUangMukaPenjualan.FormShow(Sender: TObject);

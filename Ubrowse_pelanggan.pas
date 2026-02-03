@@ -157,6 +157,7 @@ begin
      Dm.Qtemp.next;
     end;
   end;
+  Dm.Qtemp.Close;
 end;
 
 procedure TFbrowse_data_pelanggan.btTampilkanClick(Sender: TObject);
@@ -176,7 +177,7 @@ begin
 
   if vcall='dpp' then
   begin
-     FDataPenagihanPiutang.MemDetail.insert;
+     FDataPenagihanPiutang.MemDetail.edit;
      FDataPenagihanPiutang.MemDetail['kode_pel']:=MemMasterData['KD_PELANGGAN'];
      FDataPenagihanPiutang.MemDetail['nama_pel']:=MemMasterData['NM_PELANGGAN'];
      FDataPenagihanPiutang.MemDetail['no_invoice']:='0';
@@ -223,10 +224,10 @@ begin
   end;
   if vcall='terima_bank' then
   begin
-    FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
+
     FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
     FDataPenerimaanBank.edNamaPKP.Text:=MemMasterData['NM_PKP'];
-
+    FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
     //Ganti Akun Header bank Menjadi Akun Piutang Pelanggan
     with FDataPenerimaanBank do
     begin

@@ -68,12 +68,11 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = -6
+    ExplicitWidth = 1102
     object LabelPelanggan: TLabel
       Left = 20
       Top = 80
-      Width = 69
+      Width = 70
       Height = 15
       Caption = 'No. Transaksi'
     end
@@ -87,7 +86,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object Label39: TLabel
       Left = 587
       Top = -1
-      Width = 75
+      Width = 76
       Height = 15
       Caption = 'Jenis Transaksi'
       Visible = False
@@ -103,7 +102,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object Label12: TLabel
       Left = 20
       Top = 106
-      Width = 91
+      Width = 93
       Height = 15
       Caption = 'Tanggal Transaksi'
     end
@@ -222,7 +221,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     object Label27: TLabel
       Left = 19
       Top = 51
-      Width = 75
+      Width = 76
       Height = 15
       Caption = 'Jenis Transaksi'
     end
@@ -267,6 +266,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 64
       Height = 15
       Caption = 'Group Biaya'
+      Visible = False
     end
     object Label40: TLabel
       Left = 700
@@ -274,6 +274,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label45: TLabel
       Left = 1031
@@ -281,13 +282,15 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label46: TLabel
       Left = 971
       Top = 212
-      Width = 48
+      Width = 49
       Height = 15
       Caption = 'Daftar TP'
+      Visible = False
     end
     object Label_sumber: TLabel
       Left = 20
@@ -564,6 +567,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Width = 188
       Height = 23
       TabOrder = 23
+      Visible = False
       OnChange = CbGroup_BiayaChange
     end
     object Btn_daf_tp: TRzBitBtn
@@ -573,6 +577,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Height = 23
       Caption = '...'
       TabOrder = 24
+      Visible = False
       OnClick = Btn_daf_tpClick
     end
     object Cb_debt_source: TComboBox
@@ -800,7 +805,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 876
-      ExplicitTop = 3
     end
   end
   object Panel5: TPanel
@@ -894,7 +898,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       end
       object edNMSumberHutang: TRzButtonEdit
         Left = 347
-        Top = 86
+        Top = 118
         Width = 141
         Height = 23
         Text = ''
@@ -916,7 +920,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       end
       object edKodeSumberPengeluaran: TEdit
         Left = 494
-        Top = 86
+        Top = 118
         Width = 20
         Height = 23
         CharCase = ecUpperCase
@@ -939,7 +943,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       end
       object Cb_debt_source_x: TComboBox
         Left = 347
-        Top = 115
+        Top = 147
         Width = 141
         Height = 23
         TabOrder = 6
@@ -953,7 +957,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Height = 23
         Enabled = False
         TabOrder = 7
-        Visible = False
         OnChange = ak_accountChange
       end
       object Btn_Data: TRzBitBtn
@@ -963,6 +966,66 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Caption = 'Ambil Data Rencana'
         TabOrder = 8
         OnClick = Btn_DataClick
+        Glyph.Data = {
+          36060000424D3606000000000000360400002800000020000000100000000100
+          08000000000000020000A30E0000A30E00000001000000000000000000003300
+          00006600000099000000CC000000FF0000000033000033330000663300009933
+          0000CC330000FF33000000660000336600006666000099660000CC660000FF66
+          000000990000339900006699000099990000CC990000FF99000000CC000033CC
+          000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
+          0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
+          330000333300333333006633330099333300CC333300FF333300006633003366
+          33006666330099663300CC663300FF6633000099330033993300669933009999
+          3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
+          330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
+          66006600660099006600CC006600FF0066000033660033336600663366009933
+          6600CC336600FF33660000666600336666006666660099666600CC666600FF66
+          660000996600339966006699660099996600CC996600FF99660000CC660033CC
+          660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
+          6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
+          990000339900333399006633990099339900CC339900FF339900006699003366
+          99006666990099669900CC669900FF6699000099990033999900669999009999
+          9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
+          990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
+          CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
+          CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
+          CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
+          CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
+          CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
+          FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
+          FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
+          FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
+          FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
+          000000808000800000008000800080800000C0C0C00080808000191919004C4C
+          4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
+          6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E8E881E8E8E8E8E8E8E8E8E8E8E8E8E8E80909
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8E8090909
+          09090909090909E8E8E8E8E8E881818181818181818181E8E8E8E8E8E8E80909
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E88181E8E8E8E8E8E8E8E8E8E8E8E8E8E8E809
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E8E881E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
+          E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8A37878787878
+          78E8E85E5E5E5E5E5E5E81818181818181E8E881818181818181A3D5D5D5D5D5
+          78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+          78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+          78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5D5D5D5
+          78E8E85ED7D7D7D7D75E81ACACACACAC81E8E881E8E8E8E8E881A3D5D5A3A3A3
+          A3E8E85ED7D75E5E5E5E81ACAC81818181E8E881E8E881818181A3D5D5A3D678
+          E8E8E85ED7D75EE35EE881ACAC81AC81E8E8E881E8E881E381E8A3D5D5A378E8
+          E8E8E85ED7D75E5EE8E881ACAC8181E8E8E8E881E8E88181E8E8A3A3A3A3E8E8
+          E8E8E85E5E5E5EE8E8E881818181E8E8E8E8E881818181E8E8E8}
+        NumGlyphs = 2
+      end
+      object Btn_Data_Um: TRzBitBtn
+        Left = 303
+        Top = 83
+        Width = 170
+        Caption = 'Ambil Data Uang Muka'
+        TabOrder = 9
+        OnClick = Btn_Data_UmClick
         Glyph.Data = {
           36060000424D3606000000000000360400002800000020000000100000000100
           08000000000000020000A30E0000A30E00000001000000000000000000003300
@@ -1074,7 +1137,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       object Label32: TLabel
         Left = 319
         Top = 30
-        Width = 61
+        Width = 62
         Height = 15
         Caption = 'Tgl. Cek/BG'
       end
@@ -1095,7 +1158,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       object Label36: TLabel
         Left = 319
         Top = 56
-        Width = 95
+        Width = 97
         Height = 15
         Caption = 'Tgl. JthTempo Cek'
       end
@@ -1171,10 +1234,10 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 196
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 187
@@ -1357,11 +1420,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       end
     end
     object TabGroup_Biaya: TRzTabSheet
+      TabVisible = False
       Caption = 'Group Biaya'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid_GroupBiaya: TDBGridEh
         Left = 0
         Top = 0
@@ -1533,6 +1593,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
           FieldName = 'no_sj'
           StringDataType = fdtStringEh
           DisplayWidth = 100
+          Size = 100
         end
         object no_tagihan: TMTStringDataFieldEh
           FieldName = 'no_tagihan'
@@ -1585,7 +1646,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 928
+    Left = 920
     Top = 232
   end
   object DSTP: TDataSource

@@ -168,13 +168,24 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select DISTINCT sent_date from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL';
+      sql.Text:='select DISTINCT sent_date, string_agg(notrans, '', '') AS notrans from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL GROUP BY sent_date';
       open;
     end;
 
     if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])<>FormatDateTime('dd-mm-yyyy',FNew_SalesOrder.dtTanggal_Kirim.Date)) then
     begin
       MessageDlg('Kelompok Kendaraan sudah ada Order dengan Pengiriman Tanggal '+FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])+' ..!!',mtInformation,[mbRetry],0);
+    end else if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])=FormatDateTime('dd-mm-yyyy',FNew_SalesOrder.dtTanggal_Kirim.Date)) then
+    begin
+      MessageDlg('Kelompok Kendaraan sudah ada Order di Nomor SO: '+dm.Qtemp.FieldValues['notrans']	+' ..!!',mtInformation,[mbRetry],0);
+      FNew_SalesOrder.strVehicleGroupId:=MemMasterData['code'];
+      FNew_SalesOrder.edKelompokKendaraan.Text :=MemMasterData['sort_number'];
+      FNew_SalesOrder.edTypeKendaraan.Text:=MemMasterData['type_name'];
+      FNew_SalesOrder.edKodeTypeKendaraan.Text:=MemMasterData['type'];
+      FNew_SalesOrder.edKapasitas.Text :=MemMasterData['capacity'];
+      FNew_SalesOrder.edKendaraan.Text :=MemMasterData['plate_number'];
+      FDaftarKendaraan.Close;
+      FDaftarKendaraan.MemMasterData.EmptyTable;
     end else begin
 
       FNew_SalesOrder.strVehicleGroupId:=MemMasterData['code'];
@@ -243,10 +254,11 @@ begin
       key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
       vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
 
-      Vpath := '/api/get-vehicle?sbu_code='+FHomeLogin.vKodePRSH;
+      Vpath := '/api/get-vehicle?sbu_code='+FHomeLogin.vKodePRSH+'&send_date='+FormatDateTime('yyyy-mm-dd',FNew_SalesOrder.dtTanggal_Kirim.Date);
 //      Vpath := '/api/get-vehicle';
       url := BaseUrl + Vpath;
-
+//      Memo1.Text := url;
+//      Exit;
       // Setup HTTP client
       gNet := TIdHTTP.Create(nil);
       ssl := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
@@ -277,7 +289,6 @@ begin
             ShowMessage('Format JSON tidak valid');
             Exit;
           end;
-
 
           // JSON root object
           if jsonValue is TJSONObject then

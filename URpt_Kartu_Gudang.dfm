@@ -1314,8 +1314,8 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 548
-    Top = 160
+    Left = 500
+    Top = 168
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'

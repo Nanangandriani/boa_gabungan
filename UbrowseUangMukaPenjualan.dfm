@@ -13,6 +13,7 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object RzPanel1: TRzPanel
@@ -23,6 +24,7 @@ object FbrowseUangMukaPenjualan: TFbrowseUangMukaPenjualan
     Align = alTop
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 758
     object RzLabel1: TRzLabel
       Left = 45
       Top = 14

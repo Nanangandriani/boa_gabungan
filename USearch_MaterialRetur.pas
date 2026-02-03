@@ -67,6 +67,8 @@ begin
     MemDetail['nm_material']:=QMaterial['item_Name'];
     MemDetail['harga']:=QMaterial['price'];
     MemDetail['satuan']:=QMaterial['unit'];
+    MemDetail['item_code']:=QMaterial['item_code'];
+    MemDetail['wh_code']:=QMaterial['wh_code'];
     MemDetail.Post;
   end;
 end;

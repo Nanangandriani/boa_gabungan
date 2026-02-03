@@ -96,13 +96,15 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>12297</VerInfo_Locale>
+        <VerInfo_Locale>1035</VerInfo_Locale>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_PreRelease>true</VerInfo_PreRelease>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.58.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.58.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>58</VerInfo_MinorVer>
+        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1370,6 +1372,29 @@
         <DCCReference Include="ULaporanPenjualan.pas">
             <Form>FLaporanPenjualan</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_List_SO_PO.pas">
+            <Form>FList_SO</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UlistItemDo.pas">
+            <Form>FListDo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListItemSo.pas">
+            <Form>FlistItemSo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftarPenggunaanFakturPajak.pas">
+            <Form>FDaftarPenggunaanFakturPajak</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBatalTransaksi.pas">
+            <Form>FBatalTransaksi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDaftar_UM_Pemb.pas">
+            <Form>FDaftar_UM_Pemb</Form>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

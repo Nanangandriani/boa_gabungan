@@ -37,6 +37,7 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
     Width = 1060
     Height = 620
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DsPelakuBiaya
     DynProps = <>
     SearchPanel.Enabled = True
@@ -92,7 +93,7 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
         EditButtons = <>
         FieldName = 'name_1'
         Footers = <>
-        Title.Caption = 'Wilayah'
+        Title.Caption = 'Wilayah TP'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -670,13 +671,13 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
     Connection = dm.Koneksi
     SQL.Strings = (
       'select a.*,b.name from "public"."t_cost_actors" a'
-      'LEFT JOIN t_region_karesidenan b on a.karesidenan_code=b.code'
+      'LEFT JOIN t_region_tp b on a.karesidenan_code=b.code'
       'where a.deleted_at is null order by created_at ASC'
       ''
       ''
       '-- select * from "public"."t_cost_actors"'
       '-- where deleted_at is null order by created_at Desc')
-    Left = 428
+    Left = 404
     Top = 56
     object QPelakuBiayacode: TStringField
       FieldName = 'code'

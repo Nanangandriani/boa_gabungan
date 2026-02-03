@@ -311,7 +311,7 @@ begin
               FNew_po.MemItempo['pph_rp']:=QMaterial_stok['pph_rp'];
               //FNew_po.MemItempo['subtotal_rp']:=QMaterial_stok['subtotal_rp'];
               //FNew_po.MemItempo['grandtotalrp']:=QMaterial_stok['grandtotal'];
-              FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
+              FNew_PO.MemItempo['gudang']:=FNew_PO.Ed_kd_wh.Text;
               FNew_PO.MemItempo.Post;
             end;
           end;
@@ -346,7 +346,7 @@ begin
               FNew_po.MemItempo['pph_rp']:=0;
               //FNew_po.MemItempo['subtotal_rp']:=QMaterial_stok['subtotal_rp'];
               //FNew_po.MemItempo['grandtotalrp']:=QMaterial_stok['grandtotal'];
-              FNew_PO.MemItempo['gudang']:=FNew_PO.cb_gudang.Text;
+              FNew_PO.MemItempo['gudang']:=FNew_PO.Ed_kd_wh.Text;
               FNew_PO.MemItempo.Post;
             end;
             with dm.Qtemp do
@@ -406,7 +406,7 @@ begin
     MemItempo['pemb_dpp']:=0;
     MemItempo['pemb_ppn_us']:=0;
     MemItempo['pph']:=0;
-    MemItempo['gudang']:=cb_gudang.Text;
+    MemItempo['gudang']:=Ed_kd_wh.Text;
     MemItempo.Post;
   end;
   close;

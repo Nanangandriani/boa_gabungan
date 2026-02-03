@@ -32,7 +32,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     object Label3: TLabel
       Left = 24
       Top = 102
-      Width = 57
+      Width = 58
       Height = 15
       Caption = 'No. Terima'
     end
@@ -47,7 +47,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     object Label6: TLabel
       Left = 24
       Top = 74
-      Width = 79
+      Width = 81
       Height = 15
       Caption = 'Tanggal Terima'
     end
@@ -122,7 +122,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     object Label9: TLabel
       Left = 483
       Top = 69
-      Width = 77
+      Width = 78
       Height = 15
       Caption = 'Tanggal Faktur'
       Visible = False
@@ -130,7 +130,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     object Label15: TLabel
       Left = 483
       Top = 15
-      Width = 67
+      Width = 68
       Height = 15
       Caption = 'Jatuh Tempo'
       Visible = False

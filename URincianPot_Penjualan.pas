@@ -47,6 +47,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -90,7 +91,7 @@ begin
                 ' LEFT JOIN t_item c on a.code_item=c.item_code '+
                 ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
                 ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                ' and c.item_code=e.code_item '+
+                ' and c.item_code=e.code_item and e.code_unit=a.code_unit  '+
                 ' where '+
   //                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
                 ' "trans_no"='+QuotedStr(FNew_Penjualan.edNomorTrans.Text)+' '+
@@ -111,7 +112,7 @@ begin
                 ' LEFT JOIN t_item c on a.code_item=c.item_code '+
                 ' LEFT JOIN t_item_group d on c.group_id=d.group_id  '+
                 ' LEFT JOIN t_sales_classification_price_master e on e.code_type_customer=b.code_type '+
-                ' and c.item_code=e.code_item '+
+                ' and c.item_code=e.code_item and e.code_unit=a.code_unit '+
                 ' where '+
   //                  "trans_no"='+QuotedStr(edNomorTrans.Text)+'  '+
                  ' "id_master"='+QuotedStr(get_uuid)+' '+
@@ -393,8 +394,6 @@ begin
       open;
     end;
 
-
-
     stat_klasifikasi:=Dm.Qtemp3.fieldbyname('stat_klasifikasi').Value;
     hjual:=Dm.Qtemp3.fieldbyname('HARGAJUAL').Value;
     {disc:=fmainmenu.qexec.fieldbyname('disc').asfloat+fmainmenu.qexec.fieldbyname('disc1').asfloat+fmainmenu.qexec.fieldbyname('disc2').asfloat+
@@ -518,7 +517,6 @@ begin
 
   //bruto:=hjual*qty;
   //dpp:=fmainmenu.qexec3.fieldbyname('disc1').asfloat;
-
 
   {if stat_klasifikasi=1 then
   begin
@@ -661,8 +659,6 @@ begin
     netto_cortex:= netto;
   end;
   //ndisc:=strtofloat(parsing_koma(floattostr(ndisc)));
-
-
   //ShowMessage(FloatToStr(dpp+ppn));
 end;
 
@@ -715,6 +711,12 @@ begin
   end;
   FNew_Penjualan.HitungDetail;
   Close;
+end;
+
+procedure TFRincianPot_Penjualan.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  query2.Close;
 end;
 
 procedure TFRincianPot_Penjualan.FormShow(Sender: TObject);

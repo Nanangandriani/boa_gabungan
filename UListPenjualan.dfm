@@ -11,6 +11,7 @@ object FDataListPenjualan: TFDataListPenjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIForm
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -1421,9 +1422,9 @@ object FDataListPenjualan: TFDataListPenjualan
       OnClick = dxBarLargeButton10Click
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                   '
+      Caption = 'Karesidenan  '
       Category = 0
-      Hint = 'TP                   '
+      Hint = 'Karesidenan  '
       Visible = ivAlways
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -1895,7 +1896,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 46021.663255833340000000
+    ReportOptions.LastChange = 46021.663255833300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -16222,29 +16223,37 @@ object FDataListPenjualan: TFDataListPenjualan
       
         'select a."trans_no", "no_traveldoc", "trans_date", a."code_cust"' +
         ',  a."name_cust",  d."address",e."address" AS address2, b."code_' +
-        'item", b."name_item",  b."amount",  b."code_unit", b."name_unit"' +
-        ', a."no_reference", b."code_unit" as ket, (SELECT SUM(gross_weig' +
-        'ht) FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=b' +
-        '.code_unit)  gross_weight, (SELECT SUM(tare_weight) FROM t_selli' +
-        'ng_det WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare' +
-        '_weight, COALESCE((SELECT vehicles FROM t_delivery_order_service' +
-        's WHERE notrans=(SELECT DISTINCT notrans from t_delivery_order_l' +
-        'oad WHERE notrans_load=a.trans_no )),'#39#39')::VARCHAR vehicles  from' +
-        ' "public"."t_selling" a   LEFT JOIN "public"."t_selling_det" b O' +
-        'N a.trans_no=b.trans_no   LEFT JOIN (SELECT "customer_code", "ad' +
-        'dress" from "public"."t_customer_address"  where "code_details"=' +
-        #39'003'#39') d on a.code_cust=d.customer_code   LEFT JOIN (SELECT "cus' +
-        'tomer_code", "address" from "public"."t_customer_address"  where' +
-        ' "code_details"='#39'002'#39') e on a.code_cust=e.customer_code   where ' +
-        'a.deleted_at is null and   a.trans_no='#39'FP/001/13/XI/2025/HLJ/JKT' +
-        #39'   order by b.created_at Desc'
+        'item", b."name_item",  b."amount",  b."code_unit", UPPER(b."name' +
+        '_unit") name_unit, a."no_reference", b."code_unit" as ket, (SELE' +
+        'CT SUM(gross_weight) FROM t_selling_det WHERE trans_no=a.trans_n' +
+        'o AND code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_wei' +
+        'ght) FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=' +
+        'b.code_unit) tare_weight, COALESCE((SELECT vehicles FROM t_deliv' +
+        'ery_order_services WHERE notrans=(SELECT DISTINCT notrans from t' +
+        '_delivery_order_load WHERE notrans_load=a.trans_no )),'#39#39')::VARCH' +
+        'AR vehicles  from "public"."t_selling" a   LEFT JOIN "public"."t' +
+        '_selling_det" b ON a.trans_no=b.trans_no   LEFT JOIN (SELECT "cu' +
+        'stomer_code", "address" from "public"."t_customer_address"  wher' +
+        'e "code_details"='#39'003'#39') d on a.code_cust=d.customer_code   LEFT ' +
+        'JOIN (SELECT "customer_code", "address" from "public"."t_custome' +
+        'r_address"  where "code_details"='#39'002'#39') e on a.code_cust=e.custo' +
+        'mer_code   where a.deleted_at is null and   a.trans_no='#39'FP/001/1' +
+        '3/XI/2025/HLJ/JKT'#39'   order by b.created_at Desc'
       ''
       '-- 0 row(s) affected.')
     Left = 596
     Top = 248
+    object QCetakSJtrans_no: TStringField
+      FieldName = 'trans_no'
+      Required = True
+      Size = 255
+    end
     object QCetakSJno_traveldoc: TStringField
       FieldName = 'no_traveldoc'
       Size = 255
+    end
+    object QCetakSJtrans_date: TDateField
+      FieldName = 'trans_date'
     end
     object QCetakSJcode_cust: TStringField
       FieldName = 'code_cust'
@@ -16256,6 +16265,11 @@ object FDataListPenjualan: TFDataListPenjualan
     end
     object QCetakSJaddress: TMemoField
       FieldName = 'address'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QCetakSJaddress2: TMemoField
+      FieldName = 'address2'
       ReadOnly = True
       BlobType = ftMemo
     end
@@ -16278,10 +16292,10 @@ object FDataListPenjualan: TFDataListPenjualan
       ReadOnly = True
       Size = 100
     end
-    object QCetakSJname_unit: TStringField
+    object QCetakSJname_unit: TMemoField
       FieldName = 'name_unit'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
     object QCetakSJno_reference: TStringField
       FieldName = 'no_reference'
@@ -16291,13 +16305,6 @@ object FDataListPenjualan: TFDataListPenjualan
       FieldName = 'ket'
       ReadOnly = True
       Size = 100
-    end
-    object QCetakSJtrans_no: TStringField
-      FieldName = 'trans_no'
-      Size = 255
-    end
-    object QCetakSJtrans_date: TDateField
-      FieldName = 'trans_date'
     end
     object QCetakSJgross_weight: TFloatField
       FieldName = 'gross_weight'
@@ -16309,11 +16316,6 @@ object FDataListPenjualan: TFDataListPenjualan
     end
     object QCetakSJvehicles: TMemoField
       FieldName = 'vehicles'
-      ReadOnly = True
-      BlobType = ftMemo
-    end
-    object QCetakSJaddress2: TMemoField
-      FieldName = 'address2'
       ReadOnly = True
       BlobType = ftMemo
     end
@@ -16380,7 +16382,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46021.334454386580000000
+    ReportOptions.LastChange = 46035.622051840280000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -16459,13 +16461,13 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 40.440944880000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -20
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'SURAT - JALAN')
+            'SURAT JALAN')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -16558,7 +16560,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -16575,7 +16577,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -16592,7 +16594,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -16605,7 +16607,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 257.330860000000000000
           Top = 129.149606300000000000
-          Height = 234.330708661417300000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16614,7 +16616,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 143.944960000000000000
           Top = 129.149606300000000000
-          Height = 234.330708661417300000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16881,7 +16883,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object Line7: TfrxLineView
           AllowVectorExport = True
           Left = 756.661417320000000000
-          Top = 40.818897637795280000
+          Top = 40.818897637795300000
           Height = 444.472440940000000000
           Color = clBlack
           Frame.Typ = []
@@ -16891,7 +16893,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 47.000000000000000000
           Top = 129.102350000000000000
-          Height = 234.330708661417300000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -16904,7 +16906,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -16983,7 +16985,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDCetakSJ."code_unit"]')
+            '[frxDBDCetakSJ."name_unit"]')
           ParentFont = False
         end
         object frxDBDCetakSJname_item: TfrxMemoView
@@ -16997,7 +16999,7 @@ object FDataListPenjualan: TFDataListPenjualan
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -17023,7 +17025,7 @@ object FDataListPenjualan: TFDataListPenjualan
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -17122,7 +17124,7 @@ object FDataListPenjualan: TFDataListPenjualan
         object Line15: TfrxLineView
           AllowVectorExport = True
           Top = 122.299010000000000000
-          Width = 758.173228346456700000
+          Width = 758.173228346457000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -17151,12 +17153,12 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 4.000000000000000000
           Top = 25.299010000000000000
           Width = 352.023810000000000000
-          Height = 68.913420000000000000
+          Height = 87.913420000000000000
           DataSet = frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -17172,7 +17174,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []

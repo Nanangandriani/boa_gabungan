@@ -11,6 +11,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
@@ -58,6 +59,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
     SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
+    OnAdvDrawDataCell = DBGridListAdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -142,6 +144,16 @@ object FListDeliveryOrder: TFListDeliveryOrder
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
+  end
+  object Memo1: TMemo
+    Left = 472
+    Top = 246
+    Width = 225
+    Height = 89
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
+    Visible = False
   end
   object ActMenu: TActionManager
     Left = 936
@@ -964,10 +976,14 @@ object FListDeliveryOrder: TFListDeliveryOrder
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location f' +
-        'rom t_delivery_order a LEFT JOIN t_delivery_order_status b on b.' +
-        'kode=a.status '
+        'SELECT a.*,b.status_name,c.pickup_location,c.delivery_location,C' +
+        'OALESCE(d.notrans,'#39#39') no_spm from t_delivery_order a LEFT JOIN t' +
+        '_delivery_order_status b on b.kode=a.status '
       'LEFT JOIN t_delivery_order_services c on c.notrans=a.notrans'
+      
+        'LEFT JOIN (SELECT spm_det.notrans,spm_det.notrans_do FROM t_spm_' +
+        'det spm_det left join t_spm spm on spm.notrans=spm_det.notrans w' +
+        'here spm.deleted_at is null)d on d.notrans_do=a.notrans'
       ' ORDER BY a.created_at Desc')
     Left = 884
     Top = 16
@@ -1016,6 +1032,21 @@ object FListDeliveryOrder: TFListDeliveryOrder
     object QDeliveryOrdersbu_code: TStringField
       FieldName = 'sbu_code'
       Size = 10
+    end
+    object QDeliveryOrderno_spm: TMemoField
+      FieldName = 'no_spm'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QDeliveryOrderstatus: TSmallintField
+      FieldName = 'status'
+    end
+    object QDeliveryOrderdeleted_at: TDateTimeField
+      FieldName = 'deleted_at'
+    end
+    object QDeliveryOrderdeleted_by: TStringField
+      FieldName = 'deleted_by'
+      Size = 50
     end
   end
   object DsDeliveryOrder: TDataSource

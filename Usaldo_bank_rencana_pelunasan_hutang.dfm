@@ -340,6 +340,11 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     Connection = dm.Koneksi
     SQL.Strings = (
       
+        'SELECT supplier_code,principle_name, nosj, CONCAT(TO_CHAR(MIN(pe' +
+        'riode1), '#39'DD'#39'), '#39' - '#39', TO_CHAR(MAX(periode2), '#39'DD/MM/YYYY'#39') ) AS' +
+        ' periode,sum(jumlah)as jumlah,  concat(bank,cek_no)ket  from ('
+      ''
+      
         'SELECT row_number() OVER (ORDER BY id) AS no_urut, bank,xxx.supp' +
         'lier_code,principle_name,cek_no,periode1,periode2,jumlah,ket,uru' +
         'tan,xxx.plan_to,nosj FROM (SELECT * FROM (SELECT a.id,a.bank,a.s' +
@@ -374,13 +379,16 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         'code,STRING_AGG (b.sj_no,'#39' ,'#39') nosj,periode1,periode2,a.plan_to ' +
         'from t_paid_debt_det a INNER JOIN t_purchase_invoice b ON a.inv_' +
         'no=b.trans_no and a.supplier_code=b.supplier_code INNER JOIN (SE' +
-        'LECT a.code,b.account_code2 FROM t_ak_account a INNER JOIN t_ak_' +
-        'account_sub b ON a.code=b.account_code) c on b.account_code=c.ac' +
-        'count_code2 and periode1='#39'2025-08-12'#39' and a.periode2='#39'2025-08-12' +
-        #39' and  c.code='#39'2101.01'#39' GROUP BY a.supplier_code,a.periode1,a.pe' +
-        'riode2,a.plan_to ORDER BY plan_to)z)zz on xxx.supplier_code=zz.s' +
-        'upplier_code and xxx.plan_to=zz.plan_to')
-    Active = True
+        'LECT a.code,b.account_code2 FROM t_ak_account a '
+      
+        'INNER JOIN t_ak_account_sub b ON a.code=b.account_code) c on b.a' +
+        'ccount_code=c.account_code2 and periode1='#39'2025-08-12'#39' and a.peri' +
+        'ode2='#39'2025-08-12'#39' and  c.code='#39'2101.01'#39' '
+      
+        'GROUP BY a.supplier_code,a.periode1,a.periode2,a.plan_to ORDER B' +
+        'Y plan_to)z)zz on xxx.supplier_code=zz.supplier_code and xxx.pla' +
+        'n_to=zz.plan_to'
+      ')xx GROUP BY supplier_code, principle_name, nosj, bank, cek_no;')
     Left = 592
     Top = 72
   end
@@ -1337,7 +1345,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       Caption = 'Cari'
       Category = 0
       Hint = 'Cari'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
@@ -1534,7 +1542,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       Caption = 'Rencana Ke       : '
       Category = 0
       Hint = 'Rencana Ke       : '
-      Visible = ivAlways
+      Visible = ivNever
       PropertiesClassName = 'TcxComboBoxProperties'
       Properties.Items.Strings = (
         ''
@@ -1749,18 +1757,12 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     UserName = 'frxDBDataset_hut_dagang'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_urut=no_urut'
-      'bank=bank'
       'supplier_code=supplier_code'
       'principle_name=principle_name'
-      'cek_no=cek_no'
-      'periode1=periode1'
-      'periode2=periode2'
+      'nosj=nosj'
+      'periode=periode'
       'jumlah=jumlah'
-      'ket=ket'
-      'urutan=urutan'
-      'plan_to=plan_to'
-      'nosj=nosj')
+      'ket=ket')
     DataSet = QHut_Dagang
     BCDToCurrency = False
     DataSetOptions = []
@@ -4614,19 +4616,12 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     UserName = 'frxDBDataset_hut_biaya'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'no_urut=no_urut'
       'supplier_code=supplier_code'
       'principle_name=principle_name'
-      'cek_no=cek_no'
-      'periode1=periode1'
-      'periode2=periode2'
-      'ket=ket'
-      'account_code=account_code'
-      'ket3=ket3'
+      'nosj=nosj'
+      'periode=periode'
       'jumlah=jumlah'
-      'jenis_akun=jenis_akun'
-      'plan_to=plan_to'
-      'nosj=nosj')
+      'ket=ket')
     DataSet = QHut_Biaya
     BCDToCurrency = False
     DataSetOptions = []
@@ -4636,66 +4631,56 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
   object QHut_Biaya: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT '
-      'row_number() OVER (ORDER BY id) AS no_urut,'
       
-        ' xxx.supplier_code,principle_name,cek_no,periode1,periode2,ket,a' +
-        'ccount_code,ket3,jumlah,jenis_akun,xxx.plan_to,nosj FROM '
-      ' (SELECT * FROM '
+        'SELECT supplier_code,principle_name, nosj, CONCAT(TO_CHAR(MIN(pe' +
+        'riode1), '#39'DD'#39'), '#39' - '#39', TO_CHAR(MAX(periode2), '#39'DD/MM/YYYY'#39') ) AS' +
+        ' periode,sum(jumlah)as jumlah,  concat(bank,cek_no)ket  from ('
+      ''
       
-        ' (select id,supplier_code,principle_name,cek_no,periode1,periode' +
-        '2,ket,account_code,concat(ket3,'#39' '#39','#39'(Rencanake'#39',plan_to,'#39')'#39') AS ' +
-        'ket3,sum(jumlah)as jumlah,jenis_akun,plan_to from '
-      ' (select aa.*, bb.account_code jenis_akun from '
+        'SELECT row_number() OVER (ORDER BY id) AS no_urut, bank,xxx.supp' +
+        'lier_code,principle_name,cek_no,periode1,periode2,jumlah,ket,uru' +
+        'tan,xxx.plan_to,nosj FROM (SELECT * FROM (SELECT a.id,a.bank,a.s' +
+        'upplier_code,b.supplier_name as principle_name,a.cek_no,a.period' +
+        'e1,a.periode2,sum(amount)as jumlah,concat(d.account_name,'#39' '#39','#39'(R' +
+        'encanake'#39',A.plan_to,'#39')'#39') AS ket,1 as urutan,a.plan_to from t_pai' +
+        'd_debt_det a INNER JOIN t_supplier b ON a.supplier_code=b.suppli' +
+        'er_code INNER JOIN t_purchase_invoice c ON a.inv_no=c.trans_no I' +
+        'NNER JOIN (SELECT a.code,a.account_name,b.account_code2 FROM t_a' +
+        'k_account a INNER JOIN t_ak_account_sub b ON a.code=b.account_co' +
+        'de) d ON c.account_code=d.account_code2  where a.supplier_code=b' +
+        '.supplier_code and a.inv_no=c.trans_no and a.periode1='#39'2025-08-1' +
+        '2'#39' and a.periode2='#39'2025-08-12'#39' and d.code='#39'2101.01'#39'  and c.accou' +
+        'nt_code=d.account_code2 group by a.id,bank,a.supplier_code,princ' +
+        'iple_name,cek_no,periode1,periode2,account_name,plan_to union al' +
+        'l select id,bank,supplier_code,principle_name,cek_no,periode1,pe' +
+        'riode2,sum(jumlah)as jumlah,ket2 as ket,urutan,plan_to from (sel' +
+        'ect a.id,a.inv_no,a.bank,a.supplier_code,b.supplier_name as prin' +
+        'ciple_name,a.cek_no,a.periode1,a.periode2,-(sum(npph))as jumlah,' +
+        '(case when a.bank<>'#39#39' then concat(a.bank,'#39#39',a.cek_no) else '#39'KAS ' +
+        'BESAR'#39' end)ket,2 as urutan ,a.plan_to,c.account_name as ket2,a.p' +
+        'ph_account as kd_akun from t_paid_debt_det a,t_supplier b,t_ak_a' +
+        'ccount c,t_purchase_invoice d where a.npph<>0 and a.supplier_cod' +
+        'e=b.supplier_code and a.pph_account=c.code and a.inv_no=d.trans_' +
+        'no and c.code='#39'2101.01'#39' and a.periode1='#39'2025-08-12'#39' and a.period' +
+        'e2='#39'2025-08-12'#39' group by a.id,a.inv_no,a.bank,a.supplier_code,pr' +
+        'inciple_name,a.cek_no,a.periode1,a.periode2,a.periodetempo1,a.pe' +
+        'riodetempo2,ket,ket2,a.pph_account,a.plan_to)x group by id,bank,' +
+        'supplier_code,principle_name,cek_no,periode1,periode2,ket2,uruta' +
+        'n,plan_to)xx order by plan_to,supplier_code,urutan)xxx LEFT JOIN' +
+        ' (SELECT z.supplier_code,z.nosj,plan_to from (select a.supplier_' +
+        'code,STRING_AGG (b.sj_no,'#39' ,'#39') nosj,periode1,periode2,a.plan_to ' +
+        'from t_paid_debt_det a INNER JOIN t_purchase_invoice b ON a.inv_' +
+        'no=b.trans_no and a.supplier_code=b.supplier_code INNER JOIN (SE' +
+        'LECT a.code,b.account_code2 FROM t_ak_account a '
       
-        ' (select id,inv_no,supplier_code,principle_name,cek_no,periode1,' +
-        'periode2,ket,account_code,account_name as ket3,sum(jumlah)as jum' +
-        'lah,plan_to from '
+        'INNER JOIN t_ak_account_sub b ON a.code=b.account_code) c on b.a' +
+        'ccount_code=c.account_code2 and periode1='#39'2025-08-12'#39' and a.peri' +
+        'ode2='#39'2025-08-12'#39' and  c.code='#39'2101.01'#39' '
       
-        ' (select a.inv_no,a.bank,a.supplier_code,b.supplier_name as prin' +
-        'ciple_name,a.cek_no,a.periode1,a.periode2,a.periodetempo1,a.peri' +
-        'odetempo2,sum(amount)as jumlah, (case when a.bank<>'#39#39' then conca' +
-        't(a.bank,'#39#39',a.cek_no) else '#39'KAS BESAR'#39' end)ket,1 as urutan,'#39#39' as' +
-        ' ket2,c.account_code,a.plan_to from t_paid_debt_det a '
-      ' INNER JOIN t_supplier b ON a.supplier_code=b.supplier_code '
-      ' INNER JOIN t_purchase_invoice c ON a.inv_no=c.trans_no '
-      
-        ' INNER JOIN (SELECT a.code,a.header_code,a.account_name,b.accoun' +
-        't_code2 FROM t_ak_account a INNER JOIN t_ak_account_sub b ON a.c' +
-        'ode=b.account_code) d ON c.account_code=d.account_code2 '
-      
-        ' where a.supplier_code=b.supplier_code and a.periode1='#39'2025-03-0' +
-        '7'#39' and a.periode2='#39'2025-03-07'#39' '
-      
-        'and a.inv_no=c.trans_no and d.code in (SELECT account_code FROM ' +
-        't_asset_payable_account) group by a.inv_no,a.bank,a.supplier_cod' +
-        'e,principle_name,a.cek_no,a.periode1,a.periode2,a.periodetempo1,' +
-        'a.periodetempo2,ket,ket2,c.account_code,a.plan_to )xx '
-      
-        'left join t_ak_account x on xx.account_code=x.code group by id,i' +
-        'nv_no,supplier_code,principle_name,cek_no,periode1,periode2,ket,' +
-        'account_code,account_name,plan_to order by supplier_code,princip' +
-        'le_name,cek_no,periode1,periode2,ket,account_code,account_name,p' +
-        'lan_to) aa '
-      'left join t_purchase_invoice bb on aa.inv_no=bb.trans_no) cc '
-      
-        'group by id,supplier_code,principle_name,cek_no,periode1,periode' +
-        '2,ket,account_code,ket3,jenis_akun,plan_to order by plan_to,supp' +
-        'lier_code,principle_name,cek_no,periode1,periode2,ket,account_co' +
-        'de,jenis_akun,ket3)x ORDER BY plan_to,supplier_code)xxx '
-      
-        'LEFT JOIN (SELECT z.supplier_code,z.nosj,plan_to from (select a.' +
-        'supplier_code,STRING_AGG (b.sj_no,'#39' ,'#39') nosj,periode1,periode2,a' +
-        '.plan_to from t_paid_debt_det a INNER JOIN t_purchase_invoice b ' +
-        'ON a.inv_no=b.trans_no and a.supplier_code=b.supplier_code INNER' +
-        ' JOIN (SELECT a.code,b.account_code2 FROM t_ak_account a INNER J' +
-        'OIN t_ak_account_sub b ON a.code=b.account_code) c on b.account_' +
-        'code=c.account_code2 and periode1='#39'2025-03-07'#39' and a.periode2='#39'2' +
-        '025-03-07'#39' and c.code in (SELECT account_code FROM t_asset_payab' +
-        'le_account) GROUP BY a.supplier_code,a.periode1,a.periode2,a.pla' +
-        'n_to ORDER BY plan_to)z)zz on xxx.supplier_code=zz.supplier_code' +
-        ' and xxx.plan_to=zz.plan_to')
-    Active = True
+        'GROUP BY a.supplier_code,a.periode1,a.periode2,a.plan_to ORDER B' +
+        'Y plan_to)z)zz on xxx.supplier_code=zz.supplier_code and xxx.pla' +
+        'n_to=zz.plan_to'
+      ')xx GROUP BY supplier_code, principle_name, nosj, bank, cek_no;')
     Left = 608
     Top = 136
   end
@@ -4981,7 +4966,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45677.603257696800000000
-    ReportOptions.LastChange = 45881.577853923610000000
+    ReportOptions.LastChange = 46050.570891759260000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Page3OnBeforePrint(Sender: TfrxComponent);'
@@ -5064,6 +5049,10 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       item
         DataSet = frxDBDataset_deposito
         DataSetName = 'frxDBDataset_deposito'
+      end
+      item
+        DataSet = frxDBDataset_SaldoKet
+        DataSetName = 'frxDBDataset_SaldoKet'
       end>
     Variables = <>
     Style = <>
@@ -5119,7 +5108,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           DataSetName = 'frxDBDatasetPers'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -5274,14 +5263,14 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           AllowVectorExport = True
           Left = 257.181102360000000000
           Top = 30.582560000000000000
-          Width = 207.874015750000000000
+          Width = 177.637775750000000000
           Height = 34.015748030000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Deposito')
@@ -5292,7 +5281,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           AllowVectorExport = True
           Left = 257.133858270000000000
           Top = 64.582560000000000000
-          Width = 94.488188980000000000
+          Width = 68.031478980000000000
           Height = 34.015748030000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -5302,15 +5291,15 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Tgl. Jatuh Tempo')
+            'TGL.JT')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo159: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.102362200000000000
+          Left = 437.669291340000000000
           Top = 30.582560000000000000
-          Width = 291.023622050000000000
+          Width = 318.614173228346000000
           Height = 68.031496060000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -5326,7 +5315,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo160: TfrxMemoView
           AllowVectorExport = True
-          Left = 351.960629920000000000
+          Left = 325.503919920000000000
           Top = 64.582560000000000000
           Width = 113.385826770000000000
           Height = 34.015748030000000000
@@ -5335,7 +5324,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Saldo')
@@ -5348,6 +5337,14 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           Page = frxReport1.Page2
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Left = 437.669291338583000000
+          Top = 30.236240000000000000
+          Height = 68.031540000000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
         end
       end
       object MasterData2: TfrxMasterData
@@ -5419,9 +5416,9 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         object Memo164: TfrxMemoView
           AllowVectorExport = True
           Left = 181.629921260000000000
-          Top = 29.858267716535400000
+          Top = 29.858267720000000000
           Width = 226.771653540000000000
-          Height = 34.015748031496100000
+          Height = 34.015748030000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -5430,7 +5427,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'No. Surat Jalan')
+            'Tanggal Faktur')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -5709,7 +5706,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'No. Surat Jalan')
+            'Tanggal Faktur')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -5873,7 +5870,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'No. Surat Jalan')
+            'Tanggal Faktur')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -5949,7 +5946,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         FillGap.Right = 0
         Frame.Typ = []
         Height = 83.054730000000000000
-        Top = 634.961040000000000000
+        Top = 740.787880000000000000
         Width = 755.906000000000000000
         DataSet = frxDBDataset_NonHutang
         DataSetName = 'frxDBDataset_Non_Hutang'
@@ -5969,7 +5966,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'E. PELUNASAN DO /NON HUTANG')
+            'F. PENGISIAN DANA KAS BESAR')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6061,7 +6058,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         FillGap.Right = 0
         Frame.Typ = []
         Height = 82.897650000000000000
-        Top = 740.787880000000000000
+        Top = 634.961040000000000000
         Width = 755.906000000000000000
         DataSet = frxDBDataset_IsiKasBesar
         DataSetName = 'frxDBDataset_IsiKasBesar'
@@ -6080,7 +6077,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'F. PENGELUARAN DENGAN CEK / BG')
+            'E. PENGELUARAN DENGAN CEK / BG')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6182,20 +6179,26 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 51.897637800000000000
-        Top = 18.897650000000000000
+        Height = 37.795275590000000000
+        Top = 45.354360000000000000
         Width = 755.906000000000000000
         DataSet = frxDBDataset_SaldoBank
         DataSetName = 'frxDBDataset_saldobank'
         PrintIfDetailEmpty = True
         RowCount = 0
+        Stretched = True
+        object Subreport7: TfrxSubreport
+          AllowVectorExport = True
+          Top = 1.000000000000000000
+          Width = 94.488250000000000000
+          Height = 18.897637800000000000
+          Page = frxReport1.Page8
+        end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 30.614173230000000000
-          Top = -1.000000000000000000
+          Left = 30.614173228346500000
           Width = 113.385826770000000000
-          Height = 51.779527560000000000
-          StretchMode = smMaxHeight
+          Height = 37.795275590000000000
           DataSet = frxDBDataset_SaldoBank
           DataSetName = 'frxDBDataset_saldobank'
           Font.Charset = DEFAULT_CHARSET
@@ -6203,7 +6206,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight]
+          Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBDataset_saldobank."bank_name"]'
             '[frxDBDataset_saldobank."rekening_no"]')
@@ -6219,10 +6222,9 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 143.622047240000000000
-          Top = -1.000000000000000000
+          Left = 143.622047244094000000
           Width = 113.385826770000000000
-          Height = 51.779527560000000000
+          Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataField = 'saldo_akhir'
           DataSet = frxDBDataset_SaldoBank
@@ -6234,36 +6236,18 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight]
+          Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset_saldobank."saldo_akhir"]')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo29: TfrxMemoView
-          AllowVectorExport = True
-          Left = 464.259842520000000000
-          Top = -1.000000000000000000
-          Width = 292.023622050000000000
-          Height = 51.779527560000000000
-          StretchMode = smMaxHeight
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftRight]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 258.007874020000000000
-          Top = -1.000000000000000000
-          Width = 94.488188980000000000
-          Height = 51.779527560000000000
+          Left = 257.007874015748000000
+          Width = 68.031496062992100000
+          Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataField = 'due_date'
           DataSet = frxDBDataset_SaldoBank
@@ -6273,7 +6257,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight]
+          Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset_saldobank."due_date"]')
@@ -6283,9 +6267,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 350.874015750000000000
-          Top = -1.000000000000000000
-          Width = 114.385826770000000000
-          Height = 51.779527560000000000
+          Width = 65.251936770000000000
+          Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataField = 'deposito_value'
           DataSet = frxDBDataset_SaldoBank
@@ -6295,7 +6278,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight]
+          Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset_saldobank."deposito_value"]')
@@ -6304,9 +6287,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Top = -1.000000000000000000
-          Width = 30.614173230000000000
-          Height = 51.779527560000000000
+          Width = 30.614173228346500000
+          Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset_SaldoBank
           DataSetName = 'frxDBDataset_saldobank'
@@ -6317,7 +6299,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight]
+          Frame.Typ = []
           HAlign = haRight
           ParentFont = False
           VAlign = vaCenter
@@ -6325,7 +6307,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
           Left = 5.000000000000000000
-          Top = 12.157390000000000000
+          Top = 13.157390000000000000
           Width = 22.488250000000000000
           Height = 13.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -6338,6 +6320,12 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
             '[LINE#]')
           ParentFont = False
         end
+        object Line3: TfrxLineView
+          AllowVectorExport = True
+          Width = 755.905511811024000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
       end
       object Footer1: TfrxFooter
         FillType = ftBrush
@@ -6347,12 +6335,12 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         FillGap.Right = 0
         Frame.Typ = []
         Height = 69.976377950000000000
-        Top = 94.488250000000000000
+        Top = 128.504020000000000000
         Width = 755.906000000000000000
         object Memo142: TfrxMemoView
           AllowVectorExport = True
-          Width = 30.614173230000000000
-          Height = 34.015748030000000000
+          Width = 30.614173228346500000
+          Height = 69.921259840000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -6366,9 +6354,9 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo143: TfrxMemoView
           AllowVectorExport = True
-          Left = 30.614173230000000000
+          Left = 29.614173230000000000
           Width = 113.385826770000000000
-          Height = 34.015748030000000000
+          Height = 69.921259840000000000
           StretchMode = smMaxHeight
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39'#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -6382,13 +6370,12 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Memo.UTF8W = (
             'Total')
           ParentFont = False
-          VAlign = vaCenter
         end
         object Memo147: TfrxMemoView
           AllowVectorExport = True
           Left = 143.622047240000000000
           Width = 113.385826770000000000
-          Height = 34.015748030000000000
+          Height = 69.921259840000000000
           StretchMode = smMaxHeight
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -6402,12 +6389,11 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Memo.UTF8W = (
             '[SUM(<frxDBDataset_saldobank."saldo_akhir">,MasterData3)]')
           ParentFont = False
-          VAlign = vaCenter
         end
         object Memo151: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.259842520000000000
-          Width = 291.023622050000000000
+          Left = 438.803149610000000000
+          Width = 317.480332050000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
@@ -6418,15 +6404,17 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftTop]
           HAlign = haBlock
           Memo.UTF8W = (
-            '           Jumlah        :')
+            
+              '           Jumlah        : Rp.[FormatFloat('#39'#,##0.00'#39', SUM(<frxD' +
+              'BDataset_SaldoKet."paid_amount">,MasterData13))]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo157: TfrxMemoView
           AllowVectorExport = True
           Left = 257.007874020000000000
-          Width = 95.488188980000000000
-          Height = 34.015748030000000000
+          Width = 68.031496062992100000
+          Height = 69.921259840000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -6440,79 +6428,25 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo158: TfrxMemoView
           AllowVectorExport = True
-          Left = 351.874015750000000000
+          Left = 325.417322830000000000
           Width = 113.385826770000000000
-          Height = 34.015748030000000000
+          Height = 69.921259840000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftTop]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo113: TfrxMemoView
-          AllowVectorExport = True
-          Top = 32.299212600000000000
-          Width = 30.614173230000000000
-          Height = 34.015748030000000000
-          StretchMode = smMaxHeight
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo114: TfrxMemoView
-          AllowVectorExport = True
-          Left = 30.614173230000000000
-          Top = 32.299212600000000000
-          Width = 113.385826770000000000
-          Height = 34.015748030000000000
-          StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39'#,##0.00;(#,##0.00);'#39
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo115: TfrxMemoView
-          AllowVectorExport = True
-          Left = 143.622047240000000000
-          Top = 32.299212600000000000
-          Width = 113.385826770000000000
-          Height = 34.015748030000000000
-          StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           HAlign = haRight
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo116: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.259842520000000000
-          Top = 44.299212600000000000
-          Width = 291.023622050000000000
+          Left = 438.803149610000000000
+          Top = 47.299212600000000000
+          Width = 317.480332050000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
@@ -6523,43 +6457,65 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haBlock
           Memo.UTF8W = (
-            '          Sisa Saldo   :')
+            
+              '          Sisa Saldo   : Rp.[FormatFloat('#39'#,##0.00'#39', <frxDBDatas' +
+              'et_saldobank."saldo_akhir">-SUM(<frxDBDataset_SaldoKet."paid_amo' +
+              'unt">,MasterData13))]')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo117: TfrxMemoView
+        object Line5: TfrxLineView
           AllowVectorExport = True
-          Left = 257.007874020000000000
-          Top = 32.299212600000000000
-          Width = 95.488188980000000000
-          Height = 34.015748030000000000
+          Left = 437.669291340000000000
+          Height = 69.921259842519700000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+      end
+      object GroupHeader2: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 2.645637560000000000
+        Top = 18.897650000000000000
+        Visible = False
+        Width = 755.906000000000000000
+        Condition = 'frxDBDataset_saldobank."rekening_no"'
+        object Memo29: TfrxMemoView
+          AllowVectorExport = True
+          Left = 460.259842520000000000
+          Width = 292.023622050000000000
+          Height = 2.645637560000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftBottom]
+          Font.Style = []
+          Frame.Typ = []
           HAlign = haRight
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo118: TfrxMemoView
+      end
+      object GroupFooter1: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 105.826840000000000000
+        Visible = False
+        Width = 755.906000000000000000
+        object Line1: TfrxLineView
           AllowVectorExport = True
-          Left = 351.874015750000000000
-          Top = 32.220472440000000000
-          Width = 113.385826770000000000
-          Height = 34.015748030000000000
-          StretchMode = smMaxHeight
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftBottom]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
+          Width = 755.905511810000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
         end
       end
     end
@@ -6595,7 +6551,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 30.614173230000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'no_urut'
           DataSet = frxDBDataset_HutangDagang
           DataSetName = 'frxDBDataset_hut_dagang'
           Font.Charset = DEFAULT_CHARSET
@@ -6606,7 +6561,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset_hut_dagang."no_urut"]')
+            '[Line#]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6661,7 +6616,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 226.771653540000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'nosj'
           DataSet = frxDBDataset_HutangDagang
           DataSetName = 'frxDBDataset_hut_dagang'
           DisplayFormat.FormatStr = '%2.2n'
@@ -6672,11 +6626,9 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
-          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset_hut_dagang."nosj"]')
           ParentFont = False
-          VAlign = vaCenter
         end
         object Memo210: TfrxMemoView
           AllowVectorExport = True
@@ -6685,7 +6637,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 113.385826770000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'periode1'
           DataSet = frxDBDataset_HutangDagang
           DataSetName = 'frxDBDataset_hut_dagang'
           Font.Charset = DEFAULT_CHARSET
@@ -6696,7 +6647,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset_hut_dagang."periode1"]')
+            '[frxDBDataset_hut_dagang."periode"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6873,7 +6824,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 30.614173230000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'no_urut'
           DataSet = frxDBDataset_HutangBiaya
           DataSetName = 'frxDBDataset_hut_biaya'
           Font.Charset = DEFAULT_CHARSET
@@ -6884,7 +6834,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset_hut_biaya."no_urut"]')
+            '[Line#]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6918,7 +6868,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 121.322834650000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'ket3'
           DataSet = frxDBDataset_HutangBiaya
           DataSetName = 'frxDBDataset_hut_biaya'
           Font.Charset = DEFAULT_CHARSET
@@ -6928,7 +6877,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset_hut_biaya."ket3"]')
+            '[frxDBDataset_hut_biaya."ket"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6950,11 +6899,9 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
-          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataset_hut_biaya."nosj"]')
           ParentFont = False
-          VAlign = vaCenter
         end
         object Memo218: TfrxMemoView
           AllowVectorExport = True
@@ -6963,7 +6910,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 113.385826770000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'periode1'
           DataSet = frxDBDataset_HutangBiaya
           DataSetName = 'frxDBDataset_hut_biaya'
           Font.Charset = DEFAULT_CHARSET
@@ -6974,7 +6920,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset_hut_biaya."periode1"]')
+            '[frxDBDataset_hut_biaya."periode"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6985,7 +6931,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 113.385826770000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'jumlah'
           DataSet = frxDBDataset_HutangBiaya
           DataSetName = 'frxDBDataset_hut_biaya'
           DisplayFormat.FormatStr = '%2.2n'
@@ -7805,6 +7750,286 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
             '[SUM(<frxDBDataset_IsiKasBesar."jumlah">,MasterData12)]')
           ParentFont = False
           VAlign = vaCenter
+        end
+      end
+    end
+    object Page8: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 330.000000000000000000
+      PaperSize = 10000
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object MasterData13: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 41.574830000000000000
+        Width = 755.906000000000000000
+        DataSet = frxDBDataset_SaldoKet
+        DataSetName = 'frxDBDataset_SaldoKet'
+        RowCount = 0
+        Stretched = True
+        object frxDBDataset_SaldoKetket: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 437.803149610000000000
+          Width = 318.614190310000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoKet
+          DataSetName = 'frxDBDataset_SaldoKet'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          Memo.UTF8W = (
+            
+              '[frxDBDataset_SaldoKet."ket"] Rp.[FormatFloat('#39'#,##0.00'#39', <frxDB' +
+              'Dataset_SaldoKet."paid_amount">)]')
+          ParentFont = False
+          Formats = <
+            item
+            end
+            item
+            end>
+        end
+        object Memo124: TfrxMemoView
+          AllowVectorExport = True
+          Left = 257.008040000000000000
+          Width = 68.031496060000000000
+          Height = 18.897637795275600000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo125: TfrxMemoView
+          AllowVectorExport = True
+          Left = 143.622140000000000000
+          Width = 113.385826770000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo127: TfrxMemoView
+          AllowVectorExport = True
+          Left = 30.614173228346500000
+          Width = 113.385826770000000000
+          Height = 18.897637795275600000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+              FormatStr = '#,##0.00;(#,##0.00);'#39
+              Kind = fkNumeric
+            end
+            item
+            end>
+        end
+        object Memo126: TfrxMemoView
+          AllowVectorExport = True
+          Width = 30.614173228346500000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        Condition = 'frxDBDataset_SaldoKet."bank_norek"'
+      end
+      object GroupFooter2: TfrxGroupFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 83.149660000000000000
+        Visible = False
+        Width = 755.906000000000000000
+      end
+      object Footer7: TfrxFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 45.354330710000000000
+        Top = 105.826840000000000000
+        Width = 755.906000000000000000
+        object Memo186: TfrxMemoView
+          AllowVectorExport = True
+          Width = 30.614173230000000000
+          Height = 45.354330710000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo134: TfrxMemoView
+          AllowVectorExport = True
+          Left = 30.614173230000000000
+          Width = 113.385826770000000000
+          Height = 45.354330710000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+              FormatStr = '#,##0.00;(#,##0.00);'#39
+              Kind = fkNumeric
+            end
+            item
+            end>
+        end
+        object Memo139: TfrxMemoView
+          AllowVectorExport = True
+          Left = 143.622047244094000000
+          Width = 113.385826770000000000
+          Height = 45.354330710000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo140: TfrxMemoView
+          AllowVectorExport = True
+          Left = 257.007874020000000000
+          Width = 68.031496060000000000
+          Height = 45.354330710000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_SaldoBank
+          DataSetName = 'frxDBDataset_saldobank'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo133: TfrxMemoView
+          AllowVectorExport = True
+          Left = 437.669291340000000000
+          Width = 318.614173230000000000
+          Height = 45.354360000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            
+              'Sisa Saldo : Rp.[FormatFloat('#39'#,##0.00'#39', <frxDBDataset_saldobank' +
+              '."saldo_akhir">-SUM(<frxDBDataset_SaldoKet."paid_amount">,Master' +
+              'Data13))] Jumlah : Rp.[FormatFloat('#39'#,##0.00'#39', SUM(<frxDBDataset' +
+              '_SaldoKet."paid_amount">,MasterData13))]')
+          ParentFont = False
+          VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 437.669291338583000000
+          Height = 45.354360000000000000
+          Color = clBlack
+          Frame.Typ = [ftLeft]
         end
       end
     end
@@ -10614,5 +10839,58 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     Datasets = <>
     Variables = <>
     Style = <>
+  end
+  object Qsaldo_ket: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT b.bank_norek,concat(remark, '#39' '#39',supplier_initial)as ket, ' +
+        'b.trans_date, a.paid_amount  from t_cash_bank_expenditure_submis' +
+        'sion_det a'
+      
+        'LEFT JOIN t_cash_bank_expenditure_submission b on a.no_voucher=b' +
+        '.voucher_no '
+      'LEFT JOIN t_supplier c on b.supplier_code=c.supplier_code'
+      
+        'where substring(no_voucher,1,2)='#39'BS'#39' and "position"='#39'K'#39' and b.ba' +
+        'nk_norek='#39'139.00.265265.78'#39' and periode1='#39'2026-01-04'#39' and period' +
+        'e2='#39'2026-01-10'#39)
+    MasterSource = dsQsaldo_bank
+    MasterFields = 'rekening_no'
+    DetailFields = 'bank_norek'
+    Active = True
+    Left = 43
+    Top = 446
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'rekening_no'
+        ParamType = ptInput
+        Value = '7131977666'
+      end>
+  end
+  object frxDBDataset_SaldoKet: TfrxDBDataset
+    UserName = 'frxDBDataset_SaldoKet'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'bank_norek=bank_norek'
+      'ket=ket'
+      'trans_date=trans_date'
+      'paid_amount=paid_amount')
+    DataSet = Qsaldo_ket
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 152
+    Top = 438
+  end
+  object dsQsaldo_bank: TDataSource
+    DataSet = Qsaldo_bank
+    Left = 520
+    Top = 16
+  end
+  object dsQsaldo_ket: TDataSource
+    DataSet = Qsaldo_bank
+    Left = 56
+    Top = 376
   end
 end

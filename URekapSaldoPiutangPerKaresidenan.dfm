@@ -1395,7 +1395,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44662.430320902800000000
-    ReportOptions.LastChange = 46014.099922187500000000
+    ReportOptions.LastChange = 46042.655607141210000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1514,7 +1514,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NAMA KARESIDENAN')
+            'NAMA TP')
           ParentFont = False
         end
         object Memo3: TfrxMemoView

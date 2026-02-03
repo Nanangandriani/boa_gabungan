@@ -96,6 +96,7 @@ begin
             end;
             Edkd_akun.Text:=DM.Qtemp['account_code'];
             EdNm_akun.Text:=DM.Qtemp['account_name'];
+            Edkd_akunum.Text:=DM.Qtemp['account_name'];
       end;
     end;
     close;
@@ -117,7 +118,8 @@ begin
     begin
        close ;
        sql.Clear;
-       sql.Text:='select * from t_supplier Order by supplier_code ASC';
+       sql.Text:='select * from t_supplier '+
+                 'where deleted_at is null  Order by supplier_code ASC';
        open;
     end;
     qsupplier.close;

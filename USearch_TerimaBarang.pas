@@ -34,10 +34,13 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+
   public
     { Public declarations }
     Procedure Autonumberlot;
     procedure Autonumber2;
+    procedure AddItemToPembelian(Q: TDataSet; IsReceive: Boolean);
+
   end;
 
 function FSearch_TerimaBarang: TFSearch_TerimaBarang;
@@ -182,7 +185,129 @@ begin
   Close;
 end;
 
+
+procedure TFSearch_TerimaBarang.AddItemToPembelian(
+  Q: TDataSet; IsReceive: Boolean);
+begin
+  with FNew_Pembelian do
+  begin
+    // Cegah dobel item
+    //if IsItemExist(Q.FieldByName('item_stock_code').AsString) then
+      //Exit;
+
+    MemTerimaDet.Append;
+
+    MemTerimaDet['nm_material']      := Q['item_name'];
+    MemTerimaDet['item_stock_code']  := Q['item_stock_code'];
+    MemTerimaDet['kd_material']      := Q['item_code'];
+    MemTerimaDet['no_material']      := Q['order_no'];
+    MemTerimaDet['Gudang']           := Q['wh_name'];
+    MemTerimaDet['wh_code']          := Q['wh_code'];
+    MemTerimaDet['Satuanpo']         := Q['unit'];
+    MemTerimaDet['Satuan']           := Q['unit'];
+    MemTerimaDet['ppn']              := Q['ppn'];
+    MemTerimaDet['pph']              := Q['pph'];
+    MemTerimaDet['harga']            := Q['price'];
+    MemTerimaDet['Tahun']            := DTth.Text;
+
+    // INI YANG DIPERBAIKI
+    if IsReceive then
+      MemTerimaDet['nopo'] := Q['receive_no']
+    else
+      MemTerimaDet['nopo'] := Q['po_no'];
+
+    MemTerimaDet['kd_akun'] := Q['account_code'];
+    MemTerimaDet['kd_akunpph'] := Q['account_pph_code'];
+
+    MemTerimaDet['qtypo'] := Q['qty'];
+    MemTerimaDet['qty']   := Q['qty'];
+    MemTerimaDet['qtyselisih']   := 0;
+
+    MemTerimaDet['ppn_rp_pembulatan'] := 0;
+    MemTerimaDet['bea_masuk'] := 0;
+    MemTerimaDet['subtotal'] := Q['subtotal'];
+    MemTerimaDet['subtotalrp'] := Q['subtotal'];
+    MemTerimaDet['grandtotal'] := Q['grandtotal'];
+    MemTerimaDet['pph_rp'] := Q['pph_rp'];
+    MemTerimaDet['ppn_rp'] := Q['ppn_rp'];
+    MemTerimaDet['pemb_dpp'] := 0;
+
+    Edjatuhtempo.Text := VarToStrDef(Q['due_date'], '');
+    EdValas.Text      := VarToStrDef(Q['valas'], '');
+    EdNilai_Valas.Text:= VarToStrDef(Q['valas_value'], '0');
+    Edjenispo.Text    := VarToStrDef(Q['type'], '');
+
+    MemTerimaDet['header_code'] := Q['header_code'];
+
+    MemTerimaDet.Post;
+  end;
+end;
+
+
 procedure TFSearch_TerimaBarang.BEditClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  // GRID 1
+  if DBGridEh1.Visible and (DBGridEh1.SelectedRows.Count > 0) then
+  begin
+    with DBGridEh1.DataSource.DataSet do
+      for i := 0 to DBGridEh1.SelectedRows.Count - 1 do
+      begin
+        GotoBookmark(DBGridEh1.SelectedRows[i]);
+        AddItemToPembelian(QMaterial, False);
+      end;
+  end;
+
+  // GRID 2
+  if DBGridEh2.Visible and (DBGridEh2.SelectedRows.Count > 0) then
+  begin
+    with DBGridEh2.DataSource.DataSet do
+      for i := 0 to DBGridEh2.SelectedRows.Count - 1 do
+      begin
+        GotoBookmark(DBGridEh2.SelectedRows[i]);
+        AddItemToPembelian(QMaterial2, True);
+      end;
+  end;
+
+  // ===== LOT / STOK =====
+  with FNew_Pembelian do
+  begin
+    MemTerimaDet.First;
+    while not MemTerimaDet.Eof do
+    begin
+      with Dm.Qtemp do
+      begin
+        Close;
+        SQL.Text :=
+          'select a.lot_status from t_item a ' +
+          'inner join t_item_stock b on a.item_code=b.item_code ' +
+          'where b.item_stock_code=' +
+          QuotedStr(MemTerimaDet['item_stock_code']);
+        Open;
+      end;
+
+      if not Dm.Qtemp['lot_status'] then
+      begin
+        MemTerimaDet.Edit;
+        MemTerimaDet['kd_stok'] :=
+        MemTerimaDet['item_stock_code'];
+        MemTerimaDet.Post;
+      end
+      else
+        Autonumberlot;
+
+      MemTerimaDet.Next;
+    end;
+  end;
+
+  FNew_Pembelian.DBGridDetailpoColEnter(Sender);
+  Close;
+end;
+
+
+
+{procedure TFSearch_TerimaBarang.BEditClick(Sender: TObject);
 var i:integer;
 begin
     if jenis_pembelian<>'AKTIVA' then
@@ -199,20 +324,20 @@ begin
                     with FNew_Pembelian do
                     begin
                       MemterimaDet.Insert;
-                      MemterimaDet['nm_material']:=QMaterial['item_name'];
-                      MemterimaDet['item_stock_code']:=QMaterial['item_stock_code'];
-                      MemterimaDet['kd_material']:=QMaterial['item_code'];
-                      MemterimaDet['no_material']:=QMaterial['order_no'];
-                      MemterimaDet['Gudang']:=QMaterial['wh_name'];
-                      MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                      MemterimaDet['Satuanpo']:=QMaterial['unit'];
-                      MemterimaDet['Satuan']:=QMaterial['unit'];
+                      MemterimaDet['nm_material']:=VarToStrDef(QMaterial['item_name'], '');
+                      MemterimaDet['item_stock_code']:=VarToStrDef(QMaterial['item_stock_code'], '');
+                      MemterimaDet['kd_material']:=VarToStrDef(QMaterial['item_code'], '');
+                      MemterimaDet['no_material']:=VarToStrDef(QMaterial['order_no'], '');
+                      MemterimaDet['Gudang']:=VarToStrDef(QMaterial['wh_name'], '');
+                      MemterimaDet['wh_code']:=VarToStrDef(QMaterial['wh_code'], '');
+                      MemterimaDet['Satuanpo']:=VarToStrDef(QMaterial['unit'], '');
+                      MemterimaDet['Satuan']:=VarToStrDef(QMaterial['unit'], '');
                       MemterimaDet['ppn']:=QMaterial['ppn'];
                       MemterimaDet['pph']:=QMaterial['pph'];
                       MemterimaDet['harga']:=QMaterial['price'];
                       MemterimaDet['Tahun']:=DTth.Text;
-                      MemterimaDet['nopo']:=QMaterial['po_no'];
-                      MemterimaDet['kd_akun']:=QMaterial['account_code'];
+                      MemterimaDet['nopo']:=VarToStrDef(QMaterial['po_no'], '');
+                      MemterimaDet['kd_akun']:=VarToStrDef(QMaterial['account_code'], '');
                       MemterimaDet['ppn_rp_pembulatan']:=0;
                       MemterimaDet['bea_masuk']:=0;
                       MemterimaDet['subtotalrp']:=0;
@@ -220,25 +345,32 @@ begin
                       MemterimaDet['pph_rp']:=0;
                       MemterimaDet['ppn_rp']:=0;
                       MemterimaDet['pemb_dpp']:=0;
-                      Edjatuhtempo.Text:=QMaterial['due_date'];
-                      EdValas.Text:=QMaterial['valas'];
-                      EdNilai_Valas.Text:=QMaterial['valas_value'];
-                      Edjenispo.Text:=QMaterial['type'];
+                      //Edjatuhtempo.Text:=QMaterial['due_date'];
+                      //EdValas.Text:=QMaterial['valas'];
+                      //EdNilai_Valas.Text:=QMaterial['valas_value'];
+                      //Edjenispo.Text:=QMaterial['type'];
+                      Edjatuhtempo.Text:= VarToStrDef(QMaterial['due_date'], '');
+                      EdValas.Text:= VarToStrDef(QMaterial['valas'], '');
+                      EdNilai_Valas.Text:= VarToStrDef(QMaterial['valas_value'], '0');
+                      Edjenispo.Text:= VarToStrDef(QMaterial['type'], '');
                       MemterimaDet['qtypo']:=QMaterial['qty'];
                       MemterimaDet['qty']:=QMaterial['qty'];
-                      MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                      MemterimaDet['kd_akun']:=QMaterial['header_code'];
+                      MemterimaDet['header_code']:=VarToStrDef(QMaterial['header_code'], '');
                       MemterimaDet.Post;
                     end;
                end;
             end;
          end;
        end;
-       close;
+       //close;
+       //ModalResult := mrOk;
+       //exit;
+
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
-           if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+           //if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+           if FNew_Pembelian.DBGridDetailpo.Fields[0].IsNull or (FNew_Pembelian.DBGridDetailpo.Fields[0].AsString = '') then
            begin
               FNew_Pembelian.MemterimaDet.Delete
            end;
@@ -253,12 +385,16 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
-                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
-                ExecSQL;
+                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(VarToStrDef(MemterimaDet['item_stock_code'], ''));
+                Open;
              end;
              //category:=Dm.Qtemp['category_id'];
-             lotstatus:=Dm.Qtemp['lot_status'];
+             //lotstatus:=Dm.Qtemp['lot_status'];
+             if VarIsNull(Dm.Qtemp['lot_status']) then
+                lotstatus := False
+              else
+                lotstatus := Dm.Qtemp['lot_status'];
              if lotstatus=false then
              begin
                 MemterimaDet.Edit;
@@ -269,9 +405,9 @@ begin
              else
              Autonumberlot;
              //showmessage('0');
-             {MemterimaDet.Edit;
-             MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
-             MemterimaDet.Post;}
+             //MemterimaDet.Edit;
+             //MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
+             //MemterimaDet.Post;
              MemterimaDet.Next;
           end;
        end;
@@ -289,20 +425,20 @@ begin
                     with FNew_Pembelian do
                     begin
                       MemterimaDet.Insert;
-                      MemterimaDet['nm_material']:=QMaterial2['item_name'];
-                      MemterimaDet['item_stock_code']:=QMaterial2['item_stock_code'];
-                      MemterimaDet['kd_material']:=QMaterial2['item_code'];
-                      MemterimaDet['no_material']:=QMaterial2['order_no'];
-                      MemterimaDet['Gudang']:=QMaterial2['wh_name'];
-                      MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      MemterimaDet['Satuanpo']:=QMaterial2['unit'];
-                      MemterimaDet['Satuan']:=QMaterial2['unit'];
+                      MemterimaDet['nm_material']:=VarToStrDef(QMaterial2['item_name'], '');
+                      MemterimaDet['item_stock_code']:=VarToStrDef(QMaterial2['item_stock_code'], '');
+                      MemterimaDet['kd_material']:=VarToStrDef(QMaterial2['item_code'], '');
+                      MemterimaDet['no_material']:=VarToStrDef(QMaterial2['order_no'], '');
+                      MemterimaDet['Gudang']:=VarToStrDef(QMaterial2['wh_name'], '');
+                      MemterimaDet['wh_code']:=VarToStrDef(QMaterial2['wh_code'], '');
+                      MemterimaDet['Satuanpo']:=VarToStrDef(QMaterial2['unit'], '');
+                      MemterimaDet['Satuan']:=VarToStrDef(QMaterial2['unit'], '');
                       MemterimaDet['ppn']:=QMaterial2['ppn'];
                       MemterimaDet['pph']:=QMaterial2['pph'];
                       MemterimaDet['harga']:=QMaterial2['price'];
                       MemterimaDet['Tahun']:=DTth.Text;
-                      MemterimaDet['nopo']:=QMaterial2['receive_no'];
-                      MemterimaDet['kd_akun']:=QMaterial2['account_code'];
+                      MemterimaDet['nopo']:=VarToStrDef(QMaterial2['receive_no'], '');
+                      MemterimaDet['kd_akun']:=VarToStrDef(QMaterial2['account_code'], '');
                       MemterimaDet['ppn_rp_pembulatan']:=0;
                       MemterimaDet['bea_masuk']:=0;
                       MemterimaDet['subtotalrp']:=0;
@@ -310,26 +446,34 @@ begin
                       MemterimaDet['pph_rp']:=0;
                       MemterimaDet['ppn_rp']:=0;
                       MemterimaDet['pemb_dpp']:=0;
-                      Edjatuhtempo.Text:=QMaterial2['due_date'];
-                      EdValas.Text:=QMaterial2['valas'];
-                      EdNilai_Valas.Text:=QMaterial2['valas_value'];
-                      Edjenispo.Text:=QMaterial2['type'];
+                      //Edjatuhtempo.Text:=QMaterial2['due_date'];
+                      //EdValas.Text:=QMaterial2['valas'];
+                      //EdNilai_Valas.Text:=QMaterial2['valas_value'];
+                      //Edjenispo.Text:=QMaterial2['type'];
+
+                      Edjatuhtempo.Text:= VarToStrDef(QMaterial2['due_date'], '');
+                      EdValas.Text:= VarToStrDef(QMaterial2['valas'], '');
+                      EdNilai_Valas.Text:= VarToStrDef(QMaterial2['valas_value'], '0');
+                      Edjenispo.Text:= VarToStrDef(QMaterial2['type'], '');
+
                       MemterimaDet['qtypo']:=QMaterial2['qty'];
                       MemterimaDet['qty']:=QMaterial2['qty'];
-                      MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                      MemterimaDet['kd_material']:=QMaterial2['item_code'];
-                      MemterimaDet['kd_akun']:=QMaterial2['header_code'];
+                      MemterimaDet['header_code']:=VarToStrDef(QMaterial2['header_code'], '');
                       MemterimaDet.Post;
                     end;
                end;
             end;
          end;
        end;
-       close;
+       //close;
+       //ModalResult := mrOk;
+       //exit;
+
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
-           if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+           //if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+           if FNew_Pembelian.DBGridDetailpo.Fields[0].IsNull or (FNew_Pembelian.DBGridDetailpo.Fields[0].AsString = '') then
            begin
               FNew_Pembelian.MemterimaDet.Delete
            end;
@@ -344,12 +488,16 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
-                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
-                ExecSQL;
+                sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(VarToStrDef(MemterimaDet['item_stock_code'], ''));
+                Open;;
              end;
              //category:=Dm.Qtemp['category_id'];
-             lotstatus:=Dm.Qtemp['lot_status'];
+             //lotstatus:=Dm.Qtemp['lot_status'];
+             if VarIsNull(Dm.Qtemp['lot_status']) then
+                lotstatus := False
+              else
+                lotstatus := Dm.Qtemp['lot_status'];
              if lotstatus=false then
              begin
                 MemterimaDet.Edit;
@@ -360,14 +508,15 @@ begin
              else
              Autonumberlot;
              //showmessage('0');
-             {MemterimaDet.Edit;
-             MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
-             MemterimaDet.Post;}
+             //MemterimaDet.Edit;
+             //MemterimaDet['kd_stok']:=MemterimaDet['item_stock_code'];
+             //MemterimaDet.Post;
              MemterimaDet.Next;
           end;
        end;
 
     end;
+
     if jenis_pembelian='AKTIVA' then
     begin
      if DBGridEh1.Visible=true then
@@ -382,20 +531,20 @@ begin
                with FNew_Pembelian do
                begin
                   MemterimaDet.Insert;
-                  MemterimaDet['nm_material']:=QMaterial['item_name'];
-                  MemterimaDet['item_stock_code']:=QMaterial['item_stock_code'];
-                  MemterimaDet['kd_material']:=QMaterial['item_code'];
-                  MemterimaDet['no_material']:=QMaterial['order_no'];
-                  MemterimaDet['Gudang']:=QMaterial['wh_name'];
-                  MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                  MemterimaDet['Satuanpo']:=QMaterial['unit'];
-                  MemterimaDet['Satuan']:=QMaterial['unit'];
+                  MemterimaDet['nm_material']:= VarToStrDef(QMaterial['item_name'], '');
+                  MemterimaDet['item_stock_code']:= VarToStrDef(QMaterial['item_stock_code'], '');
+                  MemterimaDet['kd_material']:= VarToStrDef(QMaterial['item_code'], '');
+                  MemterimaDet['no_material']:= VarToStrDef(QMaterial['order_no'], '');
+                  MemterimaDet['Gudang']:= VarToStrDef(QMaterial['wh_name'], '');
+                  MemterimaDet['wh_code']:= VarToStrDef(QMaterial['wh_code'], '');
+                  MemterimaDet['Satuanpo']:= VarToStrDef(QMaterial['unit'], '');
+                  MemterimaDet['Satuan']:= VarToStrDef(QMaterial['unit'], '');
                   MemterimaDet['ppn']:=QMaterial['ppn'];
                   MemterimaDet['pph']:=QMaterial['pph'];
                   MemterimaDet['harga']:=QMaterial['price'];
                   MemterimaDet['Tahun']:=DTth.Text;
-                  MemterimaDet['nopo']:=QMaterial['po_no'];
-                  MemterimaDet['kd_akun']:=QMaterial['account_code'];
+                  MemterimaDet['nopo']:= VarToStrDef(QMaterial['po_no'], '');
+                  MemterimaDet['kd_akun']:= VarToStrDef(QMaterial['account_code'], '');
                   MemterimaDet['ppn_rp_pembulatan']:=0;
                   MemterimaDet['bea_masuk']:=0;
                   MemterimaDet['subtotalrp']:=0;
@@ -403,25 +552,33 @@ begin
                   MemterimaDet['pph_rp']:=0;
                   MemterimaDet['ppn_rp']:=0;
                   MemterimaDet['pemb_dpp']:=0;
-                  Edjatuhtempo.Text:=QMaterial['due_date'];
-                  EdValas.Text:=QMaterial['valas'];
-                  EdNilai_Valas.Text:=QMaterial['valas_value'];
+                  //Edjatuhtempo.Text:=QMaterial['due_date'];
+                  //EdValas.Text:=QMaterial['valas'];
+                  //EdNilai_Valas.Text:=QMaterial['valas_value'];
+
+                  Edjatuhtempo.Text:= VarToStrDef(QMaterial['due_date'], '');
+                  EdValas.Text:= VarToStrDef(QMaterial['valas'], '');
+                  EdNilai_Valas.Text:= VarToStrDef(QMaterial['valas_value'], '0');
+                  Edjenispo.Text:= VarToStrDef(QMaterial['type'], '');
+
                   MemterimaDet['ppn_rp_pembulatan']:=0;
                   MemterimaDet['qtypo']:=QMaterial['qty'];
                   MemterimaDet['qty']:=QMaterial['qty'];
-                  MemterimaDet['wh_code']:=QMaterial['wh_code'];
-                  MemterimaDet['kd_material']:=QMaterial['item_code'];
-                  MemterimaDet['kd_akun']:=QMaterial['header_code'];
+                  MemterimaDet['header_code']:= VarToStrDef(QMaterial['header_code'], '');
                   MemterimaDet.Post;
                end;
             end;
           end;
        end;
-       Close;
+       //Close;
+       //ModalResult := mrOk;
+       //exit;
+
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
-          if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+          //if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+          if FNew_Pembelian.DBGridDetailpo.Fields[0].IsNull or (FNew_Pembelian.DBGridDetailpo.Fields[0].AsString = '') then
           begin
              FNew_Pembelian.MemterimaDet.Delete
           end;
@@ -436,11 +593,16 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
-                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
-                ExecSQL;
+                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(VarToStrDef(MemterimaDet['item_stock_code'], ''));
+                open;
              end;
-             lotstatus:=Dm.Qtemp['lot_status'];
+             //lotstatus:=Dm.Qtemp['lot_status'];
+             if VarIsNull(Dm.Qtemp['lot_status']) then
+                lotstatus := False
+              else
+                lotstatus := Dm.Qtemp['lot_status'];
+
              if lotstatus=false then
              begin
                 MemterimaDet.Edit;
@@ -468,20 +630,20 @@ begin
                with FNew_Pembelian do
                begin
                   MemterimaDet.Insert;
-                  MemterimaDet['nm_material']:=QMaterial2['item_name'];
-                  MemterimaDet['item_stock_code']:=QMaterial2['item_stock_code'];
-                  MemterimaDet['kd_material']:=QMaterial2['item_code'];
-                  MemterimaDet['no_material']:=QMaterial2['order_no'];
-                  MemterimaDet['Gudang']:=QMaterial2['wh_name'];
-                  MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                  MemterimaDet['Satuanpo']:=QMaterial2['unit'];
-                  MemterimaDet['Satuan']:=QMaterial2['unit'];
+                  MemterimaDet['nm_material']:=VarToStrDef(QMaterial2['item_name'], '');
+                  MemterimaDet['item_stock_code']:=VarToStrDef(QMaterial2['item_stock_code'], '');
+                  MemterimaDet['kd_material']:=VarToStrDef(QMaterial2['item_code'], '');
+                  MemterimaDet['no_material']:=VarToStrDef(QMaterial2['order_no'], '');
+                  MemterimaDet['Gudang']:=VarToStrDef(QMaterial2['wh_name'], '');
+                  MemterimaDet['wh_code']:=VarToStrDef(QMaterial2['wh_code'], '');
+                  MemterimaDet['Satuanpo']:=VarToStrDef(QMaterial2['unit'], '');
+                  MemterimaDet['Satuan']:=VarToStrDef(QMaterial2['unit'], '');
                   MemterimaDet['ppn']:=QMaterial2['ppn'];
                   MemterimaDet['pph']:=QMaterial2['pph'];
                   MemterimaDet['harga']:=QMaterial2['price'];
                   MemterimaDet['Tahun']:=DTth.Text;
-                  MemterimaDet['nopo']:=QMaterial2['receive_no'];
-                  MemterimaDet['kd_akun']:=QMaterial2['account_code'];
+                  MemterimaDet['nopo']:=VarToStrDef(QMaterial2['receive_no'], '');
+                  MemterimaDet['kd_akun']:=VarToStrDef(QMaterial2['account_code'], '');
                   MemterimaDet['ppn_rp_pembulatan']:=0;
                   MemterimaDet['bea_masuk']:=0;
                   MemterimaDet['subtotalrp']:=0;
@@ -489,25 +651,32 @@ begin
                   MemterimaDet['pph_rp']:=0;
                   MemterimaDet['ppn_rp']:=0;
                   MemterimaDet['pemb_dpp']:=0;
-                  Edjatuhtempo.Text:=QMaterial2['due_date'];
-                  EdValas.Text:=QMaterial['valas'];
-                  EdNilai_Valas.Text:=QMaterial2['valas_value'];
+                  //Edjatuhtempo.Text:=QMaterial2['due_date'];
+                  //EdValas.Text:=QMaterial['valas'];
+                  //EdNilai_Valas.Text:=QMaterial2['valas_value'];
+                  Edjatuhtempo.Text:= VarToStrDef(QMaterial2['due_date'], '');
+                  EdValas.Text:= VarToStrDef(QMaterial2['valas'], '');
+                  EdNilai_Valas.Text:= VarToStrDef(QMaterial2['valas_value'], '0');
+                  Edjenispo.Text:= VarToStrDef(QMaterial2['type'], '');
+
                   MemterimaDet['ppn_rp_pembulatan']:=0;
                   MemterimaDet['qtypo']:=QMaterial2['qty'];
                   MemterimaDet['qty']:=QMaterial2['qty'];
-                  MemterimaDet['wh_code']:=QMaterial2['wh_code'];
-                  MemterimaDet['kd_material']:=QMaterial['item_code'];
-                  MemterimaDet['kd_akun']:=QMaterial['header_code'];
+                  MemterimaDet['header_code']:=VarToStrDef(QMaterial2['header_code'], '');
                   MemterimaDet.Post;
                end;
             end;
           end;
        end;
-       Close;
+       //Close;
+       //ModalResult := mrOk;
+       //exit;
+
        FNew_Pembelian.MemterimaDet.First;
        while not FNew_Pembelian.MemterimaDet.Eof do
        begin
-          if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+          //if FNew_Pembelian.DBGridDetailpo.Fields[0].AsString='' then
+          if FNew_Pembelian.DBGridDetailpo.Fields[0].IsNull or (FNew_Pembelian.DBGridDetailpo.Fields[0].AsString = '') then
           begin
              FNew_Pembelian.MemterimaDet.Delete
           end;
@@ -522,11 +691,15 @@ begin
              begin
                 close;
                 sql.Clear;
-                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
-                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(MemterimaDet['item_stock_code']);
-                ExecSQL;
+                sql.Text:=' select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
+                          ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(VarToStrDef(MemterimaDet['item_stock_code'], ''));
+                open;
              end;
-             lotstatus:=Dm.Qtemp['lot_status'];
+             //lotstatus:=Dm.Qtemp['lot_status'];
+             if VarIsNull(Dm.Qtemp['lot_status']) then
+                lotstatus := False
+              else
+                lotstatus := Dm.Qtemp['lot_status'];
              if lotstatus=false then
              begin
                 MemterimaDet.Edit;
@@ -549,9 +722,10 @@ begin
       sql.Text:=' SELECT a.*,b.account_name FROM t_item_category a '+
                 ' INNER JOIN t_ak_account b on a.account_code=b.code '+
                 ' INNER JOIN t_item c on a.category_id=c.category_id '+
-                ' INNER JOIN warehouse.t_item_stock d on c.item_code=d.item_code '+
-                ' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
-      ExecSQL
+                ' INNER JOIN t_item_stock d on c.item_code=d.item_code '+
+                //' where d.item_stock_code='+QuotedStr(DBGridEh1.Fields[5].AsString);
+                'where d.item_stock_code='+QuotedStr(VarToStrDef(DBGridEh1.Fields[5].Value, ''));
+      Open;
     end;
     if DM.Qtemp.RecordCount=0 then
     begin
@@ -610,7 +784,8 @@ begin
       end;
     end;
     FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-end;
+    Close;
+end;}
 
 procedure TFSearch_TerimaBarang.BSelectAllClick(Sender: TObject);
 begin
@@ -702,7 +877,7 @@ begin
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
-         MemterimaDet['kd_akun']:=QMaterial['header_code'];
+         MemterimaDet['header_code']:=QMaterial['header_code'];
          MemterimaDet.Post;
       end;
 
@@ -711,7 +886,7 @@ begin
       begin
        close;
        sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
+       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
                  ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial['item_stock_code']);
        ExecSQL;
       end;
@@ -763,14 +938,14 @@ begin
          MemterimaDet['qtypo']:=QMaterial['qty'];
          MemterimaDet['qty']:=QMaterial['qty'];
          MemterimaDet['wh_code']:=QMaterial['wh_code'];
-         MemterimaDet['kd_akun']:=QMaterial['header_code'];
+         MemterimaDet['header_code']:=QMaterial['header_code'];
          MemterimaDet.Post;
       end;
       with Dm.Qtemp do
       begin
        close;
        sql.Clear;
-       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join warehouse.t_item_stock b '+
+       sql.Text:='select a.*,b.item_stock_code from t_item a  inner join t_item_stock b '+
                  ' on a.item_code=b.item_code where b.item_stock_code='+QuotedStr(QMaterial['item_stock_code']);
        ExecSQL;
       end;

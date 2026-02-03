@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzLabel, RzCmboBx,
   Vcl.ExtCtrls, RzPanel, Vcl.ComCtrls, RzDTP, RzButton, frxClass, frxDBSet,
-  Data.DB, MemDS, DBAccess, Uni;
+  Data.DB, MemDS, DBAccess, Uni, RzRadChk;
 
 type
   TFCetakKolektifPenerimaanBank = class(TForm)
@@ -29,6 +29,9 @@ type
     DSBuktiTerima: TDataSource;
     RzLabel5: TRzLabel;
     cbTransaksi: TRzComboBox;
+    Report2: TfrxReport;
+    rbCetakA5: TRzRadioButton;
+    rbCetakF4: TRzRadioButton;
     procedure BBatalClick(Sender: TObject);
     procedure cbBankChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -37,6 +40,9 @@ type
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dtTanggalAwalChange(Sender: TObject);
     procedure dtTanggalAkhirChange(Sender: TObject);
+    procedure rbCetakA5Click(Sender: TObject);
+    procedure rbCetakF4Click(Sender: TObject);
+    procedure Report2GetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
   public
@@ -110,14 +116,16 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='SELECT a.*, "code_account_header",b.name_account  "account_name", "paid_amount", "desc_akun" from '+
+      sql.Text:='SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust,a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from '+
               '( select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank",  "account_name_bank", '+
-              '"for_acceptance", "description", "module_id",word_amount,code_type_trans  from "public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) a '+
+              '"for_acceptance", "description", "module_id",word_amount,code_type_trans,paid_amount tot_paid_amount  from "public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) a '+
               'LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  "paid_amount", "description" as desc_akun, '+
               'COALESCE(bb.account_code,aa.code_account) code_account_header, bb.account_name ,  "amount_rate_results" '+
               'from "public"."t_cash_bank_acceptance_det" aa  LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
               'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON a."voucher_no"=b."voucher_no"  '+
               'left join t_master_trans_account dd on dd.code_trans=a.code_type_trans '+
+              'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
+              'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
               'where  "position"=''K'' '+strTransaksi+' '+
               'AND (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
               'order by voucher_no ASC, account_name=''Piutang Barang Dagang'' ASC';
@@ -138,9 +146,17 @@ begin
       cLocation := ExtractFilePath(Application.ExeName);
 
       //ShowMessage(cLocation);
-      Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan_kolektif'+ '.fr3');
-           //Report.DesignReport();
-      Report.ShowReport();
+      if rbCetakA5.Checked=True then
+      begin
+        Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan_kolektif'+ '.fr3');
+        Report.ShowReport();
+      end else
+      begin
+        Report2.LoadFromFile(cLocation +'report/rpt_buktipenerimaan_kolektif_F4'+ '.fr3');
+        Report2.ShowReport();
+      end;
+      //Report.DesignReport();
+
     end;
   end;
 end;
@@ -202,6 +218,18 @@ begin
   cbBank.ItemIndex:=-1;
   cbBank.Enabled:=False;
   cbNoRek.Enabled:=False;
+  rbCetakF4.Checked:=True;
+  rbCetakA5.Checked:=False;
+end;
+
+procedure TFCetakKolektifPenerimaanBank.rbCetakA5Click(Sender: TObject);
+begin
+  rbCetakF4.Checked:=False;
+end;
+
+procedure TFCetakKolektifPenerimaanBank.rbCetakF4Click(Sender: TObject);
+begin
+  rbCetakA5.Checked:=False;
 end;
 
 procedure TFCetakKolektifPenerimaanBank.RefreshBank;
@@ -242,13 +270,32 @@ begin
   cbNoRek.ItemIndex:=0;
 end;
 
+procedure TFCetakKolektifPenerimaanBank.Report2GetValue(const VarName: string;
+  var Value: Variant);
+var
+  MemoObj: TfrxComponent;
+begin
+  // Standard practice: Only run logic if the report is looking for a specific variable
+ { if QBuktiTerimaDet.RecordCount = 2 then
+  begin
+      TfrxMemoView(Report2.FindObject('Memo45')).Visible := True;
+  end else begin
+      TfrxMemoView(Report2.FindObject('Memo45')).Visible := False;
+  end; }
+
+  if CompareText(VarName, 'nama_pt') = 0 then
+  Value := FHomeLogin.vKodePRSH;
+  if CompareText(VarName, 'kota_tanggal') = 0 then
+  Value := FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBuktiTerima.FieldValues['trans_date']);
+end;
+
 procedure TFCetakKolektifPenerimaanBank.ReportGetValue(const VarName: string;
   var Value: Variant);
 begin
   if CompareText(VarName, 'nama_pt') = 0 then
   Value := FHomeLogin.vKodePRSH;
   if CompareText(VarName, 'kota_tanggal') = 0 then
-  Value := FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW());
+  Value := FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBuktiTerima.FieldValues['trans_date']);
 end;
 
 procedure TFCetakKolektifPenerimaanBank.BBatalClick(Sender: TObject);

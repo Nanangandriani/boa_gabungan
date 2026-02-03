@@ -34,9 +34,8 @@ object FNoteCancel: TFNoteCancel
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -242
-    ExplicitTop = 410
-    ExplicitWidth = 870
+    ExplicitTop = 190
+    ExplicitWidth = 511
     object BBatal: TRzBitBtn
       Left = 439
       Top = 1
@@ -97,7 +96,7 @@ object FNoteCancel: TFNoteCancel
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 794
+      ExplicitLeft = 435
     end
     object BSave: TRzBitBtn
       Left = 364
@@ -159,7 +158,7 @@ object FNoteCancel: TFNoteCancel
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 719
+      ExplicitLeft = 360
     end
   end
   object MemAlasan: TRzMemo

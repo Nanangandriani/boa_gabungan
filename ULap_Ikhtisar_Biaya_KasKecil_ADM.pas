@@ -105,11 +105,34 @@ type
     frxReportADM2: TfrxReport;
     frxDBDatasetADM2: TfrxDBDataset;
     QkasKecilADM2: TUniQuery;
+    QkasKecilADM2actors_name: TStringField;
+    QkasKecilADM2voucher_no: TStringField;
+    QkasKecilADM2description: TStringField;
+    QkasKecilADM2name: TStringField;
+    QkasKecilADM2total: TFloatField;
+    QkasKecilADM2b1: TFloatField;
+    QkasKecilADM2b2: TFloatField;
+    QkasKecilADM2b3: TFloatField;
+    QkasKecilADM2b4: TFloatField;
+    QkasKecilADM2b5: TFloatField;
+    QkasKecilADM2b6: TFloatField;
+    QkasKecilADM2b7: TFloatField;
+    QkasKecilADM2b8: TFloatField;
+    QkasKecilADM2b9: TFloatField;
+    QkasKecilADM2b10: TFloatField;
+    QkasKecilADM2b11: TFloatField;
+    QkasKecilADM2b12: TFloatField;
+    QkasKecilADM2b13: TFloatField;
+    QkasKecilADM2b14: TFloatField;
+    QkasKecilADM2b15: TFloatField;
     procedure DxRefreshClick(Sender: TObject);
     procedure dxPrintClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DBGridKasKecilADMGetCellParams(Sender: TObject; Column: TColumnEh;
+      AFont: TFont; var Background: TColor; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -137,6 +160,16 @@ begin
     Application.CreateForm(TFLap_Ikhtisar_Biaya_KasKecil_ADM, Result);
 end;
 
+procedure TFLap_Ikhtisar_Biaya_KasKecil_ADM.DBGridKasKecilADMGetCellParams(
+  Sender: TObject; Column: TColumnEh; AFont: TFont; var Background: TColor;
+  State: TGridDrawState);
+begin
+    if not MemKasKecilADM.FieldByName('deleted_at').IsNull then
+    begin
+      AFont.Color := clRed;
+    end;
+end;
+
 procedure TFLap_Ikhtisar_Biaya_KasKecil_ADM.dxPrintClick(
   Sender: TObject);
 begin
@@ -153,11 +186,11 @@ begin
       Exit;
     end;
 
-    with QCetak_KasKecil_ADM do
+    with QkasKecilADM2 do
     begin
       close;
       sql.Clear;
-      sql.Text:='select a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
+      sql.Text:='select a.actors_name,a.voucher_no,a.description,a."name",b.total,a.deleted_at, '+
                 '(case when b1.amount is null then 0 else b1.amount end)b1, '+
                 '(case when b2.amount is null then 0 else b2.amount end)b2, '+
                 '(case when b3.amount is null then 0 else b3.amount end)b3, '+
@@ -169,71 +202,88 @@ begin
                 '(case when b9.amount is null then 0 else b9.amount end)b9, '+
                 '(case when b10.amount is null then 0 else b10.amount end)b10, '+
                 '(case when b11.amount is null then 0 else b11.amount end)b11, '+
-                '(case when b12.amount is null then 0 else b12.amount end)b12  '+
+                '(case when b12.amount is null then 0 else b12.amount end)b12,  '+
+                '(case when b13.amount is null then 0 else b13.amount end)b13, '+
+                '(case when b14.amount is null then 0 else b14.amount end)b14, '+
+                '(case when b15.amount is null then 0 else b15.amount end)b15  '+
                 'from '+
-                '(select distinct  a.voucher_no  from t_petty_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' and code_account=''1112''  and position=''K'')xx '+
-                'left join (select distinct a.actors_name,a.voucher_no,a.code_account,a.trans_date,a.description,a.order_no,b.code,c."name" from (SELECT a.voucher_no,a.actors_name,a.trans_date,a.description,b.code_account,a.order_no,a.actors_code from t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no) a,t_ak_account b,t_cost_actors c where a.code_account=b.code and a.actors_code=c.code and b.type_id=2 and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' order by voucher_no)a on a.voucher_no=xx.voucher_no '+
+                '(select distinct  a.voucher_no  from t_petty_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' and code_account=''1101.02''  and position=''K'' and deleted_at is null)xx '+
+                'left join (select distinct a.actors_name,a.voucher_no,a.code_account,a.trans_date,a.description,a.order_no,b.code,c."name",a.deleted_at from '+
+                '(SELECT a.voucher_no,a.actors_name,a.trans_date,a.description,b.code_account,a.order_no,a.actors_code,a.deleted_at  from t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no) a,t_ak_account b,t_cost_actors c where a.code_account=b.code and a.actors_code=c.code and b.type_id=2 and a.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' order by voucher_no)a on a.voucher_no=xx.voucher_no '+
 
-                'left join (select voucher_no,a.code_account,a."position",sum(amount)as total from (select a.voucher_no,b.code_account,b."position",a.amount FROM t_petty_cash a '+
+                'left join (select voucher_no,a.code_account,a."position",sum(amount)as total from (select a.voucher_no,b.code_account,b."position",a.amount,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account,b."position") a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and a."position"=''D''  group by voucher_no,a.code_account,a."position" order by voucher_no)b on a.voucher_no=b.voucher_no '+
+                'where a.code_account=b.code and b.type_id=2 and a."position"=''D'' and a.deleted_at is null  group by voucher_no,a.code_account,a."position" order by voucher_no)b on a.voucher_no=b.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''SBG'')b1 on a.voucher_no=b1.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2GAJ'')b1 on a.voucher_no=b1.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''ASR'')b2 on a.voucher_no=b2.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2SUM'')b2 on a.voucher_no=b2.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''JMT'')b3 on a.voucher_no=b3.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ASU'')b3 on a.voucher_no=b3.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''PD2'')b4 on a.voucher_no=b4.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MRA'')b4 on a.voucher_no=b4.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''ATK'')b5 on a.voucher_no=b5.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ALA'')b5 on a.voucher_no=b5.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''LNA'')b6 on a.voucher_no=b6.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2LIS'')b6 on a.voucher_no=b6.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''PTM'')b7 on a.voucher_no=b7.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PTT'')b7 on a.voucher_no=b7.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''MRA'')b8 on a.voucher_no=b8.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PER'')b8 on a.voucher_no=b8.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''PDK'')b9 on a.voucher_no=b9.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PEN'')b9 on a.voucher_no=b9.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''PDP'')b10 on a.voucher_no=b10.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PAJ'')b10 on a.voucher_no=b10.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''KPK'')b11 on a.voucher_no=b11.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MRK'')b11 on a.voucher_no=b11.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
+                'left join (select voucher_no,amount,a.deleted_at  from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
-                'where a.code_account=b.code and b.type_id=2 and b.category_code=''HMS'')b12 on a.voucher_no=b12.voucher_no '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ADM'')b12 on a.voucher_no=b12.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2JAM'')b13 on a.voucher_no=b13.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MAN'')b14 on a.voucher_no=b14.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2KEP'')b15 on a.voucher_no=b15.voucher_no '+
+
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no; ';
       open;
     end;
     //frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_ADM.fr3');
-    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_ADM2.fr3');
-    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick1.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick2.EditValue);
-    frxReport1.ReportOptions.Name:='Laporan Ikhtisar Biaya Kas Kecil ADM';
-    frxReport1.showreport;
+    frxReportADM2.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Ikhtisar_Kas_Kecil_ADM2.fr3');
+    Tfrxmemoview(frxReportADM2.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick1.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick2.EditValue);
+    frxReportADM2.ReportOptions.Name:='Laporan Ikhtisar Biaya Kas Kecil ADM';
+    frxReportADM2.showreport;
 end;
 
 procedure TFLap_Ikhtisar_Biaya_KasKecil_ADM.DxRefreshClick(Sender: TObject);
@@ -256,7 +306,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
+      sql.Text:='select a.actors_name,a.voucher_no,a.description,a."name",b.total,a.deleted_at, '+
                 '(case when b1.amount is null then 0 else b1.amount end)b1, '+
                 '(case when b2.amount is null then 0 else b2.amount end)b2, '+
                 '(case when b3.amount is null then 0 else b3.amount end)b3, '+
@@ -268,50 +318,80 @@ begin
                 '(case when b9.amount is null then 0 else b9.amount end)b9, '+
                 '(case when b10.amount is null then 0 else b10.amount end)b10, '+
                 '(case when b11.amount is null then 0 else b11.amount end)b11, '+
-                '(case when b12.amount is null then 0 else b12.amount end)b12  '+
+                '(case when b12.amount is null then 0 else b12.amount end)b12,  '+
+                '(case when b13.amount is null then 0 else b13.amount end)b13, '+
+                '(case when b14.amount is null then 0 else b14.amount end)b14, '+
+                '(case when b15.amount is null then 0 else b15.amount end)b15  '+
                 'from '+
-                '(select distinct  a.voucher_no  from t_petty_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue)) + ' and code_account=''1112''  and position=''K'')xx '+
-                'left join (select distinct a.actors_name,a.voucher_no,a.code_account,a.trans_date,a.description,a.order_no,b.code,c."name" from (SELECT a.voucher_no,a.actors_name,a.trans_date,a.description,b.code_account,a.order_no,a.actors_code from t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no) a,t_ak_account b,t_cost_actors c where a.code_account=b.code and a.actors_code=c.code and b.type_id=2 and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' order by voucher_no)a on a.voucher_no=xx.voucher_no '+
+                '(select distinct  a.voucher_no  from t_petty_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue)) + ' and code_account=''1101.02''  and position=''K'' and a.deleted_at is null)xx '+
+                'left join (select distinct a.actors_name,a.voucher_no,a.code_account,a.trans_date,a.description,a.order_no,b.code,c."name",a.deleted_at from '+
+                '(SELECT a.voucher_no,a.actors_name,a.trans_date,a.description,b.code_account,a.order_no,a.actors_code,a.deleted_at  from t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no) a,t_ak_account b,t_cost_actors c where a.code_account=b.code and a.actors_code=c.code and b.type_id=2 and a.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' order by voucher_no)a on a.voucher_no=xx.voucher_no '+
 
-                'left join (select voucher_no,a.code_account,a."position",sum(amount)as total from (select a.voucher_no,b.code_account,b."position",a.amount FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account,b."position") a,t_ak_account b where a.code_account=b.code and b.type_id=2 and a."position"=''D''  '+
+                'left join (select voucher_no,a.code_account,a."position",sum(amount)as total from (select a.voucher_no,b.code_account,b."position",a.amount,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account,b."position") a,t_ak_account b where a.code_account=b.code and b.type_id=2 and a."position"=''D'' and a.deleted_at is null  '+
                 'group by voucher_no,a.code_account,a."position" order by voucher_no)b on a.voucher_no=b.voucher_no '+
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''SBG'')b1 on a.voucher_no=b1.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''ASR'')b2 on a.voucher_no=b2.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2GAJ'')b1 on a.voucher_no=b1.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''JMT'')b3 on a.voucher_no=b3.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2SUM'')b2 on a.voucher_no=b2.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''PD2'')b4 on a.voucher_no=b4.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ASU'')b3 on a.voucher_no=b3.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''ATK'')b5 on a.voucher_no=b5.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MRA'')b4 on a.voucher_no=b4.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''LNA'')b6 on a.voucher_no=b6.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ALA'')b5 on a.voucher_no=b5.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''PTM'')b7 on a.voucher_no=b7.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2LIS'')b6 on a.voucher_no=b6.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''MRA'')b8 on a.voucher_no=b8.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PTT'')b7 on a.voucher_no=b7.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''PDK'')b9 on a.voucher_no=b9.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PER'')b8 on a.voucher_no=b8.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''PDP'')b10 on a.voucher_no=b10.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PEN'')b9 on a.voucher_no=b9.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''KPK'')b11 on a.voucher_no=b11.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2PAJ'')b10 on a.voucher_no=b10.voucher_no '+
 
-                'left join (select voucher_no,amount from (SELECT a.voucher_no,a.amount,b.code_account FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.code_account=b.code and b.type_id=2 and b.category_code=''HMS'')b12 on a.voucher_no=b12.voucher_no '+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MRK'')b11 on a.voucher_no=b11.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at  from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2ADM'')b12 on a.voucher_no=b12.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2JAM'')b13 on a.voucher_no=b13.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2MAN'')b14 on a.voucher_no=b14.voucher_no '+
+
+                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b '+
+                'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2KEP'')b15 on a.voucher_no=b15.voucher_no '+
+
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no; ';
       open;
     end;
@@ -336,6 +416,12 @@ end;
 procedure TFLap_Ikhtisar_Biaya_KasKecil_ADM.FormDestroy(Sender: TObject);
 begin
    RealFLap_Ikhtisar_Biaya_KasKecil_ADM:=nil;
+end;
+
+procedure TFLap_Ikhtisar_Biaya_KasKecil_ADM.FormShow(Sender: TObject);
+begin
+   DTPick1.EditValue:=date();
+   DTPick2.EditValue:=date();
 end;
 
 Initialization

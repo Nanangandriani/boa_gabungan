@@ -174,6 +174,7 @@ begin
    txtnocek.enabled:=true;
    btncek.enabled:=true;
    dptglcek.enabled:=true;
+   Ed_sumber.Text:='';
 
 end;
 
@@ -199,6 +200,21 @@ begin
     //if vcall='Data_Hutang' then
     vcall:='Data_Hutang';
     //begin
+
+        with Dm.Qtemp do
+        begin
+          close;
+          sql.Clear;
+          sql.text:=' delete from t_paid_debt_det '+
+                    ' where periode1=:periode1 and periode2=:periode2 and supplier_code=:kd_sup '+
+                    ' and plan_to=:rencanake';
+          params.ParamByName('periode1').asstring:=formatdatetime('yyyy-mm-dd',dpperiode1.Date);
+          params.ParamByName('periode2').asstring:=formatdatetime('yyyy-mm-dd',dpperiode2.Date);
+          params.ParamByName('kd_sup').asstring:=MemRencana['kd_sup'];
+          params.ParamByName('rencanake').asstring:=CBrencanake.Text;
+          Execute;
+        end;
+
         MemRencana.first;
         while not MemRencana.Eof do
         begin
@@ -406,8 +422,15 @@ begin
           end}
           if dm.Qtemp.RecordCount > 0 then
           begin
-            if MessageDlg('Rencana ke ' + CBrencanake.Text +' sudah ada, lanjut simpan?',mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-            Exit;
+//            if MessageDlg('Rencana ke ' + CBrencanake.Text +' sudah ada, lanjut simpan?',mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+//            begin
+            Simpan;
+            //Dm.Koneksi.Commit;
+            MessageDlg('Data berhasil dipebarui..!!',mtInformation,[MBOK],0);
+            FList_Rencana_Lunas_Hutang.ActROExecute(sender);
+            close;
+//            end;
+            //Exit;
           end
           else
           begin
@@ -653,13 +676,6 @@ begin
    load_bank;
    Load_Rencanake;
    load_source_plan;
-   dptgllunas.Date:=now;
-   dpperiode1.Date:=now;
-   dpperiode2.Date:=now;
-   dpperiodetmp1.date:=now;
-   dpperiodetmp2.date:=now;
-   dptglcek.Date:=now;
-   Ed_sumber.Text:='';
    if MemRencana.Active=false then
       MemRencana.Active:=true;
 

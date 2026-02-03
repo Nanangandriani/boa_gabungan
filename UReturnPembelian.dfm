@@ -23,6 +23,7 @@ object FReturnPembelian: TFReturnPembelian
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 820
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -1131,6 +1132,7 @@ object FReturnPembelian: TFReturnPembelian
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print Jurnal'
@@ -2326,7 +2328,7 @@ object FReturnPembelian: TFReturnPembelian
       'ORDER BY'
       #9'a.return_no DESC'
       '')
-    Left = 328
+    Left = 312
     Top = 24
     object QReturnPembeliantrans_day: TSmallintField
       FieldName = 'trans_day'

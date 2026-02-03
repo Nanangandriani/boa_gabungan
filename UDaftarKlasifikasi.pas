@@ -376,6 +376,7 @@ begin
                     ' '+QuotedStr(edkd_jenis_pel.Text)+', '+
                     ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
                     ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
+//                     ' '+QuotedStr(StringReplace(MemKlasifikasi['harga_satuan'],',','.',[]))+','+
                     ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
           ExecSQL;
         end;
@@ -478,11 +479,11 @@ begin
                 ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['batas1'])+', '+
                 ' '+QuotedStr(MemKlasifikasi['batas2'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc1'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc2'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc3'])+', '+
-                ' '+QuotedStr(MemKlasifikasi['disc4'])+');';
+                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc1'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc2'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc3'],',','.',[]))+','+
+                ' '+QuotedStr(StringReplace(MemKlasifikasi['disc4'],',','.',[]))+');';
       ExecSQL;
       end;
       with Dm.Qtemp3 do //cek data master harga

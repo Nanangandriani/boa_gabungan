@@ -125,6 +125,8 @@ type
     dxBarMRUListItem1: TdxBarMRUListItem;
     edTP: TcxBarEditItem;
     frxPDFExport1: TfrxPDFExport;
+    QCetakcode_kecamatan: TStringField;
+    QCetakkecamatan: TMemoField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -221,9 +223,10 @@ begin
   //               ' "code_karesidenan"  from t_region_regency WHERE deleted_at IS NULL)b   '+
   //               ' ON "left"(code_region, 4)=b.code_kab '+
   //               ' where customer_code<> ''0'' ');
-    sql.Add('WITH RankedData AS (  '+
+    {sql.Add('WITH RankedData AS (  '+
             'SELECT *, ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor), 2) AS saldo '+
             'FROM (SELECT trx.*,b."code_province", b.code_kab,b.name_kab, b."code_karesidenan" '+
+            ',c.code code_kecamatan,UPPER(c.name) kecamatan '+
             'FROM ( '+
             'SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY no_urut, tgltrans ASC) AS nomor,sq.* '+
             'FROM ( '+
@@ -234,11 +237,11 @@ begin
             'ORDER BY customer_code, no_urut, created_at ASC '+
             ') AS sq '+
             ') trx '+
-            'LEFT JOIN ( '+
-            'SELECT "code_province", "code" AS code_kab, "name" AS name_kab, "code_karesidenan",code_tp '+
-            'FROM t_region_regency '+
-            'WHERE deleted_at IS NULL '+
-            ') b ON "left"(trx.code_region, 4) = b.code_kab '+
+            'LEFT JOIN  (SELECT rg.code_province, rg.code as code_kab, rg.name as name_kab,  '+
+            'rg.code_karesidenan,rg.code_tp from t_region_regency rg '+
+            ')b '+
+            'ON "left"(code_region, 4)=b.code_kab '+
+            'LEFT JOIN t_region_subdistrict c on c.code=trx.code_region '+
             'WHERE customer_code <> ''0'' ');
 
     if edKaresidenan.EditValue<>'' then
@@ -263,7 +266,54 @@ begin
             'CASE WHEN (COUNT(*) OVER (PARTITION BY customer_code) = 1) AND '+
             '(MAX(CASE WHEN nomor = 1 THEN saldo_awal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) '+
             'THEN 0 ELSE 1 END AS KeepCustomer FROM RankedData) '+
-            'SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ORDER BY customer_code ASC, nomor ASC;');
+            'SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ORDER BY customer_code ASC, nomor ASC;');        }
+    sql.Clear;
+    sql.Add('WITH RankedData AS (');
+    sql.Add(' SELECT *, ROUND(SUM(saldo_awal + debet - kredit) OVER (PARTITION BY customer_code ORDER BY nomor), 2) AS saldo ');
+    sql.Add(' FROM (');
+    sql.Add(' SELECT trx.*, b."code_province", b.code_kab, b.name_kab, b."code_karesidenan", b.code_tp, ');
+    sql.Add(' c.code AS code_kecamatan, UPPER(c.name) AS kecamatan ');
+    sql.Add(' FROM ( ');
+    sql.Add(' SELECT ROW_NUMBER() OVER (PARTITION BY customer_code ORDER BY tgltrans ASC NULLS FIRST, no_urut ASC) AS nomor, sq.* ');
+    sql.Add(' FROM ( ');
+    sql.Add(' SELECT customer_code, customer_name_pkp, code_region, name_region, trans_no, tgltrans, ');
+    sql.Add(' COALESCE(saldo_awal,0) AS saldo_awal, no_urut, keterangan2, debet, kredit ');
+    sql.Add(' FROM "public"."get_piutang_trx2" (' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl1)) + ',' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl2)) + ') ');
+    sql.Add(' ) AS sq ');
+    sql.Add(' ) trx ');
+    sql.Add(' LEFT JOIN (');
+    sql.Add(' SELECT rg.code_province, rg.code AS code_kab, rg.name AS name_kab, rg.code_karesidenan, rg.code_tp ');
+    sql.Add(' FROM t_region_regency rg ');
+    sql.Add(' ) b ON LEFT(trx.code_region, 4) = b.code_kab ');
+    sql.Add(' LEFT JOIN t_region_subdistrict c ON c.code = trx.code_region ');
+    sql.Add(' WHERE customer_code <> ''0'' ');
+
+    if edKaresidenan.EditValue <> '' then
+      sql.Add(' AND b.code_karesidenan = ' + QuotedStr(vkd_kares));
+
+    if edTP.EditValue <> '' then
+      sql.Add(' AND b.code_tp = ' + QuotedStr(vkd_tp));
+
+    if edKabupaten.EditValue <> '' then
+      sql.Add(' AND b.code_kab = ' + QuotedStr(vkd_kab));
+
+    if edNama_Pelanggan.EditValue <> '' then
+      sql.Add(' AND customer_code = ' + QuotedStr(strKodePelanggan));
+
+    sql.Add('  ) zz ');
+    sql.Add('), ');
+
+    sql.Add('FilteredCustomerCount AS (');
+    sql.Add('  SELECT *, COUNT(*) OVER (PARTITION BY customer_code) AS TotalRows, ');
+    sql.Add('  CASE ');
+    sql.Add('    WHEN (COUNT(*) OVER (PARTITION BY customer_code) = 1) ');
+    sql.Add('         AND (MAX(CASE WHEN nomor = 1 THEN saldo_awal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) ');
+    sql.Add('         AND (debet = 0 AND kredit = 0) ');
+    sql.Add('    THEN 0 ELSE 1 ');
+    sql.Add('  END AS KeepCustomer FROM RankedData');
+    sql.Add(') ');
+    sql.Add('SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ');
+    sql.Add('ORDER BY customer_code ASC, tgltrans ASC NULLS FIRST, no_urut ASC;');
      open;
   end;
 

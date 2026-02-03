@@ -293,7 +293,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46021.347759317130000000
+    ReportOptions.LastChange = 46028.252854050900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
@@ -302,16 +302,18 @@ object FKolektifPenjualan: TFKolektifPenjualan
       ''
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '    Line2.Height:=624;'
-      '    Line25.Height:=624;'
-      '    Line29.Height:=624;'
-      '    Line28.Height:=624;'
-      '    Line31.Height:=780;'
-      '    Line26.Height:=790;'
-      '    Line32.Height:=780;'
-      '    Line30.Height:=780;'
-      '    Line33.Height:=604;'
-      '    Line34.Height:=604;'
+      '    Line2.Height:=558;'
+      '    Line25.Height:=558;'
+      '    Line29.Height:=558;'
+      '    Line28.Height:=558;'
+      ' //   Line26.Height:=520;'
+      '    Line24.Height:=712;'
+      '    Line32.Height:=712;'
+      '    Line30.Height:=712;'
+      '    Line31.Height:=712;'
+      '    Line33.Height:=538;'
+      '    Line34.Height:=538;'
+      '    Line35.Height:=558;'
       'end;'
       ''
       'procedure ReportOnStopReport(Sender: TfrxComponent);'
@@ -418,6 +420,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
       'begin'
       ''
       'end.')
+    OnGetValue = ReportGetValue
     OnStopReport = 'ReportOnStopReport'
     Top = 63
     Datasets = <
@@ -445,7 +448,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
+      PaperHeight = 279.400000000000000000
       PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
@@ -659,7 +662,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Width = 109.497011120000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
@@ -700,7 +703,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         end
         object Line26: TfrxLineView
           AllowVectorExport = True
-          Height = 665.952755910000000000
+          Height = 166.299212600000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -808,7 +811,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = 98.076358360000000000
           Width = 187.982057720000000000
           Height = 22.677180000000000000
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime
@@ -829,7 +832,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Top = 73.131476470000000000
           Width = 186.630879470000000000
           Height = 18.897650000000000000
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -967,11 +970,11 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object Memo46: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 152.894736850000000000
+          Left = 149.894736850000000000
           Top = 75.485380550000000000
-          Width = 287.955430060000000000
+          Width = 317.955430060000000000
           Height = 18.897650000000000000
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -986,11 +989,11 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object Memo47: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 152.894736840000000000
+          Left = 149.894736840000000000
           Top = 96.538012130000000000
-          Width = 297.429114270000000000
+          Width = 316.318003160000000000
           Height = 45.213439470000000000
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1005,11 +1008,11 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object Memo48: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 153.947368420000000000
+          Left = 150.947368420000000000
           Top = 143.538012130000000000
-          Width = 303.744903740000000000
+          Width = 315.967125960000000000
           Height = 18.897650000000000000
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1061,7 +1064,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Width = 187.982057720000000000
           Height = 22.677180000000000000
           OnBeforePrint = 'MemPOOnBeforePrint'
-          DataSet = FDataListPenjualan.frxDBDPenjualan
+          DataSet = frxDBDPenjualan
           DataSetName = 'frxDBDPenjualan'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
           DisplayFormat.Kind = fkDateTime
@@ -1343,7 +1346,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         end
         object Line30: TfrxLineView
           AllowVectorExport = True
-          Left = 301.606299212598000000
+          Left = 302.606299210000000000
           Top = 164.875766920000000000
           Height = 48.377952760000000000
           Color = clBlack
@@ -1362,7 +1365,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object Line32: TfrxLineView
           AllowVectorExport = True
           Left = 756.000000000000000000
-          Top = 165.543307086614000000
+          Top = 165.543307090000000000
           Height = 48.377952760000000000
           Color = clBlack
           Frame.Typ = []
@@ -1403,6 +1406,15 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Frame.Typ = []
           Diagonal = True
         end
+        object Line35: TfrxLineView
+          AllowVectorExport = True
+          Left = -0.377952755905512000
+          Top = 164.619356670000000000
+          Height = 48.377952760000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
@@ -1411,13 +1423,13 @@ object FKolektifPenjualan: TFKolektifPenjualan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 295.921460000000000000
+        Height = 295.937007870000000000
         Top = 442.205010000000000000
         Width = 755.906000000000000000
         OnBeforePrint = 'PageFooter1OnBeforePrint'
         object Line7: TfrxLineView
           AllowVectorExport = True
-          Width = 755.905511811024000000
+          Width = 755.905511810000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1608,7 +1620,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           AllowVectorExport = True
           Left = 87.385900000000000000
           Top = 219.212740000000000000
-          Width = 313.700819130000000000
+          Width = 355.605581030000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
@@ -1723,42 +1735,6 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Frame.Typ = []
           Diagonal = True
         end
-        object MemPembulatan: TfrxMemoView
-          Anchors = [fraLeft]
-          AllowVectorExport = True
-          Left = 641.514637300000000000
-          Top = 51.935684340000000000
-          Width = 111.874015750000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          ParentFont = False
-        end
-        object MemHargaJual: TfrxMemoView
-          Anchors = [fraLeft]
-          AllowVectorExport = True
-          Left = 641.847970640000000000
-          Top = -0.300248100000000000
-          Width = 111.835807140000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          ParentFont = False
-        end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
           Left = 311.634920640000000000
@@ -1780,7 +1756,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Anchors = [fraLeft]
           AllowVectorExport = True
           Left = 640.440012870000000000
-          Top = 105.491239900000000000
+          Top = 106.491239900000000000
           Width = 111.874015750000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.n'
@@ -1824,7 +1800,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Anchors = [fraLeft]
           AllowVectorExport = True
           Left = 640.995568420000000000
-          Top = 132.739121980000000000
+          Top = 133.739121980000000000
           Width = 111.874015750000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.n'
@@ -1851,25 +1827,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Anchors = [fraLeft]
           AllowVectorExport = True
           Left = 642.292415080000000000
-          Top = 79.069830640000000000
-          Width = 111.874015750000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          ParentFont = False
-        end
-        object MemDikurangiPotongan: TfrxMemoView
-          Anchors = [fraLeft]
-          AllowVectorExport = True
-          Left = 642.330458690000000000
-          Top = 25.864874340000000000
+          Top = 80.069830640000000000
           Width = 111.874015750000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%2.n'
@@ -1898,6 +1856,99 @@ object FKolektifPenjualan: TFKolektifPenjualan
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBDPenjualan."word_amount"]')
+          ParentFont = False
+        end
+        object signature_name: TfrxMemoView
+          AllowVectorExport = True
+          Left = 505.922233330000000000
+          Top = 243.444496190000000000
+          Width = 223.379406670000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[vsignature_name]')
+          ParentFont = False
+        end
+        object MemTanggalFooter: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 504.333333330000000000
+          Top = 167.318799520000000000
+          Width = 224.363636670000000000
+          Height = 18.897637800000000000
+          DataSet = frxDBDPenjualan
+          DataSetName = 'frxDBDPenjualan'
+          DisplayFormat.FormatStr = 'dd mmmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[vtglFooter]')
+          ParentFont = False
+        end
+        object MemPembulatan: TfrxMemoView
+          Anchors = [fraLeft]
+          AllowVectorExport = True
+          Left = 641.514637300000000000
+          Top = 52.935684340000000000
+          Width = 111.874015750000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          ParentFont = False
+        end
+        object MemDikurangiPotongan: TfrxMemoView
+          Anchors = [fraLeft]
+          AllowVectorExport = True
+          Left = 642.330458690000000000
+          Top = 26.864874340000000000
+          Width = 111.874015750000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
+          ParentFont = False
+        end
+        object MemHargaJual: TfrxMemoView
+          Anchors = [fraLeft]
+          AllowVectorExport = True
+          Left = 641.847970640000000000
+          Top = 0.699751900000000000
+          Width = 111.835807140000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haRight
           ParentFont = False
         end
       end
@@ -1996,9 +2047,9 @@ object FKolektifPenjualan: TFKolektifPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select (SELECT company_name FROM t_company) company_name,(SELECT' +
-        ' city FROM t_company) company_city,a."trans_no", "no_inv_tax", "' +
-        'trans_date",a.po_order, '
+        'select (SELECT company_name FROM t_company) company_name,(select' +
+        ' * from get_user_signature(2)),(SELECT city FROM t_company) comp' +
+        'any_city,a."trans_no", "no_inv_tax", "trans_date",a.po_order, '
       
         'a.tot_before_piece tot_before_piece_master,a.sub_total sub_total' +
         '_master,a.tot_piece_value tot_piece_value_master,a.ppn_value ppn' +

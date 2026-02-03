@@ -39,7 +39,8 @@ uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UInput_um, UNew_Penjualan, UNew_DataPenjualan, UDataModule, UNewDeliveryOrder,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
   U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan,
-  UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank, UPerhitunganAsset;
+  UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank, UPerhitunganAsset,
+  UNew_PO, UbrowseUangMukaDibayarkan;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -50,12 +51,50 @@ end;
 
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 begin
+    if (vpanggil ='pph_po') then
+    begin
+      with FNew_PO do
+      begin
+        Memitempo.Edit;
+        Memitempo['kd_akunpph']:=QDaftar_Perk.fieldbyname('code').AsString;
+        Memitempo.Post;
+      end;
+      QDaftar_Perk.Close;
+    end;
+
     if (vpanggil = 'terima_bank')then
     begin
+      //UANG MUKA
+      if (QDaftar_Perk.FieldByName('code').AsString='2102.08') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
+      begin
+        with FbrowseUangMukaDibayarkan.Qdetail do
+        begin
+          close;
+          sql.clear;
+          sql.text:='SELECT a.no_trans no_trans_down_payment,a.trans_date,'+
+                    'a.grand_tot sisa_uang_muka,'''' customer_head_name,'''' voucher_no,b.customer_name from t_down_payment_sales a '+
+                    'left join t_customer b on b.customer_code=a.customer_code '+
+                    'LEFT JOIN (SELECT cbd.voucher_no,cbd.no_trans_down_payment FROM t_cash_bank_acceptance_down_payment cbd '+
+                    'left join t_cash_bank_acceptance cba on cba.voucher_no=cbd.voucher_no where cba.deleted_at is null) c on c.no_trans_down_payment=a.no_trans '+
+                    'WHERE a.deleted_at is NULL and c.voucher_no is NULL and a.customer_code='+QuotedStr(FDataPenerimaanBank.edKode_Pelanggan.Text);
+          open;
+        end;
+
+        FbrowseUangMukaDibayarkan.vcall:='terima_bank';
+        FbrowseUangMukaDibayarkan.ShowModal;
+      end;
+
+
       FDataPenerimaanBank.MemDetailAkun.edit;
       FDataPenerimaanBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataPenerimaanBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-      FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+      if (QDaftar_Perk.FieldByName('code').AsString='2103.01') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
+      begin
+        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
+      end else begin
+        FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+      end;
+
       FDataPenerimaanBank.MemDetailAkun['debit']:=0;
       FDataPenerimaanBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
       FDataPenerimaanBank.MemDetailAkun['keterangan']:='-';
@@ -71,14 +110,13 @@ begin
       FDataKasKecil.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataKasKecil.MemDetailAkun['kredit']:=0;
       FDataKasKecil.MemDetailAkun['debit']:=0;
-      FDataKasKecil.MemDetailAkun['kd_group_biaya']:='0';
-      FDataKasKecil.MemDetailAkun['nm_group_biaya']:='-';
+      FDataKasKecil.MemDetailAkun['kd_group_biaya']:=SelectRow('SELECT cost_st_id from t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
+      FDataKasKecil.MemDetailAkun['nm_group_biaya']:=SelectRow('SELECT cost_type from t_ak_type_cost a left join t_ak_account b on a.id=b.cost_st_id where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
       FDataKasKecil.MemDetailAkun['keterangan']:='-';
       FDataKasKecil.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataKasKecil.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
-
     if (vpanggil = 'kas_bon')then
     begin
       FDataKasBon.MemDetailAkun.edit;
@@ -86,8 +124,8 @@ begin
       FDataKasBon.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataKasBon.MemDetailAkun['kredit']:=0;
       FDataKasBon.MemDetailAkun['debit']:=0;
-      FDataKasBon.MemDetailAkun['kd_group_biaya']:='0';
-      FDataKasBon.MemDetailAkun['nm_group_biaya']:='-';
+      FDataKasBon.MemDetailAkun['kd_group_biaya']:=SelectRow('SELECT cost_st_id from t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
+      FDataKasBon.MemDetailAkun['nm_group_biaya']:=SelectRow('SELECT cost_type from t_ak_type_cost a left join t_ak_account b on a.id=b.cost_st_id where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
       FDataKasBon.MemDetailAkun['keterangan']:='-';
       FDataKasBon.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataKasBon.MemDetailAkun.post;
@@ -233,38 +271,41 @@ begin
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kredit']:=0;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['debit']:=0;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
-      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
+
     if (vpanggil ='pengajuankeluarkasbank_show_header')then
     begin
       FDataPengajuanPengeluaranKasBank.MemDetailAkun.edit;
       //FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=QDaftar_Perk.fieldbyname('header_code').AsString;
-      //FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-      FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      //FDataPengajuanPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kredit']:=0;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['debit']:=0;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
-      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengajuanPengeluaranKasBank.MemDetailAkun['keterangan']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       //FDataPengajuanPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(FDataPengajuanPengeluaranKasBank.ak_account.Text)+'') ;
       FDataPengajuanPengeluaranKasBank.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
+
+
     if (vpanggil ='keluar_kasbank_show_header')then
     begin
       FDataPengeluaranKasBank.MemDetailAkun.edit;
       //FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=QDaftar_Perk.fieldbyname('header_code').AsString;
-      //FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-      FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
+      FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      //FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('header_name').AsString;
       FDataPengeluaranKasBank.MemDetailAkun['kredit']:=0;
       FDataPengeluaranKasBank.MemDetailAkun['debit']:=0;
       FDataPengeluaranKasBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
-      FDataPengeluaranKasBank.MemDetailAkun['keterangan']:='-';
+      FDataPengeluaranKasBank.MemDetailAkun['keterangan']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       //FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=SelectRow('SELECT code from t_ak_account where code='+QuotedSTR(FDataPengajuanPengeluaranKasBank.ak_account.Text)+'') ;
       FDataPengeluaranKasBank.MemDetailAkun.post;

@@ -218,8 +218,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     end
   end
   object ActMenu: TActionManager
-    Left = 632
-    Top = 32
+    Left = 648
+    Top = 96
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -264,7 +264,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 600
-    Top = 24
+    Top = 88
     PixelsPerInch = 96
     object dxBarManager1Bar3: TdxBar
       Caption = 'Filter'
@@ -281,6 +281,12 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           UserWidth = 196
           Visible = True
           ItemName = 'cbKaresidenan'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 196
+          Visible = True
+          ItemName = 'cbTP'
         end
         item
           UserDefine = [udWidth]
@@ -338,7 +344,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 471
+      DockedLeft = 592
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1177,7 +1183,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       Caption = 'Karesidenan'
       Category = 0
       Hint = 'Karesidenan'
-      Visible = ivAlways
+      Visible = ivNever
       OnChange = cbKaresidenanChange
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
@@ -1568,6 +1574,19 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton7Click
     end
+    object cbTP: TcxBarEditItem
+      Caption = 'TP                 '
+      Category = 0
+      Hint = 'TP                 '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cxBarEditItem12PropertiesButtonClick
+    end
   end
   object DsRekapPenjualanperCustomer: TDataSource
     DataSet = MemTableEh1
@@ -1583,7 +1602,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46020.672080983790000000
+    ReportOptions.LastChange = 46049.920764872690000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1635,20 +1654,32 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
+      ''
       'end;'
       ''
       'procedure Memo36OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      ''
+      '  if <frxDBDatasetLapHarianSisaNota."amount_nota_awal"> = 0 then'
+      '    Memo36.Text := '#39#39
+      '  else'
+      
+        '    Memo36.Text := FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', <frxDBD' +
+        'atasetLapHarianSisaNota."amount_nota_awal">);'
       'end;'
       ''
       'procedure Memo40OnBeforePrint(Sender: TfrxComponent);'
+      'var'
+      '  tglTxt: String;'
+      
+        '  vBayar, vReturn, vUM, vPenjualan, vNotaAwal, vJurnal: Extended' +
+        ';'
+      '  tBayar, tReturn, tUM, tJurnal: TDateTime;    '
       'begin'
       
-        '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND ' +
-        '(<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) AND (<frxDB' +
-        'DatasetLapHarianSisaNota."amount_nota_awal"> = <frxDBDatasetLapH' +
-        'arianSisaNota."amount_bayar">) then'
+        ' { if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND' +
+        ' (<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) AND (<frxD' +
+        'BDatasetLapHarianSisaNota."amount_nota_awal"> = <frxDBDatasetLap' +
+        'HarianSisaNota."amount_bayar">) then'
       '  begin'
       
         '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
@@ -1673,15 +1704,136 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         'arianSisaNota."trans_date_bayar">) + #13#10 + FormatDateTime('#39'dd' +
         '/mm/yyyy'#39',<frxDBDatasetLapHarianSisaNota."trans_date_returns">);'
       '  end;'
+      ''
+      
+        '  if (<frxDBDatasetLapHarianSisaNota."amount_penjualan"> > 0) AN' +
+        'D (<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) AND (<frx' +
+        'DBDatasetLapHarianSisaNota."amount_penjualan"> = <frxDBDatasetLa' +
+        'pHarianSisaNota."amount_bayar">) then'
+      '  begin'
+      
+        '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
+        'ianSisaNota."trans_date_bayar">);'
+      '  end;'
+      ''
+      
+        '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND ' +
+        '(<frxDBDatasetLapHarianSisaNota."amount_uang_muka"> > 0) AND (<f' +
+        'rxDBDatasetLapHarianSisaNota."amount_nota_awal"> = <frxDBDataset' +
+        'LapHarianSisaNota."amount_uang_muka">) then'
+      '  begin'
+      
+        '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
+        'ianSisaNota."trans_date_uang_muka">);'
+      '  end;      '
+      ''
+      
+        '  if (<frxDBDatasetLapHarianSisaNota."amount_penjualan"> > 0) AN' +
+        'D (<frxDBDatasetLapHarianSisaNota."amount_uang_muka"> > 0) AND (' +
+        '<frxDBDatasetLapHarianSisaNota."amount_penjualan"> = <frxDBDatas' +
+        'etLapHarianSisaNota."amount_uang_muka">) then'
+      '  begin'
+      
+        '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
+        'ianSisaNota."trans_date_uang_muka">);'
+      '  end;  }'
+      ''
+      '  vBayar     := <frxDBDatasetLapHarianSisaNota."amount_bayar">;'
+      
+        '  vReturn    := <frxDBDatasetLapHarianSisaNota."amount_returns">' +
+        ';'
+      
+        '  vUM        := <frxDBDatasetLapHarianSisaNota."amount_uang_muka' +
+        '">;'
+      
+        '  vPenjualan := <frxDBDatasetLapHarianSisaNota."amount_penjualan' +
+        '">;'
+      
+        '  vNotaAwal  := <frxDBDatasetLapHarianSisaNota."amount_nota_awal' +
+        '">;'
+      
+        '  vJurnal    := <frxDBDatasetLapHarianSisaNota."amount_jurnal_me' +
+        'morial">;'
+      ''
+      
+        '  tBayar     := <frxDBDatasetLapHarianSisaNota."trans_date_bayar' +
+        '">;'
+      
+        '  tReturn    := <frxDBDatasetLapHarianSisaNota."trans_date_retur' +
+        'ns">;'
+      
+        '  tUM        := <frxDBDatasetLapHarianSisaNota."trans_date_uang_' +
+        'muka">;'
+      
+        '  tJurnal    := <frxDBDatasetLapHarianSisaNota."trans_date_jurna' +
+        'l_memorial">;'
+      ''
+      '  tglTxt := '#39#39';'
+      ''
+      '  // --- 2. Pembayaran ---   '
+      
+        '  if ((vReturn = 0) and (vBayar > 0) and (vNotaAwal = vBayar)) o' +
+        'r'
+      
+        '     ((vPenjualan > 0) and (vBayar > 0) and (vPenjualan = vBayar' +
+        ')) then'
+      '  begin'
+      '    tglTxt := FormatDateTime('#39'dd/mm/yyyy'#39', tBayar);'
+      '  end;'
+      ''
+      '  // --- 3. Returns ---'
+      '  if (vReturn > 0) then'
+      '  begin'
+      '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
+      '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tReturn);'
+      '  end;'
+      ''
+      '  // --- 4. Uang Muka ---   '
+      '  if ((vReturn = 0) and (vUM > 0) and (vNotaAwal = vUM)) or'
+      
+        '     ((vPenjualan > 0) and (vUM > 0) and (vPenjualan = vUM)) the' +
+        'n'
+      '  begin'
+      '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
+      '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tUM);'
+      '  end;'
+      ''
+      '  // --- 5.Jurnal Memorial'
+      '  if (vJurnal <> 0) then'
+      '  begin'
+      '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
+      '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tJurnal);'
+      '  end;'
+      ''
+      '  // --- 6. Hasil Akhir ---'
+      '  Memo40.Text := tglTxt;      '
       'end;'
       ''
       'procedure Memo41OnBeforePrint(Sender: TfrxComponent);'
+      'var'
+      '  displayTxt: String;'
+      '  valBayar, valReturn, valUM, valJurnal: Extended;'
+      ''
       'begin'
+      
+        '  // Ambil nilai dari dataset ke variabel agar script lebih bers' +
+        'ih'
+      '  valBayar  := <frxDBDatasetLapHarianSisaNota."amount_bayar">;'
+      '  valReturn := <frxDBDatasetLapHarianSisaNota."amount_returns">;'
+      
+        '  valUM     := <frxDBDatasetLapHarianSisaNota."amount_uang_muka"' +
+        '>;'
+      
+        '  valJurnal := <frxDBDatasetLapHarianSisaNota."amount_jurnal_mem' +
+        'orial">;'
+      ''
+      '  displayTxt := '#39#39';      '
+      '    '
       '  Memo41.DisplayFormat.FormatStr:='#39'#,#0.00;(#,#0.00);#,#0'#39';'
       '  Memo41.DisplayFormat.Kind:=fkNumeric;'
       
-        '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND ' +
-        '(<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) then'
+        '  {if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND' +
+        ' (<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) then'
       '  begin'
       
         '    Memo41.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39',<frxDBData' +
@@ -1698,6 +1850,16 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       '  end;'
       ''
       
+        '  if (<frxDBDatasetLapHarianSisaNota."amount_uang_muka"> > 0) AN' +
+        'D (<frxDBDatasetLapHarianSisaNota."amount_bayar"> = 0) AND (<frx' +
+        'DBDatasetLapHarianSisaNota."amount_returns"> = 0) then'
+      '  begin'
+      
+        '    Memo41.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39',<frxDBData' +
+        'setLapHarianSisaNota."amount_uang_muka">);'
+      '  end;      '
+      ''
+      
         '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) AND ' +
         '(<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) then'
       '  begin'
@@ -1706,9 +1868,47 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         'tasetLapHarianSisaNota."amount_bayar">) + #13#10 + FormatFloat('#39 +
         '#,#0.00;(#,#0.00);#,#0'#39',<frxDBDatasetLapHarianSisaNota."amount_r' +
         'eturns">);'
+      '  end; }'
+      ''
+      '  // Cek Bayar'
+      '  if valBayar <> 0 then'
+      
+        '    displayTxt := FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', valBayar' +
+        ');'
+      ''
+      '  // Cek Returns'
+      '  if valReturn <> 0 then'
+      '  begin'
+      
+        '    if displayTxt <> '#39#39' then displayTxt := displayTxt + #13#10; ' +
+        '// Tambah baris baru jika sudah ada isi'
+      
+        '    displayTxt := displayTxt + FormatFloat('#39'#,#0.00;(#,#0.00);#,' +
+        '#0'#39', valReturn);'
       '  end;'
       ''
+      '  // Cek Uang Muka'
+      '  if valUM <> 0 then'
+      '  begin'
+      
+        '    if displayTxt <> '#39#39' then displayTxt := displayTxt + #13#10; ' +
+        '           '
+      
+        '    displayTxt := displayTxt +  FormatFloat('#39'#,#0.00;(#,#0.00);#' +
+        ',#0'#39', valUM);'
+      '  end;'
+      '  '
+      '  // Cek Jurnal Memorial'
+      '  if valJurnal <> 0 then'
+      '  begin'
+      '    if displayTxt <> '#39#39' then displayTxt := displayTxt + #13#10;'
+      
+        '    displayTxt := displayTxt + FormatFloat('#39'#,#0.00;(#,#0.00);#,' +
+        '#0'#39', valJurnal);'
+      '  end;'
       ''
+      '  Memo41.Text := displayTxt;      '
+      '      '
       'end;'
       ''
       'procedure Memo35OnAfterData(Sender: TfrxComponent);'
@@ -1749,7 +1949,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'begin'
       
         ' Memo55.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasan' +
-        ');;'
+        ');'
+      
+        '// Memo55.Text := FormatFloat('#39'#,#0;(#,#0);0'#39', Round(TotPelunasa' +
+        'n));'
       'end;'
       ''
       'procedure Memo56OnBeforePrint(Sender: TfrxComponent);'
@@ -1758,10 +1961,61 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'end;'
       ''
       'procedure Memo40OnAfterPrint(Sender: TfrxComponent);'
+      'var'
+      
+        '  isLunasAwal, isLunasJual, adaRetur, adaMemorial, isLunasJualUM' +
+        ', isLunasAwalUM: Boolean;'
       'begin'
-      '  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
+      '  // Ambil nilai ke variabel lokal agar lebih bersih'
+      
+        '  isLunasAwal := (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
+        ' > 0) and'
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_nota_aw' +
+        'al"> = <frxDBDatasetLapHarianSisaNota."amount_bayar">);'
+      ''
+      
+        '  isLunasJual := (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
+        ' > 0) and'
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
+        'an"> = <frxDBDatasetLapHarianSisaNota."amount_bayar">);'
+      ''
+      
+        '  isLunasAwalUM := (<frxDBDatasetLapHarianSisaNota."amount_uang_' +
+        'muka"> > 0) and'
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_nota_aw' +
+        'al"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);'
+      ''
+      
+        '  isLunasJualUM := (<frxDBDatasetLapHarianSisaNota."amount_uang_' +
+        'muka"> > 0) and'
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
+        'an"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);     ' +
+        '                '
+      '  '
+      
+        '  adaRetur    := <frxDBDatasetLapHarianSisaNota."amount_returns"' +
+        '> > 0;'
+      
+        '  adaMemorial := <frxDBDatasetLapHarianSisaNota."amount_jurnal_m' +
+        'emorial"> > 0;'
+      ''
+      
+        '  if isLunasAwal or isLunasJual or adaRetur or adaMemorial or is' +
+        'LunasAwalUM or isLunasJualUM then'
+      '  begin'
+      '    CountPelunasan := CountPelunasan + 1;'
+      '  end;'
+      '{  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
       
         '      (<frxDBDatasetLapHarianSisaNota."amount_nota_awal"> = <frx' +
+        'DBDatasetLapHarianSisaNota."amount_bayar">)) or'
+      '      ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
+      
+        '      (<frxDBDatasetLapHarianSisaNota."amount_penjualan"> = <frx' +
         'DBDatasetLapHarianSisaNota."amount_bayar">)) or'
       '     (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) or'
       
@@ -1769,15 +2023,24 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         ' 0) then'
       '  begin'
       '    CountPelunasan := CountPelunasan + 1;'
-      '  end;'
+      '  end;}'
       'end;'
       ''
       'procedure Memo41OnAfterPrint(Sender: TfrxComponent);'
       'begin'
       
-        '  TotPelunasan:=<frxDBDatasetLapHarianSisaNota."amount_bayar">+<' +
-        'frxDBDatasetLapHarianSisaNota."amount_returns">+<frxDBDatasetLap' +
-        'HarianSisaNota."amount_jurnal_memorial">;'
+        ' // TotPelunasan:=<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
+        '+<frxDBDatasetLapHarianSisaNota."amount_returns">+<frxDBDatasetL' +
+        'apHarianSisaNota."amount_jurnal_memorial">;'
+      
+        '  TotPelunasan :=TotPelunasan+ <frxDBDatasetLapHarianSisaNota."a' +
+        'mount_bayar"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_returns' +
+        '"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_jurnal_' +
+        'memorial">+<frxDBDatasetLapHarianSisaNota."amount_uang_muka">;'
       'end;'
       ''
       'procedure Memo43OnAfterPrint(Sender: TfrxComponent);'
@@ -1790,6 +2053,92 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo57OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       '  Memo57.Text := IntToStr(CountSaldoNota)+'#39' Lembar'#39';'
+      'end;'
+      ''
+      'procedure Memo77OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  Memo77.Text := IntToStr(CountNotaPenjualan+<frxDBDatasetLapHar' +
+        'ianSisaNotaPrev."total_transaksi">)+'#39' Lembar'#39';'
+      'end;'
+      ''
+      'procedure Memo91OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  Memo91.Text := IntToStr(CountPelunasan+<frxDBDatasetLapHarianS' +
+        'isaNotaPrev."count_paid_full">)+'#39' Lembar'#39';'
+      'end;'
+      ''
+      'procedure Memo87OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '   Memo87.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunas' +
+        'an+<frxDBDatasetLapHarianSisaNotaPrev."total_paid_amount">);'
+      'end;'
+      ''
+      'procedure Memo39OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  if <frxDBDatasetLapHarianSisaNota."amount_penjualan"> = 0 then'
+      '    Memo39.Text := '#39#39
+      '  else'
+      
+        '    Memo39.Text := FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', <frxDBD' +
+        'atasetLapHarianSisaNota."amount_penjualan">);'
+      'end;'
+      ''
+      'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure ColumnFooter1OnBeforePrint(Sender: TfrxComponent);'
+      'var'
+      '  IsVisible: Boolean;'
+      'begin'
+      '  IsVisible := MasterData1.RowCount <5;'
+      ''
+      '  Line6.Visible  := IsVisible;'
+      '  Line8.Visible  := IsVisible;'
+      '  Line9.Visible  := IsVisible;'
+      '  Line10.Visible := IsVisible;'
+      '   Line11.Visible := IsVisible;'
+      '    Line12.Visible := IsVisible;'
+      '    Line13.Visible := IsVisible;'
+      '    Line14.Visible := IsVisible;'
+      '    Line15.Visible := IsVisible;'
+      '    Line16.Visible := IsVisible;'
+      '    Line17.Visible := IsVisible;'
+      '  Line18.Visible := IsVisible;'
+      ''
+      ' { if MasterData1.RowCount < 2 then'
+      '  begin'
+      '    Line6 .Visible := False;'
+      '    Line8.Visible := False;'
+      '    Line9.Visible := False;'
+      '    Line10.Visible := False;'
+      '    Line11.Visible := False;'
+      '    Line12.Visible := False;'
+      '    Line13.Visible := False;'
+      '    Line14.Visible := False;'
+      '    Line15.Visible := False;'
+      '    Line16.Visible := False;'
+      '    Line17.Visible := False;'
+      '    Line18.Visible := False;'
+      '  end else'
+      '  begin'
+      '    Line6.Visible := True;'
+      '    Line8.Visible := True;'
+      '    Line9.Visible := True;'
+      '    Line10.Visible := True;'
+      '    Line11.Visible := True;'
+      '    Line12.Visible := True;'
+      '    Line13.Visible := True;'
+      '    Line14.Visible := True;'
+      '    Line15.Visible := True;'
+      '    Line16.Visible := True;'
+      '    Line17.Visible := True;'
+      '    Line18.Visible := True;'
+      '  end; }'
       'end;'
       ''
       'begin'
@@ -1807,6 +2156,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       item
         DataSet = frxDBDatasetLapHarianSisaNota
         DataSetName = 'frxDBDatasetLapHarianSisaNota'
+      end
+      item
+        DataSet = frxDBDatasetLapHarianSisaNotaPrev
+        DataSetName = 'frxDBDatasetLapHarianSisaNotaPrev'
       end>
     Variables = <>
     Style = <>
@@ -1825,6 +2178,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       BottomMargin = 10.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
+      OnBeforePrint = 'Page1OnBeforePrint'
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         FillGap.Top = 0
@@ -1926,7 +2280,6 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Height = 22.230983330000000000
           OnBeforePrint = 'Memo36OnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'amount_nota_awal'
           DataSet = frxDBDatasetLapHarianSisaNota
           DataSetName = 'frxDBDatasetLapHarianSisaNota'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
@@ -1938,8 +2291,6 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Font.Style = []
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDatasetLapHarianSisaNota."amount_nota_awal"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1989,8 +2340,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Left = 645.813648300000000000
           Width = 109.606299210000000000
           Height = 22.230983330000000000
+          OnBeforePrint = 'Memo39OnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'amount_penjualan'
           DataSet = frxDBDatasetLapHarianSisaNota
           DataSetName = 'frxDBDatasetLapHarianSisaNota'
           DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
@@ -2002,8 +2353,6 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Font.Style = []
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDatasetLapHarianSisaNota."amount_penjualan"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2029,6 +2378,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         object Memo41: TfrxMemoView
           AllowVectorExport = True
           Left = 815.166666660000000000
+          Top = -1.821946170000000000
           Width = 108.850393700000000000
           Height = 22.230983330000000000
           OnAfterPrint = 'Memo41OnAfterPrint'
@@ -2112,17 +2462,6 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           ParentFont = False
         end
       end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 430.866420000000000000
-        Width = 1171.654300000000000000
-      end
       object PageHeader1: TfrxPageHeader
         FillType = ftBrush
         FillGap.Top = 0
@@ -2202,7 +2541,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'Karesidenan')
+            'TP')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2467,7 +2806,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 256.629921259843000000
+          Left = 256.629921260000000000
           Top = 129.602350000000000000
           Width = 249.166666660000000000
           Height = 26.666666670000000000
@@ -2777,228 +3116,12 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         Top = 257.008040000000000000
         Width = 1171.654300000000000000
         Condition = 'frxDBDatasetLapHarianSisaNota."code_cust"'
+        KeepTogether = True
+        ReprintOnNewPage = True
+        Stretched = True
         object Line1: TfrxLineView
           AllowVectorExport = True
           Width = 1172.409448818900000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-      end
-      object Footer1: TfrxFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.310143330000000000
-        Top = 325.039580000000000000
-        Width = 1171.654300000000000000
-        object Memo50: TfrxMemoView
-          AllowVectorExport = True
-          Left = 256.629921260000000000
-          Top = 0.079160000000000000
-          Width = 141.420603660000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo50OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'TOTAL')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo52: TfrxMemoView
-          AllowVectorExport = True
-          Left = 396.916666670000000000
-          Top = 0.039580000000000000
-          Width = 108.587270330000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo50OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_nota_awal">,MasterDa' +
-              'ta1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo53: TfrxMemoView
-          AllowVectorExport = True
-          Left = 505.916666670000000000
-          Top = 0.079160000000000000
-          Width = 141.087270330000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo53OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo54: TfrxMemoView
-          AllowVectorExport = True
-          Left = 646.166666660000000000
-          Top = 0.039580000000000000
-          Width = 108.587270330000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo50OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
-              'ta1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo55: TfrxMemoView
-          AllowVectorExport = True
-          Left = 815.073529410000000000
-          Top = 0.039580000000000000
-          Width = 108.515053270000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo55OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo57: TfrxMemoView
-          AllowVectorExport = True
-          Left = 922.750000000000000000
-          Top = 0.079160000000000000
-          Width = 139.420603660000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo57OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo58: TfrxMemoView
-          AllowVectorExport = True
-          Left = 1061.916666660000000000
-          Top = 0.039580000000000000
-          Width = 111.087270330000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo50OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_saldo_nota">,MasterD' +
-              'ata1)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo51: TfrxMemoView
-          AllowVectorExport = True
-          Width = 257.087270330000000000
-          Height = 22.230983330000000000
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'TOTAL')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo56: TfrxMemoView
-          AllowVectorExport = True
-          Left = 756.283464570000000000
-          Top = 0.079160000000000000
-          Width = 59.338582680000000000
-          Height = 22.230983330000000000
-          OnBeforePrint = 'Memo56OnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDatasetLapHarianSisaNota
-          DataSetName = 'frxDBDatasetLapHarianSisaNota'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haCenter
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Width = 1172.409448820000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3011,11 +3134,554 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Top = 408.189240000000000000
+        Height = 70.101257670000000000
+        Top = 362.834880000000000000
         Width = 1171.654300000000000000
-        object Line3: TfrxLineView
+        OnBeforePrint = 'ColumnFooter1OnBeforePrint'
+        object Line4: TfrxLineView
           AllowVectorExport = True
           Width = 1172.409448820000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo55: TfrxMemoView
+          AllowVectorExport = True
+          Left = 815.073529410000000000
+          Top = 2.000000000000000000
+          Width = 108.515053270000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo55OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line3: TfrxLineView
+          AllowVectorExport = True
+          Top = 2.743405220000000000
+          Width = 1172.409448820000000000
+          Visible = False
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Left = 256.629921260000000000
+          Top = 2.909145220000000000
+          Width = 141.420603660000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo50OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo52: TfrxMemoView
+          AllowVectorExport = True
+          Left = 396.916666670000000000
+          Top = 2.869565220000000000
+          Width = 108.587270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_nota_awal">,MasterDa' +
+              'ta1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Left = 505.916666670000000000
+          Top = 2.909145220000000000
+          Width = 141.087270330000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo53OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo54: TfrxMemoView
+          AllowVectorExport = True
+          Left = 646.166666660000000000
+          Top = 2.869565220000000000
+          Width = 108.587270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
+              'ta1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 922.750000000000000000
+          Top = 2.909145220000000000
+          Width = 139.420603660000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo57OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo58: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1061.916666660000000000
+          Top = 2.869565220000000000
+          Width = 111.087270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_saldo_nota">,MasterD' +
+              'ata1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo51: TfrxMemoView
+          AllowVectorExport = True
+          Top = 2.829985220000000000
+          Width = 257.087270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'JUMLAH HARI INI             ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo56: TfrxMemoView
+          AllowVectorExport = True
+          Left = 756.283464570000000000
+          Top = 2.909145220000000000
+          Width = 59.338582680000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo56OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 0.869565220000000000
+          Top = 2.829985220000000000
+          Width = 1172.409448820000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Memo79: TfrxMemoView
+          AllowVectorExport = True
+          Left = 505.916666670000000000
+          Top = 24.826086960000000000
+          Width = 141.087270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDatasetLapHarianSisaNotaPrev."total_transaksi"] Lembar')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo80: TfrxMemoView
+          AllowVectorExport = True
+          Left = 646.166666660000000000
+          Top = 24.786506960000000000
+          Width = 108.587270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo81: TfrxMemoView
+          AllowVectorExport = True
+          Left = 815.073529410000000000
+          Top = 24.786506960000000000
+          Width = 108.515053270000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDatasetLapHarianSisaNotaPrev."total_paid_amount"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo84: TfrxMemoView
+          AllowVectorExport = True
+          Top = 24.746926960000000000
+          Width = 257.087270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'JUMLAH S/D KEMARIN    ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo85: TfrxMemoView
+          AllowVectorExport = True
+          Left = 756.283464570000000000
+          Top = 24.826086960000000000
+          Width = 59.338582680000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDatasetLapHarianSisaNotaPrev."count_paid_full"] Lembar')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Shape3: TfrxShapeView
+          AllowVectorExport = True
+          Left = 257.391304350000000000
+          Top = 24.529535660000000000
+          Width = 248.424512160000000000
+          Height = 45.354330710000000000
+          Fill.BackColor = clBackground
+          Frame.Typ = []
+        end
+        object Shape4: TfrxShapeView
+          AllowVectorExport = True
+          Left = 922.608695650000000000
+          Top = 24.746926960000000000
+          Width = 248.424512160000000000
+          Height = 45.354330710000000000
+          Fill.BackColor = clBackground
+          Frame.Typ = []
+        end
+        object Memo86: TfrxMemoView
+          AllowVectorExport = True
+          Left = 646.166666660000000000
+          Top = 47.395202610000000000
+          Width = 108.587270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
+              'ta1)+<frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount">]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo87: TfrxMemoView
+          AllowVectorExport = True
+          Left = 815.073529410000000000
+          Top = 47.395202610000000000
+          Width = 108.515053270000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo87OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          DisplayFormat.FormatStr = '#,#0.00;(#,#0.00);#,#0'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haRight
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo90: TfrxMemoView
+          AllowVectorExport = True
+          Top = 47.355622610000000000
+          Width = 257.087270330000000000
+          Height = 22.230983330000000000
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'JUMLAH S/D HARI INI      ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo77: TfrxMemoView
+          AllowVectorExport = True
+          Left = 505.916666670000000000
+          Top = 47.434782610000000000
+          Width = 141.087270330000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo77OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo91: TfrxMemoView
+          AllowVectorExport = True
+          Left = 756.283464570000000000
+          Top = 47.434782610000000000
+          Width = 59.338582680000000000
+          Height = 22.230983330000000000
+          OnBeforePrint = 'Memo91OnBeforePrint'
+          DataSet = frxDBDatasetLapHarianSisaNota
+          DataSetName = 'frxDBDatasetLapHarianSisaNota'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 30.614173230000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 256.542757740000000000
+          Width = -0.235712470000000000
+          Height = -102.692405380000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 397.209302330000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 506.046511630000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line11: TfrxLineView
+          AllowVectorExport = True
+          Left = 566.046511630000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line12: TfrxLineView
+          AllowVectorExport = True
+          Left = 645.921259842520000000
+          Width = -0.055667460000000000
+          Height = -102.047244090000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line13: TfrxLineView
+          AllowVectorExport = True
+          Left = 756.279069770000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line14: TfrxLineView
+          AllowVectorExport = True
+          Left = 815.348837210000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line15: TfrxLineView
+          AllowVectorExport = True
+          Left = 922.790697670000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line16: TfrxLineView
+          AllowVectorExport = True
+          Left = 982.325581400000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line17: TfrxLineView
+          AllowVectorExport = True
+          Left = 1061.860465120000000000
+          Width = -0.055667460000000000
+          Height = -102.047244094488000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line18: TfrxLineView
+          AllowVectorExport = True
+          Left = 316.774193540000000000
+          Top = 0.100603870000000000
+          Width = 0.086868180000000000
+          Height = -102.692405380000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3035,6 +3701,11 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'no_nota_penjualan=no_nota_penjualan'
       'amount_penjualan=amount_penjualan'
       'customer_name=customer_name'
+      'code_tp=code_tp'
+      'code_karesidenan=code_karesidenan'
+      'code_kabupaten=code_kabupaten'
+      'code_kecamatan=code_kecamatan'
+      'tp=tp'
       'karesidenan=karesidenan'
       'kabupaten=kabupaten'
       'kecamatan=kecamatan'
@@ -3044,6 +3715,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'trans_date_bayar=trans_date_bayar'
       'trans_date_jurnal_memorial=trans_date_jurnal_memorial'
       'amount_jurnal_memorial=amount_jurnal_memorial'
+      'trans_date_uang_muka=trans_date_uang_muka'
+      'amount_uang_muka=amount_uang_muka'
       'amount_saldo_nota=amount_saldo_nota'
       'no_nota_saldo_nota=no_nota_saldo_nota'
       'tgl_nota_saldo_nota=tgl_nota_saldo_nota')
@@ -3064,10 +3737,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * FROM get_lhsn('#39'2025-10-03'#39',NULL,'#39'TANGERANG'#39','#39'KOTA TANGE' +
-        'RANG'#39','#39'Karawaci'#39')')
-    Left = 600
-    Top = 240
+        'SELECT * FROM get_lhsn('#39'2026-01-15'#39',NULL,'#39#39','#39'3375'#39','#39'337504'#39','#39'PKL' +
+        #39')')
+    Left = 440
+    Top = 208
   end
   object MemTableEh1: TMemTableEh
     Active = True
@@ -3255,5 +3928,26 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PDFVersion = pv17
     Left = 360
     Top = 288
+  end
+  object QReportPrev: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT * FROM get_lhsn_weekly_prev('#39'2026-01-18'#39','#39'331513'#39')')
+    Left = 280
+    Top = 240
+  end
+  object frxDBDatasetLapHarianSisaNotaPrev: TfrxDBDataset
+    UserName = 'frxDBDatasetLapHarianSisaNotaPrev'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'total_transaksi=total_transaksi'
+      'grand_total_amount=grand_total_amount'
+      'count_paid_full=count_paid_full'
+      'total_paid_amount=total_paid_amount')
+    DataSet = QReportPrev
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 176
+    Top = 254
   end
 end

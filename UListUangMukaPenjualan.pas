@@ -129,6 +129,7 @@ end;
 procedure TFListUangMukaPenjualan.ActROExecute(Sender: TObject);
 var month,year:String;
 begin
+  DBGrid.SearchPanel.SearchingText:='';
   year :=FormatDateTime('yyyy', NOW());
   month :=FormatDateTime('m', NOW());
   edTahun.Text:=(year);
@@ -138,6 +139,7 @@ end;
 
 procedure TFListUangMukaPenjualan.ActSearchClick(Sender: TObject);
 begin
+  DBGrid.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -182,6 +184,7 @@ end;
 
 procedure TFListUangMukaPenjualan.FormShow(Sender: TObject);
 begin
+  DBGrid.SearchPanel.SearchingText:='';
   ActROExecute(sender);
   FillSBUBarCombo(cbSBU);
 end;

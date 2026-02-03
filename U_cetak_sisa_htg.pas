@@ -108,10 +108,23 @@ type
     QCetakSisaHutangh3: TFloatField;
     QCetakSisaHutangtot_rcn: TFloatField;
     QCetakSisaHutanghtg_blm_jatuh_tempo: TFloatField;
+    QCetakRincianFaktur: TUniQuery;
+    frxDBRincianFaktur: TfrxDBDataset;
+    dsCetakRincianFaktur: TDataSource;
+    QCetakRincianFaktursupplier_code: TStringField;
+    QCetakRincianFaktursupplier_name: TStringField;
+    QCetakRincianFakturtrans_no: TMemoField;
+    QCetakRincianFakturfaktur_no: TMemoField;
+    QCetakRincianFakturtrans_date: TDateField;
+    QCetakRincianFakturdue_date: TDateField;
+    QCetakRincianFakturdebt_amount: TFloatField;
+    QCetakRincianFakturpaid_amount: TFloatField;
+    QCetakRincianFaktursisa_hutang: TFloatField;
     procedure FormShow(Sender: TObject);
     procedure Jenis_HutangChange(Sender: TObject);
     procedure dxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure DBGridSisaHutangDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -128,7 +141,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule;
+uses UDataModule, UMy_Function, UHomeLogin;
 
 
 procedure TF_cetak_sisa_htg.Jenis_HutangChange(Sender: TObject);
@@ -165,6 +178,70 @@ begin
    begin
       Jenis_Hutang.Items.Add(Dm.Qtemp.FieldByName('type').AsString);
       Dm.Qtemp.Next;
+   end;
+end;
+
+procedure TF_cetak_sisa_htg.DBGridSisaHutangDblClick(Sender: TObject);
+begin
+  with QTgl_hutang do
+    begin
+        close;
+        sql.Clear;
+        sql.Add('select * from t_tmpsyst');
+        open;
+    end;
+    tgl_htg:=QTgl_hutang.FieldByName('debt_date').asdatetime;
+
+  with QCetakRincianFaktur do
+  begin
+     close;
+     sql.clear;
+     sql.Add(' SELECT *,(debt_amount-paid_amount) as sisa_hutang from ('+
+             ' SELECT a.supplier_code, supplier_name, trans_no, faktur_no, '+
+             ' trans_date, due_date,debt_amount, COALESCE(paid_amount, 0) as paid_amount '+
+             ' from t_supplier a '+
+             ' LEFT JOIN ( SELECT faktur_no as trans_no, date as trans_date, faktur_no, '+
+             ' faktur_no as sj_no, date as faktur_date, date+30 as due_date, debt_type as account_code, '+
+             ' debt_amount,''saldo_awal'' as "source"   from t_initial_balance_debt_det '+
+             ' where faktur_no is not null union all '+
+             ' SELECT trans_no, trans_date, faktur_no, sj_no, faktur_date, '+
+             ' faktur_date+due_date as due_date, account_code, debt_amount, ''transaksi'' as "source"  '+
+             ' from t_purchase_invoice where trans_date '+
+             ' between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue-1))+') inv '+
+             ' on a.account_code=inv.account_code '+
+             ' LEFT JOIN (SELECT supplier_code, invoice_no, paid_amount from '+
+             ' t_cash_bank_expenditure_payable '+
+             ' union all '+
+             ' SELECT supplier_code, faktur_no as invoice_no, total_price as paid_amount '+
+             ' from t_purchase_return '+
+             ' )lns on inv.trans_no=lns.invoice_no '+
+             ' where a.supplier_code='+QuotedStr(MemSisaHutang['principle_code'])+' )aa '+
+             ' where (debt_amount-paid_amount)<>0 ');
+     open;
+  end;
+
+  if QCetakRincianFaktur.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+  if QCetakRincianFaktur.RecordCount<>0 then
+  begin
+     cLocation := ExtractFilePath(Application.ExeName);
+     frxReport2.LoadFromFile(cLocation +'report/Rincian_Sisa_Hutang'+'.fr3');
+     frxReport2.ReportOptions.Name := 'Lap. Detail Sisa Hutang';
+     with frxReport2.ScriptText do
+     begin
+      clear;
+      add('var supp , kodesup, tempo,prsh : string;');
+      add('begin');
+      Add('tempo:='''+'PER. TGL '+formatdatetime('dd/mm/yyyy',tgl_htg)+' S/D '+formatdatetime('dd/mm/yyyy',dp1.EditValue-1)+''' ;' );
+      Add('kodesup:='''+UpperCase(QCetakRincianFaktur.FieldByName('supplier_code').AsString)+ ''' ;' );
+      Add('supp:='''+UpperCase(QCetakRincianFaktur.FieldByName('supplier_name').AsString)+ ''' ;' );
+      Add('prsh:='''+UpperCase(FHomeLogin.vKodePRSH)+ ''' ;' );
+      add('end.');
+     end;
+     frxReport2.ShowReport();
    end;
 end;
 
@@ -256,7 +333,7 @@ begin
                       //--)x  group by kodesup)debit_do on a.supplier_code=debit_do.kodesup
                       ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup '+
 
-                      'left join (select * from t_initial_balance_debt where debt_type='+Quotedstr(vkd_jenis_hutang)+' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj)hutang on supp.principle_code=hutang.kodesup '+
+                      'left join (select * from t_initial_balance_debt where left(debt_type,7)='+Quotedstr(vkd_jenis_hutang)+' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj)hutang on supp.principle_code=hutang.kodesup '+
                       'left join (select kodesup,sum(sisa_hutang)as sisa_hutang from '+
 
                       '(SELECT DISTINCT kodesup,SUM ( jumlah ) - SUM ( nil_retur )-sum(pot) - SUM ( bayar ) - SUM ( um ) AS sisa_hutang FROM '+
@@ -749,7 +826,7 @@ begin
                       //--)x  group by kodesup)debit_do on a.supplier_code=debit_do.kodesup
                       ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup '+
 
-                      'left join (select * from t_initial_balance_debt where debt_type='+Quotedstr(vkd_jenis_hutang)+' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj)hutang on supp.principle_code=hutang.kodesup '+
+                      'left join (select * from t_initial_balance_debt where left(debt_type,7)='+Quotedstr(vkd_jenis_hutang)+' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj)hutang on supp.principle_code=hutang.kodesup '+
                       'left join (select kodesup,sum(sisa_hutang)as sisa_hutang from '+
 
                       '(SELECT DISTINCT kodesup,SUM ( jumlah ) - SUM ( nil_retur )-sum(pot) - SUM ( bayar ) - SUM ( um ) AS sisa_hutang FROM '+

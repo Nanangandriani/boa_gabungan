@@ -132,7 +132,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_sales_returns_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edNoTrans.Text) ;
+    sql.Text:='UPDATE t_sales_returns_customer SET deleted_at=NOW() where trans_no ='+QuotedStr(edNoTrans.Text) ;
     ExecSQL;
   end;
 

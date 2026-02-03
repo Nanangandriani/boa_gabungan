@@ -310,13 +310,13 @@ var
   I, J: Integer;
   R, C: Integer;
 begin
-  // Coba buat objek Excel
+
   ExcelApp := CreateOleObject('Excel.Application');
   ExcelApp.Visible := True;
   ExcelApp.Workbooks.Add;
   ExcelApp.ActiveWorkBook.WorkSheets[1].Activate;
 
-  // Header (Ambil dari Field Names)
+
   C := 1;
   for I := 0 to DataSet.FieldCount - 1 do
   begin
@@ -324,21 +324,20 @@ begin
     Inc(C);
   end;
 
-  // Data (Loop melalui DataSet)
-  R := 2; // Mulai dari baris ke-2
-  DataSet.DisableControls; // Agar lebih cepat saat loop
+
+  R := 2;
+  DataSet.DisableControls;
   try
     DataSet.First;
-    while not DataSet.EOF do // <-- Loop ini melalui data, bukan Grid baris
+    while not DataSet.EOF do
     begin
-      // ... Tulis sel ke Excel
       DataSet.Next;
     end;
   finally
     DataSet.EnableControls;
   end;
 
-  // Bersihkan dan tampilkan
+
   ExcelApp.Range['A:A'].Select;
   ExcelApp.ActiveWindow.FreezePanes := True;
 end;
@@ -514,8 +513,6 @@ begin
             dm.Qtemp.Next;
           end;
 
-
-
           with dm.Qtemp do
           begin
             close;
@@ -546,7 +543,7 @@ begin
           i:=1;
           while not dm.Qtemp.Eof do
           begin
-             scExcelExport1.ExcelWorkSheet.Range[cell[i]+'7',cell[i]+'7'].value2:=dm.Qtemp.FieldByName('item_code').AsString  ;
+              .ExcelWorkSheet.Range[cell[i]+'7',cell[i]+'7'].value2:=dm.Qtemp.FieldByName('item_code').AsString  ;
              scExcelExport1.ExcelWorkSheet.Range[cell[i]+'7',cell[i+1]+'7'].Merge(true);
              scExcelExport1.ExcelWorkSheet.Range[cell[i]+'7',cell[i]+'7'].Font.Bold:=True;
              scExcelExport1.ExcelWorkSheet.Range[cell[i]+'7',cell[i]+'7'].HorizontalAlignment := haCenter;

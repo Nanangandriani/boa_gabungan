@@ -13,6 +13,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object dxRibbon1: TdxRibbon
     Left = 0
@@ -25,6 +26,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 990
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -218,6 +220,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'total'
@@ -227,101 +230,112 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'b1'
+        Footers = <>
+        Title.Caption = 'Gaji'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b2'
         Footers = <>
         Title.Caption = 'Sumbangan'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'b2'
+        FieldName = 'b3'
+        Footers = <>
+        Title.Caption = 'Angkutan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b4'
+        Footers = <>
+        Title.Caption = 'Distribusi'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b5'
+        Footers = <>
+        Title.Caption = 'MR Kendaraan'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b6'
+        Footers = <>
+        Title.Caption = 'Promosi'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b7'
+        Footers = <>
+        Title.Caption = 'Promosi'
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'b8'
         Footers = <>
         Title.Caption = 'Perjalanan Dinas'
         Width = 100
       end
       item
         CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b3'
-        Footers = <>
-        Title.Caption = 'Alat Kantor'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b4'
-        Footers = <>
-        Title.Caption = 'Perlengkapan Dan Bahan Penolong'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b5'
-        Footers = <>
-        Title.Caption = 'Alat Produksi'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b6'
-        Footers = <>
-        Title.Caption = 'M/R Mesin Dan Alat'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b7'
-        Footers = <>
-        Title.Caption = 'M/R Kendaraan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'b8'
-        Footers = <>
-        Title.Caption = 'M/R Gedung'
-        Width = 100
-      end
-      item
-        CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'b9'
         Footers = <>
-        Title.Caption = 'Bahan Bakar'
+        Title.Caption = 'Alat Tulis dan Foto Copy'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'b10'
         Footers = <>
-        Title.Caption = 'Angkut Pembelian'
+        Title.Caption = 'Adm dan Umum'
         Width = 100
       end
       item
         CellButtons = <>
+        DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
         FieldName = 'b11'
         Footers = <>
-        Title.Caption = 'Keperluan Pabrik'
+        Title.Caption = 'Penjualan Lainnya'
         Width = 100
       end>
     object RowDetailData: TRowDetailPanelControlEh
@@ -1459,7 +1473,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       Category = 0
       Hint = 'Kode Akun         : '
       Visible = ivAlways
-      Text = '1112'
+      Text = '1101.02'
     end
     object dxBarEdit3: TdxBarEdit
       Caption = 'Nama Akun    :   '
@@ -1783,12 +1797,12 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 45664.437952870400000000
+    ReportOptions.LastChange = 45677.066849178200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo21OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '                  '
+      ''
       'end;'
       ''
       'begin'
@@ -1798,12 +1812,12 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Top = 91
     Datasets = <
       item
-        DataSet = frxDBDataset1
-        DataSetName = 'frxDBDataset1'
-      end
-      item
         DataSet = frxDBDatasetPers
         DataSetName = 'frxDBDatasetPers'
+      end
+      item
+        DataSet = frxDBDataset_Biaya_Penjualan
+        DataSetName = 'frxDBDataset_Biaya_Penjualan'
       end>
     Variables = <>
     Style = <>
@@ -1841,7 +1855,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Top = 12.094488188976400000
+          Top = 12.094488190000000000
           Width = 1247.244094490000000000
           Height = 48.236240000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1853,7 +1867,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           HAlign = haCenter
           Memo.UTF8W = (
             'IKHTISAR PENGGUNAAN DANA KAS KECIL '
-            'BIAYA OVER HEAD PABRIK')
+            'BIAYA PENJUALAN')
           ParentFont = False
         end
         object SysMemo8: TfrxSysMemoView
@@ -1923,7 +1937,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'NO.')
+            'No.')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1941,7 +1955,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'PELAKU')
+            'Pelaku')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1967,7 +1981,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           AllowVectorExport = True
           Left = 1133.314960630000000000
           Top = 114.133858270000000000
-          Width = 75.590551181102400000
+          Width = 75.590551180000000000
           Height = 56.700787400000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1977,7 +1991,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Keperluan Pabrik')
+            'Penjualan Lainnya')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2049,13 +2063,13 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Sumbangan')
+            'Gaji')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 452.409448818898000000
+          Left = 452.409448820000000000
           Top = 115.133858270000000000
           Width = 75.590551180000000000
           Height = 55.700787400000000000
@@ -2067,7 +2081,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Perjalanan Dinas')
+            'Sumbangan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2085,7 +2099,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Perlengkapan Dan Bahan Penolong')
+            'Distribusi')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2103,16 +2117,16 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Alat Produksi')
+            'MR Kendaraan')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
           Left = 756.637795280000000000
-          Top = 114.566929130000000000
+          Top = 144.566929130000000000
           Width = 75.590551180000000000
-          Height = 56.267716540000000000
+          Height = 26.267716540000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2120,17 +2134,15 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight]
           HAlign = haCenter
-          Memo.UTF8W = (
-            'M/R Mesin Dan Alat')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 831.897637800000000000
-          Top = 115.511811020000000000
+          Top = 144.511811020000000000
           Width = 75.590551180000000000
-          Height = 55.322834650000000000
+          Height = 26.322834650000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2138,8 +2150,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight]
           HAlign = haCenter
-          Memo.UTF8W = (
-            'M/R Kendaraan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2157,7 +2167,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'M/R Gedung')
+            'Perjalanan Dinas')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2175,7 +2185,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Bahan Bakar')
+            'Alat Tulis dan Foto Copy')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2183,7 +2193,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           AllowVectorExport = True
           Left = 1058.724409450000000000
           Top = 114.511811020000000000
-          Width = 75.590551181102400000
+          Width = 75.590551180000000000
           Height = 56.322834650000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2193,7 +2203,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Angkut Pembelian')
+            'Adm dan Umum')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2211,7 +2221,25 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Alat Kantor')
+            'Angkutan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo67: TfrxMemoView
+          AllowVectorExport = True
+          Left = 757.000000000000000000
+          Top = 116.102350000000000000
+          Width = 150.181102360000000000
+          Height = 28.267716540000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Promosi')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2823,12 +2851,12 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 45664.437952870400000000
+    ReportOptions.LastChange = 46024.088284456000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo21OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '                  '
+      ''
       'end;'
       ''
       'begin'
@@ -2838,12 +2866,12 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Top = 291
     Datasets = <
       item
-        DataSet = frxDBDataset_Biaya_Penjualan
-        DataSetName = 'frxDBDataset_Biaya_Penjualan'
-      end
-      item
         DataSet = frxDBDatasetPers
         DataSetName = 'frxDBDatasetPers'
+      end
+      item
+        DataSet = frxDBDataset_Biaya_Penjualan
+        DataSetName = 'frxDBDataset_Biaya_Penjualan'
       end>
     Variables = <>
     Style = <>
@@ -2881,7 +2909,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Top = 12.094488188976400000
+          Top = 12.094488190000000000
           Width = 1247.244094490000000000
           Height = 48.236240000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2893,7 +2921,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           HAlign = haCenter
           Memo.UTF8W = (
             'IKHTISAR PENGGUNAAN DANA KAS KECIL '
-            'BIAYA OVER HEAD PABRIK')
+            'BIAYA PENJUALAN')
           ParentFont = False
         end
         object SysMemo8: TfrxSysMemoView
@@ -2963,7 +2991,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'NO.')
+            'No.')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2981,7 +3009,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'PELAKU')
+            'Pelaku')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3007,7 +3035,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           AllowVectorExport = True
           Left = 1133.314960630000000000
           Top = 114.133858270000000000
-          Width = 75.590551181102400000
+          Width = 75.590551180000000000
           Height = 56.700787400000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3017,7 +3045,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'Keperluan Pabrik')
+            'Penjualan Lainnya')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3089,13 +3117,13 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Sumbangan')
+            'Gaji')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 452.409448818898000000
+          Left = 452.409448820000000000
           Top = 115.133858270000000000
           Width = 75.590551180000000000
           Height = 55.700787400000000000
@@ -3107,7 +3135,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Perjalanan Dinas')
+            'Sumbangan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3125,7 +3153,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Perlengkapan Dan Bahan Penolong')
+            'Distribusi')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3143,16 +3171,16 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Alat Produksi')
+            'MR Kendaraan')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
           Left = 756.637795280000000000
-          Top = 114.566929130000000000
+          Top = 144.566929130000000000
           Width = 75.590551180000000000
-          Height = 56.267716540000000000
+          Height = 26.267716540000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3160,17 +3188,15 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight]
           HAlign = haCenter
-          Memo.UTF8W = (
-            'M/R Mesin Dan Alat')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 831.897637800000000000
-          Top = 115.511811020000000000
+          Top = 144.511811020000000000
           Width = 75.590551180000000000
-          Height = 55.322834650000000000
+          Height = 26.322834650000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3178,8 +3204,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight]
           HAlign = haCenter
-          Memo.UTF8W = (
-            'M/R Kendaraan')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3197,7 +3221,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'M/R Gedung')
+            'Perjalanan Dinas')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3215,7 +3239,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Bahan Bakar')
+            'Alat Tulis dan Foto Copy')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3223,7 +3247,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           AllowVectorExport = True
           Left = 1058.724409450000000000
           Top = 114.511811020000000000
-          Width = 75.590551181102400000
+          Width = 75.590551180000000000
           Height = 56.322834650000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3233,7 +3257,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Angkut Pembelian')
+            'Adm dan Umum')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3251,7 +3275,25 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
-            'Alat Kantor')
+            'Angkutan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo67: TfrxMemoView
+          AllowVectorExport = True
+          Left = 757.000000000000000000
+          Top = 116.102350000000000000
+          Width = 150.181102360000000000
+          Height = 28.267716540000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Promosi')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3266,6 +3308,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         Height = 24.692779130000000000
         Top = 249.448980000000000000
         Width = 1209.449600000000000000
+        DataSet = frxDBDataset_Biaya_Penjualan
+        DataSetName = 'frxDBDataset_Biaya_Penjualan'
         RowCount = 0
         object Memo10: TfrxMemoView
           AllowVectorExport = True
@@ -3288,6 +3332,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 87.307086610000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'actors_name'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -3295,7 +3342,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."actors_name"]')
+            '[frxDBDataset_Biaya_Penjualan."actors_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3305,6 +3352,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'b4'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3315,7 +3365,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b4"]')
+            '[frxDBDataset_Biaya_Penjualan."b4"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3326,6 +3376,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'total'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3336,16 +3389,19 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."total"]')
+            '[frxDBDataset_Biaya_Penjualan."total"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 116.787401574803000000
-          Width = 75.590551181102400000
+          Left = 116.787401570000000000
+          Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'voucher_no'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -3354,7 +3410,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."voucher_no"]')
+            '[frxDBDataset_Biaya_Penjualan."voucher_no"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3364,6 +3420,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3373,8 +3431,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDataset1."b7"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3401,6 +3457,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
+          DataField = 'b5'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3411,7 +3470,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b5"]')
+            '[frxDBDataset_Biaya_Penjualan."b5"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3421,6 +3480,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3431,17 +3492,18 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b10"]')
+            '[frxDBDataset_Biaya_Penjualan."b9"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Left = 1134.314960630000000000
-          Top = 0.459183330000000000
           Width = 74.923884510000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3452,7 +3514,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b11"]')
+            '[frxDBDataset_Biaya_Penjualan."b10"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3462,6 +3524,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 111.629921260000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'description'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -3470,7 +3535,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."description"]')
+            '[frxDBDataset_Biaya_Penjualan."description"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3480,6 +3545,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'b1'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3490,7 +3558,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b1"]')
+            '[frxDBDataset_Biaya_Penjualan."b1"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3500,6 +3568,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'b2'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3510,7 +3581,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b2"]')
+            '[frxDBDataset_Biaya_Penjualan."b2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3521,6 +3592,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
+          DataField = 'b6'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3531,7 +3605,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b6"]')
+            '[frxDBDataset_Biaya_Penjualan."b6"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3541,6 +3615,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 76.257217840000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'b3'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3551,7 +3628,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b3"]')
+            '[frxDBDataset_Biaya_Penjualan."b3"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3561,6 +3638,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 76.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3571,17 +3650,18 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b8"]')
+            '[frxDBDataset_Biaya_Penjualan."b7"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 984.417322830000000000
-          Top = 0.333333330000000000
           Width = 73.257217850000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -3592,7 +3672,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b9"]')
+            '[frxDBDataset_Biaya_Penjualan."b8"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3622,7 +3702,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b11">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b10">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3657,7 +3737,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."total">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."total">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3676,7 +3756,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b1">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b1">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3695,7 +3775,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b2">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b2">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3714,7 +3794,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b4">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b4">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3733,13 +3813,13 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b5">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b5">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 756.637795280000000000
+          Left = 757.304461950000000000
           Width = 74.590551180000000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '%2.2n'
@@ -3752,7 +3832,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b6">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b6">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3771,7 +3851,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b7">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b7">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3790,7 +3870,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b8">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b7">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3809,7 +3889,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b9">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b8">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3828,7 +3908,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b10">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b9">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3847,7 +3927,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b3">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b3">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3877,32 +3957,29 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     DataSet = QKasKecil_BiayaPenjualan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 808
-    Top = 232
+    Left = 744
+    Top = 224
   end
   object QKasKecil_BiayaPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
         'select a.actors_name,a.voucher_no,a.description,a."name",b.total' +
-        ','
-      '(case when b1.amount is null then 0 else b1.amount end)b1,'
-      '(case when b2.amount is null then 0 else b2.amount end)b2,  '
-      '(case when b3.amount is null then 0 else b3.amount end)b3,'
-      '(case when b4.amount is null then 0 else b4.amount end)b4,'
-      '(case when b5.amount is null then 0 else b5.amount end)b5, '
-      '(case when b6.amount is null then 0 else b6.amount end)b6,'
-      '(case when b7.amount is null then 0 else b7.amount end)b7,'
-      '(case when b8.amount is null then 0 else b8.amount end)b8,'
-      '(case when b9.amount is null then 0 else b9.amount end)b9,'
-      '(case when b10.amount is null then 0 else b10.amount end)b10,'
-      '(case when b11.amount is null then 0 else b11.amount end)b11 '
-      'from '
-      
-        '(select  DISTINCT a.voucher_no from t_petty_cash a INNER JOIN t_' +
-        'petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date b' +
-        'etween '#39'2025-01-01'#39' and '#39'2025-01-02'#39' and code_account='#39'1112'#39'  an' +
-        'd position='#39'K'#39')xx '
+        ', (case when b1.amount is null then 0 else b1.amount end)b1, (ca' +
+        'se when b2.amount is null then 0 else b2.amount end)b2, (case wh' +
+        'en b3.amount is null then 0 else b3.amount end)b3, (case when b4' +
+        '.amount is null then 0 else b4.amount end)b4, (case when b5.amou' +
+        'nt is null then 0 else b5.amount end)b5, (case when b6.amount is' +
+        ' null then 0 else b6.amount end)b6, (case when b7.amount is null' +
+        ' then 0 else b7.amount end)b7, (case when b8.amount is null then' +
+        ' 0 else b8.amount end)b8, (case when b9.amount is null then 0 el' +
+        'se b9.amount end)b9, (case when b10.amount is null then 0 else b' +
+        '10.amount end)b10, (case when b11.amount is null then 0 else b11' +
+        '.amount end)b11  from (select  DISTINCT a.voucher_no from t_pett' +
+        'y_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher' +
+        '_no where trans_date between '#39'2025-10-01'#39' and '#39'2025-10-07'#39' and c' +
+        'ode_account='#39'1101.02'#39'  and position='#39'K'#39')xx '
+      ''
       
         'left join  (select distinct a.actors_name,a.voucher_no,a.code_ac' +
         'count,a.trans_date,a.description,a.order_no,b.code,c."name" from' +
@@ -3910,110 +3987,178 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         '.code_account,a.order_no,a.actors_code from t_petty_cash a INNER' +
         ' JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no) a,t_ak_ac' +
         'count b,t_cost_actors c where a.code_account=b.code and a.actors' +
-        '_code=c.code and b.type_id=3 and trans_date between '#39'2025-01-01'#39 +
-        ' and '#39'2025-01-02'#39' order by voucher_no)a on a.voucher_no=xx.vouch' +
-        'er_no  '
+        '_code=c.code and b.type_id=4 and trans_date between '#39'2025-10-01'#39 +
+        ' and '#39'2025-10-07'#39' order by voucher_no)a on a.voucher_no=xx.vouch' +
+        'er_no '
+      ''
       
         'left join (select voucher_no,a.code_account,a."position",sum(amo' +
         'unt)as total from (select a.voucher_no,b.code_account,b."positio' +
         'n",a.amount FROM t_petty_cash a INNER JOIN t_petty_cash_det b ON' +
         ' a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account,' +
         'b."position") a,t_ak_account b where a.code_account=b.code and b' +
-        '.type_id=3 and a."position"='#39'D'#39'  group by voucher_no,a.code_acco' +
+        '.type_id=4 and a."position"='#39'D'#39'  group by voucher_no,a.code_acco' +
         'unt,a."position" order by voucher_no)b on a.voucher_no=b.voucher' +
         '_no '
-      ' '
+      ''
       
         'left join (select voucher_no,amount from(SELECT a.voucher_no,a.a' +
         'mount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cash' +
         '_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code' +
         '_account)a,t_ak_account b where a.code_account=b.code and b.type' +
-        '_id=3 and b.category_code='#39'SBG1'#39')b1 on a.voucher_no=b1.voucher_n' +
+        '_id=4 and b.category_code='#39'SBG1'#39')b1 on a.voucher_no=b1.voucher_n' +
         'o '
-      ' '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'PD1'#39')b2 on a.voucher_no=b2.voucher_n' +
-        'o'
-      '    '
+        'e_id=4 and b.category_code='#39'PD1'#39')b2 on a.voucher_no=b2.voucher_n' +
+        'o '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'MRA1'#39')b3 on a.voucher_no=b3.voucher_' +
+        'e_id=4 and b.category_code='#39'MRA1'#39')b3 on a.voucher_no=b3.voucher_' +
         'no '
-      '   '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account) a,t_ak_account b where a.code_account=b.code and b.ty' +
-        'pe_id=3 and b.category_code='#39'PBP'#39')b4 on a.voucher_no=b4.voucher_' +
-        'no'
-      '    '
+        'pe_id=4 and b.category_code='#39'PBP'#39')b4 on a.voucher_no=b4.voucher_' +
+        'no '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'ALP'#39')b5 on a.voucher_no=b5.voucher_n' +
-        'o'
-      '    '
-      
-        'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
-        'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
-        'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
-        'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'MRM'#39')b6 on a.voucher_no=b6.voucher_n' +
+        'e_id=4 and b.category_code='#39'ALP'#39')b5 on a.voucher_no=b5.voucher_n' +
         'o '
-      '    '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'MR1'#39')b7 on a.voucher_no=b7.voucher_n' +
-        'o'
-      '     '
-      
-        'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
-        'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
-        'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
-        'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'MG1'#39')b8 on a.voucher_no=b8.voucher_n' +
+        'e_id=4 and b.category_code='#39'MRM'#39')b6 on a.voucher_no=b6.voucher_n' +
         'o '
-      '    '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'BBM'#39')b9 on a.voucher_no=b9.voucher_n' +
-        'o'
-      '     '
+        'e_id=4 and b.category_code='#39'MR1'#39')b7 on a.voucher_no=b7.voucher_n' +
+        'o '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
-        'e_id=3 and b.category_code='#39'AKP'#39')b10 on a.voucher_no=b10.voucher' +
-        '_no'
-      '   '
+        'e_id=4 and b.category_code='#39'MG1'#39')b8 on a.voucher_no=b8.voucher_n' +
+        'o '
+      ''
+      
+        'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
+        'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
+        'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
+        'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
+        'e_id=4 and b.category_code='#39'BBM'#39')b9 on a.voucher_no=b9.voucher_n' +
+        'o '
+      ''
+      
+        'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
+        'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
+        'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
+        'e_account)a,t_ak_account b where a.code_account=b.code and b.typ' +
+        'e_id=4 and b.category_code='#39'AKP'#39')b10 on a.voucher_no=b10.voucher' +
+        '_no '
+      ''
       
         'left join (select voucher_no,amount from (SELECT a.voucher_no,a.' +
         'amount,b.code_account FROM t_petty_cash a INNER JOIN t_petty_cas' +
         'h_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.cod' +
         'e_account) a,t_ak_account b where a.code_account=b.code and b.ty' +
-        'pe_id=3 and b.category_code='#39'KPP'#39')b11 on a.voucher_no=b11.vouche' +
-        'r_no   '
-      
-        'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
-        'o,a.order_no;')
+        'pe_id=4 and b.category_code='#39'KPP'#39')b11 on a.voucher_no=b11.vouche' +
+        'r_no where a.voucher_no is not null order by a.trans_date,a.vouc' +
+        'her_no,a.order_no')
+    Active = True
     Left = 672
     Top = 232
+    object QKasKecil_BiayaPenjualanactors_name: TStringField
+      FieldName = 'actors_name'
+      ReadOnly = True
+      Size = 255
+    end
+    object QKasKecil_BiayaPenjualanvoucher_no: TStringField
+      FieldName = 'voucher_no'
+      ReadOnly = True
+      Size = 100
+    end
+    object QKasKecil_BiayaPenjualandescription: TStringField
+      FieldName = 'description'
+      ReadOnly = True
+      Size = 255
+    end
+    object QKasKecil_BiayaPenjualanname: TStringField
+      FieldName = 'name'
+      ReadOnly = True
+      Size = 255
+    end
+    object QKasKecil_BiayaPenjualantotal: TFloatField
+      FieldName = 'total'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb1: TFloatField
+      FieldName = 'b1'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb2: TFloatField
+      FieldName = 'b2'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb3: TFloatField
+      FieldName = 'b3'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb4: TFloatField
+      FieldName = 'b4'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb5: TFloatField
+      FieldName = 'b5'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb6: TFloatField
+      FieldName = 'b6'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb7: TFloatField
+      FieldName = 'b7'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb8: TFloatField
+      FieldName = 'b8'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb9: TFloatField
+      FieldName = 'b9'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb10: TFloatField
+      FieldName = 'b10'
+      ReadOnly = True
+    end
+    object QKasKecil_BiayaPenjualanb11: TFloatField
+      FieldName = 'b11'
+      ReadOnly = True
+    end
   end
 end

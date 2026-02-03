@@ -9,7 +9,7 @@ uses
   EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzButton, Vcl.ExtCtrls, RzTabs,
   Vcl.ComCtrls, RzDTP, RzPanel, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Buttons,
   Vcl.Samples.Spin, MemTableDataEh, MemTableEh, IdBaseComponent, IdComponent,
-  IdTCPConnection, IdTCPClient, IdHTTP, uJSON;
+  IdTCPConnection, IdTCPClient, IdHTTP, uJSON, RzRadChk;
 
 type
   TFNewDeliveryOrder = class(TForm)
@@ -179,6 +179,7 @@ type
     btnSubmitCorrectionMuatan: TRzBitBtn;
     btnSaveMuatan: TRzBitBtn;
     btnCloseMuatan: TRzBitBtn;
+    chktambahpool: TRzCheckBox;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -227,6 +228,10 @@ type
     procedure btMasterLokasiBongkarClick(Sender: TObject);
     procedure edNamaJenisMuatanChange(Sender: TObject);
     procedure btnSaveMuatanClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure DBGrid_SumberOrderNavigatorPanelButtonClick(
+      Sender: TCustomDBGridEh; AButton: TNavigateBtnEh; var Processed: Boolean);
+    procedure chktambahpoolClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -433,6 +438,7 @@ var
 begin
   Application.ProcessMessages; // agar UI tetap responsif
   try
+
     with dm.Qtemp2 do
     begin
       Close;
@@ -453,8 +459,13 @@ begin
     Vpath := '/api/update-vehicle';
     url := BaseUrl + Vpath;
 
+//    jsonBody := TStringStream.Create(
+//      '{"vehicle_code": "'+strVehicleGroupId+'"}',
+//      TEncoding.UTF8
+//    );
+
     jsonBody := TStringStream.Create(
-      '{"vehicle_code": "'+strVehicleGroupId+'"}',
+      '{"vehicle_code": "' + strVehicleGroupId + '", "notrans": "' + edKodeDOMuatan.Text + '"}',
       TEncoding.UTF8
     );
 
@@ -995,9 +1006,53 @@ begin
   end;
 end;
 
-procedure TFNewDeliveryOrder.Save;
+procedure TFNewDeliveryOrder.chktambahpoolClick(Sender: TObject);
+var LastVendor: String;
+    IntTitik:Integer;
 begin
+  if (not MemDataMuatan.Active) or (MemDataMuatan.IsEmpty) then
+  begin
+    spTotalTitik.Value := 0; 
+    Exit;
+  end;
+  IntTitik := 0;
+  LastVendor := '';
+  
+  MemDataMuatan.DisableControls;
+  try
+    MemDataMuatan.First;
+    while not MemDataMuatan.Eof do
+    begin
+      if MemDataMuatan.FieldByName('kode_vendor').AsString <> LastVendor then
+      begin
+        Inc(IntTitik);
+        LastVendor := MemDataMuatan.FieldByName('kode_vendor').AsString;
+      end;
+      MemDataMuatan.Next;
+    end;
+  finally
+    MemDataMuatan.EnableControls;
+  end;          
+  if chktambahpool.Checked then 
+    spTotalTitik.Value := IntTitik 
+  else 
+  begin
+    if IntTitik > 0 then
+      spTotalTitik.Value := IntTitik - 1
+    else
+      spTotalTitik.Value := 0;
+  end;
 
+end;
+
+procedure TFNewDeliveryOrder.Save;
+var
+  vAddPool: string;
+begin
+  if chktambahpool.Checked then
+    vAddPool := 'true' 
+  else
+    vAddPool := 'false';
   with dm.Qtemp do
   begin
     close;
@@ -1008,7 +1063,7 @@ begin
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,'+
-            'sbu_code) '+
+            'sbu_code,add_pool_points) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -1030,7 +1085,7 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+
-            ' '+QuotedStr(FHomeLogin.vKodePRSH)+');');
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+vAddPool+');');
     ExecSQL;
   end;
   InsertDetailLoad;
@@ -1167,9 +1222,12 @@ begin
 end;
 
 procedure TFNewDeliveryOrder.Update;
-var strStatus: String;
+var strStatus, vAddPool: String;
 begin
-
+  if chktambahpool.Checked then
+    vAddPool := 'true' 
+  else
+    vAddPool := 'false';
   if (StatusPerubahanBiaya=1) then
   begin
    strStatus:=',status=1';
@@ -1201,7 +1259,8 @@ begin
             ' trans_day='+QuotedStr(strtgl)+','+
             ' trans_month='+QuotedStr(strbulan)+','+
             ' trans_year='+QuotedStr(strtahun)+strStatus+', '+
-            ' status_correction=0 '+
+            ' status_correction=0, '+
+            ' add_pool_points=' + vAddPool +
             ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
     ExecSQL;
   end;
@@ -1512,6 +1571,7 @@ begin
   MemDataBiaya.EmptyTable;
   MemDataMuatan.EmptyTable;
   strVehicleGroupId:='';
+
   //Muatan
   edKodeDOMuatan.Clear;
   dtTanggalMuatan.Date:=NOW();
@@ -1535,6 +1595,7 @@ begin
   edLokasiBongkar.Clear;
   edKelompokKendaraan.Clear;
   strVehicleGroupId:='';
+  chktambahpool.Checked := False;
 
   //Biaya
   edKodeDOBiaya.Clear;
@@ -1588,6 +1649,7 @@ begin
   MemDataMuatan.EmptyTable;
   strVehicleGroupId:='';
   //Muatan
+
   edKodeDOMuatan.Clear;
   dtTanggalMuatan.Date:=NOW();
   edKodeVendorMuatan.Clear;
@@ -1638,20 +1700,26 @@ begin
   edNamaJenisKendMuatan.ReadOnly:=True;
   edNoKendMuatan.ReadOnly:=True;
 
-  with dm.Qtemp2 do
+  if edKodeJenisMuatan.Text='007' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:='select supplier_code,supplier_name from t_supplier '+
-              'where supplier_code='+
-              '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
-              'and deleted_at is null';
-    open;
-  end;
-  if dm.Qtemp2.RecordCount>0 then
-  begin
-    edKodeVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_code'];
-    edNamaVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_name'];
+    edKodeVendorTransMuatan.Text:=FHomeLogin.vKodePRSH;
+    edNamaVendorTransMuatan.Text:=FHomeLogin.vNamaPRSH;
+  end else begin
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select supplier_code,supplier_name from t_supplier '+
+                'where supplier_code='+
+                '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
+                'and deleted_at is null';
+      open;
+    end;
+    if dm.Qtemp2.RecordCount>0 then
+    begin
+      edKodeVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_code'];
+      edNamaVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_name'];
+    end;
   end;
 end;
 
@@ -1703,6 +1771,16 @@ begin
     open;
   end;
 
+  FNewDeliveryOrder.MemDataBiaya.active:=false;
+  FNewDeliveryOrder.MemDataBiaya.active:=true;
+  FNewDeliveryOrder.MemDataBiaya.EmptyTable;
+
+  FNewDeliveryOrder.MemDataMuatan.active:=false;
+  FNewDeliveryOrder.MemDataMuatan.active:=true;
+  FNewDeliveryOrder.MemDataMuatan.EmptyTable;
+
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
     FNewDeliveryOrder.MemDataBiaya.active:=false;
     FNewDeliveryOrder.MemDataBiaya.active:=true;
     FNewDeliveryOrder.MemDataBiaya.EmptyTable;
@@ -1710,54 +1788,44 @@ begin
     FNewDeliveryOrder.MemDataMuatan.active:=false;
     FNewDeliveryOrder.MemDataMuatan.active:=true;
     FNewDeliveryOrder.MemDataMuatan.EmptyTable;
+  end;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      FNewDeliveryOrder.MemDataBiaya.active:=false;
-      FNewDeliveryOrder.MemDataBiaya.active:=true;
-      FNewDeliveryOrder.MemDataBiaya.EmptyTable;
-
-      FNewDeliveryOrder.MemDataMuatan.active:=false;
-      FNewDeliveryOrder.MemDataMuatan.active:=true;
-      FNewDeliveryOrder.MemDataMuatan.EmptyTable;
-    end;
-
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
-     FNewDeliveryOrder.MemDataBiaya.insert;
-     FNewDeliveryOrder.MemDataBiaya['kd_biaya']:=Dm.Qtemp.fieldbyname('code').value;
-     FNewDeliveryOrder.MemDataBiaya['nm_biaya']:=Dm.Qtemp.fieldbyname('name').value;
-     FNewDeliveryOrder.MemDataBiaya['dpp']:='0';
-     FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
-     FNewDeliveryOrder.MemDataBiaya['akun_ppn']:='0';
-     FNewDeliveryOrder.MemDataBiaya['nama_ppn']:='-';
-     FNewDeliveryOrder.MemDataBiaya['persen_ppn']:='0';
-     FNewDeliveryOrder.MemDataBiaya['pph']:='0';
-     FNewDeliveryOrder.MemDataBiaya['akun_pph']:='0';
-     FNewDeliveryOrder.MemDataBiaya['nama_pph']:='-';
-     FNewDeliveryOrder.MemDataBiaya['persen_pph']:='0';
-     FNewDeliveryOrder.MemDataBiaya['total']:='0';
-     FNewDeliveryOrder.MemDataBiaya['keterangan']:='0';
-     FNewDeliveryOrder.MemDataBiaya['no_invoice']:='0';
-     FNewDeliveryOrder.MemDataBiaya['tgl_invoice']:=NOW();
-     FNewDeliveryOrder.MemDataBiaya.post;
-     Dm.Qtemp.next;
+      FNewDeliveryOrder.MemDataBiaya.insert;
+      FNewDeliveryOrder.MemDataBiaya['kd_biaya']:=Dm.Qtemp.fieldbyname('code').value;
+      FNewDeliveryOrder.MemDataBiaya['nm_biaya']:=Dm.Qtemp.fieldbyname('name').value;
+      FNewDeliveryOrder.MemDataBiaya['dpp']:='0';
+      FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
+      FNewDeliveryOrder.MemDataBiaya['akun_ppn']:='0';
+      FNewDeliveryOrder.MemDataBiaya['nama_ppn']:='-';
+      FNewDeliveryOrder.MemDataBiaya['persen_ppn']:='0';
+      FNewDeliveryOrder.MemDataBiaya['pph']:='0';
+      FNewDeliveryOrder.MemDataBiaya['akun_pph']:='0';
+      FNewDeliveryOrder.MemDataBiaya['nama_pph']:='-';
+      FNewDeliveryOrder.MemDataBiaya['persen_pph']:='0';
+      FNewDeliveryOrder.MemDataBiaya['total']:='0';
+      FNewDeliveryOrder.MemDataBiaya['keterangan']:='0';
+      FNewDeliveryOrder.MemDataBiaya['no_invoice']:='0';
+      FNewDeliveryOrder.MemDataBiaya['tgl_invoice']:=NOW();
+      FNewDeliveryOrder.MemDataBiaya.post;
+      Dm.Qtemp.next;
     end;
-    end;
-    FNewDeliveryOrder.MemDataMuatan.active:=false;
-    if edKodeJenisMuatan.Text='002' then
-    begin
-      DBGridSumberPenjualan.Columns[13].Visible:=true;
-      DBGridSumberPenjualan.Columns[14].Visible:=true;
-    end
-    else
-    begin
-      DBGridSumberPenjualan.Columns[13].Visible:=false;
-      DBGridSumberPenjualan.Columns[14].Visible:=false;
-    end;
+  end;
+  FNewDeliveryOrder.MemDataMuatan.active:=false;
+  if edKodeJenisMuatan.Text='002' then
+  begin
+    DBGridSumberPenjualan.Columns[13].Visible:=true;
+    DBGridSumberPenjualan.Columns[14].Visible:=true;
+  end
+  else
+  begin
+    DBGridSumberPenjualan.Columns[13].Visible:=false;
+    DBGridSumberPenjualan.Columns[14].Visible:=false;
+  end;
 end;
 
 procedure TFNewDeliveryOrder.RzPageControl1Click(Sender: TObject);
@@ -2118,9 +2186,24 @@ end;
 
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColEnter(Sender: TObject);
+var IntTitik:Integer;
+  LastVendor: String;
 begin
   HitungGrid;
-  spTotalTitik.Text:=IntToStr(MemDataMuatan.RecordCount);
+  IntTitik:=0;
+  LastVendor := '';
+
+  MemDataBiaya.First;
+  while not MemDataBiaya.Eof do
+  begin
+    if MemDataBiaya['kode_vendor'] <> LastVendor then
+    begin
+      Inc(IntTitik);
+      LastVendor := MemDataBiaya['kode_vendor'];
+    end;
+    MemDataBiaya.Next;
+  end;
+  spTotalTitik.Text:=IntToStr(IntTitik-1);
 end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColumns0CellButtons0Click(
@@ -2219,12 +2302,61 @@ begin
   HitungGrid;
 end;
 
+procedure TFNewDeliveryOrder.DBGrid_SumberOrderNavigatorPanelButtonClick(
+  Sender: TCustomDBGridEh; AButton: TNavigateBtnEh; var Processed: Boolean);
+var LastVendor: String;
+    IntTitik:Integer;
+begin
+if AButton = nbDeleteEh then
+  begin
+    // 1. Konfirmasi hapus (Opsional tapi disarankan)
+    if MessageDlg('Hapus data ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      // 2. Hapus record yang sedang dipilih SAAT INI
+      MemDataMuatan.Delete;
+      // 3. Reset hitungan setelah data terhapus
+      IntTitik := 0;
+      LastVendor := '';
+      MemDataMuatan.DisableControls;
+      try
+        MemDataMuatan.First;
+        while not MemDataMuatan.Eof do
+        begin
+          if MemDataMuatan.FieldByName('kode_vendor').AsString <> LastVendor then
+          begin
+            Inc(IntTitik);
+            LastVendor := MemDataMuatan.FieldByName('kode_vendor').AsString;
+          end;
+          MemDataMuatan.Next;
+        end;
+      finally
+        MemDataMuatan.EnableControls;
+      end;
+//      spTotalTitik.Value := IntTitik-1;
+      if chktambahpool.Checked then 
+        spTotalTitik.Value := IntTitik 
+      else 
+      begin
+        if IntTitik > 0 then
+          spTotalTitik.Value := IntTitik - 1
+        else
+          spTotalTitik.Value := 0;
+      end;
+      
+    end;
+    // 4. SET PROCESSED JADI TRUE
+    // Ini penting agar DBGrid tidak mencoba menghapus lagi (yang bikin kursor lari ke baris akhir)
+    Processed := True;
+  end;
+end;
+
 procedure TFNewDeliveryOrder.dtTanggalMuatanChange(Sender: TObject);
 begin
 //  if Status=0 then
 //  begin
 //    Autonumber;
 //  end;
+  dtTanggalDoc.Date:=dtTanggalMuatan.Date;
   if (edKodeJenisMuatan.Text='005') OR (edKodeJenisMuatan.Text='006') then
   begin
     edKelompokKendaraan.Text:='';
@@ -2381,6 +2513,7 @@ begin
     btnSubmitCorrectionMuatan.Visible:=False;
     btnCloseMuatan.Visible:=False;
     btnSaveMuatan.Visible:=False;
+
   end else
   if edKodeJenisMuatan.Text='007' then
   begin
@@ -2397,6 +2530,8 @@ begin
     btnSubmitCorrectionMuatan.Visible:=True;
     btnCloseMuatan.Visible:=True;
     btnSaveMuatan.Visible:=True;
+    edKodeVendorTransMuatan.Text:=FHomeLogin.vKodePRSH;
+    edNamaVendorTransMuatan.Text:=FHomeLogin.vNamaPRSH;
   end else begin
     TabDataBiaya.TabVisible:=True;
     TabDataMuatan.TabVisible:=True;
@@ -2578,8 +2713,16 @@ begin
   edTotalBiaya.Text := FormatFloat('#,##0.##', edTotalBiaya.Value);
 end;
 
+procedure TFNewDeliveryOrder.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  dm.Qtemp.Close;
+  dm.Qtemp1.Close;
+end;
+
 procedure TFNewDeliveryOrder.FormShow(Sender: TObject);
 begin
+  dtTanggalMuatan.Enabled:=False;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
     btMasterSumber.Visible:=false;
@@ -2647,29 +2790,43 @@ begin
     btSaveParameter.Enabled:=False;
   end;
 
+  if Status=0 then
+  begin
+    dtTanggalMuatan.Enabled:=True;
+  end;
+
   //Kondisi Sumber Offline
-  if (Status = 1) and (IntStatusKoreksi = 2) AND (IntStatusDO<>99) then
+  if edKodeJenisMuatan.Text='007' then
   begin
-    btnSaveMuatan.Enabled := True;
-    btnSubmitCorrectionMuatan.Visible := True;
-    btnSubmitCorrectionMuatan.Enabled := False;
-  end
-  else if Status = 0 then
-  begin
+    if (Status = 1) and (IntStatusKoreksi = 2) AND (IntStatusDO<>99) then
+    begin
+      btnSaveMuatan.Enabled := True;
+      btnSubmitCorrectionMuatan.Visible := True;
+      btnSubmitCorrectionMuatan.Enabled := False;
+    end
+    else if Status = 0 then
+    begin
+      btnSaveMuatan.Visible := False;
+      btnSubmitCorrectionMuatan.Visible := False;
+      btnCloseMuatan.Visible:=False;
+      dtTerimaTagihan.Date:=NOW();
+      dtTanggalMuatan.Enabled:=True;
+    end
+    else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (IntStatusDO<>99) then
+    begin
+      btnSaveMuatan.Enabled := False;
+      btnSubmitCorrectionMuatan.Visible := True;
+      btnSubmitCorrectionMuatan.Enabled := True;
+    end else if IntStatusDO=99 then
+    begin
+      btnSubmitCorrectionMuatan.Enabled := True;
+      btnSubmitCorrectionMuatan.Visible := False;
+      btnSubmitCorrectionMuatan.Enabled := False;
+    end;
+  end else begin
+    btnSubmitCorrectionMuatan.Visible := False;
     btnSaveMuatan.Visible := False;
-    btnSubmitCorrectionMuatan.Visible := False;
     btnCloseMuatan.Visible:=False;
-  end
-  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (IntStatusDO<>99) then
-  begin
-    btnSaveMuatan.Enabled := False;
-    btnSubmitCorrectionMuatan.Visible := True;
-    btnSubmitCorrectionMuatan.Enabled := True;
-  end else if IntStatusDO=99 then
-  begin
-    btnSubmitCorrectionMuatan.Enabled := True;
-    btnSubmitCorrectionMuatan.Visible := False;
-    btnSubmitCorrectionMuatan.Enabled := False;
   end;
 
 end;

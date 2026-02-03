@@ -181,7 +181,7 @@ begin
   end else begin
     FMasterData.Caption:='Master Data Kabupaten';
     FMasterData.vcall:='rekapmonitoringtargetkab';
-    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(strKaresidenanID)+'');
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(strKaresidenanID)+'');
     FMasterData.ShowModal;
   end;
 end;
@@ -203,7 +203,7 @@ procedure TFMonitoringTargetOmset.cbKaresidenanPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='rekapmonitoringtargetkares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal;
 end;
 
@@ -241,13 +241,13 @@ begin
     QMonitoringTargetOmset.Close;
 
     if cbKaresidenan.EditValue<>'' then
-    strKaresidenan:=' AND karesidenan='+QuotedStr(cbKaresidenan.EditValue)
+    strKaresidenan:=' AND code_tp='+QuotedStr(strKaresidenanID)
     else strKaresidenan:='';
     if cbKabupaten.EditValue<>'' then
-    strKabupaten:=' AND kabupaten='+QuotedStr(cbKabupaten.EditValue)
+    strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-    strKecamatan:=' AND kecamatan='+QuotedStr(cbKecamatan.EditValue)
+    strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
 
     if Uppercase(cbVolume.Text)='QTY' then
@@ -266,8 +266,8 @@ begin
 //                +strKabupaten+strKecamatan;
       sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
-                ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
-                +','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
+                ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
+                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
       open;
     end;
     if Qreport.RecordCount=0 then
@@ -292,13 +292,13 @@ begin
     QMonitoringTargetOmset.Close;
 
     if cbKaresidenan.EditValue<>'' then
-    strKaresidenan:=' AND karesidenan='+QuotedStr(cbKaresidenan.EditValue)
+    strKaresidenan:=' AND code_karesidenan='+QuotedStr(strKaresidenanID)
     else strKaresidenan:='';
     if cbKabupaten.EditValue<>'' then
-    strKabupaten:=' AND kabupaten='+QuotedStr(cbKabupaten.EditValue)
+    strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-    strKecamatan:=' AND kecamatan='+QuotedStr(cbKecamatan.EditValue)
+    strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
 
     if Uppercase(cbVolume.Text)='QTY' then
@@ -319,8 +319,8 @@ begin
       sql.Clear;
       sql.Text:='SELECT * FROM get_monitoring_target_omset'+
               '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
-              ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
-              +','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
+              ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
+              +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
       open;
     end;
   end;
@@ -353,13 +353,13 @@ begin
     QMonitoringTargetOmset.Close;
 
     if cbKaresidenan.EditValue<>'' then
-    strKaresidenan:=' AND karesidenan='+QuotedStr(cbKaresidenan.EditValue)
+    strKaresidenan:=' AND code_karesidenan='+QuotedStr(strKaresidenanID)
     else strKaresidenan:='';
     if cbKabupaten.EditValue<>'' then
-    strKabupaten:=' AND kabupaten='+QuotedStr(cbKabupaten.EditValue)
+    strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
     if cbKecamatan.EditValue<>'' then
-    strKecamatan:=' AND kecamatan='+QuotedStr(cbKecamatan.EditValue)
+    strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
 
     if Uppercase(cbVolume.Text)='QTY' then
@@ -378,8 +378,8 @@ begin
 //                +strKabupaten+strKecamatan;
       sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
-                ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(cbKaresidenan.EditValue)
-                +','+QuotedStr(cbKabupaten.EditValue)+','+QuotedStr(cbKecamatan.EditValue)+')';
+                ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
+                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
       open;
     end;
     if Qreport.RecordCount=0 then

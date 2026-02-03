@@ -255,6 +255,8 @@ begin
 //  MemNeraca_lajur.Active:=false;
  DBGridEh1.StartLoadingStatus();
 // MemNeraca_lajur.Active:=true;
+dm.QPerusahaan.Close;
+dm.QPerusahaan.Open;
   with dm.Qtemp do
   begin
     close;
@@ -320,10 +322,10 @@ begin
         end;       }
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
-            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
-            ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(spTahun.EditValue)+' and '+
+            ' trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex))+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
             ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
             ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
             ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
@@ -408,10 +410,10 @@ begin
         end;           }
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
-            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
-            ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(spTahun.EditValue)+' and '+
+            ' trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex))+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
             ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
             ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
             ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
@@ -482,8 +484,8 @@ begin
    //   QNeraca_lajur.Open;
       //MemNeraca_lajur.Active:=true;
       Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_neracalajur.fr3');
-      TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+cbBulan.Text+' - '+QuotedStr(sptahun.editvalue);
-      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH;
+      TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode : '+cbBulan.Text+' - '+inttostr(sptahun.editvalue);    // update ds 30-01-2026 (convert tahun inttostr)
+   //   Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH;
    // GProses.Progress:=row+100;
       Rpt.ShowReport();
     //ProgressBar1.Visible:=false;
@@ -615,7 +617,7 @@ begin
           close;
           sql.Clear;
           sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
           ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
           ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
           ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
@@ -646,7 +648,7 @@ begin
         end;
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
             ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
             ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
@@ -707,7 +709,7 @@ begin
           close;
           sql.Clear;
           sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+          ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
           ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
           ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
           ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
@@ -737,7 +739,7 @@ begin
         end;
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
             ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
             ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
@@ -803,10 +805,10 @@ begin
     begin
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
-            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
-            ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(spTahun.EditValue)+' and '+
+            ' trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex))+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
             ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
             ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
             ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
@@ -846,10 +848,10 @@ begin
       begin
         subquery:='select account_code,account_name,trans_year,trans_month,sum(saldo_d) debit,sum(saldo_k) kredit,sum(trdb) trdb,sum(trkd) trkd,sum(dbend) dbend,sum(kdend) kdend'+
             ' from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
-            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::int, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::int, 0) else 0 end saldo_k,'+
+            ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
             ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
-            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
-            ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
+            ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(spTahun.EditValue)+' and '+
+            ' trans_month='+QuotedStr(inttostr(cbBulan.ItemIndex))+')taab RIGHT JOIN  (select a.account_code,a.account_code2,b.account_name,a.posisi_dk from t_ak_account_sub a'+
             ' INNER JOIN t_ak_account b on a.account_code=b.code) taa on taab.account_code=taa.account_code2 '+
             ' left join (select * from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(spTahun.EditValue)+''+
             ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+

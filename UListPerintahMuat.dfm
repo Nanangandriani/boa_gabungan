@@ -1086,8 +1086,8 @@ object FListPerintahMuat: TFListPerintahMuat
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 616
-    Top = 16
+    Left = 544
+    Top = 8
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1099,7 +1099,7 @@ object FListPerintahMuat: TFListPerintahMuat
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.413693113400000000
-    ReportOptions.LastChange = 46021.612923206020000000
+    ReportOptions.LastChange = 46027.455710196760000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1112,6 +1112,10 @@ object FListPerintahMuat: TFListPerintahMuat
       item
         DataSet = frxDBDPerintahMuat
         DataSetName = 'frxDBDPerintahMuat'
+      end
+      item
+        DataSet = frxDBDPerintahMuat2
+        DataSetName = 'frxDBDPerintahMuat2'
       end>
     Variables = <>
     Style = <>
@@ -1275,7 +1279,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line36: TfrxLineView
           AllowVectorExport = True
           Left = 0.111111110000000000
-          Top = -0.008761110000000001
+          Top = -0.008761110000000000
           Width = 755.905511810000000000
           Color = clBlack
           Frame.Style = fsDouble
@@ -1682,7 +1686,7 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 394.055350000000000000
           Top = 202.874150000000000000
-          Width = 359.811023622047200000
+          Width = 359.811023622047000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1691,7 +1695,7 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 394.055350000000000000
           Top = 221.551330000000000000
-          Width = 359.811023622047200000
+          Width = 359.811023622047000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1700,7 +1704,7 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 394.055350000000000000
           Top = 242.228510000000000000
-          Width = 359.811023622047200000
+          Width = 359.811023622047000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1709,7 +1713,7 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 394.055350000000000000
           Top = 260.905690000000000000
-          Width = 359.811023622047200000
+          Width = 359.811023622047000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1766,13 +1770,13 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 86.929190000000000000
           Top = 71.811070000000000000
-          Width = 264.567100000000000000
-          Height = 18.897650000000000000
+          Width = 298.852814290000000000
+          Height = 44.611935710000000000
           DataSet = frxDBDPerintahMuat
           DataSetName = 'frxDBDPerintahMuat'
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDPerintahMuat."kabupaten"]')
+            '[frxDBDPerintahMuat2."kabupaten"]')
         end
         object Memo28: TfrxMemoView
           IndexTag = 1
@@ -1814,7 +1818,7 @@ object FListPerintahMuat: TFListPerintahMuat
         object Line29: TfrxLineView
           AllowVectorExport = True
           Top = 302.039270000000000000
-          Width = 389.291338582677200000
+          Width = 389.291338582677000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1823,7 +1827,7 @@ object FListPerintahMuat: TFListPerintahMuat
           AllowVectorExport = True
           Left = 395.000000000000000000
           Top = 282.039270000000000000
-          Width = 359.811023622047200000
+          Width = 359.811023622047000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2055,5 +2059,27 @@ object FListPerintahMuat: TFListPerintahMuat
         end
       end
     end
+  end
+  object frxDBDPerintahMuat2: TfrxDBDataset
+    UserName = 'frxDBDPerintahMuat2'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'kabupaten=kabupaten')
+    DataSet = QCetak2
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 552
+    Top = 144
+  end
+  object QCetak2: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'SELECT DISTINCT string_agg(DISTINCT b.kabupaten, '#39', '#39') kabupaten' +
+        ' from t_spm_det a '
+      'left join get_selling(NULL) b on a."notrans_sale" = b."trans_no"'
+      'where notrans='#39'SPM/001/03/I/2026/NPA'#39)
+    Left = 608
+    Top = 288
   end
 end

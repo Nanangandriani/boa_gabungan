@@ -41,6 +41,7 @@ type
     procedure btTampilkanClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DBGridEh1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -148,51 +149,104 @@ begin
   MemDetailPiutang.Active:=true;
 end;
 
+procedure TFDaftarPenagihanPiutang.DBGridEh1DblClick(Sender: TObject);
+begin
+  if (vcall = 'edit_PenagihanPiutang') then
+  begin
+    if FDataPenerimaanBank.MemDetailPiutang.Locate('no_faktur', MemDetailPiutang['no_faktur'], []) then
+    begin
+      MessageDlg('No. Faktur: ' + MemDetailPiutang['no_faktur'] + ' sudah ada di daftar!',
+                 mtWarning, [mbOK], 0);
+      Exit;
+    end;
+
+    FDataPenerimaanBank.MemDetailPiutang.Edit;
+    try
+      FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']       := MemDetailPiutang['tglfaktur'];
+      FDataPenerimaanBank.MemDetailPiutang['no_faktur']        := MemDetailPiutang['no_faktur'];
+      FDataPenerimaanBank.MemDetailPiutang['no_tagihan']       := MemDetailPiutang['no_tagihan'];
+      FDataPenerimaanBank.MemDetailPiutang['jum_piutang']      := MemDetailPiutang['jum_piutang'];
+      FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real'] := MemDetailPiutang['jum_piutang'];
+      FDataPenerimaanBank.MemDetailPiutang['keterangan']       := 'PELUNASAN PIUTANG ';
+      FDataPenerimaanBank.MemDetailPiutang['id_dpp']          := MemDetailPiutang['id_dpp'];
+      FDataPenerimaanBank.MemDetailPiutang.Post;
+      Close;
+
+    except
+      on E: Exception do
+      begin
+        FDataPenerimaanBank.MemDetailPiutang.Cancel;
+        MessageDlg('Gagal menambah data: ' + E.Message, mtError, [mbOK], 0);
+      end;
+    end;
+  end;
+end;
+
 procedure TFDaftarPenagihanPiutang.FormShow(Sender: TObject);
 begin
-  if vcall='PenagihanPiutang' then Panel1.Visible:=False else Panel1.Visible:=True;
+  if (vcall='PenagihanPiutang') or (vcall='edit_PenagihanPiutang') then
+  begin
+    Panel1.Visible:=False;
+  end
+  else begin
+    Panel1.Visible:=True;
+  end;
+
+  if vcall='edit_PenagihanPiutang' then
+  begin
+    DBGridEh1.Columns[7].Visible:=False;
+    Panel2.Visible:=False;
+  end else begin
+    DBGridEh1.Columns[7].Visible:=True;
+    Panel2.Visible:=True;
+  end;
+
 end;
 
 procedure TFDaftarPenagihanPiutang.RefreshGrid;
 var
 URUTAN_KE : Integer;
 begin
-  if vcall='PenagihanPiutang' then
+  if (vcall='PenagihanPiutang') or (vcall='edit_PenagihanPiutang') then
   begin
     with Dm.Qtemp do
     begin
       close;
       sql.clear;
-      sql.add('SELECT a.id,a.date_trans,a.date_dpp,a.no_invoice,a.no_invoice_tax,'+
+      sql.Text:='SELECT * from get_dpp_cash_bank_acceptance('+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+')';
+
+      {sql.add('SELECT DISTINCT a.id,a.date_trans,a.date_dpp,a.no_invoice,a.no_invoice_tax,'+
               'a.code_cust,b.customer_name,a.paid_amount from t_dpp  a '+
               'LEFT JOIN t_customer b ON a.code_cust=b.customer_code '+
               'LEFT JOIN  (SELECT no_invoice,SUM(kredit) bayar FROM t_selling_general '+
               'WHERE deleted_at is NULL GROUP BY no_invoice) c ON c.no_invoice=a.no_invoice '+
-              'WHERE (a.date_dpp BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih1))+' AND '+
-              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tglTagih2))+') AND a.deleted_at IS NULL ');
+              'LEFT join (SELECT * FROM get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+') '+
+              'WHERE code_cust='+QuotedStr(kd_outlet)+') d on d.code_cust=a.code_cust '+
+              'WHERE d.sisa_piutang>0 and a.date_dpp<='+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+' AND '+
+              'a.deleted_at IS NULL ');
       if Length(edKode_Pelanggan.Text)<>0 then
       begin
         sql.add(' AND a.code_cust='+QuotedStr(kd_outlet)+' ');
       end;
-      sql.add(' ORDER BY a.code_cust,a.date_dpp desc');
+      sql.add(' ORDER BY a.code_cust,a.date_dpp desc');    }
       open;
     end;
   end;
 
+  FDaftarPenagihanPiutang.MemDetailPiutang.active:=false;
+  FDaftarPenagihanPiutang.MemDetailPiutang.active:=true;
+  FDaftarPenagihanPiutang.MemDetailPiutang.EmptyTable;
+
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
     FDaftarPenagihanPiutang.MemDetailPiutang.active:=false;
     FDaftarPenagihanPiutang.MemDetailPiutang.active:=true;
     FDaftarPenagihanPiutang.MemDetailPiutang.EmptyTable;
+    ShowMessage('Tidak Ditemukan Data...');
+  end;
 
-    if  Dm.Qtemp.RecordCount=0 then
-    begin
-      FDaftarPenagihanPiutang.MemDetailPiutang.active:=false;
-      FDaftarPenagihanPiutang.MemDetailPiutang.active:=true;
-      FDaftarPenagihanPiutang.MemDetailPiutang.EmptyTable;
-      ShowMessage('Tidak Ditemukan Data...');
-    end;
-
-    if  Dm.Qtemp.RecordCount<>0 then
-    begin
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
@@ -210,7 +264,8 @@ begin
      FDaftarPenagihanPiutang.MemDetailPiutang.post;
      Dm.Qtemp.next;
     end;
-    end;
+  end;
+  Dm.Qtemp.Close;
 end;
 
 end.

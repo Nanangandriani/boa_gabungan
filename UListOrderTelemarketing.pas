@@ -34,6 +34,11 @@ type
     edKaresidenan: TRzButtonEdit;
     edlink: TEdit;
     MemMasterDatapayment_term: TSmallintField;
+    MemMasterDatasent_date: TDateField;
+    MemMasterDataaddress: TStringField;
+    MemMasterDatatp: TStringField;
+    MemMasterDatakabupaten: TStringField;
+    MemMasterDatakecamatan: TStringField;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btGetDataProspekClick(Sender: TObject);
@@ -307,7 +312,7 @@ begin
     key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapitele''');
     Vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapitele''');
     vBody := '?sbu_code=' + FHomeLogin.vKodePRSH +
-             '&order_date=' + FormatDateTime('yyyy-mm-dd', FNew_SalesOrder.dtTanggal_Pesan.Date) +
+             '&delivery_date=' + FormatDateTime('yyyy-mm-dd', FNew_SalesOrder.dtTanggal_Kirim.Date) +
              strKodeKaresidenan;
     Vpath := '/order';
     url := BaseUrl + Vpath + vBody;
@@ -362,7 +367,7 @@ begin
         Close;
         SQL.Clear;
         SQL.Text := 'INSERT INTO "public"."t_telemarketing_orders_tmp" ' +
-                    '("created_at","created_by","ticket_number","order_date","outlet_name","status_name","outlet_code") ' +
+                    '("created_at","created_by","ticket_number","order_date","outlet_name","status_name","outlet_code",sent_date) ' +
                     'VALUES (' +
                     'NOW(), ' +
                     QuotedStr(FHomeLogin.Eduser.Text) + ', ' +
@@ -370,7 +375,8 @@ begin
                     QuotedStr(json.StringTree[row1 + 'order_date']) + ', ' +
                     QuotedStr(json.StringTree[row1 + 'outlet_name']) + ', ' +
                     QuotedStr(json.StringTree[row1 + 'status_name']) + ', ' +
-                    QuotedStr(json.StringTree[row1 + 'outlet_code']) + ')';
+                    QuotedStr(json.StringTree[row1 + 'outlet_code']) + ', '+
+                    QuotedStr(json.StringTree[row1 + 'delivery_date']) + ')';
         ExecSQL;
       end;
       // Update progress tiap beberapa data agar UI tetap responsive
@@ -520,9 +526,11 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT a.ticket_number, a.order_date, a.outlet_name, a.status_name,a.outlet_code, b.payment_term '+
-            ' FROM t_telemarketing_orders_tmp a LEFT JOIN t_customer b on b.customer_code=a.outlet_code '+
-            ' where a.created_by='+QuotedStr(FHomeLogin.Eduser.Text)+'');
+    sql.add('SELECT a.ticket_number, a.order_date,a.sent_date, a.outlet_name, '+
+            'a.status_name,a.outlet_code, b.payment_term,b.address,b.tp,b.kabupaten,'+
+            'b.kecamatan  FROM t_telemarketing_orders_tmp a '+
+            'LEFT JOIN get_customer() b on b.customer_code=a.outlet_code '+
+            'where a.created_by='+QuotedStr(FHomeLogin.Eduser.Text)+'');
 //      if Length(Edkodewilayah.Text)<>0 then
 //      begin
 //        sql.add(' AND "distribution_code"='+QuotedStr(Edkodewilayah.Text)+' ');
@@ -551,10 +559,15 @@ begin
      MemMasterData.insert;
      MemMasterData['ticket_number']:=Dm.Qtemp.fieldbyname('ticket_number').value;
      MemMasterData['order_date']:=Dm.Qtemp.fieldbyname('order_date').value;
+     MemMasterData['sent_date']:=Dm.Qtemp.fieldbyname('sent_date').value;
      MemMasterData['outlet_name']:=Dm.Qtemp.fieldbyname('outlet_name').value;
      MemMasterData['status_name']:=Dm.Qtemp.fieldbyname('status_name').value;
      MemMasterData['outlet_code']:=Dm.Qtemp.fieldbyname('outlet_code').value;
      MemMasterData['payment_term']:=Dm.Qtemp.fieldbyname('payment_term').value;
+     MemMasterData['address']:=Dm.Qtemp.fieldbyname('address').value;
+     MemMasterData['tp']:=Dm.Qtemp.fieldbyname('tp').value;
+     MemMasterData['kabupaten']:=Dm.Qtemp.fieldbyname('kabupaten').value;
+     MemMasterData['kecamatan']:=Dm.Qtemp.fieldbyname('kecamatan').value;
      MemMasterData.post;
      progress.Progress:= progress.Progress+1;
      Dm.Qtemp.next;
@@ -590,7 +603,7 @@ begin
         edKode_Pelanggan.Text:=MemMasterData['outlet_code'];
         edNama_Pelanggan.Text:=MemMasterData['outlet_name'];
         edNoReff.Text:=MemMasterData['ticket_number'];
-        spJatuhTempo.Text:=MemMasterData['payment_term'];
+//        spJatuhTempo.Text:=MemMasterData['payment_term'];
 
         if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
         begin

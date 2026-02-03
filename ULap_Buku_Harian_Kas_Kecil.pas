@@ -175,13 +175,17 @@ begin
             '(SELECT  "row_number"() over (ORDER BY urutan)+1 nomor,trans_date,voucher_no,description,actors_name,order_no,actors_code,code '+
             ',jumdebit,jumkredit,penjualan,adm,bop,urutan,0 sa,jumdebit debit,jumkredit kredit '+
             'FROM '+
-            '(/*transaksi*/ select distinct a.trans_date,a.voucher_no,a.description,a.actors_name,a.order_no,a.actors_code,a.code,'+
+            '(/*transaksi*/ select distinct a.trans_date,a.voucher_no,'+
+            //a.description,'+
+            ' case when d.jumlah is null then ''BIAYA ADM & UMUM'' else ''BIAYA PENJUALAN'' end description, '+
+            ' a.actors_name,a.order_no,a.actors_code,a.code,'+
             '(case when debit.jumlah is null then 0 else debit.jumlah end)jumdebit,(case when kredit.jumlah is null then 0 else kredit.jumlah end)jumkredit,'+
             '(case when d.jumlah is null then 0 else d.jumlah end)penjualan,(case when b.jumlah is null then 0 else b.jumlah end)adm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(case when debit.jumlah>0 then 1 else 10 end)urutan from '+
             '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
             'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
             'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-            'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+            //'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+            'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
             'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
             'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
             'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
@@ -196,7 +200,7 @@ begin
             'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no order by trans_date,urutan,order_no,voucher_no)xxx '+
             'UNION ALL '+
             '/*Saldo Awal*/ SELECT 1 nomor,null as tgltrans,'''' as voucher,''Saldo Awal'' ket,'''' kepada,0 nourut,''0'' id_pelaku,'''' kode_tp '+
-            ',0 jum_debit,0 jum_kredit,0 penjualan,0 adm,0 bop,0 urutan,0 sa,0 debit,0 kredit '+
+            ',0 jum_debit,0 jum_kredit,0 penjualan,0 adm,0 bop,0 urutan,saldo_awal as sa,0 debit,0 kredit '+
             'FROM '+
             '(select yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit,sum(yy.balance+xx.jum_debit-xx.jum_kredit) as saldo_awal from '+
             '(select code as kodesp,balance from t_ak_account where  code='+QuotedStr(txtkdacckredit.Text)+')yy '+
@@ -210,7 +214,7 @@ begin
             'group by code_account order by code_account)a on a.code_account=x.kodesp '+
             'left join (select j.code_account,(case when sum(j.paid_amount)is null then 0 else sum(j.paid_amount) end)jum_kredit from t_petty_cash_det j '+
             'INNER JOIN t_petty_cash k on j.voucher_no=k.voucher_no '+
-            'where (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
+            'where (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
             'GROUP BY  yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit)yyy '+
             ')zzz '+
             'GROUP BY zzz.nomor, zzz.trans_date,zzz.voucher_no, zzz.description,zzz.actors_name,zzz.order_no,zzz.actors_code,zzz.code,zzz.jumdebit,zzz.jumkredit,zzz.penjualan,zzz.adm,zzz.bop,zzz.urutan,zzz.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC ';
@@ -223,7 +227,8 @@ begin
       open;
     end;
     frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas_Kecil_Rev_1.fr3');
-    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
+    //Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
+    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick11.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick12.EditValue);
     frxreport1.showreport;
 
 end;
@@ -251,7 +256,7 @@ begin
                 '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
                 'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
                 'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-                'where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+                'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
                 'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
                 'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
                 'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
@@ -368,7 +373,8 @@ begin
       open;
     end;
     frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas_Kecil.fr3');
-    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
+    //Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
+    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick11.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick12.EditValue);
     frxreport1.showreport;
 
 

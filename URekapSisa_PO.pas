@@ -67,6 +67,7 @@ type
     CbKategori: TcxBarEditItem;
     DBGridKontrak: TDBGridEh;
     DsRekapSisa_PO: TDataSource;
+    CB_SBU: TdxBarCombo;
     procedure FormShow(Sender: TObject);
     procedure BPrintClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
@@ -117,7 +118,7 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text:=' select * from t_item_type';
+    sql.Text:='select Distinct type from t_item_type';
     ExecSQL;
   end;
   Dm.Qtemp.First;
@@ -143,7 +144,9 @@ begin
       DtMulai.SetFocus;
       Exit;
     end;  }
-  if DtSelesai.EditValue= null then
+    dm.qperusahaan.close;
+    dm.qperusahaan.open;
+    if DtSelesai.EditValue= null then
     begin
       MessageDlg('Tanggal Selesai Tidak boleh Kosong ',MtWarning,[MbOk],0);
       DtSelesai.SetFocus;
@@ -183,9 +186,12 @@ begin
         if status_akses<>'True' then
         begin
           Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO.Fr3');
-        //  Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
+          Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['company_code'];
           ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
-          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtSelesai.editvalue);
+          if DTMulai.EditValue=DTselesai.EditValue then
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue)
+          else
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DtSelesai.editvalue);
           //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
           //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
           Rpt.ShowReport();
@@ -193,9 +199,13 @@ begin
         if status_akses='True' then
         begin
           Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO_Dr.Fr3');
+          Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['company_code'];
          // Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
           ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
-          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtSelesai.editvalue);
+          if DTMulai.EditValue=DTselesai.EditValue then
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue)
+          else
+          Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DtSelesai.editvalue);
           //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
           //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
           Rpt.ShowReport();
@@ -214,12 +224,16 @@ begin
            ExecSQL;
         end;
       Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_RekapSisaPO.Fr3');
+      Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['company_code'];
       //Tfrxmemoview(Rpt.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['kode_perusahaan'];
       ///Tfrxmemoview(Rpt.FindObject('MGudang')).Memo.Text:=CbGudang.Text;
       //Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=FormatDateTime('dd MMMM',DtMulai.editvalue)+'-'+FormatDateTime('dd MMMM yyy',DtSelesai.Date);
       //frxReport1.Script.Variables['varPathGambar']:='Report\PMA.PNG';
       //TfrxPictureView(Rpt.FindObject('Picture2')).Picture.loadfromfile('Report\Logo.jpg');
-      Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',Dtselesai.editvalue);
+      if DTMulai.EditValue=DTselesai.EditValue then
+      Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',DtMulai.editvalue)
+      else
+      Tfrxmemoview(Rpt.FindObject('MPeriode')).Memo.Text:=' Tanggal :'+FormatDateTime('dd mmm yyy',Dtselesai.editvalue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DtSelesai.editvalue);
       Rpt.ShowReport();
 end;
 end;
@@ -303,7 +317,10 @@ end;
 procedure TFRekapSisa_PO.FormShow(Sender: TObject);
 begin
 //NmBulan;
+ DtMulai.EditValue:=Date;
+ DtSelesai.EditValue:=Date;
  Load;
+ FillSBUBarCombo(CB_SBU);
 end;
 
 procedure TFRekapSisa_PO.NmBulan;

@@ -1,12 +1,12 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
-  Height = 365
-  Width = 467
+  Height = 301
+  Width = 419
   object Koneksi: TUniConnection
     AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_sb_hlj'
+    Database = 'db_hlj'
     Username = 'Devel'
     Server = '172.101.100.125'
     LoginPrompt = False
@@ -55,8 +55,8 @@ object dm: Tdm
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 243
-    Top = 128
+    Left = 251
+    Top = 136
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi
@@ -117,7 +117,7 @@ object dm: Tdm
     MultiUser = False
     SessionName = 'Default'
     Left = 176
-    Top = 288
+    Top = 240
   end
   object ABSTable1: TABSTable
     CurrentVersion = '7.95 '
@@ -126,8 +126,8 @@ object dm: Tdm
     ReadOnly = False
     TableName = 't_konfigurasi'
     Exclusive = False
-    Left = 80
-    Top = 288
+    Left = 96
+    Top = 240
     object ABSTable1id: TAutoIncField
       FieldName = 'id'
     end
@@ -190,7 +190,7 @@ object dm: Tdm
     RTLLanguage = False
     MemoParentFont = False
     Left = 16
-    Top = 234
+    Top = 240
   end
   object Koneksi_PST: TUniConnection
     AutoCommit = False
@@ -201,18 +201,18 @@ object dm: Tdm
     Server = '10.20.99.219'
     LoginPrompt = False
     OnError = KoneksiError
-    Left = 368
+    Left = 347
     Top = 13
     EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'
   end
   object QtempPusat: TUniQuery
     Connection = Koneksi_PST
-    Left = 364
+    Left = 347
     Top = 64
   end
   object QtempPusat1: TUniQuery
     Connection = Koneksi_PST
-    Left = 364
+    Left = 347
     Top = 117
   end
 end

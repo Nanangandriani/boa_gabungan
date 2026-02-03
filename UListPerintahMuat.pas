@@ -78,6 +78,8 @@ type
     dtAkhir: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
     dxBarLargeButton5: TdxBarLargeButton;
+    frxDBDPerintahMuat2: TfrxDBDataset;
+    QCetak2: TUniQuery;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -202,6 +204,7 @@ begin
 //  month :=FormatDateTime('m', NOW());
 //  edTahun.Text:=(year);
 //  cbBulan.ItemIndex:=StrToInt(month)-1;
+  DBGridList.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
@@ -293,21 +296,31 @@ begin
     begin
      close;
      sql.clear;
-     sql.add('SELECT zz.code_kabupaten,zz.kabupaten,zz.notrans,zz.cust_vendor,zz.cust_name_vendor, '+
+     sql.add('SELECT zz.loading_date, '+
+//     zz.code_kabupaten,zz.kabupaten,
+            'zz.notrans,  '+
+             ' zz.cust_vendor,zz.cust_name_vendor, '+
             'zz.number_of_vehicles,zz.code_items,zz.name_item, '+
             'zz.amount,zz.unit,CONCAT(zz.name_item, '' '', CAST(SUM(zz.amount) AS INTEGER), '' '', zz.unit) AS banyaknya '+
             'FROM ( '+
-            'SELECT b.code_kabupaten,b.kabupaten,c.notrans,a.code_cust AS cust_vendor,'+
+            'SELECT '+
+//            b.code_kabupaten,b.kabupaten,
+            'c.notrans,a.code_cust AS cust_vendor,'+
             'a.name_cust AS cust_name_vendor,c.number_of_vehicles,a.code_items, '+
-            'a.name_item,SUM(a.amount) AS amount,a.unit '+
+            'a.name_item,SUM(a.amount) AS amount,a.unit,c.loading_date '+
             'FROM "public"."t_spm_det" a '+
             'LEFT JOIN "public".get_selling(NULL) b ON a."notrans_sale" = b."trans_no" '+
             'LEFT JOIN t_spm c ON c.notrans = a.notrans '+
             'WHERE a."notrans" = '+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
-            'GROUP BY b.code_kabupaten,b.kabupaten,c.notrans,a.code_cust, '+
-            'a.name_cust,c.number_of_vehicles,a.code_items,a.name_item,a.unit ) zz '+
-            'GROUP BY zz.code_kabupaten,zz.kabupaten,zz.notrans, '+
-            'zz.cust_vendor,zz.cust_name_vendor,zz.number_of_vehicles, '+
+            'GROUP BY '+
+//            b.code_kabupaten,b.kabupaten,
+            'c.notrans,a.code_cust, '+
+            'a.name_cust,c.number_of_vehicles,a.code_items,a.name_item,a.unit,c.loading_date ) zz '+
+            'GROUP BY zz.loading_date, '+
+//            zz.code_kabupaten,zz.kabupaten,
+            'zz.notrans, '+
+            'zz.cust_vendor,zz.cust_name_vendor, '+
+            'zz.number_of_vehicles, '+
             'zz.code_items,zz.name_item,zz.amount,zz.unit '+
             'ORDER BY zz.notrans DESC;');
 //     sql.add(' select b.code_kabupaten,b.kabupaten,c.notrans, "notrans_do", "notrans_sale", a."code_cust" as cust_vendor, '+
@@ -331,11 +344,20 @@ begin
 
  if QCetak.RecordCount<>0 then
  begin
+  with QCetak2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT DISTINCT string_agg(DISTINCT b.kabupaten, '', '') kabupaten from t_spm_det a '+
+              'left join get_selling(NULL) b on a."notrans_sale" = b."trans_no"  '+
+              'where notrans='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString);
+    Open;
+  end;
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
    Report.LoadFromFile(cLocation +'report/rpt_perintahmuat'+ '.fr3');
-   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
+   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QCetak.FieldValues['loading_date']));
    //Report.DesignReport();
    Report.ShowReport();
  end;
@@ -349,17 +371,20 @@ end;
 
 procedure TFListPerintahMuat.dxBarLargeButton4Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
 end;
 
 procedure TFListPerintahMuat.dxBarLargeButton5Click(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   Refresh;
 end;
 
 procedure TFListPerintahMuat.FormShow(Sender: TObject);
 begin
+  DBGridList.SearchPanel.SearchingText:='';
   dtAwal.EditValue := Date;
   dtAkhir.EditValue := Date;
   ActROExecute(sender);

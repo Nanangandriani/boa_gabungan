@@ -22,6 +22,7 @@ object FDataKasBon: TFDataKasBon
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1111
     object LabelPelanggan: TLabel
       Left = 18
       Top = 72
@@ -39,7 +40,7 @@ object FDataKasBon: TFDataKasBon
     object Label12: TLabel
       Left = 18
       Top = 44
-      Width = 91
+      Width = 93
       Height = 15
       Caption = 'Tanggal Transaksi'
     end
@@ -67,7 +68,7 @@ object FDataKasBon: TFDataKasBon
     object Label1: TLabel
       Left = 18
       Top = 15
-      Width = 69
+      Width = 70
       Height = 15
       Caption = 'No. Transaksi'
     end
@@ -136,18 +137,20 @@ object FDataKasBon: TFDataKasBon
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitHeight = 240
+    ExplicitWidth = 1111
+    ExplicitHeight = 278
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1129
-      ExplicitHeight = 195
+      ExplicitWidth = 1107
+      ExplicitHeight = 253
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
         Width = 1113
         Height = 262
         Align = alClient
+        AutoFitColWidths = True
         DataSource = DSDetailAkun
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
@@ -249,9 +252,8 @@ object FDataKasBon: TFDataKasBon
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = -16
-    ExplicitTop = 522
-    ExplicitWidth = 1133
+    ExplicitTop = 463
+    ExplicitWidth = 1111
     object BBatal: TRzBitBtn
       Left = 1041
       Top = 1
@@ -312,7 +314,7 @@ object FDataKasBon: TFDataKasBon
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1057
+      ExplicitLeft = 1035
     end
     object BSave: TRzBitBtn
       Left = 966
@@ -374,7 +376,7 @@ object FDataKasBon: TFDataKasBon
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 982
+      ExplicitLeft = 960
     end
     object Edautocode: TEdit
       Left = 712
@@ -485,6 +487,6 @@ object FDataKasBon: TFDataKasBon
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
     Left = 504
-    Top = 424
+    Top = 416
   end
 end

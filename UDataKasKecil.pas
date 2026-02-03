@@ -99,6 +99,7 @@ type
     procedure edKodeMataUangChange(Sender: TObject);
     procedure edKode_supplierChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MemKeteranganKeyPress(Sender: TObject; var Key: Char);
   private
     vtotal_debit, vtotal_kredit, vtotal_piutang : real;
     { Private declarations }
@@ -229,6 +230,10 @@ begin
     end;
 end;
 
+procedure TFDataKasKecil.MemKeteranganKeyPress(Sender: TObject; var Key: Char);
+begin
+  Key := UpCase(Key);
+end;
 
 procedure TFDataKasKecil.Save;
 begin
@@ -558,7 +563,6 @@ begin
   MemDetailAkun.EmptyTable;
   MemDetailAkun.Active:=false;
   MemDetailAkun.Active:=true;
-
   edNoTrans.Clear;
   dtTrans.date:=now();
   edKodeKepada.Clear;
@@ -695,6 +699,7 @@ begin
       SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a'+
                 ' left join t_ak_account b on a.account_code=b.code  '+
                 ' left join t_ak_header c on b.header_code=c.header_code'+
+                ' where a.module_id=11 and b.code is not null  '+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
       Execute;
@@ -707,7 +712,8 @@ procedure TFDataKasKecil.DBGridAkunColumns4EditButtons0Click(Sender: TObject;
 begin
   FMasterData.Caption:='Master Kelompok Biaya';
   FMasterData.vcall:='kaskecil_group_biaya';
-  FMasterData.update_grid('initial_code','name','description','"t_cost_group"','WHERE	deleted_at is null ORDER BY name desc');
+  FMasterData.update_grid('id','cost_type','cost_type','"t_ak_type_cost"','WHERE	deleted_at is null ORDER BY cost_type desc');
+  //FMasterData.update_grid('initial_code','name','description','"t_cost_group"','WHERE	deleted_at is null ORDER BY name desc');
   FMasterData.ShowModal;
 end;
 
@@ -745,7 +751,8 @@ procedure TFDataKasKecil.edNamaKepadaButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Pelaku Biaya';
   FMasterData.vcall:='kaskecil_pelaku_biaya';
-  FMasterData.update_grid('code','name','nik_employee','"t_cost_actors"','WHERE	deleted_at is null ORDER BY name desc');
+  FMasterData.update_grid('code','name','name_tp','(SELECT a.*,b.name as name_tp from "public"."t_cost_actors" a '+
+                          ' LEFT JOIN t_region_TP b on a.karesidenan_code=b.code)aa','WHERE	deleted_at is null ORDER BY name desc');
   FMasterData.ShowModal;
 end;
 
@@ -811,8 +818,10 @@ begin
   MemDetailAkun.FieldByName('nm_akun').AsString :='Kas Kecil';
   MemDetailAkun.FieldByName('debit').AsFloat := 0;
   MemDetailAkun.FieldByName('kredit').AsFloat := 0;
-  MemDetailAkun.FieldByName('keterangan').AsString :='-';
   MemDetailAkun.FieldByName('kd_header_akun').AsString := headerkode;
+  MemDetailAkun.FieldByName('keterangan').AsString :='-';
+  MemDetailAkun.FieldByName('kd_group_biaya').AsString :=SelectRow('SELECT cost_st_id from t_ak_account where code='+QuotedStr(kode)+'');
+  MemDetailAkun.FieldByName('nm_group_biaya').AsString :=SelectRow('SELECT cost_type from t_ak_type_cost a left join t_ak_account b on a.id=b.cost_st_id where code='+QuotedStr(kode)+'');
   MemDetailAkun.Post;
 end;
 
@@ -830,7 +839,7 @@ begin
     // Jika kredit diisi → debit ikut otomatis
     if (MemDetailAkun.FieldByName('kredit').AsFloat > 0) then
     begin
-        MemDetailAkun.FieldByName('debit').AsFloat :=
+      MemDetailAkun.FieldByName('debit').AsFloat :=
         MemDetailAkun.FieldByName('kredit').AsFloat;
     end;
   end;

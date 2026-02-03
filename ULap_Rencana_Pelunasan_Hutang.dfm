@@ -21,6 +21,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     Width = 1146
     Height = 315
     Align = alClient
+    AutoFitColWidths = True
     DataSource = DS_renc_pelunasan_hutang
     DrawMemoText = True
     DynProps = <>
@@ -72,7 +73,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'jumlah'
+        FieldName = 'amount'
         Footers = <>
         Title.Caption = 'Jumlah'
         Width = 100
@@ -170,7 +171,6 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1140
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -214,7 +214,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     DataSet = Qsupp
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 985
+    Left = 1009
     Top = 152
   end
   object DSsupp: TDataSource
@@ -238,7 +238,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 45871.452897673610000000
+    ReportOptions.LastChange = 46041.644870856480000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -252,7 +252,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
         DataSetName = 'frxDBDatasetSupp'
       end
       item
-        DataSet = frxDBDataset1
+        DataSet = frxDBDataset_rencana_pelunasan_hutang
         DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
       end
       item
@@ -551,7 +551,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
         Height = 28.346456690000000000
         Top = 230.551330000000000000
         Width = 755.906000000000000000
-        DataSet = frxDBDataset1
+        DataSet = frxDBDataset_rencana_pelunasan_hutang
         DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
         RowCount = 0
         Stretched = True
@@ -579,7 +579,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
           DataField = 'principle_name'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -600,7 +600,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
           DataField = 'sj_no'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -623,7 +623,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
           DataField = 'tanggal'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -639,12 +639,11 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 521.952755905512000000
-          Width = 104.314960629921000000
+          Left = 521.952755910000000000
+          Width = 104.314960630000000000
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
-          DataField = 'jumlah'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -656,7 +655,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset_rencana_pelunasan_hutang."jumlah"]')
+            '[frxDBDataset_rencana_pelunasan_hutang."amount"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -667,7 +666,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
           DataField = 'ket'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -691,7 +690,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Height = 28.346456690000000000
           StretchMode = smMaxHeight
           DataField = 'nofakturpajak'
-          DataSet = frxDBDataset1
+          DataSet = frxDBDataset_rencana_pelunasan_hutang
           DataSetName = 'frxDBDataset_rencana_pelunasan_hutang'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -796,6 +795,8 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           Left = 521.952755910000000000
           Width = 104.314960630000000000
           Height = 28.346456690000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -805,17 +806,10 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[SUM(<frxDBDataset_rencana_pelunasan_hutang."jumlah">,MasterData' +
+              '[SUM(<frxDBDataset_rencana_pelunasan_hutang."amount">,MasterData' +
               '1,1)]')
           ParentFont = False
           VAlign = vaCenter
-          Formats = <
-            item
-              FormatStr = '%2.2n'
-              Kind = fkNumeric
-            end
-            item
-            end>
         end
         object Memo63: TfrxMemoView
           AllowVectorExport = True
@@ -1254,7 +1248,8 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     SQL.Strings = (
       
         'SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_nam' +
-        'e,tanggal,nofakturpajak,sj_no,tgltempo,jumlah,urutan,ket '
+        'e,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,k' +
+        'et '
       'FROM '
       
         '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.s' +
@@ -1296,11 +1291,10 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
         ',z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_n' +
         'o=a.inv_no )x '
       ' ')
-    Active = True
     Left = 776
     Top = 272
   end
-  object frxDBDataset1: TfrxDBDataset
+  object frxDBDataset_rencana_pelunasan_hutang: TfrxDBDataset
     UserName = 'frxDBDataset_rencana_pelunasan_hutang'
     CloseDataSource = False
     FieldAliases.Strings = (
@@ -1314,14 +1308,14 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
       'nofakturpajak=nofakturpajak'
       'sj_no=sj_no'
       'tgltempo=tgltempo'
-      'jumlah=jumlah'
+      'amount=amount'
       'urutan=urutan'
       'ket=ket')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 825
-    Top = 272
+    Left = 921
+    Top = 280
   end
   object DSQTgl_Hutang: TDataSource
     DataSet = QTgl_hutang
@@ -1340,7 +1334,8 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     SQL.Strings = (
       
         'SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_nam' +
-        'e,tanggal,nofakturpajak,sj_no,tgltempo,jumlah,urutan,ket '
+        'e,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,k' +
+        'et '
       'FROM '
       
         '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.s' +
@@ -2392,7 +2387,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 961
+    Left = 969
     Top = 72
   end
   object QPerusahaan: TUniQuery

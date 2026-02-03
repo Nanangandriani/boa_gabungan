@@ -115,6 +115,7 @@ type
     cbSBU: TdxBarCombo;
     dxBarLargeButton7: TdxBarLargeButton;
     frxPDFExport1: TfrxPDFExport;
+    cbTP: TcxBarEditItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -124,10 +125,12 @@ type
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton7Click(Sender: TObject);
+    procedure cbTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
+    strTpID, strKaresidenanID : String;
   end;
 
   function FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP;
@@ -155,16 +158,25 @@ end;
 procedure TFLaporanHarianSisaNotaPerTP.cbKaresidenanPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
-  FMasterData.Caption:='Master Data TP';
+  FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='laporanhariansisanotapertpkares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 
+procedure TFLaporanHarianSisaNotaPerTP.cbTPPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='laporanhariansisanotapertptp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
 procedure TFLaporanHarianSisaNotaPerTP.dxBarLargeButton5Click(Sender: TObject);
 var strReportName: String;
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else
@@ -173,7 +185,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,FALSE,FALSE)';
+      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,FALSE,FALSE,'+QuotedStr(strTpID)+') ORDER BY kabupaten ASC';
       Open;
     end;
 
@@ -191,7 +203,7 @@ end;
 
 procedure TFLaporanHarianSisaNotaPerTP.dxBarLargeButton6Click(Sender: TObject);
 begin
-  if cbKaresidenan.EditValue='' then
+  if cbTP.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else
@@ -200,7 +212,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,FALSE,FALSE)';
+//      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,FALSE,FALSE)';
+      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,FALSE,FALSE,'+QuotedStr(strTpID)+') ORDER BY kabupaten ASC ';
       Open;
     end;
   end;
@@ -208,6 +221,9 @@ end;
 
 procedure TFLaporanHarianSisaNotaPerTP.dxBarLargeButton7Click(Sender: TObject);
 begin
+  strTpID:='';
+  strKaresidenanID:='';
+  cbTp.EditValue:='';
   cbKaresidenan.EditValue:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
@@ -227,6 +243,9 @@ end;
 
 procedure TFLaporanHarianSisaNotaPerTP.FormShow(Sender: TObject);
 begin
+  strTpID:='';
+  strKaresidenanID:='';
+  cbTp.EditValue:='';
   cbKaresidenan.EditValue:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;

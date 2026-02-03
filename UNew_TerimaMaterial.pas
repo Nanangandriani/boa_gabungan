@@ -144,7 +144,7 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='SELECT DISTINCT "type"  from t_item_type ';
+       sql.Text:='SELECT DISTINCT "type"  from t_item_type where type=''DAGANG'' ';
        open;
    end;
    edjenis.items.clear;
@@ -852,8 +852,20 @@ begin
     begin
       jenis_tr:='tr_pemb';
       Show;
-      if Qsupplier.Active=False then
-      Qsupplier.Active:=True;
+//      if Qsupplier.Active=False then
+//      Qsupplier.Active:=True;
+
+      with Qsupplier do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' select a.* from t_supplier a '+
+                  ' LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                  ' where type='+QuotedStr(Edjenis.Text)+' and  '+
+                  ' a.deleted_at is null  '+
+                  ' Order by supplier_code ASC';
+        ExecSQL;
+      end;
     end;
 end;
 

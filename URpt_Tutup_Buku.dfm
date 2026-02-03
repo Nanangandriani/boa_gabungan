@@ -41,6 +41,8 @@ object FRpt_Tutup_Buku: TFRpt_Tutup_Buku
     Align = alClient
     DataSource = DSTutup_Buku
     DynProps = <>
+    SearchPanel.Enabled = True
+    SearchPanel.WholeWords = True
     TabOrder = 1
     TitleParams.MultiTitle = True
     Columns = <

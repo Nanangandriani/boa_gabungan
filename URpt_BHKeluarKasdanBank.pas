@@ -25,34 +25,13 @@ uses
   cxControls, cxLookAndFeels, cxLookAndFeelPainters, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, cxDropDownEdit, cxBarEditItem, dxRibbon,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh;
+  GridsEh, DBAxisGridsEh, DBGridEh, frxExportXLS, frxExportBaseDialog,
+  frxExportXLSX, ShellAPI;
 
 type
   TFRpt_BHKeluarKasdanBank = class(TForm)
     rpt: TfrxReport;
     QKasBank: TUniQuery;
-    QKasBankvoucher: TStringField;
-    QKasBankket: TMemoField;
-    QKasBanknm: TMemoField;
-    QKasBanknosj: TMemoField;
-    QKasBankjum_kas: TFloatField;
-    QKasBankjum_bank: TFloatField;
-    QKasBankjum_akun_k: TFloatField;
-    QKasBankkodesp_k: TStringField;
-    QKasBanknamasp_k: TStringField;
-    QKasBankkode3: TStringField;
-    QKasBankjum_debit_hutang: TFloatField;
-    QKasBanknopk: TStringField;
-    QKasBanknmpk: TStringField;
-    QKasBankjum: TFloatField;
-    QKasBankkode3_1: TStringField;
-    QKasBankkodesp_k_1: TStringField;
-    QKasBanknopk_1: TStringField;
-    QKasBankvoucher2: TMemoField;
-    QKasBankket2: TMemoField;
-    QKasBankjum_kas2: TFloatField;
-    QKasBanknourut: TLargeintField;
-    QKasBanknomor: TLargeintField;
     frxDBDataset1: TfrxDBDataset;
     dxRibbon1: TdxRibbon;
     dxRibbon1Tab1: TdxRibbonTab;
@@ -69,16 +48,59 @@ type
     DBGridEh1: TDBGridEh;
     QPerusahaan: TUniQuery;
     frxDBDatasetPers: TfrxDBDataset;
+    DSKasBank: TDataSource;
+    QKasBanktanggal: TDateField;
+    QKasBankno_bukti: TStringField;
+    QKasBanksupplier_code: TMemoField;
+    QKasBankname: TMemoField;
+    QKasBankketerangan: TStringField;
+    QKasBankdeb_hut_acc: TMemoField;
+    QKasBankdeb_hut_nm: TMemoField;
+    QKasBankdeb_hut_jum: TFloatField;
+    QKasBankdeb_lain_acc: TMemoField;
+    QKasBankdeb_lain_nm: TMemoField;
+    QKasBankdeb_lain_jum: TFloatField;
+    QKasBankkre_k_b_acc: TMemoField;
+    QKasBankkre_k_b_nm: TMemoField;
+    QKasBankkre_k_b_jum: TFloatField;
+    QKasBankkre_lain_acc: TMemoField;
+    QKasBankkre_lain_nm: TMemoField;
+    QKasBankkre_lain_jum: TFloatField;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure QKasBankket2GetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBanksupplier_codeGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBanknameGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankdeb_hut_accGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankdeb_hut_nmGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankdeb_lain_accGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankdeb_lain_nmGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankkre_k_b_accGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankkre_k_b_nmGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankkre_lain_accGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure QKasBankkre_lain_nmGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure ExportToExcel;
   end;
 
 //var
@@ -102,64 +124,149 @@ begin
      Application.CreateForm(TFRpt_BHKeluarKasdanBank,Result);
 end;
 
+
+procedure TFRpt_BHKeluarKasdanBank.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Rpt.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
+end;
+
 procedure TFRpt_BHKeluarKasdanBank.dxBarLargeButton1Click(Sender: TObject);
 begin
-    if DtMulai.EditValue<> null then
+  with QKasBank do
+  begin
+      close;
+      sql.Clear;
+      sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
+      ExecSQL;
+  end;
+    if QKasBank.RecordCount=0 then
     begin
-      with QKasBank do
-      begin
-          close;
-          sql.Clear;
-          sql.Text:='SELECT CASE	WHEN	nomor = 1 THEN	voucher ELSE'''' 	END voucher2,CASE WHEN nomor = 1 THEN	ket ELSE'''' 	END ket2, '+
-          ' CASE WHEN nomor = 1 THEN	jum_kas ELSE 0 	END jum_kas2,* FROM	(/*X3*/	SELECT	x2.*,"row_number" ( ) OVER (PARTITION BY voucher ORDER BY nourut ASC ) AS nomor FROM'+
-          '	(/*X2*/SELECT	xx.voucher,xx.ket,bb.nm,ab.nosj,xx.jum_kas,xx.jum_bank,xx.jum_akun_k,xx.kodesp_k,xx.namasp_k,xx.kode3,xx.jum_debit_hutang,xx.nopk,xx.nmpk,xx.jum,	'+
-          '	xx.ROW_NUMBER nourut,xx.kode3,xx.kodesp_k,xx.nopk FROM		'+
-          ' (/*xx*/	SELECT DISTINCT	voucher.voucher,voucher.ket,kas.jum_kas,kas.jum_bank,akun_k.jum_akun_k,akun_k.kodesp_k,akun_k.namasp_k,d_hutang.nopk kode3,d_hutang.jum_debit_hutang,'+
-          ' k_lain.nopk,k_lain.nmpk,k_lain.jum,ROW_NUMBER ( ) OVER ( ORDER BY voucher.voucher, d_hutang.nopk, akun_k.kodesp_k, k_lain.nopk ) FROM   '+
-          '	(/*voucher*/SELECT	kas.voucher_no voucher,(CASE	WHEN kas.code_account =(select f_debt_master(1)) THEN	concat ( kas.to_, '' '' ) '+
-          ' WHEN kas.code_account =(select f_debt_master(2))  THEN	concat ( kas.to_,'' '') WHEN kas.code_account =(select f_debt_master(3)) '+
-          ' THEN	concat ( kas.to_,'' '' ) ELSE concat ( kas.remark, '' '', ''('', kas.to_, '')'' ) END ) AS ket,kas.code_account AS nopk,'+
-          ' pk.account_name AS nmpk,kas.code_account AS kd3,"position" FROM ( select a.*,b.code_account,b."position" from t_cash_bank_expenditure a '+
-          ' INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher)  kas LEFT JOIN t_ak_account pk ON kas.code_account = pk.code '+
-          ' WHERE( kas.trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' ) AND ( kas."position" = ''D'' ) AND '+
-          ' (SUBSTRING ( kas.voucher_no, 1, 2 ) <> ''KC'' ) AND ( SUBSTRING ( kas.voucher_no, 1, 2 ) <> ''KM'' ) '+
-          ' /*voucher*/) voucher '+
-          ' LEFT JOIN ( /*kas*/select a.voucher_no voucher,b.code_account,case when a.module_id=6 then ( CASE WHEN a.currency = ''USD'' THEN '+
-          ' SUM(amount * kurs) ELSE SUM (amount) END )  else 0 end jum_kas,case when a.module_id=5 then ( CASE WHEN a.currency = ''USD'' THEN '+
-          ' SUM(amount * kurs) ELSE SUM (amount) END )  else 0 end jum_bank from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b'+
-          ' on a.voucher_no=b.no_voucher WHERE "position" = ''K'' AND ( SUBSTRING ( voucher_no, 1, 2 ) <> ''KC'' ) GROUP BY a.voucher_no,b.code_account,a.currency,a.module_id/*kas*/) kas'+
-          ' ON kas.voucher = voucher.voucher '+
-          ' /*kas bank*/'+
-          ' LEFT JOIN (/*akun_k*/ SELECT DISTINCT A.no_voucher voucher,A.code_account AS kodesp_k,( CASE WHEN currency = ''USD'' THEN SUM (A.paid_amount * A.kurs) ELSE SUM (A.paid_amount) END )'+
-          ' jum_akun_k,b.account_name AS namasp_k FROM (select a.currency,a.kurs,b.* from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) A,'+
-          ' t_ak_account b WHERE A.code_account = b.code AND A."position" = ''K'' AND (a.code_account not in  (select account_no from t_bank) ) AND A.code_account <> ( select f_debt_master(4))AND'+
-          ' ( SUBSTRING ( A.no_voucher, 1, 2 ) <> ''KC'' ) GROUP BY a.no_voucher,a.code_account,b.account_name,a.currency /*akun_k*/ ) akun_k ON akun_k.voucher = voucher.voucher '+
-          ' LEFT JOIN (/*D_hutang*/SELECT A	.voucher_no voucher,( CASE WHEN A.currency = ''USD'' THEN A.amount* a.kurs ELSE A.amount END ) jum_debit_hutang,b.code_account nopk FROM '+
-          ' t_cash_bank_expenditure A INNER JOIN t_cash_bank_expenditure_det b on A.voucher_no= b.no_voucher'+
-          ' WHERE ( b.position= ''D'' ) AND ( code_account = (select f_debt_master(1)))  /*D_hutang*/) D_hutang ON D_hutang.voucher = voucher.voucher AND D_hutang.nopk = voucher.nopk'+
-          ' LEFT JOIN (/*d_lain2*/SELECT	a.voucher_no voucher,( CASE WHEN a.currency = ''USD'' THEN SUM (a.amount * a.kurs ) ELSE SUM ( amount ) END )jum_debit_lain2,b.code_account nopk,'+
-          ' name_account nmpk FROM t_cash_bank_expenditure A INNER JOIN t_cash_bank_expenditure_det b on A.voucher_no= b.no_voucher  WHERE( "position" = ''D'') AND (SUBSTRING (a.voucher_no, 1, 2) <> ''KC'')'+
-          ' AND b.code_account <> (select f_debt_master(1)) GROUP BY a.voucher_no,b.code_account,b.name_account,a.currency /*d_lain2*/) D_lain2 ON D_lain2.voucher = voucher.voucher AND D_lain2.nopk = voucher.nopk'+
-          ' LEFT JOIN (SELECT DISTINCT A.voucher_no voucher,a.nopk,a.nmpk,A.jum,A.urt FROM (/*A*/SELECT DISTINCT a.voucher_no,b.code_account AS nopk,b.name_account AS nmpk, '+
-          '	(CASE WHEN a.currency = ''USD'' THEN SUM ( a.amount * a.kurs ) ELSE SUM ( a.amount ) END ) jum,''1'' AS urt  FROM t_cash_bank_expenditure a INNER join t_cash_bank_expenditure_det b '+
-          '  on a.voucher_no=b.no_voucher WHERE ( a.trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' ) AND (b."position" = ''D'') AND ( SUBSTRING ( a.voucher_no, 1, 12 ) <> ''KC'' )'+
-          ' AND b.code_account <> (select f_debt_master(1)) AND (	( SUBSTRING (b.code_account, 1, 4 ) <> ''1113'' AND SUBSTRING ( a.voucher_no, 1, 2 ) = ''BM'' ) 	OR ( SUBSTRING (a.voucher_no, 1, 2 ) = ''BK''))'+
-          ' GROUP BY a.voucher_no,b.code_account,b.name_account,a.currency /*A*/) A ) k_lain ON ( k_lain.voucher= voucher.voucher AND k_lain.nopk = voucher.nopk AND urt = ''2'') OR ( k_lain.voucher= voucher.voucher AND k_lain.nopk = voucher.nopk  AND urt = ''1'')'+
-          ' ORDER BY voucher.voucher, d_hutang.nopk, akun_k.kodesp_k, k_lain.nopk) xx'+
-          ' LEFT JOIN (SELECT A.voucher_no voucher,A.trans_date tgl_trans,string_agg ( concat ( ''SJ.'', b.sj_no ), '','' ) nosj,	C.supplier_name nm_supplier FROM	 t_cash_bank_expenditure_payable A inner join	'+
-          ' t_purchase_invoice b on A.invoice_no = b.trans_no  inner join t_supplier C on b.supplier_code = C.supplier_code GROUP BY	A.voucher_no,	A.trans_date,	C.supplier_name ) ab ON  ab.voucher = xx.voucher'+
-          '	LEFT JOIN LATERAL (SELECT	string_agg ( concat ( item_name, '' '', to_char( tot_qty, ''99,999,999FM''), '' '', unit ), '','' ) nm FROM'+
-          '	(SELECT C.item_code,	C.item_name,b.unit,SUM ( b.qty ) AS tot_qty FROM (SELECT DISTINCT invoice_no no_lpb FROM t_cash_bank_expenditure_payable '+
-          ' WHERE voucher_no = xx.voucher )	 A '+
-          ' LEFT JOIN ( SELECT A.* FROM t_purchase_invoice_det A INNER JOIN t_purchase_invoice b ON A.trans_no= b.trans_no WHERE b.account_code= ''2110'') b ON A.no_lpb = b.trans_no '+
-          ' LEFT JOIN t_item_stock C ON b.item_stock_code = C.item_stock_code  GROUP BY	C.item_code,C.item_name,b.unit ORDER BY	C.item_name,b.unit) A ) bb ON 1 = 1 /*x2*/ )x2)x3 ';
-          ExecSQL;
-      end;
-        Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BHKeluar_KasdanBank_try.Fr3');
-        SetMemo(Rpt,'MemoPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
-        rpt.ShowReport();
-    end else
-      ShowMessage('Tanggal tidak boleh kosong');
+      ShowMessage('tidak ada transaksi');
+    end;
+
+    if QKasBank.RecordCount<>0 then
+    begin
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BH_Pengeluaran_Kas_Bank.Fr3');
+      SetMemo(Rpt,'jns_hutang',' BUKU HARIAN KELUAR KAS DAN BANK ');
+      SetMemo(Rpt,'MPeriode',' Tanggal  : '+FormatDateTime('dd mmmm yyyy',DtMulai.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTSelesai.EditValue));
+      Rpt.ShowReport();
+    end;
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.dxBarLargeButton2Click(Sender: TObject);
+begin
+  with QKasBank do
+  begin
+      close;
+      sql.Clear;
+      sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
+      ExecSQL;
+  end;
+    if QKasBank.RecordCount=0 then
+    begin
+      ShowMessage('tidak ada transaksi');
+    end;
+
+    if QKasBank.RecordCount<>0 then
+    begin
+      Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BH_Pengeluaran_Kas_Bank.Fr3');
+      SetMemo(Rpt,'jns_hutang',' BUKU HARIAN KELUAR KAS DAN BANK ');
+      SetMemo(Rpt,'MPeriode',' Tanggal  : '+FormatDateTime('dd mmmm yyyy',DtMulai.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTSelesai.EditValue));
+      //Rpt.ShowReport();
+      Rpt.PrepareReport(True);
+
+      ExportToExcel;
+    end;
 end;
 
 procedure TFRpt_BHKeluarKasdanBank.DxRefreshClick(Sender: TObject);
@@ -168,49 +275,9 @@ begin
   begin
       close;
       sql.Clear;
-      sql.Text:='SELECT CASE	WHEN	nomor = 1 THEN	voucher ELSE'''' 	END voucher2,CASE WHEN nomor = 1 THEN	ket ELSE'''' 	END ket2, '+
-      ' CASE WHEN nomor = 1 THEN	jum_kas ELSE 0 	END jum_kas2,* FROM	(/*X3*/	SELECT	x2.*,"row_number" ( ) OVER (PARTITION BY voucher ORDER BY nourut ASC ) AS nomor FROM'+
-      '	(/*X2*/SELECT	xx.voucher,xx.ket,bb.nm,ab.nosj,xx.jum_kas,xx.jum_bank,xx.jum_akun_k,xx.kodesp_k,xx.namasp_k,xx.kode3,xx.jum_debit_hutang,xx.nopk,xx.nmpk,xx.jum,	'+
-      '	xx.ROW_NUMBER nourut,xx.kode3,xx.kodesp_k,xx.nopk FROM		'+
-      ' (/*xx*/	SELECT DISTINCT	voucher.voucher,voucher.ket,kas.jum_kas,kas.jum_bank,akun_k.jum_akun_k,akun_k.kodesp_k,akun_k.namasp_k,d_hutang.nopk kode3,d_hutang.jum_debit_hutang,'+
-      ' k_lain.nopk,k_lain.nmpk,k_lain.jum,ROW_NUMBER ( ) OVER ( ORDER BY voucher.voucher, d_hutang.nopk, akun_k.kodesp_k, k_lain.nopk ) FROM   '+
-	    '	(/*voucher*/SELECT	kas.voucher_no voucher,(CASE	WHEN kas.code_account =(select f_debt_master(1)) THEN	concat ( kas.to_, '' '' ) '+
-      ' WHEN kas.code_account =(select f_debt_master(2))  THEN	concat ( kas.to_,'' '') WHEN kas.code_account =(select f_debt_master(3)) '+
-      ' THEN	concat ( kas.to_,'' '' ) ELSE concat ( kas.remark, '' '', ''('', kas.to_, '')'' ) END ) AS ket,kas.code_account AS nopk,'+
-      ' pk.account_name AS nmpk,kas.code_account AS kd3,"position" FROM ( select a.*,b.code_account,b."position" from t_cash_bank_expenditure a '+
-      ' INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher)  kas LEFT JOIN t_ak_account pk ON kas.code_account = pk.code '+
-      ' WHERE( kas.trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' ) AND ( kas."position" = ''D'' ) AND '+
-      ' (SUBSTRING ( kas.voucher_no, 1, 2 ) <> ''KC'' ) AND ( SUBSTRING ( kas.voucher_no, 1, 2 ) <> ''KM'' ) '+
-      ' /*voucher*/) voucher '+
-      ' LEFT JOIN ( /*kas*/select a.voucher_no voucher,b.code_account,case when a.module_id=6 then ( CASE WHEN a.currency = ''USD'' THEN '+
-      ' SUM(amount * kurs) ELSE SUM (amount) END )  else 0 end jum_kas,case when a.module_id=5 then ( CASE WHEN a.currency = ''USD'' THEN '+
-      ' SUM(amount * kurs) ELSE SUM (amount) END )  else 0 end jum_bank from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b'+
-      ' on a.voucher_no=b.no_voucher WHERE "position" = ''K'' AND ( SUBSTRING ( voucher_no, 1, 2 ) <> ''KC'' ) GROUP BY a.voucher_no,b.code_account,a.currency,a.module_id/*kas*/) kas'+
-      ' ON kas.voucher = voucher.voucher '+
-      ' /*kas bank*/'+
-      ' LEFT JOIN (/*akun_k*/ SELECT DISTINCT A.no_voucher voucher,A.code_account AS kodesp_k,( CASE WHEN currency = ''USD'' THEN SUM (A.paid_amount * A.kurs) ELSE SUM (A.paid_amount) END )'+
-      ' jum_akun_k,b.account_name AS namasp_k FROM (select a.currency,a.kurs,b.* from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) A,'+
-      ' t_ak_account b WHERE A.code_account = b.code AND A."position" = ''K'' AND (a.code_account not in  (select account_no from t_bank) ) AND A.code_account <> ( select f_debt_master(4))AND'+
-      ' ( SUBSTRING ( A.no_voucher, 1, 2 ) <> ''KC'' ) GROUP BY a.no_voucher,a.code_account,b.account_name,a.currency /*akun_k*/ ) akun_k ON akun_k.voucher = voucher.voucher '+
-      ' LEFT JOIN (/*D_hutang*/SELECT A	.voucher_no voucher,( CASE WHEN A.currency = ''USD'' THEN A.amount* a.kurs ELSE A.amount END ) jum_debit_hutang,b.code_account nopk FROM '+
-      ' t_cash_bank_expenditure A INNER JOIN t_cash_bank_expenditure_det b on A.voucher_no= b.no_voucher'+
-      ' WHERE ( b.position= ''D'' ) AND ( code_account = (select f_debt_master(1)))  /*D_hutang*/) D_hutang ON D_hutang.voucher = voucher.voucher AND D_hutang.nopk = voucher.nopk'+
-      ' LEFT JOIN (/*d_lain2*/SELECT	a.voucher_no voucher,( CASE WHEN a.currency = ''USD'' THEN SUM (a.amount * a.kurs ) ELSE SUM ( amount ) END )jum_debit_lain2,b.code_account nopk,'+
-      ' name_account nmpk FROM t_cash_bank_expenditure A INNER JOIN t_cash_bank_expenditure_det b on A.voucher_no= b.no_voucher  WHERE( "position" = ''D'') AND (SUBSTRING (a.voucher_no, 1, 2) <> ''KC'')'+
-      ' AND b.code_account <> (select f_debt_master(1)) GROUP BY a.voucher_no,b.code_account,b.name_account,a.currency /*d_lain2*/) D_lain2 ON D_lain2.voucher = voucher.voucher AND D_lain2.nopk = voucher.nopk'+
-      ' LEFT JOIN (SELECT DISTINCT A.voucher_no voucher,a.nopk,a.nmpk,A.jum,A.urt FROM (/*A*/SELECT DISTINCT a.voucher_no,b.code_account AS nopk,b.name_account AS nmpk, '+
-      '	(CASE WHEN a.currency = ''USD'' THEN SUM ( a.amount * a.kurs ) ELSE SUM ( a.amount ) END ) jum,''1'' AS urt  FROM t_cash_bank_expenditure a INNER join t_cash_bank_expenditure_det b '+
-      '  on a.voucher_no=b.no_voucher WHERE ( a.trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' ) AND (b."position" = ''D'') AND ( SUBSTRING ( a.voucher_no, 1, 12 ) <> ''KC'' )'+
-      ' AND b.code_account <> (select f_debt_master(1)) AND (	( SUBSTRING (b.code_account, 1, 4 ) <> ''1113'' AND SUBSTRING ( a.voucher_no, 1, 2 ) = ''BM'' ) 	OR ( SUBSTRING (a.voucher_no, 1, 2 ) = ''BK''))'+
-      ' GROUP BY a.voucher_no,b.code_account,b.name_account,a.currency /*A*/) A ) k_lain ON ( k_lain.voucher= voucher.voucher AND k_lain.nopk = voucher.nopk AND urt = ''2'') OR ( k_lain.voucher= voucher.voucher AND k_lain.nopk = voucher.nopk  AND urt = ''1'')'+
-      ' ORDER BY voucher.voucher, d_hutang.nopk, akun_k.kodesp_k, k_lain.nopk) xx'+
-      ' LEFT JOIN (SELECT A.voucher_no voucher,A.trans_date tgl_trans,string_agg ( concat ( ''SJ.'', b.sj_no ), '','' ) nosj,	C.supplier_name nm_supplier FROM	 t_cash_bank_expenditure_payable A inner join	'+
-      ' t_purchase_invoice b on A.invoice_no = b.trans_no  inner join t_supplier C on b.supplier_code = C.supplier_code GROUP BY	A.voucher_no,	A.trans_date,	C.supplier_name ) ab ON  ab.voucher = xx.voucher'+
-      '	LEFT JOIN LATERAL (SELECT	string_agg ( concat ( item_name, '' '', to_char( tot_qty, ''99,999,999FM''), '' '', unit ), '','' ) nm FROM'+
-      '	(SELECT C.item_code,	C.item_name,b.unit,SUM ( b.qty ) AS tot_qty FROM (SELECT DISTINCT invoice_no no_lpb FROM t_cash_bank_expenditure_payable '+
-      ' WHERE voucher_no = xx.voucher )	 A '+
-      ' LEFT JOIN ( SELECT A.* FROM t_purchase_invoice_det A INNER JOIN t_purchase_invoice b ON A.trans_no= b.trans_no WHERE b.account_code= ''2110'') b ON A.no_lpb = b.trans_no '+
-      ' LEFT JOIN t_item_stock C ON b.item_stock_code = C.item_stock_code  GROUP BY	C.item_code,C.item_name,b.unit ORDER BY	C.item_name,b.unit) A ) bb ON 1 = 1 /*x2*/ )x2)x3 ';
+      sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
       ExecSQL;
   end;
     if QKasBank.RecordCount=0 then
@@ -239,6 +306,74 @@ procedure TFRpt_BHKeluarKasdanBank.FormShow(Sender: TObject);
 begin
     DTMulai.EditValue:=date();
     DTSelesai.EditValue:=date();
+    DBGridEh1.FrozenCols := 5;
+    DBGridEh1.Columns[4].WordWrap := True;
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankdeb_hut_accGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+ Text := Copy(QKasBankdeb_hut_acc.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankdeb_hut_nmGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankdeb_hut_nm.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankdeb_lain_accGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankdeb_lain_acc.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankdeb_lain_nmGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankdeb_lain_nm.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankket2GetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankketerangan.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankkre_k_b_accGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankkre_k_b_acc.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankkre_k_b_nmGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankkre_k_b_nm.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankkre_lain_accGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankkre_lain_acc.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBankkre_lain_nmGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+Text := Copy(QKasBankkre_lain_nm.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBanknameGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+ Text := Copy(QKasBankname.AsString, 1, 500);
+end;
+
+procedure TFRpt_BHKeluarKasdanBank.QKasBanksupplier_codeGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+ Text := Copy(QKasBanksupplier_code.AsString, 1, 500);
 end;
 
 initialization

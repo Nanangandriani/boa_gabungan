@@ -64,6 +64,22 @@ begin
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
 //Nanang
+  if vcall='penerimaankas_bank_kares' then
+  begin
+    FDataPenerimaanBank.kd_kares:=MemMasterData['KD_MASTER'];
+    FDataPenerimaanBank.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
+//Nanang
+  if vcall='bhpenjualan_tp' then
+  begin
+    FBHPenjualan.vkd_tp:=MemMasterData['KD_MASTER'];
+    FBHPenjualan.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenjualan.vkd_kares:='';
+    FBHPenjualan.edKaresidenan.EditValue:='';
+    FBHPenjualan.vkd_kab:='';
+    FBHPenjualan.edKabupaten.EditValue:='';
+  end;
+//Nanang
   if vcall='lappenjualan_kares' then
   begin
     FLaporanPenjualan.strKodeKaresidenan:=MemMasterData['KD_MASTER'];
@@ -284,6 +300,17 @@ begin
   begin
     FBHPenerimaanKasBank.vkd_kares:=MemMasterData['KD_MASTER'];
     FBHPenerimaanKasBank.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenerimaanKasBank.vkd_tp:='';
+    FBHPenerimaanKasBank.edTp.EditValue:='';
+    FBHPenerimaanKasBank.vkd_kab:='';
+    FBHPenerimaanKasBank.edKabupaten.EditValue:='';
+  end;
+  if vcall='bhpenerimaankas_bank_tp' then
+  begin
+    FBHPenerimaanKasBank.vkd_tp:=MemMasterData['KD_MASTER'];
+    FBHPenerimaanKasBank.edTp.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenerimaanKasBank.vkd_kares:='';
+    FBHPenerimaanKasBank.edKaresidenan.EditValue:='';
     FBHPenerimaanKasBank.vkd_kab:='';
     FBHPenerimaanKasBank.edKabupaten.EditValue:='';
   end;
@@ -296,6 +323,8 @@ begin
   begin
     FBHPenjualan.vkd_kares:=MemMasterData['KD_MASTER'];
     FBHPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FBHPenjualan.vkd_tp:='';
+    FBHPenjualan.edTP.EditValue:='';
     FBHPenjualan.vkd_kab:='';
     FBHPenjualan.edKabupaten.EditValue:='';
   end;
@@ -315,6 +344,17 @@ begin
     FBHReturPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
     FBHReturPenjualan.vkd_kab:='';
     FBHReturPenjualan.edKabupaten.EditValue:='';
+    FBHReturPenjualan.vkd_tp:='';
+    FBHReturPenjualan.edTP.EditValue:='';
+  end;
+  if vcall='bhreturpenjualan_tp' then
+  begin
+    FBHReturPenjualan.vkd_tp:=MemMasterData['KD_MASTER'];
+    FBHReturPenjualan.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FBHReturPenjualan.vkd_kab:='';
+    FBHReturPenjualan.edKabupaten.EditValue:='';
+    FBHReturPenjualan.vkd_kares:='';
+    FBHReturPenjualan.edKaresidenan.EditValue:='';
   end;
   if vcall='rekappenjualan_kab' then
   begin
@@ -1332,18 +1372,37 @@ begin
     FMonitoringTargetOmset.strKelompokID:=MemMasterData['KD_MASTER'];
     FMonitoringTargetOmset.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
   end;
-
+  //Nanang
+  if vcall='laporanhariansisanotatp' then
+  begin
+    FLaporanHarianSisaNota.strTpID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNota.cbTP.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNota.strKaresidenanID:='';
+    FLaporanHarianSisaNota.cbKaresidenan.EditValue:='';
+    FLaporanHarianSisaNota.strKabupatenID:='';
+    FLaporanHarianSisaNota.cbKabupaten.EditValue:='';
+    FLaporanHarianSisaNota.strKecamatanID:='';
+    FLaporanHarianSisaNota.cbKecamatan.EditValue:='';
+  end;
   //Nanang
   if vcall='laporanhariansisanotakares' then
   begin
     FLaporanHarianSisaNota.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNota.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNota.strTpID:='';
+    FLaporanHarianSisaNota.cbTP.EditValue:='';
+    FLaporanHarianSisaNota.strKabupatenID:='';
+    FLaporanHarianSisaNota.cbKabupaten.EditValue:='';
+    FLaporanHarianSisaNota.strKecamatanID:='';
+    FLaporanHarianSisaNota.cbKecamatan.EditValue:='';
   end;
   //Nanang
   if vcall='laporanhariansisanotakab' then
   begin
     FLaporanHarianSisaNota.strKabupatenID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNota.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNota.strKecamatanID:='';
+    FLaporanHarianSisaNota.cbKecamatan.EditValue:='';
   end;
   //Nanang
   if vcall='laporanhariansisanotakec' then
@@ -1355,7 +1414,15 @@ begin
   //Nanang
   if vcall='laporanhariansisanotapertpkares' then
   begin
+    FLaporanHarianSisaNotaPerTP.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNotaPerTP.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='laporanhariansisanotapertptp' then
+  begin
+    FLaporanHarianSisaNotaPerTP.strTpID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPerTP.cbTp.EditValue:=MemMasterData['NM_MASTER'];
   end;
 
    //Nanang
@@ -1363,23 +1430,46 @@ begin
   begin
     FLaporanHarianSisaNotaPerKabupaten.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNotaPerKabupaten.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.strTPID:='';
+    FLaporanHarianSisaNotaPerKabupaten.cbTP.EditValue:='';
+  end;
+  if vcall='laporanhariansisanotaperkabtp' then
+  begin
+    FLaporanHarianSisaNotaPerKabupaten.strTPID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.cbTP.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.strKaresidenanID:='';
+    FLaporanHarianSisaNotaPerKabupaten.cbKaresidenan.EditValue:='';
   end;
   //Nanang
   if vcall='laporanhariansisanotaperkabkab' then
   begin
-//    FLaporanHarianSisaNotaPerKabupaten.strKabupatenID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPerKabupaten.strKabupatenID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNotaPerKabupaten.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
   end;
 
   //Nanang
   if vcall='laporanhariansisanotapiutangperoutletkares' then
   begin
+    FLaporanHarianSisaNotaPiutangPerOutlet.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FLaporanHarianSisaNotaPiutangPerOutlet.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNotaPiutangPerOutlet.strTPID:='';
+    FLaporanHarianSisaNotaPiutangPerOutlet.cbTP.EditValue:='';
   end;
+
+  //Nanang
+  if vcall='laporanhariansisanotapiutangperoutlettp' then
+  begin
+    FLaporanHarianSisaNotaPiutangPerOutlet.strTPID:=MemMasterData['KD_MASTER'];
+    FLaporanHarianSisaNotaPiutangPerOutlet.cbTP.EditValue:=MemMasterData['NM_MASTER'];
+    FLaporanHarianSisaNotaPiutangPerOutlet.strKaresidenanID:='';
+    FLaporanHarianSisaNotaPiutangPerOutlet.cbKaresidenan.EditValue:='';
+  end;
+
 
   //Nanang
   if vcall='stockopnamenota' then
   begin
+    FStockOpnameNota.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FStockOpnameNota.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
   end;
 
@@ -1464,7 +1554,7 @@ begin
     FMasterData.MemMasterData.SortByFields('KD_MASTER asc');
   end;
 
-
+  Dm.Qtemp.Close;
 end;
 
 initialization
