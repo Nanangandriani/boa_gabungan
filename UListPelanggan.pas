@@ -93,6 +93,8 @@ type
     QPelangganno_npwp: TMemoField;
     QPelangganno_nik: TMemoField;
     QPelanggancode_cust_old: TMemoField;
+    QPelanggankecamatan: TMemoField;
+    cbKecamatan: TcxBarEditItem;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -113,11 +115,13 @@ type
     procedure edJenisUsahaPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure cbKecamatanPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    strKaresidenanID,strKabupatenID,strKodeJenisUsaha :String;
+    strKaresidenanID,strKabupatenID,strKecamatanID,strKodeJenisUsaha :String;
     procedure Refresh;
     procedure ExportToExcel;
   end;
@@ -237,13 +241,13 @@ begin
 end;
 
 procedure TFListPelanggan.Refresh;
-var strWhereKaresidenan,strWhereKabupaten, strWhereSBU, strWhereJenisUsaha: String;
+var strWhereKaresidenan,strWhereKabupaten,strWhereKecamatan, strWhereSBU, strWhereJenisUsaha: String;
 begin
   DBGridcustomer.StartLoadingStatus();
   try
-    if cbKaresidenan.EditValue<>'' then
+    if TRIM(cbKaresidenan.EditValue)<>'' then
     begin
-      strWhereKaresidenan:=' AND tp='+QuotedStr(cbKaresidenan.EditValue);
+      strWhereKaresidenan:=' AND code_tp='+QuotedStr(strKaresidenanID);
     end else
     begin
       strWhereKaresidenan:='';
@@ -259,14 +263,20 @@ begin
       end;
     end;
 
-
-
-    if cbKabupaten.EditValue<>'' then
+    if TRIM(cbKabupaten.EditValue)<>'' then
     begin
-      strWhereKabupaten:=' AND kabupaten='+QuotedStr(cbKabupaten.EditValue);
+      strWhereKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID);
     end else
     begin
       strWhereKabupaten:='';
+    end;
+
+    if TRIM(cbKecamatan.EditValue)<>'' then
+    begin
+      strWhereKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID);
+    end else
+    begin
+      strWhereKecamatan:='';
     end;
 
     if edJenisUsaha.EditValue<>'' then
@@ -281,9 +291,9 @@ begin
       Close;
       SQL.Clear;
       SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
-                'payment_term, customer_name_pkp,kabupaten,karesidenan, '+
+                'payment_term, customer_name_pkp,kabupaten,karesidenan,Upper(kecamatan) kecamatan, '+
                 'tp,name_type,name_selling_type,name_group,name_type_business,no_npwp,no_nik,code_cust_old from get_customer() '+
-                'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+strWhereJenisUsaha+' order by created_at Desc';
+                'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+strWhereJenisUsaha+' order by created_at Desc';
       Open;
     end;
   finally
@@ -302,13 +312,27 @@ begin
   end;
 end;}
 
+procedure TFListPelanggan.cbKecamatanPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  if cbKabupaten.EditValue='' then
+  begin
+    MessageDlg('Kabupaten wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    FMasterData.Caption:='Master Data Kecamatan';
+    FMasterData.vcall:='listpelanggankecamatan';
+    FMasterData.update_grid('code','upper(name)','description','t_region_subdistrict','WHERE	deleted_at IS NULL and code_regency='+QuotedStr(strKabupatenID)+' ');
+    FMasterData.ShowModal;
+  end;
+end;
+
 procedure TFListPelanggan.cxBarEditItem1PropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='listpelanggankaresidenan';
   FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL ');
-  FMasterData.ShowModal
+  FMasterData.ShowModal;
 end;
 
 procedure TFListPelanggan.cxBarEditItem2PropertiesButtonClick(Sender: TObject;
@@ -517,10 +541,12 @@ begin
   DBGridCustomer.SearchPanel.SearchingText:='';
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
+  cbKecamatan.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
   edJenisUsaha.EditValue:='';
   strKodeJenisUsaha:='';
+  strKecamatanID:='';
 
 //  if FHomeLogin.vStatOffice=0 then
 //  begin
@@ -544,12 +570,13 @@ begin
   DBGridCustomer.SearchPanel.SearchingText:='';
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
+  cbKecamatan.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+  strKecamatanID:='';
 
   if cbSBU.Text<>'' then
   Refresh;
-
 end;
 
 procedure TFListPelanggan.dxBarLargeButton1Click(Sender: TObject);
@@ -595,8 +622,10 @@ begin
   cbKaresidenan.EditValue:='';
   cbKabupaten.EditValue:='';
   edJenisUsaha.EditValue:='';
+  cbKecamatan.EditValue:='';
   strKaresidenanID:='';
   strKabupatenID:='';
+  strKecamatanID:='';
   strKodeJenisUsaha:='';
 end;
 

@@ -31,6 +31,10 @@ type
     Edautocode: TEdit;
     btTampilkan: TRzBitBtn;
     MemMasterDataNM_PKP: TStringField;
+    MemMasterDataTP: TStringField;
+    MemMasterDataKARESIDENAN: TStringField;
+    MemMasterDataKABUPATEN: TStringField;
+    MemMasterDataKECAMATAN: TStringField;
     procedure FormShow(Sender: TObject);
     procedure RefreshGrid;
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -112,21 +116,25 @@ begin
     sql.clear;
     sql.add(' select a.customer_code, customer_name,customer_name_pkp, email, address, contact_person1 as telp, '+
             ' code_region, name_region, payment_term, '+
-            ' case when code_karesidenan is null then ''0'' else code_karesidenan end code_karesidenan  '+
+            ' case when code_karesidenan is null then ''0'' else code_karesidenan end code_karesidenan,tp.name tp,  '+
+            ' karesidenan.name karesidenan,getkares.name kabupaten,kecamatan.name kecamatan  '+
             ' from t_customer a '+
             ' LEFT JOIN (select customer_code, address, contact_person1 '+
-            ' from t_customer_address limit 1) b ON a.customer_code=b.customer_code '+
+            ' from t_customer_address WHERE code_details::text = ''001''::text) b ON a.customer_code=b.customer_code '+
             ' LEFT JOIN (SELECT code, name, code_karesidenan, code_tp from t_region_regency) getkares '+
             ' ON "left"(a.code_region,4)=getkares.code '+
-            ' where deleted_at is null '+strWhere);
+            ' LEFT JOIN t_region_tp tp ON tp.code=getkares.code_tp '+
+            ' LEFT JOIN t_region_karesidenan karesidenan ON karesidenan.code=getkares.code_karesidenan  '+
+            ' LEFT JOIN t_region_subdistrict kecamatan ON kecamatan.code=a.code_region '+
+            ' where a.deleted_at is null '+strWhere);
     if SelectRow('select value_parameter from t_parameter where key_parameter=''jns_filter_master_pelanggan'' ')= '1' then
     begin
       if ( Edkodewilayah.Text<>'' ) AND ( Edkodewilayah.Text<>'0' ) then
       begin
-        sql.add(' AND code_region='+QuotedStr(Edkodewilayah.Text)+' ');
+        sql.add(' AND a.code_region='+QuotedStr(Edkodewilayah.Text)+' ');
       end;
     end;
-    sql.add(' ORDER BY created_at Desc ');
+    sql.add(' ORDER BY a.created_at Desc ');
     open;
   end;
 
@@ -153,6 +161,10 @@ begin
      Fbrowse_data_pelanggan.MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
      Fbrowse_data_pelanggan.MemMasterData['ALAMAT']:=Dm.Qtemp.fieldbyname('address').value;
      Fbrowse_data_pelanggan.MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname('code_karesidenan').value;
+     Fbrowse_data_pelanggan.MemMasterData['KARESIDENAN']:=Dm.Qtemp.fieldbyname('karesidenan').value;
+     Fbrowse_data_pelanggan.MemMasterData['TP']:=Dm.Qtemp.fieldbyname('tp').value;
+     Fbrowse_data_pelanggan.MemMasterData['KABUPATEN']:=Dm.Qtemp.fieldbyname('kabupaten').value;
+     Fbrowse_data_pelanggan.MemMasterData['KECAMATAN']:=Dm.Qtemp.fieldbyname('kecamatan').value;
      Fbrowse_data_pelanggan.MemMasterData.post;
      Dm.Qtemp.next;
     end;

@@ -269,7 +269,7 @@ begin
   if CompareText(VarName, 'SBU') = 0 then
   Value := 'PT. '+FHomeLogin.vKodePRSH;
   if CompareText(VarName, 'TP') = 0 then
-  Value := cbKaresidenan.EditValue;
+  Value := cbTP.EditValue;
   if CompareText(VarName, 'PERIODE') = 0 then
   Value := strPeriode ;
 end;

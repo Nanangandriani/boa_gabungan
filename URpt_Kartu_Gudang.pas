@@ -603,6 +603,12 @@ begin
     sql.clear;
     sql.add(query);
     sql.add(' WHERE i.category_id = ' + vgroup_id +'');
+      if VarIsNull(cxnm_barang.EditValue) or VarIsEmpty(cxnm_barang.EditValue) then
+      begin
+        sql.Add(' ');
+      end else
+        sql.Add(' AND kd_barang='+QuotedStr(cxkd_barang.EditValue)+'');
+
     sql.add(' GROUP BY "notrans", "tgltrans", "kd_barang", "urut", "type", "keterangan", "level1_qty_in", "level1_qty_out", "saldo_awal",  "satuan", "itemproduct_name"');
     sql.add(' ORDER BY kd_barang,tgltrans,urut,type,notrans asc');
     open;

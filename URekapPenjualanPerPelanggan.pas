@@ -146,6 +146,7 @@ type
   public
     { Public declarations }
     strKaresidenanID,strKabupatenID,strKecamatanID,strKelompokID,strKodeJenisUsaha: String;
+    ListCodeUsaha: TStringList;
     procedure ExportToExcel;
   end;
 
@@ -402,7 +403,7 @@ begin
   LastDay := EndOfAMonth(StrToInt(edTahun2.Text),cbBulan2.ItemIndex+1) ;
   strTglAwal:=edTahun1.Text+'-'+IntToStr(cbBulan1.ItemIndex+1)+'-01';
   strTglAkhir:=edTahun2.Text+'-'+IntToStr(cbBulan2.ItemIndex+1)+'-'+(FormatDateTime('dd',LastDay));
-
+  strKodeJenisUsaha := ListCodeUsaha[cbJenisUsaha.ItemIndex];
   if cbKaresidenan.EditValue='' then
   begin
     MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
@@ -473,7 +474,7 @@ begin
     strTglAwal:=edTahun1.Text+'-'+IntToStr(cbBulan1.ItemIndex+1)+'-01';
     strTglAkhir:=edTahun2.Text+'-'+IntToStr(cbBulan2.ItemIndex+1)+'-'+(FormatDateTime('dd',LastDay));
     strKaresidenan:=' code_tp='+QuotedStr(strKaresidenanID);
-
+    strKodeJenisUsaha := ListCodeUsaha[cbJenisUsaha.ItemIndex];
     if cbKabupaten.EditValue<>'' then
       strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
@@ -624,6 +625,7 @@ begin
   end else
   begin
     strKaresidenan:=' code_tp='+QuotedStr(strKaresidenanID);
+    strKodeJenisUsaha := ListCodeUsaha[cbJenisUsaha.ItemIndex];
     if cbKabupaten.EditValue<>'' then
       strKabupaten:=' AND code_kabupaten='+QuotedStr(strKabupatenID)
     else strKabupaten:='';
@@ -675,11 +677,13 @@ end;
 procedure TFRekapPenjualanPerPelanggan.FormCreate(Sender: TObject);
 begin
   rekappenjualanperpelanggan:=Self;
+  ListCodeUsaha := TStringList.Create;
 end;
 
 procedure TFRekapPenjualanPerPelanggan.FormDestroy(Sender: TObject);
 begin
   rekappenjualanperpelanggan:=nil;
+  ListCodeUsaha.Free;
 end;
 
 procedure TFRekapPenjualanPerPelanggan.FormShow(Sender: TObject);
@@ -696,6 +700,7 @@ begin
   cbKecamatan.EditValue:='';
   cbKelompok.EditValue:='';
   cbJenisUsaha.Items.Clear;
+  ListCodeUsaha.Clear;
 
   with dm.Qtemp do
   begin
@@ -705,10 +710,12 @@ begin
     open;
   end;
   cbJenisUsaha.Items.Add('Semua');
+  ListCodeUsaha.Add('');
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
   begin
     cbJenisUsaha.Items.Add(Dm.Qtemp['description']);
+    ListCodeUsaha.Add(Dm.Qtemp.FieldByName('code').AsString);
     Dm.Qtemp.Next;
   end;
   cbJenisUsaha.ItemIndex:=0;

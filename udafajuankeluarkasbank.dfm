@@ -25,6 +25,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     SearchPanel.Enabled = True
     TabOrder = 0
     TitleParams.MultiTitle = True
+    OnAdvDrawDataCell = DBGridPengajuanKeluarKasBankAdvDrawDataCell
     OnDblClick = DBGridPengajuanKeluarKasBankDblClick
     Columns = <
       item
@@ -791,7 +792,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     end
   end
   object ActMenu: TActionManager
-    Left = 561
+    Left = 537
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
@@ -1912,7 +1913,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Connection = dm.Koneksi
     SQL.Strings = (
       ''
-      'SELECT x.*,zz.code_account as kode FROM'
+      'SELECT x.*,zz.code_account as kode,'#39#39' as ak_bank FROM'
       '(SELECT A'
       #9'.*,'
       #9'"code_account_header",'
@@ -2044,7 +2045,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
       'paid_amount=paid_amount'
       'ket_1=ket_1'
       'module_id=module_id'
-      'kode=kode')
+      'kode=kode'
+      'ak_bank=ak_bank')
     DataSet = QBukti_Ajuan_Keluar
     BCDToCurrency = False
     DataSetOptions = []
@@ -2060,7 +2062,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46056.053264212960000000
+    ReportOptions.LastChange = 46056.620197754600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2322,9 +2324,9 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         end
         object kota_tanggal: TfrxMemoView
           AllowVectorExport = True
-          Left = 461.102660000000000000
+          Left = 510.236550000000000000
           Top = 74.149660000000000000
-          Width = 291.023810000000000000
+          Width = 241.889920000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2427,7 +2429,7 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
           AllowVectorExport = True
           Left = 172.299212600000000000
           Top = 74.078740160000000000
-          Width = 351.496290000000000000
+          Width = 415.748300000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
@@ -2822,69 +2824,126 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select *  from t_cash_bank_expenditure_submission_payable where ' +
-        '"voucher_no"='#39'BS/002/03/I/2026/HLJ'#39' ;')
+        'SELECT voucher_no, invoice_no, sj_no, faktur_no, faktur_date,  t' +
+        'rans_date, supplier_code, supplier_name, trans_type_code,   tran' +
+        's_type_name, bank_number_account, bank_name_account,   paid_amou' +
+        'nt, description, CASE WHEN rn = 1 THEN account_acc ELSE  '#39#39' END ' +
+        'AS account_acc, CASE WHEN rn = 1 THEN account_name ELSE  '#39#39' END ' +
+        'AS account_name, id, urut FROM (  SELECT xx.*,aa.account_name, R' +
+        'OW_NUMBER() OVER ( PARTITION BY account_acc,account_name ORDER B' +
+        'Y urut, faktur_date) AS rn  FROM ( '
+      
+        ' select a.voucher_no, CAST(a.invoice_no AS VARCHAR) AS invoice_n' +
+        'o, CAST(a.sj_no AS VARCHAR) AS sj_no, CAST(a.faktur_no AS VARCHA' +
+        'R) AS faktur_no,  a.faktur_date, a.trans_date,CAST(a.supplier_co' +
+        'de AS VARCHAR) AS supplier_code,  CAST(a.supplier_name AS VARCHA' +
+        'R) AS supplier_name, CAST(a.trans_type_code AS VARCHAR) AS trans' +
+        '_type_code,  CAST(a.trans_type_name AS VARCHAR) AS trans_type_na' +
+        'me,  CAST(a.bank_number_account AS VARCHAR) AS bank_number_accou' +
+        'nt,  CAST(a.bank_name_account AS VARCHAR) AS bank_name_account, ' +
+        ' a.paid_amount, a.description,  CAST(LEFT(a.account_acc,7) AS VA' +
+        'RCHAR) as account_acc, a.id, 1 AS urut  from t_cash_bank_expendi' +
+        'ture_submission_payable  a  where a.voucher_no='#39'BS/003/07/I/2026' +
+        '/NPA'#39' '
+      
+        ' union all   select  no_voucher as "voucher_no", '#39'0'#39'::varchar as' +
+        ' "invoice_no", '#39'0'#39'::varchar as "sj_no",  '#39'0'#39'::varchar as "faktur' +
+        '_no", now() as "faktur_date", now() as "trans_date",  '#39'0'#39'::varch' +
+        'ar as "supplier_code", '#39'0'#39'::varchar as "supplier_name", '#39'0'#39'::var' +
+        'char as "trans_type_code",  '#39'0'#39'::varchar as "trans_type_name", '#39 +
+        '0'#39'::varchar as "bank_number_account", '#39'0'#39'::varchar as "bank_name' +
+        '_account",  "paid_amount", "description", code_account as "accou' +
+        'nt_acc", 0 as "id",2 as urut   from "public"."t_cash_bank_expend' +
+        'iture_submission_det" a  where a.no_voucher='#39'BS/003/07/I/2026/NP' +
+        'A'#39'  and  "position" ='#39'D'#39' AND LEFT(code_account_header,4) NOT IN ' +
+        '('#39'2102'#39')) xx  LEFT JOIN t_ak_account aa on xx.account_acc=aa.cod' +
+        'e  )t ORDER BY urut, faktur_date;')
     Left = 960
     Top = 120
     object QBukti_Ajuan_Keluar_Fakturvoucher_no: TStringField
       FieldName = 'voucher_no'
+      ReadOnly = True
       Size = 100
     end
-    object QBukti_Ajuan_Keluar_Fakturinvoice_no: TStringField
+    object QBukti_Ajuan_Keluar_Fakturinvoice_no: TMemoField
       FieldName = 'invoice_no'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Faktursj_no: TStringField
+    object QBukti_Ajuan_Keluar_Faktursj_no: TMemoField
       FieldName = 'sj_no'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturfaktur_no: TStringField
+    object QBukti_Ajuan_Keluar_Fakturfaktur_no: TMemoField
       FieldName = 'faktur_no'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturfaktur_date: TDateField
+    object QBukti_Ajuan_Keluar_Fakturfaktur_date: TDateTimeField
       FieldName = 'faktur_date'
+      ReadOnly = True
     end
-    object QBukti_Ajuan_Keluar_Fakturtrans_date: TDateField
+    object QBukti_Ajuan_Keluar_Fakturtrans_date: TDateTimeField
       FieldName = 'trans_date'
+      ReadOnly = True
     end
-    object QBukti_Ajuan_Keluar_Faktursupplier_code: TStringField
+    object QBukti_Ajuan_Keluar_Faktursupplier_code: TMemoField
       FieldName = 'supplier_code'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Faktursupplier_name: TStringField
+    object QBukti_Ajuan_Keluar_Faktursupplier_name: TMemoField
       FieldName = 'supplier_name'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturtrans_type_code: TStringField
+    object QBukti_Ajuan_Keluar_Fakturtrans_type_code: TMemoField
       FieldName = 'trans_type_code'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturtrans_type_name: TStringField
+    object QBukti_Ajuan_Keluar_Fakturtrans_type_name: TMemoField
       FieldName = 'trans_type_name'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturbank_number_account: TStringField
+    object QBukti_Ajuan_Keluar_Fakturbank_number_account: TMemoField
       FieldName = 'bank_number_account'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturbank_name_account: TStringField
+    object QBukti_Ajuan_Keluar_Fakturbank_name_account: TMemoField
       FieldName = 'bank_name_account'
-      Size = 255
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QBukti_Ajuan_Keluar_Fakturpaid_amount: TFloatField
       FieldName = 'paid_amount'
+      ReadOnly = True
     end
     object QBukti_Ajuan_Keluar_Fakturdescription: TMemoField
       FieldName = 'description'
+      ReadOnly = True
       BlobType = ftMemo
     end
-    object QBukti_Ajuan_Keluar_Fakturaccount_acc: TStringField
+    object QBukti_Ajuan_Keluar_Fakturaccount_acc: TMemoField
       FieldName = 'account_acc'
-      Size = 100
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QBukti_Ajuan_Keluar_Fakturaccount_name: TMemoField
+      FieldName = 'account_name'
+      ReadOnly = True
+      BlobType = ftMemo
     end
     object QBukti_Ajuan_Keluar_Fakturid: TLargeintField
       FieldName = 'id'
+      ReadOnly = True
+    end
+    object QBukti_Ajuan_Keluar_Faktururut: TIntegerField
+      FieldName = 'urut'
+      ReadOnly = True
     end
   end
   object frxDBDBuktiAjuan_Faktur: TfrxDBDataset
@@ -2906,7 +2965,9 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
       'paid_amount=paid_amount'
       'description=description'
       'account_acc=account_acc'
-      'id=id')
+      'account_name=account_name'
+      'id=id'
+      'urut=urut')
     DataSet = QBukti_Ajuan_Keluar_Faktur
     BCDToCurrency = False
     DataSetOptions = []

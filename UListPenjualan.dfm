@@ -100,6 +100,16 @@ object FDataListPenjualan: TFDataListPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'code_cust'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kode Pelanggan'
+        Width = 99
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
         Title.Alignment = taCenter

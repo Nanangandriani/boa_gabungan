@@ -308,8 +308,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 642
-    Top = 40
+    Left = 650
+    Top = 32
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -996,7 +996,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       'a.cheque_no,a.cheque_date,a.cheque_due_date'
       'ORDER BY entry_date,voucher_no,trans_date,order_no ASC'
       '')
-    Left = 384
+    Left = 416
     Top = 32
     object QDaf_Pengeluaran_Kas_Bankid: TLargeintField
       AutoGenerateValue = arAutoInc
@@ -1321,7 +1321,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       'paid_amount=paid_amount'
       'ket=ket'
       'module_id=module_id'
-      'kode=kode')
+      'kode=kode'
+      'ak_bank=ak_bank')
     DataSet = QBukti_Keluar
     BCDToCurrency = False
     DataSetOptions = []
@@ -1331,7 +1332,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
   object QBukti_Keluar: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT x.*,zz.code_account as kode FROM (SELECT A'
+      'SELECT x.*,zz.code_account as kode,'#39#39' as ak_bank FROM (SELECT A'
       #9'.*,'
       #9'"code_account_header",'
       #9'"name_account",'
@@ -1408,7 +1409,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46049.454390185190000000
+    ReportOptions.LastChange = 46072.373725706020000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1417,7 +1418,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       'end.')
     OnReportPrint = 'ReportOnReportPrint'
     Left = 908
-    Top = 32
+    Top = 40
     Datasets = <
       item
         DataSet = dm.DBPerusahaan
@@ -1506,7 +1507,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'BUKTI PENGELUARAN KAS')
+            'PENGAJUAN PENGELUARAN KAS')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1783,7 +1784,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Height = 18.897650000000000000
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDBuktiKeluar."to_"]')
+            '[frxDBDBuktiKeluar_Faktur."supplier_name"]')
         end
         object frxDBDQBukti_Terimafor_acceptance: TfrxMemoView
           IndexTag = 1
@@ -1817,7 +1818,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           AllowVectorExport = True
           Left = 589.606680000000000000
           Top = 161.299320000000000000
-          Height = 200.314960629921300000
+          Height = 232.440944881890000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1826,7 +1827,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           AllowVectorExport = True
           Left = 264.567100000000000000
           Top = 161.299320000000000000
-          Height = 200.314960629921300000
+          Height = 198.425194410000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1835,105 +1836,10 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           AllowVectorExport = True
           Left = 173.858380000000000000
           Top = 161.299320000000000000
-          Height = 200.314967950000000000
+          Height = 198.425174880000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
-        end
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 18.897637800000000000
-        Top = 260.787570000000000000
-        Width = 755.906000000000000000
-        DataSet = frxDBDBukti_Keluar
-        DataSetName = 'frxDBDBuktiKeluar'
-        RowCount = 0
-        Stretched = True
-        object frxDBDCetakSJamount: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 4.779530000000000000
-          Top = -2.000000000000000000
-          Width = 166.299320000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataSet = frxDBDBukti_Keluar
-          DataSetName = 'frxDBDBuktiKeluar'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBuktiKeluar."name_account"]')
-          ParentFont = False
-        end
-        object frxDBDCetakSJcode_item: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 173.858380000000000000
-          Width = 90.708720000000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDBukti_Keluar
-          DataSetName = 'frxDBDBuktiKeluar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[frxDBDBuktiKeluar."code_account_header"]')
-          ParentFont = False
-        end
-        object frxDBDCetakSJname_item: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 268.346630000000000000
-          Width = 321.260050000000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataSet = FDataListPenjualan.frxDBDCetakSJ
-          DataSetName = 'frxDBDCetakSJ'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBuktiKeluar."ket"]')
-          ParentFont = False
-        end
-        object frxDBDQBukti_Terimapaid_amount: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 593.386210000000000000
-          Top = -1.000000000000000000
-          Width = 158.740260000000000000
-          Height = 18.897650000000000000
-          DisplayFormat.FormatStr = '%2.2n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[(<frxDBDBuktiKeluar."paid_amount">)]')
-          ParentFont = False
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1943,8 +1849,8 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 128.047310000000000000
-        Top = 340.157700000000000000
+        Height = 131.826840000000000000
+        Top = 362.834880000000000000
         Width = 755.906000000000000000
         object terbilang: TfrxMemoView
           AllowVectorExport = True
@@ -2118,7 +2024,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDBuktiKeluar."paid_amount">,MasterData1)]')
+            '[SUM(<frxDBDBuktiKeluar."amount">,MasterData2,1)]')
           ParentFont = False
         end
         object Memo25: TfrxMemoView
@@ -2153,6 +2059,143 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
           HAlign = haCenter
           Memo.UTF8W = (
             '(____________________)')
+          ParentFont = False
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 260.787570000000000000
+        Width = 755.906000000000000000
+        Condition = 'frxDBDBuktiKeluar."account_code"'
+        object frxDBDCetakSJcode_item: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 173.858380000000000000
+          Width = 90.708720000000000000
+          Height = 18.897650000000000000
+          DataSet = frxDBDBukti_Keluar
+          DataSetName = 'frxDBDBuktiKeluar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDBuktiKeluar."code_account_header"]')
+          ParentFont = False
+        end
+        object frxDBDCetakSJamount: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Top = -1.000000000000000000
+          Width = 166.299320000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDBukti_Keluar
+          DataSetName = 'frxDBDBuktiKeluar'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBuktiKeluar."name_account"]')
+          ParentFont = False
+        end
+        object Subreport1: TfrxSubreport
+          AllowVectorExport = True
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Page = Report.Page2
+        end
+      end
+      object MasterData2: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 302.362400000000000000
+        Visible = False
+        Width = 755.906000000000000000
+        DataSet = frxDBDBukti_Keluar
+        DataSetName = 'frxDBDBuktiKeluar'
+        RowCount = 0
+      end
+    end
+    object Page2: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 140.000000000000000000
+      PaperSize = 256
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        DataSet = frxDBDBuktiKeluar_Faktur
+        DataSetName = 'frxDBDBuktiKeluar_Faktur'
+        RowCount = 0
+        Stretched = True
+        object frxDBDCetakSJname_item: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 268.346630000000000000
+          Width = 321.260050000000000000
+          Height = 18.897650000000000000
+          StretchMode = smMaxHeight
+          DataSet = FDataListPenjualan.frxDBDCetakSJ
+          DataSetName = 'frxDBDCetakSJ'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBuktiKeluar_Faktur."description"]')
+          ParentFont = False
+        end
+        object frxDBDQBukti_Terimapaid_amount: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 597.165740000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDBuktiKeluar_Faktur."paid_amount"]')
           ParentFont = False
         end
       end
@@ -2257,14 +2300,45 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
   object DSTP_Real: TDataSource
     DataSet = QTP_Real
     Left = 864
-    Top = 328
+    Top = 304
   end
   object QBukti_Keluar_Faktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT * from t_cash_bank_expenditure_payable where voucher_no='#39 +
-        'BK/007/02/I/2026/MAB'#39)
+        'SELECT voucher_no, invoice_no, sj_no, faktur_no, faktur_date,  t' +
+        'rans_date, supplier_code, supplier_name, trans_type_code,   tran' +
+        's_type_name, bank_number_account, bank_name_account,   paid_amou' +
+        'nt, description, CASE WHEN rn = 1 THEN account_acc ELSE  '#39#39' END ' +
+        'AS account_acc, CASE WHEN rn = 1 THEN account_name ELSE  '#39#39' END ' +
+        'AS account_name, id, urut FROM (  SELECT xx.*,aa.account_name, R' +
+        'OW_NUMBER() OVER ( PARTITION BY account_acc,account_name ORDER B' +
+        'Y urut, faktur_date) AS rn  FROM ( '
+      
+        ' select a.voucher_no, CAST(a.invoice_no AS VARCHAR) AS invoice_n' +
+        'o, CAST(a.sj_no AS VARCHAR) AS sj_no, CAST(a.faktur_no AS VARCHA' +
+        'R) AS faktur_no,  a.faktur_date, a.trans_date,CAST(a.supplier_co' +
+        'de AS VARCHAR) AS supplier_code,  CAST(a.supplier_name AS VARCHA' +
+        'R) AS supplier_name, CAST(a.trans_type_code AS VARCHAR) AS trans' +
+        '_type_code,  CAST(a.trans_type_name AS VARCHAR) AS trans_type_na' +
+        'me,  CAST(a.bank_number_account AS VARCHAR) AS bank_number_accou' +
+        'nt,  CAST(a.bank_name_account AS VARCHAR) AS bank_name_account, ' +
+        ' a.paid_amount, a.description,  CAST(LEFT(a.account_acc,7) AS VA' +
+        'RCHAR) as account_acc, a.id, 1 AS urut  from t_cash_bank_expendi' +
+        'ture_payable  a  where a.voucher_no='#39'BK/010/07/I/2026/NPA'#39
+      
+        ' union all   select  no_voucher as "voucher_no", '#39'0'#39'::varchar as' +
+        ' "invoice_no", '#39'0'#39'::varchar as "sj_no",  '#39'0'#39'::varchar as "faktur' +
+        '_no", now() as "faktur_date", now() as "trans_date",  '#39'0'#39'::varch' +
+        'ar as "supplier_code", '#39'0'#39'::varchar as "supplier_name", '#39'0'#39'::var' +
+        'char as "trans_type_code",  '#39'0'#39'::varchar as "trans_type_name", '#39 +
+        '0'#39'::varchar as "bank_number_account", '#39'0'#39'::varchar as "bank_name' +
+        '_account",  "paid_amount", "description", code_account as "accou' +
+        'nt_acc", 0 as "id",2 as urut   from "public"."t_cash_bank_expend' +
+        'iture_det" a  where a.no_voucher='#39'BK/010/07/I/2026/NPA'#39'  and  "p' +
+        'osition" ='#39'D'#39' AND LEFT(code_account_header,4) NOT IN ('#39'2101'#39','#39'21' +
+        '02'#39')) xx  LEFT JOIN t_ak_account aa on xx.account_acc=aa.code  )' +
+        't ORDER BY urut, faktur_date;')
     Left = 48
     Top = 240
   end
@@ -2287,7 +2361,9 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
       'paid_amount=paid_amount'
       'description=description'
       'account_acc=account_acc'
-      'id=id')
+      'account_name=account_name'
+      'id=id'
+      'urut=urut')
     DataSet = QBukti_Keluar_Faktur
     BCDToCurrency = False
     DataSetOptions = []

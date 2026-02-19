@@ -210,11 +210,11 @@ begin
             'left join '+
             '(select r.code_account,(case when sum(r.paid_amount)is null then 0 else sum(r.paid_amount) end)jum_debit  from t_petty_cash_det r '+
             'INNER JOIN t_petty_cash s on r.voucher_no=s.voucher_no '+
-            'where (s.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and  r.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''D'' '+
+            'where s.deleted_at is null and (s.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and  r.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''D'' '+
             'group by code_account order by code_account)a on a.code_account=x.kodesp '+
             'left join (select j.code_account,(case when sum(j.paid_amount)is null then 0 else sum(j.paid_amount) end)jum_kredit from t_petty_cash_det j '+
             'INNER JOIN t_petty_cash k on j.voucher_no=k.voucher_no '+
-            'where (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
+            'where k.deleted_at is null and (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
             'GROUP BY  yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit)yyy '+
             ')zzz '+
             'GROUP BY zzz.nomor, zzz.trans_date,zzz.voucher_no, zzz.description,zzz.actors_name,zzz.order_no,zzz.actors_code,zzz.code,zzz.jumdebit,zzz.jumkredit,zzz.penjualan,zzz.adm,zzz.bop,zzz.urutan,zzz.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC ';

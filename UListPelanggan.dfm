@@ -167,6 +167,16 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'kecamatan'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kecamatan'
+        Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'name_type_business'
         Footers = <>
         Title.Alignment = taCenter
@@ -305,6 +315,12 @@ object FListPelanggan: TFListPelanggan
         end
         item
           UserDefine = [udWidth]
+          UserWidth = 195
+          Visible = True
+          ItemName = 'cbKecamatan'
+        end
+        item
+          UserDefine = [udWidth]
           UserWidth = 127
           Visible = True
           ItemName = 'edJenisUsaha'
@@ -326,7 +342,7 @@ object FListPelanggan: TFListPelanggan
     object dxBarManager1Bar4: TdxBar
       Caption = 'Laporan'
       CaptionButtons = <>
-      DockedLeft = 753
+      DockedLeft = 820
       DockedTop = 0
       FloatLeft = 846
       FloatTop = 2
@@ -1059,6 +1075,19 @@ object FListPelanggan: TFListPelanggan
         end>
       Properties.OnButtonClick = edJenisUsahaPropertiesButtonClick
     end
+    object cbKecamatan: TcxBarEditItem
+      Caption = 'Kecamatan'
+      Category = 0
+      Hint = 'Kecamatan'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = cbKecamatanPropertiesButtonClick
+    end
   end
   object QPelanggan: TUniQuery
     Connection = dm.Koneksi
@@ -1068,9 +1097,9 @@ object FListPelanggan: TFListPelanggan
         'son1 as telp, payment_term, customer_name_pkp,kabupaten,kareside' +
         'nan,tp,'
       
-        'name_type,name_selling_type,name_group,name_type_business,no_npw' +
-        'p,no_nik,code_cust_old from get_customer() WHERE deleted_at is n' +
-        'ull order by created_at Desc')
+        'kecamatan,name_type,name_selling_type,name_group,name_type_busin' +
+        'ess,no_npwp,no_nik,code_cust_old from get_customer() WHERE delet' +
+        'ed_at is null order by created_at Desc')
     Left = 588
     Top = 192
     object QPelanggancustomer_code: TMemoField
@@ -1157,6 +1186,11 @@ object FListPelanggan: TFListPelanggan
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QPelanggankecamatan: TMemoField
+      FieldName = 'kecamatan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
@@ -1208,7 +1242,7 @@ object FListPelanggan: TFListPelanggan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 46015.547697858800000000
-    ReportOptions.LastChange = 46045.393552256940000000
+    ReportOptions.LastChange = 46069.485914178240000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1229,7 +1263,7 @@ object FListPelanggan: TFListPelanggan
     end
     object Page1: TfrxReportPage
       Orientation = poLandscape
-      PaperWidth = 640.000000000000000000
+      PaperWidth = 700.000000000000000000
       PaperHeight = 215.900000000000000000
       PaperSize = 256
       LeftMargin = 10.000000000000000000
@@ -1247,7 +1281,7 @@ object FListPelanggan: TFListPelanggan
         Frame.Typ = []
         Height = 73.450176090000000000
         Top = 18.897650000000000000
-        Width = 2343.308600000000000000
+        Width = 2570.080400000000000000
         object Memo10: TfrxMemoView
           AllowVectorExport = True
           Left = -0.130434780000000000
@@ -1413,7 +1447,7 @@ object FListPelanggan: TFListPelanggan
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Top = 0.232784780000000000
-          Width = 2301.739130430000000000
+          Width = 2439.687848380000000000
           Height = 29.565217390000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1430,8 +1464,8 @@ object FListPelanggan: TFListPelanggan
         object nama_pt: TfrxMemoView
           AllowVectorExport = True
           Top = 29.798002170000000000
-          Width = 2301.739130430000000000
-          Height = 20.869565210000000000
+          Width = 2439.687848380000000000
+          Height = 22.677165354330710000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -16
@@ -1445,7 +1479,7 @@ object FListPelanggan: TFListPelanggan
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 1813.913043480000000000
+          Left = 1951.913043480000000000
           Top = 53.276263040000000000
           Width = 137.391304340000000000
           Height = 20.000000000000000000
@@ -1454,7 +1488,7 @@ object FListPelanggan: TFListPelanggan
           Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'NPWP')
@@ -1463,7 +1497,7 @@ object FListPelanggan: TFListPelanggan
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 1951.304347830000000000
+          Left = 2089.304347830000000000
           Top = 53.276263040000000000
           Width = 137.391304340000000000
           Height = 20.000000000000000000
@@ -1481,7 +1515,7 @@ object FListPelanggan: TFListPelanggan
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 2088.695652170000000000
+          Left = 2226.695652170000000000
           Top = 53.276263040000000000
           Width = 213.043478250000000000
           Height = 20.000000000000000000
@@ -1497,6 +1531,24 @@ object FListPelanggan: TFListPelanggan
           ParentFont = False
           VAlign = vaCenter
         end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1813.846153850000000000
+          Top = 53.410042310000000000
+          Width = 137.391304340000000000
+          Height = 20.000000000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kecamatan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
       end
       object MasterData1: TfrxMasterData
         FillType = ftBrush
@@ -1507,7 +1559,7 @@ object FListPelanggan: TFListPelanggan
         Frame.Typ = []
         Height = 18.897650000000000000
         Top = 151.181200000000000000
-        Width = 2343.308600000000000000
+        Width = 2570.080400000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
@@ -1658,7 +1710,7 @@ object FListPelanggan: TFListPelanggan
         object Memo9: TfrxMemoView
           AllowVectorExport = True
           Left = 1676.598425200000000000
-          Width = 137.574803149606000000
+          Width = 137.574803150000000000
           Height = 18.897650000000000000
           DataField = 'kabupaten'
           DataSet = frxDBDataset1
@@ -1675,7 +1727,7 @@ object FListPelanggan: TFListPelanggan
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 1813.913043480000000000
+          Left = 1951.913043480000000000
           Top = 0.123147830000000000
           Width = 137.574803150000000000
           Height = 18.897650000000000000
@@ -1687,14 +1739,14 @@ object FListPelanggan: TFListPelanggan
           Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."no_npwp"]')
           ParentFont = False
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 1951.304347830000000000
+          Left = 2089.304347830000000000
           Top = 0.253582610000000000
           Width = 137.574803150000000000
           Height = 18.897650000000000000
@@ -1713,7 +1765,7 @@ object FListPelanggan: TFListPelanggan
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 2088.695652170000000000
+          Left = 2226.695652170000000000
           Top = 0.123147830000000000
           Width = 212.357411850000000000
           Height = 18.897650000000000000
@@ -1728,6 +1780,25 @@ object FListPelanggan: TFListPelanggan
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset1."code_cust_old"]')
+          ParentFont = False
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1813.922839920000000000
+          Top = -0.125390760000000000
+          Width = 137.574803150000000000
+          Height = 18.897650000000000000
+          DataField = 'kecamatan'
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."kecamatan"]')
           ParentFont = False
         end
       end
@@ -1753,7 +1824,8 @@ object FListPelanggan: TFListPelanggan
       'name_type_business=name_type_business'
       'no_npwp=no_npwp'
       'no_nik=no_nik'
-      'code_cust_old=code_cust_old')
+      'code_cust_old=code_cust_old'
+      'kecamatan=kecamatan')
     DataSet = QPelanggan
     BCDToCurrency = False
     DataSetOptions = []

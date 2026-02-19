@@ -2,8 +2,8 @@ object FCetak_POKolektif: TFCetak_POKolektif
   Left = 0
   Top = 0
   Caption = 'Form PO Kolektif'
-  ClientHeight = 176
-  ClientWidth = 416
+  ClientHeight = 165
+  ClientWidth = 367
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,19 +11,20 @@ object FCetak_POKolektif: TFCetak_POKolektif
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 135
-    Width = 416
+    Top = 124
+    Width = 367
     Height = 41
     Align = alBottom
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 144
-    ExplicitWidth = 435
+    ExplicitTop = 123
+    ExplicitWidth = 363
     object BBatal: TRzBitBtn
-      Left = 343
+      Left = 290
       Top = 2
       Height = 37
       Align = alRight
@@ -82,10 +83,10 @@ object FCetak_POKolektif: TFCetak_POKolektif
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 358
+      ExplicitLeft = 286
     end
     object BPrint: TRzBitBtn
-      Left = 256
+      Left = 203
       Top = 2
       Width = 87
       Height = 37
@@ -224,7 +225,7 @@ object FCetak_POKolektif: TFCetak_POKolektif
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 271
+      ExplicitLeft = 199
     end
     object RzBitBtn1: TRzBitBtn
       Left = 2
@@ -367,14 +368,13 @@ object FCetak_POKolektif: TFCetak_POKolektif
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 271
     end
   end
   object DBGridMaterial: TDBGridEh
     Left = 0
-    Top = 41
-    Width = 416
-    Height = 94
+    Top = 121
+    Width = 367
+    Height = 3
     Align = alClient
     DataSource = Dsrpt
     DrawMemoText = True
@@ -412,25 +412,39 @@ object FCetak_POKolektif: TFCetak_POKolektif
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 416
-    Height = 41
+    Width = 367
+    Height = 121
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 424
+    ExplicitWidth = 363
     object Label1: TLabel
-      Left = 75
-      Top = 13
+      Left = 43
+      Top = 26
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
+    object Label2: TLabel
+      Left = 43
+      Top = 75
+      Width = 84
+      Height = 15
+      Caption = 'Jenis Pembelian'
+    end
     object dtmulai: TRzDateTimeEdit
       Left = 147
-      Top = 12
-      Width = 121
+      Top = 23
+      Width = 145
       Height = 23
       EditType = etDate
       TabOrder = 0
+    end
+    object cbkategori: TComboBox
+      Left = 147
+      Top = 72
+      Width = 145
+      Height = 23
+      TabOrder = 1
     end
   end
   object Dbrpt: TfrxDBDataset
@@ -1719,7 +1733,7 @@ object FCetak_POKolektif: TFCetak_POKolektif
     DataSet = Qrptdetailpo2
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 256
+    Left = 312
     Top = 26
   end
   object Dsrpt: TDataSource

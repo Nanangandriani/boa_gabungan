@@ -603,7 +603,8 @@ begin
         edKode_Pelanggan.Text:=MemMasterData['outlet_code'];
         edNama_Pelanggan.Text:=MemMasterData['outlet_name'];
         edNoReff.Text:=MemMasterData['ticket_number'];
-//        spJatuhTempo.Text:=MemMasterData['payment_term'];
+        if dm.Qtemp2.FieldValues['payment_term']<>NULL then
+        spJatuhTempo.Text:=dm.Qtemp2.FieldValues['payment_term'];
 
         if UpperCase(edNamaSumber.Text)='TELEMARKETING' then
         begin

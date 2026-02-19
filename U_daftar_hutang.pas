@@ -156,9 +156,9 @@ begin
            //data di tandai kirm ke daftar rencana pelunasan
            if rec>0 then
            begin
-             FRencana_Lunas_Hutang.MemRencana.active:=false;
-             FRencana_Lunas_Hutang.MemRencana.active:=true;
-             FRencana_Lunas_Hutang.MemRencana.EmptyTable;
+//             FRencana_Lunas_Hutang.MemRencana.active:=false;
+//             FRencana_Lunas_Hutang.MemRencana.active:=true;
+//             FRencana_Lunas_Hutang.MemRencana.EmptyTable;
 
              Memdaftarhutang.First;
              while not Memdaftarhutang.Eof do
@@ -226,12 +226,13 @@ begin
            '(select trans_no,trans_date as tanggal,supplier_code as kodesup,trans_no as no_inv,faktur_no as nofakturpajak,faktur_date,sj_no,valas,valas_value,due_date,plan_stat,'+
            '(case when sj_status=1 and fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as ppnrp,pph_rp,id as urutan,approval_status  from t_purchase_invoice where (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
 
-           'union all '+
-           'select  a.notrans as no_terima,a.date_trans as tanggal,b.vendor_code as kodesup,a.notrans as no_inv,a.notrans as nofakturpajak,a.date_trans as tgl_faktur, '+
-           ' ''''::character varying as nosj,''IDR''::character varying as valas,0 as valas_value,  0 as  due_date,false as stat_rencana,1 as status,0 as ppnrp,0 as pph_rp,0 as id,0 as status_approval '+
-           ' from t_delivery_order a '+
-           'inner join t_delivery_order_services b  on a.notrans=b.notrans '+
-           'where a.date_trans between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
+           //Data DO semua Kumpul di terima faktur
+//           'union all '+
+//           'select  a.notrans as no_terima,a.date_trans as tanggal,b.vendor_code as kodesup,a.notrans as no_inv,a.notrans as nofakturpajak,a.date_trans as tgl_faktur, '+
+//           ' ''''::character varying as nosj,''IDR''::character varying as valas,0 as valas_value,  0 as  due_date,false as stat_rencana,1 as status,0 as ppnrp,0 as pph_rp,0 as id,0 as status_approval '+
+//           ' from t_delivery_order a '+
+//           'inner join t_delivery_order_services b  on a.notrans=b.notrans '+
+//           'where a.date_trans between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
            ')a '+
            'left join '+
            '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph '+
@@ -242,8 +243,8 @@ begin
            'left join '+
            '(select faktur_no from t_paid_debt_det)as lunas  on a.nofakturpajak=lunas.faktur_no '+
            'left join '+
-           '(select a.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else sum(b.price+b.ppn_rp) end as nil_retur from t_purchase_return_det a,t_purchase_return b '+
-           'where a.return_no=b.return_no  group by a.receive_no,b.valas_value,b.valas order by a.receive_no)retur on a.trans_no=retur.receive_no '+
+           '(select a.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else b.price+b.ppn_rp end as nil_retur from t_purchase_return_det a,t_purchase_return b '+
+           'where a.return_no=b.return_no  group by a.receive_no,b.valas_value,b.valas,b.price,b.ppn_rp order by a.receive_no)retur on a.trans_no=retur.receive_no '+
            'left join '+
            '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as nilai_pot_dolar,sum(ppnrp)as ppnrp from t_purchase_discount GROUP BY receive_no)pot on a.trans_no=pot.receive_no '+
            'left join '+
@@ -371,7 +372,8 @@ begin
             QuotedStr(FormatDateTime('yyyy-mm-dd', DtMulai.Date)) + ' AND ' +
             QuotedStr(FormatDateTime('yyyy-mm-dd', DtSelesai.Date)));
         end;
-         sql.Add('ORDER BY tglfaktur,nofakturpajak,urutan ASC ');
+         sql.Add('ORDER BY tglfaktur,no_inv,nofakturpajak ASC ');
+         //sql.Add('ORDER BY tglfaktur,nofakturpajak,urutan ASC ');
         open;
       end;
       qdaftarhutang.Close;

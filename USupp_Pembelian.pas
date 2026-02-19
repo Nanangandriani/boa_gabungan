@@ -96,7 +96,7 @@ begin
             end;
             Edkd_akun.Text:=DM.Qtemp['account_code'];
             EdNm_akun.Text:=DM.Qtemp['account_name'];
-            Edkd_akunum.Text:=DM.Qtemp['account_name'];
+           // Edkd_akunum.Text:=DM.Qtemp['account_name'];         off ds 4-02-2026
       end;
     end;
     close;
@@ -118,8 +118,12 @@ begin
     begin
        close ;
        sql.Clear;
-       sql.Text:='select * from t_supplier '+
-                 'where deleted_at is null  Order by supplier_code ASC';
+       //update ds 5-2-2026
+       sql.Text:='SELECT supplier_code,supplier_name,address,telp,supplier1_name,npwp,contact_person,pph,'+
+       ' supplier_code2,a.header_code,account_code,1 status_id,up_npwp,supplier_initial,sbu_code,header_code2,'+
+       '  account_code2,tempo,item_do,b.account_name,header_code_um,account_code_um from t_supplier  a '+
+       ' left JOIN t_ak_account b on a.header_code=b.code '+
+       ' where a.deleted_at is null  Order by supplier_code ASC';
        open;
     end;
     qsupplier.close;

@@ -215,7 +215,7 @@ begin
   FDaftarKlasifikasi.Clear;
   FDaftarKlasifikasi.BCorrection.Visible:=False;
   FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
-  FDaftarKlasifikasi.Panel3.Enabled:=True;
+  FDaftarKlasifikasi.Enable;
   FDaftarKlasifikasi.StatusNonGroup:=0;
   FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=False;
   FDaftarKlasifikasi.ShowModal;
@@ -284,11 +284,12 @@ begin
 		rgGrouping.ItemIndex:=QMasterKlasifikasi.FieldByName('status_grouping').AsInteger;
 		rgPajak.ItemIndex:=QMasterKlasifikasi.FieldByName('status_tax').AsInteger;
 		rgPotongan.ItemIndex:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
+    IntJenisPotonganPrev:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
 		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
   end;
   FDaftarKlasifikasi.RefreshGrid;
   FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=True;
-  FDaftarKlasifikasi.Panel3.Enabled:=False;
+  FDaftarKlasifikasi.Disable;
   FDaftarKlasifikasi.StatusNonGroup:=1;
   FDaftarKlasifikasi.ShowModal;
 end;

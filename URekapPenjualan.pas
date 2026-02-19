@@ -250,10 +250,14 @@ begin
     if edKaresidenan.EditValue<>'' then
     begin
       SetMemo(Report,'karesidenantp',edKaresidenan.EditValue);
+    end else begin
+      SetMemo(Report,'karesidenantp','SEMUA KARESIDENAN');
     end;
     if edTP.EditValue<>'' then
     begin
       SetMemo(Report,'karesidenantp',edTP.EditValue);
+    end else begin
+      SetMemo(Report,'karesidenantp','SEMUA TP');
     end;
     if edKabupaten.EditValue<>'' then
     begin

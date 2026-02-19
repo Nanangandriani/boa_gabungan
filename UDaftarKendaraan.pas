@@ -126,31 +126,37 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select DISTINCT sent_date from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL';
+//      sql.Text:='select DISTINCT sent_date, string_agg(notrans, '', '') AS notrans from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL GROUP BY sent_date';
+      sql.Text:='SELECT zz.sent_date,string_agg(zz.notrans, '', '') AS notrans FROM '+
+                '(SELECT sent_date,notrans,vehicle_group_id from t_sales_order WHERE deleted_at is null '+
+                'UNION ALL '+
+                'SELECT DISTINCT c.date_trans sent_date,a.no_ref_load notrans,b.vehicle_group_id from t_delivery_order_load a '+
+                'inner join t_delivery_order_services b on b.notrans=a.notrans '+
+                'INNER join t_delivery_order c on c.notrans=a.notrans WHERE c.deleted_at is null) zz '+
+                'WHERE  zz.vehicle_group_id='+QuotedStr(MemMasterData['code'])+' '+
+                'GROUP BY sent_date';
       open;
     end;
 
-    with dm.Qtemp1 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='select notrans from t_delivery_order_services where vehicle_group_id='+QuotedStr(MemMasterData['code']);
-      open;
-    end;
-
-    if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])<>FormatDateTime('dd-mm-yyyy',FNew_SalesOrder.dtTanggal_Kirim.Date)) then
+    if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])<>FormatDateTime('dd-mm-yyyy',FNewDeliveryOrder.dtTanggalMuatan.Date)) then
     begin
       MessageDlg('Kelompok Kendaraan sudah ada Order dengan Pengiriman Tanggal '+FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])+' ..!!',mtInformation,[mbRetry],0);
-    end else if (dm.Qtemp1.RecordCount>0) then
+    end else if (dm.Qtemp.RecordCount>0) AND (FormatDateTime('dd-mm-yyyy',dm.Qtemp.FieldValues['sent_date'])=FormatDateTime('dd-mm-yyyy',FNewDeliveryOrder.dtTanggalMuatan.Date)) then
     begin
-      MessageDlg('Kelompok Kendaraan sudah ada Delivery Order di No. '+dm.Qtemp1.FieldValues['notrans']+' ..!!',mtInformation,[mbRetry],0);
+      MessageDlg('Kelompok Kendaraan sudah ada Order di Nomor SO: '+dm.Qtemp.FieldValues['notrans']	+' ..!!',mtInformation,[mbRetry],0);
+//      FNewDeliveryOrder.strVehicleGroupId:=MemMasterData['code'];
+//      FNewDeliveryOrder.edKelompokKendaraan.Text :=MemMasterData['sort_number'];
+//      FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
+//      FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
+//      FNewDeliveryOrder.spKapasitas.Value :=MemMasterData['capacity'];
+//      FDaftarKendaraan.Close;
+//      FDaftarKendaraan.MemMasterData.EmptyTable;
     end else begin
-
       FNewDeliveryOrder.strVehicleGroupId:=MemMasterData['code'];
       FNewDeliveryOrder.edKelompokKendaraan.Text :=MemMasterData['sort_number'];
       FNewDeliveryOrder.edNamaJenisKendMuatan.Text:=MemMasterData['type_name'];
       FNewDeliveryOrder.edKodeJenisKendMuatan.Text:=MemMasterData['type'];
-      FNewDeliveryOrder.spKapasitas.Text :=MemMasterData['capacity'];
+      FNewDeliveryOrder.spKapasitas.Value :=MemMasterData['capacity'];
 //      FNewDeliveryOrder.edKendaraan.Text :=MemMasterData['plate_number'];
       FDaftarKendaraan.Close;
       FDaftarKendaraan.MemMasterData.EmptyTable;
@@ -168,7 +174,15 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select DISTINCT sent_date, string_agg(notrans, '', '') AS notrans from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL GROUP BY sent_date';
+//      sql.Text:='select DISTINCT sent_date, string_agg(notrans, '', '') AS notrans from t_sales_order where vehicle_group_id='+QuotedStr(MemMasterData['code'])+' AND deleted_at is NULL GROUP BY sent_date';
+      sql.Text:='SELECT zz.sent_date,string_agg(zz.notrans, '', '') AS notrans FROM '+
+                '(SELECT sent_date,notrans,vehicle_group_id from t_sales_order WHERE deleted_at is null '+
+                'UNION ALL '+
+                'SELECT DISTINCT c.date_trans sent_date,a.no_ref_load notrans,b.vehicle_group_id from t_delivery_order_load a '+
+                'inner join t_delivery_order_services b on b.notrans=a.notrans '+
+                'INNER join t_delivery_order c on c.notrans=a.notrans WHERE c.deleted_at is null) zz '+
+                'WHERE  zz.vehicle_group_id='+QuotedStr(MemMasterData['code'])+' '+
+                'GROUP BY sent_date';
       open;
     end;
 
@@ -239,7 +253,7 @@ end;
 
 procedure TFDaftarKendaraan.GetDataViaAPI;
 var
-  BaseUrl, key, vtoken, Vpath, url, res: string;
+  BaseUrl, key, vtoken, Vpath, url, res, strSendDate: string;
   gNet: TIdHTTP;
   ssl: TIdSSLIOHandlerSocketOpenSSL;
   jsonValue: TJSONValue;
@@ -253,8 +267,17 @@ begin
       BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurl_m_kend''');
       key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapichakra''');
       vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapichakra''');
+      if vcall='sales_order' then
+      begin
+         strSendDate:=FormatDateTime('yyyy-mm-dd',FNew_SalesOrder.dtTanggal_Kirim.Date);
+      end;
+      if vcall='delivery_order' then
+      begin
+         strSendDate:=FormatDateTime('yyyy-mm-dd',FNewDeliveryOrder.dtTanggalMuatan.Date);
+      end;
 
-      Vpath := '/api/get-vehicle?sbu_code='+FHomeLogin.vKodePRSH+'&send_date='+FormatDateTime('yyyy-mm-dd',FNew_SalesOrder.dtTanggal_Kirim.Date);
+
+      Vpath := '/api/get-vehicle?sbu_code='+FHomeLogin.vKodePRSH+'&send_date='+strSendDate;
 //      Vpath := '/api/get-vehicle';
       url := BaseUrl + Vpath;
 //      Memo1.Text := url;
@@ -331,7 +354,7 @@ begin
               begin
                 MemMasterData.Insert;
                 MemMasterData['code']        := dataItem.GetValue('code').Value;
-                MemMasterData['sort_number']        := dataItem.GetValue('sort_number').Value;
+                MemMasterData['sort_number'] := dataItem.GetValue('sort_number').Value;
                 MemMasterData['plate_number']:= dataItem.GetValue('plate_number').Value;
                 MemMasterData['type']        := dataItem.GetValue('type').Value;
                 MemMasterData['type_name']   := dataItem.GetValue('type_name').Value;

@@ -364,7 +364,7 @@ begin
                 '/*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit, '+
                 'debit_retur,nilai_pot)kk group by kk.kodesup,kk.saldo_awal)zzz  group by zzz.nomor,zzz.kodesup,zzz.nasup,zzz.address,zzz.telp,zzz.noinv,zzz.tanggal, '+
                 'zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zzz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket,zzz.faktur_no2  ORDER BY nomor ASC)aaa '+
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no group by a.trans_no)x '+
                 'ON aaa.noinv=x.trans_no) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg '+
                 'ORDER BY nomor ASC ';
@@ -520,7 +520,7 @@ begin
                 'group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit '+
                 'order by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.trans_no)jj '+
 
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x ON jj.noinv=x.trans_no) zz '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no GROUP BY a.trans_no)x ON jj.noinv=x.trans_no ) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)kk)kkk)LLL ';
 
       open;

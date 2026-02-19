@@ -2,8 +2,8 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   Left = 0
   Top = 0
   Caption = 'Form Approval Jurnal Transaksi'
-  ClientHeight = 441
-  ClientWidth = 896
+  ClientHeight = 657
+  ClientWidth = 963
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,27 +18,30 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 896
-    Height = 441
+    Width = 963
+    Height = 657
     Hint = ''
-    ActivePage = TabPembelian
+    ActivePage = TabKas
     Align = alClient
     HotTrackStyle = htsTabBar
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     ExplicitWidth = 890
     ExplicitHeight = 432
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
+      ExplicitWidth = 886
+      ExplicitHeight = 407
       object DBGridEh1: TDBGridEh
         Left = 0
-        Top = 105
-        Width = 892
-        Height = 311
+        Top = 137
+        Width = 959
+        Height = 495
         Align = alClient
         AutoFitColWidths = True
         DataSource = DsPembelian
+        DrawMemoText = True
         DynProps = <>
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
@@ -120,12 +123,20 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             Footers = <>
             Title.Caption = 'Approved'
             Width = 80
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'stat_balance'
+            Footers = <>
+            Visible = False
           end>
         object RowDetailData: TRowDetailPanelControlEh
           object DBGridEh3: TDBGridEh
             Left = 0
             Top = 0
-            Width = 855
+            Width = 922
             Height = 118
             Align = alClient
             DataSource = Ds_DetailPembelian
@@ -187,37 +198,44 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 892
-        Height = 105
+        Width = 959
+        Height = 137
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
         object Label1: TLabel
-          Left = 40
-          Top = 27
+          Left = 33
+          Top = 21
           Width = 45
           Height = 15
           Caption = 'Tanggal '
         end
         object Label2: TLabel
-          Left = 223
-          Top = 27
+          Left = 266
+          Top = 21
           Width = 19
           Height = 15
           Caption = 'S/D'
         end
+        object Label10: TLabel
+          Left = 36
+          Top = 61
+          Width = 84
+          Height = 15
+          Caption = 'Jenis Pembelian'
+        end
         object dtmulai: TRzDateTimeEdit
-          Left = 96
-          Top = 24
+          Left = 139
+          Top = 18
           Width = 121
           Height = 23
           EditType = etDate
           TabOrder = 0
         end
         object dtselesai: TRzDateTimeEdit
-          Left = 256
-          Top = 24
+          Left = 299
+          Top = 18
           Width = 121
           Height = 23
           EditType = etDate
@@ -225,13 +243,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         end
         object Panel4: TPanel
           Left = 1
-          Top = 68
-          Width = 890
+          Top = 100
+          Width = 957
           Height = 36
           Align = alBottom
           TabOrder = 2
+          ExplicitWidth = 884
           object BTampil_Pemb: TRzBitBtn
-            Left = 518
+            Left = 585
             Top = 1
             Width = 94
             Height = 34
@@ -291,9 +310,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 512
           end
           object BSelect_Pemb: TRzBitBtn
-            Left = 612
+            Left = 679
             Top = 1
             Width = 98
             Height = 34
@@ -353,9 +373,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 606
           end
           object BApp_Pemb: TRzBitBtn
-            Left = 710
+            Left = 777
             Top = 1
             Width = 85
             Height = 34
@@ -415,9 +436,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 704
           end
           object BPrint_Pemb: TRzBitBtn
-            Left = 795
+            Left = 862
             Top = 1
             Width = 94
             Height = 34
@@ -477,19 +499,27 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 789
           end
+        end
+        object cbkategori: TComboBox
+          Left = 140
+          Top = 58
+          Width = 145
+          Height = 23
+          TabOrder = 3
         end
       end
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Penjualan'
-      ExplicitWidth = 886
-      ExplicitHeight = 407
+      ExplicitWidth = 892
+      ExplicitHeight = 416
       object DBGridEh2: TDBGridEh
         Left = 0
-        Top = 106
-        Width = 892
-        Height = 310
+        Top = 185
+        Width = 959
+        Height = 447
         Align = alClient
         AutoFitColWidths = True
         DataSource = DsPenjualan
@@ -629,90 +659,94 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 892
-        Height = 106
+        Width = 959
+        Height = 185
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 886
         object Label3: TLabel
-          Left = 27
-          Top = 30
+          Left = 20
+          Top = 17
           Width = 45
           Height = 15
           Caption = 'Tanggal '
         end
         object Label4: TLabel
-          Left = 231
-          Top = 30
+          Left = 229
+          Top = 17
           Width = 19
           Height = 15
           Caption = 'S/D'
         end
         object Label23: TLabel
-          Left = 35
-          Top = 3
-          Width = 42
+          Left = 19
+          Top = 104
+          Width = 57
           Height = 15
-          Caption = 'Wilayah'
-          Visible = False
+          Caption = 'Kabupaten'
         end
-        object Label24: TLabel
-          Left = 100
-          Top = 4
-          Width = 3
+        object Label11: TLabel
+          Left = 19
+          Top = 43
+          Width = 64
           Height = 15
-          Caption = ':'
-          Visible = False
+          Caption = 'Karesidenan'
+        end
+        object Label12: TLabel
+          Left = 19
+          Top = 72
+          Width = 13
+          Height = 15
+          Caption = 'Tp'
         end
         object dtmulaipenj: TRzDateTimeEdit
-          Left = 101
-          Top = 27
+          Left = 99
+          Top = 14
           Width = 121
           Height = 23
           EditType = etDate
           TabOrder = 0
         end
         object dtselesaipenj: TRzDateTimeEdit
-          Left = 264
-          Top = 27
+          Left = 262
+          Top = 14
           Width = 121
           Height = 23
           EditType = etDate
           TabOrder = 1
         end
-        object Edkodewilayah: TRzButtonEdit
-          Left = 115
-          Top = 0
-          Width = 143
+        object Ednm_kab: TRzButtonEdit
+          Left = 229
+          Top = 104
+          Width = 268
           Height = 23
           Text = ''
           TabOrder = 2
-          Visible = False
           AltBtnNumGlyphs = 1
           ButtonNumGlyphs = 1
-          OnButtonClick = EdkodewilayahButtonClick
+          OnButtonClick = Ednm_kabButtonClick
         end
-        object Ednamawilayah: TEdit
-          Left = 264
-          Top = 0
-          Width = 349
+        object Edkd_kab: TEdit
+          Left = 99
+          Top = 104
+          Width = 124
           Height = 23
+          Color = clInfoBk
           ReadOnly = True
           TabOrder = 3
-          Visible = False
         end
         object Panel3: TPanel
           Left = 1
-          Top = 69
-          Width = 890
+          Top = 148
+          Width = 957
           Height = 36
           Align = alBottom
           TabOrder = 4
-          ExplicitWidth = 884
+          ExplicitTop = 69
+          ExplicitWidth = 890
           object BTampil_Penj: TRzBitBtn
-            Left = 518
+            Left = 585
             Top = 1
             Width = 94
             Height = 34
@@ -772,10 +806,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 512
+            ExplicitLeft = 518
           end
           object Bselect_Penj: TRzBitBtn
-            Left = 612
+            Left = 679
             Top = 1
             Width = 98
             Height = 34
@@ -835,10 +869,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 606
+            ExplicitLeft = 612
           end
           object BApp_Penj: TRzBitBtn
-            Left = 710
+            Left = 777
             Top = 1
             Width = 85
             Height = 34
@@ -898,10 +932,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 704
+            ExplicitLeft = 710
           end
           object BPrint_Penj: TRzBitBtn
-            Left = 795
+            Left = 862
             Top = 1
             Width = 94
             Height = 34
@@ -961,68 +995,121 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 789
+            ExplicitLeft = 795
           end
+          object RzBitBtn1: TRzBitBtn
+            Left = 1
+            Top = 1
+            Width = 94
+            Height = 34
+            Align = alLeft
+            Caption = 'Clear'
+            TabOrder = 4
+            OnClick = RzBitBtn1Click
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000203110C50961910
+              74DB0504172D000000000504172D181071DB100B4E9600000203000000000000
+              000000000000000000040000000D0000001100000011120D55A1414FC0FF4762
+              D6FF252390EE09062C5223238FEE415CD4FF3949BCFF110C539C000000000000
+              0000000000000000000C3B73B7FF2C5CA8FF87A2CEFF312C99FF8596E1FF5B7C
+              E6FF4F6DDEFF2F34A7FE4C6ADDFF5574E4FF7486DDFF1A1276DB000000000000
+              0000000000000000000F255FA9FFC1E6F5FF9FD1EFFF7C92C6FF38369AEF8EA1
+              E8FF5E7FE7FF5B7BE5FF5B7BE6FF8397E6FF312F93ED0504172A000000000000
+              0000000000000000000E235CA7FFABE2F6FF5EB3E7FF86A4CDFF0B09305C4348
+              B3FE83A0F1FF84A1F2FF829FF0FF4145B0FE0A082F5200000000000000000000
+              0000000000010000000E225BA6FF8FD6F4FF96CCEEFF798EC3FF2F3191EF87A1
+              EDFF97B2F6FFC1D0F8FF96B1F6FF859EECFF2D2E8EEE0403172D000000000000
+              0001000000060B162549225AA6FF77CAEEFF90C9ECFF3333A9FFA8B7EFFFA4BC
+              F8FFCAD3F5FF6261BBFEC7D1F4FFA2BBF8FFA6B5EEFF1F1A88E1000000010000
+              000611233A633C75B7FB67A5D8FF7FC9EBFF94D1EDFF525FBEFF9C9CDAFFD6D9
+              F3FF4744AAEF0C0B34534542A8EED1D5F1FF9597D6FF1613649F000000041123
+              395E4885C3FF84CBEEFFC3EAF9FF8EDAF2FF81D0EEFF9DC7E9FF5867C5FF3738
+              B3FF343F67910000000507061E2D221F92DE1614609300000203020406133468
+              A5E882C8EBFFBAE9F9FFE2F7FDFF90DEF5FF4BC0E8FF79B7E4FF8AB2E0FF90BB
+              E4FF809FC6F10305071500000001000000000000000000000000162C456A5797
+              CEFF99E1F7FFDFF7FDFFF5FCFFFF8BDFF5FF4DC5EAFF4CA6DEFF2D74C6FF337E
+              CCFF4083C6FF1428436C00000004000000000000000000000000284F7DB284C2
+              E6FFC3EDFAFFE6F7FDFFE2F5FCFFDFF6FCFFDEF6FCFFD7F5FBFFB7DCF2FF8FC0
+              E7FF5EA6DCFF254979B3000000060000000000000000000000003975B3F4D5EF
+              FAFF9BB8DDFF648AC7FF1348A7FF114AA9FF144FADFF1856B1FF6698D1FF99C2
+              E5FFC5ECF9FF3468AAEF000000060000000000000000000000001A3450735A91
+              C5F9AAD2EBFFCEEAF7FFDCF1FAFFE2F5FBFFE0F5FBFFD6F2FBFFC2E7F6FF9CCC
+              EAFF538CC2F918314D740000000300000000000000000000000000000003070D
+              14211D3B597E2D5C8BBE32669BD53D7BBDFF3D7ABCFF31639AD52B5888BF1C38
+              587F070E16250000000300000001000000000000000000000000}
+            ExplicitLeft = 518
+          end
+        end
+        object Edkd_kares: TEdit
+          Left = 99
+          Top = 43
+          Width = 124
+          Height = 23
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 5
+        end
+        object ednm_kares: TRzButtonEdit
+          Left = 229
+          Top = 43
+          Width = 268
+          Height = 23
+          Text = ''
+          TabOrder = 6
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = ednm_karesButtonClick
+        end
+        object Edkd_tp: TEdit
+          Left = 99
+          Top = 72
+          Width = 124
+          Height = 23
+          Color = clInfoBk
+          ReadOnly = True
+          TabOrder = 7
+        end
+        object Ednm_tp: TRzButtonEdit
+          Left = 229
+          Top = 72
+          Width = 268
+          Height = 23
+          Text = ''
+          TabOrder = 8
+          AltBtnNumGlyphs = 1
+          ButtonNumGlyphs = 1
+          OnButtonClick = Ednm_tpButtonClick
         end
       end
     end
     object TabKas: TRzTabSheet
       Caption = 'Kas && Bank'
+      ExplicitWidth = 892
+      ExplicitHeight = 416
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 892
-        Height = 153
+        Width = 959
+        Height = 229
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        object Label7: TLabel
-          Left = 40
-          Top = 56
-          Width = 45
-          Height = 15
-          Caption = 'Tanggal '
-        end
-        object Label8: TLabel
-          Left = 239
-          Top = 56
-          Width = 19
-          Height = 15
-          Caption = 'S/D'
-        end
-        object Label9: TLabel
-          Left = 40
-          Top = 19
-          Width = 48
-          Height = 15
-          Caption = 'Transaksi'
-        end
-        object Dtmulai_kas: TRzDateTimeEdit
-          Left = 112
-          Top = 53
-          Width = 121
-          Height = 23
-          EditType = etDate
-          TabOrder = 0
-        end
-        object Dtselesai_kas: TRzDateTimeEdit
-          Left = 272
-          Top = 53
-          Width = 121
-          Height = 23
-          EditType = etDate
-          TabOrder = 1
-        end
         object Panel8: TPanel
           Left = 1
-          Top = 116
-          Width = 890
+          Top = 192
+          Width = 957
           Height = 36
           Align = alBottom
-          TabOrder = 2
+          TabOrder = 0
+          ExplicitTop = 116
+          ExplicitWidth = 890
           object Btampil_kas: TRzBitBtn
-            Left = 518
+            Left = 585
             Top = 1
             Width = 94
             Height = 34
@@ -1082,9 +1169,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 518
           end
           object RzBitBtn11: TRzBitBtn
-            Left = 612
+            Left = 679
             Top = 1
             Width = 98
             Height = 34
@@ -1144,9 +1232,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 612
           end
           object RzBitBtn12: TRzBitBtn
-            Left = 710
+            Left = 777
             Top = 1
             Width = 85
             Height = 34
@@ -1206,9 +1295,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 710
           end
           object RzBitBtn13: TRzBitBtn
-            Left = 795
+            Left = 862
             Top = 1
             Width = 94
             Height = 34
@@ -1268,25 +1358,210 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 795
+          end
+          object RzBitBtn7: TRzBitBtn
+            Left = 1
+            Top = 1
+            Width = 94
+            Height = 34
+            Align = alLeft
+            Caption = 'Clear'
+            TabOrder = 4
+            OnClick = RzBitBtn1Click
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000000000000000000
+              0000000000000000000000000000000000000000000000000203110C50961910
+              74DB0504172D000000000504172D181071DB100B4E9600000203000000000000
+              000000000000000000040000000D0000001100000011120D55A1414FC0FF4762
+              D6FF252390EE09062C5223238FEE415CD4FF3949BCFF110C539C000000000000
+              0000000000000000000C3B73B7FF2C5CA8FF87A2CEFF312C99FF8596E1FF5B7C
+              E6FF4F6DDEFF2F34A7FE4C6ADDFF5574E4FF7486DDFF1A1276DB000000000000
+              0000000000000000000F255FA9FFC1E6F5FF9FD1EFFF7C92C6FF38369AEF8EA1
+              E8FF5E7FE7FF5B7BE5FF5B7BE6FF8397E6FF312F93ED0504172A000000000000
+              0000000000000000000E235CA7FFABE2F6FF5EB3E7FF86A4CDFF0B09305C4348
+              B3FE83A0F1FF84A1F2FF829FF0FF4145B0FE0A082F5200000000000000000000
+              0000000000010000000E225BA6FF8FD6F4FF96CCEEFF798EC3FF2F3191EF87A1
+              EDFF97B2F6FFC1D0F8FF96B1F6FF859EECFF2D2E8EEE0403172D000000000000
+              0001000000060B162549225AA6FF77CAEEFF90C9ECFF3333A9FFA8B7EFFFA4BC
+              F8FFCAD3F5FF6261BBFEC7D1F4FFA2BBF8FFA6B5EEFF1F1A88E1000000010000
+              000611233A633C75B7FB67A5D8FF7FC9EBFF94D1EDFF525FBEFF9C9CDAFFD6D9
+              F3FF4744AAEF0C0B34534542A8EED1D5F1FF9597D6FF1613649F000000041123
+              395E4885C3FF84CBEEFFC3EAF9FF8EDAF2FF81D0EEFF9DC7E9FF5867C5FF3738
+              B3FF343F67910000000507061E2D221F92DE1614609300000203020406133468
+              A5E882C8EBFFBAE9F9FFE2F7FDFF90DEF5FF4BC0E8FF79B7E4FF8AB2E0FF90BB
+              E4FF809FC6F10305071500000001000000000000000000000000162C456A5797
+              CEFF99E1F7FFDFF7FDFFF5FCFFFF8BDFF5FF4DC5EAFF4CA6DEFF2D74C6FF337E
+              CCFF4083C6FF1428436C00000004000000000000000000000000284F7DB284C2
+              E6FFC3EDFAFFE6F7FDFFE2F5FCFFDFF6FCFFDEF6FCFFD7F5FBFFB7DCF2FF8FC0
+              E7FF5EA6DCFF254979B3000000060000000000000000000000003975B3F4D5EF
+              FAFF9BB8DDFF648AC7FF1348A7FF114AA9FF144FADFF1856B1FF6698D1FF99C2
+              E5FFC5ECF9FF3468AAEF000000060000000000000000000000001A3450735A91
+              C5F9AAD2EBFFCEEAF7FFDCF1FAFFE2F5FBFFE0F5FBFFD6F2FBFFC2E7F6FF9CCC
+              EAFF538CC2F918314D740000000300000000000000000000000000000003070D
+              14211D3B597E2D5C8BBE32669BD53D7BBDFF3D7ABCFF31639AD52B5888BF1C38
+              587F070E16250000000300000001000000000000000000000000}
+            ExplicitLeft = 9
+            ExplicitTop = 2
           end
         end
-        object Cbmodule: TComboBox
-          Left = 112
-          Top = 16
-          Width = 145
-          Height = 23
-          TabOrder = 3
-          OnSelect = CbmoduleSelect
+        object Panel9: TPanel
+          Left = 1
+          Top = 1
+          Width = 957
+          Height = 82
+          Align = alTop
+          TabOrder = 1
+          object Label9: TLabel
+            Left = 40
+            Top = 13
+            Width = 48
+            Height = 15
+            Caption = 'Transaksi'
+          end
+          object Label16: TLabel
+            Left = 40
+            Top = 46
+            Width = 45
+            Height = 15
+            Caption = 'Tanggal '
+          end
+          object Label17: TLabel
+            Left = 242
+            Top = 51
+            Width = 19
+            Height = 15
+            Caption = 'S/D'
+          end
+          object Cbmodule: TComboBox
+            Left = 112
+            Top = 10
+            Width = 145
+            Height = 23
+            TabOrder = 0
+            OnSelect = CbmoduleSelect
+          end
+          object DtMulai_kas: TRzDateTimeEdit
+            Left = 112
+            Top = 43
+            Width = 121
+            Height = 23
+            EditType = etDate
+            TabOrder = 1
+          end
+          object Dtselesai_kas: TRzDateTimeEdit
+            Left = 275
+            Top = 43
+            Width = 121
+            Height = 23
+            EditType = etDate
+            TabOrder = 2
+          end
+        end
+        object Pnwilayah: TPanel
+          Left = 1
+          Top = 83
+          Width = 957
+          Height = 110
+          Align = alTop
+          Color = clGradientInactiveCaption
+          ParentBackground = False
+          TabOrder = 2
+          object Label13: TLabel
+            Left = 33
+            Top = 74
+            Width = 57
+            Height = 15
+            Caption = 'Kabupaten'
+          end
+          object Label14: TLabel
+            Left = 33
+            Top = 13
+            Width = 64
+            Height = 15
+            Caption = 'Karesidenan'
+          end
+          object Label15: TLabel
+            Left = 33
+            Top = 42
+            Width = 13
+            Height = 15
+            Caption = 'Tp'
+          end
+          object ednm_kab2: TRzButtonEdit
+            Left = 243
+            Top = 74
+            Width = 268
+            Height = 23
+            Text = ''
+            TabOrder = 0
+            AltBtnNumGlyphs = 1
+            ButtonNumGlyphs = 1
+            OnButtonClick = ednm_kab2ButtonClick
+          end
+          object Edkd_kab2: TEdit
+            Left = 113
+            Top = 74
+            Width = 124
+            Height = 23
+            Color = clInfoBk
+            ReadOnly = True
+            TabOrder = 1
+          end
+          object Edkd_kares2: TEdit
+            Left = 113
+            Top = 13
+            Width = 124
+            Height = 23
+            Color = clInfoBk
+            ReadOnly = True
+            TabOrder = 2
+          end
+          object Ednm_kares2: TRzButtonEdit
+            Left = 243
+            Top = 13
+            Width = 268
+            Height = 23
+            Text = ''
+            TabOrder = 3
+            AltBtnNumGlyphs = 1
+            ButtonNumGlyphs = 1
+            OnButtonClick = Ednm_kares2ButtonClick
+          end
+          object Edkd_tp2: TEdit
+            Left = 113
+            Top = 42
+            Width = 124
+            Height = 23
+            Color = clInfoBk
+            ReadOnly = True
+            TabOrder = 4
+          end
+          object ednm_tp2: TRzButtonEdit
+            Left = 243
+            Top = 42
+            Width = 268
+            Height = 23
+            Text = ''
+            TabOrder = 5
+            AltBtnNumGlyphs = 1
+            ButtonNumGlyphs = 1
+            OnButtonClick = ednm_tp2ButtonClick
+          end
         end
       end
       object DBGridEh5: TDBGridEh
         Left = 0
-        Top = 153
-        Width = 892
-        Height = 263
+        Top = 229
+        Width = 959
+        Height = 403
         Align = alClient
         AutoFitColWidths = True
         DataSource = DsKas
+        DrawMemoText = True
         DynProps = <>
         RowDetailPanel.Active = True
         SearchPanel.Enabled = True
@@ -1339,6 +1614,14 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
             Footers = <>
             Title.Caption = 'Approved'
             Width = 80
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'stat_balance'
+            Footers = <>
+            Visible = False
           end>
         object RowDetailData: TRowDetailPanelControlEh
           object DBGridEh6: TDBGridEh
@@ -1406,11 +1689,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabMemorial: TRzTabSheet
       Caption = 'Memorial'
+      ExplicitWidth = 892
+      ExplicitHeight = 416
       object DBGridEh7: TDBGridEh
         Left = 0
         Top = 89
-        Width = 892
-        Height = 327
+        Width = 959
+        Height = 543
         Align = alClient
         AutoFitColWidths = True
         DataSource = DsMemorial
@@ -1534,12 +1819,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 892
+        Width = 959
         Height = 89
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 892
         object Label5: TLabel
           Left = 40
           Top = 24
@@ -1573,12 +1859,13 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         object Panel6: TPanel
           Left = 1
           Top = 52
-          Width = 890
+          Width = 957
           Height = 36
           Align = alBottom
           TabOrder = 2
+          ExplicitWidth = 890
           object btTampilMemorial: TRzBitBtn
-            Left = 518
+            Left = 585
             Top = 1
             Width = 94
             Height = 34
@@ -1638,9 +1925,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 518
           end
           object btSelectMemo: TRzBitBtn
-            Left = 612
+            Left = 679
             Top = 1
             Width = 98
             Height = 34
@@ -1700,9 +1988,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 612
           end
           object btApprovMemo: TRzBitBtn
-            Left = 710
+            Left = 777
             Top = 1
             Width = 85
             Height = 34
@@ -1762,9 +2051,10 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 710
           end
           object btCetakMemorial: TRzBitBtn
-            Left = 795
+            Left = 862
             Top = 1
             Width = 94
             Height = 34
@@ -1824,171 +2114,20 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 795
           end
         end
       end
     end
   end
   object MemPembelian: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
+    DataDriver = DataSetDriverEh1
     AfterPost = MemPembelianAfterPost
+    AfterScroll = MemPembelianAfterScroll
     Left = 40
     Top = 264
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object subtot: TMTNumericDataFieldEh
-          FieldName = 'subtot'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'subtot'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object grandtot: TMTNumericDataFieldEh
-          FieldName = 'grandtot'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'grandtot'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object ppn: TMTNumericDataFieldEh
-          FieldName = 'ppn'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'ppn'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object status_app: TMTBlobDataFieldEh
-          FieldName = 'status_app'
-          DisplayLabel = 'status_app'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object trans_no: TMTStringDataFieldEh
-          FieldName = 'trans_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'trans_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object faktur_no: TMTStringDataFieldEh
-          FieldName = 'faktur_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'faktur_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object sj_no: TMTStringDataFieldEh
-          FieldName = 'sj_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'sj_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object supplier_name: TMTStringDataFieldEh
-          FieldName = 'supplier_name'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'supplier_name'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object account_name: TMTStringDataFieldEh
-          FieldName = 'account_name'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'account_name'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object nm_perk: TMTStringDataFieldEh
-          FieldName = 'nm_perk'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'nm_perk'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object tgl: TMTBlobDataFieldEh
-          FieldName = 'tgl'
-          DisplayLabel = 'tgl'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object bln: TMTBlobDataFieldEh
-          FieldName = 'bln'
-          DisplayLabel = 'bln'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object trans_date: TMTDateTimeDataFieldEh
-          FieldName = 'trans_date'
-          DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
-        end
-        object approval_status: TMTBooleanDataFieldEh
-          FieldName = 'approval_status'
-          DisplayLabel = 'approval_status'
-          DisplayWidth = 5
-        end
-        object stat_balance: TMTNumericDataFieldEh
-          FieldName = 'stat_balance'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-      end
-      object RecordsList: TRecordsListEh
-        Data = (
-          (
-            1500000.000000000000000000
-            1665000.000000000000000000
-            165000.000000000000000000
-            'PENGAJUAN'
-            'RCV/0001/04/XI/24'
-            '120'
-            '12'
-            'PT. TRISNA NIAGARA'
-            'SP. PT. TRISNA NIAGARA'
-            nil
-            '04'
-            '11'
-            nil
-            False
-            nil)
-          (
-            3500000.000000000000000000
-            3885000.000000000000000000
-            385000.000000000000000000
-            'PENGAJUAN'
-            'RCV/0001/28/X/24'
-            '01'
-            '90'
-            'PT CIPTA MAJU BERSAMA'
-            'SP. PT CIPTA MAJU BERSAMA'
-            nil
-            '28'
-            '10'
-            nil
-            False
-            nil))
-      end
-    end
   end
   object DsPembelian: TDataSource
     DataSet = MemPembelian
@@ -1997,169 +2136,16 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   end
   object DsPenjualan: TDataSource
     DataSet = MemPenjualan
-    Left = 289
-    Top = 328
+    Left = 97
+    Top = 336
   end
   object MemPenjualan: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
+    DataDriver = DataSetDriverEh2
     AfterPost = MemPenjualanAfterPost
-    Left = 184
-    Top = 328
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object subtot: TMTNumericDataFieldEh
-          FieldName = 'subtot'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'subtot'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object grand_tot: TMTNumericDataFieldEh
-          FieldName = 'grand_tot'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'grandtot'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object ppn: TMTNumericDataFieldEh
-          FieldName = 'ppn'
-          NumericDataType = fdtFloatEh
-          AutoIncrement = False
-          DisplayLabel = 'ppn'
-          DisplayWidth = 10
-          currency = False
-          Precision = 15
-        end
-        object status_app: TMTBlobDataFieldEh
-          FieldName = 'status_app'
-          DisplayLabel = 'status_app'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object trans_no: TMTStringDataFieldEh
-          FieldName = 'trans_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'trans_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object faktur_no: TMTStringDataFieldEh
-          FieldName = 'faktur_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'faktur_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object sj_no: TMTStringDataFieldEh
-          FieldName = 'sj_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'sj_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object name_cust: TMTStringDataFieldEh
-          FieldName = 'name_cust'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'supplier_name'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object account_name: TMTStringDataFieldEh
-          FieldName = 'account_name'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'account_name'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object nm_perk: TMTStringDataFieldEh
-          FieldName = 'nm_perk'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'nm_perk'
-          DisplayWidth = 100
-          Size = 100
-          Transliterate = True
-        end
-        object tgl: TMTBlobDataFieldEh
-          FieldName = 'tgl'
-          DisplayLabel = 'tgl'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object bln: TMTBlobDataFieldEh
-          FieldName = 'bln'
-          DisplayLabel = 'bln'
-          DisplayWidth = 10
-          BlobType = ftMemo
-          Transliterate = True
-        end
-        object trans_date: TMTDateTimeDataFieldEh
-          FieldName = 'trans_date'
-          DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
-        end
-        object approval_status: TMTBooleanDataFieldEh
-          FieldName = 'approval_status'
-          DisplayLabel = 'approval_status'
-          DisplayWidth = 5
-        end
-        object stat_balance: TMTNumericDataFieldEh
-          FieldName = 'stat_balance'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-      end
-      object RecordsList: TRecordsListEh
-        Data = (
-          (
-            1500000.000000000000000000
-            1665000.000000000000000000
-            165000.000000000000000000
-            'PENGAJUAN'
-            'RCV/0001/04/XI/24'
-            '120'
-            '12'
-            'PT. TRISNA NIAGARA'
-            'SP. PT. TRISNA NIAGARA'
-            nil
-            '04'
-            '11'
-            nil
-            False
-            nil)
-          (
-            3500000.000000000000000000
-            3885000.000000000000000000
-            385000.000000000000000000
-            'PENGAJUAN'
-            'RCV/0001/28/X/24'
-            '01'
-            '90'
-            'PT CIPTA MAJU BERSAMA'
-            'SP. PT CIPTA MAJU BERSAMA'
-            nil
-            '28'
-            '10'
-            nil
-            False
-            nil))
-      end
-    end
+    Left = 48
+    Top = 344
   end
   object Qdetail_Pembelian: TUniQuery
     Connection = dm.Koneksi
@@ -2218,85 +2204,28 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     MasterSource = DsPenjualan
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'
-    Left = 185
-    Top = 382
+    Left = 41
+    Top = 414
     ParamData = <
       item
-        DataType = ftString
+        DataType = ftMemo
         Name = 'trans_no'
         ParamType = ptInput
-        Value = 'RCV/0001/04/XI/24'
+        Value = Null
       end>
   end
   object DsDetailPenjualan: TDataSource
     DataSet = QDetail_Penjualan
-    Left = 287
-    Top = 382
+    Left = 87
+    Top = 414
   end
   object MemKas: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
+    DataDriver = DataSetDriverEh3
     AfterPost = MemKasAfterPost
     Left = 360
     Top = 328
-    object MemTableData: TMemTableDataEh
-      object DataStruct: TMTDataStructEh
-        object jumlah: TMTNumericDataFieldEh
-          FieldName = 'jumlah'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayLabel = 'ppn'
-          DisplayWidth = 50
-          currency = False
-          Precision = 50
-        end
-        object status_app: TMTBooleanDataFieldEh
-          FieldName = 'status_app'
-          DisplayLabel = 'status_app'
-          DisplayWidth = 10
-        end
-        object trans_no: TMTStringDataFieldEh
-          FieldName = 'trans_no'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'trans_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object ket: TMTStringDataFieldEh
-          FieldName = 'ket'
-          StringDataType = fdtStringEh
-          DisplayLabel = 'faktur_no'
-          DisplayWidth = 50
-          Size = 50
-          Transliterate = True
-        end
-        object trans_date: TMTDateTimeDataFieldEh
-          FieldName = 'trans_date'
-          DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
-        end
-        object stat_balance: TMTNumericDataFieldEh
-          FieldName = 'stat_balance'
-          NumericDataType = fdtCurrencyEh
-          AutoIncrement = False
-          DisplayWidth = 20
-          currency = False
-          Precision = 15
-        end
-      end
-      object RecordsList: TRecordsListEh
-        Data = (
-          (
-            600000c
-            False
-            nil
-            nil
-            nil
-            nil))
-      end
-    end
   end
   object DsKas: TDataSource
     DataSet = MemKas
@@ -2339,7 +2268,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
       end>
   end
   object MemMemorial: TMemTableEh
-    Active = True
     FetchAllOnOpen = True
     Params = <>
     AfterPost = MemMemorialAfterPost
@@ -2440,5 +2368,66 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     DataSet = MemMemorial
     Left = 609
     Top = 328
+  end
+  object QPembelian: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select  subtot,grandtot,ppn,status_app,cast(trans_no as varchar(' +
+        '100)) trans_no ,'
+      
+        'faktur_no,sj_no,supplier_name,account_name, nm_perk,tgl,bln,appr' +
+        'oval_status,trans_date,stat_balance,purchase_type from v_app_pur' +
+        'chase_invoice ')
+    Left = 66
+    Top = 258
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QPembelian
+    Left = 128
+    Top = 256
+  end
+  object Qpenjualan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select x.created_at,'
+      '    x.faktur_no,'
+      '    cast(x.trans_no as varchar(100)) trans_no,'
+      '    x.pph_value,'
+      '    x.ppn,'
+      '    x.subtot,'
+      '    x.grand_tot,'
+      '    x.name_cust,'
+      '    x.code_cust,'
+      '    x.trans_date,'
+      '    x.approval_status,'
+      '    x.stat_balance,'
+      '    x.code_karesidenan,'
+      '    x.karesidenan,'
+      '    x.code_tp,'
+      '    x.tp,'
+      '    x.code_kecamatan,'
+      '    x.kecamatan,'
+      '    x.code_kabupaten,'
+      '    x.kabupaten from "v_app_selling" x')
+    Left = 153
+    Top = 446
+  end
+  object DataSetDriverEh2: TDataSetDriverEh
+    ProviderDataSet = Qpenjualan
+    Left = 136
+    Top = 376
+  end
+  object Qkas: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'select * from "v_app_kas_bank"')
+    Left = 360
+    Top = 456
+  end
+  object DataSetDriverEh3: TDataSetDriverEh
+    ProviderDataSet = Qkas
+    Left = 368
+    Top = 272
   end
 end

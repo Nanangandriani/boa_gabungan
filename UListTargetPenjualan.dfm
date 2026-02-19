@@ -190,7 +190,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
             Left = 0
             Top = 0
             Width = 612
-            Height = 198
+            Height = 186
             Align = alClient
             AllowedOperations = []
             DataSource = DSTargetPenjualanDet
@@ -221,7 +221,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
               end
               item
                 CellButtons = <>
-                DisplayFormat = '#,###;(#,#0.00);#,#0'
+                DisplayFormat = '#,##0.##'
                 DynProps = <>
                 EditButtons = <>
                 FieldName = 'value'

@@ -410,7 +410,7 @@ object FRekapPenjualan: TFRekapPenjualan
       Caption = 'Karesidenan'
       Category = 0
       Hint = 'Karesidenan'
-      Visible = ivAlways
+      Visible = ivNever
       PropertiesClassName = 'TcxButtonEditProperties'
       Properties.Buttons = <
         item

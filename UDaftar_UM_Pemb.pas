@@ -121,9 +121,9 @@ begin
       FDataPengajuanPengeluaranKasBank.MemDetailHutang.active:=true;
       FDataPengajuanPengeluaranKasBank.MemDetailHutang.EmptyTable;
 
-      MemData.First;
-      while not MemData.Eof do
-      begin
+//      MemData.First;
+//      while not MemData.Eof do
+//      begin
           FDataPengajuanPengeluaranKasBank.MemDetailHutang.insert;
           FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_tagihan']:=MemData['trans_no'];
           FDataPengajuanPengeluaranKasBank.MemDetailHutang['no_sj']:=MemData['trans_no'];
@@ -132,8 +132,8 @@ begin
           FDataPengajuanPengeluaranKasBank.MemDetailHutang['jum_hutang']:=MemData['amount'];
           FDataPengajuanPengeluaranKasBank.MemDetailHutang.FieldByName('keterangan').AsString :='EX. ' + FormatDateTime('dd/mm/yyyy', MemData.FieldByName('trans_date').AsDateTime) +' No.Faktur : ' + MemData.FieldByName('trans_no').AsString;
           FDataPengajuanPengeluaranKasBank.MemDetailHutang.post;
-      MemData.Next;
-      end;
+//      MemData.Next;
+//      end;
       FDataPengajuanPengeluaranKasBank.edKode_supplier.Text:=MemData['supplier_code'];
       FDataPengajuanPengeluaranKasBank.ednama_supplier.Text:=MemData['supplier_name'];
       FDataPengajuanPengeluaranKasBank.CbRencana.Text:='1';
@@ -155,13 +155,13 @@ begin
           MemDetailAkun['debit']:=MemData['ppn_value'] ;
           MemDetailAkun.post;
         end;
-        if MemDetailAkun['kd_header_akun']='1132.01' then
+        if (MemDetailAkun['kd_header_akun']='1132.01') or (MemDetailAkun['kd_header_akun']='1132.02')then
         begin
           MemDetailAkun.Edit;
           MemDetailAkun['debit']:=MemData['dpp_value'] ;
           MemDetailAkun.post;
         end;
-        if (MemDetailAkun['kd_header_akun']<>'1132.01') and (MemDetailAkun['kd_header_akun']<>'1131.08')then
+        if (MemDetailAkun['kd_header_akun']='1102')then
         begin
           MemDetailAkun.Edit;
           MemDetailAkun['kredit']:=MemData['amount'] ;

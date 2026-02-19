@@ -290,10 +290,10 @@ object FNew_Barang: TFNew_Barang
     Width = 558
     Height = 359
     Hint = ''
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 1
     ExplicitWidth = 552
     ExplicitHeight = 350

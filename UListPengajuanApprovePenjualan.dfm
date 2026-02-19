@@ -64,8 +64,6 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitTop = 1
-          ExplicitHeight = 421
         end
         object WebBrowser1: TWebBrowser
           Left = 1
@@ -350,15 +348,12 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
           Width = 1100
           Height = 25
           Align = alTop
-          TabOrder = 6
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 1102
+          TabOrder = 3
           object cbApproveKlasifikasiAll: TRzCheckBox
             Left = 14
             Top = 3
-            Width = 85
-            Height = 19
+            Width = 81
+            Height = 17
             AlignmentVertical = avCenter
             Caption = 'Pilih Semua'
             State = cbUnchecked
@@ -552,6 +547,7 @@ object FListPengajuanApprovePenjualan: TFListPengajuanApprovePenjualan
         Height = 25
         Align = alTop
         TabOrder = 1
+        ExplicitWidth = 1098
         object cbApprovePenjAll: TRzCheckBox
           Left = 14
           Top = 3

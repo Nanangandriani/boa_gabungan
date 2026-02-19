@@ -130,8 +130,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date) )+') '+
-                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+';';
+      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
+                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0;';
       open;
     end;
     if QCetak.RecordCount=0 then
@@ -142,8 +142,10 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select name_cust,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date))+') '+
-                  'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' GROUP BY name_cust,address;';
+        sql.Text:='select name_cust,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
+                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0 GROUP BY name_cust,address;';
+//        sql.Text:='select name_cust,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1))+') '+
+//                  'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' GROUP BY name_cust,address;';
         open;
       end;
       cLocation := ExtractFilePath(Application.ExeName);
@@ -163,8 +165,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date) )+') '+
-                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+';';
+      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
+                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0;';
       open;
     end;
     if QDetail.RecordCount=0 then
@@ -257,13 +259,13 @@ begin
   if CompareText(VarName, 'almt_ktr') = 0 then
   Value := FHomeLogin.vAlamatPRSH;
   if CompareText(VarName, 'nofax') = 0 then
-  Value := '';
+  Value := FHomeLogin.vTelpPRSH;
   if CompareText(VarName, 'nm_up') = 0 then
   Value := StrNonOp;
   if CompareText(VarName, 'total_piutang') = 0 then
-  Value := dm.Qtemp1.FieldValues['total_piutang'];
+  Value := FormatFloat('#,##0.##', dm.Qtemp1.FieldByName('total_piutang').AsFloat);
   if CompareText(VarName, 'terbilang') = 0 then
-  Value := UraikanAngka(floattostr(dm.Qtemp1.FieldValues['total_piutang']))
+  Value := ConvKeHuruf(floattostr(dm.Qtemp1.FieldValues['total_piutang']))
 end;
 
 initialization

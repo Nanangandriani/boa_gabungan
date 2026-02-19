@@ -204,7 +204,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
     TabOrder = 1
     Visible = False
     ExplicitTop = 392
-    ExplicitWidth = 855
+    ExplicitWidth = 1393
     object BBatal: TRzBitBtn
       Left = 1323
       Top = 1
@@ -264,7 +264,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 779
+      ExplicitLeft = 1317
     end
     object BPrint: TRzBitBtn
       Left = 1244
@@ -326,7 +326,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 700
+      ExplicitLeft = 1238
     end
   end
   object dxRibbon1: TdxRibbon
@@ -340,7 +340,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
     Contexts = <>
     TabOrder = 2
     TabStop = False
-    ExplicitWidth = 861
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -365,7 +364,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 46031.581273958330000000
+    ReportOptions.LastChange = 46057.288799467590000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo21OnBeforePrint(Sender: TfrxComponent);'
@@ -884,6 +883,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
         DataSet = frxDBDatasetADM2
         DataSetName = 'frxDBDatasetADM2'
         RowCount = 0
+        Stretched = True
         object Memo10: TfrxMemoView
           AllowVectorExport = True
           Width = 30.236220470000000000
@@ -922,7 +922,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -981,7 +981,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1019,7 +1019,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1039,7 +1039,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1059,7 +1059,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1069,7 +1069,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDatasetADM2."b12"]')
+            '[frxDBDatasetADM2."b15"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1097,7 +1097,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1117,7 +1117,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1133,12 +1133,12 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 644.787401574803000000
-          Width = 56.692913385826800000
+          Left = 644.787401570000000000
+          Width = 56.692913390000000000
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1158,7 +1158,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1178,7 +1178,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1198,7 +1198,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1218,7 +1218,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1238,7 +1238,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1248,7 +1248,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDatasetADM2."b11"]')
+            '[frxDBDatasetADM2."b12"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1258,7 +1258,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1268,7 +1268,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDatasetADM2."b11"]')
+            '[frxDBDatasetADM2."b13"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1278,7 +1278,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Width = 56.692913390000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1288,7 +1288,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDatasetADM2."b11"]')
+            '[frxDBDatasetADM2."b14"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1308,7 +1308,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 1152.244094490000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1318,7 +1318,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDatasetADM2."b12">,MasterData1,3)]')
+            '[SUM(<frxDBDatasetADM2."b15">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1343,7 +1343,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 361.566929130000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1362,7 +1362,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 417.125984250000000000
           Width = 55.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1381,7 +1381,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 530.779527560000000000
           Width = 57.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1400,7 +1400,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 588.472440940000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1419,7 +1419,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 644.787401570000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1438,7 +1438,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 700.724409450000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1457,7 +1457,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 756.795275590000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1476,7 +1476,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 815.154855650000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1495,7 +1495,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 870.803149610000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1514,7 +1514,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 473.330708660000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1533,7 +1533,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 925.984251970000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1571,7 +1571,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 981.921259840000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1581,7 +1581,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDatasetADM2."b11">,MasterData1,3)]')
+            '[SUM(<frxDBDatasetADM2."b12">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1590,7 +1590,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 1038.992125980000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1600,7 +1600,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDatasetADM2."b11">,MasterData1,3)]')
+            '[SUM(<frxDBDatasetADM2."b13">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1609,7 +1609,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Left = 1094.929133860000000000
           Width = 56.692913390000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1619,7 +1619,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDatasetADM2."b11">,MasterData1,3)]')
+            '[SUM(<frxDBDatasetADM2."b14">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1653,7 +1653,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_ADM: TFLap_Ikhtisar_Biaya_KasKecil_ADM
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 816
+    Left = 824
     Top = 88
   end
   object QPerusahaan: TUniQuery

@@ -179,7 +179,7 @@ type
     procedure Ed_kd_bankChange(Sender: TObject);
   private
     { Private declarations }
-    vtotal_debit, vtotal_kredit, vtotal_hutang : Currency;
+    vtotal_debit, vtotal_kredit, vtotal_hutang, vhutang_debit : Currency;
   public
     { Public declarations }
     Status,KetemuCekPosisiDK : Integer;
@@ -1308,7 +1308,36 @@ end;
 
 procedure TFDataPengeluaranKasBank.edKode_supplierChange(Sender: TObject);
 begin
-  with dm.Qtemp do
+  if Cb_jenis_trans.Text<>'KELUAR BANK UANG MUKA' then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.*,c.supplier_code FROM t_ak_account_sub a '+
+                'INNER JOIN t_ak_account b on a.account_code=b.code '+
+                'INNER JOIN t_supplier c ON a.account_code2=c.account_code '+
+                'WHERE supplier_code='+QuotedStr(edKode_supplier.Text);
+      open;
+      ak_account.Text:=fieldbyname('account_code2').AsString;
+    end;
+  end;
+  if Cb_jenis_trans.Text='KELUAR BANK UANG MUKA' then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT a.*,c.supplier_code FROM t_ak_account_sub a '+
+                'INNER JOIN t_ak_account b on a.account_code=b.code '+
+                'INNER JOIN t_supplier c ON a.account_code2=c.account_code_um '+
+                'WHERE supplier_code='+QuotedStr(edKode_supplier.Text);
+      open;
+      ak_account.Text:=fieldbyname('account_code2').AsString;
+    end;
+  end;
+
+  {with dm.Qtemp do
   begin
     close;
     sql.Clear;
@@ -1316,7 +1345,7 @@ begin
               'LEFT JOIN t_supplier b ON a.code=b.account_code where supplier_code='+QuotedStr(edKode_supplier.Text);
     open;
     ak_account.Text:=fieldbyname('code').AsString;
-  end;
+  end;}
 end;
 
 procedure TFDataPengeluaranKasBank.edNamaBankButtonClick(Sender: TObject);
@@ -1719,18 +1748,24 @@ begin
     //Cek Balance Debit Kredit
   vtotal_debit:=0;
   vtotal_kredit:=0;
+  vhutang_debit:=0;
   MemDetailAkun.First;
   while not MemDetailAkun.Eof do
   begin
     vtotal_debit:=vtotal_debit+MemDetailAkun['debit'];
     vtotal_kredit:=vtotal_kredit+MemDetailAkun['kredit'];
+    if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
+    vhutang_debit:=MemDetailAkun['debit'];
+    if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code_um from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
+    vhutang_debit:=MemDetailAkun['debit'];
+
     MemDetailAkun.Next;
   end;
 
   if vtotal_debit <> vtotal_kredit then
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    //ShowMessage(FloatToStr(vtotal_debit)+'0'+FloatToStr(vtotal_kredit));
     next_proses:=false;
     exit;
   end;
@@ -1738,7 +1773,7 @@ begin
   if vtotal_debit <> edJumlah.Value then
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+    //ShowMessage(FloatToStr(vtotal_debit)+'0'+FloatToStr(edJumlah.Value));
     next_proses:=false;
     exit;
   end;
@@ -1755,10 +1790,10 @@ begin
       MemDetailHutang.Next;
     end;
 
-    if vtotal_kredit <> vtotal_hutang then
+    if vhutang_debit <> vhutang_debit then
     begin
       ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Dengan Total Hutang Anda Sudah Benar...!!!');
-      //ShowMessage(FloatToStr(Grand_Tot)+'0'+FloatToStr(edTotalBiaya.Value));
+      //ShowMessage(FloatToStr(vhutang_debit)+'0'+FloatToStr(vhutang_debit));
       next_proses:=false;
       exit;
     end;

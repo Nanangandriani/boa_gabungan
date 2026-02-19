@@ -717,7 +717,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 666
+    Left = 674
     Top = 40
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar

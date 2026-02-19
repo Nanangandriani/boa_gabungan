@@ -23,7 +23,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 426
+    ExplicitWidth = 481
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -282,12 +282,12 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 426
+    ExplicitWidth = 481
     ExplicitHeight = 260
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail'
-      ExplicitWidth = 422
+      ExplicitWidth = 477
       ExplicitHeight = 235
       object DBGridDetail: TDBGridEh
         Left = 0
@@ -338,7 +338,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
           end
           item
             CellButtons = <>
-            DisplayFormat = '#,###;(#,#0.00);#,#0'
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'value'
@@ -368,7 +368,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
     Align = alBottom
     TabOrder = 3
     ExplicitTop = 485
-    ExplicitWidth = 426
+    ExplicitWidth = 481
     object BBatal: TRzBitBtn
       Left = 409
       Top = 1
@@ -429,7 +429,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 350
+      ExplicitLeft = 405
     end
     object BSave: TRzBitBtn
       Left = 334
@@ -491,7 +491,7 @@ object FNew_DataTargetPenjualan: TFNew_DataTargetPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 275
+      ExplicitLeft = 330
     end
   end
   object MemDetail: TMemTableEh

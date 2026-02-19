@@ -105,6 +105,15 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         Footers = <>
         Title.Caption = 'Jumlah'
         Width = 130
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Caption = 'No Nota'
+        Width = 164
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridKelompok: TDBGridEh
@@ -932,11 +941,16 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        #9#9'select a.no_trans,a.trans_date,a.customer_code,b.customer_name' +
-        ',a.account_code,c.account_name,a.grand_tot from t_down_payment_s' +
-        'ales a '
-      #9#9'LEFT JOIN get_customer() b on b.customer_code=a.customer_code'
-      #9#9'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code')
+        'select a.no_trans,a.trans_date,a.customer_code,c.account_name,b.' +
+        'customer_name,'
+      
+        'a.account_code,a.grand_tot,d.trans_no from t_down_payment_sales ' +
+        'a '
+      'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '
+      'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code '
+      
+        'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.' +
+        'no_trans')
     Left = 548
     Top = 112
   end

@@ -95,9 +95,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
+    procedure DBGridDetailKeyPress(Sender: TObject; var Key: Char);
+    procedure MemDetailAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
-  tot_dpp, tot_ppn, tot_pph, tot_grand,tot_dpp_lain : real;
+  tot_dpp, tot_ppn, tot_pph, tot_grand,tot_dpp_lain : Currency;
   public
     { Public declarations }
     strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV,StrTglFaktur: string;
@@ -252,13 +254,15 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+', '+
-            ' '+QuotedStr(FloatToStr(edDPP.Value))+', '+
-            ' '+QuotedStr(FloatToStr(edTotPPN.Value))+', '+
-            ' '+QuotedStr(FloatToStr(tot_pph))+', '+
-            ' '+QuotedStr(FloatToStr(edGrandTot.Value))+', '+
+            ' '+QuotedStr(StringReplace(FloatToStr(edDPP.Value),',','.',[]))+','+
+            ' '+QuotedStr(StringReplace(FloatToStr(edTotPPN.Value),',','.',[]))+','+
+            ' '+QuotedStr(StringReplace(FloatToStr(tot_pph),',','.',[]))+','+
+            ' '+QuotedStr(StringReplace(FloatToStr(edGrandTot.Value),',','.',[]))+','+
             ' '+QuotedStr(edNoFaktur.Text)+','+
             ' '+QuotedStr(StrNoINV)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+
-            ' '+QuotedStr(strKeterangan)+','+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+'  );');
+            ' '+QuotedStr(strKeterangan)+','+
+            ' '+QuotedStr(StringReplace(FloatToStr(edDPPNilaiLain.Value),',','.',[]))+');');
+//            ' '+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+'  );');
     ExecSQL;
   end;
   InsertDetailRet;
@@ -285,11 +289,12 @@ begin
             ' code_type_return='+QuotedStr(edKodeJenis.Text)+','+
             ' name_type_return='+QuotedStr(edNamaJenis.Text)+','+
             ' description='+QuotedStr(MemKeterangan.Text)+','+
-            ' sub_total='+QuotedStr(FloatToStr(edDPP.Value))+', '+
-            ' ppn_value='+QuotedStr(FloatToStr(edTotPPN.Value))+', '+
-            ' pph_value='+QuotedStr(FloatToStr(ROUND(tot_pph)))+', '+
-            ' dpp_nilai_lain='+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+', '+
-            ' grand_tot='+QuotedStr(FloatToStr(edGrandTot.Value))+', '+
+            ' sub_total='+QuotedStr(StringReplace(FloatToStr(edDPP.Value),',','.',[]))+','+
+            ' ppn_value='+QuotedStr(StringReplace(FloatToStr(edTotPPN.Value),',','.',[]))+','+
+            ' pph_value='+QuotedStr(StringReplace(FloatToStr(tot_pph),',','.',[]))+','+
+//            ' pph_value='+QuotedStr(FloatToStr(ROUND(tot_pph)))+', '+
+            ' dpp_nilai_lain='+QuotedStr(StringReplace(FloatToStr(edDPPNilaiLain.Value),',','.',[]))+','+
+            ' grand_tot='+QuotedStr(StringReplace(FloatToStr(edGrandTot.Value),',','.',[]))+','+
             ' order_no='+QuotedStr(order_no)+','+
             ' additional_code='+QuotedStr('0')+','+
             ' trans_day='+QuotedStr(strtgl)+','+
@@ -346,7 +351,7 @@ begin
                 ' '+QuotedStr(MemDetail['PPN_PERSEN'])+','+
                 ' '+QuotedStr(StringReplace(MemDetail['PPN_NILAI'],',','.',[]))+','+
                 ' '+QuotedStr(MemDetail['PPH_AKUN'])+','+
-                ' '+QuotedStr(MemDetail['PPH_NILAI'])+','+
+                ' '+QuotedStr(StringReplace(MemDetail['PPH_NILAI'],',','.',[]))+','+
                 ' '+QuotedStr(MemDetail['NAMA_PPH'])+','+
                 ' '+QuotedStr(MemDetail['PPH_PERSEN'])+','+
                 ' '+QuotedStr(StringReplace(MemDetail['JUMLAH_JUAL'],',','.',[]))+','+
@@ -356,6 +361,11 @@ begin
     end;
     MemDetail.Next;
   end;
+end;
+
+procedure TFDataReturPenjualan.MemDetailAfterPost(DataSet: TDataSet);
+begin
+//  HitungGrid;
 end;
 
 procedure TFDataReturPenjualan.UpdateDPP;
@@ -389,6 +399,10 @@ var ppn : real;
 begin
    try
       begin
+        ppn:=0;
+        tot_dpp:=0;
+        tot_ppn:=0;
+        tot_dpp_lain:=0;
         if MemDetail['JUMLAH']>MemDetail['JUMLAH_JUAL'] then
         begin
           ShowMessage('Jumlah Quantum Retur Melebihi Jumlah Penjualan...!!!');
@@ -397,14 +411,14 @@ begin
           MemDetail.Post;
           exit;
         end;
-        if MemDetail['HARGA_SATUAN']>MemDetail['HARGA_SATUAN_JUAL'] then
-        begin
-          ShowMessage('Harga Satuan Retur Melebihi Harga Satuan Penjualan...!!!');
-          MemDetail.Edit;
-          MemDetail['HARGA_SATUAN']:=MemDetail['HARGA_SATUAN_JUAL'];
-          MemDetail.Post;
-          exit;
-        end;
+//        if MemDetail['HARGA_SATUAN']>MemDetail['HARGA_SATUAN_JUAL'] then
+//        begin
+//          ShowMessage('Harga Satuan Retur Melebihi Harga Satuan Penjualan...!!!');
+//          MemDetail.Edit;
+//          MemDetail['HARGA_SATUAN']:=MemDetail['HARGA_SATUAN_JUAL'];
+//          MemDetail.Post;
+//          exit;
+//        end;
         if MemDetail['KD_ITEM']<>'0' then
         begin
           MemDetail.Edit;
@@ -416,11 +430,15 @@ begin
             MemDetail['PPN_AKUN']:=0;
             MemDetail['PPN_PERSEN']:=0;
           end;
-          if MemDetail['PPN_PERSEN']<>0 then
-          begin
-//            MemDetail['PPN_NILAI']:=ROUND(MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100));
-            MemDetail['PPN_NILAI']:=MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100);
-          end;
+//          if MemDetail['PPN_PERSEN']<>0 then
+//          begin
+//            MemDetail['PPN_NILAI']:=MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100);
+//          end;
+//          if (MemDetail['PPN_PERSEN']='') OR (MemDetail['PPN_PERSEN']=NULL) then
+//          begin
+//            MemDetail['PPN_NILAI']:=MemDetail['SUB_TOTAL']*(MemDetail['PPN_PERSEN']/100);
+//              MemDetail['PPN_NILAI']:=0;
+//          end;
           //Validasi PPH
           if (MemDetail['NAMA_PPH']='0') AND (MemDetail['PPH_PERSEN']=0) then
           begin
@@ -429,32 +447,54 @@ begin
             MemDetail['NAMA_PPH']:=0;
             MemDetail['PPH_PERSEN']:=0;
           end;
-          if (MemDetail['PPH_PERSEN']<>0)  OR (MemDetail['PPH_PERSEN']<>'0')  then
-          begin
-            MemDetail['PPH_NILAI']:=ROUND((MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI'])*(MemDetail['PPH_PERSEN']/100));
-          end;
+//          if (MemDetail['PPH_PERSEN']<>0)  OR (MemDetail['PPH_PERSEN']<>'0')  then
+//          begin
+//            MemDetail['PPH_NILAI']:=ROUND((MemDetail['SUB_TOTAL']+MemDetail['PPN_NILAI'])*(MemDetail['PPH_PERSEN']/100));
+//          end;
 //          MemDetail['GRAND_TOTAL']:=ROUND(MemDetail['SUB_TOTAL']+ROUND(MemDetail['PPN_NILAI'])-ROUND(MemDetail['PPH_NILAI']));
-          MemDetail['GRAND_TOTAL']:=(MemDetail['SUB_TOTAL']+(MemDetail['PPN_NILAI'])-(MemDetail['PPH_NILAI']));
+//          ShowMessage('subtotal'+FloatToStr(MemDetail['SUB_TOTAL']));
+
+          if (MemDetail['PPN_PERSEN'] <> 0) then
+          begin
+            MemDetail['GRAND_TOTAL'] := MemDetail['SUB_TOTAL'] + MemDetail['PPN_NILAI'];
+          end
+          else
+          begin
+            MemDetail['GRAND_TOTAL'] := MemDetail['SUB_TOTAL'];
+          end;
+
+//          ShowMessage('total'+FloatToStr(MemDetail['GRAND_TOTAL']));
+
           MemDetail.Post;
         end;
-        ppn:=0;
-        tot_dpp:=0;
-        tot_ppn:=0;
-        tot_dpp_lain:=0;
+
+//        ShowMessage('tot_dpp'+FloatToStr(tot_dpp));
+//        ShowMessage('tot_ppn'+FloatToStr(tot_ppn));
         MemDetail.First;
         while not MemDetail.Eof do
         begin
+
           tot_dpp:=tot_dpp+MemDetail['SUB_TOTAL'];
+          if (MemDetail['KD_ITEM'] <> '') then
+          begin
+            if (MemDetail['PPN_NILAI'] <> NULL) and (MemDetail['PPN_NILAI'] <> 0) then
+            begin
+              tot_ppn := tot_ppn + MemDetail['PPN_NILAI'];
+            end;
+          end;
           MemDetail.Next;
         end;
+//        ShowMessage('tot_dpp'+FloatToStr(tot_dpp));
+//        ShowMessage('tot_ppn'+FloatToStr(tot_ppn));
         ppn:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_pajak_jual'' '));
 
-        edDPP.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//        edDPP.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
         tot_dpp_lain:=(tot_dpp*11/12);
-        edDPPNilaiLain.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp_lain), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
-        tot_ppn:=(tot_dpp*(ppn/100));
-        edTotPPN.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_ppn), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
-        edGrandTot.Value:=edDPP.Value+edTotPPN.Value;
+//        edDPPNilaiLain.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_dpp_lain), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//        tot_ppn:=(tot_dpp*(ppn/100));
+//        edTotPPN.Value:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('##0.00',tot_ppn), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+//        edTotPPN.Value:=tot_ppn;
+//        edGrandTot.Value:=edDPP.Value+edTotPPN.Value;
      end;
      Except;
    end;
@@ -485,7 +525,7 @@ end;
 
 procedure TFDataReturPenjualan.BSaveClick(Sender: TObject);
 begin
-  HitungGrid;
+//  HitungGrid;
   DecodeDate(dtTanggal.Date, Year, Month, Day);
   strtgl:=IntToStr(Day);
   strbulan:=inttostr(Month);
@@ -615,7 +655,7 @@ end;
 
 procedure TFDataReturPenjualan.DBGridDetailColExit(Sender: TObject);
 begin
-  HitungGrid;
+//  HitungGrid;
 end;
 
 procedure TFDataReturPenjualan.DBGridDetailColumns0EditButtons0Click(
@@ -677,6 +717,23 @@ end;
 procedure TFDataReturPenjualan.DBGridDetailExit(Sender: TObject);
 begin
   HitungGrid;
+end;
+
+procedure TFDataReturPenjualan.DBGridDetailKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if Key = #13 then
+  begin
+    if DBGridDetail.SelectedIndex < DBGridDetail.Columns.Count - 1 then
+      DBGridDetail.SelectedIndex := DBGridDetail.SelectedIndex + 1
+    else
+    begin
+      DBGridDetail.DataSource.DataSet.Next;
+      DBGridDetail.SelectedIndex := 0;
+    end;
+    HitungGrid;
+    Key := #0;
+  end;
 end;
 
 procedure TFDataReturPenjualan.DBGridDetailMouseEnter(Sender: TObject);
@@ -756,9 +813,10 @@ begin
       BCorrection.Enabled:=True;
     end;
   end;
-
-
-
+  edDPP.Enabled:=True;
+  edDPPNilaiLain.Enabled:=True;
+  edTotPPN.Enabled:=True;
+  edGrandTot.Enabled:=True;
 end;
 
 procedure TFDataReturPenjualan.Autonumber;

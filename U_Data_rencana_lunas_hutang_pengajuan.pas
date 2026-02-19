@@ -432,6 +432,24 @@ begin
              FDataPengajuanPengeluaranKasBank.edUntukPengeluaran.Text:='PELUNASAN HUTANG';
              FDataPengajuanPengeluaranKasBank.MemKeterangan.Text:='PELUNASAN HUTANG';
 
+             //Ganti Akun Header bank Menjadi Akun No Rekening
+              with FDataPengajuanPengeluaranKasBank do
+              begin
+                MemDetailAkun.First;
+                while not MemDetailAkun.Eof do
+                begin
+                  if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_account_no from t_bank where rekening_no='+QuotedStr(FDataPengajuanPengeluaranKasBank.edNoRek.Text)) then
+                  begin
+                    MemDetailAkun.Edit;
+                    MemDetailAkun['kd_akun']:=SelectRow('SELECT account_no from t_bank where rekening_no='+QuotedStr(FDataPengajuanPengeluaranKasBank.edNoRek.Text)+' ');
+                    MemDetailAkun['nm_akun']:=SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no='+QuotedStr(FDataPengajuanPengeluaranKasBank.edNoRek.Text)+' ');
+                    MemDetailAkun['kredit']:=FDataPengajuanPengeluaranKasBank.DBGridTagihan.Columns[4].Footer.sumvalue;;
+                    MemDetailAkun.post;
+                  end;
+                  MemDetailAkun.Next;
+                end;
+              end;
+
            end;
       {end
       Except on E :Exception do

@@ -102,8 +102,8 @@
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.58.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.58.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>58</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.80.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.80.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>80</VerInfo_MinorVer>
         <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
@@ -1395,6 +1395,34 @@
         </DCCReference>
         <DCCReference Include="UDaftar_UM_Pemb.pas">
             <Form>FDaftar_UM_Pemb</Form>
+        </DCCReference>
+        <DCCReference Include="UCetak_POkoletif.pas">
+            <Form>FCetak_POKolektif</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UCetak_LPBKolektif.pas">
+            <Form>FCetak_LPbKolektif</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UbrowseListPenjualan.pas">
+            <Form>FbrowseListPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URegisterCekMundur.pas">
+            <Form>FRegisterCekMundur</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URpt_BukuHarianReturPembelian.pas">
+            <Form>FBuku_HarianReturPembelian</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKelompokBiayaWilayah.pas">
+            <Form>FKelompokBiayaWilayah</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListKelompokBiayaWilayah.pas">
+            <Form>FListKelompokBiayaWilayah</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

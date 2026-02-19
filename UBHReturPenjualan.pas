@@ -169,6 +169,8 @@ type
     QBHReturPenjualanExportBarangname_item: TStringField;
     QBHReturPenjualanExportBarangamount: TFloatField;
     QBHReturPenjualanExportBarangname_unit: TStringField;
+    QCetakBHRetur: TUniQuery;
+    frxDBDataBHRetur: TfrxDBDataset;
     procedure btSearchClick(Sender: TObject);
     procedure edKabupatenPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
@@ -214,8 +216,67 @@ begin
 end;
 
 procedure TFBHReturPenjualan.btPreviewClick(Sender: TObject);
+var strKab,strTP,strKaresidenan,
+  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2: STRING;
 begin
-   with QCetak do
+  tgl1:=FormatDateTime('DD', dtAwal.EditValue);
+  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
+  tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
+
+  tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
+  bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
+  tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
+
+  strKab := 'NULL';
+  strKaresidenan := 'NULL';
+  strTP := 'NULL';
+  if edKabupaten.EditValue<>'' then
+  strKab:=QuotedStr(vkd_kab)+' ';
+
+  if edKaresidenan.EditValue<>'' then strKaresidenan:=QuotedStr(vkd_kares);
+
+  if edTp.EditValue<>'' then strTP:=QuotedStr(vkd_tp);
+
+  with QCetakBHRetur do
+  begin
+    close;
+    sql.Text:='SELECT * FROM get_bh_retur_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
+    Open;
+  end;
+
+  if QCetakBHRetur.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+
+  if QCetakBHRetur.RecordCount<>0 then
+  begin
+
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/rpt_BukuHarianReturPenjualanNew'+ '.fr3');
+    SetMemo(Report,'kodeprsh',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'periode',UpperCase(formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' S/D '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue)));
+
+    if edTP.EditValue<>'' then
+    begin
+      SetMemo(Report,'karesidenan',+edTP.EditValue);
+    end else begin
+      SetMemo(Report,'karesidenan','SEMUA TP');
+    end;
+    if (edKabupaten.EditValue<>'') then
+    begin
+      SetMemo(Report,'kabupaten',+edKabupaten.EditValue);
+    end else begin
+      SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
+    end;
+
+    Report.ShowReport();
+
+  end;
+
+//////////////////////SCRIPT LAMA////////////////////////////
+   {with QCetak do
    begin
        close;
        sql.Clear;
@@ -298,7 +359,7 @@ begin
     end;
    //Report.DesignReport();
    Report.ShowReport();
- end;
+ end; }
 
 end;
 
@@ -550,10 +611,7 @@ begin
       Report.LoadFromFile(cLocation +'report/rpt_BukuHarianReturPenjualanExport'+ '.fr3');
       SetMemo(Report,'kodeprsh',FHomeLogin.vKodePRSH);
       SetMemo(Report,'periode',FHomeLogin.vKodePRSH);
-
       SetMemo(Report,'kabupaten',FHomeLogin.vKodePRSH);
-
-
 
       if (edKaresidenan.EditValue<>'') AND (edTP.editValue='') then
       begin
@@ -593,11 +651,9 @@ begin
     //    Value := UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1);
          SetMemo(Report,'periode',UpperCase('Periode : '+tgl1+' '+bulan1+' '+tahun1));
       end;
-
       Report.PrepareReport(True);
       // Baru export
       ExportToExcel;
-
     end;
  
 //  end;
@@ -608,7 +664,7 @@ procedure TFBHReturPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Kabupaten';
   FMasterData.vcall:='bhreturpenjualan_kab';
-  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(vkd_kares)+'');
+  FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(vkd_tp)+'');
   FMasterData.ShowModal;
 end;
 

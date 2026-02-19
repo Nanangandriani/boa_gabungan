@@ -83,6 +83,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure RzBitBtn2Click(Sender: TObject);
     procedure edNamaKolektorChange(Sender: TObject);
+    procedure DBGridDetailMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -204,7 +206,8 @@ begin
             ' SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
             ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
             ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
-            ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", "date_tempo_cheque", "kodeprsh" '+
+            ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2",'+
+            ' "date_tempo_cheque", "kodeprsh", isdpp_prev '+
             ' FROM  "public"."t_dpp") a '+
             ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
             ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
@@ -254,7 +257,7 @@ begin
      FDataPenagihanPiutang.MemDetail['nilai_cek']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
      FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
      FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
-     FDataPenagihanPiutang.MemDetail['isdpp_prev']:=1;
+     FDataPenagihanPiutang.MemDetail['isdpp_prev']:=Dm.Qtemp.FieldByName('isdpp_prev').AsString;
 
      FDataPenagihanPiutang.MemDetail.post;
      Dm.Qtemp.next;
@@ -619,6 +622,24 @@ begin
   FDaftarTagihan.show;
 end;
 
+procedure TFDataPenagihanPiutang.DBGridDetailMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  if WheelDelta > 0 then
+  begin
+    if not DBGridDetail.DataSource.DataSet.Bof then
+      DBGridDetail.DataSource.DataSet.Prior;
+  end
+  else
+  begin
+    if not DBGridDetail.DataSource.DataSet.Eof then
+      DBGridDetail.DataSource.DataSet.Next;
+  end;
+
+  Handled := True;
+end;
+
 procedure TFDataPenagihanPiutang.edKabupatenButtonClick(Sender: TObject);
 begin
   if edKaresidenan.Text<>'' then
@@ -629,7 +650,7 @@ begin
     FMasterData.ShowModal;
   end else
   begin
-    MessageDlg('TP wajib di isi..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Karesidenan wajib di isi..!!',mtInformation,[mbRetry],0);
   end;
 end;
 
@@ -641,7 +662,7 @@ end;
 
 procedure TFDataPenagihanPiutang.edKaresidenanButtonClick(Sender: TObject);
 begin
-  FMasterData.Caption:='Master Data TP';
+  FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='dppkares';
   FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
@@ -695,7 +716,7 @@ end;
 procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
 begin
 //  if edKodeKolektor.Text<>'' then RefreshGrid;
-  if Status=0 then btTampilkan.Enabled:=True else btTampilkan.Enabled:=False;
+    if Status=0 then btTampilkan.Enabled:=True else btTampilkan.Enabled:=False;
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);
@@ -710,6 +731,14 @@ begin
 //    Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
 //    Fbrowse_data_pelanggan.vcall:='dpp';
 //    Fbrowse_data_pelanggan.ShowModal;
+    FDaftarTagihan.strKdKaresidenan:=strKaresidenanID;
+    FDaftarTagihan.strKdKabupaten:=strKabupatenID;
+    FDaftarTagihan.strKdKecamatan:='';
+
+    FDaftarTagihan.edKaresidenan.Text:=edKaresidenan.Text;
+    FDaftarTagihan.edKabupaten.Text:=edKabupaten.Text;
+    FDaftarTagihan.edKecamatan.Text:='';
+
     FDaftarTagihan.vcall:='dpp';
 //    FDaftarTagihan.kd_outlet:=MemDetail['kode_pel'];
     FDaftarTagihan.RefreshGrid;

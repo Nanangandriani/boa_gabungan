@@ -280,11 +280,11 @@ begin
       MessageDlg('TP Wajib Diisi..!!',mtInformation,[mbRetry],0);
     end;
   end;
-  if vcall='m_jurnalPenj' then
-  begin
-    FPengajuan_AppJurnal_Trans.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
-    FPengajuan_AppJurnal_Trans.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
-  end;
+//  if vcall='m_jurnalPenj' then
+//  begin
+//    FPengajuan_AppJurnal_Trans.Edkodewilayah.text:= MemDetailMasterWil['KODE_DISTRIBUSI'];
+//    FPengajuan_AppJurnal_Trans.Ednamawilayah.text:= edKaresidenan.Text+', '+MemDetailMasterWil['NAMA_KABUPATEN']+', '+MemDetailMasterWil['NAMA_KECAMATAN'];
+//  end;
   FMasterWilayah.MemDetailMasterWil.EmptyTable;
   FMasterWilayah.close;
 end;
@@ -293,7 +293,6 @@ procedure TFMasterWilayah.edAreaButtonClick(Sender: TObject);
 begin
   if edWilayah.Text<>'' then
   begin
-
     FMasterData.Caption:='Master Data Area';
     FMasterData.vcall:='m_area';
     FMasterData.update_grid('code','name','description','t_region_areas','WHERE	deleted_at IS NULL and code_region='+QuotedStr(edKode_wil.text)+'');
@@ -313,7 +312,6 @@ procedure TFMasterWilayah.edTPButtonClick(Sender: TObject);
 begin
   if edArea.Text<>'' then
   begin
-
     FMasterData.Caption:='Master Data TP';
     FMasterData.vcall:='m_tp';
     FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL and code_areas='+QuotedStr(edKode_area.text)+'');

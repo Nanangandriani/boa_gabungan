@@ -2,8 +2,8 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
   Left = 0
   Top = 0
   Caption = 'Form Rekap Mutasi '
-  ClientHeight = 445
-  ClientWidth = 719
+  ClientHeight = 649
+  ClientWidth = 885
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -57,15 +57,15 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
   end
   object Panel1: TPanel
     Left = 0
-    Top = 404
-    Width = 719
+    Top = 608
+    Width = 885
     Height = 41
     Align = alBottom
     TabOrder = 2
     ExplicitTop = 395
     ExplicitWidth = 713
     object BBatal: TRzBitBtn
-      Left = 643
+      Left = 813
       Top = 1
       Height = 39
       Align = alRight
@@ -127,7 +127,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       ExplicitLeft = 637
     end
     object BPrint: TRzBitBtn
-      Left = 564
+      Left = 734
       Top = 1
       Width = 79
       Height = 39
@@ -193,7 +193,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 719
+    Width = 885
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -201,6 +201,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     Contexts = <>
     TabOrder = 3
     TabStop = False
+    ExplicitWidth = 889
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -214,8 +215,8 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 719
-    Height = 277
+    Width = 885
+    Height = 481
     Align = alClient
     DataSource = DsRekap_Mutasi
     DrawMemoText = True
@@ -329,35 +330,11 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
-        FieldName = 'dbbop'
-        Footer.DisplayFormat = '#,##0.00'
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'BOP|Debit'
-        Width = 110
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'kdbop'
-        Footer.DisplayFormat = '#,##0.00'
-        Footer.ValueType = fvtSum
-        Footers = <>
-        Title.Caption = 'BOP|Kredit'
-        Width = 110
-      end
-      item
-        CellButtons = <>
-        DisplayFormat = '#,##0.00'
-        DynProps = <>
-        EditButtons = <>
         FieldName = 'dbadm'
         Footer.DisplayFormat = '#,##0.00'
         Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Adm|Debit'
+        Title.Caption = 'Kas Kecil|Debit'
         Width = 110
       end
       item
@@ -369,7 +346,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         Footer.DisplayFormat = '#,##0.00'
         Footer.ValueType = fvtSum
         Footers = <>
-        Title.Caption = 'Adm|Kredit'
+        Title.Caption = 'Kas Kecil|Kredit'
         Width = 110
       end
       item
@@ -1745,7 +1722,6 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         '         (select * from "VRekap_Mutasi" where trans_date >= '#39'202' +
         '4-11-01'#39' and trans_date <= '#39'2024-11-30'#39') a'
       'GROUP BY account_code,account_name,notr')
-    Active = True
     Left = 277
     Top = 312
   end
@@ -1837,7 +1813,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -1897,7 +1873,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -1951,7 +1927,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -2019,7 +1995,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -2111,7 +2087,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

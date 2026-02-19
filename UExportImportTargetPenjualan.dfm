@@ -21,17 +21,15 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
     Width = 455
     Height = 263
     Hint = ''
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     ExplicitWidth = 451
     ExplicitHeight = 262
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Caption = 'Export'
-      ExplicitWidth = 447
-      ExplicitHeight = 237
       object Label11: TLabel
         Left = 21
         Top = 22
@@ -387,6 +385,8 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
     end
     object TabSheet2: TRzTabSheet
       Caption = 'Import'
+      ExplicitWidth = 447
+      ExplicitHeight = 237
       object LabelSBU: TLabel
         Left = 12
         Top = 58

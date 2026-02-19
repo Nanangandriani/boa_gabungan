@@ -132,6 +132,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     Height = 41
     Align = alBottom
     TabOrder = 3
+    Visible = False
     OnClick = Panel1Click
     ExplicitTop = 404
     ExplicitWidth = 1086
@@ -402,6 +403,7 @@ object FRpt_Kartu_Gudang: TFRpt_Kartu_Gudang
     AutoFitColWidths = True
     DataSource = DsKartu_Gudang
     DynProps = <>
+    SearchPanel.Enabled = True
     TabOrder = 9
     Columns = <
       item

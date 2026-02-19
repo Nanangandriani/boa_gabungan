@@ -318,7 +318,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 123
+      Top = 122
       Width = 344
       Height = 23
       Text = ''

@@ -288,16 +288,11 @@ object FDataReturPenjualan: TFDataReturPenjualan
         DataSource = DSDetail
         DynProps = <>
         HorzScrollBar.ExtraPanel.Visible = True
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghEnterAsTab, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
         SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
-        OnCellClick = DBGridDetailCellClick
-        OnColEnter = DBGridDetailColEnter
-        OnColExit = DBGridDetailColExit
-        OnEnter = DBGridDetailEnter
         OnExit = DBGridDetailExit
-        OnMouseEnter = DBGridDetailMouseEnter
+        OnKeyPress = DBGridDetailKeyPress
         Columns = <
           item
             CellButtons = <>
@@ -363,6 +358,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'HARGA_SATUAN'
@@ -388,6 +384,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'SUB_TOTAL'
@@ -419,6 +416,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'PPN_NILAI'
@@ -430,7 +428,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Font.Style = [fsBold]
             Footer.ValueType = fvtSum
             Footers = <>
-            ReadOnly = True
             Title.Caption = 'PPN|Nilai'
             Width = 118
           end
@@ -479,6 +476,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'GRAND_TOTAL'
@@ -598,7 +596,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ReadOnly = True
           TabOrder = 0
           DisplayFormat = '0.00#,##'
         end
@@ -614,7 +611,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ReadOnly = True
           TabOrder = 1
           DisplayFormat = '0.00#,##'
         end
@@ -630,7 +626,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ReadOnly = True
           TabOrder = 2
           DisplayFormat = '0.00#,##'
         end
@@ -646,7 +641,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
-          ReadOnly = True
           TabOrder = 3
           DisplayFormat = '0.00#,##'
         end

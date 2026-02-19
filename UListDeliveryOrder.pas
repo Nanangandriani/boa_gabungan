@@ -371,7 +371,7 @@ begin
         edKodeKabupaten.Text:=Dm.Qtemp.FieldByName('regency_code').AsString;
         edNamaKabupaten.Text:=Dm.Qtemp.FieldByName('regency_name').AsString;
       end;
-      spTotalTitik.Value:=Dm.Qtemp.FieldValues['number_of_points'];
+
       MemKeteranganBiaya.Text:=Dm.Qtemp.FieldByName('description').AsString;
       order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
       kd_kares:=Dm.Qtemp.FieldByName('additional_code').AsString;
@@ -386,7 +386,13 @@ begin
         chktambahpool.Checked := False
       else
         chktambahpool.Checked := Dm.Qtemp.FieldByName('add_pool_points').AsBoolean;
-      end;
+
+      if Dm.Qtemp.FieldByName('pool_to_customers').IsNull then
+        chkDOpool.Checked := False
+      else
+        chkDOpool.Checked := Dm.Qtemp.FieldByName('pool_to_customers').AsBoolean;
+      spTotalTitik.Value:=Dm.Qtemp.FieldValues['number_of_points'];
+    end;
 
   //biaya
     if FNewDeliveryOrder.IntStatusDO >3 then FNewDeliveryOrder.btSimpanSumberJual.Enabled:=false

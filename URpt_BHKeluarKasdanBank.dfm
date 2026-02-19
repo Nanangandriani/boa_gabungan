@@ -215,7 +215,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44169.465120821800000000
-    ReportOptions.LastChange = 46053.059809432870000000
+    ReportOptions.LastChange = 46056.606913715280000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1423,7 +1423,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."kre_lain_jum">,MasterData2,3)]')
+            '[SUM(<frxDBDataset1."kre_k_b_jum">,MasterData2,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2233,7 +2233,7 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 735
+    Left = 751
     Top = 32
   end
   object DSKasBank: TDataSource

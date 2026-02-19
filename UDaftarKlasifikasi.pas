@@ -171,7 +171,7 @@ type
   public
   { Public declarations }
     id_master, jenis_pelanggan : string ;
-    Status,StatusNonGroup : Integer;
+    Status,StatusNonGroup,IntJenisPotonganPrev : Integer;
     procedure Clear;
     procedure RefreshGrid;
     procedure RefreshGrid_Group;
@@ -179,6 +179,8 @@ type
     procedure Save;
     procedure Update;
     procedure SaveUpdateGroup;
+    procedure Disable;
+    procedure Enable;
   end;
 
 var
@@ -191,6 +193,36 @@ implementation
 uses Ubrowse_pelanggan, UMasterData, UDataModule, UHomeLogin, UTambah_Barang,
   UMy_Function, UKoreksi, UListKlasifikasi, UMainMenu, UbrowseKlasifikasi;
 //uses UDataModule, UHomeLogin;
+
+procedure TFDaftarKlasifikasi.Disable;
+begin
+  ednm_jenis_usaha.Enabled:=False;
+  ednm_jenis_pel.Enabled:=False;
+  ednm_kategori.Enabled:=False;
+  ednm_type_hitung.Enabled:=False;
+  ednm_type_jual.Enabled:=False;
+  ednm_jenis_jual.Enabled:=False;
+  rgPembayaran.Enabled:=False;
+  rgGrouping.Enabled:=False;
+  rgPajak.Enabled:=False;
+  rgPromo.Enabled:=False;
+//  rgPotongan.Enabled:=False;
+end;
+
+procedure TFDaftarKlasifikasi.Enable;
+begin
+  ednm_jenis_usaha.Enabled:=True;
+  ednm_jenis_pel.Enabled:=True;
+  ednm_kategori.Enabled:=True;
+  ednm_type_hitung.Enabled:=True;
+  ednm_type_jual.Enabled:=True;
+  ednm_jenis_jual.Enabled:=True;
+  rgPembayaran.Enabled:=True;
+  rgGrouping.Enabled:=True;
+  rgPajak.Enabled:=True;
+  rgPromo.Enabled:=True;
+//  rgPotongan.Enabled:=True;
+end;
 
 procedure TFDaftarKlasifikasi.SaveUpdateGroup;
 begin
@@ -440,13 +472,22 @@ begin
               ' "status_payment"='+IntToStr(rgPembayaran.ItemIndex)+' AND '+
               ' "status_grouping"='+IntToStr(rgGrouping.ItemIndex)+' AND '+
               ' "status_tax"='+IntToStr(rgPajak.ItemIndex)+' AND '+
-              ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
+              ' "status_disc"='+IntToStr(IntJenisPotonganPrev)+' AND '+
               ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
               ' deleted_at IS NULL '+
               ' Order By "code_type_customer" desc ');
       open;
     end;
     id_master:= Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2);
+
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE t_sales_classification set status_disc='+IntToStr(rgPotongan.ItemIndex)+' '+
+                'WHERE id='+QuotedStr(id_master)+';';
+      ExecSQL;
+    end;
 
     with dm.Qtemp2 do
     begin
@@ -559,7 +600,7 @@ begin
             ' "status_payment"='+IntToStr(rgPembayaran.ItemIndex)+' AND '+
             ' "status_grouping"='+IntToStr(rgGrouping.ItemIndex)+' AND '+
             ' "status_tax"='+IntToStr(rgPajak.ItemIndex)+' AND '+
-            ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
+//            ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
             ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
             ' deleted_at IS NULL '+
             ' Order By "code_item_category" desc ');

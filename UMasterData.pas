@@ -52,7 +52,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UExportImportTargetPenjualan, UNew_Satuan, UNew_Barang, URpt_Kartu_Gudang,
   UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank,
   URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan,
-  USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan;
+  USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan, URegisterCekMundur,
+  UDaftarTagihan, UKelompokBiayaWilayah, UPengajuanApproval_JurnalTrans;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -63,6 +64,107 @@ begin
 //    FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
 //    FNew_supplier.KodeHeaderPerkiraan_ret:=MemMasterData['KD_MASTER'];
 //  end;
+// cr ds 17-02-2026
+  with FPengajuan_AppJurnal_Trans do
+  begin
+    if vcall='apppenjualan_kr' then
+    begin
+      edkd_kares.text:=MemMasterData['KD_MASTER'];
+      ednm_kares.text:=MemMasterData['NM_MASTER'];
+      edkd_tp.text:='';
+      ednm_tp.text:='';
+      edkd_kab.text:='';
+      ednm_kab.text:='';
+    end;
+
+    if vcall='apppenjualan_tp' then
+    begin
+      edkd_kares.text:='';
+      ednm_kares.text:='';
+      edkd_tp.text:=MemMasterData['KD_MASTER'];
+      ednm_tp.text:=MemMasterData['NM_MASTER'];
+      edkd_kab.text:='';
+      ednm_kab.text:='';
+    end;
+
+    if vcall='apppenjualan_kab' then
+    begin
+      edkd_kab.text:=MemMasterData['KD_MASTER'];
+      ednm_kab.text:=MemMasterData['NM_MASTER'];
+    end;
+    if vcall='apppenjualan_kr2' then
+    begin
+      edkd_kares2.text:=MemMasterData['KD_MASTER'];
+      ednm_kares2.text:=MemMasterData['NM_MASTER'];
+      edkd_tp2.text:='';
+      ednm_tp2.text:='';
+      edkd_kab2.text:='';
+      ednm_kab2.text:='';
+    end;
+
+      if vcall='apppenjualan_tp2' then
+    begin
+      edkd_kares2.text:='';
+      ednm_kares2.text:='';
+      edkd_tp2.text:=MemMasterData['KD_MASTER'];
+      ednm_tp2.text:=MemMasterData['NM_MASTER'];
+      edkd_kab2.text:='';
+      ednm_kab2.text:='';
+    end;
+
+    if vcall='apppenjualan_kab2' then
+    begin
+      edkd_kab2.text:=MemMasterData['KD_MASTER'];
+      ednm_kab2.text:=MemMasterData['NM_MASTER'];
+    end;
+  end;
+
+//Rudi
+  if vcall='klmpk_biaya_wilayah' then
+  begin
+    FKelompokBiayaWilayah.MemTP.Edit;
+    FKelompokBiayaWilayah.MemTP['kd_tp']:=MemMasterData['KD_MASTER'];
+    FKelompokBiayaWilayah.MemTP['nm_tp']:=MemMasterData['NM_MASTER'];
+    FKelompokBiayaWilayah.MemTP.Post;
+  end;
+//Nanang
+  if vcall='daftartagihan_kares' then
+  begin
+    FDaftarTagihan.strKdKaresidenan:=MemMasterData['KD_MASTER'];
+    FDaftarTagihan.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+    FDaftarTagihan.strKdKabupaten:='';
+    FDaftarTagihan.edKabupaten.Text:='';
+    FDaftarTagihan.strKdKecamatan:='';
+    FDaftarTagihan.edKecamatan.Text:='';
+  end;
+  if vcall='daftartagihan_kabupaten' then
+  begin
+    FDaftarTagihan.strKdKabupaten:=MemMasterData['KD_MASTER'];
+    FDaftarTagihan.edKabupaten.Text:=MemMasterData['NM_MASTER'];
+    FDaftarTagihan.strKdKecamatan:='';
+    FDaftarTagihan.edKecamatan.Text:='';
+  end;
+  if vcall='daftartagihan_kecamatan' then
+  begin
+    FDaftarTagihan.strKdKecamatan:=MemMasterData['KD_MASTER'];
+    FDaftarTagihan.edKecamatan.Text:=MemMasterData['NM_MASTER'];
+  end;
+//Nanang
+  if vcall='register_cek_bank' then
+  begin
+    if not FRegisterCekMundur.MemDetail.IsEmpty then
+    begin
+      FRegisterCekMundur.MemDetail.Edit;
+      FRegisterCekMundur.MemDetail['code_bank_ditunaikan'] := MemMasterData['KD_MASTER'];
+      FRegisterCekMundur.MemDetail['bank_ditunaikan'] := MemMasterData['NM_MASTER'];
+      FRegisterCekMundur.MemDetail.Post;
+    end;
+  end;
+  if vcall='registercek' then
+  begin
+    FRegisterCekMundur.kd_kares:=MemMasterData['KD_MASTER'];
+    FRegisterCekMundur.edKaresidenan.Text:=MemMasterData['NM_MASTER'];
+  end;
 //Nanang
   if vcall='penerimaankas_bank_kares' then
   begin
@@ -1286,12 +1388,24 @@ begin
   begin
     FListPelanggan.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FListPelanggan.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FListPelanggan.strKabupatenID:='';
+    FListPelanggan.cbKabupaten.EditValue:='';
+    FListPelanggan.strKecamatanID:='';
+    FListPelanggan.cbKecamatan.EditValue:='';
   end;
   //Nanang
   if vcall='listpelanggankabupaten' then
   begin
     FListPelanggan.strKabupatenID:=MemMasterData['KD_MASTER'];
     FListPelanggan.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+    FListPelanggan.strKecamatanID:='';
+    FListPelanggan.cbKecamatan.EditValue:='';
+  end;
+  //Nanang
+  if vcall='listpelanggankecamatan' then
+  begin
+    FListPelanggan.strKecamatanID:=MemMasterData['KD_MASTER'];
+    FListPelanggan.cbKecamatan.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //Nanang
   if vcall='amploppelanggankaresidenan' then

@@ -399,7 +399,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
         'Retur Pembelian'
         'Penerimaan kas dan bank'
         'Pengeluaran kas dan bank'
-        'Penyusutan Asset')
+        'Penyusutan Asset'
+        'Uan Muka Penjualaan')
     end
     object CbHarta: TComboBox
       Left = 535

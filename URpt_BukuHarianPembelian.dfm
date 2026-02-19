@@ -1,9 +1,8 @@
 object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
   Caption = 'Form Laporan Buku Harian Pembelian'
-  ClientHeight = 610
+  ClientHeight = 615
   ClientWidth = 1186
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -59,14 +58,14 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
   end
   object Panel1: TPanel
     Left = 0
-    Top = 575
+    Top = 580
     Width = 1186
     Height = 35
     Align = alBottom
-    TabOrder = 0
+    TabOrder = 1
     Visible = False
     OnClick = Panel1Click
-    ExplicitTop = 566
+    ExplicitTop = 571
     ExplicitWidth = 1180
     object Bprint: TRzBitBtn
       Left = 1
@@ -325,7 +324,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 135
     Height = 21
     EditType = etDate
-    TabOrder = 1
+    TabOrder = 2
     Visible = False
   end
   object DtSelesai1: TRzDateTimeEdit
@@ -334,7 +333,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 121
     Height = 21
     EditType = etDate
-    TabOrder = 2
+    TabOrder = 3
     Visible = False
   end
   object edkd_akun1: TRzEdit
@@ -343,7 +342,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 89
     Height = 21
     Text = ''
-    TabOrder = 3
+    TabOrder = 4
     Visible = False
   end
   object Ednm_akun1: TRzButtonEdit
@@ -352,9 +351,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 196
     Height = 21
     Text = ''
-    TabOrder = 4
+    TabOrder = 5
     Visible = False
-    OnChange = Ednm_akun1Change
     AltBtnNumGlyphs = 1
     ButtonNumGlyphs = 1
     OnButtonClick = Ednm_akun1ButtonClick
@@ -365,7 +363,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Width = 97
     Height = 17
     Caption = 'Uang Muka'
-    TabOrder = 5
+    TabOrder = 6
     Visible = False
   end
   object dxRibbon1: TdxRibbon
@@ -377,7 +375,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 6
+    TabOrder = 0
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
@@ -393,7 +391,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     Left = 0
     Top = 127
     Width = 1186
-    Height = 448
+    Height = 453
     Align = alClient
     DataSource = dsbph
     DrawMemoText = True
@@ -595,7 +593,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44169.465120821800000000
-    ReportOptions.LastChange = 46052.582242766210000000
+    ReportOptions.LastChange = 46058.418473611110000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -709,7 +707,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo75: TfrxMemoView
           AllowVectorExport = True
-          Left = 887.055118110236000000
+          Left = 887.055118110000000000
           Width = 71.811023620000000000
           Height = 26.456710000000000000
           StretchMode = smMaxHeight
@@ -724,6 +722,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ak_ht_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -755,6 +755,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 35.905511810000000000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
+          DataField = 'ak_ppn'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           DisplayFormat.FormatStr = '#,##'
@@ -766,6 +767,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ak_ppn"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -775,6 +778,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 60.472440940000000000
           Height = 26.456710000000000000
           StretchMode = smMaxHeight
+          DataField = 'ppn_rp'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           DisplayFormat.FormatStr = '#,##'
@@ -786,6 +790,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ppn_rp"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -864,6 +870,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ak_ppn_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -873,6 +881,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 34.015748031496100000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
+          DataField = 'ak_htng'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
@@ -884,6 +893,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."ak_htng"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -893,6 +904,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 76.724409450000000000
           Height = 26.456695350000000000
           StretchMode = smMaxHeight
+          DataField = 'grandtotal'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           DisplayFormat.FormatStr = '#,##0.00'
@@ -904,6 +916,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = []
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[Rpt_BHP."grandtotal"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1316,6 +1330,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Top = 20.897650000000000000
           Width = 515.706644100000000000
           Height = 22.677180000000000000
+          DataSet = Rpt_BHP
+          DataSetName = 'Rpt_BHP'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -19
@@ -1323,7 +1339,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'Buku Harian Pembelian')
+            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1689,12 +1705,14 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         end
         object Memo71: TfrxMemoView
           AllowVectorExport = True
-          Left = 887.055118110236000000
+          Left = 887.055118110000000000
           Width = 71.811023620000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataSet = DbRptSP
           DataSetName = 'DbRptSP'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39#39
+          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -1702,17 +1720,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[Rpt_BHP."ak_ht_name"]')
           ParentFont = False
           VAlign = vaCenter
-          Formats = <
-            item
-              FormatStr = '#,##0.00;(#,##0.00);'#39#39
-              Kind = fkNumeric
-            end
-            item
-            end>
         end
         object Memo72: TfrxMemoView
           AllowVectorExport = True
@@ -1732,7 +1741,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Rpt_BHP."grandtotal"]')
+            '[SUM(<Rpt_BHP."grandtotal">,MasterData2)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1816,7 +1825,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Rpt_BHP."ak_htng"]')
+            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1843,7 +1852,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 35.905511810000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
-          DataField = 'ak_ppn'
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           DisplayFormat.FormatStr = '#,##'
@@ -1855,8 +1863,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[Rpt_BHP."ak_ppn"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1876,7 +1882,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            '[Rpt_BHP."ak_ppn_name"]')
+            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1928,13 +1934,13 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677165350000000000
+        Height = 30.236225350000000000
         Top = 366.614410000000000000
         Width = 1217.008660000000000000
         object Memo56: TfrxMemoView
           AllowVectorExport = True
           Left = 608.503937010000000000
-          Width = 75.590551180000000000
+          Width = 73.700787401574800000
           Height = 22.677165350000000000
           DisplayFormat.FormatStr = '#,##0.00'
           DisplayFormat.Kind = fkNumeric
@@ -1943,7 +1949,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<Rpt_BHP."subtotalrp">,MasterData2,3)]')
@@ -2016,7 +2022,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<Rpt_BHP."ppn_rp">,MasterData2,3)]')

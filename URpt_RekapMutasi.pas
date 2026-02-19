@@ -84,7 +84,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UHomeLogin;
+uses UDataModule, UHomeLogin, UMainMenu;
 var
   RealFRpt_RekapMutasi: TFRpt_RekapMutasi;
 
@@ -388,6 +388,10 @@ begin
     end;
 tgl_mulai:=FormatDateTime('yyyy-mm-dd',DtMulai.EditValue);
 tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
+//FMainMenu.
+//ShowLoading('Menyiapkan Query...', 20);
+QRekap_Mutasi.Close;
+//FMainMenu.ShowLoading('Menyiapkan Query...', 50);
   WITH QRekap_Mutasi DO
   BEGIN
     Close;
@@ -412,6 +416,10 @@ tgl_selesai:=FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue);
     Execute;
   END;
   QRekap_Mutasi.Open;
+//  FMainMenu.ShowLoading('Menyiapkan Query...', 100);
+//   Sleep(200);
+
+//  FMainMenu.HideLoading;
 end;
 
 procedure TFRpt_RekapMutasi.FormClose(Sender: TObject;

@@ -175,6 +175,7 @@ begin
                 ' LEFT JOIN t_supplier c on b.supplier_code=c.supplier_code '+
                 ' where substring(no_voucher,1,2)=''BS'' and "position"=''K'' '+
                 //' and b.bank_norek='139.00.265265.78' '+
+                ' and b.deleted_at is null '+
                 ' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' '+
                 ' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' ';
       open;
@@ -185,16 +186,16 @@ begin
        close;
        sql.Clear;
        sql.Text:=//'select id,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                 'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                 '(select a.* from '+
-                 '(select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.remark as ket,case when a.currency=''USD'' then a.amount*a.kurs else a.amount end jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
+                 'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from ( '+
+                 'select a.* from ('+
+                 {'select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.remark as ket,case when a.currency=''USD'' then a.amount*a.kurs else a.amount end jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
                  'from t_cash_bank_expenditure_submission a '+
                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
                  'where a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                  //and a.norek<>a.kode3
                  'and b.code_account=''1101.01'' and b."position"=''D'' '+
-                 'union all '+
-                 'select a.id,a.voucher_no,b.code_account,a.trans_date as tgl,a.remark as ket,(case when a.currency=''USD'' then a.amount*a.kurs else a.amount end)*-1 jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
+                 'union all '+}
+                 'select a.id,a.voucher_no,b.code_account,a.trans_date as tgl,a.remark as ket,(case when a.currency=''USD'' then a.amount*a.kurs else a.amount end) jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
                  'from t_cash_bank_expenditure_submission a '+
                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
                  'where a.voucher_no=b.no_voucher and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
@@ -214,16 +215,16 @@ begin
            close;
            sql.Clear;
            sql.Text:=//'select id,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                     'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                     '(select a.* from '+
-                     '(select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.remark as ket,case when a.currency=''USD'' then a.amount*a.kurs else a.amount end jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
+                     'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from ('+
+                     'select a.* from ('+
+                     {'select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.remark as ket,case when a.currency=''USD'' then a.amount*a.kurs else a.amount end jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
                      'from t_cash_bank_expenditure_submission a '+
                      'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
                      'where a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                      //and a.norek<>a.kode3
                      'and b.code_account=''1101.01'' and b."position"=''D'' '+
-                     'union all '+
-                     'select a.id,a.voucher_no,b.code_account,a.trans_date as tgl,a.remark as ket,(case when a.currency=''USD'' then a.amount*a.kurs else a.amount end)*-1 jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
+                     'union all '+}
+                     'select a.id,a.voucher_no,b.code_account,a.trans_date as tgl,a.remark as ket,(case when a.currency=''USD'' then a.amount*a.kurs else a.amount end) jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
                      'from t_cash_bank_expenditure_submission a '+
                      'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
                      'where a.voucher_no=b.no_voucher and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
@@ -435,7 +436,9 @@ begin
                 'and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                 'and a.inv_no=c.trans_no '+
                 //'and d.header_code=''2102'' '+
-                'and d.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                //'and d.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                'and  d.code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
+
                 'group by a.inv_no,a.faktur_no,a.bank,a.supplier_code,principle_name,a.cek_no,a.periode1,a.periode2,a.periodetempo1,a.periodetempo2,ket,ket2,c.account_code,a.plan_to '+
                 ')xx '+
                 'left join t_ak_account x on xx.account_code=x.code group by id,inv_no,faktur_no,supplier_code,principle_name,cek_no,periode1,periode2,ket,account_code,account_name,plan_to, bank '+
@@ -470,7 +473,8 @@ begin
                 'INNER JOIN (SELECT a.code,a.header_code,b.account_code2 FROM t_ak_account a INNER JOIN t_ak_account_sub b ON a.code=b.account_code) c on b.account_code=c.account_code2 '+
                 'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                 //'and c.header_code=''2102'' '+
-                'and c.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                //'and c.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                'and  c.code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
                 'GROUP BY a.supplier_code,a.periode1,a.periode2,a.plan_to ORDER BY plan_to)z)zz '+
                 'on xxx.supplier_code=zz.supplier_code and xxx.plan_to=zz.plan_to '+
                 ')xx GROUP BY supplier_code, principle_name, nosj, bank, cek_no; '+
@@ -524,7 +528,8 @@ begin
                 'and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                 'and a.inv_no=c.trans_no '+
                 //'and d.header_code=''2102'' '+
-                'and d.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                //'and d.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                'and  d.code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
                 'group by a.inv_no,a.faktur_no,a.bank,a.supplier_code,principle_name,a.cek_no,a.periode1,a.periode2,a.periodetempo1,a.periodetempo2,ket,ket2,c.account_code,a.plan_to '+
                 ')xx '+
                 'left join t_ak_account x on xx.account_code=x.code group by id,inv_no,faktur_no,supplier_code,principle_name,cek_no,periode1,periode2,ket,account_code,account_name,plan_to, bank '+
@@ -559,7 +564,8 @@ begin
                 'INNER JOIN (SELECT a.code,a.header_code,b.account_code2 FROM t_ak_account a INNER JOIN t_ak_account_sub b ON a.code=b.account_code) c on b.account_code=c.account_code2 '+
                 'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
                 //'and c.header_code=''2102'' '+
-                'and c.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                //'and c.code in(SELECT account_code FROM t_expenses_payable_account) '+
+                'and  c.code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
                 'GROUP BY a.supplier_code,a.periode1,a.periode2,a.plan_to ORDER BY plan_to)z)zz '+
                 'on xxx.supplier_code=zz.supplier_code and xxx.plan_to=zz.plan_to '+
                 ')xx GROUP BY supplier_code, principle_name, nosj, bank, cek_no; '+
@@ -723,6 +729,58 @@ begin
       end;
     end;
 
+
+      with QNon_Hutang do  //Non Hutang Move Pengeluaran dengan Cek/BG
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' select noinv,to_,'+
+                  ' concat(remark,'' '') AS ket ,'+
+                  ' (case when currency=''USD'' then jumlah*kurs else jumlah end) jumlah,plan_to, cheque_no from ('+
+//                  'select voucher_no as noinv,to_,b.trans_date,1 as urutan,remark,currency,kurs,sum(amount)as jumlah,plan_to from t_cash_bank_expenditure_submission a '+
+//                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
+//                  'where periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
+//                  'and "position"=''D'' '+
+//                  'and code_account_header<>''2101'' '+
+//                  'and code_account_header<>''2102'' '+
+//                  'and code_account_header<>''2103'' '+
+//                  'and b.code_account<>''1101.01'' '+
+//                  'group by voucher_no,to_,b.trans_date,remark,currency,kurs,plan_to '+
+//                  'UNION ALL '+
+                  'select a.voucher_no as noinv,'+
+                  //' a.to_,'+
+                  ' concat (a.to_getout,'' '','' '',to_char(sum(a.amount), ''FM999,999,999,999.00''),'' '',bank_name,'' '',cheque_no) as to_, cheque_no,'+
+                  ' a.trans_date,2 as urutan,b.description as remark,currency,kurs,'+
+                  //'(sum(a.amount))as jumlah,'+
+                  '(sum(b.paid_amount))as jumlah,'+
+                  'a.plan_to from t_cash_bank_expenditure_submission a '+
+                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
+                  'where voucher_no IN (select voucher_no from t_cash_bank_expenditure_submission a '+
+                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
+                  'where  a.deleted_at is null and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
+                  'and position=''D'' '+
+                  'and code_account_header<>''2101'' '+
+                  'and code_account_header<>''2102'' '+
+                  //'and code_account_header<>''2103'' '+
+                  'and code_account_header<>''8101'' )'+
+                  'and  a.deleted_at is null '+
+                  'and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
+                  //'and b.position=''K'' '+
+                  'and b.position=''D'' '+
+                  'and b.code_account<>''1101.01'' '+
+                  'and b.code_account<>''2103.02'' '+
+                  //'and b.code_account<>''1102.03'' '+
+                  //'group by a.voucher_no,a.to_,a.trans_date,a.remark,a.currency,a.kurs,a.plan_to '+
+                  'group by a.voucher_no,b.description, a.to_getout,a.bank_name,a.cheque_no,a.trans_date,a.remark,a.currency,a.kurs,a.plan_to '+
+                  ')x '+
+                  'where x.noinv in(select distinct voucher_no from t_cash_bank_expenditure_submission a '+
+                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher EXCEPT select DISTINCT voucher_no from t_cash_bank_expenditure_submission_payable) '+
+                  'order by plan_to,trans_date,noinv,urutan ';
+                  //'UNION ALL '+
+                  //'SELECT null as noinv,null	as to_,null as	ket,null as	jumlah,	null as plan_to order by plan_to,noinv ';
+        open;
+      end;
+
     if QNon_Hutang.RecordCount=0 then
     begin
       with QNon_Hutang do
@@ -730,48 +788,6 @@ begin
         close;
         sql.Clear;
         sql.Text:='SELECT null as noinv,null	as to_,null as	ket,null as	jumlah,	null as plan_to order by plan_to,noinv';
-        open;
-      end;
-    end
-    else
-    if QNon_Hutang.RecordCount>0 then
-    begin
-      with QNon_Hutang do  //Non Hutang
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='select noinv,to_,concat(remark,'' '',''(Rencanake'',plan_to,'')'') AS ket ,(case when currency=''USD'' then jumlah*kurs else jumlah end) jumlah,plan_to from '+
-                  '(select voucher_no as noinv,to_,b.trans_date,1 as urutan,remark,currency,kurs,sum(amount)as jumlah,plan_to from t_cash_bank_expenditure_submission a '+
-                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
-                  'where periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
-                  'and "position"=''D'' '+
-                  'and code_account_header<>''2101'' '+
-                  'and code_account_header<>''2102'' '+
-                  'and code_account_header<>''2103'' '+
-                  'and b.code_account<>''1101.01'' '+
-                  'group by voucher_no,to_,b.trans_date,remark,currency,kurs,plan_to '+
-                  'UNION ALL '+
-                  'select a.voucher_no as noinv,a.to_,a.trans_date,2 as urutan,a.remark,currency,kurs,-(sum(a.amount))as jumlah,a.plan_to from t_cash_bank_expenditure_submission a '+
-                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
-                  'where voucher_no IN (select voucher_no from t_cash_bank_expenditure_submission a '+
-                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher '+
-                  'where periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
-                  'and position=''D'' '+
-                  'and code_account_header<>''2101'' '+
-                  'and code_account_header<>''2102'' '+
-                  'and code_account_header<>''2103'' )'+
-                  'and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick1.EditValue))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick2.EditValue))+' '+
-                  'and b.position=''K'' '+
-                  'and b.code_account<>''1101.01'' '+
-                  'and b.code_account<>''2103.02'' '+
-                  'and b.code_account<>''1102.03'' '+
-                  'group by a.voucher_no,a.to_,a.trans_date,a.remark,a.currency,a.kurs,a.plan_to '+
-                  ')x '+
-                  'where x.noinv in(select distinct voucher_no from t_cash_bank_expenditure_submission a '+
-                  'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher_no=b.no_voucher EXCEPT select DISTINCT voucher_no from t_cash_bank_expenditure_submission_payable) '+
-                  'order by plan_to,trans_date,noinv,urutan ';
-                  //'UNION ALL '+
-                  //'SELECT null as noinv,null	as to_,null as	ket,null as	jumlah,	null as plan_to order by plan_to,noinv ';
         open;
       end;
     end;

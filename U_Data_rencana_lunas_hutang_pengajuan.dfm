@@ -24,6 +24,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
     Align = alTop
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 867
     object Label3: TLabel
       Left = 21
       Top = 21
@@ -89,7 +90,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       Left = 249
       Top = 19
       Width = 293
-      Height = 21
+      Height = 24
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -107,7 +108,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       Left = 160
       Top = 19
       Width = 83
-      Height = 21
+      Height = 24
       CharCase = ecUpperCase
       Ctl3D = False
       Font.Charset = DEFAULT_CHARSET
@@ -242,31 +243,31 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
     Align = alClient
     Color = 15987699
     TabOrder = 1
+    ExplicitWidth = 867
+    ExplicitHeight = 397
     object PGC1: TRzPageControl
       Left = 2
       Top = 2
-      Width = 875
-      Height = 411
+      Width = 869
+      Height = 402
       Hint = ''
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
       TabOrder = 0
-      ExplicitWidth = 869
-      ExplicitHeight = 402
+      ExplicitWidth = 863
+      ExplicitHeight = 393
       FixedDimension = 21
       object TabSheet1: TRzTabSheet
         Color = 15987699
         Caption = 'Data Rencana'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 865
-        ExplicitHeight = 377
+        ExplicitWidth = 859
+        ExplicitHeight = 368
         object DBGridEh1: TDBGridEh
           Left = 0
           Top = 0
-          Width = 871
-          Height = 342
+          Width = 865
+          Height = 333
           Align = alClient
           DataSource = DSMemRencana
           DynProps = <>
@@ -411,16 +412,16 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         end
         object RzPanel3: TRzPanel
           Left = 0
-          Top = 342
-          Width = 871
+          Top = 333
+          Width = 865
           Height = 44
           Align = alBottom
           Color = 15987699
           TabOrder = 1
-          ExplicitTop = 333
-          ExplicitWidth = 865
+          ExplicitTop = 324
+          ExplicitWidth = 859
           object btn_proses: TRzBitBtn
-            Left = 744
+            Left = 738
             Top = 2
             Width = 125
             Height = 40
@@ -480,7 +481,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 738
+            ExplicitLeft = 732
           end
         end
       end
@@ -488,15 +489,11 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         Color = 15987699
         TabVisible = False
         Caption = 'Data Rencana'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridEh2: TDBGridEh
           Left = 0
           Top = 0
-          Width = 871
-          Height = 342
+          Width = 865
+          Height = 333
           Align = alClient
           DataSource = DSMemRencana
           DynProps = <>
@@ -648,14 +645,14 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         end
         object RzPanel4: TRzPanel
           Left = 0
-          Top = 342
-          Width = 871
+          Top = 333
+          Width = 865
           Height = 44
           Align = alBottom
           Color = 15987699
           TabOrder = 1
           object btn_proses2: TRzBitBtn
-            Left = 744
+            Left = 738
             Top = 2
             Width = 125
             Height = 40
@@ -722,15 +719,11 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         Color = 15987699
         TabVisible = False
         Caption = 'TabSheet3'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGridEh3: TDBGridEh
           Left = 0
           Top = 0
-          Width = 871
-          Height = 386
+          Width = 865
+          Height = 377
           Align = alClient
           DynProps = <>
           SearchPanel.Enabled = True

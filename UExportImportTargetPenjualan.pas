@@ -123,10 +123,13 @@ var
   // 💡 TAMBAH INI:
   CellValue_Qty, CellValue_Value: Variant;
   Qty_Str, Value_Str, Item_Code2,Item_Code: string;
+  FS: TFormatSettings;
 const
   xlUp = -4162;
   xlToLeft = -4159;
 begin
+  FS := TFormatSettings.Create;
+  FS.DecimalSeparator := '.';
   OpenDialog := TOpenDialog.Create(nil);
   try
     OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx';
@@ -210,13 +213,18 @@ begin
                       CellValue_Qty := WorkSheet.Cells[Row, Col].Value2;
                       CellValue_Value := WorkSheet.Cells[Row, Col + 1].Value2;
                       try
-                          Qty_Str := FloatToStr(CellValue_Qty);
+//                        Qty_Str := FloatToStr(StrToFloatDef(VarToStr(CellValue_Qty), 0), FS);
+                          Qty_Str    := StringReplace(FloatToStr(CellValue_Qty), ',', '.', [rfReplaceAll]);
+//                          Qty_Str :=  FloatToStr(CellValue_Qty);
                       except
                           Qty_Str := '0';
                       end;
 
                       try
-                          Value_Str := FloatToStr(CellValue_Value);
+//                          Value_Str    := StringReplace(FloatToStr(CellValue_Value), ',', '.', [rfReplaceAll]);
+                          Value_Str:=FloatToStr(CellValue_Value, FS);
+//                          Value_Str := FloatToStr(StrToFloatDef(VarToStr(CellValue_Value), 0), FS);
+//                          Value_Str := FloatToStr(CellValue_Value);
                       except
                           Value_Str := '0';
                       end;

@@ -2,7 +2,7 @@ object FNew_Pembelian: TFNew_Pembelian
   Left = 0
   Top = 0
   Caption = 'Form New Faktur Pembelian'
-  ClientHeight = 637
+  ClientHeight = 783
   ClientWidth = 1117
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -25,12 +25,12 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object Panel1: TPanel
     Left = 0
-    Top = 605
+    Top = 751
     Width = 1117
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 596
+    ExplicitTop = 742
     ExplicitWidth = 1111
     object BBatal: TRzBitBtn
       Left = 1041
@@ -309,7 +309,7 @@ object FNew_Pembelian: TFNew_Pembelian
     Left = 0
     Top = 0
     Width = 1117
-    Height = 217
+    Height = 362
     Align = alTop
     TabOrder = 1
     ExplicitWidth = 1111
@@ -779,9 +779,9 @@ object FNew_Pembelian: TFNew_Pembelian
       OnChange = Edkd_akunChange
     end
     object Edkd_akunum: TRzEdit
-      Left = 830
-      Top = 156
-      Width = 101
+      Left = 820
+      Top = 155
+      Width = 159
       Height = 23
       Text = ''
       Color = clInfoBk
@@ -790,8 +790,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Visible = False
     end
     object tgl_jatuhtempo: TRzDateTimeEdit
-      Left = 872
-      Top = 43
+      Left = 859
+      Top = 44
       Width = 107
       Height = 23
       EditType = etDate
@@ -800,14 +800,14 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 217
+    Top = 362
     Width = 1117
-    Height = 388
+    Height = 389
     Align = alClient
     Color = 15987699
     TabOrder = 2
     ExplicitWidth = 1111
-    ExplicitHeight = 379
+    ExplicitHeight = 380
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -907,23 +907,25 @@ object FNew_Pembelian: TFNew_Pembelian
       Left = 2
       Top = 2
       Width = 1113
-      Height = 245
+      Height = 246
       Hint = ''
       ActivePage = TabBarang2
       Align = alClient
       TabIndex = 0
       TabOrder = 6
       ExplicitWidth = 1107
-      ExplicitHeight = 236
+      ExplicitHeight = 237
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
+        ExplicitWidth = 1103
+        ExplicitHeight = 212
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
           Width = 1109
-          Height = 220
+          Height = 221
           Align = alClient
           DataSource = DsTerimadet
           DynProps = <>
@@ -1322,13 +1324,11 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitWidth = 1103
-        ExplicitHeight = 211
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
           Width = 1109
-          Height = 220
+          Height = 221
           Align = alClient
           DataGrouping.GroupLevels = <
             item
@@ -1416,7 +1416,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 220
+          Height = 221
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1521,7 +1521,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 220
+          Height = 221
           Align = alClient
           DynProps = <>
           TabOrder = 0
@@ -1589,7 +1589,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 220
+          Height = 221
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1920,13 +1920,13 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object RzPanel2: TRzPanel
       Left = 2
-      Top = 247
+      Top = 248
       Width = 1113
       Height = 139
       Align = alBottom
       Color = 15987699
       TabOrder = 7
-      ExplicitTop = 238
+      ExplicitTop = 239
       ExplicitWidth = 1107
       object Label28: TLabel
         Left = 26

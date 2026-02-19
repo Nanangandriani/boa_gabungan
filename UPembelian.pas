@@ -77,6 +77,9 @@ type
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
     dxBarLargeButton3: TdxBarLargeButton;
+    dxBarSubItem1: TdxBarSubItem;
+    dxBarButton8: TdxBarButton;
+    dxBarButton9: TdxBarButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActRoExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -91,6 +94,8 @@ type
     procedure DBGridTerima1GetCellParams(Sender: TObject; Column: TColumnEh;
       AFont: TFont; var Background: TColor; State: TGridDrawState);
     procedure dxBarLargeButton3Click(Sender: TObject);
+    procedure dxBarButton8Click(Sender: TObject);
+    procedure dxBarButton9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -133,7 +138,11 @@ begin
 end;
 
 procedure TFPembelian.ActDelExecute(Sender: TObject);
+var
+  OldNo, NewNo: string;
 begin
+    OldNo := DBGridTerima1.Fields[1].AsString;
+    NewNo := OldNo + '-DEL';
    FNew_Pembelian.iserror:=0;
    if CheckJurnalPosting(DBGridTerima1.Fields[1].AsString)>0 then
    begin
@@ -143,7 +152,7 @@ begin
 
     if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
-    with dm.Qtemp do
+    {with dm.Qtemp do
     begin
       Close;
       sql.Clear;
@@ -155,8 +164,8 @@ begin
       //parambyname('deleted_at').AsDateTime:=Now();
       parambyname('deleted_at').AsString :=FormatDateTime('yyyy-mm-dd hh:nn:ss', Now);
       parambyname('deleted_by').AsString:=Nm; }
-      ExecSQL;
-    end;
+    {  ExecSQL;
+    end;  }
     {with dm.Qtemp1 do
     begin
       Close;
@@ -169,6 +178,28 @@ begin
       parambyname('deleted_by').AsString:=Nm;
       Execute;
     end;}
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      //sql.Text:='Delete From t_po where po_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_purchase_invoice set trans_no=:new_no,deleted_at=now(),deleted_by=:deleted_by where trans_no=:old_no';
+
+      ParamByName('new_no').AsString := NewNo;
+      parambyname('deleted_by').AsString:=Nm;
+      ParamByName('old_no').AsString := OldNo;
+      Execute;
+    end;
+    with dm.Qtemp1 do
+    begin
+      Close;
+      sql.Clear;
+      //sql.Text:='Delete From t_podetail where contract_no='+QuotedStr(DBGridPO.Fields[0].AsString);
+      sql.Text:='Update t_purchase_invoice_det set trans_no=:new_no where trans_no=:old_no ';
+      ParamByName('new_no').AsString := NewNo;
+      ParamByName('old_no').AsString := OldNo;
+      Execute;
+    end;
     ActROExecute(sender);
     ShowMessage('Data Berhasil di Hapus');
     end;
@@ -200,7 +231,9 @@ begin
     ' where a.trans_no='+QuotedStr(Memterima_material['trans_no'])+' order by e.id asc';
     Execute;
   end;
-    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPNgb.fr3');
+//    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPNgb.fr3');
+
+   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarang_kolektif.fr3');
     Rpt.ShowReport();
 end;
 
@@ -442,6 +475,70 @@ begin
     begin
       AFont.Color := clRed;
     end;
+end;
+
+procedure TFPembelian.dxBarButton8Click(Sender: TObject);
+begin
+  if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
+  WITH QReportLPB do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'+
+    ' a.faktur_date,a.due_date,a.supplier_code,a.account_code,a.purchase_type,a.debt_amount, '+
+    ' a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value,a.updated_at,a.updated_by, '+
+    ' a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month, '+
+    ' a.trans_year,a.tgl_jatuh_tempo,C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,'+
+    ' e.pph_rp,e.ppn_pembulatan,e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value '+
+    ' from t_purchase_invoice A Left join t_spb C on A.spb_no=C.spb_no '+
+    ' inner join t_purchase_invoice_det E on A.trans_no=E.trans_no '+
+    ' inner join t_supplier D on A.supplier_code=D.supplier_code '+
+    ' inner join t_item_stock F on E.item_stock_code=F. item_stock_code '+
+    ' left JOIN t_user g on a.created_by=g.user_name '+
+    ' where a.trans_no='+QuotedStr(Memterima_material['trans_no'])+' order by e.id asc';
+    Execute;
+  end;
+//    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPNgb.fr3');
+
+   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarang_kolektif.fr3');
+    Rpt.ShowReport();
+end;
+
+procedure TFPembelian.dxBarButton9Click(Sender: TObject);
+begin
+  if not Memterima_material.FieldByName('deleted_at').IsNull  then
+    begin
+       ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+       exit;
+    end;
+
+  WITH QReportLPB do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'+
+    ' a.faktur_date,a.due_date,a.supplier_code,a.account_code,a.purchase_type,a.debt_amount, '+
+    ' a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value,a.updated_at,a.updated_by, '+
+    ' a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month, '+
+    ' a.trans_year,a.tgl_jatuh_tempo,C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,'+
+    ' e.pph_rp,e.ppn_pembulatan,e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value '+
+    ' from t_purchase_invoice A Left join t_spb C on A.spb_no=C.spb_no '+
+    ' inner join t_purchase_invoice_det E on A.trans_no=E.trans_no '+
+    ' inner join t_supplier D on A.supplier_code=D.supplier_code '+
+    ' inner join t_item_stock F on E.item_stock_code=F. item_stock_code '+
+    ' left JOIN t_user g on a.created_by=g.user_name '+
+    ' where a.trans_no='+QuotedStr(Memterima_material['trans_no'])+' order by e.id asc';
+    Execute;
+  end;
+//    Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarangPPNgb.fr3');
+
+   Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\frx_LaporanPenerimaanBarang_kolektifa4.fr3');
+    Rpt.ShowReport();
 end;
 
 procedure TFPembelian.dxBarLargeButton2Click(Sender: TObject);

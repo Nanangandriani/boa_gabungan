@@ -21,6 +21,7 @@ object FDaftar_UM_Pemb: TFDaftar_UM_Pemb
     Align = alTop
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 815
     object Label3: TLabel
       Left = 21
       Top = 21
@@ -198,16 +199,14 @@ object FDaftar_UM_Pemb: TFDaftar_UM_Pemb
     Align = alClient
     TabIndex = 0
     TabOrder = 1
-    ExplicitLeft = -241
-    ExplicitTop = 2
-    ExplicitWidth = 869
-    ExplicitHeight = 402
+    ExplicitWidth = 815
+    ExplicitHeight = 328
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Color = 15987699
       Caption = 'Data Uang Muka'
-      ExplicitWidth = 865
-      ExplicitHeight = 377
+      ExplicitWidth = 811
+      ExplicitHeight = 303
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -275,7 +274,7 @@ object FDaftar_UM_Pemb: TFDaftar_UM_Pemb
   end
   object MemData: TMemTableEh
     Params = <>
-    Left = 176
+    Left = 200
     Top = 160
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh

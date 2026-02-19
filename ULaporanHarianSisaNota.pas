@@ -271,6 +271,34 @@ begin
 
       cLocation := ExtractFilePath(Application.ExeName);
       Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+      if Qreport.RecordCount<5 then
+      begin
+          Report.FindObject('Line6').Visible  := False;
+          Report.FindObject('Line8').Visible  := False;
+          Report.FindObject('Line9').Visible  := False;
+          Report.FindObject('Line10').Visible := False;
+          Report.FindObject('Line11').Visible := False;
+          Report.FindObject('Line12').Visible := False;
+          Report.FindObject('Line13').Visible := False;
+          Report.FindObject('Line14').Visible := False;
+          Report.FindObject('Line15').Visible := False;
+          Report.FindObject('Line16').Visible := False;
+          Report.FindObject('Line17').Visible := False;
+          Report.FindObject('Line18').Visible := False;
+      end else begin
+          Report.FindObject('Line6').Visible  := True;
+          Report.FindObject('Line8').Visible  := True;
+          Report.FindObject('Line9').Visible  := True;
+          Report.FindObject('Line10').Visible := True;
+          Report.FindObject('Line11').Visible := True;
+          Report.FindObject('Line12').Visible := True;
+          Report.FindObject('Line13').Visible := True;
+          Report.FindObject('Line14').Visible := True;
+          Report.FindObject('Line15').Visible := True;
+          Report.FindObject('Line16').Visible := True;
+          Report.FindObject('Line17').Visible := True;
+          Report.FindObject('Line18').Visible := True;
+      end;
       Report.ShowReport();
     end;
   end;
@@ -278,6 +306,7 @@ end;
 
 procedure TFLaporanHarianSisaNota.dxBarLargeButton6Click(Sender: TObject);
 var previous: String;
+  vReturns, vBayar, vJurnal: Double;
 begin
   if cbKecamatan.EditValue='' then
   begin
@@ -298,10 +327,15 @@ begin
     MemTableEh1.EmptyTable;
     if QLaporanHarianSisaNota.RecordCount>0 then
     begin
+
+
       QLaporanHarianSisaNota.First;
 
       while not QLaporanHarianSisaNota.Eof do
       begin
+//        vReturns := VarToFloat(QLaporanHarianSisaNota['amount_returns']);
+//        vBayar   := VarToFloat(QLaporanHarianSisaNota['amount_bayar']);
+//        vJurnal  := VarToFloat(QLaporanHarianSisaNota['amount_jurnal_memorial']);
         MemTableEh1.Insert;
         if previous=QLaporanHarianSisaNota.FieldValues['code_cust'] then
         begin
@@ -310,17 +344,55 @@ begin
           MemTableEh1['customer_name']:=QLaporanHarianSisaNota.FieldValues['customer_name'];
           previous:=QLaporanHarianSisaNota.FieldValues['code_cust'];
         end;
-        MemTableEh1['code_cust']:=QLaporanHarianSisaNota.FieldValues['code_cust'];
-        MemTableEh1['amount_nota_awal']:=QLaporanHarianSisaNota.FieldValues['amount_nota_awal'];
-        MemTableEh1['trans_date']:=QLaporanHarianSisaNota.FieldValues['trans_date'];
-        MemTableEh1['trans_no']:=QLaporanHarianSisaNota.FieldValues['trans_no'];
-        MemTableEh1['amount_penjualan']:=QLaporanHarianSisaNota.FieldValues['amount_penjualan'];
-        MemTableEh1['tgl_nota_penjualan']:=QLaporanHarianSisaNota.FieldValues['tgl_nota_penjualan'];
-        MemTableEh1['no_nota_penjualan']:=QLaporanHarianSisaNota.FieldValues['no_nota_penjualan'];
-        MemTableEh1['amount_bayar']:=QLaporanHarianSisaNota.FieldValues['amount_bayar'];
+        if QLaporanHarianSisaNota.FieldValues['code_cust']<>NULL then
+        MemTableEh1['code_cust']:=QLaporanHarianSisaNota.FieldValues['code_cust'] else  MemTableEh1['code_cust']:='';
+
+        if not QLaporanHarianSisaNota.FieldByName('amount_nota_awal').IsNull then
+        MemTableEh1.FieldByName('amount_nota_awal').AsFloat :=QLaporanHarianSisaNota.FieldByName('amount_nota_awal').AsFloat
+        else
+        MemTableEh1.FieldByName('amount_nota_awal').AsFloat := 0;
+
+        if not QLaporanHarianSisaNota.FieldByName('trans_date').IsNull then
+        MemTableEh1.FieldByName('trans_date').AsDateTime :=QLaporanHarianSisaNota.FieldByName('trans_date').AsDateTime
+        else
+        MemTableEh1.FieldByName('trans_date').Clear;
+
+
+        if not QLaporanHarianSisaNota.FieldByName('trans_no').IsNull then
+        MemTableEh1.FieldByName('trans_no').AsString :=QLaporanHarianSisaNota.FieldByName('trans_no').AsString
+        else
+        MemTableEh1.FieldByName('trans_no').Clear;
+
+
+        if not QLaporanHarianSisaNota.FieldByName('amount_nota_awal').IsNull then
+        MemTableEh1.FieldByName('amount_penjualan').AsFloat :=QLaporanHarianSisaNota.FieldByName('amount_penjualan').AsFloat
+        else
+        MemTableEh1.FieldByName('amount_penjualan').AsFloat := 0;
+
+
+        if not QLaporanHarianSisaNota.FieldByName('tgl_nota_penjualan').IsNull then
+        MemTableEh1.FieldByName('tgl_nota_penjualan').AsDateTime :=QLaporanHarianSisaNota.FieldByName('tgl_nota_penjualan').AsDateTime
+        else
+        MemTableEh1.FieldByName('tgl_nota_penjualan').Clear;
+
+        if not QLaporanHarianSisaNota.FieldByName('no_nota_penjualan').IsNull then
+        MemTableEh1.FieldByName('no_nota_penjualan').AsString :=QLaporanHarianSisaNota.FieldByName('no_nota_penjualan').AsString
+        else
+        MemTableEh1.FieldByName('no_nota_penjualan').Clear;
+
+
+        if not QLaporanHarianSisaNota.FieldByName('amount_bayar').IsNull then
+        MemTableEh1.FieldByName('amount_bayar').AsFloat :=QLaporanHarianSisaNota.FieldByName('amount_bayar').AsFloat
+        else
+        MemTableEh1.FieldByName('amount_bayar').AsFloat := 0;
+
         MemTableEh1['tgl_nota_saldo_nota']:=QLaporanHarianSisaNota.FieldValues['tgl_nota_saldo_nota'];
         MemTableEh1['no_nota_saldo_nota']:=QLaporanHarianSisaNota.FieldValues['no_nota_saldo_nota'];
-        MemTableEh1['amount_saldo_nota']:=QLaporanHarianSisaNota.FieldValues['amount_saldo_nota'];
+
+        if not QLaporanHarianSisaNota.FieldByName('amount_saldo_nota').IsNull then
+        MemTableEh1.FieldByName('amount_saldo_nota').AsFloat :=QLaporanHarianSisaNota.FieldByName('amount_saldo_nota').AsFloat
+        else
+        MemTableEh1.FieldByName('amount_saldo_nota').AsFloat := 0;
 
         if (QLaporanHarianSisaNota.FieldValues['amount_returns']=0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']>0) then
         begin //pelunasan

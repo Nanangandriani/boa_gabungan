@@ -261,7 +261,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 264
+      ExplicitLeft = 262
+      ExplicitTop = -4
     end
   end
   object cbBank: TRzComboBox
@@ -339,7 +340,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46042.623494085640000000
+    ReportOptions.LastChange = 46042.623494085600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -348,7 +349,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       '  AccountName.Text:=UpperCase(AccountName.Text);'
       
         '  MemPaid.Text:=FormatFloat('#39'#,###,###,###0.00'#39',<frxDBDatasetBuk' +
-        'tiTerima."tot_paid_amount">);      '
+        'tiTerima."tot_paid_amount">);'
       'end;'
       ''
       'procedure GroupHeader2OnBeforePrint(Sender: TfrxComponent);'
@@ -1265,7 +1266,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         'e_module='#39'TERIMA BANK'#39'  AND (a.trans_date BETWEEN '#39'2026-01-02'#39' A' +
         'ND '#39'2026-01-02'#39') AND a.account_number_bank='#39'155-00-1098668-8'#39' or' +
         'der by voucher_no ASC, account_name='#39'Piutang Barang Dagang'#39' ASC')
-    Left = 56
+    Left = 72
     Top = 144
   end
   object QBuktiTerimaDet: TUniQuery

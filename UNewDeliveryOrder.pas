@@ -180,6 +180,7 @@ type
     btnSaveMuatan: TRzBitBtn;
     btnCloseMuatan: TRzBitBtn;
     chktambahpool: TRzCheckBox;
+    chkDOpool: TRzCheckBox;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -232,6 +233,7 @@ type
     procedure DBGrid_SumberOrderNavigatorPanelButtonClick(
       Sender: TCustomDBGridEh; AButton: TNavigateBtnEh; var Processed: Boolean);
     procedure chktambahpoolClick(Sender: TObject);
+    procedure chkDOpoolClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -283,7 +285,8 @@ uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   Ubrowse_pelanggan, UMy_Function, USearch_Supplier, UDelivery_Order_Sumber,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
   UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan,
-  ULokasiMuat, ULokasiBongkar, UTambah_Barang, UDeliveryOrder_SumberPO;
+  ULokasiMuat, ULokasiBongkar, UTambah_Barang, UDeliveryOrder_SumberPO,
+  UbrowseListPenjualan;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -1006,6 +1009,11 @@ begin
   end;
 end;
 
+procedure TFNewDeliveryOrder.chkDOpoolClick(Sender: TObject);
+begin
+  if chkDOpool.Checked=True then btAddDetail.Visible:=True else btAddDetail.Visible:=False;
+end;
+
 procedure TFNewDeliveryOrder.chktambahpoolClick(Sender: TObject);
 var LastVendor: String;
     IntTitik:Integer;
@@ -1047,12 +1055,17 @@ end;
 
 procedure TFNewDeliveryOrder.Save;
 var
-  vAddPool: string;
+  vAddPool,vPoolToCustomer: string;
 begin
   if chktambahpool.Checked then
-    vAddPool := 'true' 
+    vAddPool := 'true'
   else
     vAddPool := 'false';
+
+  if chkDOpool.Checked then
+    vPoolToCustomer := 'true'
+  else
+    vPoolToCustomer := 'false';
   with dm.Qtemp do
   begin
     close;
@@ -1063,7 +1076,7 @@ begin
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,'+
-            'sbu_code,add_pool_points) '+
+            'sbu_code,add_pool_points,pool_to_customers) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -1085,7 +1098,7 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+
-            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+vAddPool+');');
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+vAddPool+','+vPoolToCustomer+');');
     ExecSQL;
   end;
   InsertDetailLoad;
@@ -1222,12 +1235,18 @@ begin
 end;
 
 procedure TFNewDeliveryOrder.Update;
-var strStatus, vAddPool: String;
+var strStatus, vAddPool, vPoolToCustomer: String;
 begin
   if chktambahpool.Checked then
     vAddPool := 'true' 
   else
     vAddPool := 'false';
+
+  if chkDOpool.Checked then
+    vPoolToCustomer := 'true'
+  else
+    vPoolToCustomer := 'false';
+
   if (StatusPerubahanBiaya=1) then
   begin
    strStatus:=',status=1';
@@ -1261,6 +1280,7 @@ begin
             ' trans_year='+QuotedStr(strtahun)+strStatus+', '+
             ' status_correction=0, '+
             ' add_pool_points=' + vAddPool +
+            ' ,pool_to_customers='+ vPoolToCustomer +
             ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
     ExecSQL;
   end;
@@ -1864,6 +1884,10 @@ begin
   end else if (edKodeJenisMuatan.Text='006') then
   begin
     FDeliveryOrder_SumberPO.ShowModal;
+  end else if chkDOpool.Checked=True then
+  begin
+    vStatusTrans:='deliveryorder';
+    FbrowseListPenjualan.Show;
   end;
 
 //  if (vFormSumber01<>'0') AND (vFormSumber01<>'') then
@@ -2304,21 +2328,32 @@ end;
 
 procedure TFNewDeliveryOrder.DBGrid_SumberOrderNavigatorPanelButtonClick(
   Sender: TCustomDBGridEh; AButton: TNavigateBtnEh; var Processed: Boolean);
-var LastVendor: String;
+var LastVendor,CurrentNoReff: String;
     IntTitik:Integer;
 begin
 if AButton = nbDeleteEh then
   begin
-    // 1. Konfirmasi hapus (Opsional tapi disarankan)
-    if MessageDlg('Hapus data ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+
+    if MessageDlg('Hapus No Reff: '+MemDataMuatan.FieldByName('no_reff').AsString+'?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // 2. Hapus record yang sedang dipilih SAAT INI
-      MemDataMuatan.Delete;
-      // 3. Reset hitungan setelah data terhapus
-      IntTitik := 0;
-      LastVendor := '';
+
+//      MemDataMuatan.Delete;
+
+      CurrentNoReff := MemDataMuatan.FieldByName('no_reff').AsString;
+
       MemDataMuatan.DisableControls;
       try
+        MemDataMuatan.First;
+        while not MemDataMuatan.Eof do
+        begin
+          if MemDataMuatan.FieldByName('no_reff').AsString = CurrentNoReff then
+            MemDataMuatan.Delete // Setelah Delete, kursor otomatis pindah ke baris berikutnya
+          else
+            MemDataMuatan.Next;
+        end;
+
+        IntTitik := 0;
+        LastVendor := '';
         MemDataMuatan.First;
         while not MemDataMuatan.Eof do
         begin
@@ -2344,8 +2379,6 @@ if AButton = nbDeleteEh then
       end;
       
     end;
-    // 4. SET PROCESSED JADI TRUE
-    // Ini penting agar DBGrid tidak mencoba menghapus lagi (yang bikin kursor lari ke baris akhir)
     Processed := True;
   end;
 end;
@@ -2548,7 +2581,7 @@ begin
     btnSaveMuatan.Visible:=True;
   end;
 
-  if (edKodeJenisMuatan.Text='005') then
+  if (edKodeJenisMuatan.Text='005') AND(chkDOpool.Checked=False) then
   begin
     btAddDetail.Visible:=False;
     DBGrid_SumberOrder.Columns[2].Title.Caption:='Nama Pelanggan';
@@ -2670,7 +2703,7 @@ begin
   if edNamaJenisMuatan.Text='' then
   begin
     ShowMessage('Jenis Muatan Wajib Diisi..!');
-  end else if edKodeJenisMuatan.Text='006' then
+  end else if (edKodeJenisMuatan.Text='006') OR (chkDOpool.Checked=True) then
   begin
     FDaftarKendaraan.vcall:='delivery_order';
     FDaftarKendaraan.GetDataViaAPI;

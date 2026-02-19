@@ -228,6 +228,10 @@ begin
       Cb_sbu.Text:=MemMaterial.FieldByName('sbu_code').value;
       edKdBrgCoretax.Text:=MemMaterial.FieldByName('item_code_coretax').value;
       edNmBrgCoretax.Text:=MemMaterial.FieldByName('item_name_coretax').value;
+      // cr ds 5-2-2026
+      KodeHeaderPerkiraan:=MemMaterial['hd_persd'];
+      KodeHeaderPerkiraan2:=MemMaterial['hd_pemb'];
+      //
       if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;
   end;

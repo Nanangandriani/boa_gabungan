@@ -83,7 +83,8 @@ begin
       ' GROUP BY gl.account_code,ak.account_name,status_dk ' ;  }
       open;
     END;
-  QSumber_memo2.First;
+ { off cr ds 6-2-2026
+ QSumber_memo2.First;
   while not QSumber_memo2.Eof do
     begin
        MemTableEh1.Insert;
@@ -93,7 +94,7 @@ begin
        MemTableEh1['nama_akun']:=QSumber_memo2['account_name'];
        MemTableEh1.Post;
        QSumber_memo2.Next;
-     end;
+     end;  }
   end;
   Close;
 end;

@@ -120,6 +120,7 @@ type
     QCetakRincianFakturdebt_amount: TFloatField;
     QCetakRincianFakturpaid_amount: TFloatField;
     QCetakRincianFaktursisa_hutang: TFloatField;
+    QCetakSisaHutangket: TMemoField;
     procedure FormShow(Sender: TObject);
     procedure Jenis_HutangChange(Sender: TObject);
     procedure dxRefreshClick(Sender: TObject);
@@ -275,7 +276,7 @@ begin
         begin
             close;
             sql.Clear;
-            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,sum(tot_hutang-h1-h2-h3) as htg_blm_jatuh_tempo FROM '+
+            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,0::numeric as htg_blm_jatuh_tempo,get_ket.ket FROM '+
                       '(SELECT rrr.supplier_code,	rrr.principle_code,	rrr.principle_name,	tot_hutang,	h1,	h2,	h3,	tot_rcn FROM '+
                       '(SELECT * FROM '+
                       '(select supplier_code from t_supplier) s '+
@@ -357,7 +358,7 @@ begin
                       '(SELECT	x.kodesup,x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar FROM '+
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 WHERE b.code ='+Quotedstr(vkd_jenis_hutang)+' ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code ='+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code ='+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -399,18 +400,27 @@ begin
                       '(SELECT	x.kodesup,x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar  FROM '+
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 WHERE b.code ='+Quotedstr(vkd_jenis_hutang)+' ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code = '+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code = '+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code='+Quotedstr(vkd_jenis_hutang)+' '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
                       'LEFT JOIN (select supplier_code,sum(initial_balance) saldo_awal from t_initial_balance_debt where year=''2024'' group by supplier_code) saldo_awal_hut on rrr.supplier_code=saldo_awal_hut.supplier_code '+
                       'where tot_hutang+case when saldo_awal is NULL then 0 else saldo_awal end>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkkk '+
-                      'GROUP BY supplier_code,principle_name,tot_hutang,h1,h2,h3,tot_rcn ';
+
+                      'LEFT JOIN (SELECT kd_sup, CASE WHEN COUNT(NULLIF(bank,'''')) > 0 THEN STRING_AGG( bank || '+QuotedStr(' ')+' || '+
+                      'cek_no || '+QuotedStr(' ')+' || TO_CHAR(jumlah, ''FM999,999,999,999,999.00''), E'+QuotedStr('\n')+') '+
+                      'ELSE ''KAS BESAR'' END AS ket FROM ( SELECT supplier_code AS kd_sup, bank, cek_no, '+
+                      'SUM(amount) AS jumlah FROM t_paid_debt_det WHERE '+
+                      '(periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') '+
+                      'GROUP BY supplier_code, bank, cek_no ) x GROUP BY kd_sup) '+
+                      'get_ket on kkkk.supplier_code=get_ket.kd_sup '+
+                      ' ';
            open;
         end;
     end
@@ -421,7 +431,7 @@ begin
         begin
             close;
             sql.Clear;
-            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,sum(tot_hutang-h1-h2-h3) as htg_blm_jatuh_tempo FROM '+
+            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,0::numeric as htg_blm_jatuh_tempo,get_ket.ket FROM '+
                       '(SELECT rrr.supplier_code,	rrr.principle_code,	rrr.principle_name,	tot_hutang,	h1,	h2,	h3,	tot_rcn FROM '+
                       '(SELECT * FROM '+
                       '(select supplier_code from t_supplier) s '+
@@ -507,7 +517,7 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_expenses_payable_account)) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code in (SELECT account_code FROM t_expenses_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code in (SELECT account_code FROM t_expenses_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -552,18 +562,27 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_expenses_payable_account) ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_expenses_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_expenses_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code in(SELECT account_code FROM t_expenses_payable_account) '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
                       'LEFT JOIN (select supplier_code,sum(initial_balance) saldo_awal from t_initial_balance_debt where year=''2024'' group by supplier_code) saldo_awal_hut on rrr.supplier_code=saldo_awal_hut.supplier_code '+
                       'where tot_hutang+case when saldo_awal is NULL then 0 else saldo_awal end>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkkk '+
-                      'GROUP BY supplier_code,principle_name,tot_hutang,h1,h2,h3,tot_rcn ';
+
+                      'LEFT JOIN (SELECT kd_sup, CASE WHEN COUNT(NULLIF(bank,'''')) > 0 THEN STRING_AGG( bank || '+QuotedStr(' ')+' || '+
+                      'cek_no || '+QuotedStr(' ')+' || TO_CHAR(jumlah, ''FM999,999,999,999,999.00''), E'+QuotedStr('\n')+') '+
+                      'ELSE ''KAS BESAR'' END AS ket FROM ( SELECT supplier_code AS kd_sup, bank, cek_no, '+
+                      'SUM(amount) AS jumlah FROM t_paid_debt_det WHERE '+
+                      '(periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') '+
+                      'GROUP BY supplier_code, bank, cek_no ) x GROUP BY kd_sup) '+
+                      'get_ket on kkkk.supplier_code=get_ket.kd_sup '+
+                      ' ';
            open;
         end;
     end
@@ -574,7 +593,7 @@ begin
         begin
             close;
             sql.Clear;
-            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,sum(tot_hutang-h1-h2-h3) as htg_blm_jatuh_tempo FROM '+
+            sql.Text:='select supplier_code principle_code, principle_name, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,0::numeric as htg_blm_jatuh_tempo,get_ket.ket FROM '+
                       '(SELECT rrr.supplier_code,	rrr.principle_code,	rrr.principle_name,	tot_hutang,	h1,	h2,	h3,	tot_rcn FROM '+
                       '(SELECT * FROM '+
                       '(select supplier_code from t_supplier) s '+
@@ -660,7 +679,7 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_asset_payable_account)) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code in (SELECT account_code FROM t_asset_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code in (SELECT account_code FROM t_asset_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -705,23 +724,32 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_asset_payable_account) ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_asset_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_asset_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code in(SELECT account_code FROM t_asset_payable_account) '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
                       'LEFT JOIN (select supplier_code,sum(initial_balance) saldo_awal from t_initial_balance_debt where year=''2024'' group by supplier_code) saldo_awal_hut on rrr.supplier_code=saldo_awal_hut.supplier_code '+
                       'where tot_hutang+case when saldo_awal is NULL then 0 else saldo_awal end>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkkk '+
-                      'GROUP BY supplier_code,principle_name,tot_hutang,h1,h2,h3,tot_rcn ';
+
+                      'LEFT JOIN (SELECT kd_sup, CASE WHEN COUNT(NULLIF(bank,'''')) > 0 THEN STRING_AGG( bank || '+QuotedStr(' ')+' || '+
+                      'cek_no || '+QuotedStr(' ')+' || TO_CHAR(jumlah, ''FM999,999,999,999,999.00''), E'+QuotedStr('\n')+') '+
+                      'ELSE ''KAS BESAR'' END AS ket FROM ( SELECT supplier_code AS kd_sup, bank, cek_no, '+
+                      'SUM(amount) AS jumlah FROM t_paid_debt_det WHERE '+
+                      '(periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') '+
+                      'GROUP BY supplier_code, bank, cek_no ) x GROUP BY kd_sup) '+
+                      'get_ket on kkkk.supplier_code=get_ket.kd_sup '+
+                      ' ';
            open;
         end;
     end;
-    QCetakSisaHutang.Close;
-    QCetakSisaHutang.Open;
+    //QCetakSisaHutang.Close;
+    //QCetakSisaHutang.Open;
     DBGridSisaHutang.FinishLoadingStatus();
 
     frxSisaHutang.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Lap_Sisa_Hutang.fr3');
@@ -850,7 +878,7 @@ begin
                       '(SELECT	x.kodesup,x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar FROM '+
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 WHERE b.code ='+Quotedstr(vkd_jenis_hutang)+' ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code ='+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code ='+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -892,17 +920,19 @@ begin
                       '(SELECT	x.kodesup,x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar  FROM '+
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 WHERE b.code ='+Quotedstr(vkd_jenis_hutang)+' ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code = '+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code = '+Quotedstr(vkd_jenis_hutang)+'	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code='+Quotedstr(vkd_jenis_hutang)+' '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
                       'LEFT JOIN (select supplier_code,sum(initial_balance) saldo_awal from t_initial_balance_debt where year=''2024'' group by supplier_code) saldo_awal_hut on rrr.supplier_code=saldo_awal_hut.supplier_code '+
                       'where tot_hutang+case when saldo_awal is NULL then 0 else saldo_awal end>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkkk '+
+
                       ' ';
            open;
         end;
@@ -1000,7 +1030,7 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_expenses_payable_account)) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code in (SELECT account_code FROM t_expenses_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code in (SELECT account_code FROM t_expenses_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -1045,12 +1075,13 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_expenses_payable_account) ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_expenses_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_expenses_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code in(SELECT account_code FROM t_expenses_payable_account) '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
@@ -1153,7 +1184,7 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_asset_payable_account)) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 '+
-                      'WHERE	b.code in (SELECT account_code FROM t_asset_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'WHERE	b.code in (SELECT account_code FROM t_asset_payable_account) AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.faktur_no	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x '+
                       'group by kodesup order by kodesup )mggini on supp.principle_code=mggini.kodesup '+
@@ -1198,12 +1229,13 @@ begin
                       '( SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_code2 '+
                       'WHERE b.code in (SELECT account_code FROM t_asset_payable_account) ) x '+
                       'LEFT JOIN (SELECT	supplier_code,faktur_no AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar '+
-                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_asset_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b on a.account_acc=b.account_code2 WHERE	b.code in(SELECT account_code FROM t_asset_payable_account)	AND trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
                       'GROUP BY supplier_code,faktur_no,invoice_no ORDER BY	supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code 	AND x.faktur_no = y.nofaktur	) A '+
                       'WHERE	hutang - bayar  > 0 ) xx GROUP BY	kodesup	)x	group by kodesup order by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup '+
 
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
-                      'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
+                      'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
                       'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') and cc.code in(SELECT account_code FROM t_asset_payable_account) '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 

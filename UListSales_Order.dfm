@@ -101,6 +101,15 @@ object FSalesOrder: TFSalesOrder
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'code_cust'
+        Footers = <>
+        Title.Caption = 'Kode Pelanggan'
+        Width = 95
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'name_cust'
         Footers = <>
         ReadOnly = True

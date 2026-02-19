@@ -166,7 +166,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select * from t_cash_bank_acceptance_down_payment '+
+    sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a '+
               'where no_trans_down_payment='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans']);
     Open;
   end;
@@ -209,9 +209,10 @@ begin
       Close;
       Sql.Clear;
       Sql.Text:='select a.no_trans,a.trans_date,a.customer_code,c.account_name,b.customer_name,'+
-                'a.account_code,a.grand_tot from t_down_payment_sales a '+
+                'a.account_code,a.grand_tot,d.trans_no from t_down_payment_sales a '+
 		            'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
                 'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code '+
+                'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.no_trans '+
                 'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
                 'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' and a.deleted_at is NULL ORDER BY a.trans_date DESC, a.no_trans DESC;';
       Open;

@@ -1602,7 +1602,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46049.920764872690000000
+    ReportOptions.LastChange = 46058.990357928200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1673,7 +1673,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       
         '  vBayar, vReturn, vUM, vPenjualan, vNotaAwal, vJurnal: Extended' +
         ';'
-      '  tBayar, tReturn, tUM, tJurnal: TDateTime;    '
+      '  tBayar, tReturn, tUM, tJurnal: TDateTime;'
       'begin'
       
         ' { if (<frxDBDatasetLapHarianSisaNota."amount_returns"> = 0) AND' +
@@ -1725,7 +1725,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       
         '    Memo40.Text:=FormatDateTime('#39'dd/mm/yyyy'#39',<frxDBDatasetLapHar' +
         'ianSisaNota."trans_date_uang_muka">);'
-      '  end;      '
+      '  end;'
       ''
       
         '  if (<frxDBDatasetLapHarianSisaNota."amount_penjualan"> > 0) AN' +
@@ -1770,7 +1770,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       '  tglTxt := '#39#39';'
       ''
-      '  // --- 2. Pembayaran ---   '
+      '  // --- 2. Pembayaran ---'
       
         '  if ((vReturn = 0) and (vBayar > 0) and (vNotaAwal = vBayar)) o' +
         'r'
@@ -1788,7 +1788,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tReturn);'
       '  end;'
       ''
-      '  // --- 4. Uang Muka ---   '
+      '  // --- 4. Uang Muka ---'
       '  if ((vReturn = 0) and (vUM > 0) and (vNotaAwal = vUM)) or'
       
         '     ((vPenjualan > 0) and (vUM > 0) and (vPenjualan = vUM)) the' +
@@ -1806,7 +1806,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       '  end;'
       ''
       '  // --- 6. Hasil Akhir ---'
-      '  Memo40.Text := tglTxt;      '
+      '  Memo40.Text := tglTxt;'
       'end;'
       ''
       'procedure Memo41OnBeforePrint(Sender: TfrxComponent);'
@@ -1827,8 +1827,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         '  valJurnal := <frxDBDatasetLapHarianSisaNota."amount_jurnal_mem' +
         'orial">;'
       ''
-      '  displayTxt := '#39#39';      '
-      '    '
+      '  displayTxt := '#39#39';'
+      ''
       '  Memo41.DisplayFormat.FormatStr:='#39'#,#0.00;(#,#0.00);#,#0'#39';'
       '  Memo41.DisplayFormat.Kind:=fkNumeric;'
       
@@ -1857,7 +1857,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       
         '    Memo41.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39',<frxDBData' +
         'setLapHarianSisaNota."amount_uang_muka">);'
-      '  end;      '
+      '  end;'
       ''
       
         '  if (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) AND ' +
@@ -1890,14 +1890,12 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       '  // Cek Uang Muka'
       '  if valUM <> 0 then'
       '  begin'
-      
-        '    if displayTxt <> '#39#39' then displayTxt := displayTxt + #13#10; ' +
-        '           '
+      '    if displayTxt <> '#39#39' then displayTxt := displayTxt + #13#10;'
       
         '    displayTxt := displayTxt +  FormatFloat('#39'#,#0.00;(#,#0.00);#' +
         ',#0'#39', valUM);'
       '  end;'
-      '  '
+      ''
       '  // Cek Jurnal Memorial'
       '  if valJurnal <> 0 then'
       '  begin'
@@ -1907,8 +1905,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         '#0'#39', valJurnal);'
       '  end;'
       ''
-      '  Memo41.Text := displayTxt;      '
-      '      '
+      '  Memo41.Text := displayTxt;'
+      ''
       'end;'
       ''
       'procedure Memo35OnAfterData(Sender: TfrxComponent);'
@@ -1993,9 +1991,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         'muka"> > 0) and'
       
         '                 (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
-        'an"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);     ' +
-        '                '
-      '  '
+        'an"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);'
+      ''
       
         '  adaRetur    := <frxDBDatasetLapHarianSisaNota."amount_returns"' +
         '> > 0;'
@@ -2097,7 +2094,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'begin'
       '  IsVisible := MasterData1.RowCount <5;'
       ''
-      '  Line6.Visible  := IsVisible;'
+      '{  Line6.Visible  := IsVisible;'
       '  Line8.Visible  := IsVisible;'
       '  Line9.Visible  := IsVisible;'
       '  Line10.Visible := IsVisible;'
@@ -2108,7 +2105,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       '    Line15.Visible := IsVisible;'
       '    Line16.Visible := IsVisible;'
       '    Line17.Visible := IsVisible;'
-      '  Line18.Visible := IsVisible;'
+      '  Line18.Visible := IsVisible;   }'
       ''
       ' { if MasterData1.RowCount < 2 then'
       '  begin'
@@ -2174,8 +2171,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       PaperSize = 256
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       MirrorMode = []
       OnBeforePrint = 'Page1OnBeforePrint'
@@ -3214,7 +3211,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetLapHarianSisaNota."amount_nota_awal">,MasterDa' +
-              'ta1)]')
+              'ta1,2)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3257,7 +3254,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
-              'ta1)]')
+              'ta1,2)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3300,7 +3297,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetLapHarianSisaNota."amount_saldo_nota">,MasterD' +
-              'ata1)]')
+              'ata1,2)]')
           ParentFont = False
           VAlign = vaCenter
         end

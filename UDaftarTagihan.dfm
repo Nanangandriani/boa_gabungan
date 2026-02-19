@@ -4,8 +4,8 @@ object FDaftarTagihan: TFDaftarTagihan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Daftar Tagihan'
-  ClientHeight = 492
-  ClientWidth = 1041
+  ClientHeight = 491
+  ClientWidth = 1088
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,33 +17,34 @@ object FDaftarTagihan: TFDaftarTagihan
   TextHeight = 15
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 0
-    Width = 1041
-    Height = 460
+    Top = 57
+    Width = 1088
+    Height = 402
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 0
-    ExplicitWidth = 1037
-    ExplicitHeight = 459
+    ExplicitWidth = 1084
+    ExplicitHeight = 401
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1033
-      ExplicitHeight = 434
+      ExplicitWidth = 1080
+      ExplicitHeight = 376
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1037
-        Height = 435
+        Width = 1084
+        Height = 377
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
-        FrozenCols = 3
+        FrozenCols = 5
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
+        SearchPanel.FilterOnTyping = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         OnDblClick = DBGridEh1DblClick
@@ -55,7 +56,7 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'code_cust'
             Footers = <>
             Title.Caption = 'Kode Pelanggan'
-            Width = 89
+            Width = 64
           end
           item
             CellButtons = <>
@@ -64,7 +65,7 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'name_cust'
             Footers = <>
             Title.Caption = 'Nama Pelanggan'
-            Width = 224
+            Width = 198
           end
           item
             CellButtons = <>
@@ -73,7 +74,25 @@ object FDaftarTagihan: TFDaftarTagihan
             FieldName = 'customer_name_pkp'
             Footers = <>
             Title.Caption = 'Nama PKP'
-            Width = 224
+            Width = 181
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kabupaten'
+            Footers = <>
+            Title.Caption = 'Kabupaten'
+            Width = 135
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'kecamatan'
+            Footers = <>
+            Title.Caption = 'Kecamatan'
+            Width = 106
           end
           item
             CellButtons = <>
@@ -136,15 +155,15 @@ object FDaftarTagihan: TFDaftarTagihan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 460
-    Width = 1041
+    Top = 459
+    Width = 1088
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 459
-    ExplicitWidth = 1037
+    ExplicitTop = 458
+    ExplicitWidth = 1084
     object BBatal: TRzBitBtn
-      Left = 965
+      Left = 1012
       Top = 1
       Height = 30
       Align = alRight
@@ -203,10 +222,10 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 961
+      ExplicitLeft = 1008
     end
     object BSave: TRzBitBtn
-      Left = 890
+      Left = 937
       Top = 1
       Height = 30
       Align = alRight
@@ -265,7 +284,81 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 886
+      ExplicitLeft = 933
+    end
+  end
+  object RzPanel1: TRzPanel
+    Left = 0
+    Top = 0
+    Width = 1088
+    Height = 57
+    Align = alTop
+    Color = 15987699
+    TabOrder = 2
+    ExplicitWidth = 1084
+    object RzLabel1: TRzLabel
+      Left = 8
+      Top = 21
+      Width = 64
+      Height = 15
+      Caption = 'Karesidenan'
+    end
+    object RzLabel2: TRzLabel
+      Left = 302
+      Top = 21
+      Width = 57
+      Height = 15
+      Caption = 'Kabupaten'
+    end
+    object RzLabel3: TRzLabel
+      Left = 593
+      Top = 21
+      Width = 59
+      Height = 15
+      Caption = 'Kecamatan'
+    end
+    object edKaresidenan: TRzButtonEdit
+      Left = 78
+      Top = 18
+      Width = 185
+      Height = 23
+      Text = ''
+      TabOrder = 0
+      OnChange = edKaresidenanChange
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKaresidenanButtonClick
+    end
+    object edKabupaten: TRzButtonEdit
+      Left = 368
+      Top = 18
+      Width = 185
+      Height = 23
+      Text = ''
+      TabOrder = 1
+      OnChange = edKabupatenChange
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKabupatenButtonClick
+    end
+    object edKecamatan: TRzButtonEdit
+      Left = 660
+      Top = 18
+      Width = 185
+      Height = 23
+      Text = ''
+      TabOrder = 2
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = edKecamatanButtonClick
+    end
+    object RzButton1: TRzButton
+      Left = 872
+      Top = 16
+      Width = 113
+      Caption = 'Cari'
+      TabOrder = 3
+      OnClick = RzButton1Click
     end
   end
   object dsDetailPiutang: TDataSource
@@ -307,6 +400,14 @@ object FDaftarTagihan: TFDaftarTagihan
     end
     object MemDetailPiutangcustomer_name_pkp: TStringField
       FieldName = 'customer_name_pkp'
+      Size = 100
+    end
+    object MemDetailPiutangkabupaten: TStringField
+      FieldName = 'kabupaten'
+      Size = 100
+    end
+    object MemDetailPiutangkecamatan: TStringField
+      FieldName = 'kecamatan'
       Size = 100
     end
     object MemTableData: TMemTableDataEh
@@ -362,6 +463,18 @@ object FDaftarTagihan: TFDaftarTagihan
         object pilih: TMTBooleanDataFieldEh
           FieldName = 'pilih'
           DisplayWidth = 20
+        end
+        object kabupaten: TMTStringDataFieldEh
+          FieldName = 'kabupaten'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object kecamatan: TMTStringDataFieldEh
+          FieldName = 'kecamatan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

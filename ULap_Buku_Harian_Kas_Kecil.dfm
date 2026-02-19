@@ -724,7 +724,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44224.360934872700000000
-    ReportOptions.LastChange = 46046.425123310180000000
+    ReportOptions.LastChange = 46056.609626851850000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
@@ -1567,8 +1567,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
         end
         object Memo59: TfrxMemoView
           AllowVectorExport = True
-          Left = 517.795275590551000000
-          Width = 102.047244094488000000
+          Left = 517.795275590000000000
+          Width = 102.047244090000000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
@@ -1598,6 +1598,8 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
           HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset1."adm">,MasterData1,1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1674,13 +1676,17 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
           Left = 723.448818900000000000
           Width = 86.929133860000000000
           Height = 30.236220470000000000
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
+          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
-          HAlign = haCenter
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDataset1."penjualan">,MasterData1,1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2073,7 +2079,7 @@ object FLap_Buku_Harian_Kas_Kecil: TFLap_Buku_Harian_Kas_Kecil
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 772
+    Left = 780
     Top = 24
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar

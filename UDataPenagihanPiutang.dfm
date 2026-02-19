@@ -541,6 +541,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnMouseWheel = DBGridDetailMouseWheel
         Columns = <
           item
             CellButtons = <>

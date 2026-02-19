@@ -5802,8 +5802,8 @@ object FMainMenu: TFMainMenu
     end
   end
   object ImageList1: TImageList
-    Left = 744
-    Top = 56
+    Left = 648
+    Top = 80
     Bitmap = {
       494C010102000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -5958,8 +5958,8 @@ object FMainMenu: TFMainMenu
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 666
-    Top = 62
+    Left = 618
+    Top = 14
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'File'
@@ -6489,7 +6489,7 @@ object FMainMenu: TFMainMenu
     DataSet = QJurnal
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 412
+    Left = 396
     Top = 136
   end
   object Report: TfrxReport
@@ -6508,7 +6508,8 @@ object FMainMenu: TFMainMenu
       'begin'
       ''
       'end.')
-    Left = 664
+    Left = 552
+    Top = 16
     Datasets = <>
     Variables = <>
     Style = <>

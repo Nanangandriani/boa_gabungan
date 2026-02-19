@@ -27,6 +27,7 @@ Uses SysUtils, frxClass,uni,dxBar, RzCmboBx, StdCtrls, DB;
   function ConvKeHuruf(inp: string): string;
 
   var strday,strmonth,stryear,notif,notrans,idmenu,order_no,Vtgl,Vbln,Vthn,vStatusTrans,vBatas_Data,cLocation,statustr,status_akses:string;
+      strbulan,strtahun:string; //cr ds 13-02-2026
       strday2:TDate;
       status_pakai_terbilang : Integer;
       Voice:array[1..100] of string;
@@ -592,7 +593,7 @@ function getNourut(tgl:TDateTime;Tablename,kode:string):string;
 var
   year, month, day: word;
   strsepr: string[1];
-  strtemp,strbukti, strtgl,strbulan,strtahun,conv_romawi: string;
+  strtemp,strbukti, strtgl,conv_romawi: string;
   q:TUniQuery;
   i,n,nourut:Integer;
   query,query2,query3:string;

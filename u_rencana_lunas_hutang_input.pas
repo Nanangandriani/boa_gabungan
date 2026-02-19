@@ -207,11 +207,12 @@ begin
           sql.Clear;
           sql.text:=' delete from t_paid_debt_det '+
                     ' where periode1=:periode1 and periode2=:periode2 and supplier_code=:kd_sup '+
-                    ' and plan_to=:rencanake';
+                    ' and plan_to=:rencanake and cek_no=:cek_no';
           params.ParamByName('periode1').asstring:=formatdatetime('yyyy-mm-dd',dpperiode1.Date);
           params.ParamByName('periode2').asstring:=formatdatetime('yyyy-mm-dd',dpperiode2.Date);
           params.ParamByName('kd_sup').asstring:=MemRencana['kd_sup'];
           params.ParamByName('rencanake').asstring:=CBrencanake.Text;
+          params.ParamByName('cek_no').asstring:=txtnocek.Text;
           Execute;
         end;
 
@@ -225,11 +226,16 @@ begin
             sql.add('insert into t_paid_debt_det(bank,supplier_code,inv_no,faktur_no,faktur_date, '+
                     'cek_no,cek_date,paid_date,periode1,periode2,periodetempo1,periodetempo2,amount,'+
                     'debt_type,username,npph,pph_account,pph_name '+
-                    ',paid_status,exchange_rate,dolar_amount,approve_status,sj_no,factory_code,plan_to,source_plan_id '+
+                    ',paid_status,exchange_rate,dolar_amount,'+
+                    //'approve_status,'+
+                    'sj_no,factory_code,plan_to,source_plan_id '+
                     ')');
-            sql.add('values(:bnk,:kds,:nv,:nofak,:tglfak,:nck,:tglck,:tgllns,:prd1,:prd2,:prdtmp1,:prdtmp2,'+
+            sql.add('values(:bnk,:kds,:nv,:nofak,:tglfak,:nck,:tglck,:tgllns,:prd1,:prd2,'+
+                    ':prdtmp1,:prdtmp2,'+
                     ':jml,:jenhtg,:username,:npphs,:akuns,:pphname '+
-                    ',:stat,:kurss,:jum_dol,:approvstat,:sjno,:kdprsh,:rencanake,:sumber_id '+
+                    ',:stat,:kurss,:jum_dol,'+
+                    //':approvstat,'+
+                    ':sjno,:kdprsh,:rencanake,:sumber_id '+
                     ')');
 
             if rbbank.Checked=true then
@@ -259,7 +265,7 @@ begin
             ParamByName('pphname').Value:=MemRencana['nm_akun_pph'];
             ParamByName('stat').Value:='0';
             ParamByName('jum_dol').Value:=MemRencana['jumlah_dolar'];
-            ParamByName('approvstat').Value:='0';
+            //ParamByName('approvstat').Value:='0';
             ParamByName('sjno').AsString:=MemRencana['nosj'];
             ParamByName('kurss').Value:=MemRencana['kurs'];
             ParamByName('kdprsh').Asstring:=dm.QPerusahaan.FieldByName('company_code').AsString;
@@ -698,7 +704,8 @@ begin
       SQL.Text :='UPDATE t_paid_debt_det SET bank = :bnk,cek_no = :nck, '+
                  'cek_date = :tglck,paid_date = :tgllns,amount = :jml, '+
                  'exchange_rate = :kurs,dolar_amount = :jumdol,npph = :npph,pph_account = :akunpph, '+
-                 'pph_name = :nmpph,approve_status = :appstat '+
+                 'pph_name = :nmpph'+
+                 //'approve_status = :appstat '+
                  'WHERE periode1 = :prd1 AND periode2 = :prd2 '+
                  'AND plan_to = :rencanake AND supplier_code = :kds AND faktur_no = :nofak';
 
@@ -722,7 +729,7 @@ begin
       ParamByName('npph').AsFloat :=MemRencana.FieldByName('npph').AsFloat;
       ParamByName('akunpph').AsString :=MemRencana.FieldByName('akun_pph').AsString;
       ParamByName('nmpph').AsString :=MemRencana.FieldByName('nm_akun_pph').AsString;
-      ParamByName('appstat').AsInteger := 0;
+      //ParamByName('appstat').AsInteger := 0;
       { ====== WHERE ====== }
       ParamByName('prd1').AsDate := dpperiode1.Date;
       ParamByName('prd2').AsDate := dpperiode2.Date;

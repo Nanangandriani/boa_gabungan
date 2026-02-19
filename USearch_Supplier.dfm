@@ -4,8 +4,8 @@ object FSearch_Supplier: TFSearch_Supplier
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'List Supplier'
-  ClientHeight = 315
-  ClientWidth = 482
+  ClientHeight = 458
+  ClientWidth = 964
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,8 +21,8 @@ object FSearch_Supplier: TFSearch_Supplier
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 482
-    Height = 283
+    Width = 964
+    Height = 426
     Align = alClient
     AutoFitColWidths = True
     DataSource = DsSupplier
@@ -52,23 +52,50 @@ object FSearch_Supplier: TFSearch_Supplier
         ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nama Supplier'
-        Width = 368
+        Width = 251
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'address'
+        Footers = <>
+        Title.Caption = 'Alamat'
+        Width = 287
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_code'
+        Footers = <>
+        Title.Caption = 'Kode Perkiraan'
+        Width = 115
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'account_name'
+        Footers = <>
+        Title.Caption = 'Nama Perkiraan'
+        Width = 127
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 283
-    Width = 482
+    Top = 426
+    Width = 964
     Height = 32
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 274
-    ExplicitWidth = 476
+    ExplicitTop = 417
+    ExplicitWidth = 656
     object BBatal: TRzBitBtn
-      Left = 406
+      Left = 888
       Top = 1
       Height = 30
       Align = alRight
@@ -126,10 +153,10 @@ object FSearch_Supplier: TFSearch_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 400
+      ExplicitLeft = 580
     end
     object BSimpan: TRzBitBtn
-      Left = 331
+      Left = 813
       Top = 1
       Height = 30
       Align = alRight
@@ -187,25 +214,29 @@ object FSearch_Supplier: TFSearch_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 325
+      ExplicitLeft = 505
     end
   end
   object QSupplier: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
-        '(SELECT a.*,b.header_name from t_supplier  a left JOIN t_ak_head' +
-        'er b on a.header_code_um=b.header_code where a.deleted_at is nul' +
-        'l order by supplier_code asc)'
+        '(SELECT supplier_code,supplier_name,address,telp,supplier1_name,' +
+        'npwp,contact_person,pph,supplier_code2,a.header_code,account_cod' +
+        'e,1 status_id,up_npwp,supplier_initial,'
+      
+        'sbu_code,header_code2, account_code2,tempo,item_do,b.account_nam' +
+        'e,header_code_um,account_code_um from t_supplier  a left JOIN t_' +
+        'ak_account b on a.header_code=b.code '
+      'where a.deleted_at is null order by supplier_code asc)'
       
         'UNION ALL (SELECT company_code supplier_code,company_name suppli' +
         'er_name,'#39#39' address,'#39#39' telp,'#39#39' supplier1_name,'#39#39' npwp,'#39#39'contact_p' +
-        'erson,'#39#39' pph,null id,null created_at,created_by,null updated_at,' +
-        'null updated_by,null deleted_at,null deleted_by,'#39#39' supplier_code' +
-        '2,'#39#39' header_code,'#39#39' account_code,'#39#39' header_code_um,'#39#39' account_co' +
-        'de_um,1 status_id,'#39#39' up_npwp,company_code supplier_initial,compa' +
-        'ny_code sbu_code,'#39#39' header_code2,'#39#39' account_code2,null tempo,nul' +
-        'l,null header_name from t_company)')
+        'erson,'#39#39' pph,'#39#39' supplier_code2,'#39#39' header_code,'#39#39' account_code,1 ' +
+        'status_id,'#39#39' up_npwp,company_code supplier_initial,company_code ' +
+        'sbu_code,'#39#39' header_code2,'#39#39' account_code2,null tempo,null,null h' +
+        'eader_name,'#39#39' header_um,'#39#39' account_um from t_company)')
     Left = 232
     Top = 72
   end

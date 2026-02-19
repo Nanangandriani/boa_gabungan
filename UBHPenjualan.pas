@@ -174,6 +174,8 @@ type
     QBHPenjualanExportakun_penjualan: TStringField;
     QBHPenjualanExportakun_penjualan_name: TMemoField;
     QBHPenjualanExportamount_penjualan: TFloatField;
+    QCetakBHP: TUniQuery;
+    frxDBDataCetakBHP: TfrxDBDataset;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -222,7 +224,116 @@ begin
 end;
 
 procedure TFBHPenjualan.btPreviewClick(Sender: TObject);
-var strKab,strTP,strKaresidenan: String;
+var strKab,strTP,strKaresidenan,
+  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2: STRING;
+begin
+  tgl1:=FormatDateTime('DD', dtAwal.EditValue);
+  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
+  tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
+
+  tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
+  bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
+  tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else begin
+    strKab := 'NULL';
+    strKaresidenan := 'NULL';
+    strTP := 'NULL';
+    if edKabupaten.EditValue<>'' then
+    strKab:=QuotedStr(vkd_kab)+' ';
+
+    if edKaresidenan.EditValue<>'' then strKaresidenan:=QuotedStr(vkd_kares);
+
+    if edTp.EditValue<>'' then strTP:=QuotedStr(vkd_tp);
+
+    with QCetakBHP do
+    begin
+      close;
+      sql.Text:='SELECT * FROM get_bh_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
+//      sql.Text:='WITH debet_details AS ( SELECT a.trans_no, a.account_code, a.account_name, a.db AS amount_debet_lain, '+
+//                'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn FROM "public"."VTrans_Journal" a '+
+//                'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
+//                'WHERE a.status_dk = ''D''  AND a.db <> 0  AND a.account_code <> ''1104.01'' ), '+
+//                'kredit_details AS ( SELECT a.trans_no,a.account_code,a.account_name, '+
+//                'a.kd AS amount_kredit_lain,ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn FROM "public"."VTrans_Journal" a '+
+//                'WHERE a.status_dk = ''K'' AND a.kd <> 0 AND a.account_code <> ''4101.01'' ), '+
+//                'item_details AS(select a.trans_no,a.code_item,a.name_item, a.amount,Upper(a.name_unit) name_unit, '+
+//                'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.name_item) as rn from t_selling_det a ), '+
+//                'row_master AS ( '+
+//                'SELECT trans_no, rn FROM debet_details '+
+//                'UNION '+
+//                'SELECT trans_no, rn FROM kredit_details '+
+//                'UNION '+
+//                'SELECT trans_no, rn FROM item_details '+
+//                ')'+
+//                'SELECT DISTINCT a.trans_no,a.trans_date, a.code_cust, a.customer_name_pkp AS name_cust, '+
+//                'i.code_item,i.name_item,i.amount,i.name_unit, '+
+//                'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_code ELSE '''' END AS account_code_piutang,'+
+//                'e.account_code AS account_code_piutang2, CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_name ELSE '''' END AS account_name_p, '+
+//                'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.db ELSE NULL END AS amount_piutang,'+
+//                'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_code ELSE '''' END AS account_code_penjualan, '+
+//                'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_name ELSE '''' END AS account_name_penjualan,'+
+//                'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.kd ELSE NULL END AS amount_penjualan, '+
+//                'g.account_code AS d_code_lain,g.account_name AS d_name_lain, g.amount_debet_lain,'+
+//                'h.account_code AS k_code_lain, h.account_name AS k_name_lain,h.amount_kredit_lain,'+
+//                'a.code_kecamatan,a.code_kabupaten,a.code_tp,a.code_karesidenan, rm.rn FROM get_selling(False) a '+
+//                'LEFT JOIN row_master rm ON rm.trans_no = a.trans_no '+
+//                'LEFT JOIN ( SELECT trans_no, account_code, account_name, db FROM "public"."VTrans_Journal" '+
+//                'WHERE account_code=''1104.01'' ) e ON e.trans_no = a.trans_no '+
+//                'LEFT JOIN ( SELECT trans_no, account_code, account_name, kd FROM "public"."VTrans_Journal" '+
+//                'WHERE account_code=''4101.01'') f ON f.trans_no = a.trans_no '+
+//                'LEFT JOIN debet_details g ON g.trans_no = a.trans_no AND g.rn = rm.rn '+
+//                'LEFT JOIN kredit_details h ON h.trans_no = a.trans_no AND h.rn = rm.rn '+
+//                'LEFT JOIN item_details i ON i.trans_no = a.trans_no AND i.rn = rm.rn '+
+//                'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+//                ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+'and a.deleted_at IS NULL '+strTP+strKaresidenan+strKab+' '+
+//                'ORDER BY e.account_code ASC,  a.trans_no ASC, rm.rn ASC;';
+
+      Open;
+    end;
+
+
+
+    if QCetakBHP.RecordCount=0 then
+    begin
+      showmessage('Tidak ada data yang bisa dicetak !');
+      exit;
+    end;
+
+    if QCetakBHP.RecordCount<>0 then
+    begin
+
+      cLocation := ExtractFilePath(Application.ExeName);
+      Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanNew'+ '.fr3');
+      SetMemo(Report,'kodeprsh',FHomeLogin.vNamaPRSH);
+      SetMemo(Report,'periode',UpperCase(formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue)));
+
+
+      if edTP.EditValue<>'' then
+      begin
+        SetMemo(Report,'karesidenan',+edTP.EditValue);
+      end else begin
+        SetMemo(Report,'karesidenan','SEMUA TP');
+      end;
+      if (edKabupaten.EditValue<>'') then
+      begin
+        SetMemo(Report,'kabupaten',+edKabupaten.EditValue);
+      end else begin
+        SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
+      end;
+
+      Report.ShowReport();
+
+
+
+    end;
+//  end;
+////////////////////////////////////////
+//Script Lama
+
+{var strKab,strTP,strKaresidenan: String;
 begin
 //  if edKaresidenan.EditValue='' then
 //  begin
@@ -360,7 +471,7 @@ begin
 //      Report.PreviewOptions.Zoom := 1.0;
 //    end;
     end;
-//  end;
+//  end;      }
 
 end;
 
@@ -408,6 +519,7 @@ begin
     DBGrid.FinishLoadingStatus();
     end;
 //  end;
+
 end;
 
 procedure TFBHPenjualan.dxBarLargeButton1Click(Sender: TObject);

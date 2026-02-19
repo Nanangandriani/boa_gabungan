@@ -26,7 +26,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 990
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -540,7 +539,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 756
+    Left = 764
     Top = 24
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
@@ -1797,7 +1796,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 45677.066849178200000000
+    ReportOptions.LastChange = 46056.625050902800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo21OnBeforePrint(Sender: TfrxComponent);'
@@ -1808,6 +1807,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
       'begin'
       ''
       'end.')
+    OnReportPrint = 'ReportOnReportPrint'
     Left = 590
     Top = 91
     Datasets = <
@@ -2254,6 +2254,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         Height = 24.692779130000000000
         Top = 249.448980000000000000
         Width = 1209.449600000000000000
+        DataSet = frxDBDataset_Biaya_Penjualan
+        DataSetName = 'frxDBDataset_Biaya_Penjualan'
         RowCount = 0
         object Memo10: TfrxMemoView
           AllowVectorExport = True
@@ -2276,6 +2278,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 87.307086610000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'actors_name'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -2283,7 +2288,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."actors_name"]')
+            '[frxDBDataset_Biaya_Penjualan."actors_name"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2293,7 +2298,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b4'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2303,7 +2311,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b4"]')
+            '[frxDBDataset_Biaya_Penjualan."b4"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2314,6 +2322,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'total'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -2324,16 +2335,19 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."total"]')
+            '[frxDBDataset_Biaya_Penjualan."total"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 116.787401574803000000
-          Width = 75.590551181102400000
+          Left = 116.787401570000000000
+          Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'voucher_no'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -2342,7 +2356,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."voucher_no"]')
+            '[frxDBDataset_Biaya_Penjualan."voucher_no"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2352,6 +2366,8 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 75.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -2361,8 +2377,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[frxDBDataset1."b7"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2389,7 +2403,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b5'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2399,7 +2416,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b5"]')
+            '[frxDBDataset_Biaya_Penjualan."b5"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2409,7 +2426,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2419,18 +2438,19 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b10"]')
+            '[frxDBDataset_Biaya_Penjualan."b9"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Left = 1134.314960630000000000
-          Top = 0.459183330000000000
           Width = 74.923884510000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2440,7 +2460,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b11"]')
+            '[frxDBDataset_Biaya_Penjualan."b10"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2450,6 +2470,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 111.629921260000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
+          DataField = 'description'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -2458,7 +2481,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDataset1."description"]')
+            '[frxDBDataset_Biaya_Penjualan."description"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2468,7 +2491,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b1'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2478,7 +2504,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b1"]')
+            '[frxDBDataset_Biaya_Penjualan."b1"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2488,7 +2514,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 74.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b2'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2498,7 +2527,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b2"]')
+            '[frxDBDataset_Biaya_Penjualan."b2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2509,7 +2538,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Height = 24.566929130000000000
           OnBeforePrint = 'Memo21OnBeforePrint'
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b6'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2519,7 +2551,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b6"]')
+            '[frxDBDataset_Biaya_Penjualan."b6"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2529,7 +2561,10 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 76.257217840000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataField = 'b3'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2539,7 +2574,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b3"]')
+            '[frxDBDataset_Biaya_Penjualan."b3"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2549,7 +2584,9 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Width = 76.590551180000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2559,18 +2596,19 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b8"]')
+            '[frxDBDataset_Biaya_Penjualan."b7"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 984.417322830000000000
-          Top = 0.333333330000000000
           Width = 73.257217850000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '%2.2n'
+          DataSet = frxDBDataset_Biaya_Penjualan
+          DataSetName = 'frxDBDataset_Biaya_Penjualan'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2580,7 +2618,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[frxDBDataset1."b9"]')
+            '[frxDBDataset_Biaya_Penjualan."b8"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2600,7 +2638,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 1134.314960630000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2610,7 +2648,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b11">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b10">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2635,7 +2673,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 304.000000000000000000
           Width = 74.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2645,7 +2683,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."total">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."total">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2654,7 +2692,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 378.708661420000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2664,7 +2702,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b1">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b1">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2673,7 +2711,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 454.409448820000000000
           Width = 73.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2683,7 +2721,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b2">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b2">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2692,7 +2730,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 604.834645670000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2702,7 +2740,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b4">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b4">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2711,7 +2749,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 680.425196850000000000
           Width = 76.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2721,16 +2759,16 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b5">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b5">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 756.637795280000000000
+          Left = 757.304461950000000000
           Width = 74.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2740,7 +2778,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b6">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b6">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2758,8 +2796,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b7">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2768,7 +2804,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 906.826771650000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2778,7 +2814,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b8">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b7">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2787,7 +2823,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 983.000000000000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2797,7 +2833,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b9">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b8">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2806,7 +2842,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 1060.000000000000000000
           Width = 75.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2816,7 +2852,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b10">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b9">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2825,7 +2861,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Left = 528.000000000000000000
           Width = 76.590551180000000000
           Height = 30.236220470000000000
-          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2835,7 +2871,7 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataset1."b3">,MasterData1,3)]')
+            '[SUM(<frxDBDataset_Biaya_Penjualan."b3">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -4089,7 +4125,6 @@ object FLap_Ikhtisar_Biaya_KasKecil_BOP: TFLap_Ikhtisar_Biaya_KasKecil_BOP
         'pe_id=4 and b.category_code='#39'KPP'#39')b11 on a.voucher_no=b11.vouche' +
         'r_no where a.voucher_no is not null order by a.trans_date,a.vouc' +
         'her_no,a.order_no')
-    Active = True
     Left = 672
     Top = 232
     object QKasKecil_BiayaPenjualanactors_name: TStringField

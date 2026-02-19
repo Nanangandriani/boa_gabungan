@@ -1351,7 +1351,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
       Caption = 'Cetak'
       Category = 0
       Hint = 'Cetak'
-      Visible = ivNever
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1569,7 +1569,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46036.670761921300000000
+    ReportOptions.LastChange = 46056.486610300930000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2098,7 +2098,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           HAlign = haCenter
           Memo.UTF8W = (
             'REKAP LAPORAN HARIAN SISA NOTA'
-            'PER KARESIDENAN')
+            'PER TP')
           ParentFont = False
           WordBreak = True
           VAlign = vaCenter
@@ -2116,7 +2116,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            'Karesidenan')
+            'TP')
           ParentFont = False
           VAlign = vaCenter
         end

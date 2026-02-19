@@ -116,7 +116,6 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 936
     Top = 32
   end

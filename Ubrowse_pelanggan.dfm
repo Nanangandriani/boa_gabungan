@@ -3,8 +3,8 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Browse Data Pelanggan'
-  ClientHeight = 561
-  ClientWidth = 1106
+  ClientHeight = 560
+  ClientWidth = 1102
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,13 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 129
-    Width = 1106
-    Height = 432
+    Width = 1102
+    Height = 431
     Align = alClient
     DataSource = dsMasterData
     DrawMemoText = True
     DynProps = <>
+    FrozenCols = 3
     EmptyDataInfo.Active = True
     ReadOnly = True
     SearchPanel.Enabled = True
@@ -75,6 +76,45 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'KARESIDENAN'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Karesidenan'
+        Width = 155
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'TP'
+        Footers = <>
+        Title.Alignment = taCenter
+        Width = 151
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'KABUPATEN'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kabupaten'
+        Width = 140
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'KECAMATAN'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Kecamatan'
+        Width = 152
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'WILAYAH'
         Footers = <>
         Title.Alignment = taCenter
@@ -97,13 +137,12 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
   object pnlFilter: TPanel
     Left = 0
     Top = 0
-    Width = 1106
+    Width = 1102
     Height = 129
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1102
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -271,6 +310,18 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
       FieldName = 'NM_PKP'
       Size = 250
     end
+    object MemMasterDataTP: TStringField
+      FieldName = 'TP'
+    end
+    object MemMasterDataKARESIDENAN: TStringField
+      FieldName = 'KARESIDENAN'
+    end
+    object MemMasterDataKABUPATEN: TStringField
+      FieldName = 'KABUPATEN'
+    end
+    object MemMasterDataKECAMATAN: TStringField
+      FieldName = 'KECAMATAN'
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -313,6 +364,26 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
           StringDataType = fdtStringEh
           DisplayWidth = 250
           Size = 250
+        end
+        object TP: TMTStringDataFieldEh
+          FieldName = 'TP'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object KARESIDENAN: TMTStringDataFieldEh
+          FieldName = 'KARESIDENAN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object KABUPATEN: TMTStringDataFieldEh
+          FieldName = 'KABUPATEN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object KECAMATAN: TMTStringDataFieldEh
+          FieldName = 'KECAMATAN'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

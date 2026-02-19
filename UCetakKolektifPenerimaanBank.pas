@@ -63,11 +63,26 @@ uses UDataModule, UMy_Function, UHomeLogin;
 procedure TFCetakKolektifPenerimaanBank.BPrintClick(Sender: TObject);
 var terbilang,strTransaksi,strNoRekening: String;
 begin
+  if cbTransaksi.ItemIndex=0 then
+  begin
+    strNoRekening:='AND c.account_number_bank='+QuotedStr(cbNoRek.Text)+' ';
+  end else begin
+    strNoRekening:='';
+  end;
   with dm.Qtemp do
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT * from t_cash_bank_acceptance WHERE word_amount IS NULL';
+    sql.Text:='SELECT a.voucher_no,SUM(CASE '+
+              'WHEN a.position = ''D'' AND a.paid_amount > 0 THEN -a.paid_amount '+
+              'ELSE a.paid_amount '+
+              'END) AS paid_amount FROM t_cash_bank_acceptance_det a '+
+              'LEFT JOIN t_ak_account b on b.code=a.code_account '+
+              'LEFT JOIN t_cash_bank_acceptance c on c.voucher_no=a.voucher_no '+
+              'WHERE (c.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') AND '+
+              '((a.position = ''K'') OR (a.position = ''D'' AND a.paid_amount > 0 AND b.header_code NOT IN (''1102'', ''1101''))) '+
+              'and c.word_amount IS NULL '+
+              'GROUP BY a.voucher_no';
     open;
   end;
   terbilang:='';
@@ -90,6 +105,7 @@ begin
     end;
   end;
 
+//  {
   if cbTransaksi.Text='' then
   begin
     MessageDlg('Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -116,19 +132,48 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust,a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from '+
-              '( select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank",  "account_name_bank", '+
-              '"for_acceptance", "description", "module_id",word_amount,code_type_trans,paid_amount tot_paid_amount  from "public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) a '+
-              'LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  "paid_amount", "description" as desc_akun, '+
-              'COALESCE(bb.account_code,aa.code_account) code_account_header, bb.account_name ,  "amount_rate_results" '+
-              'from "public"."t_cash_bank_acceptance_det" aa  LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
-              'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON a."voucher_no"=b."voucher_no"  '+
-              'left join t_master_trans_account dd on dd.code_trans=a.code_type_trans '+
-              'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
-              'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
-              'where  "position"=''K'' '+strTransaksi+' '+
-              'AND (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
-              'order by voucher_no ASC, account_name=''Piutang Barang Dagang'' ASC';
+      sql.Text:='SELECT UPPER(COALESCE(c.customer_name_pkp, a.name_cust)) AS name_cust,a.*, '+
+                'SUM(b.paid_amount) OVER(PARTITION BY a.voucher_no) AS tot_paid_amount, '+
+                '"code_account_header",b.name_account AS "account_name",b.paid_amount,"desc_akun" '+
+                'FROM ( '+
+                'SELECT "voucher_no","trans_date","code_cust","name_cust","account_number_bank",'+
+                '"account_name_bank","for_acceptance","description","module_id",word_amount,code_type_trans '+
+                'FROM "public"."t_cash_bank_acceptance" a '+
+                'WHERE deleted_at IS NULL ) a '+
+                'LEFT JOIN ( '+
+                'SELECT "voucher_no","code_account",aa.name_account,"position", '+
+                'CASE WHEN "position" = ''D'' AND paid_amount > 0 THEN -paid_amount ELSE paid_amount '+
+                'END AS paid_amount, "description" AS desc_akun, '+
+                'COALESCE(bb.account_code, aa.code_account) AS code_account_header,bb.account_name,"amount_rate_results" '+
+                'FROM "public"."t_cash_bank_acceptance_det" aa '+
+                'LEFT JOIN t_ak_account_sub bb ON bb.account_code2 = aa."code_account" '+
+                'LEFT JOIN t_ak_account cc ON cc.code = aa."code_account" '+
+                'WHERE (aa.position = ''K'') '+
+                'OR (aa.position = ''D'' AND aa.paid_amount > 0 AND cc.header_code NOT IN (''1102'', ''1101'')) '+
+                ') b ON a."voucher_no" = b."voucher_no" '+
+                'LEFT JOIN t_master_trans_account dd ON dd.code_trans = a.code_type_trans '+
+                'LEFT JOIN t_cash_bank_acceptance_customer c ON c.trans_no = a.voucher_no '+
+                'AND c.customer_code = a.code_cust '+
+                'AND c.deleted_at IS NULL '+
+                'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no = a.voucher_no '+
+                'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
+                'ORDER BY voucher_no ASC, account_name = ''Piutang Barang Dagang'' ASC;';
+//      sql.Text:='SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust,a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from '+
+//              '( select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank",  "account_name_bank", '+
+//              '"for_acceptance", "description", "module_id",word_amount,code_type_trans,paid_amount tot_paid_amount  from "public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) a '+
+//              'LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  CASE WHEN "position" = ''D'' '+
+//              'AND paid_amount > 0 THEN -paid_amount ELSE paid_amount '+
+//              'END AS paid_amount, "description" as desc_akun, '+
+//              'COALESCE(bb.account_code,aa.code_account) code_account_header, bb.account_name ,  "amount_rate_results" '+
+//              'from "public"."t_cash_bank_acceptance_det" aa  LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
+//              'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account" WHERE (aa.position = ''K'') OR (aa.position = ''D'' AND aa.paid_amount > 0 AND cc.header_code NOT IN (''1102'', ''1101''))) b ON a."voucher_no"=b."voucher_no"  '+
+//              'left join t_master_trans_account dd on dd.code_trans=a.code_type_trans '+
+//              'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
+//              'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
+//              'where '+
+////              ' "position"=''K'' '+strTransaksi+' AND '+
+//              ' (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
+//              'order by voucher_no ASC, account_name=''Piutang Barang Dagang'' ASC';
       open;
     end;
 
@@ -159,6 +204,7 @@ begin
 
     end;
   end;
+//  }
 end;
 
 procedure TFCetakKolektifPenerimaanBank.cbBankChange(Sender: TObject);

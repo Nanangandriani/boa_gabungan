@@ -400,6 +400,8 @@ begin
                 'LEFT JOIN t_supplier d on b.supplier_code=d.supplier_code where b.trans_date >'+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cutoff))+' and b.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTawal.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTakhir.EditValue))+' and a.account_pph_code=''2130.04'') zz';
       open;
    end;
+   MemCatatan_ppn_pph.Close;
+   MemCatatan_ppn_pph.Open;
    DBGridCatatan_ppn_pph.FinishLoadingStatus();
 
 end;
@@ -441,6 +443,8 @@ end;
 procedure TF_catatan_ppn_pph.dxBarLargeButton4Click(Sender: TObject);
 begin
    load_cut_off;
+   dm.qperusahaan.close;
+   dm.qperusahaan.open;
    with QCat_ppn_pph do
    begin
       close;
@@ -700,6 +704,7 @@ begin
       open;
    end;
    frxReport2.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Catatan_PPN_PPH.fr3');
+   //Tfrxmemoview(frxReport2.FindObject('MSBU')).Memo.Text:=dm.QPerusahaan['company_name'];
    Tfrxmemoview(frxReport2.FindObject('Memperiode')).Memo.Text:='Periode  : '+FormatDateTime('dd mmmm yyyy',DTawal.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTakhir.EditValue);
    frxReport2.ReportOptions.Name:='Catatan_PPN_PPH';
    frxreport2.showreport;

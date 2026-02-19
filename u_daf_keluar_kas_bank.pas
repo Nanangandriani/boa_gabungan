@@ -273,9 +273,16 @@ begin
         code_trans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_type_code').AsString;
         Ed_id_modul.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('module_id').AsString;
         if Ed_id_modul.Text='5' then
+        begin
            cbsumberdata.Text:='BANK';
+           id_module:='5';
+        end;
         if Ed_id_modul.Text='6' then
+        begin
            cbsumberdata.Text:='KAS';
+           id_module:='6';
+        end;
+
 
         edNoTrans.Text:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_no').AsString;
         dtTrans.Date:=QDaf_Pengeluaran_Kas_Bank.fieldbyname('trans_date').asdatetime;
@@ -494,8 +501,9 @@ begin
   begin
      close;
      sql.clear;
-     sql.Add('SELECT x.*,zz.code_account as kode FROM ('+
-             'SELECT A.*,"code_account_header","name_account","paid_amount","ket","module_id" FROM '+
+     sql.Add('SELECT x.*,code_account as kode,bb.account_no as ak_bank  FROM ('+
+             //Akun D
+             'SELECT A.*,"code_account_header","name_account","paid_amount","ket","module_id",code_account FROM '+
              '(SELECT voucher_no,voucher_tmp,subvoucher,remark,	entry_date,	trans_date,	periode1,	periode2, '+
              'amount,account_code, group_code, group_name,tp_code,account_name,dk, perpetrator_id,debit,kredit, '+
              'header_code,ref_no,posting,customer_code,supplier_code,cash_type,job_no,company_code,trans_year,'+
@@ -511,11 +519,32 @@ begin
              'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.code) b ON A."voucher_no" = b."no_voucher" '+
              'WHERE A."voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
              'AND "position" = ''D'' '+
-             ')x LEFT JOIN (SELECT no_voucher,code_account,"position" FROM '+
-             '(SELECT no_voucher,code_account,"position" FROM "public"."t_cash_bank_expenditure_det" '+
-             'x LEFT JOIN t_ak_account y ON x."code_account_header" = y.code) C WHERE '+
-             'c."no_voucher"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
-             'AND c."position" =''K'')zz on x.voucher_no=zz.no_voucher ');
+             ' union all '+
+             //Akun K
+             'SELECT A.*,"code_account_header","name_account","paid_amount"*-1,"ket","module_id",code_account FROM '+
+             '(SELECT voucher_no,voucher_tmp,subvoucher,remark,	entry_date,	trans_date,	periode1,	periode2, '+
+             'amount,account_code, group_code, group_name,tp_code,account_name,dk, perpetrator_id,debit,kredit, '+
+             'header_code,ref_no,posting,customer_code,supplier_code,cash_type,job_no,company_code,trans_year,'+
+             'trans_month,trans_day,order_no,giro_no,bank_giro_name,giro_due_date,customer_name,supplier_name,to_,'+
+             'deposit,deposit_date,tgup,voucher_code,to_getout,stat,time_lock,update_time,stat_lock,currency,'+
+             'kurs,bon_no,post_status,created_at,created_by,updated_at,updated_by,deleted_at,deleted_by,bank_norek,'+
+             'bank_name,cek_no,trans_type_code,trans_type_name,bank_number_account,bank_name_account,additional_code,cheque_no '+
+             'FROM "public"."t_cash_bank_expenditure" A WHERE "voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+             'AND deleted_at IS NULL) A '+
+             'LEFT JOIN '+
+             '(SELECT no_voucher,code_account,name_account,position,paid_amount,description as ket,code_account_header, '+
+             'amount_rate_results,module_id,trans_date,no_voucher_sub FROM "public"."t_cash_bank_expenditure_det" aa '+
+             'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.code) b ON A."voucher_no" = b."no_voucher" '+
+             'WHERE A."voucher_no"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+             'AND "position" = ''K'' AND code_account_header NOT IN (''1102'',''1101'',''1101.01'')  '+
+             ')x '+
+             ' LEFT JOIN t_bank bb on x.bank_norek=bb.rekening_no '+
+//             'LEFT JOIN (SELECT no_voucher,code_account,"position" FROM '+
+//             '(SELECT no_voucher,code_account,"position" FROM "public"."t_cash_bank_expenditure_det" '+
+//             'x LEFT JOIN t_ak_account y ON x."code_account_header" = y.code) C WHERE '+
+//             'c."no_voucher"='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+//             'AND c."position" =''K'')zz on x.voucher_no=zz.no_voucher '+
+             '');
      open;
   end;
 
@@ -563,8 +592,38 @@ begin
        begin
          close;
          sql.clear;
-         sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+         sql.add(' SELECT voucher_no, invoice_no, sj_no, faktur_no, faktur_date, '+
+                 ' trans_date, supplier_code, supplier_name, trans_type_code,  '+
+                 ' trans_type_name, bank_number_account, bank_name_account,  '+
+                 ' paid_amount, description, CASE WHEN rn = 1 THEN account_acc ELSE '+
+                 ' '''' END AS account_acc, CASE WHEN rn = 1 THEN account_name ELSE '+
+                 ' '''' END AS account_name, id, urut FROM ( '+
+                 ' SELECT xx.*,aa.account_name, ROW_NUMBER() OVER ('+
+                 ' PARTITION BY account_acc,account_name ORDER BY urut, faktur_date) AS rn  FROM ( ');
+         sql.add(' select a.voucher_no, CAST(a.invoice_no AS VARCHAR) AS invoice_no,'+
+                 ' CAST(a.sj_no AS VARCHAR) AS sj_no, CAST(a.faktur_no AS VARCHAR) AS faktur_no, '+
+                 ' a.faktur_date, a.trans_date,CAST(a.supplier_code AS VARCHAR) AS supplier_code, '+
+                 ' CAST(a.supplier_name AS VARCHAR) AS supplier_name,'+
+                 ' CAST(a.trans_type_code AS VARCHAR) AS trans_type_code, '+
+                 ' CAST(a.trans_type_name AS VARCHAR) AS trans_type_name, '+
+                 ' CAST(a.bank_number_account AS VARCHAR) AS bank_number_account, '+
+                 ' CAST(a.bank_name_account AS VARCHAR) AS bank_name_account, '+
+                 ' a.paid_amount, a.description,  CAST(LEFT(a.account_acc,7) AS VARCHAR) as account_acc, a.id, 1 AS urut '+
+                 ' from t_cash_bank_expenditure_payable  a '+
                  ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
+         sql.add(' union all  '+
+                 ' select  no_voucher as "voucher_no", ''0''::varchar as "invoice_no", ''0''::varchar as "sj_no", '+
+                 ' ''0''::varchar as "faktur_no", now() as "faktur_date", now() as "trans_date", '+
+                 ' ''0''::varchar as "supplier_code", ''0''::varchar as "supplier_name", ''0''::varchar as "trans_type_code", '+
+                 ' ''0''::varchar as "trans_type_name", ''0''::varchar as "bank_number_account", ''0''::varchar as "bank_name_account", '+
+                 ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
+                 ' from "public"."t_cash_bank_expenditure_det" a '+
+                 ' where a.no_voucher='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
+                 ' )t ORDER BY urut, faktur_date;');
+         //sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+         //        ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
          open;
        end;
 
@@ -604,13 +663,44 @@ begin
        begin
          close;
          sql.clear;
-         sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+         sql.add(' SELECT voucher_no, invoice_no, sj_no, faktur_no, faktur_date, '+
+                 ' trans_date, supplier_code, supplier_name, trans_type_code,  '+
+                 ' trans_type_name, bank_number_account, bank_name_account,  '+
+                 ' paid_amount, description, CASE WHEN rn = 1 THEN account_acc ELSE '+
+                 ' '''' END AS account_acc, CASE WHEN rn = 1 THEN account_name ELSE '+
+                 ' '''' END AS account_name, id, urut FROM ( '+
+                 ' SELECT xx.*,aa.account_name, ROW_NUMBER() OVER ('+
+                 ' PARTITION BY account_acc,account_name ORDER BY urut, faktur_date) AS rn  FROM ( ');
+         sql.add(' select a.voucher_no, CAST(a.invoice_no AS VARCHAR) AS invoice_no,'+
+                 ' CAST(a.sj_no AS VARCHAR) AS sj_no, CAST(a.faktur_no AS VARCHAR) AS faktur_no, '+
+                 ' a.faktur_date, a.trans_date,CAST(a.supplier_code AS VARCHAR) AS supplier_code, '+
+                 ' CAST(a.supplier_name AS VARCHAR) AS supplier_name,'+
+                 ' CAST(a.trans_type_code AS VARCHAR) AS trans_type_code, '+
+                 ' CAST(a.trans_type_name AS VARCHAR) AS trans_type_name, '+
+                 ' CAST(a.bank_number_account AS VARCHAR) AS bank_number_account, '+
+                 ' CAST(a.bank_name_account AS VARCHAR) AS bank_name_account, '+
+                 ' a.paid_amount, a.description,  CAST(LEFT(a.account_acc,7) AS VARCHAR) as account_acc, a.id, 1 AS urut '+
+                 ' from t_cash_bank_expenditure_payable  a '+
                  ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
+         sql.add(' union all  '+
+                 ' select  no_voucher as "voucher_no", ''0''::varchar as "invoice_no", ''0''::varchar as "sj_no", '+
+                 ' ''0''::varchar as "faktur_no", now() as "faktur_date", now() as "trans_date", '+
+                 ' ''0''::varchar as "supplier_code", ''0''::varchar as "supplier_name", ''0''::varchar as "trans_type_code", '+
+                 ' ''0''::varchar as "trans_type_name", ''0''::varchar as "bank_number_account", ''0''::varchar as "bank_name_account", '+
+                 ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
+                 ' from "public"."t_cash_bank_expenditure_det" a '+
+                 ' where a.no_voucher='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
+                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
+                 ' )t ORDER BY urut, faktur_date;');
+         //sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
+         //        ' where a.voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' ');
          open;
        end;
 
          Report.LoadFromFile(cLocation +'report/Bukti_Pengeluaran_Cheque_Hutang'+'.fr3');
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'tot_rec',IntToStr(QBukti_Keluar_Faktur.RecordCount));
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
          SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');

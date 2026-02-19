@@ -204,12 +204,12 @@ begin
          jenis_hutang.SetFocus;
          Exit;
        end;
-       if code_supp.EditValue='' then
+       {if code_supp.EditValue='' then
        begin
          MessageDlg('Supplier tidak boleh Kosong ',MtWarning,[MbOk],0);
          code_supp.SetFocus;
          Exit;
-       end;
+       end;}
        if cbrencana.Text='' then
        begin
          MessageDlg('rencana ke tidak boleh Kosong ',MtWarning,[MbOk],0);
@@ -266,7 +266,9 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,cek_no as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
+                          'and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -326,7 +328,9 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -363,7 +367,8 @@ begin
 
        end
        else
-       if  Jenis_Hutang.Text='BIAYA' then
+       //if  Jenis_Hutang.Text='BIAYA' then
+       if  Jenis_Hutang.Text<>'DAGANG' then
        begin
          if Cb_semua.EditValue=true then
          begin
@@ -396,7 +401,9 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
-                          'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x  -- 5';
+                          //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
+                          'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
+                          '  GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x  -- 5';
                 Open;
               end;
            end
@@ -408,8 +415,10 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,cek_no as ket '+
                           'FROM '+
-                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
+                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
+                          'and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -429,7 +438,9 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
-                          'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x  -- 6';
+                          //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
+                          'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
+                          '  GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x  -- 6';
                 Open;
               end;
            end;
@@ -467,9 +478,11 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,cek_no as ket '+
                           'FROM '+
-                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,1 as urutan,bb.nm as ket FROM '+
+                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -503,8 +516,8 @@ begin
               end;
            end;
          end
-       end
-       else
+       end;
+       {else
        if  Jenis_Hutang.Text='AKTIVA' then
        begin
          if Cb_semua.EditValue=true then
@@ -646,7 +659,7 @@ begin
               end;
            end;
          end
-       end;
+       end; }
        dm.Qtemp.Close;
        dm.Qtemp.Open;
        frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Lap_Rencana_Pelunasan_Hutang.fr3');
@@ -672,12 +685,12 @@ begin
          jenis_hutang.SetFocus;
          Exit;
        end;
-       if code_supp.EditValue='' then
+       {if Length(code_supp.EditValue)=0 then
        begin
          MessageDlg('Supplier tidak boleh Kosong ',MtWarning,[MbOk],0);
          code_supp.SetFocus;
          Exit;
-       end;
+       end;}
        if cbrencana.Text='' then
        begin
          MessageDlg('rencana ke tidak boleh Kosong ',MtWarning,[MbOk],0);
@@ -737,7 +750,9 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,cek_no as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -797,7 +812,9 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -834,11 +851,13 @@ begin
 
        end
        else
-       if  Jenis_Hutang.Text='BIAYA' then
+       //if  Jenis_Hutang.Text='BIAYA' then
+       if  Jenis_Hutang.Text<>'DAGANG' then
        begin
          if Cb_semua.EditValue=true then
          begin
            if length(code_supp.EditValue)<>0 then
+           //if not VarIsNull(code_supp.EditValue) and (Trim(code_supp.EditValue) <> '') then
            begin
               with QLap_renc_pelunasan_hutang do
               begin
@@ -867,7 +886,9 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
-                          'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x ';
+                          //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
+                          'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
+                          '  GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x ';
                 Open;
               end;
            end
@@ -879,8 +900,14 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,cek_no as ket '+
                           'FROM '+
-                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,'+
+                          'c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo, '+
+                          'a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
+                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
+                          'and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  '+
+                          'and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -899,8 +926,16 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
-                          'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb on bb.inv_no=a.inv_no )x ';
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where '+
+                          'k.factory_code='+QuotedStr(vKODEPRSH)+'  and '+
+                          'k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
+                          'and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
+                          //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
+                          'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
+                          'GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  '+
+                          'group by z.inv_no,z.id ORDER BY inv_no,id desc )b GROUP BY inv_no )bb '+
+                          'on bb.inv_no=a.inv_no )x ';
                 Open;
               end;
            end;
@@ -940,7 +975,9 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
+                          'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -974,8 +1011,8 @@ begin
               end;
            end;
          end
-       end
-       else
+       end;
+       {else
        if  Jenis_Hutang.Text='AKTIVA' then
        begin
          if Cb_semua.EditValue=true then
@@ -1117,7 +1154,7 @@ begin
               end;
            end;
          end
-       end;
+       end; }
        QLap_renc_pelunasan_hutang.Close;
        QLap_renc_pelunasan_hutang.Open;
        Mem_renc_pelunasan_hutang.close;
@@ -1130,8 +1167,34 @@ procedure TFlap_Rencana_Pelunasan_Hutang.Ed_supplierPropertiesButtonClick(
 begin
     with FSearch_Supplier do
     begin
-       QSupplier.Close;
-       QSupplier.Open;
+    if Jenis_Hutang.Text='DAGANG' then
+    begin
+      with Qsupplier do
+      begin
+        sql.Text:=' select a.* from t_supplier a '+
+                  ' LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                  ' where type='+QuotedStr(Jenis_Hutang.Text)+' and  '+
+                  ' a.deleted_at is null  '+
+                  ' Order by supplier_code ASC';
+//       QSupplier.Close;
+//       QSupplier.Open;
+      end;
+    end;
+    if Jenis_Hutang.Text<>'DAGANG' then
+    begin
+      with Qsupplier do
+      begin
+        sql.Text:=' select a.* from t_supplier a '+
+                  ' LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                  ' where type<>''DAGANG'' and  '+
+                  ' a.deleted_at is null  '+
+                  ' Order by supplier_code ASC';
+//       QSupplier.Close;
+//       QSupplier.Open;
+      end;
+    end;
+
+
     end;
     FSearch_Supplier.Caption:='Master Data Supplier';
     FSearch_Supplier.vcall:='Lap_Rencana_Pelunasan_Hutang';
@@ -1161,6 +1224,7 @@ begin
     Cb_semua.EditValue:=false;
     load_item_type;
     load_rencana;
+    code_supp.EditValue:='';
 end;
 
 procedure TFlap_Rencana_Pelunasan_Hutang.Jenis_HutangChange(Sender: TObject);
@@ -1176,6 +1240,9 @@ begin
        vkd_jenis_hutang:=fieldbyname('acc_code_pemb').AsString;
        //showmessage(vkd_jenis_hutang);
    end;
+
+    code_supp.EditValue:='';
+    supp_name.Text:='';
 end;
 
 procedure TFlap_Rencana_Pelunasan_Hutang.load_item_type;
@@ -1183,7 +1250,10 @@ begin
       with Dm.Qtemp do
       begin
         close;
-        sql.Text:='SELECT DISTINCT type from t_item_type WHERE deleted_at IS NULL ';
+        sql.Text:=' SELECT ''DAGANG'' type '+
+                  ' UNION ALL '+
+                  ' SELECT ''NON DAGANG'' type ';
+        //sql.Text:='SELECT DISTINCT type from t_item_type WHERE deleted_at IS NULL ';
         Open;
       end;
       Dm.Qtemp.First;

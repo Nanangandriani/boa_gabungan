@@ -1550,8 +1550,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   end
   object MemDetailHutang: TMemTableEh
     Params = <>
-    Left = 784
-    Top = 464
+    Left = 792
+    Top = 448
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
       Size = 500
@@ -1566,9 +1566,11 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object MemDetailHutangno_faktur: TStringField
       FieldName = 'no_faktur'
+      Size = 100
     end
     object MemDetailHutangno_sj: TStringField
       FieldName = 'no_sj'
+      Size = 100
     end
     object MemDetailHutangjum_hutang: TCurrencyField
       FieldName = 'jum_hutang'
@@ -1646,11 +1648,11 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 920
+    Left = 872
     Top = 232
   end
   object DSTP: TDataSource
-    Left = 976
+    Left = 984
     Top = 232
   end
 end

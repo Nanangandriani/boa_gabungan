@@ -270,7 +270,6 @@ begin
         QAppKlasifikasi.Edit;
         QAppKlasifikasi.FieldByName('pilih').AsBoolean := cbApproveKlasifikasiAll.Checked;
         QAppKlasifikasi.Post;
-
         QAppKlasifikasi.Next;
       end;
     finally
@@ -291,7 +290,6 @@ begin
         QSalesOrder.Edit;
         QSalesOrder.FieldByName('pilih').AsBoolean := cbApprovePenjAll.Checked;
         QSalesOrder.Post;
-
         QSalesOrder.Next;
       end;
     finally

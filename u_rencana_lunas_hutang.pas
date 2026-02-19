@@ -176,7 +176,12 @@ end;
 
 procedure TFList_Rencana_Lunas_Hutang.ActDelExecute(Sender: TObject);
 begin
-    if Qrencana.FieldByName('stat_lunas').AsInteger=1 then
+    if Qrencana.RecordCount=0 then
+    begin
+      MessageDlg('Data Kosong!!',mtInformation,[mbRetry],0);
+    end
+    else
+    if Qrencana.FieldByName('paid_status').value=true then
     begin
       MessageDlg('Rencana sudah lunas, tidak dapat dihapus!!',mtInformation,[mbRetry],0);
     end
@@ -184,22 +189,29 @@ begin
     begin
       if application.MessageBox('Yakin data akan dihapus?','confirm',mb_yesno or MB_ICONQUESTION)=id_yes then
       begin
-        with Qrencana do
+        with dm.Qtemp do
         begin
           close;
           sql.Clear;
           sql.text:=' delete from t_paid_debt_det '+
-                    ' where periode1=:periode1 and periode2=:periode2 and supplier_code=:kd_sup '+
+                    ' where paid_status='+IntToStr(CBstatus.ItemIndex)+' and  '+
+                    ' periode1 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+
+                    ' periode2 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
+                    ' plan_to='+QuotedStr(CbRencanake.Text)+' and '+
+                    ' supplier_code='+QuotedStr(QRencana.fieldbyname('supplier_code').AsString)+' and '+
+                    ' cek_no='+QuotedStr(QRencana.fieldbyname('cek_no').AsString)+' ';
+
+         {           ' where periode1=:periode1 and periode2=:periode2 and supplier_code=:kd_sup '+
                     ' and plan_to=:rencanake';
-          params.ParamByName('periode1').asstring:=Qrencana.fieldbyname('periode1').asstring;
-          params.ParamByName('periode2').asstring:=Qrencana.fieldbyname('periode2').asstring;
-          params.ParamByName('kd_sup').asstring:=Qrencana.fieldbyname('kd_sup').asstring;
-          params.ParamByName('rencanake').asstring:=Qrencana.fieldbyname('rencanake').asstring;
-          params.ParamByName('stat_approve').asstring:=Qrencana.fieldbyname('stat_approve').asstring;
+          params.ParamByName('periode1').value:=Qrencana.fieldbyname('periode1').asstring;
+          params.ParamByName('periode2').value:=Qrencana.fieldbyname('periode2').asstring;
+          params.ParamByName('kd_sup').value:=Qrencana.fieldbyname('supplier_code').asstring;
+          params.ParamByName('rencanake').value:=Qrencana.fieldbyname('plan_to').asstring;  }
+          //params.ParamByName('stat_approve').asstring:=Qrencana.fieldbyname('approve_status').asstring;
           Execute;
         end;
-        Qrencana.close;
-        Qrencana.open;
+        //Qrencana.close;
+        //Qrencana.open;
       end;
     end;
 end;
@@ -230,7 +242,8 @@ begin
               ' periode1 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+
               ' periode2 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
               ' plan_to='+QuotedStr(CbRencanake.Text)+' and '+
-              ' supplier_code='+QuotedStr(txtkdsupp.Text)+'';
+              ' supplier_code='+QuotedStr(QRencana.fieldbyname('supplier_code').AsString)+' and '+
+              ' cek_no='+QuotedStr(QRencana.fieldbyname('cek_no').AsString)+' ';
     Open;
   end;
 
@@ -243,16 +256,22 @@ begin
   begin
   with FRencana_Lunas_Hutang do
   begin
+    MemRencana.active:=false;
+    MemRencana.active:=true;
+    MemRencana.EmptyTable;
 
     if dm.Qtemp.FieldByName('bank').asstring='' then
     begin
       cbbank.Text:='';
       rbbank.Checked:=false;
+      rbkas.Checked:=true;
     end else
     begin
       cbbank.Text:=dm.Qtemp.FieldByName('bank').asstring;
       rbbank.Checked:=true;
+      rbkas.Checked:=false;
     end;
+
     txtnocek.Text:=dm.Qtemp.FieldByName('cek_no').asstring;
     dptglcek.Date:=Dm.Qtemp.FieldByName('cek_date').AsDateTime;
     dptgllunas.Date:=Dm.Qtemp.FieldByName('paid_date').AsDateTime;

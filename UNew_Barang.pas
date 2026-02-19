@@ -115,11 +115,14 @@ type
     { Private declarations }
   public
     { Public declarations }
-    id_ct,idmaterial,no_urut,kode,group_id,st_penjualan,st_nourut,KodeHeaderPerkiraan:string;
+    id_ct,idmaterial,no_urut,kode,group_id,st_penjualan,st_nourut,KodeHeaderPerkiraan,KodeHeaderPerkiraan2:string;
     status_tr:integer;
     Procedure Load;
     Procedure clear;
     procedure Autocode_perkiraan;
+    Procedure Autocode_perkiraan2;
+    Procedure simpan;
+    Procedure edit;
   end;
 
 Function FNew_Barang: TFNew_Barang;
@@ -188,6 +191,55 @@ begin
     Edkd_akun.Text := KodeHeaderPerkiraan+'.'+edkd.Text;
 end;
 
+// cr ds 4-2-2026
+procedure TFNew_barang.Autocode_perkiraan2;
+var
+  kode : String;
+  Urut : Integer;
+begin
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      Sql.Text :=' SELECT * FROM t_ak_account '+
+                 ' WHERE code='+Quotedstr(KodeHeaderPerkiraan2)+'  ';
+      open;
+    end;
+
+    if Dm.Qtemp.RecordCount = 0 then urut := 1 else
+    if Dm.Qtemp.RecordCount > 0 then
+    begin
+        With Dm.Qtemp do
+        begin
+          Close;
+          Sql.Clear;
+          Sql.Text :=' select count(code) as hasil '+
+                     ' from  t_ak_account where code='+QuotedSTR(KodeHeaderPerkiraan2)+'  ';
+          Open;
+        end;
+        Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
+    end;
+    Edkd_akun.Clear;
+    kode := inttostr(urut);
+
+    if Length(kode)=1 then
+    begin
+      kode := '00'+kode;
+    end
+    else
+    if Length(kode)=2 then
+    begin
+      kode := '0'+kode;
+    end
+    else
+    if Length(kode)=3 then
+    begin
+      kode := kode;
+    end;
+//    edKodePerkiraan.Text := KodeHeaderPerkiraan+'.'+kode;  of sementara ds 13/01/2025
+    Edkd_akunPemb.Text := KodeHeaderPerkiraan2+'.'+edkd.Text;
+end;
+
 Procedure TFNew_Barang.Load;
 begin
   Edjenis.Clear;
@@ -222,6 +274,138 @@ begin
   st_nourut:='False';
   ck_st_penjualan.Checked:=false;
   Ck_NoUrut.Checked:=false;
+end;
+
+Procedure TFnew_barang.simpan;
+begin
+   with dm.Qtemp do
+       begin
+       close;
+       sql.clear;
+       sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
+                 ' category_id,unit,merk,account_code,created_by,description,group_id, '+
+                 ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code, '+
+                 ' item_code_coretax, item_name_coretax)'+
+                 ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
+                 ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
+                 ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax)';
+         ParamByName('order_no').Value:=Edno.Text;
+         ParamByName('item_cd').Value:=EdKd.Text;
+         ParamByName('item_cd2').Value:=Edkd_display.Text;
+         ParamByName('item_nm').Value:=EdNm.Text;
+         ParamByName('id_ct').Value:=id_ct;
+         ParamByName('unit').Value:=EdSatuan.Text;
+         ParamByName('merk').Value:=EdMerk.Text;
+         ParamByName('akun_cd').Value:=edkd_akun.text;
+         ParamByName('pic').Value:=Nm;
+         ParamByName('desk').Value:=EdDesk.text;
+         ParamByName('group_id').Value:=group_id;
+         ParamByName('sell_status').Value:=st_penjualan;
+         ParamByName('buy').Value:=edharga_pemb.Value;
+         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
+         ParamByName('sell').Value:=edharga_penj.Value;
+         ParamByName('discount_sell').Value:=eddisc_penj.Value;
+         ParamByName('lot_status').Value:=st_nourut;
+         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
+         ParamByName('sbu_code').Value:=Cb_sbu.Text;
+         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
+         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
+       ExecSQL;
+       end;
+         with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
+           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;
+end;
+
+procedure TFnew_Barang.edit;
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_code2=:item_cd2,item_name=:item_name,'+
+       ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
+       ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
+       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,'+
+       ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code, '+
+       ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax where "id"=:id';
+         ParamByName('order_no').Value:=Edno.Text;
+         ParamByName('item_code').Value:=EdKd.Text;
+         ParamByName('item_cd2').Value:=Edkd_display.Text;
+         ParamByName('item_name').Value:=EdNm.Text;
+         ParamByName('unit').Value:=EdSatuan.Text;
+         ParamByName('merk').Value:=EdMerk.Text;
+         ParamByName('akun_code').Value:=Edkd_akun.Text;
+         ParamByName('ct_id').Value:=id_ct;
+         ParamByName('id').Value:=idmaterial;
+         ParamByName('pic').Value:=nm;
+         ParamByName('desk').Value:=EdDesk.text;
+         ParamByName('group_id').Value:=group_id;
+         ParamByName('sell_status').Value:=st_penjualan;
+         ParamByName('buy').Value:=edharga_pemb.Value;
+         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
+         ParamByName('sell').Value:=edharga_penj.Value;
+         ParamByName('discount_sell').Value:=eddisc_penj.Value;
+         ParamByName('lot_status').Value:=st_nourut;
+         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
+         ParamByName('sbu_code').Value:=Cb_sbu.Text;
+         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
+         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
+       ExecSQL;
+    end;
+    // cr ds 5-2-2026
+         with dm.Qtemp do
+         begin
+            Edkd_akun.Text:=KodeHeaderPerkiraan+'.'+EdKd.Text;
+            Edkd_akunPemb.Text:=KodeHeaderPerkiraan2+'.'+EdKd.Text;
+           close;
+           sql.Clear;
+           sql.Text:='update t_item_account set acc_persd=:acc_persd,acc_pemb=:acc_pemb,acc_penj=:acc_penj,acc_rtpemb=:acc_rtpemb,'+
+           ' acc_potpemb=:acc_potpemb,acc_rtpenj=:acc_rtpenj where item_code=:item_code';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;
+      {  OFF DS 5-2-2026 with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='delete from t_item_account where item_code=:item_code';
+           ParamByName('item_code').Value:=EdKd.Text;
+           Execute;
+         end;
+         with dm.Qtemp do
+         begin
+           close;
+           sql.Clear;
+           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
+           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
+            ParamByName('acc_persd').Value:=Edkd_akun.Text;
+            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
+            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
+            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
+            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
+            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
+            ParamByName('item_code').Value:=EdKd.Text;
+            Execute;
+         end;                 }
 end;
 
 procedure TFNew_Barang.EdNm_akunPembButtonClick(Sender: TObject);
@@ -447,134 +631,11 @@ begin
     begin
       if status_tr=0 then
       begin
-       with dm.Qtemp do
-       begin
-       close;
-       sql.clear;
-       sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
-                 ' category_id,unit,merk,account_code,created_by,description,group_id, '+
-                 ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code, '+
-                 ' item_code_coretax, item_name_coretax)'+
-                 ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
-                 ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
-                 ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax)';
-         ParamByName('order_no').Value:=Edno.Text;
-         ParamByName('item_cd').Value:=EdKd.Text;
-         ParamByName('item_cd2').Value:=Edkd_display.Text;
-         ParamByName('item_nm').Value:=EdNm.Text;
-         ParamByName('id_ct').Value:=id_ct;
-         ParamByName('unit').Value:=EdSatuan.Text;
-         ParamByName('merk').Value:=EdMerk.Text;
-         ParamByName('akun_cd').Value:=edkd_akun.text;
-         ParamByName('pic').Value:=Nm;
-         ParamByName('desk').Value:=EdDesk.text;
-         ParamByName('group_id').Value:=group_id;
-         ParamByName('sell_status').Value:=st_penjualan;
-         ParamByName('buy').Value:=edharga_pemb.Value;
-         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
-         ParamByName('sell').Value:=edharga_penj.Value;
-         ParamByName('discount_sell').Value:=eddisc_penj.Value;
-         ParamByName('lot_status').Value:=st_nourut;
-         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
-         ParamByName('sbu_code').Value:=Cb_sbu.Text;
-         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
-         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
-       ExecSQL;
-       end;
-         with dm.Qtemp do
-         begin
-           close;
-           sql.Clear;
-           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
-           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
-            ParamByName('acc_persd').Value:=Edkd_akun.Text;
-            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
-            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
-            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
-            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
-            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
-            ParamByName('item_code').Value:=EdKd.Text;
-            Execute;
-         end;
+        simpan //cr ds 4-2-2026
       end;
       if status_tr=1 then
       begin
-       with dm.Qtemp do
-       begin
-       close;
-       sql.clear;
-       sql.Text:=' Update t_item set order_no=:order_no,item_code=:item_code,item_code2=:item_cd2,item_name=:item_name,'+
-       ' unit=:unit,merk=:merk,account_code=:akun_code,category_id=:ct_id,updated_at=now(), '+
-       ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
-       ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,'+
-       ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code, '+
-       ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax where "id"=:id';
-         ParamByName('order_no').Value:=Edno.Text;
-         ParamByName('item_code').Value:=EdKd.Text;
-         ParamByName('item_cd2').Value:=Edkd_display.Text;
-         ParamByName('item_name').Value:=EdNm.Text;
-         ParamByName('unit').Value:=EdSatuan.Text;
-         ParamByName('merk').Value:=EdMerk.Text;
-         ParamByName('akun_code').Value:=Edkd_akun.Text;
-         ParamByName('ct_id').Value:=id_ct;
-         ParamByName('id').Value:=idmaterial;
-         ParamByName('pic').Value:=nm;
-         ParamByName('desk').Value:=EdDesk.text;
-         ParamByName('group_id').Value:=group_id;
-         ParamByName('sell_status').Value:=st_penjualan;
-         ParamByName('buy').Value:=edharga_pemb.Value;
-         ParamByName('discount_buy').Value:=eddisc_pemb.Value;
-         ParamByName('sell').Value:=edharga_penj.Value;
-         ParamByName('discount_sell').Value:=eddisc_penj.Value;
-         ParamByName('lot_status').Value:=st_nourut;
-         ParamByName('header_code').Value:=KodeHeaderPerkiraan;
-         ParamByName('sbu_code').Value:=Cb_sbu.Text;
-         ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
-         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
-       ExecSQL;
-       end;
-
-
-        {with dm.Qtemp do
-         begin
-           close;
-           sql.Clear;
-           sql.Text:='update t_item_account set acc_persd=:acc_persd,acc_pemb=:acc_pemb,acc_penj=:acc_penj,acc_rtpemb=:acc_rtpemb,'+
-           ' acc_potpemb=:acc_potpemb,acc_rtpenj=:acc_rtpenj where item_code=:item_code';
-            ParamByName('acc_persd').Value:=Edkd_akun.Text;
-            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
-            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
-            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
-            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
-            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
-            ParamByName('item_code').Value:=EdKd.Text;
-            Execute;
-         end;}
-
-
-         with dm.Qtemp do
-         begin
-           close;
-           sql.Clear;
-           sql.Text:='delete from t_item_account where item_code=:item_code';
-           ParamByName('item_code').Value:=EdKd.Text;
-           Execute;
-         end;
-         with dm.Qtemp do
-         begin
-           close;
-           sql.Clear;
-           sql.Text:='insert into t_item_account(acc_persd,acc_pemb,acc_penj,acc_rtpemb,acc_potpemb,acc_rtpenj,item_code)'+
-           ' values(:acc_persd,:acc_pemb,:acc_penj,:acc_rtpemb,:acc_potpemb,:acc_rtpenj,:item_code)';
-            ParamByName('acc_persd').Value:=Edkd_akun.Text;
-            ParamByName('acc_pemb').Value:=Edkd_akunPemb.Text;
-            ParamByName('acc_penj').Value:=Edkd_akunPenj.text;
-            ParamByName('acc_rtpemb').Value:=Edkd_akunrt_Pemb.Text;
-            ParamByName('acc_potpemb').Value:=Edkd_akunPot_Pemb.text;
-            ParamByName('acc_rtpenj').Value:=Edkd_akunRt_Penj.Text;
-            ParamByName('item_code').Value:=EdKd.Text;
-            Execute;
-         end;
+        edit; //cr ds 4-2-2026
       end;
       dm.koneksi.Commit;
       Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
@@ -634,6 +695,7 @@ begin
    kode:=DM.Qtemp2['code'];
    Edkd_akun.Text:=Dm.Qtemp2['account_code'];
    KodeHeaderPerkiraan:=Dm.Qtemp2['account_code'];
+   KodeHeaderPerkiraan2:=Dm.Qtemp2['account_code'];
    Edkd_akunPemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunrt_Pemb.Text:=Dm.Qtemp2['account_code'];
    Edkd_akunPot_Pemb.Text:=Dm.Qtemp2['account_code'];

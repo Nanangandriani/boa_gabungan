@@ -224,6 +224,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label46: TLabel
       Left = 971
@@ -231,6 +232,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 49
       Height = 15
       Caption = 'Daftar TP'
+      Visible = False
     end
     object Label40: TLabel
       Left = 700
@@ -238,6 +240,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 3
       Height = 15
       Caption = ':'
+      Visible = False
     end
     object Label37: TLabel
       Left = 587
@@ -245,6 +248,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 64
       Height = 15
       Caption = 'Group Biaya'
+      Visible = False
     end
     object edNoTrans: TEdit
       Left = 147
@@ -530,6 +534,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Height = 23
       Caption = '...'
       TabOrder = 25
+      Visible = False
       OnClick = Btn_daf_tpClick
     end
     object CbGroup_Biaya: TRzComboBox
@@ -538,6 +543,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Width = 188
       Height = 23
       TabOrder = 26
+      Visible = False
       OnChange = CbGroup_BiayaChange
     end
   end
@@ -861,6 +867,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 3
         Height = 15
         Caption = ':'
+        Visible = False
       end
       object Label26: TLabel
         Left = 20
@@ -868,6 +875,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Width = 68
         Height = 15
         Caption = 'Sumber Data'
+        Visible = False
       end
       object edKode_supplier: TRzButtonEdit
         Left = 147
@@ -906,6 +914,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Height = 23
         Enabled = False
         TabOrder = 3
+        Visible = False
       end
       object ak_account: TEdit
         Left = 294
@@ -1504,9 +1513,11 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     end
     object MemDetailHutangno_faktur: TStringField
       FieldName = 'no_faktur'
+      Size = 100
     end
     object MemDetailHutangno_sj: TStringField
       FieldName = 'no_sj'
+      Size = 100
     end
     object MemDetailHutangjum_hutang: TCurrencyField
       FieldName = 'jum_hutang'
@@ -1942,14 +1953,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Top = 528
   end
   object DSTP: TDataSource
-    Left = 992
-    Top = 184
+    Left = 1000
+    Top = 160
   end
   object QTP_Real: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 936
+    Left = 920
     Top = 184
   end
 end

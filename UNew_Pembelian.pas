@@ -563,6 +563,14 @@ begin
       Edno_Faktur.SetFocus;
       Exit;
     end;
+          // cr ds 13-02-2026 deteksi klau akun kosong
+        if Edkd_akun.Text='' then
+        begin
+          MessageDlg('Lengkapi Akun Hutangnya',MtWarning,[MbOk],0);
+          //Edkd_akun.SetFocus;
+          Exit;
+        end;
+        //
                                                                                                                                                                                if EdNilai_um.Value<>edum.Value then
       begin
         MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
@@ -596,6 +604,7 @@ begin
           EdNo.SetFocus;
           Exit;
         end;
+
         with dm.Qtemp do
         begin
           close;
@@ -1233,6 +1242,17 @@ begin
        Edjenispo.Text:=dm.Qtemp.FieldByName('type').AsString;
        Edjenis.Text:=dm.Qtemp.FieldByName('trans_category').AsString;
        EdjenisSelect(sender);
+         with dm.Qtemp3 do
+         begin
+            close;
+            SQL.Clear;
+            sql.Text:='SELECT um_account_code from t_po where po_no='+QuotedStr(dm.Qtemp['po_no']);
+            Open;
+         end;
+          if dm.Qtemp3.RecordCount<>0 then
+          begin
+            Edkd_akunum.Text:=dm.Qtemp3['um_account_code'];
+          end;
      end
      else
      if Cb_Sumber.ItemIndex=1 then
@@ -1638,6 +1658,7 @@ begin
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp'+
                         ' ,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,e.header_code '+
                         ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal '+
+                        ' ,c.um_account_code,c.um_value '+                    //cr ds 4-2-2026
                         ' from t_item_stock a '+
                         ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_po c on b.po_no=c.po_no '+
@@ -1652,7 +1673,7 @@ begin
                         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,b.id_pengajuan_asset,b.no_pengajuan_asset,'+
                         ' b.id_detail_asset,b.spesifikasi_asset,e.header_code, '+
-                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal ';
+                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_account_code,c.um_value  ';
               ExecSQL;
            end;
            QMaterial.open;
@@ -1676,7 +1697,7 @@ begin
                         ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.acc_pemb account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
                         ' ,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,c.receive_date,g.account_code header_code '+
-                        ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal '+
+                        ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,'''' um_account_code,0 um_value'+
                         ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_item_receive C on b.receive_no=c.receive_no '+
                         ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
@@ -2578,7 +2599,8 @@ begin
      Open;
    end;
    Edjenis.Text:=dm.Qtemp.FieldByName('type').AsString;
-   Edkd_akunum.Text:=dm.Qtemp.FieldByName('account_name').AsString;
+   //Edkd_akunum.Text:=dm.Qtemp.FieldByName('account_name').AsString;   //off 4-2-2026
+   EdNm_akun.Text:=dm.Qtemp.FieldByName('account_name').AsString;   //off 4-2-2026
 end;
 
 procedure TFNew_Pembelian.Edkd_suppChange(Sender: TObject);
@@ -2655,11 +2677,11 @@ begin
     end;
     Edkd_supp.Text:=Dm.Qtemp.FieldByName('supplier_code').AsString;
     EdNm_supp.Text:=Dm.Qtemp.FieldByName('supplier_name').AsString;
+    nopo:=Dm.Qtemp.FieldByName('po_no').AsString;
     EdValas.Text:=Dm.Qtemp.FieldByName('valas').AsString;
     EdNilai_Valas.Text:=Dm.Qtemp.FieldByName('valas_value').Value;
     Edjenispo.Text:=Dm.Qtemp.FieldByName('type').AsString;
     Edjatuhtempo.Text:=Dm.Qtemp.FieldByName('due_date').AsString;
-    nopo:=Dm.Qtemp.FieldByName('po_no').AsString;
 
     if Dm.Qtemp.FieldByName('um').Asfloat > 0 then
        EdNilai_um.Value:=Dm.Qtemp.FieldByName('um').value

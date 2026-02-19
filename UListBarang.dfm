@@ -176,10 +176,12 @@ object FlistBarang: TFlistBarang
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'SELECT'#9'"a".category,"c"."type",b.*,d.account_name,e.group_id,e.g' +
-        'roup_name,'
+        ' SELECT'#9'"a".category,"c"."type",b.*,d.account_name,e.group_id,e.' +
+        'group_name,  '
+      '  COALESCE(f.hd_persd, '#39#39')     AS hd_persd,'
       '  COALESCE(f.acc_persd, '#39#39')     AS acc_persd,'
       '  COALESCE(f.account_name, '#39#39')  AS account_name,'
+      '  COALESCE(f.hd_pemb, '#39#39')      AS hd_pemb,'
       '  COALESCE(f.acc_pemb, '#39#39')      AS acc_pemb,'
       '  COALESCE(f.nm_pemb, '#39#39')       AS nm_pemb,'
       '  COALESCE(f.acc_penj, '#39#39')      AS acc_penj,'
@@ -198,19 +200,22 @@ object FlistBarang: TFlistBarang
       'INNER JOIN t_item_group AS "e" ON "b".group_id = "e"."group_id"'
       'LEFT JOIN t_ak_account d ON b.header_code=d.code'
       
-        'LEFT JOIN (SELECT'#9'acc_persd, b.account_name ,acc_pemb, c.account' +
-        '_name as nm_pemb, acc_penj, d.account_name as nm_penj, acc_rtpem' +
-        'b, e.account_name nm_rtpemb, acc_potpemb, f.account_name nm_potp' +
-        'emb,acc_rtpenj, g.account_name nm_rtpenj, item_code FROM t_item_' +
-        'account AS "a" '
-      'INNER JOIN t_ak_account_sub b on a.acc_persd=b.account_code2'
-      'INNER JOIN t_ak_account_sub c on a.acc_pemb=c.account_code2'
-      'INNER JOIN t_ak_account_sub d on a.acc_penj=d.account_code2'
-      'INNER JOIN t_ak_account_sub e on a.acc_rtpemb=e.account_code2'
-      'INNER JOIN t_ak_account_sub f on a.acc_potpemb=f.account_code2'
+        'LEFT JOIN (SELECT'#9'acc_persd, b.account_name,b.account_code hd_pe' +
+        'rsd ,acc_pemb, c.account_name as nm_pemb,c.account_code hd_pemb,' +
+        ' acc_penj, d.account_name as nm_penj, acc_rtpemb, e.account_name' +
+        ' nm_rtpemb, acc_potpemb, f.account_name nm_potpemb,acc_rtpenj, g' +
+        '.account_name nm_rtpenj, item_code FROM t_item_account AS "a" '
+      'LEFT JOIN t_ak_account_sub b on a.acc_persd=b.account_code2'
       
-        'INNER JOIN t_ak_account_sub g on a.acc_rtpenj=g.account_code2) f' +
-        ' on b.item_code=f.item_code'
+        'LEFT JOIN (select b.account_code,b.account_code2,a.account_name ' +
+        'from t_ak_account a inner join t_ak_account_sub b on a.code=b.ac' +
+        'count_code ) c on a.acc_pemb=c.account_code2'
+      'LEFT JOIN t_ak_account_sub d on a.acc_penj=d.account_code2'
+      'LEFT JOIN t_ak_account_sub e on a.acc_rtpemb=e.account_code2'
+      'LEFT JOIN t_ak_account_sub f on a.acc_potpemb=f.account_code2'
+      
+        'LEFT JOIN t_ak_account_sub g on a.acc_rtpenj=g.account_code2) f ' +
+        'on b.item_code=f.item_code'
       'where b.deleted_at isnull'
       'order by b.item_code asc')
     Left = 44

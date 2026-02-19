@@ -390,8 +390,10 @@ begin
             ' VALUES ( '+
             ' '+IntToStr(IdCustomerSalesTarget)+', '+
             ' '+QuotedStr(MemDetail['item_code'])+', '+
-            ' '+QuotedStr(MemDetail['qty'])+', '+
-            ' '+QuotedStr(MemDetail['value'])+' );';
+            ' '+QuotedStr(StringReplace(MemDetail['qty'],',','.',[]))+', '+
+            ' '+QuotedStr(StringReplace(MemDetail['value'],',','.',[]))+');';
+//            ' '+QuotedStr(MemDetail['qty'])+', '+
+//            ' '+QuotedStr(MemDetail['value'])+' );';
     ExecSQL;
     end;
   MemDetail.Next;

@@ -686,7 +686,7 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45894.441382430600000000
+    ReportOptions.LastChange = 46072.403179212960000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1139,9 +1139,9 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Top = 281.102350000000000000
+          Top = 269.102350000000000000
           Width = 743.165430000000000000
-          Height = 42.795300000000000000
+          Height = 56.128633330000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -15
@@ -1153,9 +1153,16 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
             
               'Bersama surat ini  kami mengkonfirmasi tentang saldo piutang ( S' +
               'aldo Nota ) Bapak / Ibu  kepada  pihak [nmsbu] sampai dengan tan' +
-              'ggal [tgl_sampai] sejumlah Rp.total_piutang (terbilang) yang ter' +
-              'diri dari :')
+              'ggal [tgl_sampai] sejumlah Rp.[total_piutang] ([terbilang]) yang' +
+              ' terdiri dari :')
           ParentFont = False
+          Formats = <
+            item
+            end
+            item
+            end
+            item
+            end>
         end
       end
       object GroupFooter1: TfrxGroupFooter

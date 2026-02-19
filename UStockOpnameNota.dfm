@@ -181,6 +181,7 @@ object FStockOpnameNota: TFStockOpnameNota
     TabOrder = 1
     TitleParams.MultiTitle = True
     OnKeyDown = DBGridEh1KeyDown
+    OnMouseWheel = DBGridEh1MouseWheel
     Columns = <
       item
         CellButtons = <>

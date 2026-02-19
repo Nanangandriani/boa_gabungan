@@ -55,6 +55,8 @@ type
     procedure RzBitBtn1Click(Sender: TObject);
     procedure DBGridEh1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure DBGridEh1MouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -332,6 +334,24 @@ begin
       Key := 0;
     end;
   end;
+end;
+
+procedure TFStockOpnameNota.DBGridEh1MouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  if WheelDelta > 0 then
+  begin
+    if not DBGridEh1.DataSource.DataSet.Bof then
+      DBGridEh1.DataSource.DataSet.Prior;
+  end
+  else
+  begin
+    if not DBGridEh1.DataSource.DataSet.Eof then
+      DBGridEh1.DataSource.DataSet.Next;
+  end;
+
+  Handled := True;
 end;
 
 procedure TFStockOpnameNota.dtTanggal1Change(Sender: TObject);

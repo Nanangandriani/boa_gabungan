@@ -404,7 +404,8 @@ begin
      SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
      SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
      SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
-     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+//     SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat)));
+     SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat))+' Rupiah');
      //Report.DesignReport();
      Report.ShowReport();
   end;

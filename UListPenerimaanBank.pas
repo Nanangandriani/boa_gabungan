@@ -426,6 +426,9 @@ begin
         lbJenisBayarr.Visible:=False;
         edNMSumberTagihan.Visible:=False;
         edNMJenisBayar.Visible:=False;
+//        edJumlah.Visible:=True;
+//        Label19.Visible:=True;
+//        Label20.Visible:=True;
       end;
 
       //detailakun
@@ -505,6 +508,9 @@ begin
       if cbJenisTransaksi.Text='NON PIUTANG' then
       begin
 //        ShowMessage(strDiterimaDari);
+//        edJumlah.Visible:=True;
+//        Label19.Visible:=True;
+//        Label20.Visible:=True;
         edJumlah.Enabled:=False;
         gbDataSumberPenerimaan.Visible:=True;
         label33.Visible:=False;
@@ -516,6 +522,7 @@ begin
         edNoRefSumberPenerimaan.Text:='';
         edNamaPKPSumber.Text:='';
         cbSumberPenerimaan.Text:='TIDAK ADA SUMBER';
+
       end;
 
       //UANG MUKA
@@ -541,6 +548,9 @@ begin
         begin
           edJumlah.Enabled:=False;
           gbDataSumberPenerimaan.Visible:=True;
+//          edJumlah.Visible:=True;
+//          Label19.Visible:=True;
+//          Label20.Visible:=True;
         end else begin
           gbDataSumberPenerimaan.Visible:=False;
           edJumlah.Enabled:=True;
@@ -557,8 +567,6 @@ begin
 //        gbDataSumberPenerimaan.Visible:=False;
 //        edJumlah.Enabled:=True;
 //      end;
-    
-
 
     end;
   end;
@@ -595,23 +603,61 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust, a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from ('+
-           ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
-           ' "account_name_bank", "for_acceptance", "description", "module_id", paid_amount tot_paid_amount '+
-           ' from "public"."t_cash_bank_acceptance"  a  '+
-           ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
-           ' AND deleted_at is null) a '+
-           ' LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  '+
-           '"paid_amount", "description" as desc_akun, COALESCE(bb.account_code,aa.code_account) code_account_header, '+
-           'bb.account_name ,  "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa  '+
-           'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
-           'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON '+
-           'a."voucher_no"=b."voucher_no" '+
-           'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
-           'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
-           ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
-           ' and "position"=''K'' '+
-           ' order by position asc, account_name=''PIUTANG'' ');
+    sql.Add('SELECT '+
+            'Upper(coalesce(c.customer_name_pkp, a.name_cust)) name_cust, a.voucher_no,a.trans_date, '+
+            'a.code_cust,a.account_number_bank,a.account_name_bank,a.for_acceptance,a.description,a.module_id, '+
+            'SUM(b.paid_amount) OVER(PARTITION BY a.voucher_no) as tot_paid_amount, '+
+            'b.paid_amount,b.code_account_header,b.name_account "account_name", b.desc_akun '+
+            'FROM ( '+
+            'SELECT "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
+            '"account_name_bank", "for_acceptance", "description", "module_id" '+
+            'FROM "public"."t_cash_bank_acceptance" '+
+            'WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+            'AND deleted_at is null '+
+            ') a '+
+            'LEFT JOIN ( '+
+            'SELECT "voucher_no","code_account",aa.name_account,"position", '+
+            'CASE '+
+            'WHEN position::text = ''D''::text AND paid_amount > 0::numeric THEN - paid_amount '+
+            'ELSE paid_amount  '+
+            'END paid_amount, '+
+            '"description" as desc_akun, '+
+            'COALESCE(bb.account_code, aa.code_account) code_account_header, '+
+            'bb.account_name, '+
+            '"amount_rate_results"  '+
+            'FROM "public"."t_cash_bank_acceptance_det" aa  '+
+            'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
+            'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account" '+
+            ') b ON a."voucher_no" = b."voucher_no" '+
+            'LEFT JOIN t_cash_bank_acceptance_customer c ON c.trans_no = a.voucher_no '+
+            'AND c.customer_code = a.code_cust '+
+            'AND c.deleted_at is NULL '+
+            'LEFT JOIN t_ak_account e ON e.code = b.code_account_header '+
+            'WHERE a."voucher_no" = '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+            'AND ( '+
+            '("position" = ''K'') '+
+            'OR '+
+            '("position" = ''D'' AND b.paid_amount < 0 AND e.header_code NOT IN (''1102'', ''1101'')) '+
+            ') '+
+            'ORDER BY b.account_name = ''PIUTANG'' ASC, position ASC;');
+//    sql.add(' SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust, a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from ('+
+//           ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
+//           ' "account_name_bank", "for_acceptance", "description", "module_id", paid_amount tot_paid_amount '+
+//           ' from "public"."t_cash_bank_acceptance"  a  '+
+//           ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
+//           ' AND deleted_at is null) a '+
+//           ' LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  '+
+//           '"paid_amount", "description" as desc_akun, COALESCE(bb.account_code,aa.code_account) code_account_header, '+
+//           'bb.account_name ,  "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa  '+
+//           'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
+//           'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON '+
+//           'a."voucher_no"=b."voucher_no" '+
+//           'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
+//           'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
+//           'LEFT JOIN t_ak_account e on e.code=b.code_account_header '+
+//           ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
+//           ' and ( ("position"=''K'') OR ("position"=''D'' AND b.paid_amount > 0) AND e.header_code<>''1102'' AND e.header_code<>''1101'' ) '+
+//           ' order by b.account_name=''PIUTANG'' ASC,position asc ');
     open;
   end;
 
@@ -657,7 +703,7 @@ begin
    SetReportToPortrait(Report);
    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBukti_Terima.FieldValues['trans_date']));
-   SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah');
+   SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(QBukti_Terima.FieldByName('tot_paid_amount').AsFloat))+' Rupiah');
 
    if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
    begin

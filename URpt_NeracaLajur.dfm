@@ -79,6 +79,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     Align = alBottom
     TabOrder = 2
     Visible = False
+    ExplicitTop = 551
+    ExplicitWidth = 914
     object BBatal: TRzBitBtn
       Left = 844
       Top = 1
@@ -139,6 +141,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 838
     end
     object BPrint: TRzBitBtn
       Left = 765
@@ -201,6 +204,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 759
     end
   end
   object ProgressBar1: TProgressBar
@@ -1122,7 +1126,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Caption = 'Neraca Lajur'
       Category = 0
       Hint = 'Neraca Lajur'
-      Visible = ivAlways
+      Visible = ivNever
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1179,10 +1183,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       OnClick = BPrintClick
     end
     object DxRefresh: TdxBarLargeButton
-      Caption = 'CariX'
+      Caption = 'Cari'
       Category = 0
-      Hint = 'CariX'
-      Visible = ivNever
+      Hint = 'Cari'
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
@@ -1223,10 +1227,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       PropertiesClassName = 'TcxSpinEditProperties'
     end
     object dxBarLargeButton2: TdxBarLargeButton
-      Caption = 'PrintX'
+      Caption = 'Print'
       Category = 0
-      Hint = 'PrintX'
-      Visible = ivNever
+      Hint = 'Print'
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1289,10 +1293,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Visible = ivAlways
     end
     object dxBarLargeButton4: TdxBarLargeButton
-      Caption = 'Cari'
+      Caption = 'Carii'
       Category = 0
-      Hint = 'Cari'
-      Visible = ivAlways
+      Hint = 'Carii'
+      Visible = ivNever
       Glyph.SourceDPI = 96
       Glyph.Data = {
         3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574

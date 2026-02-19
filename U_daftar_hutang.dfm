@@ -940,7 +940,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
       
         'ORDER BY tglfaktur,nofakturpajak,urutan ASC)qqq ORDER BY tglfakt' +
         'ur,nofakturpajak,urutan ASC')
-    Left = 840
+    Left = 832
     Top = 176
     object QdaftarHutangtanggal: TDateField
       FieldName = 'tanggal'

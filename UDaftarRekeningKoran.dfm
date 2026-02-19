@@ -750,7 +750,7 @@ object FDaftarRekeningKoran: TFDaftarRekeningKoran
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46030.413462187500000000
+    ReportOptions.LastChange = 46063.368326446760000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

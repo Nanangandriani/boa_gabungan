@@ -26,7 +26,6 @@ object F_catatan_ppn_pph: TF_catatan_ppn_pph
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 954
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -215,7 +214,6 @@ object F_catatan_ppn_pph: TF_catatan_ppn_pph
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 817
     Top = 40
   end
@@ -958,15 +956,17 @@ object F_catatan_ppn_pph: TF_catatan_ppn_pph
       'fp_name=fp_name'
       'kk_year=kk_year'
       'kkas_year=kkas_year'
-      #13#10'inventory_date='#13#10'inventory_date'
-      #13#10'month_sa_acc='#13#10'month_sa_acc'
+      'inventory_date=inventory_date'
+      'month_sa_acc=month_sa_acc'
       'item_date=item_date'
       'debt_date=debt_date'
       'expenditure_date=expenditure_date'
       'serial_no=serial_no'
       'reporter=reporter'
       'position=position'
-      'nitku=nitku')
+      'nitku=nitku'
+      'stat_office=stat_office'
+      'company_serial=company_serial')
     DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
@@ -1886,7 +1886,7 @@ object F_catatan_ppn_pph: TF_catatan_ppn_pph
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44630.556593796300000000
-    ReportOptions.LastChange = 45271.601852835700000000
+    ReportOptions.LastChange = 46059.928422199070000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1946,7 +1946,7 @@ object F_catatan_ppn_pph: TF_catatan_ppn_pph
             'CATATAN PPN, PPH PS 23,PPH PS 22, PPH 15, PPH 4(2)')
           ParentFont = False
         end
-        object MemoPers: TfrxMemoView
+        object MSBU: TfrxMemoView
           AllowVectorExport = True
           Top = 32.795300000000000000
           Width = 1166.929887500000000000

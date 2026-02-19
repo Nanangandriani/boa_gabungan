@@ -138,6 +138,8 @@ begin
   Edurut.Text:=order_no;
 end;
 
+
+
 procedure TFNew_TerimaMaterial.loadtype;
 begin
    with dm.Qtemp do
@@ -381,9 +383,9 @@ begin
           sql.Text:='update t_item_receive set receive_date=:partgl_terima,remark=:parket,spb_no=:parnospb,sj_no=:parnosj,faktur_no=:parnofaktur,'+
           ' supplier_code=:parkd_supplier,faktur_date=:partgl_faktur,due_date=:parjatuh_tempo,purchase_type=:parjenis_pembelian,debt_amount=:parjmlh_hutang,'+
           ' payment_amount=:parjmlh_bayar,debt_remaining=:parsisa_hutang,ppn_rp=:parppn_rp,pic=:parpic,status=:parstatus,valas=:parvalas,'+
-          ' valas_value=:parnilai_valas,account_code=:parkd_akun,trans_month=:parbln,trans_year=:parthn,import_duty=:parbea,'+
+          ' valas_value=:parnilai_valas,account_code=:parkd_akun,import_duty=:parbea,'+
           ' pph_rp=:parpph_rp,sbu_code=:parsbu,pib_no=:parpib,po_type=:parjenispo,faktur2_date=:partgl_faktur2,account_um_code=:parkd_akunum,'+
-          ' um_value=:parum,trans_day=:partgl_no,pic2=:parpic2'+
+          ' um_value=:parum,pic2=:parpic2,change_by=:ch_by,change_at=now()'+
           ' where receive_no=:parno_terima';
                  ParamByName('parno_terima').Value:=EdNo.Text;
                   ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
@@ -406,14 +408,15 @@ begin
                   ParamByName('parnilai_valas').Value:=EdNilai_Valas.Text;
                   ParamByName('parkd_akun').Value:=Edkd_akun.Text;
                   ParamByName('parsbu').Value:=Edsbu.Text;
-                  ParamByName('parbln').Value:=Edbln.Text;
-                  ParamByName('parthn').Value:=Edth.text;
                   ParamByName('parjenispo').Value:=Edjenispo.Text;
                   ParamByName('parpib').Value:=EdPIB.Text;
                   ParamByName('parkd_akunum').Value:=Edkd_akunum.Text;
                   ParamByName('parum').Value:=EdNilai_um.Value;
-                  ParamByName('partgl_no').Value:=Edhari.Text;
+               // off ds 13-02-2026  ParamByName('parbln').Value:=Edbln.Text;
+                // off ds 13-02-2026  ParamByName('parthn').Value:=Edth.text;
+                  // off ds 13-02-2026  ParamByName('partgl_no').Value:=Edhari.Text;
                   ParamByName('parpic2').Value:=Nm;
+                  ParamByName('ch_by').Value:=Nm;   // cr ds 13-02-2026
                //   ParamByName('parorder_no').Value:=Edurut.text;
               ExecSQL;
             end;
@@ -577,11 +580,13 @@ begin
               sql.Text:=' insert into t_item_receive(receive_no,receive_date,remark,spb_no,sj_no,faktur_no,'+
                         ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                         ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                        ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no)values(:parno_terima,'+
+                        ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,created_by)'+
+                        ' values(:parno_terima,'+
                         ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                         ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                         ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                        ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no)';
+                        ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,'+
+                        ':parpic2,:parorder_no,:cr_by)';
                   ParamByName('parno_terima').Value:=EdNo.Text;
                   ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                   ParamByName('parket').Value:=EdKet.Text;
@@ -603,15 +608,19 @@ begin
                   ParamByName('parnilai_valas').Value:=EdNilai_Valas.Text;
                   ParamByName('parkd_akun').Value:=Edkd_akun.Text;
                   ParamByName('parsbu').Value:=Edsbu.Text;
-                  ParamByName('parbln').Value:=Edbln.Text;
-                  ParamByName('parthn').Value:=Edth.text;
                   ParamByName('parjenispo').Value:=Edjenispo.Text;
                   ParamByName('parpib').Value:=EdPIB.Text;
                   ParamByName('parkd_akunum').Value:=Edkd_akunum.Text;
                   ParamByName('parum').Value:=EdNilai_um.Value;
-                  ParamByName('partgl_no').Value:=Edhari.Text;
+               // off ds 13-02-2026  ParamByName('parbln').Value:=Edbln.Text;
+                // off ds 13-02-2026  ParamByName('parthn').Value:=Edth.text;
+                  // off ds 13-02-2026  ParamByName('partgl_no').Value:=Edhari.Text;
+                  ParamByName('partgl_no').Value:=strday;  // cr ds 13-02-2026
+                  ParamByName('parbln').Value:=strbulan;    // cr ds 13-02-2026
+                  ParamByName('parthn').Value:=strtahun;     // cr ds 13-02-2026
                   ParamByName('parpic2').Value:=Nm;
                   ParamByName('parorder_no').Value:=Edurut.text;
+                  ParamByName('cr_by').Value:=Nm;       // cr ds 13-02-2026
               ExecSQL;
             end;
 
@@ -812,7 +821,8 @@ var
 begin
   //thn:=FormatDateTime('yyy',Dtterima.Date);
   //bln:=FormatDateTime('MM',Dtterima.Date);
-  with dm.Qtemp2 do
+ { off ds 13-02-2026
+ with dm.Qtemp2 do
    begin
      close;
      sql.Clear;
@@ -837,7 +847,7 @@ begin
      sql.Text:='Select TO_CHAR('+Quotedstr(FormatDateTime('yyyy-mm-dd',Dtterima.Date))+' :: DATE, ''mm'') bulan ';
      Open;
    end;
-   Edbln.Text:=dm.Qtemp1.FieldByName('bulan').AsString;
+   Edbln.Text:=dm.Qtemp1.FieldByName('bulan').AsString;  }
 end;
 
 procedure TFNew_TerimaMaterial.EdjenisSelect(Sender: TObject);

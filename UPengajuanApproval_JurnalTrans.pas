@@ -33,9 +33,8 @@ type
     dtselesaipenj: TRzDateTimeEdit;
     MemPenjualan: TMemTableEh;
     Label23: TLabel;
-    Label24: TLabel;
-    Edkodewilayah: TRzButtonEdit;
-    Ednamawilayah: TEdit;
+    Ednm_kab: TRzButtonEdit;
+    Edkd_kab: TEdit;
     Panel3: TPanel;
     BTampil_Penj: TRzBitBtn;
     Bselect_Penj: TRzBitBtn;
@@ -48,10 +47,6 @@ type
     BPrint_Pemb: TRzBitBtn;
     Qdetail_Pembelian: TUniQuery;
     Panel7: TPanel;
-    Label7: TLabel;
-    Label8: TLabel;
-    Dtmulai_kas: TRzDateTimeEdit;
-    Dtselesai_kas: TRzDateTimeEdit;
     Panel8: TPanel;
     Btampil_kas: TRzBitBtn;
     RzBitBtn11: TRzBitBtn;
@@ -64,8 +59,6 @@ type
     DBGridEh4: TDBGridEh;
     DBGridEh5: TDBGridEh;
     DBGridEh6: TDBGridEh;
-    Cbmodule: TComboBox;
-    Label9: TLabel;
     MemKas: TMemTableEh;
     DsKas: TDataSource;
     DsDetail_kas: TDataSource;
@@ -87,7 +80,40 @@ type
     btSelectMemo: TRzBitBtn;
     btApprovMemo: TRzBitBtn;
     btCetakMemorial: TRzBitBtn;
-    procedure EdkodewilayahButtonClick(Sender: TObject);
+    Label10: TLabel;
+    cbkategori: TComboBox;
+    QPembelian: TUniQuery;
+    DataSetDriverEh1: TDataSetDriverEh;
+    Label11: TLabel;
+    Edkd_kares: TEdit;
+    ednm_kares: TRzButtonEdit;
+    Label12: TLabel;
+    Edkd_tp: TEdit;
+    Ednm_tp: TRzButtonEdit;
+    RzBitBtn1: TRzBitBtn;
+    Qpenjualan: TUniQuery;
+    DataSetDriverEh2: TDataSetDriverEh;
+    Panel9: TPanel;
+    Label9: TLabel;
+    Cbmodule: TComboBox;
+    Pnwilayah: TPanel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    ednm_kab2: TRzButtonEdit;
+    Edkd_kab2: TEdit;
+    Edkd_kares2: TEdit;
+    Ednm_kares2: TRzButtonEdit;
+    Edkd_tp2: TEdit;
+    ednm_tp2: TRzButtonEdit;
+    RzBitBtn7: TRzBitBtn;
+    Label16: TLabel;
+    DtMulai_kas: TRzDateTimeEdit;
+    Label17: TLabel;
+    Dtselesai_kas: TRzDateTimeEdit;
+    Qkas: TUniQuery;
+    DataSetDriverEh3: TDataSetDriverEh;
+    procedure Ednm_kabButtonClick(Sender: TObject);
     procedure BTampil_PembClick(Sender: TObject);
     procedure BTampil_PenjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -125,11 +151,21 @@ type
     procedure MemPenjualanAfterPost(DataSet: TDataSet);
     procedure MemKasAfterPost(DataSet: TDataSet);
     procedure MemMemorialAfterPost(DataSet: TDataSet);
+    procedure ednm_karesButtonClick(Sender: TObject);
+    procedure Ednm_tpButtonClick(Sender: TObject);
+    procedure RzBitBtn1Click(Sender: TObject);
+    procedure MemPembelianAfterScroll(DataSet: TDataSet);
+    procedure Qpenjualantrans_noGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure Ednm_kares2ButtonClick(Sender: TObject);
+    procedure ednm_tp2ButtonClick(Sender: TObject);
+    procedure ednm_kab2ButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     module_id:string;
+    vKaresidenan,vTP,vKabupaten :String;
   end;
 
 function FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans;
@@ -153,53 +189,65 @@ begin
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.BTampil_PembClick(Sender: TObject);
+var vkategori:string;
 begin
+  vkategori:='';
   MemPembelian.EmptyTable;
   MemPembelian.Active:=false;
-  MemPembelian.Active:=true;
-  with dm.qtemp do
+  Qdetail_Pembelian.Close;
+  DBGridEh1.StartLoadingStatus();
+  if cbkategori.Text<>'' then
   begin
-    close;
-    sql.clear;
-    sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn, '+
-    ' status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk, '+
-    ' tgl,bln,approved_status approval_status,trans_date, stat_balance from ('+
-    //Pembelian
-    ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
-    ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
-    ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
-    ' left join t_ak_account_sub c on a.account_code=c.account_code2 '+
-    ' left join t_ak_account_sub d on a.account_um_code=d.account_code2 '+
-    ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
-    ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY approved_status,trans_no) g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
-    //Retur Pembelian
-    ' UNION ALL ' +
-    ' select '''' AS status_app,a.return_no,a.faktur_no,''0'' as sj_no, b.supplier_name,'+
-    ' f.price as subtotalrp,f.total_price as grandtotal, f.ppn_rp ppn, c.account_name, '+
-    ' d.account_name as nm_perk,to_char(a.return_date,''dd'') tgl,to_char(a.return_date,''mm'') bln,'+
-    ' g.approved_status,a.return_date from    t_purchase_return a '+
-    ' Left join t_supplier b on a.supplier_code=b.supplier_code  '+
-    ' left join t_ak_account_sub c on a.account_code=c.account_code2  '+
-    ' left join t_ak_account_sub d on a.account_code=d.account_code2  '+
-    ' left join t_purchase_return_det f on a.return_no=f.return_no  '+
-    ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY '+
-    ' approved_status,trans_no) g on a.return_no=g.trans_no'+
-    //' order by a.id desc'+
-    ') a '+
-    ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
-    ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
-    ' GROUP BY trans_no) a '+
-    ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
-    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
-    ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
-    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
-    ' on a.trans_no=cek_balance.jurnal_no'+
-    ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
-    ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name, '+
-    ' nm_perk,tgl,bln,approved_status,trans_date,stat_balance';
-    Execute;
+    vkategori:=' and purchase_type='+QuotedStr(cbkategori.Text)+'';
   end;
-  dm.Qtemp.First;
+      with QPembelian do
+    begin
+      close;
+      sql.clear;
+     { sql.text:='select sum(subtotalrp) subtot,sum(grandtotal) grandtot,sum(ppn) ppn, '+
+      ' status_app,trans_no,faktur_no,sj_no,supplier_name,account_name,nm_perk, '+
+      ' tgl,bln,approved_status approval_status,trans_date, stat_balance from ('+
+      //Pembelian
+      ' select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE''  END) AS status_app,a.trans_no,a.faktur_no,a.sj_no, b.supplier_name,f.subtotalrp,grandtotal,'+
+      ' f.ppn_rp+f.ppn_pembulatan ppn, c.account_name, d.account_name as nm_perk,to_char(a.trans_date,''dd'') tgl,to_char(a.trans_date,''mm'') bln,g.approved_status,a.trans_date from   '+
+      ' t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
+      ' left join t_ak_account_sub c on a.account_code=c.account_code2 '+
+      ' left join t_ak_account_sub d on a.account_um_code=d.account_code2 '+
+      ' left join t_purchase_invoice_det f on a.trans_no=f.trans_no '+
+      ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY approved_status,trans_no) g on a.trans_no=g.trans_no where a.deleted_at isnull  '+
+      //Retur Pembelian
+      ' UNION ALL ' +
+      ' select '''' AS status_app,a.return_no,a.faktur_no,''0'' as sj_no, b.supplier_name,'+
+      ' f.price as subtotalrp,f.total_price as grandtotal, f.ppn_rp ppn, c.account_name, '+
+      ' d.account_name as nm_perk,to_char(a.return_date,''dd'') tgl,to_char(a.return_date,''mm'') bln,'+
+      ' g.approved_status,a.return_date from    t_purchase_return a '+
+      ' Left join t_supplier b on a.supplier_code=b.supplier_code  '+
+      ' left join t_ak_account_sub c on a.account_code=c.account_code2  '+
+      ' left join t_ak_account_sub d on a.account_code=d.account_code2  '+
+      ' left join t_purchase_return_det f on a.return_no=f.return_no  '+
+      ' INNER JOIN (select approved_status,trans_no from t_general_ledger GROUP BY '+
+      ' approved_status,trans_no) g on a.return_no=g.trans_no'+
+      //' order by a.id desc'+
+      ') a '+
+      ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+      ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+      ' GROUP BY trans_no) a '+
+      ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+      ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+      ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+      ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+      ' on a.trans_no=cek_balance.jurnal_no'+
+      ' where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+'and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+''+
+      ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name, '+
+      ' nm_perk,tgl,bln,approved_status,trans_date,stat_balance';}
+      // update Ds 17-02-2026
+      SQL.Text:=' select  subtot,grandtot,ppn,status_app,cast(trans_no as varchar(100)) trans_no ,faktur_no,sj_no,supplier_name,account_name,'+
+                ' nm_perk,tgl,bln,approval_status,trans_date,stat_balance,purchase_type from v_app_purchase_invoice where '+
+                ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+''+
+                ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+'';
+      open;
+    end;
+  {dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
     MemPembelian.Insert;
@@ -215,21 +263,43 @@ begin
     MemPembelian['stat_balance']:=dm.Qtemp['stat_balance'];
     MemPembelian.Post;
     dm.Qtemp.Next;
-  end;
-  Qdetail_Pembelian.Close;
+  end;     }
+  MemPembelian.Active:=true;
   Qdetail_Pembelian.Open;
+  DBGridEh1.FinishLoadingStatus();
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.BTampil_PenjClick(Sender: TObject);
 begin
+  vKaresidenan:='';
+  vKabupaten:='';
+  vTP:='';
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else
+//  begin
+    if Edkd_kares.text<>'' then
+    begin
+      vKaresidenan:=' AND code_karesidenan='+QuotedStr(Edkd_kares.Text)+' ';
+    end;
+    if Edkd_kab.text<>'' then
+    begin
+      vKabupaten:=' AND code_kabupaten='+QuotedStr(edkd_kab.Text)+' ';
+    end;
+    if edkd_TP.text<>'' then
+    begin
+      vTP:=' AND code_tp='+QuotedStr(Edkd_tp.text)+' ';
+    end;
   MemPenjualan.EmptyTable;
   MemPenjualan.Active:=false;
-  MemPenjualan.Active:=true;
-  with dm.Qtemp do
+  Qdetail_Penjualan.Close;
+  DBGridEh2.StartLoadingStatus();
+  with Qpenjualan do
   begin
     close;
     sql.clear;
-    sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,'+
+   { sql.Text:='SELECT a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,'+
     ' "a".sub_total,"a".grand_tot,'+
     '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status, cek_balance.stat_balance '+
     ' FROM public.t_selling AS "a" '+
@@ -263,27 +333,37 @@ begin
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
     '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status,cek_balance.stat_balance '+
-    ' ORDER BY created_at DESC ';
-    Execute;
+    ' ORDER BY created_at DESC ';     }
+    sql.Text:='select x.created_at, x.faktur_no,cast(x.trans_no as varchar(100)) trans_no,x.pph_value,x.ppn,'+
+    ' x.subtot,x.grand_tot,x.name_cust,x.code_cust,x.trans_date,x.approval_status,x.stat_balance,x.code_karesidenan,'+
+    ' x.karesidenan,x.code_tp,x.tp,x.code_kecamatan,x.kecamatan, x.code_kabupaten,x.kabupaten'+
+    '  from "v_app_selling" x where x.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+''+
+    ' and x.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+vKaresidenan+vTP+vKabupaten;
+    ExecSQL;
   end;
-  dm.Qtemp.First;
-  while not dm.Qtemp.Eof do
+// qpenjualan.First;
+
+  Qpenjualan.FieldDefs.Update;
+  Qpenjualan.FieldDefs[0].DataType := ftString;
+  qpenjualan.open;
+  MemPenjualan.Active:=true;
+{  while not Qpenjualan.Eof do
   begin
     MemPenjualan.Insert;
-    MemPenjualan['trans_no']:=dm.Qtemp['trans_no'];
-    MemPenjualan['faktur_no']:=dm.Qtemp['no_inv_tax'];
-    MemPenjualan['name_cust']:=dm.Qtemp['name_cust'];
-    MemPenjualan['subtot']:=dm.Qtemp['sub_total'];
-    MemPenjualan['ppn']:=dm.Qtemp['ppn_value'];
-    MemPenjualan['grand_tot']:=dm.Qtemp['grand_tot'];
-    MemPenjualan['trans_date']:=dm.Qtemp['trans_date'];
-    MemPenjualan['approval_status']:=dm.Qtemp['approved_status'];
-    MemPenjualan['stat_balance']:=dm.Qtemp['stat_balance'];
+    MemPenjualan['trans_no']:=qpenjualan['trans_no'];
+    MemPenjualan['faktur_no']:=qpenjualan['faktur_no'];
+    MemPenjualan['name_cust']:=qpenjualan['name_cust'];
+    MemPenjualan['subtot']:=qpenjualan['subtot'];
+    MemPenjualan['ppn']:=qpenjualan['ppn'];
+    MemPenjualan['grand_tot']:=qpenjualan['grand_tot'];
+    MemPenjualan['trans_date']:=qpenjualan['trans_date'];
+    MemPenjualan['approval_status']:=qpenjualan['approval_status'];
+    MemPenjualan['stat_balance']:=qpenjualan['stat_balance'];
     MemPenjualan.Post;
     dm.Qtemp.Next;
-  end;
-  Qdetail_Penjualan.Close;
+  end;             }
   Qdetail_Penjualan.Open;
+  DBGridEh2.FinishLoadingStatus();
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.btApprovMemoClick(Sender: TObject);
@@ -422,6 +502,11 @@ begin
     Execute;
   end;
   module_id:=dm.Qtemp['id'];
+  if (dm.Qtemp['id']='3') or (dm.Qtemp['id']='4') then
+  begin
+     Pnwilayah.Visible:=true;
+  end else
+     Pnwilayah.Visible:=false;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.DBGridEh1AdvDrawDataCell(
@@ -439,7 +524,6 @@ begin
 
   F := DS.FindField('stat_balance');
   if F = nil then Exit;
-
   if F.AsInteger <> 0 then
     Params.Font.Color := clRed;
 end;
@@ -459,7 +543,6 @@ begin
 
   F := DS.FindField('stat_balance');
   if F = nil then Exit;
-
   if F.AsInteger <> 0 then
     Params.Font.Color := clRed;
 end;
@@ -480,7 +563,6 @@ begin
 
   F := DS.FindField('stat_balance');
   if F = nil then Exit;
-
   if F.AsInteger <> 0 then
     Params.Font.Color := clRed;
 end;
@@ -501,16 +583,72 @@ begin
 
   F := DS.FindField('stat_balance');
   if F = nil then Exit;
-
   if F.AsInteger <> 0 then
     Params.Font.Color := clRed;
 end;
 
 
-procedure TFPengajuan_AppJurnal_Trans.EdkodewilayahButtonClick(Sender: TObject);
+procedure TFPengajuan_AppJurnal_Trans.ednm_kab2ButtonClick(Sender: TObject);
 begin
-  FMasterWilayah.vcall:='m_jurnalPenj';
-  FMasterWilayah.Showmodal;
+ FMasterData.Caption:='Master Data Kabupaten';
+  FMasterData.vcall:='apppenjualan_kab2';
+  if (Edkd_kares2.text<>'') AND (Edkd_tp2.text='') then
+  begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(Edkd_kares2.text)+'');
+    FMasterData.ShowModal;
+  end else if (Edkd_kares2.text='') AND (Edkd_tp2.text<>'') then begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(Edkd_tp2.Text)+'');
+    FMasterData.ShowModal;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.Ednm_kabButtonClick(Sender: TObject);
+begin
+{  FMasterWilayah.vcall:='m_jurnalPenj';
+  FMasterWilayah.Showmodal; }
+  FMasterData.Caption:='Master Data Kabupaten';
+  FMasterData.vcall:='apppenjualan_kab';
+  if (Edkd_kares.text<>'') AND (Edkd_tp.text='') then
+  begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_karesidenan='+QuotedStr(Edkd_kares.text)+'');
+    FMasterData.ShowModal;
+  end else if (Edkd_kares.text='') AND (Edkd_tp.text<>'') then begin
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(Edkd_tp.Text)+'');
+    FMasterData.ShowModal;
+  end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.Ednm_kares2ButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='apppenjualan_kr2';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.ednm_karesButtonClick(
+  Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='apppenjualan_kr';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.ednm_tp2ButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='apppenjualan_tp2';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.Ednm_tpButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data TP';
+  FMasterData.vcall:='apppenjualan_tp';
+  FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.FormClose(Sender: TObject;
@@ -560,6 +698,19 @@ begin
     dm.Qtemp.Next;
   end;
   module_id:='';
+  with dm.qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select DISTINCT type from t_item_type order by type';
+    Execute;
+  end;
+  dm.Qtemp.First;
+  while not dm.Qtemp.eof do
+  begin
+    cbkategori.items.add(dm.Qtemp['type']);
+    dm.Qtemp.Next;
+  end;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.MemKasAfterPost(DataSet: TDataSet);
@@ -628,6 +779,15 @@ begin
   end;
 end;
 
+procedure TFPengajuan_AppJurnal_Trans.MemPembelianAfterScroll(
+  DataSet: TDataSet);
+begin
+ { QDetail_Penjualan.Close;
+  QDetail_Penjualan.ParamByName('trans_no').AsString :=
+  MemPenjualan.FieldByName('trans_no').AsString;
+  QDetail_Penjualan.Open;}
+end;
+
 procedure TFPengajuan_AppJurnal_Trans.MemPenjualanAfterPost(DataSet: TDataSet);
 begin
   if MemPenjualan.FieldByName('approval_status').AsBoolean then
@@ -648,6 +808,13 @@ begin
 //      end;
     end;
   end;
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.Qpenjualantrans_noGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+ // text:=//Qpenjualantrans_no.AsString,255;
+  //Copy(Qpenjualantrans_no.AsString, 1, 200);
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.RzBitBtn11Click(Sender: TObject);
@@ -728,6 +895,16 @@ begin
     //  SetMemo(Rpt,'MPT',' '+SBU+' ');
       //SetMemo(Rpt,'MPeriode',' '++' Rupiah ');
     FRpt_Jurnal_Khusus.Rpt.ShowReport();
+end;
+
+procedure TFPengajuan_AppJurnal_Trans.RzBitBtn1Click(Sender: TObject);
+begin
+  Edkd_kab.Clear;
+  Edkd_kares.Clear;
+  Edkd_tp.Clear;
+  Ednm_kab.Clear;
+  ednm_kares.Clear;
+  Ednm_tp.Clear;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.BApp_PenjClick(Sender: TObject);
@@ -892,14 +1069,34 @@ end;
 
 procedure TFPengajuan_AppJurnal_Trans.Btampil_kasClick(Sender: TObject);
 begin
+  vKaresidenan:='';
+  vKabupaten:='';
+  vTP:='';
+//  if edKaresidenan.EditValue='' then
+//  begin
+//    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
+//  end else
+//  begin
+    if Edkd_kares.text<>'' then
+    begin
+      vKaresidenan:=' AND code_karesidenan='+QuotedStr(Edkd_kares2.Text)+' ';
+    end;
+    if Edkd_kab.text<>'' then
+    begin
+      vKabupaten:=' AND code_kabupaten='+QuotedStr(edkd_kab2.Text)+' ';
+    end;
+    if edkd_TP.text<>'' then
+    begin
+      vTP:=' AND code_tp='+QuotedStr(Edkd_tp2.text)+' ';
+    end;
+  DBGridEh5.StartLoadingStatus();
   MemKas.EmptyTable;
   MemKas.Close;
-  MemKas.Open;
-  with dm.Qtemp do
+  with Qkas do
   begin
     close;
     sql.Clear;
-    sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,'+
+  {  sql.Text:='SELECT	a.voucher_no,a.trans_date,a.created_at,a.paid_amount,a.description,'+
     ' b.approved_status,b.module_id, cek_balance.stat_balance '+
     ' FROM	(select voucher_no,trans_date,created_at,paid_amount,description,deleted_at from t_cash_bank_acceptance   '+
     ' UNION select voucher_no,trans_date,created_at,amount,to_ ,deleted_at from t_cash_bank_expenditure'+
@@ -909,18 +1106,24 @@ begin
     ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
     ' GROUP BY trans_no) a '+
     ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
-    ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+    ' where status_dk=''D''  and deleted_at ISNULL GROUP BY trans_no) d on a.trans_no=d.trans_no '+
     ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
-    ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+    ' where status_dk=''K''  and deleted_at ISNULL GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
     ' on a.voucher_no=cek_balance.jurnal_no'+
     ' where "a".deleted_at IS NULL and b.module_id= '+quotedstr(module_id)+' and '+
     ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+'and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, '+
     ' a.description,b.approved_status,b.module_id, cek_balance.stat_balance'+
-    ' ORDER BY "a".created_at DESC ';
+    ' ORDER BY "a".created_at DESC ';    }
+    sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
+    ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
+    ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
+    ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
+    ' '+vKaresidenan+vtp+vKabupaten+'';                             // cr ds 19-02-2026
     execute;
   end;
-  dm.Qtemp.First;
+  MemKas.Open;
+  {dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
     Memkas.Insert;
@@ -933,9 +1136,10 @@ begin
     Memkas['stat_balance']:=dm.Qtemp['stat_balance'];
     Memkas.Post;
     dm.Qtemp.Next;
-  end;
+  end;       }
   QDetail_kas.Close;
   QDetail_kas.Open;
+  DBGridEh5.FinishLoadingStatus();
 end;
 
 initialization

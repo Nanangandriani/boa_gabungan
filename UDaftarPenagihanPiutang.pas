@@ -159,7 +159,6 @@ begin
                  mtWarning, [mbOK], 0);
       Exit;
     end;
-
     FDataPenerimaanBank.MemDetailPiutang.Edit;
     try
       FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']       := MemDetailPiutang['tglfaktur'];
@@ -171,7 +170,6 @@ begin
       FDataPenerimaanBank.MemDetailPiutang['id_dpp']          := MemDetailPiutang['id_dpp'];
       FDataPenerimaanBank.MemDetailPiutang.Post;
       Close;
-
     except
       on E: Exception do
       begin
@@ -213,7 +211,12 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='SELECT * from get_dpp_cash_bank_acceptance('+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+')';
+      if FDataPenerimaanBank.edKodeJenisBayar.Text='3' then
+      begin
+      sql.Text:='SELECT a.* from get_dpp_cash_bank_acceptance('+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+') a INNER JOIN t_register_cek b on b.id_dpp=a.id';
+      end else begin
+        sql.Text:='SELECT * from get_dpp_cash_bank_acceptance('+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+')';
+      end;
 
       {sql.add('SELECT DISTINCT a.id,a.date_trans,a.date_dpp,a.no_invoice,a.no_invoice_tax,'+
               'a.code_cust,b.customer_name,a.paid_amount from t_dpp  a '+

@@ -1603,7 +1603,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 46041.603501481480000000
+    ReportOptions.LastChange = 46041.603501481500000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

@@ -234,7 +234,7 @@ object FListDo: TFListDo
     object Label1: TLabel
       Left = 31
       Top = 18
-      Width = 73
+      Width = 74
       Height = 15
       Caption = 'Tanggal DO   :'
     end

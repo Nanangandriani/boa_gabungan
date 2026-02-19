@@ -510,8 +510,11 @@ begin
     hjual:=Dm.Qtemp3.fieldbyname('HARGAJUAL').asfloat;
     disc:=Dm.Qtemp3.fieldbyname('disc2').asfloat;
     stat_klasifikasi:=Dm.Qtemp3.fieldbyname('stat_klasifikasi').asfloat;
-  end;
 
+//    ShowMessage('Non Grouping '+FloattoStr(disc1));
+//    ShowMessage('Non Grouping '+FloattoStr(disc2));
+  end;
+//  ShowMessage('Status Pajak '+Inttostr(stat_fp));
   stat_fp:=stat_fp;
   qty:=jumlah_item;
 
@@ -530,6 +533,7 @@ begin
   begin
     bruto:=hjual*qty;
     //ndisc:=diskon*qty;
+//    ShowMessage('stat_klasifikasi '+Floattostr(stat_klasifikasi));
     if stat_klasifikasi=0 then //BACA KLASIFIKASI
     begin
       ndisc:=diskon*qty;
@@ -640,6 +644,7 @@ begin
   end
   else
   begin
+//    ShowMessage('non tax');
     bruto:=hjual*qty;
     //ndisc:=diskon*qty;
     if stat_klasifikasi=0 then
@@ -647,6 +652,7 @@ begin
       ndisc:=diskon*qty;
     end;
     dpp:=RoundTo(((hjual-(diskon/qty)))*qty,-2);
+//    ShowMessage('non tax'+Floattostr(dpp));
     //   dpp:=round(hjual*qty);
 
     ppn:=0;

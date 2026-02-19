@@ -767,7 +767,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object Bdaftar: TRzBitBtn
       Left = 645
-      Top = 93
+      Top = 64
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'
@@ -993,6 +993,6 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
   object DSRencana: TDataSource
     DataSet = MemRencana
     Left = 760
-    Top = 288
+    Top = 304
   end
 end

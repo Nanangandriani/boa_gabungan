@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, RzButton, Vcl.ExtCtrls,
-  MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs;
+  MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, Vcl.StdCtrls,
+  Vcl.Mask, RzEdit, RzBtnEdt, RzPanel, RzLabel;
 
 type
   TFDaftarTagihan = class(TForm)
@@ -27,14 +28,30 @@ type
     MemDetailPiutangcode_cust: TStringField;
     MemDetailPiutangname_cust: TStringField;
     MemDetailPiutangcustomer_name_pkp: TStringField;
+    MemDetailPiutangkabupaten: TStringField;
+    RzPanel1: TRzPanel;
+    edKaresidenan: TRzButtonEdit;
+    edKabupaten: TRzButtonEdit;
+    edKecamatan: TRzButtonEdit;
+    RzLabel1: TRzLabel;
+    RzLabel2: TRzLabel;
+    RzLabel3: TRzLabel;
+    RzButton1: TRzButton;
+    MemDetailPiutangkecamatan: TStringField;
     procedure BSaveClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure edKaresidenanButtonClick(Sender: TObject);
+    procedure edKabupatenButtonClick(Sender: TObject);
+    procedure edKecamatanButtonClick(Sender: TObject);
+    procedure edKaresidenanChange(Sender: TObject);
+    procedure edKabupatenChange(Sender: TObject);
+    procedure RzButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
-    kd_outlet, vcall: string;
+    kd_outlet, vcall,strKdKaresidenan,strKdKabupaten,strKdKecamatan: string;
     Status: Integer;
     periode1, periode2: TDate;
     { Public declarations }
@@ -52,7 +69,7 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UDataPenerimaanBank, UDataRencanaLunasPiutang,
-  UDataPenagihanPiutang;
+  UDataPenagihanPiutang, UMasterData;
 
 procedure TFDaftarTagihan.ProsesRencanaLunasPiutang;
 var
@@ -340,7 +357,6 @@ begin
                mtInformation, [mbOK], 0);
     Exit;
   end;
-
   FDataPenerimaanBank.MemDetailPiutang.Edit;
   try
     FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']       := MemDetailPiutang['tgl_faktur'];
@@ -361,6 +377,63 @@ begin
 end;
 end;
 
+procedure TFDaftarTagihan.edKabupatenButtonClick(Sender: TObject);
+begin
+  if edKaresidenan.Text<>'' then
+  begin
+    FMasterData.Caption:='Master Data Kabupaten';
+    FMasterData.vcall:='daftartagihan_kabupaten';
+    FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL AND code_karesidenan='+QuotedStr(strKdKaresidenan)+'');
+    FMasterData.ShowModal;
+  end else
+  begin
+    MessageDlg('Karesidenan wajib di isi..!!',mtInformation,[mbRetry],0);
+  end;
+end;
+
+procedure TFDaftarTagihan.edKabupatenChange(Sender: TObject);
+begin
+  if edKabupaten.Text='' then
+  begin
+    edKecamatan.Text:='';
+    strKdKecamatan:='';
+    strKdKabupaten:='';
+  end;
+end;
+
+procedure TFDaftarTagihan.edKaresidenanButtonClick(Sender: TObject);
+begin
+  FMasterData.Caption:='Master Data Karesidenan';
+  FMasterData.vcall:='daftartagihan_kares';
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.ShowModal;
+end;
+
+procedure TFDaftarTagihan.edKaresidenanChange(Sender: TObject);
+begin
+  if edKaresidenan.Text='' then
+  begin
+    edKabupaten.Text:='';
+    strKdKabupaten:='';
+    edKecamatan.Text:='';
+    strKdKecamatan:='';
+    strKdKaresidenan:='';
+  end;
+end;
+
+procedure TFDaftarTagihan.edKecamatanButtonClick(Sender: TObject);
+begin
+  if edKabupaten.Text='' then
+  begin
+    MessageDlg('Kabupaten wajib diisi ..!!',mtInformation,[mbRetry],0);
+  end else begin
+    FMasterData.Caption:='Master Data Kecamatan';
+    FMasterData.vcall:='daftartagihan_kecamatan';
+    FMasterData.update_grid('code','name','description','t_region_subdistrict','WHERE	deleted_at IS NULL and code_regency='+QuotedStr(strKdKabupaten)+' ');
+    FMasterData.ShowModal;
+  end;
+end;
+
 procedure TFDaftarTagihan.FormShow(Sender: TObject);
 begin
   if vcall='edit_terima_bank' then
@@ -372,24 +445,44 @@ begin
     Panel2.Visible:=True;
   end;
 
+  if vcall='dpp' then RzPanel1.Visible:=True else RzPanel1.Visible:=False;
+
+
 end;
 
 procedure TFDaftarTagihan.RefreshGrid;
 var
 URUTAN_KE : Integer;
+strWhereKaresidenan,strWhereKabupaten,strWhereKecamatan:String;
 begin
   if vcall='dpp' then
   begin
-
+    strWhereKaresidenan:='';
+    strWhereKabupaten:='';
+    strWhereKecamatan:='';
+    if edKaresidenan.Text<>'' then
+    begin
+      strWhereKaresidenan:=' AND code_karesidenan='+QuotedStr(strKdKaresidenan)+' ';
+    end;
+    if edKabupaten.Text<>'' then
+    begin
+      strWhereKabupaten:=' AND code_kabupaten='+QuotedStr(strKdKabupaten)+' ';
+    end;
+    if edKecamatan.Text<>'' then
+    begin
+      strWhereKecamatan:=' AND code_kecamatan='+QuotedStr(strKdKecamatan)+' ';
+    end;
     with Dm.Qtemp do
     begin
       close;
       sql.clear;
-      sql.Text:='select code_cust,name_cust,customer_name_pkp,trans_no no_trans,trans_date date_trans,date_tempo,no_inv_tax,sisa_piutang total_receivables,code_kabupaten '+
+      sql.Text:='select code_cust,name_cust,customer_name_pkp,trans_no no_trans,trans_date date_trans,date_tempo,no_inv_tax,sisa_piutang total_receivables,code_kabupaten,kabupaten,code_kecamatan,kecamatan '+
                 'from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',FDataPenagihanPiutang.dtTagih.Date))+') '+
                 'where '+
 //                code_cust='+QuotedStr(kd_outlet)+' and
-                'code_kabupaten='+QuotedStr(FDataPenagihanPiutang.strKabupatenID)+' AND no_inv_tax is not null and no_inv_tax<>'''' AND sisa_piutang>0 order by name_cust asc, trans_no desc  ';
+//                'code_kabupaten='+QuotedStr(FDataPenagihanPiutang.strKabupatenID)+' AND
+                'no_inv_tax is not null and no_inv_tax<>'''' AND sisa_piutang>0 '+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+
+                'order by (kabupaten='+QuotedStr(FDataPenagihanPiutang.edKabupaten.Text)+') ASC,kabupaten DESC, name_cust DESC, trans_no ASC  ';
 //      sql.add(' SELECT * from ('+
 //              ' SELECT * '+
 //              ' FROM "public"."vget_piutang") a '+
@@ -401,6 +494,21 @@ begin
 
   if (vcall='terima_bank') OR (vcall='edit_terima_bank') then
   begin
+    strWhereKaresidenan:='';
+    strWhereKabupaten:='';
+    strWhereKecamatan:='';
+    if edKaresidenan.Text<>'' then
+    begin
+      strWhereKaresidenan:=' AND code_karesidenan='+QuotedStr(strKdKaresidenan)+' ';
+    end;
+    if edKabupaten.Text<>'' then
+    begin
+      strWhereKabupaten:=' AND code_kabupaten='+QuotedStr(strKdKabupaten)+' ';
+    end;
+    if edKecamatan.Text<>'' then
+    begin
+      strWhereKecamatan:=' AND code_kecamatan='+QuotedStr(strKdKecamatan)+' ';
+    end;
     with Dm.Qtemp do
     begin
       close;
@@ -410,8 +518,8 @@ begin
 //              ' FROM "public"."vget_piutang") a '+
 //              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' '+
 //              ' ORDER BY date_tempo desc');
-      sql.Text:='select  code_cust,name_cust,customer_name_pkp,trans_date date_trans,trans_no no_trans,no_inv_tax,sisa_piutang total_receivables,date_tempo from get_piutang_invoice(NOW()::DATE) '+
-                'where code_cust='+QuotedStr(kd_outlet)+' AND sisa_piutang>0 ORDER BY date_tempo desc';
+      sql.Text:='select  code_cust,name_cust,customer_name_pkp,trans_date date_trans,trans_no no_trans,no_inv_tax,sisa_piutang total_receivables,date_tempo,kabupaten,kecamatan from get_piutang_invoice(NOW()::DATE) '+
+                'where code_cust='+QuotedStr(kd_outlet)+' AND sisa_piutang>0'+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+' ORDER BY date_tempo desc';
       open;
     end;
   end;
@@ -457,6 +565,8 @@ begin
         FDaftarTagihan.MemDetailPiutang['code_cust']:=Dm.Qtemp.FieldByName('code_cust').AsString;
         FDaftarTagihan.MemDetailPiutang['name_cust']:=Dm.Qtemp.FieldByName('name_cust').AsString;
         FDaftarTagihan.MemDetailPiutang['customer_name_pkp']:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
+        FDaftarTagihan.MemDetailPiutang['kabupaten']:=Dm.Qtemp.FieldByName('kabupaten').AsString;
+        FDaftarTagihan.MemDetailPiutang['kecamatan']:=Dm.Qtemp.FieldByName('kecamatan').AsString;
        end;
 
        FDaftarTagihan.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
@@ -471,5 +581,10 @@ begin
     end;
 end;
 
+
+procedure TFDaftarTagihan.RzButton1Click(Sender: TObject);
+begin
+  RefreshGrid;
+end;
 
 end.

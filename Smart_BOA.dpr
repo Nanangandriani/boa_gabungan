@@ -347,7 +347,14 @@ uses
   UListItemSo in 'UListItemSo.pas' {FlistItemSo},
   UDaftarPenggunaanFakturPajak in 'UDaftarPenggunaanFakturPajak.pas' {FDaftarPenggunaanFakturPajak},
   UBatalTransaksi in 'UBatalTransaksi.pas' {FBatalTransaksi},
-  UDaftar_UM_Pemb in 'UDaftar_UM_Pemb.pas' {FDaftar_UM_Pemb};
+  UDaftar_UM_Pemb in 'UDaftar_UM_Pemb.pas' {FDaftar_UM_Pemb},
+  UCetak_POkoletif in 'UCetak_POkoletif.pas' {FCetak_POKolektif},
+  UCetak_LPBKolektif in 'UCetak_LPBKolektif.pas' {FCetak_LPbKolektif},
+  UbrowseListPenjualan in 'UbrowseListPenjualan.pas' {FbrowseListPenjualan},
+  URegisterCekMundur in 'URegisterCekMundur.pas' {FRegisterCekMundur},
+  URpt_BukuHarianReturPembelian in 'URpt_BukuHarianReturPembelian.pas' {FBuku_HarianReturPembelian},
+  UKelompokBiayaWilayah in 'UKelompokBiayaWilayah.pas' {FKelompokBiayaWilayah},
+  UListKelompokBiayaWilayah in 'UListKelompokBiayaWilayah.pas' {FListKelompokBiayaWilayah};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -526,6 +533,13 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFlistItemSo, FlistItemSo);
   Application.CreateForm(TFBatalTransaksi, FBatalTransaksi);
   Application.CreateForm(TFDaftar_UM_Pemb, FDaftar_UM_Pemb);
+  Application.CreateForm(TFCetak_POKolektif, FCetak_POKolektif);
+  Application.CreateForm(TFCetak_LPbKolektif, FCetak_LPbKolektif);
+  Application.CreateForm(TFbrowseListPenjualan, FbrowseListPenjualan);
+  Application.CreateForm(TFBuku_HarianReturPembelian, FBuku_HarianReturPembelian);
+  Application.CreateForm(TFKelompokBiayaWilayah, FKelompokBiayaWilayah);
+  Application.CreateForm(TFListKelompokBiayaWilayah, FListKelompokBiayaWilayah);
+  //  Application.CreateForm(TFRegisterCekMundur, FRegisterCekMundur);
   //  Application.CreateForm(TFDaftarPenggunaanFakturPajak, FDaftarPenggunaanFakturPajak);
   FHomeSreen.Hide;
   FHomeSreen.Free;
