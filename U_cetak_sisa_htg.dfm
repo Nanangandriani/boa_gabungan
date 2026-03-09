@@ -123,7 +123,6 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1044
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -2464,7 +2463,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   end
   object ActMenu: TActionManager
     Left = 1008
-    Top = 32
+    Top = 144
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -2509,7 +2508,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 1022
-    Top = 32
+    Top = 144
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -2582,6 +2581,10 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         item
           Visible = True
           ItemName = 'dxBarLargeButton4'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton6'
         end>
       OneOnRow = True
       Row = 0
@@ -3390,6 +3393,56 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
       Category = 0
       Visible = ivAlways
     end
+    object dxBarLargeButton6: TdxBarLargeButton
+      Caption = 'Berita Acara Hutang'
+      Category = 0
+      Hint = 'Berita Acara Hutang'
+      Visible = ivNever
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F4000004DC49444154785E95565D88555514FEF63EF7CE383A334A1395106809
+        5194155A241441249AD98FF62208D98B3F28DA0F3933A09695485358F6346109
+        5186F5982195D2938104E9432F6121680FFDC080A6A532F79CFDAD3CEB2CCEBE
+        C7EB65EE5D87C5DA7B9F73F9D6FABEB5D8D78908CCE09CC3F56CE8B1518D977E
+        3DE2E13C9219430EBE06DFD3EFB28B7FF0CAD9E382AA09DA98E195566B03EE9A
+        E3859307DC91D90387FC00960B05E4458420986CE0C82A377B25800CD12419BA
+        537CFF4D92FE7E8C98C26A6835F7EED767886820057E74196EDFBC1912029805
+        48C870EAC3F1A5A363FB2F27B504220041FCF9F7B9DD9FEC1979DBF70DA5F539
+        8F666BB6EE2129C8FDD357167596401E869F9E0B330412C74644C1CF1F3F0EA6
+        A97A08C4AB57BFEB9FDE0B338C1CF865FBEA1777F77CF1F1DE31D73B78F9B33D
+        C38DD52FBF43CAF555F1ADE0D1C49C923BC12C2BC125CD4006A4814849347249
+        32A25EF378E8EE5B87573EBFF17597F40EFAE943BD073F18F542762E8188B434
+        0E494816C0460A662924CB90056A2F401C44A0EE1387C5F36F04202F65D93A7F
+        F8CBFD636EDACC0B9F6F7DF83200E92C01548D220814088D812C553902A9EF14
+        DC1E06C1DC9B67603180461AB634D2176A470F1D1C033009203897D7276D2488
+        88D52D0B06980603CF94814022134B02000B50D413AF493CB9E0163C72FFBC8D
+        8F2F5FB51D402F8004809B92010A5A12080C1006055629181042005502EB1802
+        13E7FEC39ABD3F16490B21040666DDB07EC56B87CF7FB5EBA93700D058689B80
+        52D99A804E8156CF408D81B4F10384457C7FED025C69141322AED053E0F0DEA1
+        D3A300760348BB6A42B109602818F867624213189C391359082A8D80A0381082
+        2471983EAD07B4AEA400246053E0A792C05525D085767A46E2AF1327C165CFA9
+        1CFFFEF0BD82D3BA1F10534174AF875206500FE1BB1A43D1F152411474F29E85
+        58B86D9BCAF1D39B029E3A0538577EA71EB141C0CECB04D0490210B1A80F50AF
+        2798BD7E13EE1A1EC1405F9F023DB073277EAE7B4CEBA9E9DEC6313A60E7B077
+        91E1CE7B400AEFADD5B070C70E244902EF9CEA3DD8DF87456FED42E25D1CC302
+        D012A882B3D0D5752341A9AFF30E3DBE564C8395E71DD0534F4A7A8525B04962
+        F49731266051DA3721A522C14747CF2A5020ADF1040C792CF6C16E3B3D670009
+        3DDFB2623EC41913ECBC070C366AB976C91CADD0A8B675ECF8C88280463DEC9C
+        741021049D4B10195040877DDF9D0125561A4888566E6C3433432929DFFCEC7D
+        9586ECB8094963028596EB96DCA6C91065B5B1725AE3C124B8567B6389822E18
+        881228F0F8B7A7215639C52AA798B35235CD9133F0CCBD10675275D503524D60
+        C3D279B1E272BE6395A188D603888C10EA5509A2B59D02CB16142AC8F837BF15
+        DA8700DA3488441628B404AA17D9C6AB0CC024EB4E822A5DD8F0C41D5A46002D
+        31672C54D920351A23F63ED2DA4D0FA009A8D8C5FBA6021AAB2BF711B5E55C6D
+        EA29B08689DD4C23D62A32F01895E6F85DD43C4E04D095049A6D954661756F00
+        F1CCBC4C4C1F57B919D53A6B429614DA1C9BDB1A0EACECE33A46ED93082EEC88
+        0131056C67D4C3C60A0EE2AAB71EA43541F5086EEC019DFE2DCF28C486F113B1
+        2273DA3E6659BD7E21CD8D27808B49993500B05D02CE5E4EEEDBF4E02C007500
+        49E5BDC58ECEAA6B1AF82500A1ED1F5077D50CC05B74686F0EDD190D5C2482E2
+        7F5631F6D30A05E4E60000000049454E44AE426082}
+      OnClick = dxBarLargeButton6Click
+    end
   end
   object frxDBDataset4: TfrxDBDataset
     UserName = 'frxDBDataset4'
@@ -3430,14 +3483,14 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     BCDToCurrency = False
     DataSetOptions = []
     Left = 976
-    Top = 32
+    Top = 144
   end
   object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
     Left = 936
-    Top = 32
+    Top = 144
   end
   object QCetakRincianFaktur: TUniQuery
     Connection = dm.Koneksi
@@ -3535,5 +3588,595 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     DataSet = QCetakRincianFaktur
     Left = 600
     Top = 376
+  end
+  object QBeritaAcara: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select jj.kodesup,jj.namasup,jj.saldo_awal_tahun+jj.kredit -jj.d' +
+        'ebit-jj.debit_do-jj.debit_retur-jj.nilai_pot sisa_hutang from (s' +
+        'elect a.supplier_code as kodesup,a.supplier_name as namasup,case' +
+        ' when saldo_awal.initial_balance is null then 0 else saldo_awal.' +
+        'initial_balance end saldo_awal_tahun,(case when x.nilai is null ' +
+        'then 0 else x.nilai end)kredit, (case when y.nilai is null then ' +
+        '0 else y.nilai end)debit,(case when debit_do.nilai is null then ' +
+        '0 else debit_do.nilai end)debit_do, (case when z.nilai is null t' +
+        'hen 0 else z.nilai end)debit_retur, (case when xx.nilai_pot is n' +
+        'ull then 0 else xx.nilai_pot end)nilai_pot from (select * from t' +
+        '_supplier a LEFT JOIN t_item_type b on a.header_code=b.acc_code_' +
+        'pemb where type='#39'AKTIVA'#39' )a left join (select kodesup,sum(nilai)' +
+        '-sum(nilai_um) as nilai from (select a.*,(case when b.nilai_um i' +
+        's null then 0 else b.nilai_um end)nilai_um from  (select a.suppl' +
+        'ier_code as kodesup,b.po_no,(case when a.valas='#39'USD'#39' then sum(ni' +
+        'lai*valas_value) else sum(nilai) end)nilai from (select * from t' +
+        '_purchase_invoice a INNER JOIN v_ak_account b on a.account_code=' +
+        'b.account_code2 where b.code in(SELECT account_code FROM t_asset' +
+        '_payable_account)and  trans_date  between '#39'2026-01-01'#39' and '#39'2026' +
+        '-02-23'#39' )a left join (select trans_no,po_no,stock_code as kode,q' +
+        'ty,unit as jumlah,grandtotal as nilai, 0 as urutan from t_purcha' +
+        'se_invoice_det )b on a.trans_no=b.trans_no  group by kodesup,b.p' +
+        'o_no,a.valas)a left join(select po_no,supplier_code,sum(um_value' +
+        ')as nilai_um from t_po where um_status=true and po_date<='#39'2026-0' +
+        '2-24'#39' group by po_no,supplier_code order by po_no,supplier_code)' +
+        'b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x group by ko' +
+        'desup )x on a.supplier_code=x.kodesup left join(select supplier_' +
+        'code as kodesup,sum(bayar) as nilai from(select a.voucher_no,a.s' +
+        'upplier_code,a.bayar,(case when b.saldo is null then 0 else b.sa' +
+        'ldo end)nilai_kredit from (select voucher_no,supplier_code,sum(p' +
+        'aid_amount)as bayar,b.code from t_cash_bank_expenditure_payable ' +
+        'a INNER JOIN v_ak_account b on a.account_acc= b.account_code2  w' +
+        'here b.code in(SELECT account_code FROM t_asset_payable_account)' +
+        ' and a.trans_date between '#39'2026-01-01'#39' and '#39'2026-02-24'#39' group by' +
+        ' voucher_no,supplier_code,b.code order by voucher_no,supplier_co' +
+        'de,b.code)a left join (select voucher,sum(saldo)as saldo from t_' +
+        'credit_trx_real where account_code<>'#39'2130.02'#39' group by voucher o' +
+        'rder by voucher)b '#9'on a.voucher_no=b.voucher)x group by supplier' +
+        '_code order by supplier_code)y on a.supplier_code=y.kodesup left' +
+        ' join(select b.supplier_code as kodesup,(case when b.valas='#39'USD'#39 +
+        ' then sum(a.total_price*b.valas_value) else sum(a.total_price) e' +
+        'nd)nilai from t_purchase_return_det a INNER JOIN t_purchase_retu' +
+        'rn b on a.return_no=b.return_no left join t_purchase_invoice dd ' +
+        'on b.receive_no=dd.trans_no INNER JOIN v_ak_account ee on dd.acc' +
+        'ount_code= ee.account_code2 where a.return_no=b.return_no and re' +
+        'turn_date between '#39'2026-01-01'#39' and '#39'2026-02-24'#39' and ee.code in(S' +
+        'ELECT account_code FROM t_asset_payable_account) group by b.supp' +
+        'lier_code,b.valas order by b.supplier_code)z on a.supplier_code=' +
+        'z.kodesup left join(select bb.supplier_code,sum(bb.price_rp)+sum' +
+        '(bb.ppnrp)as nilai_pot from t_purchase_discount bb left join t_p' +
+        'urchase_invoice dd on bb.receive_no=dd.ref_no INNER JOIN v_ak_ac' +
+        'count ee ON dd.account_code= ee.account_code2 where bb.discount_' +
+        'date between '#39'2026-01-01'#39' and '#39'2026-02-24'#39' and ee.code in (SELEC' +
+        'T account_code FROM t_asset_payable_account) group by bb.supplie' +
+        'r_code order by bb.supplier_code)xx on a.supplier_code=xx.suppli' +
+        'er_code left join(select kodesup,sum(nilai)as nilai from (select' +
+        ' a.bk_no as noinv,  '#39#39' kodesup, b.tgltrans as tanggal,a.account_' +
+        'code as kode,a.remark,a.pay as nilai,a.urutan from (select vouch' +
+        'er_no ,bk_no ,account_code,remark,pay,4 as urutan from t_payment' +
+        '_detail_real where source_id=3 and account_code in (SELECT accou' +
+        'nt_code FROM t_asset_payable_account))a left join (select distin' +
+        'ct voucher_no,trans_date as tgltrans from (SELECT a.voucher_no,a' +
+        '.trans_date,b.code_account,b."position",c.code from t_cash_bank_' +
+        'expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.vouc' +
+        'her_no=b.no_voucher INNER JOIN v_ak_account c on b.code_account=' +
+        ' c.account_code2 )h where h.trans_date between '#39'2026-01-01'#39' and ' +
+        #39'2026-02-24'#39' and h.code in(SELECT account_code FROM t_asset_paya' +
+        'ble_account) and h.position='#39'D'#39')b on a.bk_no=b.voucher_no )x gro' +
+        'up by kodesup)debit_do on a.supplier_code=debit_do.kodesup left ' +
+        'join (select * from t_initial_balance_debt  a INNER JOIN v_ak_ac' +
+        'count b on a.debt_type=account_code2 where b.code in (SELECT acc' +
+        'ount_code FROM t_asset_payable_account) and year = (select to_ch' +
+        'ar(debt_date, '#39'YYYY'#39') from t_tmpsyst)::INTEGER) saldo_awal on sa' +
+        'ldo_awal.supplier_code= a.supplier_code) jj')
+    Left = 64
+    Top = 384
+    object QBeritaAcarakodesup: TStringField
+      FieldName = 'kodesup'
+      ReadOnly = True
+      Size = 10
+    end
+    object QBeritaAcaranamasup: TStringField
+      FieldName = 'namasup'
+      ReadOnly = True
+      Size = 100
+    end
+    object QBeritaAcarasisa_hutang: TFloatField
+      FieldName = 'sisa_hutang'
+      ReadOnly = True
+    end
+  end
+  object frxDBDBeritaAcara: TfrxDBDataset
+    UserName = 'frxDBDBeritaAcara'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'kodesup=kodesup'
+      'namasup=namasup'
+      'sisa_hutang=sisa_hutang')
+    DataSet = QBeritaAcara
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 192
+    Top = 384
+  end
+  object Report: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45870.419327546300000000
+    ReportOptions.LastChange = 46077.388155798610000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'function FormatTanggalIndo(dt: TDateTime): String;'
+      'var'
+      '  Hari: array[1..7] of String;'
+      '  Bulan: array[1..12] of String;'
+      'begin'
+      '  Hari[1] := '#39'Minggu'#39';'
+      '  Hari[2] := '#39'Senin'#39';'
+      '  Hari[3] := '#39'Selasa'#39';'
+      '  Hari[4] := '#39'Rabu'#39';'
+      '  Hari[5] := '#39'Kamis'#39';'
+      '  Hari[6] := '#39'Jumat'#39';'
+      '  Hari[7] := '#39'Sabtu'#39';'
+      ''
+      '  Bulan[1] := '#39'Januari'#39';'
+      '  Bulan[2] := '#39'Februari'#39';'
+      '  Bulan[3] := '#39'Maret'#39';'
+      '  Bulan[4] := '#39'April'#39';'
+      '  Bulan[5] := '#39'Mei'#39';'
+      '  Bulan[6] := '#39'Juni'#39';'
+      '  Bulan[7] := '#39'Juli'#39';'
+      '  Bulan[8] := '#39'Agustus'#39';'
+      '  Bulan[9] := '#39'September'#39';'
+      '  Bulan[10] := '#39'Oktober'#39';'
+      '  Bulan[11] := '#39'November'#39';'
+      '  Bulan[12] := '#39'Desember'#39';'
+      ''
+      '  Result := Hari[DayOfWeek(dt)] + '#39', '#39' +'
+      '            FormatDateTime('#39'dd'#39', dt) + '#39' '#39' +'
+      '            Bulan[StrToInt(FormatDateTime('#39'mm'#39', dt))] + '#39' '#39' +'
+      '            FormatDateTime('#39'yyyy'#39', dt);'
+      'end;'
+      ''
+      'begin'
+      '  // kosongkan jika tidak ada script onStart atau lainnya'
+      'end.')
+    Left = 128
+    Top = 328
+    Datasets = <
+      item
+        DataSet = frxDBDBeritaAcara
+        DataSetName = 'frxDBDBeritaAcara'
+      end>
+    Variables = <
+      item
+        Name = ' New Category1'
+        Value = Null
+      end
+      item
+        Name = 'nama_pt'
+        Value = Null
+      end
+      item
+        Name = 'tgl_now'
+        Value = Null
+      end
+      item
+        Name = 'waktu_now'
+        Value = Null
+      end
+      item
+        Name = 'tot_hutang'
+        Value = Null
+      end
+      item
+        Name = 'akun_hutang1'
+        Value = Null
+      end
+      item
+        Name = 'akun_hutang2'
+        Value = Null
+      end
+      item
+        Name = 'TanggalFilter'
+        Value = Null
+      end>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 249.448980000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Shape1: TfrxShapeView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Top = 211.653680000000000000
+          Width = 642.520100000000000000
+          Height = 37.795300000000000000
+          Frame.Typ = []
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 7.559060000000000000
+          Width = 710.551640000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'BERITA ACARA')
+          ParentFont = False
+        end
+        object akun_hutang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Top = 30.236240000000000000
+          Width = 710.551640000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -19
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'NAMA AKUN HUTANG')
+          ParentFont = False
+        end
+        object Rich1: TfrxRichView
+          AllowVectorExport = True
+          Left = 11.338590000000000000
+          Top = 60.472480000000000000
+          Width = 699.213050000000000000
+          Height = 151.181200000000000000
+          StretchMode = smMaxHeight
+          Frame.Typ = []
+          GapX = 2.000000000000000000
+          GapY = 1.000000000000000000
+          RichEdit = {
+            7B5C727466315C616E73695C616E7369637067313235325C64656666305C6E6F
+            7569636F6D7061745C6465666C616E67313033337B5C666F6E7474626C7B5C66
+            305C666E696C5C66636861727365743020417269616C3B7D7D0D0A7B5C2A5C67
+            656E657261746F722052696368656432302031302E302E32363130307D5C7669
+            65776B696E64345C756331200D0A5C706172645C667332342050616461206861
+            726920696E692074616E6767616C205B466F726D617454616E6767616C496E64
+            6F283C446174653E295D204A616D205B466F726D61744461746554696D652827
+            48483A6D6D3A7373272C3C54696D653E295D2042657274656D70617420646920
+            5B6E616D615F70745D5C7061720D0A54656C61682064696C616B73616E616B61
+            6E2070656E676563656B6B616E2074657268616461702073616C646F205B616B
+            756E5F687574616E67315D205C7061720D0A5C7061720D0A53616C646F204D65
+            6E75727574204B61727475205B616B756E5F687574616E67325D205065722074
+            616E6767616C205B466F726D617454616E6767616C496E646F283C54616E6767
+            616C46696C7465723E295D202020202020202052702E205B466F726D6174466C
+            6F61742827232C2323232C2323232C232323302E2323272C203C746F745F6875
+            74616E673E295D5C7061720D0A5C7061720D0A44656E67616E20506572696E63
+            69616E205365626167616920626572696B7574203A205C7061720D0A7D0D0A00}
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Top = 219.212740000000000000
+          Width = 64.252010000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nomor')
+          ParentFont = False
+        end
+        object Memo4: TfrxMemoView
+          AllowVectorExport = True
+          Left = 105.826840000000000000
+          Top = 219.212740000000000000
+          Width = 396.850650000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Nama Supplier')
+          ParentFont = False
+        end
+        object Memo5: TfrxMemoView
+          AllowVectorExport = True
+          Left = 506.457020000000000000
+          Top = 219.212740000000000000
+          Width = 173.858380000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo (Rp.)')
+          ParentFont = False
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Top = 211.653680000000000000
+          Height = 37.795300000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 504.457020000000000000
+          Top = 211.653680000000000000
+          Height = 37.795300000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 22.677180000000000000
+        Top = 328.819110000000000000
+        Width = 718.110700000000000000
+        DataSet = frxDBDBeritaAcara
+        DataSetName = 'frxDBDBeritaAcara'
+        RowCount = 0
+        Stretched = True
+        object frxDBDBeritaAcaraHutangprinciple_name: TfrxMemoView
+          AllowVectorExport = True
+          Left = 105.826840000000000000
+          Width = 396.850650000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDBeritaAcaraHutang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDBeritaAcara."namasup"]')
+          ParentFont = False
+        end
+        object frxDBDBeritaAcaraHutangtot_hutang: TfrxMemoView
+          AllowVectorExport = True
+          Left = 506.457020000000000000
+          Width = 170.078850000000000000
+          Height = 22.677180000000000000
+          DataSetName = 'frxDBDBeritaAcaraHutang'
+          DisplayFormat.FormatStr = '#,###,###,###0.00'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDBeritaAcara."sisa_hutang"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object SysMemo1: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Width = 64.252010000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[LINE#]')
+          ParentFont = False
+        end
+        object Line3: TfrxLineView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Left = 102.047310000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line5: TfrxLineView
+          AllowVectorExport = True
+          Left = 504.566929130000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 680.315400000000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Width = 642.520100000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 37.795300000000000000
+          Top = 22.677180000000000000
+          Width = 642.520100000000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 532.913730000000000000
+        Width = 718.110700000000000000
+      end
+      object ReportSummary1: TfrxReportSummary
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 98.267780000000000000
+        Top = 411.968770000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 105.826840000000000000
+          Top = 3.779530000000000000
+          Width = 188.976500000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Dibuat,')
+          ParentFont = False
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 105.826840000000000000
+          Top = 71.811070000000000000
+          Width = 188.976500000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '(________________________)')
+          ParentFont = False
+        end
+        object Memo7: TfrxMemoView
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Top = 3.779530000000000000
+          Width = 188.976500000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Diketahui,')
+          ParentFont = False
+        end
+        object Memo8: TfrxMemoView
+          AllowVectorExport = True
+          Left = 340.157700000000000000
+          Top = 71.811070000000000000
+          Width = 188.976500000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '(________________________)')
+          ParentFont = False
+        end
+        object SysMemo2: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 548.031850000000000000
+          Top = 3.779530000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[SUM(<frxDBDBeritaAcara."sisa_hutang">,MasterData1)]')
+          ParentFont = False
+        end
+      end
+    end
   end
 end

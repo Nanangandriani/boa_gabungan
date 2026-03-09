@@ -568,180 +568,264 @@ begin
 
 end;
 
-procedure TFMainMenu.CreateSubMenu(Role,Menu:String);
-var TotalHeightNeeded: Integer;
+procedure TFMainMenu.CreateSubMenu(Role, Menu: String);
+var
+  CurrentMenuName: string;
+  RecordCountForPanel: Integer;
+  ACategoryPanel: TCategoryPanel;
+  AButtonPanel: TRzButton;
 begin
-  TotalHeightNeeded := 0;
-   {with dm.Qtemp1 do
-   begin
-       SQL.Clear;
-       SQL.Text :=' SELECT DISTINCT cc.id, cc.menu FROM penjualan.t_akses aa  '+
-                  ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu '+
-                  ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
-                  ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama  '+
-                  ' WHERE dd.akses='+QuotedStr('Admin')+'  and cc.menu='+QuotedStr(Menu)+
-                  ' Order by cc.id DESC ';
-       open;
-       First;
-   end;
-   //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
-   TCategoryPanelGroup.Create(nil);
-   CategoryPanelUtama.Create(nil);
-   ClearCategoryPanelGroup;
-   //CategoryPanelUtama.Parent := SplitView1;
-   CategoryPanelUtama.Width:=250;
-   TRzTreeView.Create(nil);
-   Treeview1.Create(nil);
-   Cleartreview;
-   Treeview1.Width:=250;
-   while not dm.Qtemp1.Eof do
-   begin
-    //Create Category Panel
-      CategoryPanelUtama.HeaderFont.Style:=[fsBold];
-      ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
-      ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
-      ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
-      //ACategoryPanel.
-      ACategoryPanel.Font.Size:=9;
-      ACategoryPanel.Expand;
-      ACategoryPanel.Height:=RzSplitter1.Height;
-      ACategoryPanel.color:=clGradientInactiveCaption;
-      //ACategoryPanel.StyleName:='windows';
-      //ACategoryPanel.Width:=250;
-      //TreeView1.Items.Add(nil,StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]));
-     with dm.Qtemp2 do
-     begin
-          SQL.Clear;
-           SQL.Text :=' SELECT DISTINCT bb.id, cc.menu,bb.submenu FROM penjualan.t_akses aa  '+
-                      ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu   '+
-                      ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
-                      ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
-                      ' WHERE dd.akses='+QuotedStr('Admin')+
-                      ' and cc.menu='+QuotedStr(Menu)+
-                      ' Order by bb.id  DESC ';
-          open;
-          First;
-      end;
-      while not dm.Qtemp2.Eof do
-      begin
-        //Create Button Dalam Category Panel
-        //AButtonPanel:= TButton.Create(ACategoryPanel);
-        AButtonPanel:= TRzButton.Create(ACategoryPanel);
-        //AButtonPanel:= TButton.Create(ACategoryPanel);
-        AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
-        AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
-        AButtonPanel.Parent := ACategoryPanel;
-        AButtonPanel.Align := alTop;
-        //AButtonPanel.Width:=250;
-        AButtonPanel.Alignment:=taLeftJustify;
-        AButtonPanel.OnClick := btnApplyClick;
-        //AButtonPanel.StyleName:='windows';
-        AButtonPanel.Color:=clBlue;
-        //clGradientInactiveCaption;
-        //AButtonPanel.Tag:=1;
-         TreeView1.Items.AddChild(TreeView1.Selected,StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll])) ;
-          dm.Qtemp2.Next;
-      end;
-      dm.Qtemp1.Next;
-    end;}
   with dm.Qtemp do
   begin
-    close;
-    sql.Clear;
-    sql.Text:='select * from t_user where user_name='+QuotedStr(nm)+' AND deleted_at IS NULL';
-    ExecSQL;
+    Close;
+    SQL.Text := 'SELECT dept_code, position_code FROM t_user WHERE user_name = ' + QuotedStr(nm) + ' AND deleted_at IS NULL';
+    Open;
+    if Eof then Exit;
+    dept_code := FieldByName('dept_code').AsString;
+    jabatan_code := FieldByName('position_code').AsString;
   end;
-  dept_code:=dm.Qtemp['dept_code'];
-  jabatan_code:=dm.Qtemp['position_code'];
+
   with dm.Qtemp1 do
   begin
+    Close;
     SQL.Clear;
-    SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
-    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
-    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.position_code=aa.position_code AND dd.deleted_at IS NULL '+
-    ' INNER JOIN t_menu e on bb.menu_code=e.menu_code AND e.deleted_at IS NULL '+
-    ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code AND cc.deleted_at IS NULL '+
-    ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
-    ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
-    ' and cc.master_name='+QuotedStr(Menu)+' '+
-    ' and bb.deleted_at IS NULL '+
-    ' group by e.created_at,e.id, e.menu '+
-    ' Order by e.created_at asc';
-    open;
-    First;
+    SQL.Add('SELECT e.menu AS menu_caption, bb.submenu AS submenu_caption');
+    SQL.Add('FROM t_akses aa');
+    SQL.Add('INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL');
+    SQL.Add('INNER JOIN t_menu e ON bb.menu_code = e.menu_code AND e.deleted_at IS NULL');
+    SQL.Add('INNER JOIN t_menu_master cc ON e.master_code = cc.master_code AND cc.deleted_at IS NULL');
+    SQL.Add('WHERE aa.deleted_at IS NULL');
+    SQL.Add('AND aa.dept_code = ' + QuotedStr(dept_code));
+    SQL.Add('AND aa.position_code = ' + QuotedStr(jabatan_code));
+    SQL.Add('AND cc.master_name = ' + QuotedStr(Menu));
+    SQL.Add('GROUP BY e.menu,bb.submenu ');
+    SQL.Add('ORDER BY e.menu,bb.submenu');
+    Open;
   end;
-  //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
+
   TCategoryPanelGroup.Create(nil);
   CategoryPanelUtama.Create(nil);
+  CategoryPanelUtama.Visible := False;
   ClearCategoryPanelGroup;
-  //CategoryPanelUtama.Parent := SplitView1;
+
+  CurrentMenuName := '';
+  ACategoryPanel := nil;
   CategoryPanelUtama.Width:=260;
   CategoryPanelUtama.HeaderFont.style:=[fsbold];
-  //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
+
   while not dm.Qtemp1.Eof do
   begin
-    //Create Category Panel
-    ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
-    ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
-    ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
-    //ACategoryPanel.Collapsed:=True;
-    ACategoryPanel.Width:=260; //awal260
-    //ACategoryPanel.Width:=CategoryPanelUtama.Width;
 
-    with dm.Qtemp2 do
+    if CurrentMenuName <> dm.Qtemp1.FieldByName('menu_caption').AsString then
     begin
-      SQL.Clear;
-      SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu '+
-      ' FROM t_akses aa  '+
-      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL '+
-      ' INNER JOIN t_menu b ON b.menu_code = bb.menu_code '+
-      ' INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
-      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code and dd.position_code=aa.position_code and dd.deleted_at IS NULL '+
-      ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
-      ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
-      ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
-      ' and cc.master_name='+QuotedStr(Menu)+
-      ' Order by bb.created_at desc ';
-      open;
-      First;
-    end;
-    while not dm.Qtemp2.Eof do
-    begin
-      //Create Button Dalam Category Panel
-      AButtonPanel:= TRzButton.Create(ACategoryPanel);
+      CurrentMenuName := dm.Qtemp1.FieldByName('menu_caption').AsString;
+      RecordCountForPanel := 0;
 
-      AButtonPanel.Height := 34; // Tinggi tombol diatur ke 30px
-      TotalHeightNeeded := TotalHeightNeeded + AButtonPanel.Height;
-      //AButtonPanel:= TButton.Create(ACategoryPanel);
-      AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
-      AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
-      AButtonPanel.Parent := ACategoryPanel;
-      AButtonPanel.Align := alTop;
-      AButtonPanel.Width:=230; //awal260
-      //AButtonPanel.Width:=ACategoryPanel.Width;
-      //AButtonPanel.Width:=Rzsplitter1.Width-2;
-      ACategoryPanel.Color:=clSkyBlue;
-      AButtonPanel.OnClick := btnApplyClick;
-      AButtonPanel.Alignment:=taleftjustify;
-      //AButtonPanel.Tag:=1;
-      if (dm.Qtemp2.RecordCount=1) then
-      begin
-        ACategoryPanel.Height:=65;
-        //ACategoryPanel.Height:=90;
-      end;
-      if dm.Qtemp2.RecordCount>1 then
-      begin
-        //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
-      //  ACategoryPanel.Height:=40+30*dm.Qtemp2.RecordCount;
-        ACategoryPanel.Height:=30+(AButtonPanel.Height*dm.Qtemp2.RecordCount);
-//        ACategoryPanel.Height:=TotalHeightNeeded;
-      end;
-      dm.Qtemp2.Next;
+      ACategoryPanel := CategoryPanelUtama.CreatePanel(Self) as TCategoryPanel;
+      ACategoryPanel.Caption := CurrentMenuName;
+      ACategoryPanel.Name := 'cp_' + StringReplace(CurrentMenuName, ' ', '', [rfReplaceAll]) + IntToStr(dm.Qtemp1.RecNo);
+      ACategoryPanel.Width := 260;
+      ACategoryPanel.Collapsed := False;
+      ACategoryPanel.Color := clSkyBlue;
     end;
-    ACategoryPanel.Collapsed:=True;
+
+    AButtonPanel := TRzButton.Create(ACategoryPanel);
+    AButtonPanel.Parent := ACategoryPanel;
+    AButtonPanel.Align := alTop;
+    AButtonPanel.Height := 34;
+    AButtonPanel.Width:=230;
+    AButtonPanel.Caption := dm.Qtemp1.FieldByName('submenu_caption').AsString;
+    AButtonPanel.Name := StringReplace(dm.Qtemp1.Fieldbyname('submenu_caption').AsString, ' ', '', [rfReplaceAll]);
+    AButtonPanel.Alignment := taLeftJustify;
+    AButtonPanel.OnClick := btnApplyClick;
+    ACategoryPanel.Color:=clSkyBlue;
+    Inc(RecordCountForPanel);
+    ACategoryPanel.Height := (RecordCountForPanel * AButtonPanel.Height) + 35;
     dm.Qtemp1.Next;
-   end;
+  end;
+
+  for RecordCountForPanel := 0 to CategoryPanelUtama.Panels.Count - 1 do
+  begin
+    TCategoryPanel(CategoryPanelUtama.Panels[RecordCountForPanel]).Collapsed := True;
+  end;
+
+  CategoryPanelUtama.Visible := True;
 end;
+
+//procedure TFMainMenu.CreateSubMenu(Role,Menu:String);
+//var TotalHeightNeeded: Integer;
+//begin
+//  TotalHeightNeeded := 0;
+//   {with dm.Qtemp1 do
+//   begin
+//       SQL.Clear;
+//       SQL.Text :=' SELECT DISTINCT cc.id, cc.menu FROM penjualan.t_akses aa  '+
+//                  ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu '+
+//                  ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
+//                  ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama  '+
+//                  ' WHERE dd.akses='+QuotedStr('Admin')+'  and cc.menu='+QuotedStr(Menu)+
+//                  ' Order by cc.id DESC ';
+//       open;
+//       First;
+//   end;
+//   //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
+//   TCategoryPanelGroup.Create(nil);
+//   CategoryPanelUtama.Create(nil);
+//   ClearCategoryPanelGroup;
+//   //CategoryPanelUtama.Parent := SplitView1;
+//   CategoryPanelUtama.Width:=250;
+//   TRzTreeView.Create(nil);
+//   Treeview1.Create(nil);
+//   Cleartreview;
+//   Treeview1.Width:=250;
+//   while not dm.Qtemp1.Eof do
+//   begin
+//    //Create Category Panel
+//      CategoryPanelUtama.HeaderFont.Style:=[fsBold];
+//      ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
+//      ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
+//      ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
+//      //ACategoryPanel.
+//      ACategoryPanel.Font.Size:=9;
+//      ACategoryPanel.Expand;
+//      ACategoryPanel.Height:=RzSplitter1.Height;
+//      ACategoryPanel.color:=clGradientInactiveCaption;
+//      //ACategoryPanel.StyleName:='windows';
+//      //ACategoryPanel.Width:=250;
+//      //TreeView1.Items.Add(nil,StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]));
+//     with dm.Qtemp2 do
+//     begin
+//          SQL.Clear;
+//           SQL.Text :=' SELECT DISTINCT bb.id, cc.menu,bb.submenu FROM penjualan.t_akses aa  '+
+//                      ' INNER JOIN penjualan.t_submenu bb ON aa.submenu = bb.submenu   '+
+//                      ' INNER JOIN penjualan.t_menu cc ON bb.kodemaster = cc.kodemaster '+
+//                      ' INNER JOIN penjualan.t_user dd ON dd.akses = aa.RoleNama '+
+//                      ' WHERE dd.akses='+QuotedStr('Admin')+
+//                      ' and cc.menu='+QuotedStr(Menu)+
+//                      ' Order by bb.id  DESC ';
+//          open;
+//          First;
+//      end;
+//      while not dm.Qtemp2.Eof do
+//      begin
+//        //Create Button Dalam Category Panel
+//        //AButtonPanel:= TButton.Create(ACategoryPanel);
+//        AButtonPanel:= TRzButton.Create(ACategoryPanel);
+//        //AButtonPanel:= TButton.Create(ACategoryPanel);
+//        AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
+//        AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
+//        AButtonPanel.Parent := ACategoryPanel;
+//        AButtonPanel.Align := alTop;
+//        //AButtonPanel.Width:=250;
+//        AButtonPanel.Alignment:=taLeftJustify;
+//        AButtonPanel.OnClick := btnApplyClick;
+//        //AButtonPanel.StyleName:='windows';
+//        AButtonPanel.Color:=clBlue;
+//        //clGradientInactiveCaption;
+//        //AButtonPanel.Tag:=1;
+//         TreeView1.Items.AddChild(TreeView1.Selected,StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll])) ;
+//          dm.Qtemp2.Next;
+//      end;
+//      dm.Qtemp1.Next;
+//    end;}
+//  with dm.Qtemp do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='select * from t_user where user_name='+QuotedStr(nm)+' AND deleted_at IS NULL';
+//    ExecSQL;
+//  end;
+//  dept_code:=dm.Qtemp['dept_code'];
+//  jabatan_code:=dm.Qtemp['position_code'];
+//  with dm.Qtemp1 do
+//  begin
+//    SQL.Clear;
+//    SQL.Text := 'SELECT DISTINCT e.created_at,e.id, e.menu menu FROM t_akses aa '+
+//    ' INNER JOIN t_menu_sub bb ON aa.submenu_code = bb.submenu_code AND bb.deleted_at IS NULL '+
+//    ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code AND dd.position_code=aa.position_code AND dd.deleted_at IS NULL '+
+//    ' INNER JOIN t_menu e on bb.menu_code=e.menu_code AND e.deleted_at IS NULL '+
+//    ' INNER JOIN t_menu_master cc ON e.master_code = cc.master_code AND cc.deleted_at IS NULL '+
+//    ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
+//    ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
+//    ' and cc.master_name='+QuotedStr(Menu)+' '+
+//    ' and bb.deleted_at IS NULL '+
+//    ' group by e.created_at,e.id, e.menu '+
+//    ' Order by e.created_at asc';
+//    open;
+//    First;
+//  end;
+//  //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
+//  TCategoryPanelGroup.Create(nil);
+//  CategoryPanelUtama.Create(nil);
+//  ClearCategoryPanelGroup;
+//  //CategoryPanelUtama.Parent := SplitView1;
+//  CategoryPanelUtama.Width:=260;
+//  CategoryPanelUtama.HeaderFont.style:=[fsbold];
+//  //CategoryPanelUtama.Width:=Rzsplitter1.Width-5;
+//  while not dm.Qtemp1.Eof do
+//  begin
+//    //Create Category Panel
+//    ACategoryPanel:=CategoryPanelUtama.CreatePanel(self) as TCategoryPanel;
+//    ACategoryPanel.Name:= StringReplace(dm.Qtemp1.fieldbyname('menu').AsString, ' ', '', [rfReplaceAll]);
+//    ACategoryPanel.Caption:= dm.Qtemp1.fieldbyname('menu').AsString;
+//    //ACategoryPanel.Collapsed:=True;
+//    ACategoryPanel.Width:=260; //awal260
+//    //ACategoryPanel.Width:=CategoryPanelUtama.Width;
+//
+//    with dm.Qtemp2 do
+//    begin
+//      SQL.Clear;
+//      SQL.Text := 'SELECT DISTINCT bb.created_at,bb.id,b.menu menu,bb.submenu submenu '+
+//      ' FROM t_akses aa  '+
+//      ' INNER JOIN t_menu_sub bb ON aa.submenu_code=bb.submenu_code and bb.deleted_at IS NULL '+
+//      ' INNER JOIN t_menu b ON b.menu_code = bb.menu_code '+
+//      ' INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
+//      ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code and dd.position_code=aa.position_code and dd.deleted_at IS NULL '+
+//      ' WHERE aa.deleted_at IS NULL AND dd.dept_code='+QuotedStr(dept_code)+' '+
+//      ' and b.menu='+QuotedStr(dm.qtemp1['menu'])+
+//      ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
+//      ' and cc.master_name='+QuotedStr(Menu)+
+//      ' Order by bb.created_at desc ';
+//      open;
+//      First;
+//    end;
+//    while not dm.Qtemp2.Eof do
+//    begin
+//      //Create Button Dalam Category Panel
+//      AButtonPanel:= TRzButton.Create(ACategoryPanel);
+//
+//      AButtonPanel.Height := 34; // Tinggi tombol diatur ke 30px
+//      TotalHeightNeeded := TotalHeightNeeded + AButtonPanel.Height;
+//      //AButtonPanel:= TButton.Create(ACategoryPanel);
+//      AButtonPanel.Name:= StringReplace(dm.Qtemp2.Fieldbyname('submenu').AsString, ' ', '', [rfReplaceAll]);
+//      AButtonPanel.Caption:= dm.Qtemp2.Fieldbyname('submenu').AsString;
+//      AButtonPanel.Parent := ACategoryPanel;
+//      AButtonPanel.Align := alTop;
+//      AButtonPanel.Width:=230; //awal260
+//      //AButtonPanel.Width:=ACategoryPanel.Width;
+//      //AButtonPanel.Width:=Rzsplitter1.Width-2;
+//      ACategoryPanel.Color:=clSkyBlue;
+//      AButtonPanel.OnClick := btnApplyClick;
+//      AButtonPanel.Alignment:=taleftjustify;
+//      //AButtonPanel.Tag:=1;
+//      if (dm.Qtemp2.RecordCount=1) then
+//      begin
+//        ACategoryPanel.Height:=65;
+//        //ACategoryPanel.Height:=90;
+//      end;
+//      if dm.Qtemp2.RecordCount>1 then
+//      begin
+//          //ACategoryPanel.Height:=35*dm.Qtemp2.RecordCount;
+//        //  ACategoryPanel.Height:=40+30*dm.Qtemp2.RecordCount;
+//          ACategoryPanel.Height:=30+(AButtonPanel.Height*dm.Qtemp2.RecordCount);
+//  //        ACategoryPanel.Height:=TotalHeightNeeded;
+//        end;
+//        dm.Qtemp2.Next;
+//      end;
+//      ACategoryPanel.Collapsed:=True;
+//      dm.Qtemp1.Next;
+//     end;
+//  end;
 
 procedure TFMainMenu.CloseAllTabsheets;
 var

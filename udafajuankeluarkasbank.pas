@@ -998,7 +998,9 @@ begin
                  ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
                  ' from "public"."t_cash_bank_expenditure_submission_det" a '+
                  ' where a.no_voucher='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
-                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' and  "position" =''D'''+
+                 ' AND LEFT(code_account_header,4) NOT IN (SELECT LEFT(acc_code_pemb,4) from t_item_type)) xx '+
+                 //' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
                  ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
                  ' )t ORDER BY urut, faktur_date;');
          open;
@@ -1006,6 +1008,7 @@ begin
 
          Report.LoadFromFile(cLocation +'report/Bukti_Pengajuan_Pengeluaran_Cheque_Hutang'+'.fr3');
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+         SetMemo(Report,'tot_rec',IntToStr(QBukti_Ajuan_Keluar.RecordCount));
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
          SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
@@ -1054,7 +1057,9 @@ begin
                  ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
                  ' from "public"."t_cash_bank_expenditure_submission_det" a '+
                  ' where a.no_voucher='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
-                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' and  "position" =''D'''+
+                 ' AND LEFT(code_account_header,4) NOT IN (SELECT LEFT(acc_code_pemb,4) from t_item_type)) xx '+
+                 //' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
                  ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
                  ' )t ORDER BY urut, faktur_date;');
          //sql.add(' select *  from t_cash_bank_expenditure_submission_payable  a '+

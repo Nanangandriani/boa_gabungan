@@ -125,14 +125,14 @@ begin
   if status_akses='True' then
   begin
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekapPO_dr.Fr3');
-    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',Dtmulai.EditValue));
+    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',Dtmulai.EditValue)+' - '+FormatDateTime('dd MMMM yyyy',DtSelesai.EditValue));
     SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
     Rpt.ShowReport();
   end;
   if status_akses<>'True' then
   begin
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\RptRekapPO.Fr3');
-    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue));
+    SetMemo(Rpt,'MPeriode',' Tanggal :  '+FormatDateTime('dd MMMM yyyy',DtMulai.EditValue)+' - '+FormatDateTime('dd MMMM yyyy',DtSelesai.EditValue));
     SetMemo(Rpt,'msbu',' '+dm.QPerusahaan['company_code']);
     Rpt.ShowReport();
   end;

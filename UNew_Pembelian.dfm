@@ -309,16 +309,17 @@ object FNew_Pembelian: TFNew_Pembelian
     Left = 0
     Top = 0
     Width = 1117
-    Height = 362
+    Height = 249
     Align = alTop
     TabOrder = 1
     ExplicitWidth = 1111
     object Label1: TLabel
-      Left = 27
+      Left = 28
       Top = 256
       Width = 35
       Height = 15
       Caption = 'No. SP'
+      Visible = False
     end
     object Label3: TLabel
       Left = 28
@@ -335,11 +336,12 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Keterangan'
     end
     object Label6: TLabel
-      Left = 26
-      Top = 285
+      Left = 28
+      Top = 288
       Width = 81
       Height = 15
       Caption = 'Tanggal Terima'
+      Visible = False
     end
     object Label4: TLabel
       Left = 528
@@ -465,11 +467,12 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Tgl. Jatuh Tempo'
     end
     object EdNoSPB: TRzComboBox
-      Left = 174
+      Left = 175
       Top = 256
       Width = 210
       Height = 23
       TabOrder = 0
+      Visible = False
       OnSelect = EdNoSPBSelect
     end
     object EdNo: TEdit
@@ -482,13 +485,14 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 1
     end
     object Dtterima: TRzDateTimeEdit
-      Left = 174
+      Left = 175
       Top = 285
       Width = 121
       Height = 23
       EditType = etDate
       Format = 'dd/mm/yyyy'
       TabOrder = 2
+      Visible = False
       OnChange = DtterimaChange
     end
     object EdKet: TMemo
@@ -800,14 +804,14 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 362
+    Top = 249
     Width = 1117
-    Height = 389
+    Height = 502
     Align = alClient
     Color = 15987699
     TabOrder = 2
     ExplicitWidth = 1111
-    ExplicitHeight = 380
+    ExplicitHeight = 493
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -907,25 +911,23 @@ object FNew_Pembelian: TFNew_Pembelian
       Left = 2
       Top = 2
       Width = 1113
-      Height = 246
+      Height = 359
       Hint = ''
       ActivePage = TabBarang2
       Align = alClient
       TabIndex = 0
       TabOrder = 6
       ExplicitWidth = 1107
-      ExplicitHeight = 237
+      ExplicitHeight = 350
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
-        ExplicitWidth = 1103
-        ExplicitHeight = 212
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
           Width = 1109
-          Height = 221
+          Height = 334
           Align = alClient
           DataSource = DsTerimadet
           DynProps = <>
@@ -1324,11 +1326,13 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitWidth = 1103
+        ExplicitHeight = 325
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
           Width = 1109
-          Height = 221
+          Height = 334
           Align = alClient
           DataGrouping.GroupLevels = <
             item
@@ -1416,7 +1420,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 221
+          Height = 334
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1521,7 +1525,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 221
+          Height = 334
           Align = alClient
           DynProps = <>
           TabOrder = 0
@@ -1589,7 +1593,7 @@ object FNew_Pembelian: TFNew_Pembelian
           Left = 0
           Top = 0
           Width = 1109
-          Height = 221
+          Height = 334
           Align = alClient
           DynProps = <>
           FooterRowCount = 1
@@ -1920,13 +1924,13 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object RzPanel2: TRzPanel
       Left = 2
-      Top = 248
+      Top = 361
       Width = 1113
       Height = 139
       Align = alBottom
       Color = 15987699
       TabOrder = 7
-      ExplicitTop = 239
+      ExplicitTop = 352
       ExplicitWidth = 1107
       object Label28: TLabel
         Left = 26
@@ -2471,8 +2475,8 @@ object FNew_Pembelian: TFNew_Pembelian
       'select a.*,b.supplier_name '
       'from t_advance_payment a'
       
-        'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code where' +
-        ' a.supplier_code='#39#39
+        'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code --whe' +
+        're a.supplier_code='#39#39
       '-- group by a.supplier_code,b.supplier_name,a.no_trans'
       'order by a.no_trans DESC')
     Left = 912

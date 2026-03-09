@@ -228,14 +228,14 @@ begin
                     'debt_type,username,npph,pph_account,pph_name '+
                     ',paid_status,exchange_rate,dolar_amount,'+
                     //'approve_status,'+
-                    'sj_no,factory_code,plan_to,source_plan_id '+
+                    'sj_no,factory_code,plan_to,source_plan_id,created_at,created_by '+
                     ')');
             sql.add('values(:bnk,:kds,:nv,:nofak,:tglfak,:nck,:tglck,:tgllns,:prd1,:prd2,'+
                     ':prdtmp1,:prdtmp2,'+
                     ':jml,:jenhtg,:username,:npphs,:akuns,:pphname '+
                     ',:stat,:kurss,:jum_dol,'+
                     //':approvstat,'+
-                    ':sjno,:kdprsh,:rencanake,:sumber_id '+
+                    ':sjno,:kdprsh,:rencanake,:sumber_id, now(), :created_by '+
                     ')');
 
             if rbbank.Checked=true then
@@ -271,6 +271,7 @@ begin
             ParamByName('kdprsh').Asstring:=dm.QPerusahaan.FieldByName('company_code').AsString;
             ParamByName('rencanake').Asstring:=CBrencanake.Text;
             ParamByName('sumber_id').Asstring:=id_source.Text;
+            ParamByName('created_by').Asstring:=Nm;
             Execute;
           end;
           MemRencana.Next;

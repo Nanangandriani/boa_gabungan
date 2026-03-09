@@ -256,7 +256,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 58
+      Top = 57
       Width = 344
       Height = 23
       Text = ''
@@ -438,7 +438,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object cbUangMuka: TRzCheckBox
       Left = 142
-      Top = 154
+      Top = 152
       Width = 84
       Height = 19
       Caption = 'Uang Muka'
@@ -740,22 +740,20 @@ object FNew_Penjualan: TFNew_Penjualan
     Width = 870
     Height = 255
     Hint = ''
-    ActivePage = TabSDetailPel
+    ActivePage = TabUangMuka
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 866
     ExplicitHeight = 254
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 862
-      ExplicitHeight = 229
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -1016,6 +1014,8 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object TabUangMuka: TRzTabSheet
       Caption = 'Uang Muka'
+      ExplicitWidth = 862
+      ExplicitHeight = 229
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0

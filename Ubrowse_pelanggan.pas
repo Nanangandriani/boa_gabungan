@@ -64,7 +64,7 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   UNew_DataTargetPenjualan, USuratKonfirmasiPiutang, UNew_PiutangBeramasalah,
   UBrowseNotaPenjualan, UNew_DataPenjualanPromosi, UNew_UangMukaPenjualan,
   UPenyesuaianPenjualan, UKartuPiutang, UNew_Gudang, UAmplopPelanggan,
-  ULaporanPenjualan;
+  ULaporanPenjualan, UKartuUangMukaPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
 var strWhere,strKares,strKabupaten: String;
@@ -180,6 +180,12 @@ end;
 procedure TFbrowse_data_pelanggan.DBGridCustomerDblClick(Sender: TObject);
 begin
   //showmessage(vcall);
+  //Nanang
+  if vcall='uangmukapenjualan' then
+  begin
+    FKartuUangMukaPenjualan.strKodePelanggan:=MemMasterData['KD_PELANGGAN'];
+    FKartuUangMukaPenjualan.edNama_Pelanggan.EditValue:=MemMasterData['NM_PELANGGAN'];
+  end;
   //Rudi
   if vcall='m_gudang' then
   begin

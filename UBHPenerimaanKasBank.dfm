@@ -2443,8 +2443,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
   end
   object dsDaftarPenerimaan: TDataSource
     DataSet = QDaftarPenerimaan
-    Left = 345
-    Top = 128
+    Left = 265
+    Top = 152
   end
   object QCetakKredit: TUniQuery
     Connection = dm.Koneksi
@@ -2518,8 +2518,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
   end
   object DSPenerimaanKasBankDetail: TDataSource
     DataSet = QBHPenerimaanKasBankDetail
-    Left = 337
-    Top = 264
+    Left = 353
+    Top = 208
   end
   object QCetakDebit: TUniQuery
     Connection = dm.Koneksi
@@ -7708,7 +7708,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     DataSet = QCetak2
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 216
+    Left = 112
     Top = 296
   end
   object QCetak2: TUniQuery
@@ -7863,7 +7863,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
       '    e.account_code ASC, '
       '    a.voucher_no ASC, '
       '    rm.rn ASC;')
-    Left = 150
-    Top = 320
+    Left = 38
+    Top = 296
   end
 end

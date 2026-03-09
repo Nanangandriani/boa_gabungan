@@ -208,6 +208,19 @@ begin
    //   FNew_Itemtype.EdNm_akun2.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
       QDaftar_Perk.Close;
     end;
+//    if (vpanggil = 'barang')then
+//    begin
+//      FNew_barang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+//      FNew_barang.KodeHeaderPerkiraan:=QDaftar_Perk.fieldbyname('code').AsString;
+//      FNew_barang.EdNm_akun.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+//      QDaftar_Perk.Close;
+//    end;
+//    if vpanggil = 'Pemb_barang' then
+//    begin
+//      FNew_barang.Edkd_akunpemb.Text:=QDaftar_Perk.fieldbyname('code').AsString;
+//      FNew_barang.EdNm_akunpemb.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+//      QDaftar_Perk.Close;
+//    end;
     if (vpanggil = 'barang')then
     begin
       FNew_barang.Edkd_akun.Text:=QDaftar_Perk.fieldbyname('code').AsString;
@@ -219,6 +232,7 @@ begin
     begin
       FNew_barang.Edkd_akunpemb.Text:=QDaftar_Perk.fieldbyname('code').AsString;
       FNew_barang.EdNm_akunpemb.Text:=QDaftar_Perk.fieldbyname('account_name').AsString;
+      FNew_barang.KodeHeaderPerkiraan2:=QDaftar_Perk.fieldbyname('code').AsString;
       QDaftar_Perk.Close;
     end;
     if vpanggil = 'RTPemb_barang' then

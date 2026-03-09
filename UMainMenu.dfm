@@ -5575,7 +5575,7 @@ object FMainMenu: TFMainMenu
   OnShow = FormShow
   TextHeight = 15
   object Splitter1: TSplitter
-    Left = 169
+    Left = 260
     Top = 126
     Width = 12
     Height = 463
@@ -5728,7 +5728,7 @@ object FMainMenu: TFMainMenu
   object CategoryPanelUtama: TCategoryPanelGroup
     Left = 0
     Top = 126
-    Width = 169
+    Width = 260
     Height = 463
     VertScrollBar.Tracking = True
     ChevronHotColor = clSkyBlue
@@ -5743,9 +5743,9 @@ object FMainMenu: TFMainMenu
     ExplicitHeight = 462
   end
   object PageControl1: TRzPageControl
-    Left = 181
+    Left = 272
     Top = 126
-    Width = 846
+    Width = 755
     Height = 463
     Hint = ''
     ActivePage = TabForm
@@ -5753,46 +5753,46 @@ object FMainMenu: TFMainMenu
     ShowCloseButtonOnActiveTab = True
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 842
+    ExplicitWidth = 751
     ExplicitHeight = 462
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       TabVisible = False
       Caption = 'Dashboard'
-      ExplicitWidth = 838
+      ExplicitWidth = 747
       ExplicitHeight = 458
       object PanelParent: TPanel
         Left = 0
         Top = 0
-        Width = 842
+        Width = 751
         Height = 459
         Align = alClient
         TabOrder = 0
         Visible = False
-        ExplicitWidth = 838
+        ExplicitWidth = 747
         ExplicitHeight = 458
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 249
-          Width = 840
+          Width = 749
           Height = 209
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 836
+          ExplicitWidth = 745
           ExplicitHeight = 208
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
-          Width = 840
+          Width = 749
           Height = 248
           Align = alTop
           TabOrder = 1
-          ExplicitWidth = 836
+          ExplicitWidth = 745
           ControlData = {
-            4C000000D1560000A21900000000000000000000000000000000000000000000
+            4C000000694D0000A21900000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -5802,8 +5802,8 @@ object FMainMenu: TFMainMenu
     end
   end
   object ImageList1: TImageList
-    Left = 648
-    Top = 80
+    Left = 704
+    Top = 16
     Bitmap = {
       494C010102000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -5958,8 +5958,8 @@ object FMainMenu: TFMainMenu
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 618
-    Top = 14
+    Left = 629
+    Top = 16
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'File'
@@ -6470,8 +6470,8 @@ object FMainMenu: TFMainMenu
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM "public"."VTrans_Journal"')
-    Left = 333
-    Top = 136
+    Left = 629
+    Top = 64
   end
   object frxDBDJurnal: TfrxDBDataset
     UserName = 'frxDBDJurnal'
@@ -6489,8 +6489,8 @@ object FMainMenu: TFMainMenu
     DataSet = QJurnal
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 396
-    Top = 136
+    Left = 551
+    Top = 64
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -6571,7 +6571,7 @@ object FMainMenu: TFMainMenu
     end
   end
   object RzVersionInfo1: TRzVersionInfo
-    Left = 251
-    Top = 137
+    Left = 707
+    Top = 65
   end
 end

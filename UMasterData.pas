@@ -1605,6 +1605,10 @@ begin
   begin
     FLog.edUser.EditValue:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='logmenu' then
+  begin
+    FLog.edMenu.EditValue:=MemMasterData['NM_MASTER'];
+  end;
 
   //ShowMessage(FTambah_Barang.edKodeBarang.Text);
   FMasterData.Close;
@@ -1620,7 +1624,7 @@ procedure TFMasterData.FormShow(Sender: TObject);
 begin
   DBGridCustomer.SearchPanel.SearchingText:='';
   //Nanang
-  if (FMasterData.vcall='do_lokasi_muat') OR (FMasterData.vcall='do_lokasi_bongkar') then
+  if (FMasterData.vcall='do_lokasi_muat') OR (FMasterData.vcall='do_lokasi_bongkar') OR (FMasterData.vcall='logmenu') then
   begin
     DBGridCustomer.Columns[0].Visible:=False;
     DBGridCustomer.Columns[2].Visible:=False;

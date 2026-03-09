@@ -284,7 +284,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'Nomor Penjualan'
-        Width = 141
+        Width = 189
       end
       item
         CellButtons = <>
@@ -294,7 +294,7 @@ object FReturPenjualan_Sumber: TFReturPenjualan_Sumber
         Footers = <>
         Title.Alignment = taCenter
         Title.Caption = 'No Faktur'
-        Width = 143
+        Width = 199
       end
       item
         CellButtons = <>

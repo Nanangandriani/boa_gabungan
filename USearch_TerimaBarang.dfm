@@ -3,7 +3,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   Top = 0
   Caption = 'Search Material'
   ClientHeight = 417
-  ClientWidth = 580
+  ClientWidth = 1051
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,14 +19,14 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object Panel1: TPanel
     Left = 0
     Top = 385
-    Width = 580
+    Width = 1051
     Height = 32
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 376
-    ExplicitWidth = 574
+    ExplicitWidth = 1045
     object BBatal: TRzBitBtn
-      Left = 504
+      Left = 975
       Top = 1
       Height = 30
       Align = alRight
@@ -85,10 +85,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 498
+      ExplicitLeft = 969
     end
     object BEdit: TRzBitBtn
-      Left = 429
+      Left = 900
       Top = 1
       Height = 30
       Align = alRight
@@ -147,8 +147,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 423
-      ExplicitTop = 6
+      ExplicitLeft = 894
     end
     object BSelectAll: TRzBitBtn
       Left = 114
@@ -237,7 +236,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object DBGridEh2: TDBGridEh
     Left = 0
     Top = 0
-    Width = 580
+    Width = 1051
     Height = 385
     Align = alClient
     DataSource = DSMaterial2
@@ -329,7 +328,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 0
-    Width = 580
+    Width = 1051
     Height = 385
     Align = alClient
     DataSource = DSMaterial
@@ -402,6 +401,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         FieldName = 'wh_code'
         Footers = <>
         Title.Caption = 'Kode Gudang'
+        Width = 121
       end
       item
         CellButtons = <>
@@ -410,6 +410,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         FieldName = 'account_code'
         Footers = <>
         Title.Caption = 'Kode Akun'
+        Width = 85
       end
       item
         CellButtons = <>
@@ -418,6 +419,25 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         FieldName = 'header_code'
         Footers = <>
         Title.Caption = 'Kode Header'
+        Width = 94
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'um_account_code'
+        Footers = <>
+        Title.Caption = 'Akun UM'
+        Width = 70
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'um_value'
+        Footers = <>
+        Title.Caption = 'Uang Muka'
+        Width = 130
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -437,7 +457,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       'b.po_no, c.supplier_code,d.spb_no,'
       
         'e.account_code,f.wh_code,c.due_date,e.header_code,b.pph_rp,b.acc' +
-        'ount_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal'
+        'ount_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_acc' +
+        'ount_code,c.um_value'
       'from t_item_stock a '
       'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
       'inner join t_po C on b.po_no=c.po_no'
@@ -451,7 +472,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       'b.po_no, c.supplier_code, d.spb_no,'
       
         'e.account_code,f.wh_code,c.due_date,e.header_code,b.account_pph_' +
-        'code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal')
+        'code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_account_code' +
+        ',c.um_value')
     Left = 259
     Top = 104
   end

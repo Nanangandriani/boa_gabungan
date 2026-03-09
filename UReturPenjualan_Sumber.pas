@@ -152,22 +152,33 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' select DISTINCT *,COALESCE((SELECT SUM(grand_tot) grand_tot FROM t_sales_returns where no_inv= aa.trans_no AND deleted_at is NULL group by no_inv),0) grand_tot_returns  from ('+
-            ' select trans_no, no_inv_tax, trans_date, code_cust, name_cust, code_source, '+
-            ' name_source, no_reference,grand_tot from  get_selling(NULL) '+
-            ' where deleted_at is null order by created_at Desc) aa ');
-    sql.add(' Where trans_date between '+
+    sql.add('SELECT * FROM ((select DISTINCT a.trans_no,a.no_inv_tax,a.trans_date,'+
+            'a.code_cust,a.name_cust,a.code_source,a.name_source,a.no_reference,'+
+            'a.grand_tot,COALESCE((SELECT SUM(grand_tot) grand_tot FROM t_sales_returns '+
+            'where no_inv= a.trans_no AND deleted_at is NULL group by no_inv),0) grand_tot_returns '+
+            'from ( select trans_no, no_inv_tax, trans_date, code_cust, name_cust, code_source,  '+
+            'name_source, no_reference,grand_tot from  get_selling(NULL)  '+
+            'where deleted_at is null order by created_at Desc) a ) '+
+            'UNION ALL '+
+            '( SELECT a.trans_no,a.no_inv_tax,a.trans_date,a.customer_code,b.customer_name name_cust,'+
+            ' '''' code_source,'''' name_source,'''' no_reference, netto grand_tot ,'+
+            ' COALESCE((SELECT SUM(grand_tot) grand_tot '+
+            'FROM t_sales_returns where no_inv= a.trans_no AND deleted_at is NULL group by no_inv),0) grand_tot_returns '+
+            'from t_selling_initial_balance a '+
+            'left join t_customer b on b.customer_code=a.customer_code)) zz ');
+
+    sql.add(' Where zz.trans_date between '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' AND  no_inv_tax<>'''' ');
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal2.Date))+' AND  zz.no_inv_tax<>'''' ');
     if Length(edKode_Pelanggan.Text)<>0 then
     begin
-      sql.add(' AND code_cust='+QuotedStr(edKode_Pelanggan.Text)+' ');
+      sql.add(' AND zz.code_cust='+QuotedStr(edKode_Pelanggan.Text)+' ');
     end;
     if Length(edNoFaktur.Text)<>0 then
     begin
-      sql.add(' AND no_inv_tax='+QuotedStr(edNoFaktur.Text)+' ');
+      sql.add(' AND zz.no_inv_tax='+QuotedStr(edNoFaktur.Text)+' ');
     end;
-    sql.add(' ORDER BY aa.trans_no desc');
+    sql.add(' ORDER BY zz.trans_no desc');
     open;
   end;
 

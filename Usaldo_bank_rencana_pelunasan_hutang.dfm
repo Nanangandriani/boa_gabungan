@@ -327,7 +327,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     Contexts = <>
     TabOrder = 2
     TabStop = False
-    ExplicitWidth = 889
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -4874,7 +4873,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       'ket2=ket2'
       'jumlah=jumlah'
       'no_cek=no_cek'
-      'plan_to=plan_to')
+      'plan_to=plan_to'
+      'description=description')
     DataSet = QIsi_KasBesar
     BCDToCurrency = False
     DataSetOptions = []
@@ -4888,14 +4888,14 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         'select row_number ()over(order by id)as no_urut,voucher_no,tgl, ' +
         'concat(ket,'#39' '#39','#39'(Rencanake'#39',plan_to,'#39')'#39') AS ket,concat(to_,'#39' '#39',R' +
         'EPLACE(TO_CHAR(jumlah,'#39'FM999G999G999G990.00 '#39'), '#39','#39', '#39'.'#39'),'#39' '#39',no' +
-        '_cek) as ket2,jumlah,no_cek,plan_to from '
+        '_cek) as ket2,jumlah,no_cek,plan_to,description from '
       '(select a.* from '
       
         '(select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.r' +
         'emark as ket,case when a.currency='#39'USD'#39' then a.amount*a.kurs els' +
         'e a.amount end jumlah,concat(a.bank_name,'#39'-'#39',a.cheque_no)as no_c' +
-        'ek,a.plan_to,a.bank_name,a.to_ from t_cash_bank_expenditure_subm' +
-        'ission a'
+        'ek,a.plan_to,a.bank_name,a.to_ ,b.description from t_cash_bank_e' +
+        'xpenditure_submission a'
       
         'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher' +
         '_no=b.no_voucher'
@@ -4908,8 +4908,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         'select a.id,a.voucher_no,b.code_account,a.trans_date as tgl,a.re' +
         'mark as ket,(case when a.currency='#39'USD'#39' then a.amount*a.kurs els' +
         'e a.amount end)*-1 jumlah,concat(a.bank_name,'#39'-'#39',a.cheque_no)as ' +
-        'no_cek,a.plan_to,a.bank_name,a.to_ from t_cash_bank_expenditure_' +
-        'submission a'
+        'no_cek,a.plan_to,a.bank_name,a.to_ ,b.description from t_cash_ba' +
+        'nk_expenditure_submission a'
       
         'INNER JOIN t_cash_bank_expenditure_submission_det b ON a.voucher' +
         '_no=b.no_voucher'
@@ -4927,7 +4927,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         '_no  '
       'where c.inv_no is null )xx'
       'order by plan_to,tgl,xx.voucher_no,id')
-    Active = True
     Left = 627
     Top = 350
   end
@@ -4966,9 +4965,10 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45677.603257696800000000
-    ReportOptions.LastChange = 46072.394753854170000000
+    ReportOptions.LastChange = 46080.445957222230000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      ''
       'procedure Page3OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       ''
@@ -5010,6 +5010,11 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       
         '  //SysMemo2.Visible := not <frxDBDataset_hut_dagang>.DataSet.Is' +
         'Empty;'
+      'end;'
+      ''
+      'procedure Memo189OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
       'end;'
       ''
       'begin'
@@ -6104,7 +6109,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           AllowVectorExport = True
           Left = 30.614173230000000000
           Top = 30.102350000000000000
-          Width = 320.503937007874000000
+          Width = 320.503937010000000000
           Height = 34.015748030000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -7719,7 +7724,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset_IsiKasBesar."ket2"]')
+            '[frxDBDataset_IsiKasBesar."ket"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -7729,7 +7734,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Width = 285.354330710000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'ket2'
           DataSet = frxDBDataset_IsiKasBesar
           DataSetName = 'frxDBDataset_IsiKasBesar'
           Font.Charset = DEFAULT_CHARSET
@@ -7738,8 +7742,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDataset_IsiKasBesar."ket2"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -7824,9 +7826,20 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight, ftTop, ftBottom]
-          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[frxDBDataset_IsiKasBesar."description"] [FormatFloat('#39'#,##0.00'#39 +
+              ', SUM(<frxDBDataset_IsiKasBesar."jumlah">,MasterData12) + 0)]  [' +
+              'frxDBDataset_IsiKasBesar."no_cek"]')
           ParentFont = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end
+            item
+            end>
         end
         object Memo149: TfrxMemoView
           AllowVectorExport = True

@@ -369,15 +369,25 @@ begin
     strCash    := StringReplace(FloatToStr(curCash), ',', '.', [rfReplaceAll]);
     strReceipt := StringReplace(FloatToStr(curReceipt), ',', '.', [rfReplaceAll]);
     strCheque1 := StringReplace(FloatToStr(curChequeAmount1), ',', '.', [rfReplaceAll]);
-
-    with dm.Qtemp2 do
+    if edKodeJenisBayar.Text='3' then
     begin
-      close;
-      sql.Clear;
-      sql.Text:='UPDATE t_dpp SET cash='+strCash+',receipt='+strReceipt+',bank_receipt='+strNamaBank+','+
-                'date_receipt='+strDateTrans+',cheque_amount1='+strCheque1+','+
-                'name_bank_cheque='+strNamaBank+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
-      ExecSQL;
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='UPDATE t_dpp SET cheque_amount1='+strCheque1+','+
+                  'name_bank_cheque='+strNamaBank+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+        ExecSQL;
+      end;
+    end else begin
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='UPDATE t_dpp SET cash='+strCash+',receipt='+strReceipt+',bank_receipt='+strNamaBank+','+
+                  'date_receipt='+strDateTrans+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+        ExecSQL;
+      end;
     end;
     MemDetailPiutang.Next;
   end;

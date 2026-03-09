@@ -155,7 +155,7 @@ implementation
 
 {$R *.dfm}
 
-uses u_rencana_lunas_hutang_input, UDataModule, USearch_Supplier;
+uses u_rencana_lunas_hutang_input, UDataModule, USearch_Supplier, UHomeLogin;
 
 var
   RealFList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang;
@@ -193,7 +193,10 @@ begin
         begin
           close;
           sql.Clear;
-          sql.text:=' delete from t_paid_debt_det '+
+          //sql.text:=' delete from t_paid_debt_det '+
+          sql.Text:=' UPDATE "public"."t_paid_debt_det" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                     ' where paid_status='+IntToStr(CBstatus.ItemIndex)+' and  '+
                     ' periode1 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+
                     ' periode2 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+

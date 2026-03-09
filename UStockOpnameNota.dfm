@@ -3157,7 +3157,7 @@ object FStockOpnameNota: TFStockOpnameNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44260.432679409700000000
-    ReportOptions.LastChange = 46042.697168935180000000
+    ReportOptions.LastChange = 46084.644538229160000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -4681,7 +4681,7 @@ object FStockOpnameNota: TFStockOpnameNota
         object Memo117: TfrxMemoView
           AllowVectorExport = True
           Left = 535.454957780000000000
-          Top = 783.435683330000000000
+          Top = 782.922862820000000000
           Width = 164.787401570000000000
           Height = 18.897650000000000000
           DisplayFormat.FormatStr = '%0.n'
@@ -4696,10 +4696,10 @@ object FStockOpnameNota: TFStockOpnameNota
           Memo.UTF8W = (
             
               '[<frxDBDatasetStokOpname."jumlah_amount_saldo_nota">-<frxDBDatas' +
-              'etStokOpname."nota_fisik">+<frxDBDatasetStokOpname."dpp_nota">+<' +
-              'frxDBDatasetStokOpname."kontra_bon">+<frxDBDatasetStokOpname."bg' +
-              '_mundur">+<frxDBDatasetStokOpname."transfer">+<frxDBDatasetStokO' +
-              'pname."retur">+<frxDBDatasetStokOpname."nota_masalah">+<frxDBDat' +
+              'etStokOpname."nota_fisik">-<frxDBDatasetStokOpname."dpp_nota">-<' +
+              'frxDBDatasetStokOpname."kontra_bon">-<frxDBDatasetStokOpname."bg' +
+              '_mundur">-<frxDBDatasetStokOpname."transfer">-<frxDBDatasetStokO' +
+              'pname."retur">-<frxDBDatasetStokOpname."nota_masalah">-<frxDBDat' +
               'asetStokOpname."nota_bangkrut">]')
           ParentFont = False
         end

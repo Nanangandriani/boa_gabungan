@@ -1312,7 +1312,8 @@ begin
      end;
       // TArik UAng Muka Pembelian //cr ds 24-10-2024
     edjum_um.Text:='';
-    with QUM do
+   { off 23-02-2026
+   with QUM do
     begin
       Close;
       sql.Clear;
@@ -1328,7 +1329,7 @@ begin
       if QUM.RecordCount=0 then
       begin
         EdJum_um.Value:=0;
-      end;
+      end;                   }
       EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
       EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
 end;
@@ -1633,12 +1634,28 @@ begin
       EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
     Except;
     end;}
-
-
-Hitungdet;
-EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
-EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-
+  try
+    begin
+      Hitungdet;
+      EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+      EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+      //cr ds 21-02-2026
+     {   with QUM do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='select a.*,b.supplier_name  from ( select a.po_no,COALESCE(avg(a.um_value),0) um_value,a.no_trans,a.supplier_code,'+
+          'a.trans_date from t_advance_payment a INNER JOIN t_item_receive_det b on a.po_no=b.po_no '+
+          ' group by a.po_no,a.no_trans,a.supplier_code,a.trans_date) a  INNER JOIN t_supplier b on '+
+          ' a.supplier_code=b.supplier_code where a.po_no='+QuotedStr(MemterimaDet['nopo'])+''+
+          ' order BY a.no_trans ';
+          Open;
+        end;        }
+        {MemUangMuka.close;
+        MemUangMuka.Open; }
+    end;
+    Except;
+  end;
 end;
 
 procedure TFNew_Pembelian.DBGridDetailpoColumns0EditButtons0Click(
@@ -1652,7 +1669,7 @@ begin
            begin
               Close;
               SQL.Clear;
-              SQL.Text:=' select a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
+              SQL.Text:=' select '''' sj_no,a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty as qty, '+
                         ' b.unit,b.wh_code,f.wh_name,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then '+
                         ' b.pph else 0 end pph,b.po_no, c.supplier_code, e.account_code, c.due_date'+
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp'+
@@ -1692,7 +1709,7 @@ begin
            begin
               Close;
               SQL.Clear;
-              SQL.Text:='select a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty, '+
+              SQL.Text:='select c.sj_no,a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty, '+
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,case when b.ppn > 0 then b.ppn else 0 end ppn,case when b.pph > 0 then b.pph else 0 end pph,b.po_no,'+
                         ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.acc_pemb account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
@@ -1707,9 +1724,9 @@ begin
                         ' inner join t_wh f on b.wh_code=f.wh_code '+
                         ' inner join t_ak_account_sub g on e.acc_pemb=g.account_code2 '+
                         ' LEFT JOIN t_purchase_invoice_det inv on b.po_no=inv.po_no and b.item_code=inv.item_code '+
-                        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+'  and inv.po_no IS NULL'+
+                        ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+'  and inv.po_no IS NULL and c.status_on_faktur<>''1'''+
                         //' and b.receive_no='+QuotedStr(Cb_Ref.Text)+' '+
-                        ' GROUP BY a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
+                        ' GROUP BY c.sj_no,a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
                         //' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,'+
                         ' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.acc_pemb,'+
                         'b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,'+
@@ -2732,6 +2749,7 @@ begin
 end;
 
 procedure TFNew_Pembelian.FormShow(Sender: TObject);
+var kk:string;
 begin
    loadtype;
    Load_ref_receive;
@@ -2739,11 +2757,44 @@ begin
    if Memterima_barang.Active=False then  Memterima_barang.Active:=True;
    PGFaktur.ActivePage:=TabBarang2;
 
+   {
    if memUM.Active=false then  memUM.Active:=true;
-   if QUM.Active=false then QUM.Active:=true;
+   if QUM.Active=false then QUM.Active:=true;}
+   //cr ds 21-02-2026
+ // qum.Close;
+ if MemterimaDet.RecordCount > 0 then
+ begin
+ kk:=MemterimaDet['nopo'];
+ ShowMessage('a-'+kk);
+ with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select a.*,b.supplier_name  from ( select a.po_no,COALESCE(AVG(a.um_value),0) um_value,a.no_trans,a.supplier_code,'+
+    'a.trans_date from t_advance_payment a INNER JOIN t_item_receive_det b on a.po_no=b.po_no '+
+    ' group by a.po_no,a.no_trans,a.supplier_code,a.trans_date) a  INNER JOIN t_supplier b on '+
+    ' a.supplier_code=b.supplier_code where a.po_no='+QuotedStr(MemterimaDet['nopo'])+''+
+    ' order BY a.no_trans --kode ';
+    open;
+  end;
 
+    //if memUM.Active=false then  memUM.Active:=true;
+     // QUM.Open;
+      ShowMessage('1');
+      if qum.RecordCount > 0 then
+      begin
+        edjum_um.value:=dm.Qtemp['um_value'];
+    //  ShowMessage('2');
+      end;
+      if QUM.RecordCount=0 then
+      begin
+        EdJum_um.Value:=0;
+     // ShowMessage('3');
+      end;
+ end else
+   EdJum_um.Value:=0;
    EdJum_Hutang.Value:=0;
-   EdJum_Um.Value:=0;
+   //EdJum_Um.Value:=0;
    EdJum_PotPem.Value:=0;
    EdJum_ReturPemb.Value:=0;
    EdJum_totalhut.Value:=0;

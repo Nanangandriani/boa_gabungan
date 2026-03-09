@@ -207,7 +207,7 @@ begin
   begin
   Autonumber;
 
-  ShowMessage(IntToStr(Urut));
+  //ShowMessage(IntToStr(Urut));
     with dm.Qtemp do
     begin
       close;
@@ -215,18 +215,18 @@ begin
       sql.Text:='Insert Into t_memorial_journal(memo_no,trans_date,notes,bk_no,'+
                 'faktur_no,rounding_status,post_status,trans_month,trans_year,'+
                 //' notes_id,'+
-                'created_by,order_no,trans_day,other_source, memorial_source) '+
+                'created_by,order_no,trans_day,other_source, memorial_source,additional_code) '+
                 'Values (:parno_bukti_memo,:partgl,:parketerangan,:parno_bk,:parno_faktur,'+
                 ':parstatus_pembulatan,:parstatus_post,:bln,:thn,'+
                 //' :id_ket,'+
-                ' :pic,:order_no,:hr, :os, :memorial_source)';
+                ' :pic,:order_no,:hr, :os, :memorial_source,'''')';
       parambyname('parno_bukti_memo').Value:=edno_bukti_memorial.Text;
       parambyname('partgl').Value:= FormatDateTime('yyyy-mm-dd',DTtgl.date);
       parambyname('parketerangan').Value:=Memket.Text;
       parambyname('parno_bk').Value:=edno_bk_pembulatan.Text;
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
       parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
-      parambyname('bln').Value:=cbbulan.ItemIndex;
+      parambyname('bln').Value:=FormatDateTime('mm',DTtgl.Date);
       parambyname('thn').Value:=edth.Text;
       //parambyname('id_ket').asstring:=Edkd_ket.Text;
       ParamByName('pic').AsString:=nm;
@@ -335,10 +335,13 @@ begin
       Sql.Clear;
       Sql.Text:='update t_memorial_journal set trans_date=:partgl,'+
                // ' notes_id=:idket,'+
-                'trans_month=:bln,trans_year=:thn,updated_by=:pic,'+
+               // 'trans_month=:bln,'+
+                //trans_year=:thn,
+               ' updated_by=:pic,'+
                 'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,'+
                 'faktur_no=:parno_faktur, other_source=:os, memorial_source=:memorial_source,'+
-                ' order_no=:order_no, trans_day=:hr, '+
+               // ' order_no=:order_no,
+                ' trans_day=:hr, '+
                 'rounding_status=:parstatus_pembulatan, post_status=:parstatus_post, '+
                 ' status_correction=0 '+
                 'where memo_no=:parno_bukti_memo';
@@ -347,15 +350,15 @@ begin
       parambyname('parketerangan').Value:=Memket.Text;
       parambyname('parno_bk').Value:=edno_bk_pembulatan.Text;
       parambyname('parno_faktur').Value:=edno_faktur_pembulatan.Text;
-      parambyname('bln').Value:=cbbulan.ItemIndex;
-      parambyname('thn').Value:=edth.Text;
+    //  parambyname('bln').Value:=cbbulan.ItemIndex;
+     // parambyname('thn').Value:=edth.Text;
       //parambyname('idket').AsString:=Edkd_ket.Text;
     //  ShowMessage('0');
       parambyname('pic').AsString:=nm;
       ParamByName('memorial_source').Value:=CbJenis.ItemIndex;
 
-      ParamByName('order_no').Value:=Urut;
-      parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
+      //ParamByName('order_no').Value:=Urut;
+     // parambyname('hr').Value:=FormatDateTime('dd',DTtgl.Date);
       if (edno_bk_pembulatan.Text<>'') and (edno_faktur_pembulatan.Text<>'') then
       begin
         parambyname('parstatus_pembulatan').Value:=1;
@@ -500,7 +503,7 @@ begin
   end
   else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
   begin
-    BSave.Enabled := False;
+   // BSave.Enabled := False;
     BCorrection.Visible := True;
     BCorrection.Enabled := True;
   end;

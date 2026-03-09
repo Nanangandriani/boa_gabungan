@@ -246,6 +246,8 @@ begin
   edNama_supplier.Clear;
   edNoRek.Clear;
   edNamaBank.Clear;
+  tgl_cek.date:=now();
+  tgl_tempo_cek.date:=now();
   //edKodeMataUang.Clear;
   //edNamaMataUang.Clear;
   edUntukPengeluaran.Clear;
@@ -973,6 +975,7 @@ begin
           else
           if Status = 0 then
           begin
+              dtTransChange(Sender);
               Autonumber;
               if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
               begin
@@ -987,6 +990,7 @@ begin
           begin
               if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
               begin
+                dtTransChange(Sender);
                 Update;
                 Dm.Koneksi.Commit;
                 MessageDlg('Data berhasil diupdate..!!',mtInformation,[MBOK],0);
@@ -1509,6 +1513,8 @@ begin
    dtTrans.Date:=Now;
    dtPeriode1.Date:=Now;
    dtPeriode2.Date:=Now;
+   tgl_cek.Date:=Now;
+   tgl_tempo_cek.Date:=Now;
    cbsumberdata.OnSelect(sender);
    if MemKKasBank.Active=false then
       MemKKasBank.Active:=true;

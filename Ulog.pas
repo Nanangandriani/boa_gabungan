@@ -74,12 +74,18 @@ type
     cxBarEditItem2: TcxBarEditItem;
     dtTanggal1: TdxBarDateCombo;
     dtTanggal2: TdxBarDateCombo;
+    edMenu: TcxBarEditItem;
+    dxBarLargeButton9: TdxBarLargeButton;
     procedure cxBarEditItem2PropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure dxBarLargeButton9Click(Sender: TObject);
+    procedure edMenuPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
+    procedure cbAksiChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,6 +113,14 @@ begin
     Application.CreateForm(TFLog, Result);
 end;
 
+procedure TFLog.cbAksiChange(Sender: TObject);
+begin
+  if (cbAksi.ItemIndex=6) OR (cbAksi.ItemIndex=7) then
+  begin
+    edMenu.EditValue:='';
+  end;
+end;
+
 procedure TFLog.cxBarEditItem2PropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
@@ -119,6 +133,24 @@ end;
 procedure TFLog.dxBarLargeButton6Click(Sender: TObject);
 begin
   Refresh;
+end;
+
+procedure TFLog.dxBarLargeButton9Click(Sender: TObject);
+begin
+  cbAksi.ItemIndex:=0;
+  edUser.EditValue:='';
+  edMenu.EditValue:='';
+  dtTanggal1.Date:=NOW;
+  dtTanggal2.Date:=NOW;
+end;
+
+procedure TFLog.edMenuPropertiesButtonClick(Sender: TObject;
+  AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master User';
+  FMasterData.vcall:='logmenu';
+  FMasterData.update_grid('''''','submenu','''''','t_log WHERE submenu is not NULL GROUP BY submenu ','ORDER BY submenu asc');
+  FMasterData.ShowModal;
 end;
 
 procedure TFLog.FormCreate(Sender: TObject);
@@ -135,12 +167,13 @@ procedure TFLog.FormShow(Sender: TObject);
 begin
   cbAksi.ItemIndex:=0;
   edUser.EditValue:='';
+  edMenu.EditValue:='';
   dtTanggal1.Date:=NOW;
   dtTanggal2.Date:=NOW;
 end;
 
 procedure TFLog.Refresh;
-var strAksi, strUser: String;
+var strAksi, strUser, strSubMebu: String;
 begin
   if cbAksi.Text='SEMUA' then
   begin
@@ -156,12 +189,19 @@ begin
     strUser:= ' AND full_name='+QuotedStr(edUser.EditValue);
   end;
 
+  if edMenu.EditValue='' then
+  begin
+    strSubMebu := '';
+  end else begin
+    strSubMebu:= ' AND submenu='+QuotedStr(edMenu.EditValue);
+  end;
+
   with QLog do
   begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM vlog WHERE date::date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+' AND '+
-              'Action IS NOT NULL'+strAksi+strUser+' Order By full_name, date ASC';
+              'Action IS NOT NULL'+strAksi+strUser+strSubMebu+' Order By date ASC';
     open;
   end;
 

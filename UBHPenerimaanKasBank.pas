@@ -436,129 +436,128 @@ begin
 
   with QCetak2 do
   begin
-       close;
-       sql.Clear;
-       sql.Add('WITH debet_details AS ( '+
-              'SELECT '+
-              'a.trans_no, '+
-              'a.account_code, '+
-              'a.account_name, '+
-              'a.db AS amount_debet_lain, '+
-              'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn '+
-              'FROM "public"."VTrans_Journal" a '+
-              'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
-              'WHERE a.status_dk = ''D''  '+
-              'AND a.db <> 0  '+
-              'AND b.header_code NOT IN (''1101'', ''1102'') '+
-              '), '+
-              'kredit_details AS ( '+
-              'SELECT '+
-              'a.trans_no,'+
-              'a.account_code,'+
-              'a.account_name, '+
-              'a.kd AS amount_kredit_lain,'+
-              'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn '+
-              'FROM "public"."VTrans_Journal" a '+
-              'WHERE a.status_dk = ''K'' '+
-              'AND a.kd <> 0 '+
-              'AND a.account_code <> ''1104.01'' '+
-              '), '+
-              'row_master AS ( '+
-              'SELECT trans_no, rn FROM debet_details '+
-              'UNION '+
-              'SELECT trans_no, rn FROM kredit_details '+
-              ') '+
+    close;
+    sql.Clear;
+    sql.Add('WITH debet_details AS ( '+
+          'SELECT '+
+          'a.trans_no, '+
+          'a.account_code, '+
+          'a.account_name, '+
+          'a.db AS amount_debet_lain, '+
+          'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn '+
+          'FROM "public"."VTrans_Journal" a '+
+          'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
+          'WHERE a.status_dk = ''D''  '+
+          'AND a.db <> 0  '+
+          'AND b.header_code NOT IN (''1101'', ''1102'') '+
+          '), '+
+          'kredit_details AS ( '+
+          'SELECT '+
+          'a.trans_no,'+
+          'a.account_code,'+
+          'a.account_name, '+
+          'a.kd AS amount_kredit_lain,'+
+          'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn '+
+          'FROM "public"."VTrans_Journal" a '+
+          'WHERE a.status_dk = ''K'' '+
+          'AND a.kd <> 0 '+
+          'AND a.account_code <> ''1104.01'' '+
+          '), '+
+          'row_master AS ( '+
+          'SELECT trans_no, rn FROM debet_details '+
+          'UNION '+
+          'SELECT trans_no, rn FROM kredit_details '+
+          ') '+
 
-              'SELECT DISTINCT '+
-              'a.voucher_no,'+
-              'a.trans_date, '+
-              'a.description, '+
-              'COALESCE(c.code_cust, d.customer_code) AS code_cust, '+
-              'COALESCE(c.customer_name_pkp, d.customer_name_pkp) AS name_cust, '+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_code ELSE '''' END AS account_code_bank,'+
-              'e.account_code AS account_code_bank2, '+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_name ELSE '''' END AS account_name_bank,'+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.db ELSE NULL END AS amount_bank,'+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_code ELSE '''' END AS account_code_piutang, '+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_name ELSE '''' END AS account_name_piutang,'+
-              'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.kd ELSE NULL END AS amount_piutang, '+
-//              'e.account_code AS account_code_bank,'+
-//              'e.account_code AS account_code_bank2, '+
-//              'e.account_name AS account_name_bank,'+
-//              'e.db AS amount_bank,'+
-//              ' f.account_code AS account_code_piutang, '+
-//              ' f.account_name AS account_name_piutang,'+
-//              ' f.kd AS amount_piutang, '+
-              'g.account_code AS d_code_lain,'+
-              'g.account_name AS d_name_lain, '+
-              'g.amount_debet_lain,'+
-              'h.account_code AS k_code_lain, '+
-              'h.account_name AS k_name_lain,'+
-              'h.amount_kredit_lain,  '+
-              'a.for_acceptance, '+
-              'COALESCE(c.code_kecamatan, d.code_kecamatan) AS code_kecamatan,'+
-              'COALESCE(c.code_kabupaten, d.code_kabupaten) AS code_kabupaten,'+
-              'COALESCE(c.code_tp, d.code_tp) AS code_tp,'+
-              'COALESCE(c.code_karesidenan, d.code_karesidenan) AS code_karesidenan, '+
-              'rm.rn '+
+          'SELECT DISTINCT '+
+          'a.voucher_no,'+
+          'a.trans_date, '+
+          'a.description, '+
+          'COALESCE(c.code_cust, d.customer_code) AS code_cust, '+
+          'COALESCE(c.customer_name_pkp, d.customer_name_pkp) AS name_cust, '+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_code ELSE '''' END AS account_code_bank,'+
+          'e.account_code AS account_code_bank2, '+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_name ELSE '''' END AS account_name_bank,'+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.db ELSE NULL END AS amount_bank,'+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_code ELSE '''' END AS account_code_piutang, '+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_name ELSE '''' END AS account_name_piutang,'+
+          'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.kd ELSE NULL END AS amount_piutang, '+
+    //              'e.account_code AS account_code_bank,'+
+    //              'e.account_code AS account_code_bank2, '+
+    //              'e.account_name AS account_name_bank,'+
+    //              'e.db AS amount_bank,'+
+    //              ' f.account_code AS account_code_piutang, '+
+    //              ' f.account_name AS account_name_piutang,'+
+    //              ' f.kd AS amount_piutang, '+
+          'g.account_code AS d_code_lain,'+
+          'g.account_name AS d_name_lain, '+
+          'g.amount_debet_lain,'+
+          'h.account_code AS k_code_lain, '+
+          'h.account_name AS k_name_lain,'+
+          'h.amount_kredit_lain,  '+
+          'a.for_acceptance, '+
+          'COALESCE(c.code_kecamatan, d.code_kecamatan) AS code_kecamatan,'+
+          'COALESCE(c.code_kabupaten, d.code_kabupaten) AS code_kabupaten,'+
+          'COALESCE(c.code_tp, d.code_tp) AS code_tp,'+
+          'COALESCE(c.code_karesidenan, d.code_karesidenan) AS code_karesidenan, '+
+          'rm.rn '+
 
-              'FROM t_cash_bank_acceptance a '+
-              'LEFT JOIN row_master rm ON rm.trans_no = a.voucher_no '+
+          'FROM t_cash_bank_acceptance a '+
+          'LEFT JOIN row_master rm ON rm.trans_no = a.voucher_no '+
 
-              'LEFT JOIN t_cash_bank_acceptance_receivable b ON b.voucher_no = a.voucher_no '+
-              'LEFT JOIN get_selling(false) c ON c.trans_no = b.no_invoice AND c.deleted_at IS NULL '+
+          'LEFT JOIN t_cash_bank_acceptance_receivable b ON b.voucher_no = a.voucher_no '+
+          'LEFT JOIN get_selling(false) c ON c.trans_no = b.no_invoice AND c.deleted_at IS NULL '+
 
-              'LEFT JOIN ( '+
-              'SELECT a.*, a.code_region AS code_kecamatan, c.code AS code_kabupaten, c.code_karesidenan, c.code_tp '+
-              'FROM t_cash_bank_acceptance_customer a  '+
-              'LEFT JOIN t_region_subdistrict b ON b.code = a.code_region '+
-              'LEFT JOIN t_region_regency c ON c.code = b.code_regency '+
-              'WHERE a.deleted_at IS NULL '+
-              ') d ON d.trans_no = a.voucher_no  '+
-              'LEFT JOIN (  '+
-              'SELECT a.trans_no, a.account_code, a.account_name, a.db '+
-              'FROM "public"."VTrans_Journal" a '+
-              'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
-              'WHERE b.header_code IN (''1101'', ''1102'') '+
-              ') e ON e.trans_no = a.voucher_no '+
-              'LEFT JOIN ( '+
-              'SELECT a.trans_no, a.account_code, a.account_name, a.kd '+
-              'FROM "public"."VTrans_Journal" a '+
-              'WHERE a.account_code = ''1104.01'' '+
-              ') f ON f.trans_no = a.voucher_no  '+
-              'LEFT JOIN debet_details g ON g.trans_no = a.voucher_no AND g.rn = rm.rn  '+
-              'LEFT JOIN kredit_details h ON h.trans_no = a.voucher_no AND h.rn = rm.rn '+
+          'LEFT JOIN ( '+
+          'SELECT a.*, a.code_region AS code_kecamatan, c.code AS code_kabupaten, c.code_karesidenan, c.code_tp '+
+          'FROM t_cash_bank_acceptance_customer a  '+
+          'LEFT JOIN t_region_subdistrict b ON b.code = a.code_region '+
+          'LEFT JOIN t_region_regency c ON c.code = b.code_regency '+
+          'WHERE a.deleted_at IS NULL '+
+          ') d ON d.trans_no = a.voucher_no  '+
+          'LEFT JOIN (  '+
+          'SELECT a.trans_no, a.account_code, a.account_name, a.db '+
+          'FROM "public"."VTrans_Journal" a '+
+          'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
+          'WHERE b.header_code IN (''1101'', ''1102'') '+
+          ') e ON e.trans_no = a.voucher_no '+
+          'LEFT JOIN ( '+
+          'SELECT a.trans_no, a.account_code, a.account_name, a.kd '+
+          'FROM "public"."VTrans_Journal" a '+
+          'WHERE a.account_code = ''1104.01'' '+
+          ') f ON f.trans_no = a.voucher_no  '+
+          'LEFT JOIN debet_details g ON g.trans_no = a.voucher_no AND g.rn = rm.rn  '+
+          'LEFT JOIN kredit_details h ON h.trans_no = a.voucher_no AND h.rn = rm.rn '+
 
-              'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+'and a.deleted_at IS NULL');
+          'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+'and a.deleted_at IS NULL');
 
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND a.code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edTp.EditValue<>'' then
-         begin
-          sql.add(' AND COALESCE(c.code_tp, d.code_tp)='+QuotedStr(vkd_tp)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND COALESCE(c.code_kabupaten, d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
-         end;
-       sql.add(' ORDER BY '+
-              'e.account_code ASC,  '+
-              'a.voucher_no ASC, '+
-              'rm.rn ASC;');
-       open;
-   end;
+     if edKaresidenan.EditValue<>'' then
+     begin
+      sql.add(' AND a.code_karesidenan='+QuotedStr(vkd_kares)+' ');
+     end;
+     if edTp.EditValue<>'' then
+     begin
+      sql.add(' AND COALESCE(c.code_tp, d.code_tp)='+QuotedStr(vkd_tp)+' ');
+     end;
+     if edKabupaten.EditValue<>'' then
+     begin
+      sql.add(' AND COALESCE(c.code_kabupaten, d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
+     end;
+     sql.add(' ORDER BY '+
+            'e.account_code ASC,  '+
+            'a.voucher_no ASC, '+
+            'rm.rn ASC;');
+     open;
+  end;
 
   if QCetak2.RecordCount=0 then
   begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
   end;
 
  if QCetak2.RecordCount<>0 then
  begin
-
    cLocation := ExtractFilePath(Application.ExeName);
 
    //ShowMessage(cLocation);
@@ -589,7 +588,6 @@ begin
 //    end;
 
     Report.ShowReport();
-
  end;
 
 end;
@@ -600,8 +598,8 @@ begin
   try
    with QBHPenerimaanKasBank do
    begin
-       close;
-       sql.Clear;
+      close;
+      sql.Clear;
       sql.Add('SELECT zz.*,cust.code_tp,cust.tp,cust.code_karesidenan,cust.karesidenan ,cust.code_kabupaten,cust.kabupaten '+
               'FROM '+
               '( '+
@@ -633,19 +631,19 @@ begin
 ////               ' from t_cash_bank_acceptance_receivable GROUP BY voucher_no)cc ON a.voucher_no=cc.voucher_no '+
 //               ' where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
 //               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' ');
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edTp.EditValue<>'' then
-         begin
-          sql.add(' AND cust.code_tp='+QuotedStr(vkd_tp)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND cust.code_kabupaten='+QuotedStr(vkd_kab)+' ');
-         end;
-          sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
+       if edKaresidenan.EditValue<>'' then
+       begin
+        sql.add(' AND cust.code_karesidenan='+QuotedStr(vkd_kares)+' ');
+       end;
+       if edTp.EditValue<>'' then
+       begin
+        sql.add(' AND cust.code_tp='+QuotedStr(vkd_tp)+' ');
+       end;
+       if edKabupaten.EditValue<>'' then
+       begin
+        sql.add(' AND cust.code_kabupaten='+QuotedStr(vkd_kab)+' ');
+       end;
+       sql.add(' ORDER BY zz.trans_date, zz.voucher_no');
        open;
    end;
 
@@ -741,8 +739,8 @@ end;
 
 procedure TFBHPenerimaanKasBank.dxBarLargeButton3Click(Sender: TObject);
 begin
-   with QBHPenerimaanKasBankExport do
-   begin
+  with QBHPenerimaanKasBankExport do
+  begin
        close;
        sql.Clear;
        sql.Add('SELECT a.voucher_no,a.trans_date,a.description,COALESCE(c.code_cust,d.customer_code) code_cust,COALESCE(c.customer_name_pkp,d.customer_name_pkp) name_cust, '+
@@ -763,18 +761,18 @@ begin
                ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+'  and a.deleted_at is NULL');
 //                'where a.voucher_no in(''BM/002/02/I/2026/NPA/SBY/MDI'',''BM/014/02/I/2026/NPA/BSK/MDI'',''BM/017/02/I/2026/NPA/SBY/MDI'')  and a.deleted_at is NULL');
 
-         if edKaresidenan.EditValue<>'' then
-         begin
-          sql.add(' AND COALESCE(c.code_karesidenan,d.code_karesidenan)='+QuotedStr(vkd_kares)+' ');
-         end;
-         if edTp.EditValue<>'' then
-         begin
-          sql.add(' AND COALESCE(c.code_tp,d.code_tp)='+QuotedStr(vkd_tp)+' ');
-         end;
-         if edKabupaten.EditValue<>'' then
-         begin
-          sql.add(' AND  COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
-         end;
+       if edKaresidenan.EditValue<>'' then
+       begin
+        sql.add(' AND COALESCE(c.code_karesidenan,d.code_karesidenan)='+QuotedStr(vkd_kares)+' ');
+       end;
+       if edTp.EditValue<>'' then
+       begin
+        sql.add(' AND COALESCE(c.code_tp,d.code_tp)='+QuotedStr(vkd_tp)+' ');
+       end;
+       if edKabupaten.EditValue<>'' then
+       begin
+        sql.add(' AND  COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
+       end;
        sql.add(' ORDER BY a.trans_date, a.voucher_no');
        open;
   end;
@@ -802,12 +800,11 @@ begin
             'SUM(CASE WHEN b.account_code = ''1104.01'' THEN b.kd ELSE 0 END) AS tot_piutang, '+
             'SUM(CASE WHEN b.status_dk = ''K'' AND b.kd <> 0 AND b.account_code <> ''1104.01'' THEN b.kd ELSE 0 END) AS tot_k_lain  '+
             'FROM t_cash_bank_acceptance a '+
-            ' LEFT JOIN t_cash_bank_acceptance_receivable bb on bb.voucher_no=a.voucher_no '+
+            'LEFT JOIN t_cash_bank_acceptance_receivable bb on bb.voucher_no=a.voucher_no '+
             'LEFT JOIN get_selling(False) c on c.trans_no=bb.no_invoice and c.deleted_at is NULL '+
-             'LEFT JOIN  (SELECT a.*,a.code_region code_kecamatan,c.code code_kabupaten,c.code_karesidenan,c.code_tp from t_cash_bank_acceptance_customer a '+
-             'LEFT JOIN t_region_subdistrict b on b.code=a.code_region '+
-             'LEFT JOIN t_region_regency c on c.code=b.code_regency WHERE a.deleted_at is NULL) d on d.trans_no=a.voucher_no '+
-
+            'LEFT JOIN (SELECT a.*,a.code_region code_kecamatan,c.code code_kabupaten,c.code_karesidenan,c.code_tp from t_cash_bank_acceptance_customer a '+
+            'LEFT JOIN t_region_subdistrict b on b.code=a.code_region '+
+            'LEFT JOIN t_region_regency c on c.code=b.code_regency WHERE a.deleted_at is NULL) d on d.trans_no=a.voucher_no '+
             'LEFT JOIN (SELECT bb.header_code,aa.* from public."VTrans_Journal" aa left join t_ak_account bb on bb.code=aa.account_code) b ON b.trans_no=a.voucher_no '+
             'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' '+
             'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' '+
@@ -822,7 +819,7 @@ begin
      end;
      if edKabupaten.EditValue<>'' then
      begin
-      sql.add(' AND  COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
+      sql.add(' AND COALESCE(c.code_kabupaten,d.code_kabupaten)='+QuotedStr(vkd_kab)+' ');
      end;
 
      sql.Add('GROUP BY a.voucher_no, a.trans_date  '+
@@ -836,7 +833,6 @@ begin
             'FROM detail_trans');
      Open;
   end;
-
 
   QBHPenerimaanKasBankExportDebit.Close;
   QBHPenerimaanKasBankExportDebit.Open;

@@ -403,7 +403,6 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 955
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
   RzTabs, MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, MemDS, DBAccess,
   Uni, RzButton, Vcl.StdCtrls, Vcl.Mask, RzEdit, Vcl.ExtCtrls, RzBtnEdt,
-  Vcl.Samples.Gauges, Vcl.Grids, Vcl.DBGrids, frxClass;
+  Vcl.Samples.Gauges, Vcl.Grids, Vcl.DBGrids, frxClass, VirtualTable;
 
 type
   TFPengajuan_AppJurnal_Trans = class(TForm)
@@ -113,6 +113,7 @@ type
     Dtselesai_kas: TRzDateTimeEdit;
     Qkas: TUniQuery;
     DataSetDriverEh3: TDataSetDriverEh;
+    VirtualTable1: TVirtualTable;
     procedure Ednm_kabButtonClick(Sender: TObject);
     procedure BTampil_PembClick(Sender: TObject);
     procedure BTampil_PenjClick(Sender: TObject);
@@ -160,6 +161,7 @@ type
     procedure Ednm_kares2ButtonClick(Sender: TObject);
     procedure ednm_tp2ButtonClick(Sender: TObject);
     procedure ednm_kab2ButtonClick(Sender: TObject);
+    procedure RzBitBtn7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -192,8 +194,9 @@ procedure TFPengajuan_AppJurnal_Trans.BTampil_PembClick(Sender: TObject);
 var vkategori:string;
 begin
   vkategori:='';
-  MemPembelian.EmptyTable;
   MemPembelian.Active:=false;
+  MemPembelian.Active:=true;
+  MemPembelian.EmptyTable;
   Qdetail_Pembelian.Close;
   DBGridEh1.StartLoadingStatus();
   if cbkategori.Text<>'' then
@@ -247,24 +250,23 @@ begin
                 ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+'';
       open;
     end;
-  {dm.Qtemp.First;
-  while not dm.Qtemp.Eof do
+  QPembelian.first;
+  while not QPembelian.Eof do
   begin
     MemPembelian.Insert;
-    MemPembelian['trans_no']:=dm.Qtemp['trans_no'];
-    MemPembelian['faktur_no']:=dm.Qtemp['faktur_no'];
-    MemPembelian['supplier_name']:=dm.Qtemp['supplier_name'];
-    MemPembelian['subtot']:=dm.Qtemp['subtot'];
-    MemPembelian['ppn']:=dm.Qtemp['ppn'];
-    MemPembelian['grandtot']:=dm.Qtemp['grandtot'];
-    MemPembelian['approval_status']:=dm.Qtemp['approval_status'];
-    MemPembelian['trans_date']:=dm.Qtemp['trans_date'];
-    MemPembelian['approval_status']:=dm.Qtemp['approval_status'];
-    MemPembelian['stat_balance']:=dm.Qtemp['stat_balance'];
+    MemPembelian['trans_no']:=QPembelian['trans_no'];
+    MemPembelian['faktur_no']:=QPembelian['faktur_no'];
+    MemPembelian['supplier_name']:=QPembelian['supplier_name'];
+    MemPembelian['subtot']:=QPembelian['subtot'];
+    MemPembelian['ppn']:=QPembelian['ppn'];
+    MemPembelian['grandtot']:=QPembelian['grandtot'];
+    MemPembelian['approval_status']:=QPembelian['approval_status'];
+    MemPembelian['trans_date']:=QPembelian['trans_date'];
+    MemPembelian['approval_status']:=QPembelian['approval_status'];
+    MemPembelian['stat_balance']:=QPembelian['stat_balance'];
     MemPembelian.Post;
-    dm.Qtemp.Next;
-  end;     }
-  MemPembelian.Active:=true;
+    QPembelian.Next;
+  end;
   Qdetail_Pembelian.Open;
   DBGridEh1.FinishLoadingStatus();
 end;
@@ -291,8 +293,9 @@ begin
     begin
       vTP:=' AND code_tp='+QuotedStr(Edkd_tp.text)+' ';
     end;
-  MemPenjualan.EmptyTable;
   MemPenjualan.Active:=false;
+  MemPenjualan.Active:=true;
+  MemPenjualan.EmptyTable;
   Qdetail_Penjualan.Close;
   DBGridEh2.StartLoadingStatus();
   with Qpenjualan do
@@ -342,12 +345,8 @@ begin
     ExecSQL;
   end;
 // qpenjualan.First;
-
-  Qpenjualan.FieldDefs.Update;
-  Qpenjualan.FieldDefs[0].DataType := ftString;
   qpenjualan.open;
-  MemPenjualan.Active:=true;
-{  while not Qpenjualan.Eof do
+  while not Qpenjualan.Eof do
   begin
     MemPenjualan.Insert;
     MemPenjualan['trans_no']:=qpenjualan['trans_no'];
@@ -360,8 +359,8 @@ begin
     MemPenjualan['approval_status']:=qpenjualan['approval_status'];
     MemPenjualan['stat_balance']:=qpenjualan['stat_balance'];
     MemPenjualan.Post;
-    dm.Qtemp.Next;
-  end;             }
+    qpenjualan.Next;
+  end;
   Qdetail_Penjualan.Open;
   DBGridEh2.FinishLoadingStatus();
 end;
@@ -907,6 +906,16 @@ begin
   Ednm_tp.Clear;
 end;
 
+procedure TFPengajuan_AppJurnal_Trans.RzBitBtn7Click(Sender: TObject);
+begin
+  Edkd_kab2.Clear;
+  Edkd_kares2.Clear;
+  Edkd_tp2.Clear;
+  Ednm_kab2.Clear;
+  ednm_kares2.Clear;
+  Ednm_tp2.Clear;
+end;
+
 procedure TFPengajuan_AppJurnal_Trans.BApp_PenjClick(Sender: TObject);
 begin
    MemPenjualan.First;
@@ -1077,21 +1086,22 @@ begin
 //    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
 //  end else
 //  begin
-    if Edkd_kares.text<>'' then
+    if Edkd_kares2.text<>'' then
     begin
       vKaresidenan:=' AND code_karesidenan='+QuotedStr(Edkd_kares2.Text)+' ';
     end;
-    if Edkd_kab.text<>'' then
+    if Edkd_kab2.text<>'' then
     begin
       vKabupaten:=' AND code_kabupaten='+QuotedStr(edkd_kab2.Text)+' ';
     end;
-    if edkd_TP.text<>'' then
+    if edkd_TP2.text<>'' then
     begin
       vTP:=' AND code_tp='+QuotedStr(Edkd_tp2.text)+' ';
     end;
   DBGridEh5.StartLoadingStatus();
-  MemKas.EmptyTable;
   MemKas.Close;
+  MemKas.Open;
+  MemKas.EmptyTable;
   with Qkas do
   begin
     close;
@@ -1122,21 +1132,20 @@ begin
     ' '+vKaresidenan+vtp+vKabupaten+'';                             // cr ds 19-02-2026
     execute;
   end;
-  MemKas.Open;
-  {dm.Qtemp.First;
-  while not dm.Qtemp.Eof do
+  Qkas.First;
+  while not Qkas.Eof do
   begin
     Memkas.Insert;
-    Memkas['trans_no']:=dm.Qtemp['Voucher_no'];
- //   Memkas['faktur_no']:=dm.Qtemp['no_inv_tax'];
-    Memkas['ket']:=dm.Qtemp['description'];
-    Memkas['jumlah']:=dm.Qtemp['paid_amount'];
-    Memkas['trans_date']:=dm.Qtemp['trans_date'];
-    Memkas['status_app']:=dm.Qtemp['approved_status'];
-    Memkas['stat_balance']:=dm.Qtemp['stat_balance'];
+    Memkas['trans_no']:=Qkas['trans_no'];
+  //  Memkas['faktur_no']:=Qkas['faktur_no'];
+    Memkas['ket']:=Qkas['ket'];
+    Memkas['jumlah']:=Qkas['jumlah'];
+    Memkas['trans_date']:=Qkas['trans_date'];
+    Memkas['status_app']:=Qkas['approved_status'];
+    Memkas['stat_balance']:=Qkas['stat_balance'];
     Memkas.Post;
-    dm.Qtemp.Next;
-  end;       }
+    Qkas.Next;
+  end;
   QDetail_kas.Close;
   QDetail_kas.Open;
   DBGridEh5.FinishLoadingStatus();

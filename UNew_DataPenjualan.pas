@@ -191,6 +191,7 @@ type
 //    procedure CheckJurnalPosting;
     procedure HitungDetail;
     procedure SimpanPelanggan;
+    procedure CariOrderBolong;
   end;
 
 var
@@ -248,6 +249,40 @@ begin
               ' SET status=true, code_trans='+QuotedStr(FNew_Penjualan.edKode_Trans.text)+' '+
               ' WHERE "no_invoice_tax"='+QuotedStr(FNew_Penjualan.vHasilGetFakturPajak)+';';
     ExecSQL;
+  end;
+end;
+
+procedure TFNew_Penjualan.CariOrderBolong;
+var
+  PrevNo, CurrNo: Integer;
+begin
+  with dm.Qtemp2 do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := 'SELECT order_no FROM t_selling ' +
+                'WHERE trans_day=''9'' AND trans_year=''2026'' AND trans_month=''2'' ' +
+                'AND additional_code=''PTI'' AND deleted_at IS NULL ' +
+                'ORDER BY CAST(order_no AS UNSIGNED) ASC';
+    Open;
+  end;
+
+  if dm.Qtemp2.IsEmpty then Exit;
+
+  PrevNo := dm.Qtemp2.FieldByName('order_no').AsInteger;
+  dm.Qtemp2.Next;
+
+  while not dm.Qtemp2.Eof do
+  begin
+    CurrNo := dm.Qtemp2.FieldByName('order_no').AsInteger;
+
+    if (CurrNo <> PrevNo + 1) then
+    begin
+      ShowMessage('Ada nomor bolong antara: ' + IntToStr(PrevNo) + ' dan ' + IntToStr(CurrNo));
+    end;
+
+    PrevNo := CurrNo;
+    dm.Qtemp2.Next;
   end;
 end;
 
@@ -956,7 +991,6 @@ begin
       strWhereUangMuka:=' code_head_office='+QuotedStr(strCodeHeadOffice)+' AND ';
     end;
 
-
     with FbrowseUangMukaDibayarkan.Qdetail do
     begin
       close;
@@ -973,7 +1007,6 @@ begin
                      FormatFloat('#,##0.##', FbrowseUangMukaDibayarkan.Qdetail['sisa_uang_muka']);
     end;
   end;
-
 
   if (FNew_Penjualan.Status=0) AND (StatusCekKasifikasi=0) and (dm.Qtemp.FieldValues['value_parameter']=1) then
   begin
@@ -1491,7 +1524,7 @@ end;
 procedure TFNew_Penjualan.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   //Hapus stock booking jika batal simpan
-  reset_stock;
+//  reset_stock;
 end;
 
 procedure TFNew_Penjualan.FormShow(Sender: TObject);
@@ -1506,11 +1539,9 @@ begin
     SpeedButton1.Visible:=False;
     spJatuhTempo.Enabled:=False;
     btMasterSumber.Visible:=False;
-    btAddDetail.Visible:=False;
   end else begin
     btAddDetail.Visible:=True;
     SpeedButton1.Visible:=True;
-    btAddDetail.Visible:=True;
     spJatuhTempo.Enabled:=True;
     edNomorFaktur.ReadOnly:=True;
     btMasterSumber.Visible:=True;
@@ -1804,7 +1835,7 @@ begin
     open;
   end;
 
-  if  Dm.Qtemp.RecordCount=0 then
+  if Dm.Qtemp.RecordCount=0 then
   begin
     FNew_Penjualan.MemDetail.active:=false;
     FNew_Penjualan.MemDetail.active:=true;

@@ -28,7 +28,8 @@ uses
   dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, RzButton, Vcl.StdCtrls,
   Vcl.Mask, RzEdit, RzSpnEdt, RzCmboBx, Vcl.ExtCtrls, RzPanel, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, RzLabel;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, RzLabel, frxExportXLSX, frxClass,
+  frxExportBaseDialog, frxExportXLS, frxDBSet, ShellAPI;
 
 type
   TFListUangMukaPenjualan = class(TForm)
@@ -73,17 +74,25 @@ type
     QUangMukaPenjualan: TUniQuery;
     DsUangMukaPenjualan: TDataSource;
     cxBarEditItem4: TcxBarEditItem;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
+    Report: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    dxBarManager1Bar2: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActSearchClick(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure Refresh;
+    procedure ExportToExcel;
   end;
 
 var
@@ -182,6 +191,117 @@ begin
   FNew_UangMukaPenjualan.ShowModal;
 end;
 
+procedure TFListUangMukaPenjualan.ExportToExcel;
+var
+  Exporter: TfrxCustomExportFilter;
+  SaveDialog: TSaveDialog;
+  SavePath, FormName, FileExt: string;
+begin
+  SaveDialog := TSaveDialog.Create(nil);
+  Exporter := nil;
+  try
+    // Ambil nama form
+    FormName := Self.Name;
+    if Pos('TF', FormName) = 1 then
+      FormName := Copy(FormName, 3, Length(FormName))
+    else if Pos('T', FormName) = 1 then
+      FormName := Copy(FormName, 2, Length(FormName));
+    FormName := StringReplace(FormName, ' ', '', [rfReplaceAll]);
+    // Setup Save Dialog
+    SaveDialog.Title := 'Simpan Export Excel';
+    SaveDialog.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
+    SaveDialog.FilterIndex := 1;
+    SaveDialog.FileName := FormName + '_' + FormatDateTime('yyyymmdd_hhnnss', Now);
+    SavePath := ExtractFilePath(Application.ExeName) + 'Export\';
+    if not DirectoryExists(SavePath) then
+      ForceDirectories(SavePath);
+    SaveDialog.InitialDir := SavePath;
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing, ofPathMustExist];
+    if SaveDialog.Execute then
+    begin
+      // Ambil extension
+      FileExt := LowerCase(ExtractFileExt(SaveDialog.FileName));
+      // Debug: tampilkan extension yang terdeteksi
+      // ShowMessage('Extension: ' + FileExt); // Uncomment untuk debug
+      // Buat exporter sesuai FilterIndex (lebih reliable)
+      if SaveDialog.FilterIndex = 1 then
+      begin
+        // Excel 2007+ (.xlsx)
+        Exporter := TfrxXLSXExport.Create(nil);
+        TfrxXLSXExport(Exporter).Wysiwyg := True;
+        TfrxXLSXExport(Exporter).EmptyLines := True;
+        TfrxXLSXExport(Exporter).SuppressPageHeadersFooters := False;
+        TfrxXLSXExport(Exporter).ChunkSize := 1;
+        // Pastikan extension .xlsx
+        if FileExt <> '.xlsx' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xlsx')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else if SaveDialog.FilterIndex = 2 then
+      begin
+        // Excel 97-2003 (.xls)
+        Exporter := TfrxXLSExport.Create(nil);
+        TfrxXLSExport(Exporter).Wysiwyg := True;
+        TfrxXLSExport(Exporter).EmptyLines := True;
+        TfrxXLSExport(Exporter).SuppressPageHeadersFooters := False;
+        // Pastikan extension .xls
+        if FileExt <> '.xls' then
+          Exporter.FileName := ChangeFileExt(SaveDialog.FileName, '.xls')
+        else
+          Exporter.FileName := SaveDialog.FileName;
+      end
+      else
+      begin
+        ShowMessage('Format file tidak didukung!');
+        Exit;
+      end;
+      try
+        // Export
+        Exporter.ShowDialog := False;
+        Report.Export(Exporter);
+        // Konfirmasi buka file
+        if MessageDlg('Export berhasil!' + #13#10 +
+                      'File: ' + Exporter.FileName + #13#10#13#10 +
+                      'Apakah ingin membuka file sekarang?',
+                      mtInformation, [mbYes, mbNo], 0) = mrYes then
+        begin
+          ShellExecute(0, 'open', PChar(Exporter.FileName), nil, nil, SW_SHOW);
+        end;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error saat export: ' + E.Message);
+        end;
+      end;
+    end;
+  finally
+    if Assigned(Exporter) then
+      Exporter.Free;
+    SaveDialog.Free;
+  end;
+end;
+
+procedure TFListUangMukaPenjualan.dxBarLargeButton1Click(Sender: TObject);
+begin
+  Refresh;
+
+  if QUangMukaPenjualan.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end else
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_listuangmukapenjualan'+ '.fr3');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'periode',Uppercase('BULAN :'+cbBulan.Text+' TAHUN :'+edTahun.Text));
+    Report.PrepareReport(True);
+    ExportToExcel;
+  end;
+end;
+
 procedure TFListUangMukaPenjualan.FormShow(Sender: TObject);
 begin
   DBGrid.SearchPanel.SearchingText:='';
@@ -209,10 +329,13 @@ begin
       Close;
       Sql.Clear;
       Sql.Text:='select a.no_trans,a.trans_date,a.customer_code,c.account_name,b.customer_name,'+
-                'a.account_code,a.grand_tot,d.trans_no from t_down_payment_sales a '+
+                'a.account_code,a.grand_tot,(SELECT array_to_string(array_agg(trans_no), '', '') '+
+                'FROM t_selling_down_payment '+
+                'WHERE trans_no_down_payment = a.no_trans) trans_no ,e.sisa_uang_muka,e.voucher_no, e.no_rekening, e.name_bank from t_down_payment_sales a '+
 		            'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
                 'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code '+
-                'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.no_trans '+
+//                'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.no_trans '+
+                'LEFT JOIN get_down_payment_sales() e on e.no_trans_down_payment=a.no_trans '+
                 'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
                 'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' and a.deleted_at is NULL ORDER BY a.trans_date DESC, a.no_trans DESC;';
       Open;

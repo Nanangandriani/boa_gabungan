@@ -236,6 +236,7 @@ begin
     EdValas.Text      := VarToStrDef(Q['valas'], '');
     EdNilai_Valas.Text:= VarToStrDef(Q['valas_value'], '0');
     Edjenispo.Text    := VarToStrDef(Q['type'], '');
+    Edsj.Text    := VarToStrDef(Q['sj_no'], '');
 
     MemTerimaDet['header_code'] := Q['header_code'];
 
@@ -968,6 +969,7 @@ begin
    FNew_Pembelian.DBGridDetailpoColEnter(sender);
    FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
    FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+  // cr ds 4-2-2026
    Close;
 end;
 

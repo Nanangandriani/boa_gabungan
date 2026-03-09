@@ -898,7 +898,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45890.551913078700000000
-    ReportOptions.LastChange = 46051.604539259260000000
+    ReportOptions.LastChange = 46076.668780011580000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -980,10 +980,12 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         DataSet = frxDBDatasetDPPBlmDitagih
         DataSetName = 'frxDBDatasetDPPBlmDitagih'
         RowCount = 0
+        Stretched = True
         object SysMemo7: TfrxSysMemoView
           AllowVectorExport = True
           Width = 26.710472220000000000
           Height = 22.230983330000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1001,6 +1003,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 27.431821020000000000
           Width = 142.020247470000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'customer_name'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1020,6 +1023,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 169.347831530000000000
           Width = 67.698537680000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_trans'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1041,6 +1045,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 234.734908140000000000
           Width = 67.517060360000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1062,6 +1067,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 299.111111110000000000
           Width = 86.173228346456700000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1084,6 +1090,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 385.333333330000000000
           Width = 64.251968500000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'cash'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1106,6 +1113,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 449.238095240000000000
           Width = 92.856392950000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1128,6 +1136,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 542.666666670000000000
           Width = 62.362204720000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1147,6 +1156,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 604.041666670000000000
           Width = 65.008202100000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1166,6 +1176,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 669.333333330000000000
           Width = 54.960629920000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1185,6 +1196,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 723.333333330000000000
           Width = 71.433070870000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'no_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1204,6 +1216,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 794.750000000000000000
           Width = 62.478346460000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_tempo_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1223,6 +1236,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 857.333333330000000000
           Width = 72.944881890000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'cheque_amount1'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1245,6 +1259,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 930.562500000000000000
           Width = 87.724714100000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -2093,10 +2108,12 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         DataSet = frxDBDatasetDpp
         DataSetName = 'frxDBDatasetDpp'
         RowCount = 0
+        Stretched = True
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
           Width = 26.710472220000000000
           Height = 22.230983330000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -2114,6 +2131,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 27.431821020000000000
           Width = 142.020247470000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
           Font.Charset = DEFAULT_CHARSET
@@ -2132,6 +2150,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 169.347831530000000000
           Width = 67.698537680000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_trans'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2153,6 +2172,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 234.734908140000000000
           Width = 67.517060360000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2174,6 +2194,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 299.111111110000000000
           Width = 86.173228350000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2196,6 +2217,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 385.333333330000000000
           Width = 64.251968500000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'cash'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2218,6 +2240,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 449.238095240000000000
           Width = 92.856392950000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'receipt'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2238,8 +2261,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object Memo31: TfrxMemoView
           AllowVectorExport = True
           Left = 542.666666670000000000
-          Width = 59.716535433070870000
+          Width = 59.716535433070900000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2259,6 +2283,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 600.170698930000000000
           Width = 68.833121670000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2278,6 +2303,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 668.000000000000000000
           Width = 56.293963250000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2297,6 +2323,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 723.333333330000000000
           Width = 71.433070870000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'no_cheque'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2316,6 +2343,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 794.750000000000000000
           Width = 62.478346460000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'date_tempo_cheque'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2335,6 +2363,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 857.333333330000000000
           Width = 72.944881890000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'cheque_amount1'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2357,6 +2386,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Left = 930.562500000000000000
           Width = 87.724714100000000000
           Height = 22.299212600000000000
+          StretchMode = smMaxHeight
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2655,7 +2685,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 449.698197240000000000
           Top = 78.823747620000000000
-          Width = 219.212598425196900000
+          Width = 219.212598425197000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2709,7 +2739,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 542.396609930000000000
           Top = 110.776128570000000000
-          Width = 59.716535433070870000
+          Width = 59.716535433070900000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2727,7 +2757,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 602.794459400000000000
           Top = 110.887239680000000000
-          Width = 66.141732283464570000
+          Width = 66.141732283464600000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -3035,7 +3065,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object Memo49: TfrxMemoView
           AllowVectorExport = True
           Left = 858.199475070000000000
-          Width = 71.811023622047240000
+          Width = 71.811023622047200000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'

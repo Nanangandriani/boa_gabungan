@@ -619,7 +619,9 @@ begin
                  ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
                  ' from "public"."t_cash_bank_expenditure_det" a '+
                  ' where a.no_voucher='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
-                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' and  "position" =''D'' '+
+                 ' AND LEFT(code_account_header,4) NOT IN (SELECT LEFT(acc_code_pemb,4) from t_item_type)) xx '+
+                 //' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
                  ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
                  ' )t ORDER BY urut, faktur_date;');
          //sql.add(' select *  from t_cash_bank_expenditure_payable  a '+
@@ -690,7 +692,9 @@ begin
                  ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
                  ' from "public"."t_cash_bank_expenditure_det" a '+
                  ' where a.no_voucher='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.FieldByName('voucher_no').AsString)+' '+
-                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' and  "position" =''D'''+
+                 ' AND LEFT(code_account_header,4) NOT IN (SELECT LEFT(acc_code_pemb,4) from t_item_type)) xx '+
+                 //' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
                  ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
                  ' )t ORDER BY urut, faktur_date;');
          //sql.add(' select *  from t_cash_bank_expenditure_payable  a '+

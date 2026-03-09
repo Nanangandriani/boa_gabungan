@@ -754,7 +754,6 @@ begin
   begin
     MessageDlg('Tidak ada data yang dicetak, Penjualan sudah di batalkan..!!',mtInformation,[mbRetry],0);
   end else begin
-
     with QJurnal do
     begin
       close;
@@ -788,7 +787,6 @@ begin
       end;
 
      cLocation := ExtractFilePath(Application.ExeName);
-
      //ShowMessage(cLocation);
      ReportJurnal.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
      SetMemo(ReportJurnal,'nm_judul','DAFTAR JURNAL PENJUALAN');

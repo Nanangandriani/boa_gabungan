@@ -330,49 +330,84 @@ begin
     end;
     if vKodeSama=False then
     begin
-      with Dm.Qtemp do //Cari Penjualan
+      with dm.Qtemp do
       begin
         close;
-        sql.clear;
-        sql.add('SELECT zz.* from ( SELECT a.trans_no, a.code_item, a.name_item, '+
-                'a.amount, a.amount-COALESCE((SELECT SUM(aa.amount) FROM t_sales_returns_det aa '+
-                'LEFT JOIN  t_sales_returns bb on bb.trans_no=aa.trans_no '+
-                'where bb.no_inv_tax='+QuotedStr(FDataReturPenjualan.edNoFaktur.Text)+' and bb.deleted_at is NULL '+
-                'and aa.code_item=a.code_item GROUP BY aa.code_item),0) sisa_amount, a.code_unit,  a.name_unit, '+
-                'a.no_reference, a.unit_price, '+
-                'a.sub_total, a.ppn_percent, a.ppn_value, a.pph_account, a.pph_name, '+
-                'a.pph_percent, a.pph_value, a.tot_piece_value, a.tot_piece_percent, '+
-                'a.grand_tot, a.ppn_account, a.account_code  FROM  t_selling_det a  '+
-                'WHERE a.deleted_at IS NULL AND a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' and '+
-                'a.code_item='+QuotedStr(edKodeBarang.Text)+' ) zz ');
+        sql.Clear;
+        sql.Text:='SELECT * from t_selling_initial_balance WHERE trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV);
         open;
       end;
-      if  Dm.Qtemp.RecordCount<>0 then
+      if dm.Qtemp.RecordCount>0 then
       begin
         FDataReturPenjualan.MemDetail.active:=false;
         FDataReturPenjualan.MemDetail.active:=true;
         FDataReturPenjualan.MemDetail.insert;
-        FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
-        FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
-        FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
+        FDataReturPenjualan.MemDetail['NO_JUAL']:=FDataReturPenjualan.StrNoINV;
+        FDataReturPenjualan.MemDetail['KD_ITEM']:=edKodeBarang.Text;
+        FDataReturPenjualan.MemDetail['NM_ITEM']:=edNamaBarang.Text;
         FDataReturPenjualan.MemDetail['JUMLAH']:= edJumlah.Text;
-        FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=Dm.Qtemp.FieldByName('amount').AsFloat;
-        FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
-        FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
+        FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=edJumlah.Text;
+        FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=0;
+        FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=0;
         FDataReturPenjualan.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
         FDataReturPenjualan.MemDetail['NM_SATUAN']:=edSatuan.Text;
         //            FDataReturPenjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('sub_total').AsFloat;
-        FDataReturPenjualan.MemDetail['PPN_AKUN']:=Dm.Qtemp.fieldbyname('ppn_account').value;
-        FDataReturPenjualan.MemDetail['PPN_PERSEN']:=Dm.Qtemp.fieldbyname('ppn_percent').value;
+        FDataReturPenjualan.MemDetail['PPN_AKUN']:=0;
+        FDataReturPenjualan.MemDetail['PPN_PERSEN']:=0;
         //            FDataReturPenjualan.MemDetail['PPN_NILAI']:=ROUND(Dm.Qtemp.fieldbyname('ppn_value').value);
-        FDataReturPenjualan.MemDetail['PPH_AKUN']:=Dm.Qtemp.fieldbyname('pph_account').value;
-        FDataReturPenjualan.MemDetail['NAMA_PPH']:=Dm.Qtemp.fieldbyname('pph_name').value;
-        FDataReturPenjualan.MemDetail['PPH_PERSEN']:=ROUND(Dm.Qtemp.fieldbyname('pph_percent').value);
-        FDataReturPenjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
+        FDataReturPenjualan.MemDetail['PPH_AKUN']:='';
+        FDataReturPenjualan.MemDetail['NAMA_PPH']:='';
+        FDataReturPenjualan.MemDetail['PPH_PERSEN']:=0;
+        FDataReturPenjualan.MemDetail['PPH_NILAI']:=0;
         //            FDataReturPenjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
-        FDataReturPenjualan.MemDetail['AKUN_PERK_ITEM']:=Dm.Qtemp.fieldbyname('account_code').value;
+        FDataReturPenjualan.MemDetail['AKUN_PERK_ITEM']:='';
         FDataReturPenjualan.MemDetail.post;
         FDataReturPenjualan.HitungGrid;
+      end else begin
+        with Dm.Qtemp do //Cari Penjualan
+        begin
+          close;
+          sql.clear;
+          sql.add('SELECT zz.* from ( SELECT a.trans_no, a.code_item, a.name_item, '+
+                  'a.amount, a.amount-COALESCE((SELECT SUM(aa.amount) FROM t_sales_returns_det aa '+
+                  'LEFT JOIN  t_sales_returns bb on bb.trans_no=aa.trans_no '+
+                  'where bb.no_inv_tax='+QuotedStr(FDataReturPenjualan.edNoFaktur.Text)+' and bb.deleted_at is NULL '+
+                  'and aa.code_item=a.code_item GROUP BY aa.code_item),0) sisa_amount, a.code_unit,  a.name_unit, '+
+                  'a.no_reference, a.unit_price, '+
+                  'a.sub_total, a.ppn_percent, a.ppn_value, a.pph_account, a.pph_name, '+
+                  'a.pph_percent, a.pph_value, a.tot_piece_value, a.tot_piece_percent, '+
+                  'a.grand_tot, a.ppn_account, a.account_code  FROM  t_selling_det a  '+
+                  'WHERE a.deleted_at IS NULL AND a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' and '+
+                  'a.code_item='+QuotedStr(edKodeBarang.Text)+' ) zz ');
+          open;
+        end;
+        if  Dm.Qtemp.RecordCount<>0 then
+        begin
+          FDataReturPenjualan.MemDetail.active:=false;
+          FDataReturPenjualan.MemDetail.active:=true;
+          FDataReturPenjualan.MemDetail.insert;
+          FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
+          FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
+          FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
+          FDataReturPenjualan.MemDetail['JUMLAH']:= edJumlah.Text;
+          FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=Dm.Qtemp.FieldByName('amount').AsFloat;
+          FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
+          FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
+          FDataReturPenjualan.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
+          FDataReturPenjualan.MemDetail['NM_SATUAN']:=edSatuan.Text;
+          //            FDataReturPenjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('sub_total').AsFloat;
+          FDataReturPenjualan.MemDetail['PPN_AKUN']:=Dm.Qtemp.fieldbyname('ppn_account').value;
+          FDataReturPenjualan.MemDetail['PPN_PERSEN']:=Dm.Qtemp.fieldbyname('ppn_percent').value;
+          //            FDataReturPenjualan.MemDetail['PPN_NILAI']:=ROUND(Dm.Qtemp.fieldbyname('ppn_value').value);
+          FDataReturPenjualan.MemDetail['PPH_AKUN']:=Dm.Qtemp.fieldbyname('pph_account').value;
+          FDataReturPenjualan.MemDetail['NAMA_PPH']:=Dm.Qtemp.fieldbyname('pph_name').value;
+          FDataReturPenjualan.MemDetail['PPH_PERSEN']:=ROUND(Dm.Qtemp.fieldbyname('pph_percent').value);
+          FDataReturPenjualan.MemDetail['PPH_NILAI']:=Dm.Qtemp.fieldbyname('pph_value').value;
+          //            FDataReturPenjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
+          FDataReturPenjualan.MemDetail['AKUN_PERK_ITEM']:=Dm.Qtemp.fieldbyname('account_code').value;
+          FDataReturPenjualan.MemDetail.post;
+          FDataReturPenjualan.HitungGrid;
+        end;
       end;
     end;
   end;
@@ -771,7 +806,20 @@ begin
     FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_group b on b.group_id=a.group_id','WHERE b.group_name='+QuotedStr(FNew_DataTargetPenjualan.cbKelompokBarang.Text)+' AND	a.deleted_at IS NULL');
   end else if vStatusTrans='returpenjualan' then
   begin
-    FMasterData.update_grid('code_item','item_name','code_unit','t_selling_det a LEFT JOIN t_item b on  b.item_code=a.code_item','WHERE a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' AND	a.deleted_at IS NULL');
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM t_selling_initial_balance where trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV);
+      open;
+    end;
+
+    if dm.Qtemp3.RecordCount>0 then
+    begin
+      FMasterData.update_grid('item_code','item_name','unit','t_item','WHERE deleted_at IS NULL');
+    end else begin
+      FMasterData.update_grid('code_item','item_name','code_unit','t_selling_det a LEFT JOIN t_item b on  b.item_code=a.code_item','WHERE a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' AND	a.deleted_at IS NULL');
+    end;
   end else if vStatusTrans='deliveryorder' then
   begin
     FMasterData.update_grid('item_code','item_name','unit','t_item a LEFT JOIN t_item_category b on b.category_id=a.category_id ','WHERE	a.deleted_at IS NULL ');
@@ -786,7 +834,7 @@ procedure TFTambah_Barang.edNamaGudangButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Gudang';
   FMasterData.vcall:='gudang_order';
-  FMasterData.update_grid('wh_code','wh_name','category','t_wh','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('wh_code','wh_name','category','t_wh','WHERE deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

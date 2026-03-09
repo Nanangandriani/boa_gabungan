@@ -77,10 +77,10 @@ procedure TFHomeLogin.CbSBUClick(Sender: TObject);
 begin
   with dm.abstable1 do
   begin
-  Filtered:=false;
-  Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
-  FilterOptions:=[];
-  Filtered:=true;
+    Filtered:=false;
+    Filter:='Nama_Sbu='+QuotedStr(CbSBU.Text);
+    FilterOptions:=[];
+    Filtered:=true;
   end;
   TRY
     DM.Koneksi.Connected:=False;
@@ -174,15 +174,15 @@ end;
 
 procedure TFHomeLogin.Image1Click(Sender: TObject);
 begin
-   Application.Terminate;
+  Application.Terminate;
 end;
 
 procedure TFHomeLogin.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-    cLocation := ExtractFilePath(Application.ExeName);
+  cLocation := ExtractFilePath(Application.ExeName);
 //   Image1.Picture.LoadFromFile('BCancelo.png');
-   Image1.Picture.LoadFromFile(cLocation +'Image/BCancelo.png');
+  Image1.Picture.LoadFromFile(cLocation +'Image/BCancelo.png');
 end;
 
 procedure TFHomeLogin.Image1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -190,37 +190,37 @@ procedure TFHomeLogin.Image1MouseUp(Sender: TObject; Button: TMouseButton;
 begin
   cLocation := ExtractFilePath(Application.ExeName);
 //   image1.Picture.LoadFromFile('BCancel.png');
-   Image1.Picture.LoadFromFile(cLocation +'Image/BCancel.png');
+  Image1.Picture.LoadFromFile(cLocation +'Image/BCancel.png');
 end;
 procedure TFHomeLogin.ImgTransaksiClick(Sender: TObject);
 begin
    //Cek User
-   if CbSBU.Text='' then
-   begin
-     MessageDlg('Silakan Pilih Koneksi..!!',mtInformation,[mbRetry],0);
-     CbSBU.SetFocus;
-     exit;
-   end
-   else if Eduser.Text='' then
-   begin
-     MessageDlg('Username Wajib Diisi..!!',mtInformation,[mbRetry],0);
-     Eduser.SetFocus;
-     exit;
-   end
-   else if (EdPass.Text='') and (Length(EdPass.Text)=0) then
-   begin
-     MessageDlg('Password Wajib Diisi..!!',mtInformation,[mbRetry],0);
-     EdPass.SetFocus;
-     exit;
-   end
-   else if (EdPass.Text<>'') and (Eduser.Text<>'') then
-   begin
+  if CbSBU.Text='' then
+  begin
+    MessageDlg('Silakan Pilih Koneksi..!!',mtInformation,[mbRetry],0);
+    CbSBU.SetFocus;
+    exit;
+  end
+  else if Eduser.Text='' then
+  begin
+    MessageDlg('Username Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    Eduser.SetFocus;
+    exit;
+  end
+  else if (EdPass.Text='') and (Length(EdPass.Text)=0) then
+  begin
+    MessageDlg('Password Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    EdPass.SetFocus;
+    exit;
+  end
+  else if (EdPass.Text<>'') and (Eduser.Text<>'') then
+  begin
    //cek User
     with dm.Qtemp do
     begin
-     close;
-     sql.clear;
-     sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+      close;
+      sql.clear;
+      sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
              ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
              ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
@@ -229,7 +229,7 @@ begin
              ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
              ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
              ' where "user_name"='+QuotedStr(Eduser.Text)+' and aa.deleted_at IS NULL ');
-     open;
+      open;
     end;
     if dm.Qtemp.RecordCount=0 then
     begin
@@ -238,19 +238,19 @@ begin
     end;
     with dm.Qtemp do
     begin
-     close;
-     sql.clear;
-     sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
-             ' "password", "role_id", "is_active", "last_login", "last_logout", '+
-             ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
-             ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
-             ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
-             ' FROM "public"."t_user" aa '+
-             ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
-             ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
-             ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
-             ' and "password"='+QuotedStr(EdPass.Text)+'  and aa.deleted_at IS NULL  ');
-     open;
+      close;
+      sql.clear;
+      sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+              ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+              ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+              ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+              ' FROM "public"."t_user" aa '+
+              ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+              ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
+              ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
+              ' and "password"='+QuotedStr(EdPass.Text)+'  and aa.deleted_at IS NULL ');
+      open;
     end;
     if dm.Qtemp.RecordCount=0 then
     begin
@@ -286,12 +286,12 @@ begin
     //Rudi
     with dm.Qtemp do
     begin
-     close;
-     sql.clear;
-     sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
+      close;
+      sql.clear;
+      sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
              ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
              ' "tax_status", "currency", stat_office FROM "t_company" ');
-     open;
+      open;
     end;
 //    FMainMenu := TFMainMenu.Create(Application);
     if dm.Qtemp.RecordCount<>0 then

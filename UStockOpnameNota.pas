@@ -213,7 +213,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,'+strKaresidenan+') '+
+      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+',NULL,'+strKaresidenan+') '+
                 'ORDER BY karesidenan,kabupaten,kecamatan,customer_name ASC';
       open
     end;

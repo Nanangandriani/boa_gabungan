@@ -1006,7 +1006,7 @@ object FRekapPenjualan: TFRekapPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46021.710884039350000000
+    ReportOptions.LastChange = 46077.576971400460000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1127,7 +1127,7 @@ object FRekapPenjualan: TFRekapPenjualan
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 765.354330708661400000
+          Left = 765.354330708661000000
           Top = 86.816635710000000000
           Width = 127.919295710000000000
           Height = 18.897650000000000000
@@ -1568,7 +1568,7 @@ object FRekapPenjualan: TFRekapPenjualan
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDBHPenjualan."ppn_value">,MasterData1)]')
+            '[SUM(<frxDBDBHPenjualan."grand_tot">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end

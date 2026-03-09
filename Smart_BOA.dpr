@@ -354,7 +354,8 @@ uses
   URegisterCekMundur in 'URegisterCekMundur.pas' {FRegisterCekMundur},
   URpt_BukuHarianReturPembelian in 'URpt_BukuHarianReturPembelian.pas' {FBuku_HarianReturPembelian},
   UKelompokBiayaWilayah in 'UKelompokBiayaWilayah.pas' {FKelompokBiayaWilayah},
-  UListKelompokBiayaWilayah in 'UListKelompokBiayaWilayah.pas' {FListKelompokBiayaWilayah};
+  UListKelompokBiayaWilayah in 'UListKelompokBiayaWilayah.pas' {FListKelompokBiayaWilayah},
+  UKartuUangMukaPenjualan in 'UKartuUangMukaPenjualan.pas' {FKartuUangMukaPenjualan};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -539,6 +540,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFBuku_HarianReturPembelian, FBuku_HarianReturPembelian);
   Application.CreateForm(TFKelompokBiayaWilayah, FKelompokBiayaWilayah);
   Application.CreateForm(TFListKelompokBiayaWilayah, FListKelompokBiayaWilayah);
+//  Application.CreateForm(TFKartuUangMukaPenjualan, FKartuUangMukaPenjualan);
   //  Application.CreateForm(TFRegisterCekMundur, FRegisterCekMundur);
   //  Application.CreateForm(TFDaftarPenggunaanFakturPajak, FDaftarPenggunaanFakturPajak);
   FHomeSreen.Hide;

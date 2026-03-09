@@ -1272,7 +1272,7 @@ object FRekap_PO: TFRekap_PO
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44124.612568669000000000
-    ReportOptions.LastChange = 46045.598734652780000000
+    ReportOptions.LastChange = 46045.598734652800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'

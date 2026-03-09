@@ -587,7 +587,7 @@ begin
     EdCategory.SetFocus;
     Exit;
   end;
-    if Cbkelompok.Text='' then
+  if Cbkelompok.Text='' then
   begin
     MessageDlg('Kelompok Tidak boleh Kosong ',MtWarning,[MbOk],0);
     Cbkelompok.SetFocus;

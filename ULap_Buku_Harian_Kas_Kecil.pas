@@ -115,6 +115,16 @@ type
     QBHKasKecil: TUniQuery;
     cxBarEditItem2: TcxBarEditItem;
     DTPick12: TcxBarEditItem;
+    dxBarLargeButton2: TdxBarLargeButton;
+    frxDBDKasKecil_AKT: TfrxDBDataset;
+    QKasKecil_Akt: TUniQuery;
+    QKasKecil_Akttrans_date: TDateField;
+    QKasKecil_Aktvoucher_no: TStringField;
+    QKasKecil_Aktdescription: TStringField;
+    QKasKecil_Aktcode_account: TStringField;
+    QKasKecil_Aktname_account: TStringField;
+    QKasKecil_Aktdebit: TFloatField;
+    QKasKecil_Aktkredit: TFloatField;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
@@ -122,6 +132,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -233,6 +244,65 @@ begin
 
 end;
 
+procedure TFLap_Buku_Harian_Kas_Kecil.dxBarLargeButton2Click(Sender: TObject);
+var
+  query:string;
+  tglawal,tglakhir : string;
+  tgl1:tdate;
+  dd,mm,yy:word;
+  ketemu:boolean;
+begin
+    with dm.qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Add('select * from t_tmpsyst');
+      open;
+    end;
+    tgl_htg:=dm.qtemp.FieldByName('debt_date').asdatetime;
+    //tgl_mulai:=dm.qtemp.FieldByName('start_date').asdatetime;
+    tgl1:=dm.qtemp.FieldByName('start_date').asdatetime;
+    tgl_saldobank:=dm.qtemp.FieldByName('bankbalance_date').asdatetime;
+
+    with QKasKecil_Akt do
+    begin
+      {close;
+      sql.clear;
+      sql.Add(' SELECT b.trans_date, a.voucher_no, b.description, a.code_account, '+
+              ' a.name_account, case when a."position"=''D'' then paid_amount else 0 '+
+              ' end debit, case when a."position"=''K'' then paid_amount else 0 end '+
+              ' kredit   from t_petty_cash_det a '+
+              ' LEFT JOIN t_petty_cash b on a.voucher_no=b.voucher_no '+
+              ' where b.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' '+
+              ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+' '+
+              ' ORDER BY b.trans_date, a.voucher_no, a."position" asc');
+      open; old}
+
+      close;
+      sql.clear;
+      sql.Add('SELECT * FROM '+
+              ' (SELECT b.trans_date, a.voucher_no, b.description, a.code_account, '+
+              ' a.name_account, case when a."position"=''D'' then paid_amount else 0 '+
+              ' end debit, case when a."position"=''K'' then paid_amount else 0 end '+
+              ' kredit   from t_petty_cash_det a '+
+              ' LEFT JOIN t_petty_cash b on a.voucher_no=b.voucher_no '+
+              ' where b.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' '+
+              ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+' and b.deleted_at is null  '+
+              ' union All '+
+              'SELECT b.trans_date,	a.voucher_no,CAST(b.description AS varchar(255)) as description,b.code_account,b.name_account,case when b."position"=''D'' then paid_amount else 0  end 	debit,case when b."position"=''K'' then paid_amount else 0 end	kredit '+
+              'FROM t_cash_bank_expenditure a LEFT JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher '+
+              'WHERE a.remark ilike ''%PENGISIAN KAS KECIL%''	and	b.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' '+
+              ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+' and a.deleted_at is null )x '+
+              'ORDER BY voucher_no ASC,code_account = ''1101.'' DESC');
+      open;
+    end;
+    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas_Kecil_AKT.fr3');
+    //Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DTPick1.date);
+    Tfrxmemoview(frxReport1.FindObject('Memoperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmm yyyy',DTPick11.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmm yyyy',DTPick12.EditValue);
+    frxreport1.showreport;
+
+end;
+
 procedure TFLap_Buku_Harian_Kas_Kecil.DxRefreshClick(Sender: TObject);
 begin
    if DTPick11.EditValue = null then
@@ -268,7 +338,13 @@ begin
                 '(a.code_account=b.code)and (b.type_id=3) group by voucher_no order by voucher_no)c on a.voucher_no=c.voucher_no '+
                 'left join '+
                 '(select voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
-                'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no order by trans_date,urutan,order_no,voucher_no)xxx ';
+                'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no '+
+                'union '+
+                'SELECT trans_date,	voucher_no,	description,	''KAS KECIL'' actors_name,	0 order_no,	'''' actors_code,	'''' code,	paid_amount jumdebit,	0 as jumkredit,	0 as penjualan,	0 as adm,0 as	bop,	11 as urutan FROM '+
+                '(SELECT a.trans_date,a.voucher_no,b.description,b.paid_amount FROM t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher WHERE b.code_account=''1101.02'' and b."position"=''D'' and a.deleted_at ISNULL '+
+                'and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+')aa '+
+                'ORDER BY trans_date,order_no, urutan, voucher_no '+
+                ')xxx ';
       open;
     end;
       MemBHKasKecil.Close;
