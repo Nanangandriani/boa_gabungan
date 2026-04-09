@@ -311,9 +311,12 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46036.463414583330000000
+    ReportOptions.LastChange = 46098.346643865740000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      'var'
+      '  isBundle: Integer;'
+      ''
       'function TglIndo(Tanggal: TDateTime): String;'
       'var'
       '  bln: Integer;'
@@ -343,6 +346,10 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       ''
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
+      
+        '  if isBundle=1 then Memo31.Text:='#39'PROMO BELI '#39'+FloatToStr(<frxD' +
+        'BDSuratJalan."qty_bundle">)+'#39' GRATIS '#39'+ FloatToStr(<frxDBDSuratJ' +
+        'alan."add_on_qty">) else Memo31.Text:='#39#39';'
       'end;'
       ''
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
@@ -364,6 +371,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       ''
       'procedure GroupHeader1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
+      ' isBundle := 0;'
       ' if <frxDBDSuratJalan."tare_weight"> <> 0 then'
       '  begin'
       '    labelberatisi.Visible := True;'
@@ -419,8 +427,53 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       ''
       'end;'
       ''
+      
+        'procedure frxDBDPenjualanunit_priceOnBeforePrint(Sender: TfrxCom' +
+        'ponent);'
       'begin'
+      '  if <frxDBDSuratJalan."qty_bundle"> > 0 then'
+      '  begin'
+      '    isBundle := 1;'
+      
+        '    TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
+        '+ '#39' '#39' +'
+      
+        '                                 <frxDBDSuratJalan."word_amount_' +
+        'qty"> + '#39' '#39' +'
+      
+        '                                 <frxDBDSuratJalan."name_unit"> ' +
+        '+ #13 +          '
+      
+        '                                 '#39'(PROMO BELI '#39' + FloatToStr(<fr' +
+        'xDBDSuratJalan."qty_bundle">) +'
+      
+        '                                 '#39' GRATIS '#39' + FloatToStr(<frxDBD' +
+        'SuratJalan."add_on_qty">) +'#39')'#39';'
+      
+        '  { TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
+        '+ '#39' '#39' +'
+      
+        '                                 <frxDBDSuratJalan."word_amount_' +
+        'qty"> + '#39' '#39' +'
+      
+        '                                 <frxDBDSuratJalan."name_unit">;' +
+        '      }  '
+      '  end'
+      '  else'
+      '  begin'
+      
+        '    TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
+        '+ '#39' '#39' +'
+      
+        '                                 <frxDBDSuratJalan."word_amount_' +
+        'qty"> + '#39' '#39' +'
+      '                                 <frxDBDSuratJalan."name_unit">;'
+      '  end;'
       ''
+      'end;'
+      ''
+      'begin'
+      '  isBundle := 0;'
       'end.')
     OnStopReport = 'ReportOnStopReport'
     Left = 16
@@ -482,6 +535,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Top = -0.100597780000000000
           Width = 109.606299210000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'name_unit'
           DataSet = frxDBDSuratJalan
           DataSetName = 'frxDBDSuratJalan'
@@ -505,6 +559,8 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Top = -0.100597780000000000
           Width = 478.519685040000000000
           Height = 18.897650000000000000
+          OnBeforePrint = 'frxDBDPenjualanunit_priceOnBeforePrint'
+          StretchMode = smMaxHeight
           DataSet = frxDBDSuratJalan
           DataSetName = 'frxDBDSuratJalan'
           Font.Charset = DEFAULT_CHARSET
@@ -513,15 +569,13 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
-          Memo.UTF8W = (
-            
-              '[frxDBDSuratJalan."name_item"] ( [frxDBDSuratJalan."word_amount_' +
-              'qty"] ) [frxDBDSuratJalan."name_unit"]')
           ParentFont = False
           Formats = <
             item
               FormatStr = '%2.n'
               Kind = fkNumeric
+            end
+            item
             end
             item
             end>
@@ -533,6 +587,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Top = -0.100597780000000000
           Width = 96.377952760000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'amount'
           DataSet = frxDBDSuratJalan
           DataSetName = 'frxDBDSuratJalan'
@@ -553,6 +608,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Top = -0.100597780000000000
           Width = 43.464566930000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -15
@@ -1048,9 +1104,9 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 547.481339570000000000
+          Left = 543.891595980000000000
           Top = 0.102350000000000000
-          Width = 187.464566929134000000
+          Width = 191.054310520000000000
           Height = 40.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1101,7 +1157,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         object Memo12: TfrxMemoView
           AllowVectorExport = True
           Left = 379.914037580000000000
-          Top = 0.075084779999999990
+          Top = 0.075084780000000000
           Width = 149.493925280000000000
           Height = 57.913420000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1200,7 +1256,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Left = 4.869565220000000000
           Top = 18.374094780000000000
           Width = 352.023810000000000000
-          Height = 85.913420000000000000
+          Height = 88.990343070000000000
           DataSet = FDataListPenjualan.frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
@@ -1225,6 +1281,21 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Frame.Typ = []
           Memo.UTF8W = (
             'Alamat Pengiriman Barang :')
+          ParentFont = False
+        end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 5.102564100000000000
+          Top = 87.041957440000000000
+          Width = 352.307692300000000000
+          Height = 19.487179490000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
           ParentFont = False
         end
       end
@@ -1273,36 +1344,41 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
       'ket=ket'
       'gross_weight=gross_weight'
       'tare_weight=tare_weight'
-      'vehicles=vehicles')
+      'vehicles=vehicles'
+      'qty_bundle=qty_bundle'
+      'add_on_qty=add_on_qty')
     DataSet = QSuratJalan
     BCDToCurrency = False
     DataSetOptions = []
     Left = 72
-    Top = 87
+    Top = 71
   end
   object QSuratJalan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       
         'select (SELECT company_code FROM t_company) company_code,a."tran' +
-        's_no", "no_traveldoc", "trans_date", a."code_cust",  a."name_cus' +
-        't",  d."address",e."address" AS address2, b."code_item", b."name' +
-        '_item",  b."amount",  b."code_unit", b."name_unit",b.word_amount' +
-        '_qty, a."no_reference", b."code_unit" as ket, (SELECT SUM(gross_' +
-        'weight) FROM t_selling_det WHERE trans_no=a.trans_no AND code_un' +
-        'it=b.code_unit)  gross_weight, (SELECT SUM(tare_weight) FROM t_s' +
-        'elling_det WHERE trans_no=a.trans_no AND code_unit=b.code_unit) ' +
-        'tare_weight, COALESCE((SELECT vehicles FROM t_delivery_order_ser' +
-        'vices WHERE notrans=(SELECT DISTINCT notrans from t_delivery_ord' +
-        'er_load WHERE notrans_load=a.trans_no )),'#39#39')::VARCHAR vehicles  ' +
-        'from "public".get_selling(False) a   LEFT JOIN "public"."t_selli' +
-        'ng_det" b ON a.trans_no=b.trans_no LEFT JOIN (SELECT "customer_c' +
-        'ode", "address" from "public"."t_customer_address"  where "code_' +
-        'details"='#39'003'#39') d on a.code_cust=d.customer_code   LEFT JOIN (SE' +
-        'LECT "customer_code", "address" from "public"."t_customer_addres' +
-        's"  where "code_details"='#39'002'#39') e on a.code_cust=e.customer_code' +
-        ' where (a.trans_date BETWEEN '#39'2025-10-01'#39' AND '#39'2025-10-01'#39')  AND' +
-        ' a.deleted_at is null   order by b.created_at Desc')
+        's_no", "no_traveldoc", "trans_date", a."code_cust", a.customer_n' +
+        'ame_pkp "name_cust",  d."address",e."address" AS address2, b."co' +
+        'de_item", b."name_item",  b."amount",  b."code_unit", Upper(b."n' +
+        'ame_unit") name_unit,b.word_amount_qty, a."no_reference", b."cod' +
+        'e_unit" as ket, (SELECT SUM(gross_weight) FROM t_selling_det WHE' +
+        'RE trans_no=a.trans_no AND code_unit=b.code_unit)  gross_weight,' +
+        ' (SELECT SUM(tare_weight) FROM t_selling_det WHERE trans_no=a.tr' +
+        'ans_no AND code_unit=b.code_unit) tare_weight, COALESCE((SELECT ' +
+        'vehicles FROM t_delivery_order_services WHERE notrans=(SELECT DI' +
+        'STINCT notrans from t_delivery_order_load WHERE notrans_load=a.t' +
+        'rans_no )),'#39#39')::VARCHAR vehicles  , COALESCE(b.qty_bundle,0) qty' +
+        '_bundle, Trunc(amount/qty_bundle) add_on_qty from "public".get_s' +
+        'elling(False) a   LEFT JOIN "public"."t_selling_det" b ON a.tran' +
+        's_no=b.trans_no LEFT JOIN (SELECT "customer_code", "address" fro' +
+        'm "public"."t_customer_address"  where "code_details"='#39'002'#39') d o' +
+        'n a.code_cust=d.customer_code LEFT JOIN (SELECT "customer_code",' +
+        ' "address" from "public"."t_customer_address"  where "code_detai' +
+        'ls"='#39'003'#39') e on a.code_cust=e.customer_code LEFT JOIN t_item f O' +
+        'N f.item_code=b.code_item  where (a.trans_date BETWEEN '#39'2026-03-' +
+        '01'#39' AND '#39'2026-03-16'#39') AND a.code_karesidenan='#39'PKL'#39'   AND a.delet' +
+        'ed_at is null order by a.trans_date,a.trans_no,f.group_id ASC')
     Left = 120
     Top = 88
   end

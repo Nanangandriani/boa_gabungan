@@ -147,7 +147,7 @@ implementation
 {$R *.dfm}
 
 uses UDataPenerimaanBank, UDataModule, UMy_Function, UHomeLogin,
-  UCetakKolektifPenerimaanBank, UNoteCancel;
+  UCetakKolektifPenerimaanBank, UNoteCancel, UKoreksi;
 
 procedure TFListPenerimaanBank.SetReportToPortrait(frxReport: TfrxReport);
 var
@@ -216,16 +216,35 @@ end;
 
 procedure TFListPenerimaanBank.ActDelExecute(Sender: TObject);
 begin
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Penerimaan Bank dan Kas ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else
   if CheckJurnalPosting(QPenerimaanBank.FieldByName('voucher_no').AsString)>0 then
   begin
     MessageDlg('Sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
   end else begin
     if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      FNoteCancel.vtbl:='t_cash_bank_acceptance';
-      FNoteCancel.vfieldtransno:='voucher_no';
-      FNoteCancel.edNoTransaksi.Text:=QPenerimaanBank.FieldByName('voucher_no').AsString;
-      FNoteCancel.ShowModal;
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FListPenerimaanBank.Name));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QPenerimaanBank.FieldByName('voucher_no').AsString;
+      FKoreksi.ShowModal;
+//      FNoteCancel.vtbl:='t_cash_bank_acceptance';
+//      FNoteCancel.vfieldtransno:='voucher_no';
+//      FNoteCancel.edNoTransaksi.Text:=QPenerimaanBank.FieldByName('voucher_no').AsString;
+//      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -246,6 +265,7 @@ var strPaymentCode,strDiterimaDari:String;
 begin
   strPaymentCode:='';
   FDataPenerimaanBank.Clear;
+  FDataPenerimaanBank.Status := 1;
   with Dm.Qtemp do
   begin
      close;
@@ -264,6 +284,8 @@ begin
   end;
   if Dm.Qtemp.RecordCount<>0 then
   begin
+    if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then FDataPenerimaanBank.chkNomorPengganti.Checked:=True
+    else FDataPenerimaanBank.chkNomorPengganti.Checked:=False;
 
     if (not dm.Qtemp.FieldByName('name_cust').IsNull) and
    ((dm.Qtemp.FieldByName('code_type_trans').AsString = '3.002') or
@@ -571,7 +593,7 @@ begin
     end;
   end;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
-  FDataPenerimaanBank.Status := 1;
+
   FDataPenerimaanBank.Disable;
   FDataPenerimaanBank.Show;
 end;

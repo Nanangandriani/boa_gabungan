@@ -353,7 +353,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
           ItemName = 'dxBarDelete'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -387,7 +387,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
           ItemName = 'ActSearch'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -406,7 +406,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
           Visible = True
           ItemName = 'dxBarLargeButton1'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

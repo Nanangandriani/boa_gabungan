@@ -113,23 +113,13 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
       TabOrder = 1
       DisplayFormat = '0.00#,##'
     end
-    object cbsumberdata: TComboBox
-      Left = 147
-      Top = 17
-      Width = 344
-      Height = 23
-      TabOrder = 2
-      Items.Strings = (
-        'Pembelian'
-        'Pengeluarann Kas Dan Bank')
-    end
     object MemKeterangan: TMemo
       Left = 644
       Top = 44
       Width = 343
       Height = 68
       Enabled = False
-      TabOrder = 3
+      TabOrder = 2
     end
     object edNoTrans: TRzButtonEdit
       Left = 147
@@ -139,10 +129,18 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
       Text = ''
       Color = clInfoBk
       ReadOnly = True
-      TabOrder = 4
+      TabOrder = 3
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNoTransButtonClick
+    end
+    object cbsumberdata: TEdit
+      Left = 147
+      Top = 17
+      Width = 344
+      Height = 23
+      ReadOnly = True
+      TabOrder = 4
     end
   end
   object RzPageControl1: TRzPageControl
@@ -160,7 +158,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Color = clGradientInactiveCaption
-      Caption = 'Detail Akun'
+      Caption = 'Data Detail'
       ExplicitHeight = 308
       object DBGridAkun: TDBGridEh
         Left = 0
@@ -176,6 +174,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnDblClick = DBGridAkunDblClick
         Columns = <
           item
             CellButtons = <
@@ -308,6 +307,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
           end
           item
             CellButtons = <>
+            DisplayFormat = '#,##0.00'
             DynProps = <>
             EditButtons = <>
             FieldName = 'jumlah'
@@ -398,6 +398,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
       Align = alRight
       Caption = 'Save'
       TabOrder = 0
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -641,6 +642,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
     end
     object MemTPnm_akun: TStringField
       FieldName = 'nm_akun'
+      Size = 200
     end
     object MemTPkd_tp: TStringField
       FieldName = 'kd_tp'
@@ -649,7 +651,9 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
       FieldName = 'nm_tp'
     end
     object MemTPketerangan: TStringField
+      DisplayWidth = 200
       FieldName = 'keterangan'
+      Size = 200
     end
     object MemTPjumlah: TCurrencyField
       FieldName = 'jumlah'
@@ -664,7 +668,8 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
         object nm_akun: TMTStringDataFieldEh
           FieldName = 'nm_akun'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 200
         end
         object kd_tp: TMTStringDataFieldEh
           FieldName = 'kd_tp'
@@ -679,7 +684,8 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 200
         end
         object jumlah: TMTNumericDataFieldEh
           FieldName = 'jumlah'

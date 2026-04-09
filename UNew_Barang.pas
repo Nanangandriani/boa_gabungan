@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RzButton, Vcl.ExtCtrls, Vcl.StdCtrls,
   RzCmboBx, Data.DB, MemDS, DBAccess, Uni, RzBtnEdt, Vcl.Mask, RzEdit,
-  Vcl.Buttons, RzTabs, Vcl.ComCtrls;
+  Vcl.Buttons, RzTabs, Vcl.ComCtrls, RzRadChk;
 
 type
   TFNew_Barang = class(TForm)
@@ -85,6 +85,13 @@ type
     Label10: TLabel;
     edKdBrgCoretax: TRzButtonEdit;
     edNmBrgCoretax: TEdit;
+    ckStatusBundling: TRzCheckBox;
+    edQtyKelipatanBundling: TRzNumericEdit;
+    Label12: TLabel;
+    Label14: TLabel;
+    edTambahanQtyBundling: TRzNumericEdit;
+    cbSatuanBundling: TRzComboBox;
+    Label15: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -274,6 +281,9 @@ begin
   st_nourut:='False';
   ck_st_penjualan.Checked:=false;
   Ck_NoUrut.Checked:=false;
+  ckStatusBundling.Checked:=False;
+  edQtyKelipatanBundling.Value:=0;
+  edTambahanQtyBundling.Value:=0;
 end;
 
 Procedure TFnew_barang.simpan;
@@ -285,10 +295,11 @@ begin
        sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
                  ' category_id,unit,merk,account_code,created_by,description,group_id, '+
                  ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code, '+
-                 ' item_code_coretax, item_name_coretax)'+
+                 ' item_code_coretax, item_name_coretax,is_bundle_sell,qty_bundle_sell,add_on_qty_bundle_sell,unit_of_measure_bundle_sell)'+
                  ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
                  ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
-                 ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax)';
+                 ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax,'+
+                 ':is_bundle_sell,:qty_bundle_sell,:add_on_qty_bundle_sell,:unit_of_measure_bundle_sell)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -309,7 +320,11 @@ begin
          ParamByName('header_code').Value:=KodeHeaderPerkiraan;
          ParamByName('sbu_code').Value:=Cb_sbu.Text;
          ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
-         ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
+         if ckStatusBundling.Checked=True then
+         ParamByName('is_bundle_sell').Value:=True else ParamByName('is_bundle_sell').Value:=False;
+         ParamByName('qty_bundle_sell').Value:=edQtyKelipatanBundling.Value;
+         ParamByName('add_on_qty_bundle_sell').Value:=edTambahanQtyBundling.Value;
+         ParamByName('unit_of_measure_bundle_sell').Value:=cbSatuanBundling.Text;
        ExecSQL;
        end;
          with dm.Qtemp do
@@ -340,7 +355,9 @@ begin
        ' updated_by=:pic,description=:desk,group_id=:group_id,sell_status=:sell_status,buy=:buy,'+
        ' disc_buy=:discount_buy,sell=:sell,disc_sell=:discount_sell,'+
        ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code, '+
-       ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax where "id"=:id';
+       ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax, '+
+       ' is_bundle_sell=:is_bundle_sell,qty_bundle_sell=:qty_bundle_sell,'+
+       'add_on_qty_bundle_sell=:add_on_qty_bundle_sell,unit_of_measure_bundle_sell=:unit_of_measure_bundle_sell where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -363,6 +380,11 @@ begin
          ParamByName('sbu_code').Value:=Cb_sbu.Text;
          ParamByName('item_code_coretax').Value:=edKdBrgCoretax.Text;
          ParamByName('item_name_coretax').Value:=edNmBrgCoretax.Text;
+         if ckStatusBundling.Checked=True then
+         ParamByName('is_bundle_sell').Value:=True else ParamByName('is_bundle_sell').Value:=False;
+         ParamByName('qty_bundle_sell').Value:=edQtyKelipatanBundling.Value;
+         ParamByName('add_on_qty_bundle_sell').Value:=edTambahanQtyBundling.Value;
+         ParamByName('unit_of_measure_bundle_sell').Value:=cbSatuanBundling.Text;
        ExecSQL;
     end;
     // cr ds 5-2-2026
@@ -617,8 +639,13 @@ begin
     edKdBrgCoretax.SetFocus;
     Exit;
   end;
+  if (ckStatusBundling.Checked=True) AND ((edQtyKelipatanBundling.Value=0) OR (edTambahanQtyBundling.Value=0) OR (cbSatuanBundling.Text='') ) then
+  begin
+    MessageDlg('Semua data bundling wajib diisi !',MtWarning,[MbOk],0);
+    Exit;
+  end;
    Autocode_perkiraan;
-   with dm.Qtemp do
+  with dm.Qtemp do
   begin
     close;
     sql.clear;
@@ -897,6 +924,26 @@ begin
   begin
      cb_sbu.Items.Add(dm.Qtemp['company_code']);
      dm.Qtemp.Next;
+  end;
+
+  if status_tr=0 then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT unit_code from t_unit order by unit_code ASC ');
+      open;
+      first;
+    end;
+
+    cbSatuanBundling.clear;
+    cbSatuanBundling.items.Add('');
+    while not dm.Qtemp.eof do
+    begin
+       cbSatuanBundling.Items.add(dm.Qtemp.fieldbyname('unit_code').asstring);
+       dm.Qtemp.next;
+    end;
   end;
 
 end;

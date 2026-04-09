@@ -142,6 +142,8 @@ type
     QCetakSJgross_weight: TFloatField;
     QCetakSJtare_weight: TFloatField;
     QCetakSJvehicles: TMemoField;
+    QCetakSJqty_bundle: TFloatField;
+    QCetakSJadd_on_qty: TFloatField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
@@ -186,7 +188,7 @@ implementation
 uses UNew_DataPenjualan, UDataModule, UMy_Function, UHomeLogin,
   UNewKontrakTagihan, UMainMenu, UExportFaktur, UAmplopPelanggan,
   UPenyesuaianPenjualan, UMasterData, UNoteCancel, UKolektifPenjualan,
-  UKolektifSuratJalan;
+  UKolektifSuratJalan, UKoreksi;
 
 var
   realfdatalistpenjualan : TFDataListPenjualan;
@@ -302,20 +304,49 @@ begin
     open;
   end;
 
-  if dm.Qtemp.RecordCount>0 then
+  with dm.Qtemp1 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT no_invoice FROM t_dpp WHERE no_invoice='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' AND deleted_at is null';
+    open;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else if dm.Qtemp.RecordCount>0 then
   begin
     MessageDlg('Nota sudah ada  pembayaran..!!',mtInformation,[mbRetry],0);
+  end else if dm.Qtemp1.RecordCount>0 then
+  begin
+    MessageDlg('Nota sudah ada DPP..!!',mtInformation,[mbRetry],0);
   end else if CheckJurnalPosting(QPenjualan.FieldByName('trans_no').AsString)>0 then
   begin
     MessageDlg('Nota sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
   end else begin
-
     if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      FNoteCancel.vtbl:='t_selling';
-      FNoteCancel.vfieldtransno:='trans_no';
-      FNoteCancel.edNoTransaksi.Text:=QPenjualan.FieldByName('trans_no').AsString;
-      FNoteCancel.ShowModal;
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FDataListPenjualan'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QPenjualan.FieldByName('trans_no').AsString;
+      FKoreksi.ShowModal;
+
+//      FNoteCancel.vtbl:='t_selling';
+//      FNoteCancel.vfieldtransno:='trans_no';
+//      FNoteCancel.edNoTransaksi.Text:=QPenjualan.FieldByName('trans_no').AsString;
+//      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -333,15 +364,15 @@ end;
 
 procedure TFDataListPenjualan.ActUpdateExecute(Sender: TObject);
 begin
-   FNew_Penjualan.Clear;
-   with Dm.Qtemp do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select * from get_selling(false) '+
-                 ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString);
-       open;
-   end;
+  FNew_Penjualan.Clear;
+  with Dm.Qtemp do
+  begin
+     close;
+     sql.Clear;
+     sql.Text:=' select * from get_selling(false) '+
+               ' WHERE "trans_no"='+QuotedSTr(QPenjualan.FieldByName('trans_no').AsString);
+     open;
+  end;
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
@@ -359,6 +390,9 @@ begin
         isCancel:=0;
 //        memAlasanPembatalan.Text:='';
       end;
+
+      if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+      else chkNomorPengganti.Checked:=False;
 
       edKode_Trans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
       edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_trans').AsString)+' ');
@@ -381,6 +415,7 @@ begin
       strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
       kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
     end;
   end;
   with FNew_Penjualan do
@@ -395,18 +430,14 @@ begin
     if Dm.Qtemp.FieldByName('code_source').AsString='SEL002' then
     edPOOrder.ReadOnly:=True else edPOOrder.ReadOnly:=False;
 
-
 //    if (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>'') AND
 //    (Dm.Qtemp.FieldByName('no_inv_tax_coretax').AsString<>NULL) THEN edNomorFaktur.ReadOnly:=True
 //    else
     edNomorFaktur.ReadOnly:=False;
-
-
   end;
   FNew_Penjualan.RefreshGrid;
   FNew_Penjualan.Status := 1;
   FNew_Penjualan.ShowModal;
-
 end;
 
 procedure TFDataListPenjualan.cxBarEditItem2PropertiesButtonClick(
@@ -460,12 +491,11 @@ procedure TFDataListPenjualan.dxBarLargeButton3Click(Sender: TObject);
 var
   WatermarkMemo: TfrxMemoView;
 begin
-
   with QCetak do
   begin
     close;
     sql.clear;
-    sql.add(' select a."trans_no", "no_inv_tax", "trans_date",a.po_order, a."code_cust", a."name_cust", '+
+    sql.add('select a."trans_no", "no_inv_tax", "trans_date",a.po_order, a."code_cust", a."name_cust", '+
            ' d."address",COALESCE(e.no_npwp,'''') no_npwp, b."code_item", b."name_item", '+
            ' b."amount", b."code_unit", b."name_unit", a."no_reference", "unit_price", '+
            ' b."sub_total", b."ppn_account", "ppn_percent", b."ppn_value", b."pph_account", '+
@@ -512,27 +542,27 @@ begin
     exit;
   end;
 
-   if QCetak.RecordCount<>0 then
-   begin
+  if QCetak.RecordCount<>0 then
+  begin
      // Dapetin Grand Total
-      with dm.Qtemp do
-      begin
-       close;
-       sql.clear;
-       sql.add('select a.*,COALESCE(b.company_code_bank,'''') company_code_bank,COALESCE(b.number_va,'''') number_va,COALESCE(b.va_name,'''') va_name,COALESCE(c.bank_name,'''') bank_name  from "public"."t_selling" a '+
-              'LEFT JOIN t_selling_customer b on b.trans_no=a.trans_no and b.deleted_at IS NULL '+
-              'LEFT JOIN t_bank c on c.company_code=b.company_code_bank  where '+
-              ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
-       open;
-      end;
+    with dm.Qtemp do
+    begin
+     close;
+     sql.clear;
+     sql.add('select a.*,COALESCE(b.company_code_bank,'''') company_code_bank,COALESCE(b.number_va,'''') number_va,COALESCE(b.va_name,'''') va_name,COALESCE(c.bank_name,'''') bank_name  from "public"."t_selling" a '+
+            'LEFT JOIN t_selling_customer b on b.trans_no=a.trans_no and b.deleted_at IS NULL '+
+            'LEFT JOIN t_bank c on c.company_code=b.company_code_bank  where '+
+            ' a.trans_no='+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+' ');
+     open;
+    end;
 
-      with dm.Qtemp2 do
-      begin
-       close;
-       sql.clear;
-       sql.Text:='select * from get_user_signature(2) ';
-       open;
-      end;
+    with dm.Qtemp2 do
+    begin
+     close;
+     sql.clear;
+     sql.Text:='select * from get_user_signature(2) ';
+     open;
+    end;
 
 //      if (dm.Qtemp.FieldValues['company_code_bank']=NULL) OR
 //        (dm.Qtemp.FieldValues['company_code_bank']='') OR (dm.Qtemp.FieldValues['number_va']=NULL) OR
@@ -556,18 +586,18 @@ begin
 //      end;
 
 //     ShowMessage(QCetak.FieldValues['po_order']);
-     cLocation := ExtractFilePath(Application.ExeName);
-     //ShowMessage(cLocation);
-     Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
-     SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-     SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
-     SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
-     SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
-     SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
-     SetMemo(Report,'memTanggal',FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
-     SetMemo(Report,'MemTanggalFooter',FHomeLogin.vKotaPRSH+', '+FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
-     if (dm.Qtemp.FieldValues['po_order']<>NULL) AND (dm.Qtemp.FieldValues['po_order']<>'') then
-     begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_penjualan'+ '.fr3');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'kota',FHomeLogin.vKotaPRSH);
+    SetMemo(Report,'alamat',FHomeLogin.vAlamatPRSH);
+    SetMemo(Report,'telp','Phone : '+FHomeLogin.vTelpPRSH);
+    SetMemo(Report,'signature_name',dm.Qtemp2.FieldValues['full_name']);
+    SetMemo(Report,'memTanggal',FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
+    SetMemo(Report,'MemTanggalFooter',FHomeLogin.vKotaPRSH+', '+FormatDateTime('dd mmmm yyyy',QCetak.FieldValues['trans_date']));
+    if (dm.Qtemp.FieldValues['po_order']<>NULL) AND (dm.Qtemp.FieldValues['po_order']<>'') then
+    begin
       SetMemo(Report,'memPO',dm.Qtemp.FieldValues['po_order']);
       Report.FindObject('memPO').Visible := True;
       Report.FindObject('memo51').Visible := True;
@@ -575,24 +605,23 @@ begin
       Report.FindObject('Line25').Visible:=True;
       Report.FindObject('Line26').Visible:=True;
       Report.FindObject('Line27').Visible:=True;
-     end else begin
+    end else begin
       Report.FindObject('memPO').Visible := False;
       Report.FindObject('memo51').Visible := False;
       Report.FindObject('memo52').Visible := False;
       Report.FindObject('Line25').Visible:=False;
       Report.FindObject('Line26').Visible:=False;
       Report.FindObject('Line27').Visible:=False;
-     end;
+    end;
 
+    if (QCetak.FieldByName('deleted_at') <> nil) and (not QCetak.FieldByName('deleted_at').IsNull) then
+    begin
+      Report.FindObject('PictureBatal').Visible:=True;
+    end else begin
+      Report.FindObject('PictureBatal').Visible:=False;
+    end;
 
-     if (QCetak.FieldByName('deleted_at') <> nil) and (not QCetak.FieldByName('deleted_at').IsNull) then
-     begin
-        Report.FindObject('PictureBatal').Visible:=True;
-     end else begin
-       Report.FindObject('PictureBatal').Visible:=False;
-     end;
-
-     SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat))+' Rupiah');
+    SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('grand_tot').AsFloat))+' Rupiah');
      //Report.DesignReport();
      //Report.ShowReport();
 
@@ -623,28 +652,27 @@ begin
       Report.FindObject('MemVA7').Visible := False;
     end;
 
-
-      with dm.Qtemp3 do
-      begin
-        Close;
-        SQl.Clear;
-        SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
-                  ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
-                  ' ''Cetak Nota Tagihan untuk pelanggan '+
-                  QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
-                  QPenjualan.FieldByName('trans_no').AsString+' '', '+
-                  'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
-        ExecSQL;
-      end;
+    with dm.Qtemp3 do
+    begin
+      Close;
+      SQl.Clear;
+      SQl.Text:='CALL "InsertSPLogActivity" ('+QuotedStr(Nm)+',''Penjualan'',''M13002'', '+
+                ' ''1.0'','+QuotedStr(GetLocalIP)+',False,False,False, False, '+
+                ' ''Cetak Nota Tagihan untuk pelanggan '+
+                QPenjualan.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
+                QPenjualan.FieldByName('trans_no').AsString+' '', '+
+                'True,'+QuotedStr(QPenjualan.FieldByName('trans_no').AsString)+');';
+      ExecSQL;
+    end;
 
 //     if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')= 'dev' then
 //      begin
 //       Report.DesignReport();
 //      end else
 //      begin
-        Report.ShowReport();
+    Report.ShowReport();
 //   end;
- end;
+  end;
 end;
 
 procedure TFDataListPenjualan.dxBarLargeButton4Click(Sender: TObject);
@@ -663,6 +691,7 @@ begin
          'COALESCE((SELECT vehicles FROM t_delivery_order_services '+
          'WHERE notrans=(SELECT DISTINCT notrans '+
          'from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles '+
+         ', COALESCE(b.qty_bundle) qty_bundle, COALESCE(Trunc((b.amount / NULLIF(b.add_on_qty_bundle, 0)) / NULLIF(b.qty_bundle, 0)), 0) AS add_on_qty '+
          'from "public"."t_selling" a  '+
          'left join t_selling_customer sc on sc.trans_no=a.trans_no and sc.deleted_at is null '+
          ' LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+

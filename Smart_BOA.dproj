@@ -102,8 +102,8 @@
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.87.0.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.87.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>87</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.91.0.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.91.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>91</VerInfo_MinorVer>
         <VerInfo_Build>3</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
@@ -1426,6 +1426,10 @@
         </DCCReference>
         <DCCReference Include="UKartuUangMukaPenjualan.pas">
             <Form>FKartuUangMukaPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListNoTransaksi.pas">
+            <Form>FListNoTransaksi</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

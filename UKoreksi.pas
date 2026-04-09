@@ -44,6 +44,7 @@ type
     { Public declarations }
     kd_kares,tbl,field_no_trans,date_trans,strtgl, strbulan, strtahun,vcall,vnotransaksi,kode_koreksi :String;
     Status: Integer;
+    AksiTipe: String;
     procedure Clear;
     procedure Detail;
   end;
@@ -78,13 +79,31 @@ begin
                 'code='+QuotedStr(edKode.Text);
     ExecSQL;
   end;
-  with dm.Qtemp do
+
+  if AksiTipe='DELETE' then
   begin
-    close;
-    sql.clear;
-    Sql.Text := 'Update '+tbl+' set status_correction=2 '+
-                'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
-    ExecSQL;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      Sql.Text := 'Update '+tbl+' set status_correction=0,deleted_at=NOW(),'+
+                  'deleted_by=(SELECT created_by from t_correction_trans where code='+QuotedStr(edKode.Text)+'), '+
+                  ''+ field_no_trans + ' = CONCAT(' + field_no_trans + ', ''-DEL'', ' +
+                  '(SELECT COUNT(*) + 1 FROM (SELECT * FROM ' + tbl + ') AS temp_tbl ' +
+                  'WHERE ' + field_no_trans + ' LIKE CONCAT(' + QuotedStr(edNoTransaksi.Text) + ', ''-DEL%'') ' +
+                  'AND deleted_at IS NOT NULL) ) ' +
+                  'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
+      ExecSQL;
+    end;
+  end else begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      Sql.Text := 'Update '+tbl+' set status_correction=2 '+
+                  'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
+      ExecSQL;
+    end;
   end;
   MessageDlg('Data Berhasil di Setujui..!!',mtInformation,[MBOK],0);
   FMainMenu.TampilTabForm2;
@@ -145,7 +164,7 @@ begin
 end;
 
 procedure TFKoreksi.Save;
-var Stradditional_code,strKodeSubMenu: String;
+var Stradditional_code,strKodeSubMenu,strIsDelete: String;
 begin
   with dm.Qtemp2 do
   begin
@@ -164,6 +183,8 @@ begin
       Stradditional_code:='NULL'
     else Stradditional_code:=QuotedStr(kd_kares);
 
+
+
     with dm.Qtemp do
     begin
       close;
@@ -172,12 +193,15 @@ begin
       open;
     end;
     strKodeSubMenu:=dm.Qtemp.FieldValues['submenu_code'];
+
+    if AksiTipe='DELETE' then strIsDelete:='true' else strIsDelete:='false';
+
     with dm.Qtemp do
     begin
       close;
       sql.clear;
       sql.Text:='Insert into "public"."t_correction_trans" (code,created_at,created_by,'+
-                'menu_trans,note,no_transaksi,additional_code,order_no,trans_day,trans_month,trans_year,status) '+
+                'menu_trans,note,no_transaksi,additional_code,order_no,trans_day,trans_month,trans_year,status,is_delete) '+
               ' VALUES (  '+
               ' '+QuotedStr(edKode.Text)+', '+
               'NOW(), '+
@@ -189,7 +213,7 @@ begin
               ' '+QuotedStr(order_no)+', '+
               ' '+QuotedStr(strtgl)+', '+
               ' '+QuotedStr(strbulan)+', '+
-              ' '+QuotedStr(strtahun)+',0);';
+              ' '+QuotedStr(strtahun)+',0,'+QuotedStr(strIsDelete)+');';
       ExecSQL;
     end;
 
@@ -203,6 +227,7 @@ begin
     end;
 
     MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+    AksiTipe:='';
     Clear;
     Close;
   end;
@@ -279,6 +304,7 @@ end;
 
 procedure TFKoreksi.FormShow(Sender: TObject);
 begin
+  if AksiTipe='DELETE' then FKoreksi.Caption:='Hapus Transaksi' else FKoreksi.Caption:='Koreksi Transaksi';
   Clear;
 
   cbMenu.Enabled:=False;

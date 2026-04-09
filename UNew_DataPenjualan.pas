@@ -8,7 +8,25 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.ExtCtrls, DateUtils,
-  Vcl.Buttons, RzPanel, RzLabel, RzRadChk, DataDriverEh, MemDS, DBAccess, Uni;
+  Vcl.Buttons, RzPanel, RzLabel, RzRadChk, DataDriverEh, MemDS, DBAccess, Uni,
+  Vcl.WinXCtrls, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxContainer, cxEdit, dxSkinsCore, dxSkinBasic, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
+  dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxCheckBox, dxToggleSwitch;
 
 type
   TFNew_Penjualan = class(TForm)
@@ -122,6 +140,12 @@ type
     edGudang: TEdit;
     Label25: TLabel;
     Label26: TLabel;
+    MemDetailIS_BUNDLE: TBooleanField;
+    MemDetailQTY_BUNDLE: TSmallintField;
+    MemDetailAD_ON_QTY_BUNDLE: TSmallintField;
+    MemDetailPOTONGAN_ADD_ON: TCurrencyField;
+    btnNoTransaksi: TRzBitBtn;
+    chkNomorPengganti: TRzCheckBox;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -162,6 +186,9 @@ type
     procedure DBGridEh1Columns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure edGudangButtonClick(Sender: TObject);
+    procedure btnNoTransaksiClick(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
+    procedure edNomorTransChange(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot,tot_uang_muka,tot_dipotong_uang_muka : real;
@@ -169,7 +196,7 @@ type
     { Public declarations }
     stat_menej_fee_jual, stat_proses : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
-    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang: string;
+    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
     status,StatusCekKasifikasi,IntStatusKoreksi,iserror,isCancel: integer;
     procedure Clear;
@@ -209,7 +236,7 @@ uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   Ubrowse_faktur_pajak, UDataModule, USetMasterPenjulan,
   UListPenjualan, UTemplate_Temp, UTambah_Barang, UListSalesOrder,
   UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang, UDaftarKontrak,
-  UKoreksi, UMainMenu, UbrowseUangMukaDibayarkan;
+  UKoreksi, UMainMenu, UbrowseUangMukaDibayarkan, UListNoTransaksi;
 
 function GetFakturPajak(vtahun:string): string;
 begin
@@ -401,7 +428,6 @@ try
 
       edTotPPN.Value:=tot_ppn;
 
-
       edTotBersih.Value:=(tot_dpp+(tot_ppn));
     end;
     Except;
@@ -517,7 +543,7 @@ begin
       sql.clear;
       sql.Text:=' INSERT INTO "public"."t_selling_piece" ("trans_no", "code_cust", "name_cust", "code_item", '+
                 ' "name_item", "code_unit", "name_unit", "piece_first", "piece_second", "piece_third", '+
-                ' "piece_fourth") '+
+                ' "piece_fourth",piece_add_on) '+
                 ' Values( '+
                 ' '+QuotedStr(edNomorTrans.Text)+', '+
                 ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
@@ -529,7 +555,8 @@ begin
                 ' '+QuotedStr(MemDetail['POTONGAN1'])+', '+
                 ' '+QuotedStr(MemDetail['POTONGAN2'])+', '+
                 ' '+QuotedStr(MemDetail['POTONGAN3'])+', '+
-                ' '+QuotedStr(MemDetail['POTONGAN4'])+' );';
+                ' '+QuotedStr(MemDetail['POTONGAN4'])+', '+
+                ' '+QuotedStr(MemDetail['POTONGAN_ADD_ON'])+' );';
       ExecSQL;
     end;
     MemDetail.Next;
@@ -622,6 +649,35 @@ begin
   end;
 end;
 
+procedure TFNew_Penjualan.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
+  else btnNoTransaksi.Visible:=False;
+  edNomorTrans.Clear;
+  edSuratJalanTrans.Clear;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    edNomorFaktur.Clear;
+    MemDetail.Active:=False;
+    MemDetail.Active:=True;
+    MemDetail.EmptyTable;
+    edKode_Pelanggan.Clear;
+    edNama_Pelanggan.Clear;
+    spJatuhTempo.Value:=0;
+    edNoReff.Text:='-';
+    kd_kares:='0';
+    kd_perkiraan_pel:='0';
+    edTotSebelumPot.Value:=0;
+    edTotPot.Value:=0;
+    edTotPembulatan.Value:=0;
+    edTotSebelumPajak.Value:=0;
+    edTotPPN.Value:=0;
+    edTotBersih.Value:=0;
+    strNoTransaksiDiGanti:='';
+  end;
+end;
+
 procedure TFNew_Penjualan.BCorrectionClick(Sender: TObject);
 begin
   CheckPembayaran;
@@ -678,7 +734,19 @@ begin
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
+    if edNomorTrans.Text<>'' then
+    begin
+      with dm.Qtemp do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text :=
+          'DELETE FROM "public"."t_selling_temp" ' +
+          'WHERE "trans_no" = ' + QuotedStr(edNomorTrans.Text) + ';';
 
+        ExecSQL;
+      end;
+    end;
     with dm.Qtemp do
     begin
       Close;
@@ -803,14 +871,14 @@ begin
                 ' "ppn_percent", "ppn_account", "ppn_value", "pph_account", "pph_name", "pph_percent", '+
                 ' "pph_value", "tot_piece_value", "tot_piece_percent", "menejmen_fee", '+
                 '"menejmen_fee_value", "grand_tot",dpp_lain_lain,ppn_value_cortex,'+
-                'ppn_percent_cortex,gross_weight,tare_weight,wh_code,word_amount_qty) '+
+                'ppn_percent_cortex,gross_weight,tare_weight,wh_code,word_amount_qty,add_on_qty_bundle,qty_bundle) '+
                 ' Values( '+
                 ':partrans_no, :parcode_item,:parname_item, :paraccount_code, '+
                 ' :paramount, :parcode_unit, :parname_unit, :parno_reference, :parunit_price, :parsub_total, '+
                 ' :parppn_percent, :parppn_account, :parppn_value, :parpph_account, :parpph_name, :parpph_percent, '+
                 ' :parpph_value, :partot_piece_value, :partot_piece_percent, :parmenejmen_fee,'+
                 ' :parmenejmen_fee_value, :pargrand_tot,:pardpp_lain_lain,:parppn_value_cortex,'+
-                ':parppn_percent_cortex,:pargross_weight,:partare_weight,:parwh_code,:parword_amount_qty)';
+                ':parppn_percent_cortex,:pargross_weight,:partare_weight,:parwh_code,:parword_amount_qty,:paradd_on_qty_bundle,:parqty_bundle)';
                 parambyname('partrans_no').Value:=edNomorTrans.Text;
                 parambyname('parcode_item').Value:=MemDetail['KD_ITEM'];
                 parambyname('parname_item').Value:=MemDetail['NM_ITEM'];
@@ -840,6 +908,8 @@ begin
                 parambyname('partare_weight').Value:=MemDetail['BERAT_KOSONG'];
                 parambyname('parwh_code').Value:=strKodeGudang;
                 parambyname('parword_amount_qty').Value:=terbilang;
+                parambyname('paradd_on_qty_bundle').Value:=MemDetail['AD_ON_QTY_BUNDLE'];
+                parambyname('parqty_bundle').Value:=MemDetail['QTY_BUNDLE'];
 //              ' '+QuotedStr(edNomorTrans.Text)+', '+
 //              ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
 //              ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
@@ -965,7 +1035,12 @@ procedure TFNew_Penjualan.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
   StockAda,UangMukaAda,strLanjutUangMuka: Integer;
-  ItemNameNoStok,strCodeHeadOffice, strWhereUangMuka, strUangMuka: String;
+  ItemNameNoStok,strCodeHeadOffice, strWhereUangMuka, strUangMuka, strKodeAwalInvoice: String;
+  LOriginalName: string;
+  LBaseName: string;
+  LLastUnderscorePos: Integer;
+  LSuffix: string;
+  LDummyInt: Integer;
 begin
   ItemNameNoStok:='';
   StockAda:=1;
@@ -1034,7 +1109,7 @@ begin
 //    tot_pot:=0;
 //    tot_menej_fee:=0;
 //    tot_grand:=0;
-//
+
     tot_dipotong_uang_muka:=0;
     tot_uang_muka:=0;
     if cbUangMuka.Checked=True then
@@ -1109,12 +1184,53 @@ begin
         begin
           MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
           edNomorTrans.SetFocus;
-        end }
-        if StockAda=0 then
+        end}
+
+
+//        if StockAda=0 then
+//        begin
+//          MessageDlg(ItemNameNoStok+' Melebihi Stok..!!',mtInformation,[mbRetry],0);
+//          Exit;
+//        end;
+        if (chkNomorPengganti.Checked=True) AND (edNomorTrans.Text='') then
         begin
-          MessageDlg(ItemNameNoStok+' Melebihi Stok..!!',mtInformation,[mbRetry],0);
+          MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
           Exit;
         end;
+
+        if (chkNomorPengganti.Checked=True) AND (edNomorTrans.Text<>'') then
+        begin
+          with dm.Qtemp2 do
+          begin
+            close;
+            sql.Clear;
+            sql.Text:='SELECT * FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text);
+            open;
+          end;
+
+          if dm.Qtemp2.RecordCount>0 then
+          begin
+            MessageDlg('No Transaksi Sudah Ada..!!',mtInformation,[mbRetry],0);
+            Exit;
+          end else begin
+            LOriginalName := FDataListPenjualan.Name;
+            LBaseName := LOriginalName;
+            LLastUnderscorePos := LastDelimiter('_', LBaseName);
+            if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+            begin
+              LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+              if TryStrToInt(LSuffix, LDummyInt) then
+              begin
+                LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+              end;
+            end;
+
+            idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
+            strKodeAwalInvoice:=SelectRow('select param_name from t_numb_det a inner join t_numb b on b.trans_no=a.trans_no WHERE b.numb_type='+QuotedStr(idmenu)+'  AND a.urutan=1');
+            edSuratJalanTrans.Text:=StringReplace(edNomorTrans.Text, strKodeAwalInvoice, 'SJ', [rfReplaceAll, rfIgnoreCase]);
+          end;
+        end;
+
         if spJatuhTempo.Value=0 then
         begin
           MessageDlg('Jumlah Tempo Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -1149,7 +1265,7 @@ begin
         //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
 //          if MessageDlg ('Anda Yakin Disimpan Order No. '+edNomorTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
 //          begin
-            FNew_Penjualan.Autonumber;
+            if chkNomorPengganti.Checked=False then FNew_Penjualan.Autonumber;
             //UpdateFakturPajak(IntToStr(Year));
             Save;
             Dm.Koneksi.Commit;
@@ -1276,6 +1392,14 @@ begin
   FSetMasterPenjulan.ShowModal;
 end;
 
+procedure TFNew_Penjualan.btnNoTransaksiClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='penjualan';
+  FListNoTransaksi.update_grid('trans_no','order_no','t_selling','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY trans_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFNew_Penjualan.Clear;
 begin
   strKodeGudang:='';
@@ -1307,6 +1431,9 @@ begin
   cbUangMuka.Visible:=False;
   TabUangMuka.TabVisible:=False;
   RzPageControl1.ActivePage := TabSDetailPel;
+  chkNomorPengganti.Checked:=False;
+  btnNoTransaksi.Visible:=False;
+  strNoTransaksiDiGanti:='';
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -1491,6 +1618,14 @@ begin
   MemUangMuka.EmptyTable;
 end;
 
+procedure TFNew_Penjualan.edNomorTransChange(Sender: TObject);
+begin
+  if (chkNomorPengganti.Checked=True) AND (edNomorTrans.Text<>'') then
+  begin
+    kd_kares:=SelectRow('SELECT additional_code from t_selling WHERE trans_no='+QuotedStr(strNoTransaksiDiGanti)+';');
+  end;
+end;
+
 procedure TFNew_Penjualan.edTotBersihExit(Sender: TObject);
 begin
 //  edTotBersih.Text := FormatFloat('#,##0.##', edTotBersih.Value);
@@ -1539,6 +1674,8 @@ begin
     SpeedButton1.Visible:=False;
     spJatuhTempo.Enabled:=False;
     btMasterSumber.Visible:=False;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=False;
   end else begin
     btAddDetail.Visible:=True;
     SpeedButton1.Visible:=True;
@@ -1548,17 +1685,15 @@ begin
     dtTanggal.Date:=NOW;
     edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
     edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=True;
   end;
 
   DecodeDate(dtTanggal.Date, Year, Month, Day);
 
-
-
   MemDetail.Close;
   MemDetail.Open;
   iserror:=0;
-
-
 
   //GetFakturPajak(IntToStr(Year));
 //  if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
@@ -1652,7 +1787,8 @@ begin
             ' "name_cust", "account_code", "payment_term", "code_source", "name_source", "no_reference", '+
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,'+
-            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,load_conversion,po_order,sbu_code,word_amount,leader_name) '+
+            'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,'+
+            'load_conversion,po_order,sbu_code,word_amount,leader_name,is_no_replacement) '+
             ' VALUES (  '+
             ' NOW(), :parcreated_by, :parcode_trans, '+
             ' :parno_inv_tax, :partrans_no, :parno_traveldoc, :partrans_date, :parcode_cust, '+
@@ -1660,7 +1796,7 @@ begin
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
             ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, '+
             ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,'+
-            ':pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order,:parsbu_code,:parword_amount,:parleader_name)';
+            ':pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order,:parsbu_code,:parword_amount,:parleader_name,:paris_no_replacement)';
             parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
@@ -1670,7 +1806,7 @@ begin
             parambyname('parcode_cust').Value:=edKode_Pelanggan.Text;
             parambyname('parname_cust').Value:=edNama_Pelanggan.Text;
             parambyname('paraccount_code').Value:=kd_perkiraan_pel;
-            parambyname('parpayment_term').Value:=spJatuhTempo.Text;
+            parambyname('parpayment_term').Value:=StrToIntDef(spJatuhTempo.Text, 0);
             parambyname('parcode_source').Value:=edKodeSumber.Text;
             parambyname('parname_source').Value:=edNamaSumber.Text;
             parambyname('parno_reference').Value:=edNoReff.Text;
@@ -1702,40 +1838,25 @@ begin
             parambyname('parsbu_code').Value:=FHomeLogin.vKodePRSH;
             parambyname('parword_amount').Value:=terbilang;
             parambyname('parleader_name').Value:=strLeaderName;
-
-            //     parsbu_code      ' NOW(), '+
-//            ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
-//            ' '+QuotedStr(edKode_Trans.Text)+', '+
-//            ' '+QuotedStr(edNomorFaktur.Text)+', '+
-//            ' '+QuotedStr(edNomorTrans.Text)+', '+
-//            ' '+QuotedStr(edSuratJalanTrans.Text)+', '+
-//            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+', '+
-//            ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
-//            ' '+QuotedStr(edNama_Pelanggan.Text)+', '+
-//            ' '+QuotedStr(kd_perkiraan_pel)+', '+
-//            ' '+QuotedStr(spJatuhTempo.Text)+', '+
-//            ' '+QuotedStr(edKodeSumber.Text)+', '+
-//            ' '+QuotedStr(edNamaSumber.Text)+', '+
-//            ' '+QuotedStr(edNoReff.Text)+', '+
-//            ' '+FloatToStr(tot_dpp)+', '+
-//            ' '+FloatToStr(tot_ppn)+', '+
-//            ' '+FloatToStr(tot_pph)+', '+
-//            ' '+FloatToStr(tot_pot)+', '+
-//            ' '+FloatToStr(tot_menej_fee)+', '+
-//            ' '+FloatToStr(tot_grand)+', '+
-//            ' '+QuotedStr(FloatToStr(tot_dpp))+', '+
-//            ' '+QuotedStr(FloatToStr(tot_ppn))+', '+
-//            ' '+QuotedStr(FloatToStr(tot_pph))+', '+
-//            ' '+QuotedStr(FloatToStr(tot_pot))+', '+
-//            ' '+QuotedStr(FloatToStr(tot_menej_fee))+', '+
-//            ' '+QuotedStr(FloatToStr(tot_grand))+', '+
-//            ' '+QuotedStr(order_no)+', '+
-//            ' '+QuotedStr(kd_kares)+', '+
-//            ' '+QuotedStr(strtgl)+', '+
-//            ' '+QuotedStr(strbulan)+', '+
-//            ' '+QuotedStr(strtahun)+'  );';
+            if chkNomorPengganti.Checked=True then
+            parambyname('paris_no_replacement').Value:=True
+            else parambyname('paris_no_replacement').Value:=False;
     ExecSQL;
   end;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE "public"."t_selling" SET'+
+                ' trans_no_replacement='+QuotedStr(edNomorTrans.Text)+
+                ' Where trans_no='+QuotedStr(strNoTransaksiDiGanti);
+      ExecSQL;
+    end;
+  end;
+
   InsertDetailJU;
   SavePotongan;
   SimpanPelanggan;
@@ -1819,12 +1940,13 @@ begin
   begin
     close;
     sql.clear;
-    sql.Add('SELECT * from ( SELECT b.piece_first,b.piece_second,b.piece_third,b.piece_fourth,'+
+    sql.Add('SELECT * from ( SELECT COALESCE(b.piece_first,0) piece_first,COALESCE(b.piece_second,0) piece_second,COALESCE(b.piece_third,0) piece_third,COALESCE(b.piece_fourth,0) piece_fourth,COALESCE(b.piece_add_on,0) piece_add_on,'+
             'a.trans_no, a.code_item, a.name_item,c.group_id, a.amount, a.code_unit, a.name_unit, '+
             'a.no_reference, a.unit_price, a.sub_total, a.ppn_percent, a.ppn_value, a.pph_account, '+
             'a.pph_name, a.pph_percent, a.pph_value,  a.tot_piece_value,a.tot_piece_percent, '+
             'a.grand_tot, a.ppn_account,  a.account_code, a.menejmen_fee, a.menejmen_fee_value, '+
-            'a.gross_weight, a.tare_weight,COALESCE(a.wh_code,'''') wh_code,COALESCE(d.wh_name,'''') wh_name '+
+            'a.gross_weight, a.tare_weight,COALESCE(a.wh_code,'''') wh_code,COALESCE(d.wh_name,'''') wh_name, '+
+            'COALESCE(a.add_on_qty_bundle,0) add_on_qty_bundle, COALESCE(a.qty_bundle,0) qty_bundle '+
             'FROM  public.t_selling_det  a left join t_selling_piece b on b.trans_no=a.trans_no '+
             'AND b.code_item=a.code_item '+
             'LEFT JOIN t_item c on c.item_code=a.code_item '+
@@ -1873,6 +1995,7 @@ begin
       FNew_Penjualan.MemDetail['POTONGAN2']:=Dm.Qtemp.fieldbyname('piece_second').value;
       FNew_Penjualan.MemDetail['POTONGAN3']:=Dm.Qtemp.fieldbyname('piece_third').value;
       FNew_Penjualan.MemDetail['POTONGAN4']:=Dm.Qtemp.fieldbyname('piece_fourth').value;
+      FNew_Penjualan.MemDetail['POTONGAN_ADD_ON']:=Dm.Qtemp.fieldbyname('piece_add_on').value;
       FNew_Penjualan.MemDetail['GRAND_TOTAL']:=Dm.Qtemp.fieldbyname('grand_tot').value;
       FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp.fieldbyname('group_id').value;
 
@@ -1883,6 +2006,10 @@ begin
       if Dm.Qtemp.fieldbyname('tare_weight').value<>NULL then
       FNew_Penjualan.MemDetail['BERAT_KOSONG']:=Dm.Qtemp.fieldbyname('tare_weight').value else
       FNew_Penjualan.MemDetail['BERAT_KOSONG']:=0;
+
+      FNew_Penjualan.MemDetail['AD_ON_QTY_BUNDLE']:=Dm.Qtemp.fieldbyname('add_on_qty_bundle').value;
+      FNew_Penjualan.MemDetail['QTY_BUNDLE']:=Dm.Qtemp.fieldbyname('qty_bundle').value;
+
 
       FNew_Penjualan.strKodeGudang:=Dm.Qtemp.fieldbyname('wh_code').value;
       FNew_Penjualan.edGudang.Text:=Dm.Qtemp.fieldbyname('wh_name').value;
@@ -1928,6 +2055,7 @@ end;
 
 procedure TFNew_Penjualan.bt_re_calculateClick(Sender: TObject);
 var IntTotGroup,IntGroupID : Integer;
+vJumlah: Double;
 begin
 //  UpdateDataMenejFee;
   get_uuid:=SelectRow('SELECT gen_random_uuid()::TEXT AS clean_uuid;');
@@ -1943,6 +2071,12 @@ begin
   MemDetail.First;
   while not MemDetail.Eof do
   begin
+    if MemDetail['AD_ON_QTY_BUNDLE'] > 0 then
+      vJumlah := MemDetail['JUMLAH'] - MemDetail['AD_ON_QTY_BUNDLE']
+    else
+      vJumlah := MemDetail['JUMLAH'];
+
+
     with dm.Qtemp do
     begin
       close;
@@ -1958,7 +2092,8 @@ begin
                 ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
                 ' '+QuotedStr(MemDetail['KD_ITEM'])+', '+
                 ' '+QuotedStr(MemDetail['NM_ITEM'])+', '+
-                ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
+                ' ' + QuotedStr(FloatToStr(vJumlah)) + ', ' +
+//                ' '+QuotedStr(MemDetail['JUMLAH'])+', '+
                 ' '+QuotedStr(MemDetail['KD_SATUAN'])+', '+
                 ' '+QuotedStr(MemDetail['NM_SATUAN'])+');';
       ExecSQL;

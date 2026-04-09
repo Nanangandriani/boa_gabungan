@@ -162,7 +162,7 @@ implementation
 {$R *.dfm}
 
 uses UDataReturPenjualan, UDataModule, UHomeLogin, UMy_Function, UMainMenu,
-  UMasterData, UNoteCancel;
+  UMasterData, UNoteCancel, UKoreksi;
 
 var
   realfdatalistreturpenjualan : TFListReturPenjualan;
@@ -235,16 +235,35 @@ end;
 
 procedure TFListReturPenjualan.ActDelExecute(Sender: TObject);
 begin
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else
   if CheckJurnalPosting(QReturJual.FieldByName('trans_no').AsString)>0 then
   begin
     MessageDlg('Sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
   end else begin
-    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Penerimaan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      FNoteCancel.vtbl:='t_sales_returns';
-      FNoteCancel.vfieldtransno:='trans_no';
-      FNoteCancel.edNoTransaksi.Text:=QReturJual.FieldByName('trans_no').AsString;
-      FNoteCancel.ShowModal;
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListReturPenjualan'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QReturJual.FieldByName('trans_no').AsString;
+      FKoreksi.ShowModal;
+//      FNoteCancel.vtbl:='t_sales_returns';
+//      FNoteCancel.vfieldtransno:='trans_no';
+//      FNoteCancel.edNoTransaksi.Text:=QReturJual.FieldByName('trans_no').AsString;
+//      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -282,6 +301,13 @@ begin
   begin
     with FDataReturPenjualan do
     begin
+
+      if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+      else chkNomorPengganti.Checked:=False;
+
+      if Dm.Qtemp.FieldByName('return_type').AsInteger=1 then rgJenisRetur.ItemIndex:=1
+      else rgJenisRetur.ItemIndex:=0;
+
       edNoTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
       dtTanggal.Date:=Dm.Qtemp.FieldByName('trans_date').AsDateTime;
       edKode_Pelanggan.Text:=Dm.Qtemp.FieldByName('code_cust').AsString;
@@ -312,12 +338,9 @@ begin
     end;
   end;
 
-
-
-
+  FDataReturPenjualan.Status := 1;
   FDataReturPenjualan.edNoTrans.Enabled:=false;
   FDataReturPenjualan.RefreshGrid;
-  FDataReturPenjualan.Status := 1;
   FDataReturPenjualan.Show;
 
 end;
@@ -373,13 +396,13 @@ begin
     // Dapetin Grand Total
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.add(' select * '+
-           ' from "public"."t_sales_returns" a '+
-           ' where a.deleted_at is null and '+
-           ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
-    open;
+      close;
+      sql.clear;
+      sql.add(' select * '+
+             ' from "public"."t_sales_returns" a '+
+             ' where a.deleted_at is null and '+
+             ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
+      open;
     end;
     //
 
@@ -422,8 +445,6 @@ begin
          ' where "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+'');
     open;
   end;
-
-
 
   if QJurnal.RecordCount=0 then
   begin

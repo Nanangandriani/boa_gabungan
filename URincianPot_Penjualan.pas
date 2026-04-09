@@ -44,6 +44,10 @@ type
     MemMasterDatadpp: TCurrencyField;
     MemMasterDatanilai_ppn_cortex: TFloatField;
     LabelInformasi: TLabel;
+    MemMasterDatais_bundle: TBooleanField;
+    MemMasterDataqty_bundle: TSmallintField;
+    MemMasterDataad_on_qty_bundle: TSmallintField;
+    MemMasterDatapot_value_add_on: TCurrencyField;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -57,8 +61,10 @@ type
     disc_stat,special_proses,next_proses:boolean;
     kd_cust,kd_item,satuan,kd_JenisOutlet, kd_Kategori, get_uuid, type_jual,jenis_jual,strStatusIncludePPN :string;
     stat_fp,qty,stat_bayar,stat_promo,jumlah_item:integer;
-    stat_klasifikasi,hsatuan,hjual,disc1,disc2,disc3,disc4,disc,
+    stat_klasifikasi,hsatuan,hjual,disc1,disc2,disc3,disc4,disc,discaddon,
     bruto,ndisc,ndiscBruto1,ndiscBruto2,ndiscBruto3,ndiscBruto4,dpp,ppn,nppn,netto,total,hsatuan_cortex,dpp_cortex,nppn_cortex,netto_cortex:real;
+//    nBonus: Integer;
+    nKelipatan,nSyarat,nBonus: Double;
     { Public declarations }
     procedure HitungKlasifikasi;
     procedure AmbilDataKlasifikasi;
@@ -84,7 +90,8 @@ begin
       sql.Clear;
       SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
                 ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
-                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
+                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item,  '+
+                ' c.is_bundle_sell,c.qty_bundle_sell,COALESCE(c.add_on_qty_bundle_sell) add_on_qty_bundle_sell,c.unit_of_measure_bundle_sell '+
                 ' FROM "public"."t_selling_temp" a '+
                 ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
                 ' on a.cust_code=b.customer_code  '+
@@ -105,7 +112,8 @@ begin
       sql.Clear;
       SQL.Text:=' SELECT a."trans_no", a."id_master", a."code_item" as kd_brg, a."name_item", '+
                 ' "group_name", d."group_id",a."amount", a."code_unit", a."name_unit", a."unit_price", a."sub_total", '+
-                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item  '+
+                ' b.code_selling_type as type_cust,b.code_type as jns_cust, d.code as group_item,  '+
+                ' c.is_bundle_sell,c.qty_bundle_sell,COALESCE(c.add_on_qty_bundle_sell,0) add_on_qty_bundle_sell,c.unit_of_measure_bundle_sell '+
                 ' FROM "public"."t_selling_temp" a '+
                 ' LEFT JOIN (SELECT customer_code, code_type, code_selling_type from t_customer where deleted_at is null) b '+
                 ' on a.cust_code=b.customer_code  '+
@@ -253,8 +261,15 @@ begin
           end;
         end;
 
+        nBonus := 0;
+        nSyarat := query2.fieldbyname('qty_bundle_sell').AsFloat;
+        nKelipatan := query2.fieldbyname('add_on_qty_bundle_sell').AsFloat;
+
+
+
         AmbilDataKlasifikasi; //Cek Data Klasifikasi Umum/Grouping
-        //Masukin kegrid
+
+            //Masukin kegrid
         //showmessage('Klasifikasi');
         if dm.Qtemp.RecordCount=0 then
         begin
@@ -264,27 +279,77 @@ begin
             exit;
           end;
         end;
+
+
+
         //insert ke memtable
         with FRincianPot_Penjualan do
         begin
           MemMasterData.insert;
           MemMasterData['kd_brg']:=kd_item;
           MemMasterData['nm_brg']:=query2.fieldbyname('name_item').asstring;
-          MemMasterData['jumlah']:=qty;
-          MemMasterData['harga_satuan']:=bruto;
+
+          if nBonus > 0 then
+          begin
+            MemMasterData['harga_satuan']:=bruto;
+            MemMasterData['is_bundle'] := True;
+            MemMasterData['ad_on_qty_bundle'] := nBonus;
+            MemMasterData['jumlah']:=qty;
+//            MemMasterData['jumlah']:=qty+nBonus;
+            MemMasterData['pot_value_1'] := disc1;
+            MemMasterData['pot_value_2'] := disc2;
+            MemMasterData['pot_value_3'] := disc3;
+            MemMasterData['pot_value_4'] := disc4;
+            discaddon:=StrToFloat(SelectRow('SELECT round(CAST('+StringReplace(StringReplace(formatfloat('0.00',((bruto-disc1-disc2-disc3-disc4)*nBonus/qty)), '.', '', [rfReplaceAll]), ',', '.', [rfReplaceAll])+' AS DECIMAL(20,2)))'));
+            MemMasterData['pot_value_add_on'] := discaddon;
+//            MemMasterData['pot_value_add_on'] := (hjual*nBonus);
+
+            if (disc4 > 0) then
+              MemMasterData['pot_value_4'] := disc4 + (discaddon)
+            else if (disc3 > 0) then
+              MemMasterData['pot_value_3'] := disc3 + (discaddon)
+            else if (disc2 > 0) then
+              MemMasterData['pot_value_2'] := disc2 + (discaddon)
+            else if (disc1 > 0) then
+              MemMasterData['pot_value_1'] := disc1 + (discaddon)
+            else
+              MemMasterData['pot_value_1'] := (discaddon);
+          end else begin
+            MemMasterData['is_bundle'] := False;
+
+            MemMasterData['ad_on_qty_bundle'] := 0;
+            MemMasterData['jumlah']:=qty;
+//            MemMasterData['harga_satuan']:=bruto+(hjual*nBonus);
+            MemMasterData['harga_satuan']:=bruto;
+            MemMasterData['pot_value_4']:=disc4;
+            MemMasterData['pot_value_3']:=disc3;
+            MemMasterData['pot_value_2']:=disc2;
+            MemMasterData['pot_value_1']:=disc1;
+            MemMasterData['pot_value_add_on']:=0;
+          end;
+
+          if query2.fieldbyname('qty_bundle_sell').AsFloat>0 then
+          begin
+            MemMasterData['qty_bundle'] := query2.fieldbyname('qty_bundle_sell').AsFloat;
+          end else begin
+            MemMasterData['qty_bundle'] := 0;
+          end;
+
           MemMasterData['nilai_ppn']:=nppn_cortex;
           MemMasterData['nilai_ppn_cortex']:=nppn;
           MemMasterData['satuan']:=satuan;
-          MemMasterData['pot_value_1']:=disc1;
-          MemMasterData['pot_value_2']:=disc2;
-          MemMasterData['pot_value_3']:=disc3;
-          MemMasterData['pot_value_4']:=disc4;
+//          MemMasterData['pot_value_1']:=disc1;
+//          MemMasterData['pot_value_2']:=disc2;
+//          MemMasterData['pot_value_3']:=disc3;
+//          MemMasterData['pot_value_4']:=disc4;
           MemMasterData['pot_persen_1']:=0;
           MemMasterData['pot_persen_2']:=0;
           MemMasterData['pot_persen_3']:=0;
           MemMasterData['pot_persen_4']:=0;
           MemMasterData['dpp']:=dpp_cortex;
           MemMasterData['total']:=netto_cortex;
+
+
 //          MemMasterData['total']:=dpp+nppn-disc1-disc2-disc3-disc4;
           MemMasterData.post;
         end;
@@ -518,6 +583,15 @@ begin
   stat_fp:=stat_fp;
   qty:=jumlah_item;
 
+  if (query2.fieldbyname('is_bundle_sell').AsString = 'True') and (nSyarat > 0) and (query2.fieldbyname('unit_of_measure_bundle_sell').AsString=query2.fieldbyname('code_unit').AsString) then
+  begin
+     if qty >= nSyarat then
+    begin
+      nBonus := Trunc(qty / nSyarat) * nKelipatan;
+      qty:=qty+Trunc(nBonus);
+    end;
+  end;
+
   //bruto:=hjual*qty;
   //dpp:=fmainmenu.qexec3.fieldbyname('disc1').asfloat;
 
@@ -531,7 +605,12 @@ begin
 
   if stat_fp=1 then
   begin
-    bruto:=hjual*qty;
+//    if query2.fieldbyname('is_bundle_sell').AsBoolean=TRUE then
+//    begin
+//      bruto:=(hjual*qty)+(hjual*nBonus);
+//    end else begin
+      bruto:=hjual*qty;
+//    end;
     //ndisc:=diskon*qty;
 //    ShowMessage('stat_klasifikasi '+Floattostr(stat_klasifikasi));
     if stat_klasifikasi=0 then //BACA KLASIFIKASI
@@ -694,6 +773,7 @@ begin
           if MemDetail['KD_ITEM']=MemMasterData['kd_brg'] then
           begin
             MemDetail.Edit;
+            MemDetail['JUMLAH']:=MemMasterData['jumlah'];
             MemDetail['HARGA_SATUAN']:=MemMasterData['harga_satuan']/MemMasterData['jumlah'];
             MemDetail['JUMLAH_HARGA']:=MemMasterData['harga_satuan'];
             MemDetail['PPN_NILAI']:=MemMasterData['nilai_ppn'];
@@ -705,6 +785,10 @@ begin
             MemDetail['POTONGAN4']:=MemMasterData['pot_value_4'];
             MemDetail['SUB_TOTAL']:=MemMasterData['dpp'];
             MemDetail['GRAND_TOTAL']:=MemMasterData['total'];
+            MemDetail['QTY_BUNDLE']:=MemMasterData['qty_bundle'];
+            MemDetail['AD_ON_QTY_BUNDLE']:=MemMasterData['ad_on_qty_bundle'];
+            MemDetail['POTONGAN_ADD_ON']:=MemMasterData['pot_value_add_on'];
+
             MemDetail.Post;
 //            HitungGrid;
           end;

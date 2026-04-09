@@ -3,8 +3,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Rincian Potongan'
-  ClientHeight = 438
-  ClientWidth = 1238
+  ClientHeight = 437
+  ClientWidth = 1234
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,13 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1238
+    Width = 1234
     Height = 81
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1234
+    ExplicitWidth = 1230
     object Label39: TLabel
       Left = 14
       Top = 28
@@ -100,8 +100,8 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   object DBGridCustomer: TDBGridEh
     Left = 0
     Top = 81
-    Width = 1238
-    Height = 325
+    Width = 1234
+    Height = 324
     Align = alClient
     DataSource = dsMasterData
     DynProps = <>
@@ -272,15 +272,15 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 406
-    Width = 1238
+    Top = 405
+    Width = 1234
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 405
-    ExplicitWidth = 1234
+    ExplicitTop = 404
+    ExplicitWidth = 1230
     object BBatal: TRzBitBtn
-      Left = 1162
+      Left = 1158
       Top = 1
       Height = 30
       Align = alRight
@@ -339,10 +339,10 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1158
+      ExplicitLeft = 1154
     end
     object BSave: TRzBitBtn
-      Left = 1087
+      Left = 1083
       Top = 1
       Height = 30
       Align = alRight
@@ -401,7 +401,7 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1083
+      ExplicitLeft = 1079
     end
   end
   object dsMasterData: TDataSource
@@ -410,7 +410,6 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     Top = 256
   end
   object MemMasterData: TMemTableEh
-    Active = True
     Params = <>
     SortOrder = 'nm_brg'
     Left = 488
@@ -491,6 +490,18 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
     end
     object MemMasterDatanilai_ppn_cortex: TFloatField
       FieldName = 'nilai_ppn_cortex'
+    end
+    object MemMasterDatais_bundle: TBooleanField
+      FieldName = 'is_bundle'
+    end
+    object MemMasterDataqty_bundle: TSmallintField
+      FieldName = 'qty_bundle'
+    end
+    object MemMasterDataad_on_qty_bundle: TSmallintField
+      FieldName = 'ad_on_qty_bundle'
+    end
+    object MemMasterDatapot_value_add_on: TCurrencyField
+      FieldName = 'pot_value_add_on'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -642,6 +653,35 @@ object FRincianPot_Penjualan: TFRincianPot_Penjualan
         object nilai_ppn_cortex: TMTNumericDataFieldEh
           FieldName = 'nilai_ppn_cortex'
           NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object is_bundle: TMTBooleanDataFieldEh
+          FieldName = 'is_bundle'
+          DisplayWidth = 20
+        end
+        object qty_bundle: TMTNumericDataFieldEh
+          FieldName = 'qty_bundle'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object ad_on_qty_bundle: TMTNumericDataFieldEh
+          FieldName = 'ad_on_qty_bundle'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object pot_value_add_on: TMTNumericDataFieldEh
+          FieldName = 'pot_value_add_on'
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           DisplayFormat = '#,##0.##'

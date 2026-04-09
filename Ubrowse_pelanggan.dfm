@@ -214,7 +214,7 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
       end
       object btTampilkan: TRzBitBtn
         Left = 383
-        Top = 0
+        Top = 1
         Width = 147
         Height = 30
         Caption = 'Tampilkan'
@@ -323,6 +323,10 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
     object MemMasterDataKECAMATAN: TStringField
       FieldName = 'KECAMATAN'
     end
+    object MemMasterDataKD_TP: TStringField
+      FieldName = 'KD_TP'
+      Size = 100
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -385,6 +389,12 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
           FieldName = 'KECAMATAN'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+        end
+        object KD_TP: TMTStringDataFieldEh
+          FieldName = 'KD_TP'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

@@ -290,7 +290,7 @@ begin
             begin
                 i:=i+1;
                ProgressBar1.Position:=i;
-            if MemDetail['pilih']= true then
+            if (MemDetail['pilih']= true) AND (MemDetail['kode_outlet']<>NULL) then
             begin
               ProsesUpdate;
 //              UpdateKpiUser('PENJUALAN' ,'`update`' , '1' , True, 'UBAH FAKTUR PENJUALAN '+MemDetail['no_invoice_internal']+' FAKTUR DARI '+MemDetail['no_faktur_internal']+' KE '+MemDetail['no_faktur_coretax']+' ');
@@ -353,7 +353,7 @@ var
   CellValue: Variant;
   FileName: string;
 begin
-  // 1. Membuat dialog untuk memilih file Excel
+
   OpenDialog := TOpenDialog.Create(nil);
   try
     OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx';
@@ -361,16 +361,15 @@ begin
 
     if OpenDialog.Execute then
     begin
-      FileName := OpenDialog.FileName; // Dapatkan lokasi file yang dipilih
+      FileName := OpenDialog.FileName;
 
-      // 2. Membuka aplikasi Excel
+
       ExcelApp := CreateOleObject('Excel.Application');
       try
-        // 3. Membuka file Excel
-        WorkBook := ExcelApp.Workbooks.Open(FileName);
-        WorkSheet := WorkBook.Worksheets[1]; // Gunakan worksheet pertama
 
-        // 4. Menentukan batas baris dan kolom (LastRow dan LastCol)
+        WorkBook := ExcelApp.Workbooks.Open(FileName);
+        WorkSheet := WorkBook.Worksheets[1];
+
         LastRow := WorkSheet.UsedRange.Rows.Count;
         LastCol := WorkSheet.UsedRange.Columns.Count;
 
@@ -419,11 +418,10 @@ begin
 
         end;
 
-        // 6. Memasukkan data ke MemTable
-        //MemDetail.DisableControls;
+
         DBGridEh1.StartLoadingStatus();
         try
-          for Row := 2 to LastRow do // Mulai dari baris kedua untuk data
+          for Row := 2 to LastRow do
           begin
 					if (WorkSheet.Cells[Row, 8].Value='APPROVED') and (WorkSheet.Cells[Row, 15].Value<>'') and (WorkSheet.Cells[Row, 15].Value<>'0') then
 					begin
@@ -450,18 +448,17 @@ begin
 					end;
 		   end;
         finally
-          //DBGridEh1.FrozenCols := 4;
+
           DBGridEh1.FinishLoadingStatus();
-          //MemDetail.EnableControls;
+
         end;
 
-        // 7. Menutup workbook dan Excel
+
         WorkBook.Close(False);
       finally
         ExcelApp.Quit;
       end;
 
-      //ShowMessage('Data berhasil diimpor dari: ' + FileName);
     end
 		else
 		begin

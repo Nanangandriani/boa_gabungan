@@ -19,23 +19,22 @@ object FDataReturPenjualan: TFDataReturPenjualan
     Left = 0
     Top = 0
     Width = 967
-    Height = 176
+    Height = 182
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 963
-    ExplicitHeight = 175
+    ExplicitHeight = 176
     object Label39: TLabel
       Left = 20
-      Top = 80
+      Top = 89
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 117
-      Top = 80
+      Top = 89
       Width = 3
       Height = 15
       Caption = ':'
@@ -58,28 +57,28 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object Label10: TLabel
       Left = 21
-      Top = 53
+      Top = 62
       Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
     object Label11: TLabel
       Left = 118
-      Top = 53
+      Top = 62
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label13: TLabel
       Left = 118
-      Top = 24
+      Top = 33
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 20
-      Top = 24
+      Top = 33
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
@@ -123,7 +122,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object edKode_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 77
+      Top = 86
       Width = 186
       Height = 23
       Text = ''
@@ -135,7 +134,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object edNama_Pelanggan: TEdit
       Left = 132
-      Top = 106
+      Top = 115
       Width = 357
       Height = 23
       ReadOnly = True
@@ -163,7 +162,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object dtTanggal: TRzDateTimePicker
       Left = 132
-      Top = 50
+      Top = 59
       Width = 101
       Height = 23
       Date = 45405.000000000000000000
@@ -173,7 +172,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object edNoTrans: TEdit
       Left = 132
-      Top = 21
+      Top = 30
       Width = 250
       Height = 23
       CharCase = ecUpperCase
@@ -201,7 +200,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 132
-      Top = 135
+      Top = 144
       Width = 116
       Height = 30
       Align = alCustom
@@ -261,29 +260,59 @@ object FDataReturPenjualan: TFDataReturPenjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
     end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 132
+      Top = 6
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 9
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 386
+      Top = 29
+      Width = 30
+      Caption = '...'
+      TabOrder = 10
+      OnClick = btnNoTransaksiClick
+    end
+    object rgJenisRetur: TRadioGroup
+      Left = 500
+      Top = 129
+      Width = 277
+      Height = 47
+      Caption = 'Jenis Retur'
+      Columns = 2
+      Items.Strings = (
+        'Bukan Tukar Guling'
+        'Tukar Guling')
+      TabOrder = 11
+      Visible = False
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 176
+    Top = 182
     Width = 967
-    Height = 388
+    Height = 382
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 175
-    ExplicitWidth = 963
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 959
+      ExplicitHeight = 363
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 963
-        Height = 248
+        Height = 242
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -497,12 +526,13 @@ object FDataReturPenjualan: TFDataReturPenjualan
       end
       object RzPanel1: TRzPanel
         Left = 0
-        Top = 248
+        Top = 242
         Width = 963
         Height = 115
         Align = alBottom
         Color = 15987699
         TabOrder = 1
+        ExplicitTop = 248
         ExplicitWidth = 959
         object RzLabel2: TRzLabel
           Left = 638

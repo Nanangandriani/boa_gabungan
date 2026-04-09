@@ -903,6 +903,11 @@ begin
   MemKlasifikasi.EmptyTable;
   MemGroup.EmptyTable;
   MemMaster.EmptyTable;
+  rgPotongan.Items.Clear;
+  rgPotongan.Items.Add('Disc');
+  rgPotongan.Items.Add('Value (Rp)');
+
+
 end;
 
 procedure TFDaftarKlasifikasi.DBGridDetailColumns1CellButtons0Click(
@@ -1124,7 +1129,7 @@ end;
 procedure TFDaftarKlasifikasi.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  Clear;
+//  Clear;
   MemKlasifikasi.EmptyTable;
 end;
 

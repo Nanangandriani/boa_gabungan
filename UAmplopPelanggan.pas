@@ -110,7 +110,7 @@ end;
 procedure TFAmplopPelanggan.Report1GetValue(const VarName: string;
   var Value: Variant);
 begin
-if CompareText(VarName, 'NamaPerusahaan') = 0 then
+  if CompareText(VarName, 'NamaPerusahaan') = 0 then
   Value := FHomeLogin.vNamaPRSH;
   if CompareText(VarName, 'KotaPerusahaan') = 0 then
   Value := FHomeLogin.vKotaPRSH;

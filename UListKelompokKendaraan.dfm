@@ -224,8 +224,8 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         'LEFT JOIN t_selling b on b.no_reference=a.notrans AND b.deleted_' +
         'at is NULL'
       
-        'LEFT JOIN t_sales_order_det c on c.notrans=a.notrans WHERE NOT E' +
-        'XISTS ('
+        'LEFT JOIN t_selling_det c on c.trans_no=b.trans_no WHERE NOT EXI' +
+        'STS ('
       '    SELECT 1 '
       '    FROM t_delivery_order_load d '
       '    WHERE d.no_ref_load = a.notrans'

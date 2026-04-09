@@ -19,7 +19,7 @@ object FNew_Penjualan: TFNew_Penjualan
     Left = 0
     Top = 0
     Width = 870
-    Height = 179
+    Height = 201
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
@@ -55,14 +55,14 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label4: TLabel
       Left = 623
-      Top = 88
+      Top = 113
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 529
-      Top = 88
+      Top = 113
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
@@ -104,42 +104,42 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label13: TLabel
       Left = 624
-      Top = 6
+      Top = 31
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 530
-      Top = 6
+      Top = 31
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label1: TLabel
       Left = 530
-      Top = 33
+      Top = 58
       Width = 78
       Height = 15
       Caption = 'No. Surat Jalan'
     end
     object Label2: TLabel
       Left = 624
-      Top = 33
+      Top = 58
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label15: TLabel
       Left = 623
-      Top = 116
+      Top = 141
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label16: TLabel
       Left = 530
-      Top = 116
+      Top = 141
       Width = 43
       Height = 15
       Caption = 'No. Reff'
@@ -154,14 +154,14 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label6: TLabel
       Left = 624
-      Top = 61
+      Top = 86
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label7: TLabel
       Left = 530
-      Top = 61
+      Top = 86
       Width = 55
       Height = 15
       Caption = 'No. Faktur'
@@ -242,14 +242,14 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object Label25: TLabel
       Left = 624
-      Top = 144
+      Top = 169
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label26: TLabel
       Left = 530
-      Top = 144
+      Top = 169
       Width = 42
       Height = 15
       Caption = 'Gudang'
@@ -277,7 +277,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object spJatuhTempo: TSpinEdit
       Left = 638
-      Top = 85
+      Top = 110
       Width = 60
       Height = 24
       MaxValue = 50
@@ -321,7 +321,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object btAddDetail: TRzBitBtn
       Left = 20
-      Top = 145
+      Top = 162
       Width = 116
       Height = 30
       Align = alCustom
@@ -383,12 +383,13 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorTrans: TEdit
       Left = 638
-      Top = 2
-      Width = 230
+      Top = 27
+      Width = 187
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
       TabOrder = 7
+      OnChange = edNomorTransChange
     end
     object edKode_Trans: TRzButtonEdit
       Left = 132
@@ -404,8 +405,8 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edSuratJalanTrans: TEdit
       Left = 638
-      Top = 30
-      Width = 230
+      Top = 55
+      Width = 187
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
@@ -413,7 +414,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNoReff: TEdit
       Left = 638
-      Top = 113
+      Top = 138
       Width = 230
       Height = 23
       CharCase = ecUpperCase
@@ -421,7 +422,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edNomorFaktur: TEdit
       Left = 638
-      Top = 58
+      Top = 83
       Width = 230
       Height = 23
       CharCase = ecUpperCase
@@ -438,7 +439,7 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object cbUangMuka: TRzCheckBox
       Left = 142
-      Top = 152
+      Top = 168
       Width = 84
       Height = 19
       Caption = 'Uang Muka'
@@ -457,12 +458,30 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object edGudang: TEdit
       Left = 638
-      Top = 141
+      Top = 166
       Width = 230
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
       TabOrder = 15
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 831
+      Top = 24
+      Width = 30
+      Caption = '...'
+      TabOrder = 16
+      OnClick = btnNoTransaksiClick
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 638
+      Top = 4
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 17
+      OnClick = chkNomorPenggantiClick
     end
   end
   object Panel2: TPanel
@@ -736,29 +755,31 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 179
+    Top = 201
     Width = 870
-    Height = 255
+    Height = 233
     Hint = ''
-    ActivePage = TabUangMuka
+    ActivePage = TabSDetailPel
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 866
-    ExplicitHeight = 254
+    ExplicitHeight = 232
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
+      ExplicitWidth = 862
+      ExplicitHeight = 207
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
         Width = 866
-        Height = 230
+        Height = 208
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSDetail
@@ -1014,13 +1035,11 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object TabUangMuka: TRzTabSheet
       Caption = 'Uang Muka'
-      ExplicitWidth = 862
-      ExplicitHeight = 229
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
         Width = 866
-        Height = 230
+        Height = 208
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSUangMuka
@@ -1343,7 +1362,6 @@ object FNew_Penjualan: TFNew_Penjualan
     Top = 265
   end
   object MemDetail: TMemTableEh
-    Active = True
     CachedUpdates = True
     Params = <>
     SortOrder = 'NM_ITEM'
@@ -1452,6 +1470,18 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object MemDetailBERAT_KOSONG: TFloatField
       FieldName = 'BERAT_KOSONG'
+    end
+    object MemDetailIS_BUNDLE: TBooleanField
+      FieldName = 'IS_BUNDLE'
+    end
+    object MemDetailQTY_BUNDLE: TSmallintField
+      FieldName = 'QTY_BUNDLE'
+    end
+    object MemDetailAD_ON_QTY_BUNDLE: TSmallintField
+      FieldName = 'AD_ON_QTY_BUNDLE'
+    end
+    object MemDetailPOTONGAN_ADD_ON: TCurrencyField
+      FieldName = 'POTONGAN_ADD_ON'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -1672,6 +1702,34 @@ object FNew_Penjualan: TFNew_Penjualan
         object BERAT_KOSONG: TMTNumericDataFieldEh
           FieldName = 'BERAT_KOSONG'
           NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object IS_BUNDLE: TMTBooleanDataFieldEh
+          FieldName = 'IS_BUNDLE'
+          DisplayWidth = 20
+        end
+        object QTY_BUNDLE: TMTNumericDataFieldEh
+          FieldName = 'QTY_BUNDLE'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object AD_ON_QTY_BUNDLE: TMTNumericDataFieldEh
+          FieldName = 'AD_ON_QTY_BUNDLE'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object POTONGAN_ADD_ON: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN_ADD_ON'
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False

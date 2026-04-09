@@ -62,6 +62,15 @@ object FListKoreksi: TFListKoreksi
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'request_type'
+        Footers = <>
+        Title.Caption = 'Tipe Pengajuan'
+        Width = 86
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'code'
         Footers = <>
         Title.Caption = 'Kode Koreksi'

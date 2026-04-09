@@ -115,13 +115,22 @@ end;
 procedure TFListSalesOrder.btTampilkanClick(Sender: TObject);
 var
   max,min : Integer;
-  strkodekares,strKodePelanggan,strDate: String;
+  strKodeKecamatan,strKodePelanggan,strDate,strWhereTPKares,strKodeKaresTP: String;
 begin
 //  if Length(Edkodewilayah.Text)=0 then
 //  begin
 //    ShowMessage('Silakan Pilih Wilayah...');
 //    exit
 //  end;
+  
+  strWhereTPKares:='';
+
+  strKodeKaresTP:=SelectRow('SELECT value_parameter from t_parameter WHERE key_parameter=''karesidenan_tp'';');
+  if (FNew_Penjualan.chkNomorPengganti.Checked=True) AND (FNew_Penjualan.edNomorTrans.Text<>'') AND (FNew_Penjualan.kd_kares<>'') then
+  begin
+    
+    strWhereTPKares:= ' WHERE '+strKodeKaresTP+'='+QuotedStr(FNew_Penjualan.kd_kares);
+  end;
 
   strDate:=QuotedStr(formatdatetime('yyyy-mm-dd',FNew_Penjualan.dtTanggal.date));
 
@@ -132,8 +141,8 @@ begin
 
 
   if Edkodewilayah.Text<>'' then
-  strKodeKares:=QuotedStr(Edkodewilayah.Text)
-  else strkodeKares:=QuotedStr('');
+  strKodeKecamatan:=QuotedStr(Edkodewilayah.Text)
+  else strKodeKecamatan:=QuotedStr('');
 
 //  if Length(Edkodewilayah.Text)<>0 then
 //  begin
@@ -144,7 +153,7 @@ begin
       begin
         close;
         sql.clear;
-        sql.Text:='select * from get_sales_order_not_in_selling('+strDate+','+strKodeKares+','+strKodePelanggan+')';
+        sql.Text:='select * from get_sales_order_not_in_selling('+strDate+','+strKodeKecamatan+','+strKodePelanggan+') '+strWhereTPKares;
         open;
       end;
 
@@ -170,7 +179,8 @@ begin
           MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
           MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
           MemMasterData['PAYMENT_TERM']:=Dm.Qtemp.fieldbyname('payment_term').value;
-          MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname('code_karesidenan').value;
+         
+          MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname(strKodeKaresTP).value;
           if Dm.Qtemp.fieldbyname('po_order').value<>NULL then
           MemMasterData['PO_ORDER']:=Dm.Qtemp.fieldbyname('po_order').value else MemMasterData['PO_ORDER']:='';
 
@@ -195,7 +205,8 @@ begin
       close;
       sql.clear;
       sql.add(' select notrans, code_item, name_item, amount, code_unit, name_unit, '+
-              ' sell as selling_price,b.group_id,a.gross_weight,a.tare_weight,a.wh_code,c.wh_name from "public"."t_sales_order_det" a '+
+              ' sell as selling_price,b.group_id,a.gross_weight,a.tare_weight,a.wh_code,c.wh_name, '+
+              ' is_bundle_sell,qty_bundle_sell,add_on_qty_bundle_sell from "public"."t_sales_order_det" a '+
               ' LEFT JOIN (select * from "public"."t_item"  where  deleted_at is null '+
               ' order by created_at Desc) b ON a.code_item=b.item_code '+
               ' LEFT JOIN t_wh c on c.wh_code=a.wh_code '+
@@ -219,7 +230,7 @@ begin
       FNew_Penjualan.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
       FNew_Penjualan.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
       FNew_Penjualan.kd_perkiraan_pel:=SelectRow('SELECT account_code from t_customer where customer_code='+QuotedStr(MemMasterData['KD_PELANGGAN'])+' ');
-      FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];
+      FNew_Penjualan.spJatuhTempo.Text:=MemMasterData['PAYMENT_TERM'];    
       FNew_Penjualan.kd_kares:=MemMasterData['KD_KARES'];
       FNew_Penjualan.edPOOrder.Text:=MemMasterData['PO_ORDER'];
       FNew_Penjualan.strKodeGudang:=Dm.Qtemp2.FieldByName('wh_code').Asstring;
@@ -256,6 +267,9 @@ begin
         FNew_Penjualan.MemDetail['GROUP_ID']:=Dm.Qtemp2.FieldByName('group_id').AsString;
         FNew_Penjualan.MemDetail['BERAT_ISI']:=Dm.Qtemp2.FieldByName('gross_weight').AsString;
         FNew_Penjualan.MemDetail['BERAT_KOSONG']:=Dm.Qtemp2.FieldByName('tare_weight').AsString;
+        FNew_Penjualan.MemDetail['IS_BUNDLE']:=Dm.Qtemp2.FieldByName('is_bundle_sell').AsBoolean;
+        FNew_Penjualan.MemDetail['QTY_BUNDLE']:=0;
+        FNew_Penjualan.MemDetail['AD_ON_QTY_BUNDLE']:=0;
         FNew_Penjualan.MemDetail.post;
 //        FNew_Penjualan.HitungGrid;
         Dm.Qtemp2.next;

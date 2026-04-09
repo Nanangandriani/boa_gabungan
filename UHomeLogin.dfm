@@ -4360,7 +4360,7 @@ object FHomeLogin: TFHomeLogin
       ExplicitHeight = 372
     end
     object ImgTransaksi: TImage
-      Left = 21
+      Left = 53
       Top = 312
       Width = 121
       Height = 40

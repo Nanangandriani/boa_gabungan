@@ -51,21 +51,25 @@ type
     ActReject: TAction;
     ActClose: TAction;
     dxBarLargeButton5: TdxBarLargeButton;
-    MemData: TMemTableEh;
+    MemMasterData: TMemTableEh;
     DSMemData: TDataSource;
-    MemDatanotrans: TStringField;
-    MemDatatanggal: TStringField;
-    MemDatajumlah: TCurrencyField;
-    MemDataketerangan: TStringField;
-    MemDatasumber: TStringField;
-    MemDatastatus: TStringField;
     dtTglAwal: TcxBarEditItem;
     dtTglAkhir: TcxBarEditItem;
+    MemMasterDatanotrans: TStringField;
+    MemMasterDatatanggal: TDateField;
+    MemMasterDatajumlah: TCurrencyField;
+    MemMasterDataketerangan: TStringField;
+    MemMasterDatasumber: TStringField;
+    MemMasterDatastatus: TStringField;
     procedure FormShow(Sender: TObject);
     procedure ActBaruExecute(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
-    procedure dxBarLargeNewClick(Sender: TObject);
+    procedure cbSumberChange(Sender: TObject);
+    procedure ActUpdateExecute(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure ActROExecute(Sender: TObject);
   private
+    vSumberData : string;
     { Private declarations }
     procedure RefreshGrid;
   public
@@ -79,8 +83,26 @@ implementation
 
 {$R *.dfm}
 
-uses UKelompokBiayaWilayah, UDataModule;
+uses UKelompokBiayaWilayah, UDataModule, UHomeLogin;
 
+function CekRecord(AVoucherNo: string): Integer;
+begin
+  with dm.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := ' SELECT 1 FROM public.t_cost_detail '+
+                ' WHERE voucher_no = :voucher_no '+
+                ' LIMIT 1';
+    ParamByName('voucher_no').AsString := AVoucherNo;
+    Open;
+
+    if IsEmpty then
+      Result := 0  // belum ada
+    else
+      Result := 1; // sudah ada
+  end;
+end;
 
 procedure TFListKelompokBiayaWilayah.RefreshGrid;
 var
@@ -94,15 +116,18 @@ begin
     sql.clear;
     sql.add(' Select trans_no as notrans, trans_date as tanggal, '+
             ' debt_remaining as jumlah, supplier_name as keterangan, '+
-            ' ''-'' as status from t_purchase_invoice a'+
+            ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
+            ' WHERE b.voucher_no = a.trans_no) THEN ''Lengkap'' '+
+            ' ELSE ''Belum Lengkap'' END AS status '+
+            ' from t_purchase_invoice a'+
             ' Left join t_supplier b on a.supplier_code=b.supplier_code '+
             ' left join t_ak_account c on a.account_code=c.code '+
             ' left join t_ak_account d on a.account_um_code=d.code '+
             ' left join t_ref_item_receive e on a.ref_code=e.ref_code '+
-            ' where'+
+            ' where a.deleted_at is null and '+
             ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
-            ' order by a.trans_no, trans_date desc');
+            ' order by a.trans_no, trans_date desc   --PEMBELIAN ');
     open;
   end;
   end;
@@ -113,22 +138,26 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, amount as jumlah, '+
-            ' to_getout as keterangan, ''-'' as status   FROM t_cash_bank_expenditure a '+
+            ' to_getout as keterangan, '+
+            ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
+            ' WHERE b.voucher_no = a.voucher_no) THEN ''Lengkap'' '+
+            ' ELSE ''Belum Lengkap'' END AS status '+
+            ' FROM t_cash_bank_expenditure a '+
             ' LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
             ' LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
             ' LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
             ' LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
-            ' WHERE  trans_type_code not in (''5.001'',''6.001'') and '+
+            ' WHERE a.deleted_at is null and trans_type_code not in (''5.001'',''6.001'') and '+
             ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
-            ' ORDER BY voucher_no,trans_date desc');
+            ' ORDER BY voucher_no,trans_date desc -- PENGELUARAN KAS DAN BANK');
     open;
   end;
   end;
 
-  MemData.active:=false;
-  MemData.active:=true;
-  MemData.EmptyTable;
+  MemMasterData.EmptyTable;
+  MemMasterData.active:=false;
+  MemMasterData.active:=true;
 
   if  Dm.Qtemp1.RecordCount=0 then
   begin
@@ -142,58 +171,137 @@ begin
       while not Dm.Qtemp1.Eof do
       begin
       URUTAN_KE:=URUTAN_KE+1;
-      with FListKelompokBiayaWilayah do
-      begin
-       MemData.insert;
-       MemData['notrans']:=Dm.Qtemp1.fieldbyname('notrans').value;
-       MemData['tanggal']:=Dm.Qtemp1.fieldbyname('tanggal').value;
-       MemData['jumlah']:=Dm.Qtemp1.fieldbyname('jumlah').value;
-       MemData['keterangan']:=Dm.Qtemp1.fieldbyname('keterangan').value;
-       MemData['sumber']:=cbSumber.text;
-       MemData['status']:=Dm.Qtemp1.fieldbyname('status').value;
-       MemData.post;
-      end;
+      //ShowMessage(Dm.Qtemp1.fieldbyname('notrans').value) ;
+       MemMasterData.insert;
+       MemMasterData['notrans']:=Dm.Qtemp1.fieldbyname('notrans').value;
+       MemMasterData['tanggal']:=Dm.Qtemp1.fieldbyname('tanggal').value;
+       MemMasterData['jumlah']:=Dm.Qtemp1.fieldbyname('jumlah').value;
+       MemMasterData['keterangan']:=Dm.Qtemp1.fieldbyname('keterangan').value;
+       MemMasterData['sumber']:=cbSumber.text;
+       MemMasterData['status']:=Dm.Qtemp1.fieldbyname('status').value;
+       MemMasterData.post;
        Dm.Qtemp1.next;
       end;
+      //ShowMessage('Total Record: ' + IntToStr(MemMasterData.RecordCount));
   end;
 end;
 
 procedure TFListKelompokBiayaWilayah.ActBaruExecute(Sender: TObject);
 begin
-  FKelompokBiayaWilayah.Clear;
-  FKelompokBiayaWilayah.Status := 0;
-  FKelompokBiayaWilayah.Show;
+if MemMasterData.RecordCount=0 then
+begin
+  ShowMessage('Maaf, Tidak Ditemukan Data !!!');
+  exit;
+end;
+
+if MemMasterData.RecordCount<>0 then
+begin
+   if CekRecord(MemMasterData['notrans'])=1 then
+   begin
+     ShowMessage('Data Sudah Pernah Diproses, Silkan Melalui Menu Update...!!!');
+     exit;
+   end;
+
+ with FKelompokBiayaWilayah do
+ begin
+   Clear;
+   Status := 0 ;
+   cbsumberdata.text:=vSumberData;
+   //cbsumberdata.ItemIndex:= FListKelompokBiayaWilayah.cbSumber.ItemIndex;
+   edNoTrans.Text:=MemMasterData['notrans'];
+   dtTrans.Date:=MemMasterData['tanggal'];
+   edJumlah.Value := MemMasterData.FieldByName('jumlah').AsFloat;
+   MemKeterangan.Text:=MemMasterData['keterangan'];
+   FKelompokBiayaWilayah.RefreshGrid;
+   Show;
+ end;
+end;
+
+end;
+
+procedure TFListKelompokBiayaWilayah.ActDelExecute(Sender: TObject);
+begin
+      if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+      if MessageDlg ('Apa Anda Yakin Hapus Data Biaya '+MemMasterData['notrans']+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      begin
+        with dm.Qtemp do
+        begin
+          Close;
+          SQL.Clear;
+          SQL.Text:=' UPDATE "public"."t_cost_detail" SET '+
+                    ' "deleted_at"=now(), '+
+                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
+                    ' WHERE "voucher_no"='+QuotedStr(MemMasterData['notrans'])+';';
+          ExecSQL;
+        end;
+        MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
+        Dm.Koneksi.Commit;
+      end;
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
+end;
+
+procedure TFListKelompokBiayaWilayah.ActROExecute(Sender: TObject);
+begin
+  dxBarLargeButton5Click(Sender);
+end;
+
+procedure TFListKelompokBiayaWilayah.ActUpdateExecute(Sender: TObject);
+begin
+if MemMasterData.RecordCount=0 then
+begin
+  ShowMessage('Maaf, Tidak Ditemukan Data !!!');
+  exit;
+end;
+
+if MemMasterData.RecordCount<>0 then
+begin
+ with FKelompokBiayaWilayah do
+ begin
+   Clear;
+   Status := 1;
+   cbsumberdata.text:=vSumberData;
+   //cbsumberdata.ItemIndex:= FListKelompokBiayaWilayah.cbSumber.ItemIndex;
+   edNoTrans.Text:=MemMasterData['notrans'];
+   dtTrans.Date:=MemMasterData['tanggal'];
+   edJumlah.Value := MemMasterData.FieldByName('jumlah').AsFloat;
+   MemKeterangan.Text:=MemMasterData['keterangan'];
+   FKelompokBiayaWilayah.RefreshGrid;
+   Show;
+ end;
+end;
+
+end;
+
+procedure TFListKelompokBiayaWilayah.cbSumberChange(Sender: TObject);
+begin
+  vSumberData:=cbSumber.Text;
 end;
 
 procedure TFListKelompokBiayaWilayah.dxBarLargeButton5Click(Sender: TObject);
 begin
-  MemData.active:=false;
-  MemData.active:=true;
-  MemData.EmptyTable;
+  MemMasterData.active:=false;
+  MemMasterData.active:=true;
+  MemMasterData.EmptyTable;
   RefreshGrid;
-end;
-
-procedure TFListKelompokBiayaWilayah.dxBarLargeNewClick(Sender: TObject);
-begin
- with FKelompokBiayaWilayah do
- begin
-   cbsumberdata.text:=cbSumber.Text;
-   edNoTrans.Text:=MemData['notrans'];
-   dtTrans.Date:=MemData['tanggal'];
-   edJumlah.value:=MemData['jumlah'];
-   MemKeterangan.Text:=MemData['keterangan'];
-
-   RefreshGrid;
- end;
-
 end;
 
 procedure TFListKelompokBiayaWilayah.FormShow(Sender: TObject);
 begin
-  MemData.EmptyTable;
   cbSumber.ItemIndex:=0;
   dtTglAwal.EditValue := Date;
   dtTglAkhir.EditValue := Date;
+
+  MemMasterData.active:=false;
+  MemMasterData.active:=true;
 end;
 
 initialization

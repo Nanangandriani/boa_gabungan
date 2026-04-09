@@ -50,6 +50,7 @@ begin
 end;
 
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
+var akun_uang_muka_penjualan: string;
 begin
     if (vpanggil ='pph_po') then
     begin
@@ -65,7 +66,9 @@ begin
     if (vpanggil = 'terima_bank')then
     begin
       //UANG MUKA
-      if (QDaftar_Perk.FieldByName('code').AsString='2102.08') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
+      akun_uang_muka_penjualan:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_uang_muka_penjualan'' and deleted_at is NULL ');
+
+      if (QDaftar_Perk.FieldByName('code').AsString=akun_uang_muka_penjualan) AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
       begin
         with FbrowseUangMukaDibayarkan.Qdetail do
         begin
@@ -88,12 +91,12 @@ begin
       FDataPenerimaanBank.MemDetailAkun.edit;
       FDataPenerimaanBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataPenerimaanBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-      if (QDaftar_Perk.FieldByName('code').AsString='2103.01') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
-      begin
-        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
-      end else begin
+//      if (QDaftar_Perk.FieldByName('code').AsString='2103.01') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
+//      begin
+//        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
+//      end else begin
         FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
-      end;
+//      end;
 
       FDataPenerimaanBank.MemDetailAkun['debit']:=0;
       FDataPenerimaanBank.MemDetailAkun['jumlah_hasil_kurs']:=0;

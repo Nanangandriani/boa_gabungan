@@ -231,6 +231,28 @@ begin
       // cr ds 5-2-2026
       KodeHeaderPerkiraan:=MemMaterial['hd_persd'];
       KodeHeaderPerkiraan2:=MemMaterial['hd_pemb'];
+
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.add('SELECT * from get_unit('+QuotedStr(MemMaterial.FieldByName('item_code').AsString)+') order by unit_code ASC ');
+        open;
+        first;
+      end;
+
+      cbSatuanBundling.clear;
+      cbSatuanBundling.items.Add('');
+      while not dm.Qtemp.eof do
+      begin
+         cbSatuanBundling.Items.add(dm.Qtemp.fieldbyname('unit_code').asstring);
+         dm.Qtemp.next;
+      end;
+
+      if MemMaterial['is_bundle_sell']=True then ckStatusBundling.Checked:=True else ckStatusBundling.Checked:=False;
+      edQtyKelipatanBundling.Value:=MemMaterial['qty_bundle_sell'];
+      edTambahanQtyBundling.Value:=MemMaterial['add_on_qty_bundle_sell'];
+      cbSatuanBundling.Text:=MemMaterial['unit_of_measure_bundle_sell'];
       //
       if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;

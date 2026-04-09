@@ -27,42 +27,42 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     ExplicitWidth = 1201
     object LabelPelanggan: TLabel
       Left = 10
-      Top = 63
+      Top = 82
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label3: TLabel
       Left = 120
-      Top = 63
+      Top = 82
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 10
-      Top = 36
+      Top = 32
       Width = 75
       Height = 15
       Caption = 'Jenis Transaksi'
     end
     object Label38: TLabel
       Left = 120
-      Top = 36
+      Top = 32
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 10
-      Top = 89
+      Top = 107
       Width = 91
       Height = 15
       Caption = 'Tanggal Transaksi'
     end
     object Label13: TLabel
       Left = 120
-      Top = 89
+      Top = 107
       Width = 3
       Height = 15
       Caption = ':'
@@ -83,7 +83,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label8: TLabel
       Left = 250
-      Top = 88
+      Top = 106
       Width = 40
       Height = 15
       Caption = 'Periode'
@@ -91,7 +91,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label9: TLabel
       Left = 296
-      Top = 98
+      Top = 107
       Width = 3
       Height = 15
       Caption = ':'
@@ -99,7 +99,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label10: TLabel
       Left = 396
-      Top = 89
+      Top = 107
       Width = 17
       Height = 15
       Caption = 's/d'
@@ -107,28 +107,28 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label11: TLabel
       Left = 10
-      Top = 117
+      Top = 134
       Width = 58
       Height = 15
       Caption = 'Mata Uang'
     end
     object Label14: TLabel
       Left = 120
-      Top = 117
+      Top = 134
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label15: TLabel
       Left = 332
-      Top = 117
+      Top = 134
       Width = 23
       Height = 15
       Caption = 'Kurs'
     end
     object Label16: TLabel
       Left = 368
-      Top = 117
+      Top = 134
       Width = 3
       Height = 15
       Caption = ':'
@@ -149,7 +149,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label19: TLabel
       Left = 120
-      Top = 143
+      Top = 160
       Width = 3
       Height = 15
       Caption = ':'
@@ -157,7 +157,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label20: TLabel
       Left = 10
-      Top = 143
+      Top = 160
       Width = 38
       Height = 15
       Caption = 'Jumlah'
@@ -165,14 +165,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object Label23: TLabel
       Left = 10
-      Top = 9
+      Top = 5
       Width = 47
       Height = 15
       Caption = 'Transaksi'
     end
     object Label24: TLabel
       Left = 120
-      Top = 9
+      Top = 5
       Width = 3
       Height = 15
       Caption = ':'
@@ -193,12 +193,13 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edNoTrans: TEdit
       Left = 132
-      Top = 59
-      Width = 369
+      Top = 78
+      Width = 333
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
       TabOrder = 0
+      OnChange = edNoTransChange
     end
     object edNamaJenisTrans: TRzButtonEdit
       Left = 694
@@ -222,7 +223,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object dtTrans: TRzDateTimePicker
       Left = 132
-      Top = 86
+      Top = 104
       Width = 85
       Height = 23
       Date = 45405.000000000000000000
@@ -240,7 +241,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object dtPeriode1: TRzDateTimePicker
       Left = 305
-      Top = 86
+      Top = 104
       Width = 85
       Height = 23
       Date = 45405.000000000000000000
@@ -252,7 +253,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object dtPeriode2: TRzDateTimePicker
       Left = 419
-      Top = 86
+      Top = 104
       Width = 83
       Height = 23
       Date = 45405.000000000000000000
@@ -264,7 +265,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edNamaMataUang: TRzButtonEdit
       Left = 132
-      Top = 114
+      Top = 131
       Width = 186
       Height = 23
       Text = ''
@@ -275,7 +276,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edKodeMataUang: TEdit
       Left = 383
-      Top = 140
+      Top = 157
       Width = 119
       Height = 23
       TabOrder = 8
@@ -283,7 +284,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edKurs: TRzNumericEdit
       Left = 383
-      Top = 114
+      Top = 131
       Width = 93
       Height = 23
       TabOrder = 9
@@ -292,7 +293,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object edJumlah: TRzNumericEdit
       Left = 132
-      Top = 140
+      Top = 157
       Width = 186
       Height = 23
       TabOrder = 10
@@ -309,7 +310,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object cbJenisTransaksi: TRzComboBox
       Left = 132
-      Top = 33
+      Top = 29
       Width = 370
       Height = 23
       TabOrder = 12
@@ -321,7 +322,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object cbTransaksi: TRzComboBox
       Left = 132
-      Top = 6
+      Top = 2
       Width = 370
       Height = 23
       TabOrder = 13
@@ -337,6 +338,24 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edKaresidenanButtonClick
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 132
+      Top = 56
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 15
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 469
+      Top = 76
+      Width = 30
+      Caption = '...'
+      TabOrder = 16
+      OnClick = btnNoTransaksiClick
     end
   end
   object Panel2: TPanel
@@ -859,7 +878,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Caption = 'Sumber Penerimaan'
       end
       object edNamaBank: TRzButtonEdit
-        Left = 137
+        Left = 136
         Top = 27
         Width = 186
         Height = 23
@@ -878,6 +897,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         CharCase = ecUpperCase
         ReadOnly = True
         TabOrder = 1
+        OnChange = edNoRekChange
       end
       object edKodeSumberTagihan: TEdit
         Left = 596
@@ -1039,8 +1059,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 88
-    Top = 448
+    Left = 72
+    Top = 424
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
@@ -1245,8 +1265,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       'begin'
       ''
       'end.')
-    Left = 40
-    Top = 448
+    Left = 24
+    Top = 424
     Datasets = <>
     Variables = <>
     Style = <>

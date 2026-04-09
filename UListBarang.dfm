@@ -175,9 +175,16 @@ object FlistBarang: TFlistBarang
   object QMaterial: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ' SELECT'#9'"a".category,"c"."type",'
+      'COALESCE(is_bundle_sell, FALSE) AS is_bundle_sell,'
+      '    COALESCE(qty_bundle_sell, 0) AS qty_bundle_sell,'
       
-        ' SELECT'#9'"a".category,"c"."type",b.*,d.account_name,e.group_id,e.' +
-        'group_name,  '
+        '    COALESCE(add_on_qty_bundle_sell, 0) AS add_on_qty_bundle_sel' +
+        'l,'
+      
+        '    COALESCE(unit_of_measure_bundle_sell, '#39#39') AS unit_of_measure' +
+        '_bundle_sell,'
+      'b.*,d.account_name,e.group_id,e.group_name,  '
       '  COALESCE(f.hd_persd, '#39#39')     AS hd_persd,'
       '  COALESCE(f.acc_persd, '#39#39')     AS acc_persd,'
       '  COALESCE(f.account_name, '#39#39')  AS account_name,'
@@ -192,7 +199,8 @@ object FlistBarang: TFlistBarang
       '  COALESCE(f.nm_potpemb, '#39#39')    AS nm_potpemb,'
       '  COALESCE(f.acc_rtpenj, '#39#39')    AS acc_rtpenj,'
       '  COALESCE(f.nm_rtpenj, '#39#39')     AS nm_rtpenj,'
-      '  COALESCE(f.item_code, '#39#39')     AS item_code'
+      '  COALESCE(f.item_code, '#39#39')     AS item_code '
+      ''
       ' FROM '
       't_item_category AS "a"'#9
       'left JOIN t_item AS b ON "a"."category_id" = b.category_id'#9
@@ -412,7 +420,7 @@ object FlistBarang: TFlistBarang
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

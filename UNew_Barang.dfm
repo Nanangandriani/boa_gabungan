@@ -4,7 +4,7 @@ object FNew_Barang: TFNew_Barang
   BorderStyle = bsDialog
   Caption = 'Form New Barang'
   ClientHeight = 400
-  ClientWidth = 558
+  ClientWidth = 549
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,14 @@ object FNew_Barang: TFNew_Barang
   object Panel1: TPanel
     Left = 0
     Top = 359
-    Width = 558
+    Width = 549
     Height = 41
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 358
     ExplicitWidth = 554
     object BBatal: TRzBitBtn
-      Left = 482
+      Left = 473
       Top = 1
       Height = 39
       Align = alRight
@@ -89,7 +89,7 @@ object FNew_Barang: TFNew_Barang
       ExplicitLeft = 478
     end
     object BSimpan: TRzBitBtn
-      Left = 407
+      Left = 398
       Top = 1
       Height = 39
       Align = alRight
@@ -287,13 +287,13 @@ object FNew_Barang: TFNew_Barang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 558
+    Width = 549
     Height = 359
     Hint = ''
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 1
     ExplicitWidth = 554
     ExplicitHeight = 358
@@ -301,6 +301,7 @@ object FNew_Barang: TFNew_Barang
     object TabSheet1: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Umum'
+      ExplicitWidth = 554
       object Label16: TLabel
         Left = 32
         Top = 183
@@ -550,9 +551,10 @@ object FNew_Barang: TFNew_Barang
       object StatusBar1: TStatusBar
         Left = 0
         Top = 331
-        Width = 554
+        Width = 545
         Height = 5
         Panels = <>
+        ExplicitWidth = 554
       end
       object ck_st_penjualan: TCheckBox
         Left = 412
@@ -613,16 +615,18 @@ object FNew_Barang: TFNew_Barang
     object TabSheet2: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Penjualan/Pembelian'
+      ExplicitWidth = 550
+      ExplicitHeight = 335
       object GroupBox1: TGroupBox
         Left = 16
         Top = 16
-        Width = 273
+        Width = 521
         Height = 129
         Caption = 'Pembelian'
         TabOrder = 0
         object Label20: TLabel
           Left = 26
-          Top = 76
+          Top = 65
           Width = 69
           Height = 13
           Caption = 'Default Diskon'
@@ -644,7 +648,7 @@ object FNew_Barang: TFNew_Barang
         end
         object eddisc_pemb: TRzNumericEdit
           Left = 104
-          Top = 73
+          Top = 62
           Width = 130
           Height = 21
           TabOrder = 1
@@ -654,13 +658,13 @@ object FNew_Barang: TFNew_Barang
       object GroupBox2: TGroupBox
         Left = 16
         Top = 161
-        Width = 273
-        Height = 129
+        Width = 521
+        Height = 128
         Caption = 'Penjualan'
         TabOrder = 1
         object Label23: TLabel
           Left = 26
-          Top = 76
+          Top = 65
           Width = 69
           Height = 13
           Caption = 'Default Diskon'
@@ -672,6 +676,27 @@ object FNew_Barang: TFNew_Barang
           Height = 13
           Caption = 'Harga'
         end
+        object Label12: TLabel
+          Left = 275
+          Top = 37
+          Width = 65
+          Height = 13
+          Caption = 'Qty Kelipatan'
+        end
+        object Label14: TLabel
+          Left = 275
+          Top = 93
+          Width = 71
+          Height = 13
+          Caption = 'Tambahan Qty'
+        end
+        object Label15: TLabel
+          Left = 275
+          Top = 65
+          Width = 34
+          Height = 13
+          Caption = 'Satuan'
+        end
         object edharga_penj: TRzNumericEdit
           Left = 104
           Top = 34
@@ -682,19 +707,50 @@ object FNew_Barang: TFNew_Barang
         end
         object eddisc_penj: TRzNumericEdit
           Left = 104
-          Top = 73
+          Top = 62
           Width = 130
           Height = 21
           TabOrder = 1
           DisplayFormat = ',0;(,0)'
+        end
+        object ckStatusBundling: TRzCheckBox
+          Left = 275
+          Top = 13
+          Width = 63
+          Height = 19
+          Caption = 'Bundling'
+          State = cbUnchecked
+          TabOrder = 2
+        end
+        object edQtyKelipatanBundling: TRzNumericEdit
+          Left = 352
+          Top = 34
+          Width = 57
+          Height = 21
+          TabOrder = 3
+          DisplayFormat = ',0;(,0)'
+        end
+        object edTambahanQtyBundling: TRzNumericEdit
+          Left = 352
+          Top = 90
+          Width = 57
+          Height = 21
+          TabOrder = 4
+          DisplayFormat = ',0;(,0)'
+        end
+        object cbSatuanBundling: TRzComboBox
+          Left = 352
+          Top = 62
+          Width = 104
+          Height = 21
+          TabOrder = 5
         end
       end
     end
     object TabSheet3: TRzTabSheet
       Color = clGradientInactiveCaption
       Caption = 'Akun'
-      ExplicitWidth = 550
-      ExplicitHeight = 335
+      ExplicitWidth = 554
       object Label19: TLabel
         Left = 27
         Top = 28

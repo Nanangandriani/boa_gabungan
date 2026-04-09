@@ -47,7 +47,7 @@ begin
       sql.Text:='select a.notrans,COALESCE(b.trans_no,'''') trans_no,a.order_date,a.code_cust,a.name_cust,'+
                 'a.vehicle_group_sort_number,a.vehicle_group_id,c.code_item,c.name_item,c.amount ,c.code_unit from t_sales_order a '+
                 'LEFT JOIN t_selling b on b.no_reference=a.notrans AND b.deleted_at is NULL '+
-                'LEFT JOIN t_sales_order_det c on c.notrans=a.notrans '+
+                'LEFT JOIN t_selling_det c on c.trans_no=b.trans_no '+
                 'WHERE a.deleted_at is NULL AND a.vehicle_group_id='+QuotedStr(QKendaraan.FieldValues['vehicle_group_id']);
       Open;
     end;

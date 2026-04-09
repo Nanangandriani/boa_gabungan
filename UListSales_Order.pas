@@ -97,7 +97,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_SalesOrder, UDataModule, UMy_Function, UHomeLogin, UMasterData,
-  UNoteCancel;
+  UNoteCancel, UKoreksi;
 
 var
   realfdatalistsalesorder : TFSalesOrder;
@@ -188,16 +188,36 @@ begin
      open;
   end;
 
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Sales Order ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else
   if dm.Qtemp.RecordCount>0 then
   begin
     ShowMessage('Maaf, Proses Tidak Dapat Dilanjutkan Dikarenakan Sudah Di Buat Penjualan...!!!');
   end else begin
     if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Order ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      FNoteCancel.vtbl:='t_sales_order';
-      FNoteCancel.vfieldtransno:='notrans';
-      FNoteCancel.edNoTransaksi.Text:=QSalesOrder.FieldByName('notrans').AsString;
-      FNoteCancel.ShowModal;
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr('FSalesOrder'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QSalesOrder.FieldByName('notrans').AsString;
+      FKoreksi.ShowModal;
+
+//      FNoteCancel.vtbl:='t_sales_order';
+//      FNoteCancel.vfieldtransno:='notrans';
+//      FNoteCancel.edNoTransaksi.Text:=QSalesOrder.FieldByName('notrans').AsString;
+//      FNoteCancel.ShowModal;
     end;
   end;
 end;
@@ -235,6 +255,8 @@ begin
   end else
   if Dm.Qtemp2.RecordCount<>0 then
   begin
+    if Dm.Qtemp2.FieldByName('is_no_replacement').AsBoolean=True then FNew_SalesOrder.chkNomorPengganti.Checked:=True
+      else FNew_SalesOrder.chkNomorPengganti.Checked:=False;
 
     if (Dm.Qtemp2.FieldValues['no_invoice']<>'') then
     begin
@@ -260,6 +282,10 @@ begin
         isCancel:=0;
 //        memAlasanPembatalan.Text:='';
       end;
+
+      if Dm.Qtemp2.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+      else chkNomorPengganti.Checked:=False;
+
       edKodeSumber.Text:=Dm.Qtemp2.FieldByName('code_source').AsString;
       edNamaSumber.Text:=Dm.Qtemp2.FieldByName('name_source').AsString;
       edKodeOrder.Text:=Dm.Qtemp2.FieldByName('notrans').AsString;
@@ -310,8 +336,8 @@ begin
   end;
   FNew_SalesOrder.RefreshGrid;
   FNew_SalesOrder.edKodeOrder.Enabled:=false;
-  FNew_SalesOrder.Show;
   Status := 1;
+  FNew_SalesOrder.Show;
 end;
 
 procedure TFSalesOrder.DBGridOrderAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,

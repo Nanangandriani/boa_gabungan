@@ -70,6 +70,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
         FieldName = 'tanggal'
         Footers = <>
         Title.Alignment = taCenter
+        Title.Caption = 'Tanggal'
       end
       item
         CellButtons = <>
@@ -336,7 +337,6 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
         96B3B93F54DBED0B7D0128A5B02CEB8FD2B23E0C1CE7C5D071BEAA944AFDAF6B
         D6BDC7754388281305FFF9E8D1EDE74A5BB7FD35F7CFF7EEEBF7C900300633CB
         0F208A3B0000000049454E44AE426082}
-      OnClick = dxBarLargeNewClick
     end
     object dxBarUpdate: TdxBarButton
       Action = ActUpdate
@@ -456,6 +456,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       Category = 0
       Hint = 'Sumber Data  '
       Visible = ivAlways
+      OnChange = cbSumberChange
       Items.Strings = (
         'PEMBELIAN'
         'PENGELUARAN KAS DAN BANK')
@@ -499,9 +500,9 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       PropertiesClassName = 'TcxDateEditProperties'
     end
     object dtTglAkhir: TcxBarEditItem
-      Caption = 'Tanggal Akhir'
+      Caption = 'Tanggal Akhir '
       Category = 0
-      Hint = 'Tanggal Akhir'
+      Hint = 'Tanggal Akhir '
       Visible = ivAlways
       PropertiesClassName = 'TcxDateEditProperties'
     end
@@ -516,12 +517,15 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
     end
     object ActUpdate: TAction
       Caption = 'Update  '
+      OnExecute = ActUpdateExecute
     end
     object ActRO: TAction
       Caption = 'Refresh  '
+      OnExecute = ActROExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -539,17 +543,16 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       Enabled = False
     end
   end
-  object MemData: TMemTableEh
+  object MemMasterData: TMemTableEh
     FieldDefs = <
       item
         Name = 'notrans'
         DataType = ftString
-        Size = 20
+        Size = 100
       end
       item
         Name = 'tanggal'
-        DataType = ftString
-        Size = 20
+        DataType = ftDate
       end
       item
         Name = 'jumlah'
@@ -559,7 +562,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       item
         Name = 'keterangan'
         DataType = ftString
-        Size = 20
+        Size = 250
       end
       item
         Name = 'sumber'
@@ -574,24 +577,26 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
     IndexDefs = <>
     Params = <>
     StoreDefs = True
-    Left = 160
-    Top = 347
-    object MemDatanotrans: TStringField
+    Left = 200
+    Top = 371
+    object MemMasterDatanotrans: TStringField
       FieldName = 'notrans'
+      Size = 100
     end
-    object MemDatatanggal: TStringField
+    object MemMasterDatatanggal: TDateField
       FieldName = 'tanggal'
     end
-    object MemDatajumlah: TCurrencyField
+    object MemMasterDatajumlah: TCurrencyField
       FieldName = 'jumlah'
     end
-    object MemDataketerangan: TStringField
+    object MemMasterDataketerangan: TStringField
       FieldName = 'keterangan'
+      Size = 250
     end
-    object MemDatasumber: TStringField
+    object MemMasterDatasumber: TStringField
       FieldName = 'sumber'
     end
-    object MemDatastatus: TStringField
+    object MemMasterDatastatus: TStringField
       FieldName = 'status'
     end
     object MemTableData: TMemTableDataEh
@@ -599,11 +604,12 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
         object notrans: TMTStringDataFieldEh
           FieldName = 'notrans'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
-        object tanggal: TMTStringDataFieldEh
+        object tanggal: TMTDateTimeDataFieldEh
           FieldName = 'tanggal'
-          StringDataType = fdtStringEh
+          DateTimeDataType = fdtDateEh
           DisplayWidth = 20
         end
         object jumlah: TMTNumericDataFieldEh
@@ -618,7 +624,8 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
         object keterangan: TMTStringDataFieldEh
           FieldName = 'keterangan'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 255
+          Size = 250
         end
         object sumber: TMTStringDataFieldEh
           FieldName = 'sumber'
@@ -636,7 +643,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
     end
   end
   object DSMemData: TDataSource
-    DataSet = MemData
+    DataSet = MemMasterData
     Left = 296
     Top = 355
   end

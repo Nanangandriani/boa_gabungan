@@ -5734,8 +5734,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
       'b7=b7'
       'b8=b8'
       'b9=b9'
-      'b10=b10'
-      'b11=b11')
+      'b10=b10')
     DataSet = QRekap_KasKecil_Biaya_Penjualan
     BCDToCurrency = False
     DataSetOptions = []
@@ -5776,8 +5775,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
         'select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+s' +
         'um(b7)+sum(b8)+sum(b9)+sum(b10)+sum(b11) as total, sum(b1)as b1,' +
         'sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6' +
-        ',sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10,sum(b11)a' +
-        's b11 from '
+        ',sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10 from '
       
         '(select a.tanggal,a.actors_name,a.voucher_no,a.description,a."na' +
         'me",b.total,'
@@ -5790,8 +5788,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
       '(case when b7.amount is null then 0 else b7.amount end)b7,'
       '(case when b8.amount is null then 0 else b8.amount end)b8,'
       '(case when b9.amount is null then 0 else b9.amount end)b9,'
-      '(case when b10.amount is null then 0 else b10.amount end)b10,'
-      '(case when b11.amount is null then 0 else b11.amount end)b11 '
+      '(case when b10.amount is null then 0 else b10.amount end)b10'
       'from '
       
         '(select  DISTINCT a.voucher_no from t_petty_cash a INNER JOIN t_' +
@@ -5908,7 +5905,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
       
         'where a.voucher_no is not null order by a.trans_date,a.voucher_n' +
         'o,a.order_no)xx group by tanggal order by tanggal;')
-    Active = True
     Left = 616
     Top = 264
     object QRekap_KasKecil_Biaya_Penjualantanggal: TDateField
@@ -5957,10 +5953,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
     end
     object QRekap_KasKecil_Biaya_Penjualanb10: TFloatField
       FieldName = 'b10'
-      ReadOnly = True
-    end
-    object QRekap_KasKecil_Biaya_Penjualanb11: TFloatField
-      FieldName = 'b11'
       ReadOnly = True
     end
   end

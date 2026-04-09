@@ -94,6 +94,8 @@ type
     edGudang: TRzButtonEdit;
     Label25: TLabel;
     Label26: TLabel;
+    chkNomorPengganti: TRzCheckBox;
+    btnNoTransaksi: TRzBitBtn;
     procedure BBatalClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edNama_PelangganButtonClick(Sender: TObject);
@@ -114,6 +116,9 @@ type
     procedure edKelompokKendaraanButtonClick(Sender: TObject);
     procedure dtTanggal_KirimChange(Sender: TObject);
     procedure edGudangButtonClick(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
+    procedure btnNoTransaksiClick(Sender: TObject);
+    procedure edKodeOrderChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -121,7 +126,7 @@ type
     { Public declarations }
     vFormSumber, vFormSumber1, kd_kares,kd_kab,val_target_sales: string;
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
-    Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId,StrKodeGudang: string;
+    Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId,StrKodeGudang,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
     isCancel,val_bank_garansi,val_piutang: Integer;
     procedure Clear;
@@ -152,7 +157,8 @@ implementation
 uses UTambah_Barang, UMasterData, Ubrowse_pelanggan, UMasterSales, UMy_Function,
   UDataModule, UTemplate_Temp, UListOrderTelemarketing, UListKontrakJasa,
   UHomeLogin, UListSales_Order, USetMasterPenjulan, USetMasterPelanggan,
-  UMainMenu, UNew_DataTargetPenjualan, UDaftarKendaraan;
+  UMainMenu, UNew_DataTargetPenjualan, UDaftarKendaraan, UKoreksi,
+  UListNoTransaksi;
 //uses UDataModule, UMy_Function;
 
 procedure TFNew_SalesOrder.SimpanPelanggan;
@@ -280,7 +286,7 @@ begin
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
 //  ShowMessage(kd_kares);
    //EdNo_kontrak.Text:=getNourutBlnPrshthn_kode(strday2,'purchase.t_coop_contract','');
-  edKodeOrder.Text:=GetNourutNoDelete(strday2,'public.t_sales_order',kd_kares);
+  edKodeOrder.Text:=getNourut(strday2,'public.t_sales_order',kd_kares);
    //EdNo.Text:=Order_no;
 end;
 
@@ -404,6 +410,27 @@ begin
   end;
 end;
 
+procedure TFNew_SalesOrder.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then
+  begin
+    btnNoTransaksi.Visible:=True;
+    edNama_Pelanggan.Text:='';
+    edKode_Pelanggan.Text:='';
+    kd_kares:='';
+    kd_kab:='';
+    spJatuhTempo.Value:=0;
+    edNoReff.Text:='';
+    MemDetail.Active:=False;
+    MemDetail.Active:=True;
+    MemDetail.EmptyTable;
+  end
+  else btnNoTransaksi.Visible:=False;
+
+  if status=0 then
+  edKodeOrder.Text:='';
+end;
+
 procedure TFNew_SalesOrder.CekBankGaransi;
 var SisaPiutang,TotSaldoBankGaransi,TotNilaiSO,TotSisaPiutangNilaiSO,SisaSaldo:Currency;
   IntCountBankGaransi: Integer;
@@ -436,7 +463,7 @@ begin
               'GROUP BY customer_code;';
     open;
   end;
-  //
+
   IntCountBankGaransi:=dm.Qtemp.RecordCount;
 
   if dm.Qtemp.RecordCount=0 then
@@ -495,7 +522,6 @@ begin
       begin
         islanjut:=0;
       end;
-
     end else begin
       islanjut:=1;
     end;
@@ -688,8 +714,6 @@ begin
 
         LevelSatuan:=dm.Qtemp.FieldValues['unit_level'];
 
-
-
         if LevelSatuan=2 then
         begin
           Qty:=MemDetail['JUMLAH'];
@@ -710,10 +734,10 @@ begin
 
 //        if dm.Qtemp1.RecordCount=0 then
 //        begin
-          if (valKonversi=0) AND (Qty<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
-          begin
-            isBalanceBerat:=1;
-          end;
+        if (valKonversi=0) AND (Qty<>(MemDetail['BERAT_ISI']-MemDetail['BERAT_KOSONG'])) then
+        begin
+          isBalanceBerat:=1;
+        end;
 //        end;
 //        ShowMessage('isBalanceBerat '+IntToStr(isBalanceBerat));
 //        else begin
@@ -726,8 +750,11 @@ begin
       end;
     end;
 
-
-    if edKode_Pelanggan.Text='' then
+    if (chkNomorPengganti.Checked=True) AND (edKodeOrder.Text='') then
+    begin
+      MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      Exit;
+    end else if edKode_Pelanggan.Text='' then
     begin
       MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
 //      edKode_Pelanggan.SetFocus;
@@ -765,7 +792,7 @@ begin
     end
     else if Status = 0 then
     begin
-      Autonumber;
+      if chkNomorPengganti.Checked=False then Autonumber;
   //    if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeOrder.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
@@ -799,8 +826,8 @@ begin
         end else begin
           exit;
         end;
+      end;
     end;
-  end;
   Except on E :Exception do
     begin
       begin
@@ -893,9 +920,21 @@ begin
   FSetMasterPenjulan.ShowModal;
 end;
 
+procedure TFNew_SalesOrder.btnNoTransaksiClick(Sender: TObject);
+var strWhereKaresidenan: String;
+begin
+  strWhereKaresidenan:='';
+  if (kd_kares<>'') AND (edNama_Pelanggan.Text<>'') then
+  strWhereKaresidenan:=' AND additional_code='+QuotedStr(kd_kares);
+
+  FListNoTransaksi.vcall:='salesorder';
+  FListNoTransaksi.update_grid('notrans','order_no','t_sales_order','WHERE order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''')'+strWhereKaresidenan+' ORDER BY notrans ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFNew_SalesOrder.cbKonversiMuatanClick(Sender: TObject);
 begin
-
   MemDetail.First;
   while not MemDetail.Eof do
   begin
@@ -944,6 +983,9 @@ begin
   cbKonversiMuatan.Checked:=False;
   btMasterSales.Visible:=false;
   btMasterSumber.Visible:=false;
+  chkNomorPengganti.Checked:=False;
+  btnNoTransaksi.Visible:=False;
+  strNoTransaksiDiGanti:='';
 end;
 
 procedure TFNew_SalesOrder.dtTanggal_KirimChange(Sender: TObject);
@@ -1016,6 +1058,14 @@ begin
   FDaftarKendaraan.show;
 end;
 
+procedure TFNew_SalesOrder.edKodeOrderChange(Sender: TObject);
+begin
+  if (chkNomorPengganti.Checked=True) AND (edKodeOrder.Text<>'') then
+  begin
+    kd_kares:=SelectRow('SELECT additional_code from t_sales_order WHERE notrans='+QuotedStr(strNoTransaksiDiGanti)+';');
+  end;
+end;
+
 procedure TFNew_SalesOrder.edNamaSumberButtonClick(Sender: TObject);
 begin
   vFormSumber:='0';
@@ -1045,7 +1095,6 @@ begin
   if (edKodeSumber.Text<>'SO003') AND (status=0) AND (edKodeSumber.Text<>'') then
   begin
     defaultKodeGudang:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_warehouse'' ');
-
     with dm.Qtemp do
     begin
       close;
@@ -1062,7 +1111,8 @@ begin
       edGudang.Text:='';
       StrKodeGudang:='';
     end;
-  end else begin
+  end else
+  begin
     edGudang.Text:='';
     StrKodeGudang:='';
   end;
@@ -1088,7 +1138,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan,COALESCE(code_kabupaten,'''') code_kabupaten, COALESCE(kabupaten,'''') kabupaten FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
+      Sql.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan,COALESCE(code_kabupaten,'''') code_kabupaten, COALESCE(kabupaten,'''') kabupaten FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
       Open;
     end;
     if dm.Qtemp.FieldValues['karesidenan']='' then
@@ -1128,7 +1178,7 @@ var
   LSuffix: string;
   LDummyInt: Integer;
 begin
-  //Clear;
+//  Clear;
 //  Autonumber;
   RefreshGrid;
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
@@ -1177,8 +1227,15 @@ begin
   if Status=1 then
   begin
     dtTanggal_Pesan.Enabled:=False;
+//    if edKodeSumber.Text='SO002' then dtTanggal_Kirim.Enabled:=False
+//    else dtTanggal_Kirim.Enabled:=True;
+
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=False;
   end else begin
     dtTanggal_Pesan.Enabled:=True;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=True;
   end;
 
   if isCancel=1 then BSave.Enabled:=False;;
@@ -1188,7 +1245,7 @@ end;
 procedure TFNew_SalesOrder.Save;
 var
   Stradditional_code,StrStatus,StrNote,
-  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak,strKonversiMuatan : String;
+  StrInsert,Strupdate,Strdelete,Strapproval,Strcetak,strKonversiMuatan,strIsNoReplacement : String;
 begin
 
   if (kd_kares='') OR (kd_kares='0') then
@@ -1233,17 +1290,19 @@ begin
     StrNote:='NULL';
   end;
 
+  if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
+
   with dm.Qtemp do
   begin
     close;
     sql.clear;
-    sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
+       sql.add(' Insert into "public"."t_sales_order" ("created_at", "created_by", "notrans", '+
             ' "order_date", "sent_date", "code_cust", "name_cust", "code_sales", '+
             ' "name_sales", "payment_term", "no_reference", "code_source", "name_source", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
             'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,'+
             'type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number,'+
-            'val_bank_garansi,val_piutang) '+
+            'val_bank_garansi,val_piutang,is_no_replacement) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1267,9 +1326,24 @@ begin
             ' '+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
             ' '+QuotedStr(edTypeKendaraan.Text)+','+
             ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+
-            ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+' );');
+            ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+', '+
+            ''+QuotedStr(strIsNoReplacement)+'  );');
     ExecSQL;
   end;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE "public"."t_sales_order" SET'+
+                ' trans_no_replacement='+QuotedStr(edKodeOrder.Text)+
+                ' Where notrans='+QuotedStr(strNoTransaksiDiGanti);
+      ExecSQL;
+    end;
+  end;
+
   InsertDetailSO;
   SimpanPelanggan;
   if UpperCase(edNamaSumber.Text)='TELEMARKETING' then

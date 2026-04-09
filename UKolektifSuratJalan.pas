@@ -106,6 +106,7 @@ begin
             'FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare_weight, '+
             'COALESCE((SELECT vehicles FROM t_delivery_order_services WHERE notrans='+
             '(SELECT DISTINCT notrans from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles  '+
+            ', COALESCE(b.qty_bundle,0) qty_bundle,COALESCE(Trunc((b.amount / NULLIF(b.add_on_qty_bundle, 0)) / NULLIF(b.qty_bundle, 0)), 0) AS add_on_qty '+
             'from "public".get_selling(False) a   '+
             'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
             'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address"  where "code_details"=''002'') d '+

@@ -27,56 +27,56 @@ object FNew_SalesOrder: TFNew_SalesOrder
     ExplicitHeight = 308
     object LabelPelanggan: TLabel
       Left = 20
-      Top = 19
+      Top = 31
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label3: TLabel
       Left = 117
-      Top = 19
+      Top = 31
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 20
-      Top = 126
+      Top = 138
       Width = 91
       Height = 15
       Caption = 'Nama Pelanggan'
     end
     object Label38: TLabel
       Left = 117
-      Top = 126
+      Top = 138
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label1: TLabel
       Left = 20
-      Top = 153
+      Top = 165
       Width = 61
       Height = 15
       Caption = 'Nama Sales'
     end
     object Label2: TLabel
       Left = 117
-      Top = 153
+      Top = 165
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label4: TLabel
       Left = 118
-      Top = 180
+      Top = 192
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label5: TLabel
       Left = 21
-      Top = 180
+      Top = 192
       Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
@@ -90,63 +90,63 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object Label6: TLabel
       Left = 20
-      Top = 208
+      Top = 220
       Width = 43
       Height = 15
       Caption = 'No. Reff'
     end
     object Label7: TLabel
       Left = 117
-      Top = 208
+      Top = 220
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label8: TLabel
       Left = 21
-      Top = 99
+      Top = 111
       Width = 41
       Height = 15
       Caption = 'Sumber'
     end
     object Label9: TLabel
       Left = 117
-      Top = 99
+      Top = 111
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label10: TLabel
       Left = 20
-      Top = 72
+      Top = 84
       Width = 72
       Height = 15
       Caption = 'Tanggal Kirim'
     end
     object Label11: TLabel
       Left = 117
-      Top = 72
+      Top = 84
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 20
-      Top = 45
+      Top = 57
       Width = 75
       Height = 15
       Caption = 'Tanggal Pesan'
     end
     object Label13: TLabel
       Left = 117
-      Top = 45
+      Top = 57
       Width = 3
       Height = 15
       Caption = ':'
     end
     object btMasterSumber: TSpeedButton
       Left = 323
-      Top = 96
+      Top = 108
       Width = 23
       Height = 22
       Caption = '+'
@@ -154,7 +154,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object btMasterSales: TSpeedButton
       Left = 482
-      Top = 152
+      Top = 164
       Width = 23
       Height = 22
       Caption = '+'
@@ -162,7 +162,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object SpeedButton1: TSpeedButton
       Left = 480
-      Top = 124
+      Top = 136
       Width = 23
       Height = 22
       Glyph.Data = {
@@ -265,14 +265,14 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object Label21: TLabel
       Left = 20
-      Top = 237
+      Top = 249
       Width = 49
       Height = 15
       Caption = 'PO Order'
     end
     object Label22: TLabel
       Left = 117
-      Top = 237
+      Top = 249
       Width = 3
       Height = 15
       Caption = ':'
@@ -309,16 +309,17 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edKodeOrder: TEdit
       Left = 132
-      Top = 16
-      Width = 185
+      Top = 28
+      Width = 186
       Height = 23
       CharCase = ecUpperCase
       ReadOnly = True
       TabOrder = 0
+      OnChange = edKodeOrderChange
     end
     object edNama_Pelanggan: TRzButtonEdit
       Left = 132
-      Top = 122
+      Top = 134
       Width = 344
       Height = 23
       Text = ''
@@ -339,7 +340,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNama_Sales: TRzButtonEdit
       Left = 132
-      Top = 148
+      Top = 160
       Width = 344
       Height = 23
       Text = ''
@@ -359,7 +360,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object spJatuhTempo: TSpinEdit
       Left = 132
-      Top = 177
+      Top = 189
       Width = 60
       Height = 24
       MaxValue = 0
@@ -369,7 +370,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNoReff: TEdit
       Left = 132
-      Top = 205
+      Top = 217
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -377,7 +378,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edNamaSumber: TRzButtonEdit
       Left = 132
-      Top = 96
+      Top = 108
       Width = 185
       Height = 23
       Text = ''
@@ -390,7 +391,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edKodeSumber: TEdit
       Left = 347
-      Top = 96
+      Top = 108
       Width = 100
       Height = 23
       TabOrder = 8
@@ -398,7 +399,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object dtTanggal_Kirim: TRzDateTimePicker
       Left = 132
-      Top = 69
+      Top = 81
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -472,7 +473,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object dtTanggal_Pesan: TRzDateTimePicker
       Left = 132
-      Top = 42
+      Top = 54
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -564,8 +565,8 @@ object FNew_SalesOrder: TFNew_SalesOrder
       NumGlyphs = 2
     end
     object cbKonversiMuatan: TRzCheckBox
-      Left = 335
-      Top = 18
+      Left = 323
+      Top = 56
       Width = 112
       Height = 19
       Caption = 'Konversi Muatan'
@@ -616,7 +617,7 @@ object FNew_SalesOrder: TFNew_SalesOrder
     end
     object edPOOrder: TEdit
       Left = 132
-      Top = 234
+      Top = 246
       Width = 151
       Height = 23
       CharCase = ecUpperCase
@@ -643,6 +644,24 @@ object FNew_SalesOrder: TFNew_SalesOrder
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edGudangButtonClick
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 132
+      Top = 3
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 23
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 323
+      Top = 26
+      Width = 30
+      Caption = '...'
+      TabOrder = 24
+      OnClick = btnNoTransaksiClick
     end
   end
   object Panel2: TPanel

@@ -148,16 +148,6 @@ object FDataListPenjualan: TFDataListPenjualan
       end
       item
         CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'cancel_reason'
-        Footers = <>
-        Title.Alignment = taCenter
-        Title.Caption = 'Alasan Pembatalan'
-        Width = 500
-      end
-      item
-        CellButtons = <>
         DisplayFormat = 'dd-mm-yyyy'
         DynProps = <>
         EditButtons = <>
@@ -16238,17 +16228,22 @@ object FDataListPenjualan: TFDataListPenjualan
         'CT SUM(gross_weight) FROM t_selling_det WHERE trans_no=a.trans_n' +
         'o AND code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_wei' +
         'ght) FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=' +
-        'b.code_unit) tare_weight, COALESCE((SELECT vehicles FROM t_deliv' +
-        'ery_order_services WHERE notrans=(SELECT DISTINCT notrans from t' +
-        '_delivery_order_load WHERE notrans_load=a.trans_no )),'#39#39')::VARCH' +
-        'AR vehicles  from "public"."t_selling" a   LEFT JOIN "public"."t' +
-        '_selling_det" b ON a.trans_no=b.trans_no   LEFT JOIN (SELECT "cu' +
-        'stomer_code", "address" from "public"."t_customer_address"  wher' +
-        'e "code_details"='#39'003'#39') d on a.code_cust=d.customer_code   LEFT ' +
-        'JOIN (SELECT "customer_code", "address" from "public"."t_custome' +
-        'r_address"  where "code_details"='#39'002'#39') e on a.code_cust=e.custo' +
-        'mer_code   where a.deleted_at is null and   a.trans_no='#39'FP/001/1' +
-        '3/XI/2025/HLJ/JKT'#39'   order by b.created_at Desc'
+        'b.code_unit) tare_weight, '
+      
+        ' COALESCE(b.qty_bundle) qty_bundle, Trunc(amount/qty_bundle) add' +
+        '_on_qty,'
+      
+        'COALESCE((SELECT vehicles FROM t_delivery_order_services WHERE n' +
+        'otrans=(SELECT DISTINCT notrans from t_delivery_order_load WHERE' +
+        ' notrans_load=a.trans_no )),'#39#39')::VARCHAR vehicles  from "public"' +
+        '."t_selling" a   LEFT JOIN "public"."t_selling_det" b ON a.trans' +
+        '_no=b.trans_no   LEFT JOIN (SELECT "customer_code", "address" fr' +
+        'om "public"."t_customer_address"  where "code_details"='#39'003'#39') d ' +
+        'on a.code_cust=d.customer_code   LEFT JOIN (SELECT "customer_cod' +
+        'e", "address" from "public"."t_customer_address"  where "code_de' +
+        'tails"='#39'002'#39') e on a.code_cust=e.customer_code   where a.deleted' +
+        '_at is null and   a.trans_no='#39'FP/001/13/XI/2025/HLJ/JKT'#39'   order' +
+        ' by b.created_at Desc'
       ''
       '-- 0 row(s) affected.')
     Left = 596
@@ -16329,15 +16324,26 @@ object FDataListPenjualan: TFDataListPenjualan
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QCetakSJqty_bundle: TFloatField
+      FieldName = 'qty_bundle'
+      ReadOnly = True
+    end
+    object QCetakSJadd_on_qty: TFloatField
+      FieldName = 'add_on_qty'
+      ReadOnly = True
+    end
   end
   object frxDBDCetakSJ: TfrxDBDataset
     UserName = 'frxDBDCetakSJ'
     CloseDataSource = False
     FieldAliases.Strings = (
+      'trans_no=trans_no'
       'no_traveldoc=no_traveldoc'
+      'trans_date=trans_date'
       'code_cust=code_cust'
       'name_cust=name_cust'
       'address=address'
+      'address2=address2'
       'code_item=code_item'
       'name_item=name_item'
       'amount=amount'
@@ -16345,12 +16351,11 @@ object FDataListPenjualan: TFDataListPenjualan
       'name_unit=name_unit'
       'no_reference=no_reference'
       'ket=ket'
-      'trans_no=trans_no'
-      'trans_date=trans_date'
       'gross_weight=gross_weight'
       'tare_weight=tare_weight'
       'vehicles=vehicles'
-      'address2=address2')
+      'qty_bundle=qty_bundle'
+      'add_on_qty=add_on_qty')
     DataSet = QCetakSJ
     BCDToCurrency = False
     DataSetOptions = []
@@ -16392,11 +16397,63 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46035.622051840280000000
+    ReportOptions.LastChange = 46098.339561539350000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      'var isBundle: Integer;'
+      ''
+      
+        'procedure frxDBDCetakSJname_itemOnBeforePrint(Sender: TfrxCompon' +
+        'ent);'
+      'begin'
+      '{  if <frxDBDCetakSJ."qty_bundle"> > 0 then'
+      '  begin'
+      
+        '    frxDBDCetakSJname_item.Text:=<frxDBDCetakSJ."name_item"> <vT' +
+        'erbilang_qty> '#39'KELIPATAN '#39'<frxDBDCetakSJ."qty_bundle"> '#39'GRATIS 1' +
+        #39' <frxDBDCetakSJ."name_unit">;'
+      '  end else begin'
+      
+        '    frxDBDCetakSJname_item.Text:=<frxDBDCetakSJ."name_item"> <vT' +
+        'erbilang_qty>;'
+      '  end;  }'
+      ''
+      '  if <frxDBDCetakSJ."qty_bundle"> > 0 then'
+      '  begin'
+      '    isBundle:=1;'
+      
+        '    frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> +' +
+        ' '#39' '#39' + <vTerbilang_qty> + #13 +          '
+      
+        '                                   '#39'(PROMO BELI '#39' + FloatToStr(<' +
+        'frxDBDCetakSJ."qty_bundle">) +'
+      
+        '                                   '#39' GRATIS '#39'+FloatToStr(<frxDBD' +
+        'CetakSJ."add_on_qty">)+'#39')'#39';   '
+      
+        '    {frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> ' +
+        '+ '#39' '#39' + <vTerbilang_qty>;}  '
+      '  end'
+      '  else'
+      '  begin'
+      
+        '    frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> +' +
+        ' '#39' '#39' + <vTerbilang_qty>;'
+      '  end;'
+      'end;'
+      ''
+      'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  if isBundle=1 then'
+      
+        '  Memo31.Text:= '#39'PROMO BELI '#39'+FloatToStr(<frxDBDCetakSJ."qty_bun' +
+        'dle">)+'#39' GRATIS '#39'+FloatToStr(<frxDBDCetakSJ."add_on_qty">) else ' +
+        ' Memo31.Text:='#39#39';'
+      'end;'
       ''
       'begin'
+      '  // Inisialisasi awal saat report mulai dijalankan'
+      '  isBundle := 0;'
       ''
       'end.')
     Left = 192
@@ -16541,7 +16598,7 @@ object FDataListPenjualan: TFDataListPenjualan
           AllowVectorExport = True
           Left = 0.779530000000000000
           Top = 128.889920000000000000
-          Width = 755.149606299213000000
+          Width = 755.149606300000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -17004,6 +17061,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 259.110390000000000000
           Width = 496.448980000000000000
           Height = 18.897650000000000000
+          OnBeforePrint = 'frxDBDCetakSJname_itemOnBeforePrint'
           StretchMode = smMaxHeight
           DataSet = frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
@@ -17013,8 +17071,6 @@ object FDataListPenjualan: TFDataListPenjualan
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDCetakSJ."name_item"] [vTerbilang_qty]')
           ParentFont = False
           Formats = <
             item
@@ -17055,6 +17111,7 @@ object FDataListPenjualan: TFDataListPenjualan
         Height = 128.047310000000000000
         Top = 313.700990000000000000
         Width = 755.906000000000000000
+        OnBeforePrint = 'PageFooter1OnBeforePrint'
         object Memo12: TfrxMemoView
           AllowVectorExport = True
           Left = 395.338590000000000000
@@ -17163,7 +17220,7 @@ object FDataListPenjualan: TFDataListPenjualan
           Left = 4.000000000000000000
           Top = 25.299010000000000000
           Width = 352.023810000000000000
-          Height = 87.913420000000000000
+          Height = 95.605727690000000000
           DataSet = frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
@@ -17192,12 +17249,27 @@ object FDataListPenjualan: TFDataListPenjualan
             'Alamat Pengiriman Barang :')
           ParentFont = False
         end
+        object Memo31: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.589743600000000000
+          Top = 100.145163840000000000
+          Width = 376.923076920000000000
+          Height = 19.487179490000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+        end
       end
     end
   end
   object frxRichObject1: TfrxRichObject
-    Left = 88
-    Top = 200
+    Left = 40
+    Top = 168
   end
   object ReportJurnal: TfrxReport
     Version = '2022.1.3'

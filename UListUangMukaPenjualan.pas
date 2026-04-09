@@ -111,13 +111,14 @@ begin
   try
     if MessageDlg('Anda Yakin Mau Hapus Uang Muka Dengan No. '+QUangMukaPenjualan.FieldValues['no_trans']+' '+ '?', mtInformation, [mbYes]+[mbNo],0) = mrYes then
     begin
+
       with dm.Qtemp do
       begin
         Close;
         SQL.Clear;
         SQL.Text:='UPDATE t_down_payment_sales SET deleted_at=NOW(), '+
-                  ' deleted_by='+QuotedStr(Nm)+' '+
-                  ' WHERE no_trans='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans'])+' ';
+                  'deleted_by='+QuotedStr(Nm)+' '+
+                  'WHERE no_trans='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans'])+' ';
         ExecSQL;
       end;
 
@@ -165,9 +166,7 @@ begin
     edNama_Pelanggan.Text:=QUangMukaPenjualan.FieldValues['customer_name'];
     edAkunUangMuka.Text:=QUangMukaPenjualan.FieldValues['account_code'];
     edNamaAkunUangMuka.Text:=QUangMukaPenjualan.FieldValues['account_name'];
-    ShowMessage('tes');
     edJumlah.value:=QUangMukaPenjualan.FieldValues['grand_tot'];
-    ShowMessage('tes');
     kd_kares:='0';
   end;
 
@@ -285,7 +284,6 @@ end;
 procedure TFListUangMukaPenjualan.dxBarLargeButton1Click(Sender: TObject);
 begin
   Refresh;
-
   if QUangMukaPenjualan.RecordCount=0 then
   begin
     showmessage('Tidak ada data yang bisa dicetak !');

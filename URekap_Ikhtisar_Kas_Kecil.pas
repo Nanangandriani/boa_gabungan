@@ -133,7 +133,6 @@ type
     QRekap_KasKecil_Biaya_Penjualanb8: TFloatField;
     QRekap_KasKecil_Biaya_Penjualanb9: TFloatField;
     QRekap_KasKecil_Biaya_Penjualanb10: TFloatField;
-    QRekap_KasKecil_Biaya_Penjualanb11: TFloatField;
     QCetak_Rekap_KasKecil_ADMtanggal: TDateField;
     QCetak_Rekap_KasKecil_ADMtotal: TFloatField;
     QCetak_Rekap_KasKecil_ADMb1: TFloatField;
@@ -301,8 +300,8 @@ begin
 
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no)xx '+
                 'group by tanggal order by tanggal ';
-    subquerypenj:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10)+sum(b11) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
-                'sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10,sum(b11)as b11 from '+
+    subquerypenj:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
+                'sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10 from '+
                 '(select a.tanggal,a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
                 '(case when b1.amount is null then 0 else b1.amount end)b1, '+
                 '(case when b2.amount is null then 0 else b2.amount end)b2, '+
@@ -313,8 +312,7 @@ begin
                 '(case when b7.amount is null then 0 else b7.amount end)b7, '+
                 '(case when b8.amount is null then 0 else b8.amount end)b8, '+
                 '(case when b9.amount is null then 0 else b9.amount end)b9, '+
-                '(case when b10.amount is null then 0 else b10.amount end)b10, '+
-                '(case when b11.amount is null then 0 else b11.amount end)b11  '+
+                '(case when b10.amount is null then 0 else b10.amount end)b10 '+
                 'from '+
                 '(select  DISTINCT a.voucher_no from t_petty_cash a INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick2.EditValue))+' and code_account=''1101.02''  and position=''K'' and a.deleted_at is null)xx '+
                 'left join (select distinct a.trans_date as tanggal,a.actors_name,a.voucher_no,a.code_account,a.trans_date,a.description,a.order_no,b.code,c."name",a.deleted_at from '+
@@ -355,8 +353,8 @@ begin
                 'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account)a,t_ak_account b where a.deleted_at is null and a.code_account=b.code and b.type_id=4 and b.category_code=''4PEN'')b10 on a.voucher_no=b10.voucher_no '+
 
-                'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
-                'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.deleted_at is null and a.code_account=b.code and b.type_id=4 and b.category_code=''4PEN'')b11 on a.voucher_no=b11.voucher_no '+
+                //'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
+                //'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.deleted_at is null and a.code_account=b.code and b.type_id=4 and b.category_code=''4PEN'')b11 on a.voucher_no=b11.voucher_no '+
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no)xx group by tanggal order by tanggal ';
 
 

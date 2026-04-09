@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, Vcl.StdCtrls,
   MemTableEh, RzButton, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs,
   Vcl.ComCtrls, RzDTP, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.Buttons, Vcl.ExtCtrls,
-  RzLabel, RzPanel;
+  RzLabel, RzPanel, RzRadChk, RzRadGrp;
 
 type
   TFDataReturPenjualan = class(TForm)
@@ -76,6 +76,9 @@ type
     edDPPNilaiLain: TRzNumericEdit;
     edTotPPN: TRzNumericEdit;
     edGrandTot: TRzNumericEdit;
+    chkNomorPengganti: TRzCheckBox;
+    btnNoTransaksi: TRzBitBtn;
+    rgJenisRetur: TRadioGroup;
     procedure btMasterJenisReturClick(Sender: TObject);
     procedure edNamaJenisButtonClick(Sender: TObject);
     procedure edKode_PelangganButtonClick(Sender: TObject);
@@ -97,12 +100,14 @@ type
     procedure BCorrectionClick(Sender: TObject);
     procedure DBGridDetailKeyPress(Sender: TObject; var Key: Char);
     procedure MemDetailAfterPost(DataSet: TDataSet);
+    procedure btnNoTransaksiClick(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_grand,tot_dpp_lain : Currency;
   public
     { Public declarations }
-    strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV,StrTglFaktur: string;
+    strtgl, strbulan, strtahun,kd_perkiraan_pel, kd_kares, StrNoINV,StrTglFaktur,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
     Status,iserror,IntStatusKoreksi,isCancel: Integer;
     grand_tot_selling,grand_tot_returns: real;
@@ -126,10 +131,11 @@ implementation
 
 uses UListReturPenjualan, UMy_Function, USetMasterPenjulan, UMasterData,
   Ubrowse_pelanggan, UReturPenjualan_Sumber, UDataModule, UHomeLogin, UMainMenu,
-  UTambah_Barang, UKoreksi, System.Math;
+  UTambah_Barang, UKoreksi, System.Math, UListNoTransaksi;
 
 procedure TFDataReturPenjualan.SimpanPelanggan;
 begin
+  
   with dm.Qtemp do
   begin
     close;
@@ -223,12 +229,15 @@ begin
 end;
 
 procedure TFDataReturPenjualan.Save;
-var Stradditional_code,strKeterangan: String;
+var Stradditional_code,strKeterangan, strIsNoReplacement: String;
 begin
   if (kd_kares='') OR (kd_kares='0') then
     Stradditional_code:='NULL'
   else Stradditional_code:=QuotedStr(kd_kares);
   strKeterangan:='Retur Penjualan Tgl Faktur. '+StrTglFaktur;
+
+  if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
+
   with dm.Qtemp do
   begin
     close;
@@ -237,7 +246,7 @@ begin
             ' "trans_no", "trans_date", "code_cust", "name_cust", "account_code", "code_type_return", '+
             ' "name_type_return", "description", "order_no", "additional_code", '+
             ' "trans_day", "trans_month", "trans_year", "sub_total", "ppn_value", '+
-            ' "pph_value", "grand_tot",no_inv_tax,no_inv,sbu_code,description2,dpp_nilai_lain) '+
+            ' "pph_value", "grand_tot",no_inv_tax,no_inv,sbu_code,description2,dpp_nilai_lain,is_no_replacement,return_type) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -261,10 +270,25 @@ begin
             ' '+QuotedStr(edNoFaktur.Text)+','+
             ' '+QuotedStr(StrNoINV)+','+QuotedStr(FHomeLogin.vKodePRSH)+','+
             ' '+QuotedStr(strKeterangan)+','+
-            ' '+QuotedStr(StringReplace(FloatToStr(edDPPNilaiLain.Value),',','.',[]))+');');
+            ' '+QuotedStr(StringReplace(FloatToStr(edDPPNilaiLain.Value),',','.',[]))+','+
+            ' '+QuotedStr(strIsNoReplacement)+','+IntToStr(rgJenisRetur.ItemIndex)+');');
 //            ' '+QuotedStr(FloatToStr(edDPPNilaiLain.Value))+'  );');
     ExecSQL;
   end;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE "public"."t_sales_returns" SET'+
+                ' trans_no_replacement='+QuotedStr(edNoTrans.Text)+
+                ' Where trans_no='+QuotedStr(strNoTransaksiDiGanti);
+      ExecSQL;
+    end;
+  end;
+
   InsertDetailRet;
   SimpanPelanggan;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -300,7 +324,8 @@ begin
             ' trans_day='+QuotedStr(strtgl)+','+
             ' trans_month='+QuotedStr(strbulan)+','+
             ' trans_year='+QuotedStr(strtahun)+', '+
-            ' status_correction=2 '+
+            ' status_correction=0, '+
+            ' return_type='+IntToStr(rgJenisRetur.ItemIndex)+' '+
             ' Where trans_no='+QuotedStr(edNoTrans.Text)+'');
     ExecSQL;
   end;
@@ -327,37 +352,41 @@ begin
   MemDetail.First;
   while not MemDetail.Eof do
   begin
-    with dm.Qtemp1 do
+    if TRIM(MemDetail['KD_ITEM'])<>'' then
     begin
-      close;
-      sql.clear;
-      sql.Text:=' INSERT INTO "public"."t_sales_returns_det" (trans_no, no_trans_sale, code_item, '+
-                ' name_item, account_code, amount, code_unit, name_unit, unit_price, '+
-                ' sub_total, ppn_account, ppn_percent, ppn_value, pph_account, '+
-                ' pph_value, pph_name, pph_percent, amount_sale, unit_price_sale, grand_tot) '+
-                ' Values('+
-                ' '+QuotedStr(edNoTrans.Text)+','+
-                ' '+QuotedStr(MemDetail['NO_JUAL'])+','+
-                ' '+QuotedStr(MemDetail['KD_ITEM'])+','+
-                ' '+QuotedStr(MemDetail['NM_ITEM'])+','+
-                ' '+QuotedStr(MemDetail['AKUN_PERK_ITEM'])+','+
-                ' '+QuotedStr(StringReplace(MemDetail['JUMLAH'],',','.',[]))+','+
-//                ' '+QuotedStr(MemDetail['JUMLAH'])+','+
-                ' '+QuotedStr(MemDetail['KD_SATUAN'])+','+
-                ' '+QuotedStr(MemDetail['NM_SATUAN'])+','+
-                ' '+QuotedStr(StringReplace(MemDetail['HARGA_SATUAN'],',','.',[]))+','+
-                ' '+QuotedStr(StringReplace(MemDetail['SUB_TOTAL'],',','.',[]))+','+
-                ' '+QuotedStr(MemDetail['PPN_AKUN'])+','+
-                ' '+QuotedStr(MemDetail['PPN_PERSEN'])+','+
-                ' '+QuotedStr(StringReplace(MemDetail['PPN_NILAI'],',','.',[]))+','+
-                ' '+QuotedStr(MemDetail['PPH_AKUN'])+','+
-                ' '+QuotedStr(StringReplace(MemDetail['PPH_NILAI'],',','.',[]))+','+
-                ' '+QuotedStr(MemDetail['NAMA_PPH'])+','+
-                ' '+QuotedStr(MemDetail['PPH_PERSEN'])+','+
-                ' '+QuotedStr(StringReplace(MemDetail['JUMLAH_JUAL'],',','.',[]))+','+
-                ' '+QuotedStr(StringReplace(MemDetail['HARGA_SATUAN_JUAL'],',','.',[]))+','+
-                ' '+QuotedStr(StringReplace(MemDetail['GRAND_TOTAL'],',','.',[]))+' );';
-      ExecSQL;
+    
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' INSERT INTO "public"."t_sales_returns_det" (trans_no, no_trans_sale, code_item, '+
+                  ' name_item, account_code, amount, code_unit, name_unit, unit_price, '+
+                  ' sub_total, ppn_account, ppn_percent, ppn_value, pph_account, '+
+                  ' pph_value, pph_name, pph_percent, amount_sale, unit_price_sale, grand_tot) '+
+                  ' Values('+
+                  ' '+QuotedStr(edNoTrans.Text)+','+
+                  ' '+QuotedStr(MemDetail['NO_JUAL'])+','+
+                  ' '+QuotedStr(MemDetail['KD_ITEM'])+','+
+                  ' '+QuotedStr(MemDetail['NM_ITEM'])+','+
+                  ' '+QuotedStr(MemDetail['AKUN_PERK_ITEM'])+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['JUMLAH'],',','.',[]))+','+
+  //                ' '+QuotedStr(MemDetail['JUMLAH'])+','+
+                  ' '+QuotedStr(MemDetail['KD_SATUAN'])+','+
+                  ' '+QuotedStr(MemDetail['NM_SATUAN'])+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['HARGA_SATUAN'],',','.',[]))+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['SUB_TOTAL'],',','.',[]))+','+
+                  ' '+QuotedStr(MemDetail['PPN_AKUN'])+','+
+                  ' '+QuotedStr(MemDetail['PPN_PERSEN'])+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['PPN_NILAI'],',','.',[]))+','+
+                  ' '+QuotedStr(MemDetail['PPH_AKUN'])+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['PPH_NILAI'],',','.',[]))+','+
+                  ' '+QuotedStr(MemDetail['NAMA_PPH'])+','+
+                  ' '+QuotedStr(MemDetail['PPH_PERSEN'])+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['JUMLAH_JUAL'],',','.',[]))+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['HARGA_SATUAN_JUAL'],',','.',[]))+','+
+                  ' '+QuotedStr(StringReplace(MemDetail['GRAND_TOTAL'],',','.',[]))+' );';
+        ExecSQL;
+      end;
     end;
     MemDetail.Next;
   end;
@@ -556,6 +585,11 @@ begin
   if not dm.Koneksi.InTransaction then
    dm.Koneksi.StartTransaction;
   try
+  if (chkNomorPengganti.Checked=True) AND (edNoTrans.Text='') then
+  begin
+    MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end else
   if edKode_Pelanggan.Text='' then
   begin
     MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -572,7 +606,8 @@ begin
   end}
   else if Status = 0 then
   begin
-    FDataReturPenjualan.Autonumber;
+    if chkNomorPengganti.Checked=False then Autonumber;
+
   //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
     if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
@@ -621,6 +656,24 @@ begin
   FSetMasterPenjulan.ShowModal;
 end;
 
+procedure TFDataReturPenjualan.btnNoTransaksiClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='retur_penjualan';
+  FListNoTransaksi.update_grid('trans_no','order_no','t_sales_returns','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY trans_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
+procedure TFDataReturPenjualan.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
+  else btnNoTransaksi.Visible:=False;
+  edNoTrans.Clear;
+//  MemDetail.Active:=False;
+//  MemDetail.Active:=True;
+//  MemDetail.EmptyTable;
+end;
+
 procedure TFDataReturPenjualan.Clear;
 begin
   edNoTrans.Clear;
@@ -641,6 +694,10 @@ begin
   MemDetail.EmptyTable;
   MemDetail.active:=false;
   MemDetail.active:=true;
+  chkNomorPengganti.Checked:=False;
+  btnNoTransaksi.Visible:=False;
+  strNoTransaksiDiGanti:='';
+  rgJenisRetur.ItemIndex:=0;
 end;
 
 procedure TFDataReturPenjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -796,6 +853,8 @@ begin
   begin
     BCorrection.Visible:=False;
     BSave.Enabled:=False;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=False;
   end else
   begin
     if (Status=1) AND (IntStatusKoreksi=2) then
@@ -803,14 +862,20 @@ begin
       BSave.Enabled:=True;
       BCorrection.Visible:=True;
       BCorrection.Enabled:=False;
+      btnNoTransaksi.Visible:=False;
+      chkNomorPengganti.Enabled:=False;
     end else if Status=0 then
     begin
       BSave.Enabled:=True;
       BCorrection.Visible:=False;
+      btnNoTransaksi.Visible:=False;
+      chkNomorPengganti.Enabled:=True;
     end else begin
       BSave.Enabled:=False;
       BCorrection.Visible:=True;
       BCorrection.Enabled:=True;
+      btnNoTransaksi.Visible:=False;
+      chkNomorPengganti.Enabled:=False;
     end;
   end;
   edDPP.Enabled:=True;

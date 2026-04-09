@@ -96,6 +96,7 @@ begin
     FKoreksi.kode_koreksi:=QKoreksi.FieldValues['code'];
     FKoreksi.vcall:='';
     FKoreksi.Status:=1;
+    if QKoreksi.FieldValues['is_delete']='true' then FKoreksi.AksiTipe:='DELETE' else FKoreksi.AksiTipe:='KOREKSI';
     FKoreksi.ShowModal;
   end else begin
     MessageDlg('Tidak dapat melakukan approval, status sudah '+QKoreksi.FieldValues['status_correction']+' ..!!',mtInformation,[mbRetry],0);

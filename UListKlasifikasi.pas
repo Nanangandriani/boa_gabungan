@@ -242,6 +242,8 @@ begin
     Open;
   end;
 
+
+
   if dm.Qtemp2.FieldValues['status_correction']=2 then
   begin
     FDaftarKlasifikasi.BCorrection.Visible:=False;
@@ -266,8 +268,16 @@ begin
     FDaftarKlasifikasi.TabMasterKlasifikasi.TabVisible:=true;
   end;
 
+  if QMasterKlasifikasi.FieldByName('status_disc').AsInteger=1 then
+  begin
+    FDaftarKlasifikasi.rgPotongan.ItemIndex:=1;
+  end else begin
+    FDaftarKlasifikasi.rgPotongan.ItemIndex:=0;
+  end;
+
   with FDaftarKlasifikasi do
   begin
+    id_master:=QMasterKlasifikasi.FieldValues['id_master'];
     ednm_jenis_usaha.Text:=QMasterKlasifikasi.FieldByName('name_type_business').AsString;
     edkd_jenis_usaha.Text:=QMasterKlasifikasi.FieldByName('code_type_business').AsString;
     ednm_jenis_pel.Text:=QMasterKlasifikasi.FieldByName('name_type_customer').AsString;
@@ -283,15 +293,21 @@ begin
 		rgPembayaran.ItemIndex:=QMasterKlasifikasi.FieldByName('status_payment').AsInteger;
 		rgGrouping.ItemIndex:=QMasterKlasifikasi.FieldByName('status_grouping').AsInteger;
 		rgPajak.ItemIndex:=QMasterKlasifikasi.FieldByName('status_tax').AsInteger;
-		rgPotongan.ItemIndex:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
+
+//    rgPotongan.ItemIndex := QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
+
     IntJenisPotonganPrev:=QMasterKlasifikasi.FieldByName('status_disc').AsInteger;
 		rgPromo.ItemIndex:=QMasterKlasifikasi.FieldByName('status_promo').AsInteger;
+    RefreshGrid;
+    TabDaftarKlasifikasiPelanggan.TabVisible:=True;
+    Disable;
+    StatusNonGroup:=1;
+    try
+      ShowModal;
+    finally
+
+    end;
   end;
-  FDaftarKlasifikasi.RefreshGrid;
-  FDaftarKlasifikasi.TabDaftarKlasifikasiPelanggan.TabVisible:=True;
-  FDaftarKlasifikasi.Disable;
-  FDaftarKlasifikasi.StatusNonGroup:=1;
-  FDaftarKlasifikasi.ShowModal;
 end;
 
 procedure TFListKlasifikasi.dxBarLargeButton1Click(Sender: TObject);
@@ -301,7 +317,6 @@ end;
 
 procedure TFListKlasifikasi.FormShow(Sender: TObject);
 begin
-  cbStatusApproval.ItemIndex:=2;
   Refresh;
 end;
 
