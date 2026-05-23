@@ -22,7 +22,7 @@ object FSingkronisasi: TFSingkronisasi
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 788
+    ExplicitWidth = 790
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -67,7 +67,7 @@ object FSingkronisasi: TFSingkronisasi
     end
     object btTampilkan: TRzBitBtn
       Left = 462
-      Top = 70
+      Top = 72
       Width = 132
       Caption = 'Tampilkan'
       TabOrder = 0
@@ -225,13 +225,13 @@ object FSingkronisasi: TFSingkronisasi
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 788
-    ExplicitHeight = 304
+    ExplicitWidth = 790
+    ExplicitHeight = 312
     FixedDimension = 21
     object TabSData: TRzTabSheet
       Caption = 'Data'
-      ExplicitWidth = 784
-      ExplicitHeight = 279
+      ExplicitWidth = 786
+      ExplicitHeight = 287
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -312,6 +312,7 @@ object FSingkronisasi: TFSingkronisasi
     end
     object MemTableEh1nama: TStringField
       FieldName = 'nama'
+      Size = 250
     end
     object MemTableEh1last_sync: TDateField
       FieldName = 'last_sync'
@@ -329,7 +330,8 @@ object FSingkronisasi: TFSingkronisasi
         object nama: TMTStringDataFieldEh
           FieldName = 'nama'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 250
+          Size = 250
         end
         object last_sync: TMTDateTimeDataFieldEh
           FieldName = 'last_sync'

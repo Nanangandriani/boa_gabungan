@@ -92,6 +92,8 @@ type
     edTambahanQtyBundling: TRzNumericEdit;
     cbSatuanBundling: TRzComboBox;
     Label15: TLabel;
+    EdHSCode: TEdit;
+    Label18: TLabel;
     procedure BBatalClick(Sender: TObject);
     procedure BSimpanClick(Sender: TObject);
     procedure EdCategorySelect(Sender: TObject);
@@ -277,6 +279,7 @@ begin
   EdNm.Clear;
   EdSatuan.Clear;
   EdMerk.Clear;
+  EdHSCode.Clear;
   st_penjualan:='False';
   st_nourut:='False';
   ck_st_penjualan.Checked:=false;
@@ -295,11 +298,11 @@ begin
        sql.Text:=' insert into t_item(order_no,item_code,item_code2,item_name,'+
                  ' category_id,unit,merk,account_code,created_by,description,group_id, '+
                  ' sell_status,"buy","disc_buy","sell","disc_sell",lot_status,header_code,sbu_code, '+
-                 ' item_code_coretax, item_name_coretax,is_bundle_sell,qty_bundle_sell,add_on_qty_bundle_sell,unit_of_measure_bundle_sell)'+
+                 ' item_code_coretax, item_name_coretax,is_bundle_sell,qty_bundle_sell,add_on_qty_bundle_sell,unit_of_measure_bundle_sell,hs_code)'+
                  ' values(:order_no,:item_cd,:item_cd2,:item_nm,:id_ct,:unit,:merk,:akun_cd,'+
                  ' :pic,:desk,:group_id,:sell_status,:buy,:discount_buy,:sell,:discount_sell,'+
                  ' :lot_status,:header_code,:sbu_code,:item_code_coretax,:item_name_coretax,'+
-                 ':is_bundle_sell,:qty_bundle_sell,:add_on_qty_bundle_sell,:unit_of_measure_bundle_sell)';
+                 ':is_bundle_sell,:qty_bundle_sell,:add_on_qty_bundle_sell,:unit_of_measure_bundle_sell,:hs_code)';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_cd').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -325,6 +328,7 @@ begin
          ParamByName('qty_bundle_sell').Value:=edQtyKelipatanBundling.Value;
          ParamByName('add_on_qty_bundle_sell').Value:=edTambahanQtyBundling.Value;
          ParamByName('unit_of_measure_bundle_sell').Value:=cbSatuanBundling.Text;
+         ParamByName('hs_code').Value:=EdHSCode.Text;
        ExecSQL;
        end;
          with dm.Qtemp do
@@ -357,7 +361,8 @@ begin
        ' lot_status=:lot_status,header_code=:Header_code, sbu_code=:sbu_code, '+
        ' item_code_coretax=:item_code_coretax, item_name_coretax=:item_name_coretax, '+
        ' is_bundle_sell=:is_bundle_sell,qty_bundle_sell=:qty_bundle_sell,'+
-       'add_on_qty_bundle_sell=:add_on_qty_bundle_sell,unit_of_measure_bundle_sell=:unit_of_measure_bundle_sell where "id"=:id';
+       'add_on_qty_bundle_sell=:add_on_qty_bundle_sell,unit_of_measure_bundle_sell=:unit_of_measure_bundle_sell, '+
+       'hs_code=:hs_code where "id"=:id';
          ParamByName('order_no').Value:=Edno.Text;
          ParamByName('item_code').Value:=EdKd.Text;
          ParamByName('item_cd2').Value:=Edkd_display.Text;
@@ -385,6 +390,7 @@ begin
          ParamByName('qty_bundle_sell').Value:=edQtyKelipatanBundling.Value;
          ParamByName('add_on_qty_bundle_sell').Value:=edTambahanQtyBundling.Value;
          ParamByName('unit_of_measure_bundle_sell').Value:=cbSatuanBundling.Text;
+         ParamByName('hs_code').Value:=EdHSCode.Text;
        ExecSQL;
     end;
     // cr ds 5-2-2026

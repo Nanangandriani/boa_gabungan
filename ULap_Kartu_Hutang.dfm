@@ -1418,7 +1418,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 792
+    Left = 776
     Top = 152
   end
   object DSQTgl_Hutang: TDataSource

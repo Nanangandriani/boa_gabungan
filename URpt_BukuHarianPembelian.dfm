@@ -65,8 +65,8 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     TabOrder = 1
     Visible = False
     OnClick = Panel1Click
-    ExplicitTop = 571
-    ExplicitWidth = 1180
+    ExplicitTop = 579
+    ExplicitWidth = 1182
     object Bprint: TRzBitBtn
       Left = 1
       Top = 1
@@ -191,7 +191,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1097
+      ExplicitLeft = 1099
     end
     object BPrint2: TRzBitBtn
       Left = 83
@@ -315,7 +315,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1022
+      ExplicitLeft = 1024
     end
   end
   object DtMulai1: TRzDateTimeEdit
@@ -396,6 +396,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     DataSource = dsbph
     DrawMemoText = True
     DynProps = <>
+    FooterRowCount = 1
     TabOrder = 7
     TitleParams.MultiTitle = True
     Columns = <
@@ -493,6 +494,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         EditButtons = <>
         FieldName = 'subtotalrp'
         Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Debet|Pembelian|Jumlah'
         Width = 150
@@ -521,6 +523,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         EditButtons = <>
         FieldName = 'ppn_rp'
         Footer.DisplayFormat = '#,##'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Debet|Lain-lain|Jumlah'
         Width = 150
@@ -549,6 +552,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         EditButtons = <>
         FieldName = 'grandtotal'
         Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Kredit|Hutang|Jumlah'
         Width = 150
@@ -577,6 +581,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         EditButtons = <>
         FieldName = 'pph_rp'
         Footer.DisplayFormat = '#,##0.00'
+        Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Kredit|Lain-lain|Jumlah'
         Width = 150
@@ -593,7 +598,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44169.465120821800000000
-    ReportOptions.LastChange = 46058.418473611110000000
+    ReportOptions.LastChange = 46120.372206516200000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -924,7 +929,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         object Memo37: TfrxMemoView
           AllowVectorExport = True
           Left = 1140.283464570000000000
-          Width = 76.346456692913390000
+          Width = 76.346456692913400000
           Height = 26.456692910000000000
           StretchMode = smMaxHeight
           DataSet = Rpt_BHP
@@ -1162,7 +1167,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           AllowVectorExport = True
           Left = 852.952755910000000000
           Top = 68.031496060000000000
-          Width = 363.590551181102400000
+          Width = 363.590551181102000000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1338,8 +1343,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
-          Memo.UTF8W = (
-            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1621,7 +1624,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           AllowVectorExport = True
           Left = 1140.283464570000000000
           Top = 100.913385830000000000
-          Width = 76.346456692913390000
+          Width = 76.346456692913400000
           Height = 17.007874020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1657,7 +1660,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           AllowVectorExport = True
           Left = 1035.590551180000000000
           Top = 85.039370080000000000
-          Width = 181.039370078740200000
+          Width = 181.039370078740000000
           Height = 15.986404350000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1689,7 +1692,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Width = 60.472440940000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.FormatStr = '#,##0;'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1824,8 +1827,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1842,7 +1843,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            'Jumlah')
+            'Sub Total')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1881,8 +1882,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1910,8 +1909,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft]
           HAlign = haRight
-          Memo.UTF8W = (
-            '')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2006,7 +2003,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '   TOTAL')
+            '   Total')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2015,7 +2012,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Left = 682.204653620000000000
           Width = 170.078810940000000000
           Height = 22.677165350000000000
-          DisplayFormat.FormatStr = '#,##0.00'
+          DisplayFormat.FormatStr = '#,##0;'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

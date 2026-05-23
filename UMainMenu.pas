@@ -72,6 +72,7 @@ type
     StatusPerusahaan: TRzStatusPane;
     RzStatusVersion: TRzStatusPane;
     RzStatusPane2: TRzStatusPane;
+    TimerCekVersi: TTimer;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -94,10 +95,12 @@ type
     procedure dxBarLargeButtonUtilityClick(Sender: TObject);
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure TimerCekVersiTimer(Sender: TObject);
 
   private
     { Private declarations }
-
+    function CekAdaUpdate: Boolean;
+    function CekAdaInputAktif: Boolean;
   public
     { Public declarations }
     Procedure ShowForm;
@@ -145,6 +148,25 @@ implementation
 {$R *.dfm} {$R resource.RES}
 uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi, UUbahPassword;
 
+function TFMainMenu.CekAdaUpdate: Boolean;
+var
+  VersiAplikasiSaya, VersiDatabase: string;
+begin
+  VersiAplikasiSaya := FMainMenu.RzVersionInfo1.ProductVersion;
+  with dm.QtempPusat do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * FROM app_versions ORDER BY id DESC LIMIT 1';
+    open;
+  end;
+  VersiDatabase := dm.QtempPusat.FieldValues['version_number'];
+  if VersiDatabase <> VersiAplikasiSaya then
+    Result := True
+  else
+    Result := False;
+end;
+
 function ExecuteScript(doc: IHTMLDocument2; script: string; language: string): Boolean;
 var
   win: IHTMLWindow2;
@@ -188,6 +210,49 @@ begin
      Tag:=Tags.item(I, EmptyParam) as IHTMLElement;
      if Tag.id=TagId then Result := Tag.getAttribute(TagAttrib, 0);
    end;
+end;
+
+function TFMainMenu.CekAdaInputAktif: Boolean;
+var
+  i, j: Integer;
+  F: TCustomForm;
+  C: TComponent;
+begin
+  Result := False;
+  // 1. Sapu semua Form yang sedang terbuka di layar
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    F := Screen.Forms[i];
+    for j := 0 to F.ComponentCount - 1 do
+    begin
+      C := F.Components[j];
+      if (C is TDataSet) then // Jika komponen tersebut adalah turunan TDataSet (termasuk TUniQuery)
+      begin
+        // Jika sedang mode Tambah atau Edit, berarti ada proses berjalan
+        if TDataSet(C).State in [dsInsert, dsEdit] then
+        begin
+          Result := True;
+          Exit;
+        end;
+      end;
+    end;
+  end;
+  // 2. Sapu juga DataModule (jika Anda menaruh TUniQuery/TUniConnection di DataModule)
+  for i := 0 to Screen.DataModuleCount - 1 do
+  begin
+    for j := 0 to Screen.DataModules[i].ComponentCount - 1 do
+    begin
+      C := Screen.DataModules[i].Components[j];
+      if (C is TDataSet) then
+      begin
+        if TDataSet(C).State in [dsInsert, dsEdit] then
+        begin
+          Result := True;
+          Exit;
+        end;
+      end;
+    end;
+  end;
 end;
 
 procedure TFMainMenu.DisableMenu;
@@ -560,6 +625,31 @@ begin
     AForm.BorderStyle:=BsNone;
     AksesSub(AForm,HakAkses,vCaptionButton);
     AForm.Show;
+  end;
+end;
+
+procedure TFMainMenu.TimerCekVersiTimer(Sender: TObject);
+begin
+  TimerCekVersi.Enabled := False;
+  try
+    if CekAdaUpdate() then
+    begin
+      if CekAdaInputAktif() then
+      begin
+        TimerCekVersi.Enabled := True;
+      end
+      else
+      begin
+        ShowMessage('Versi terbaru telah tersedia! Aplikasi akan ditutup. Silakan melakukan update.');
+        FMainMenu.UpdateVersi;
+      end;
+    end
+    else
+    begin
+      TimerCekVersi.Enabled := True;
+    end;
+  except
+    TimerCekVersi.Enabled := True;
   end;
 end;
 

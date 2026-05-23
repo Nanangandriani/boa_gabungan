@@ -337,6 +337,10 @@ object FBHPenjualan: TFBHPenjualan
         end
         item
           Visible = True
+          ItemName = 'dxBarLargeButton4'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarLargeButton1'
         end
         item
@@ -488,9 +492,9 @@ object FBHPenjualan: TFBHPenjualan
       InternalEditValue = nil
     end
     object btPreview: TdxBarLargeButton
-      Caption = 'Preview'
+      Caption = 'Preview Template 1'
       Category = 0
-      Hint = 'Preview'
+      Hint = 'Preview Template 1'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -772,6 +776,119 @@ object FBHPenjualan: TFBHPenjualan
         end>
       Properties.OnButtonClick = edTPPropertiesButtonClick
     end
+    object dxBarLargeButton4: TdxBarLargeButton
+      Caption = 'Preview Template 2'
+      Category = 0
+      Hint = 'Preview Template 2'
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton4Click
+    end
   end
   object QBHPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -804,8 +921,8 @@ object FBHPenjualan: TFBHPenjualan
         'WHERE deleted_at IS NULL)b   ON "left"(code_region, 4)=b.code_ka' +
         'b  where trans_date between '#39'2025-10-26'#39'  and '#39'2025-10-26'#39' '
       ' ORDER BY trans_date, trans_no')
-    Left = 1092
-    Top = 32
+    Left = 1044
+    Top = 48
     object QCetaktrans_no: TMemoField
       FieldName = 'trans_no'
       ReadOnly = True
@@ -843,8 +960,8 @@ object FBHPenjualan: TFBHPenjualan
     DataSource = dsCetak
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 936
-    Top = 48
+    Left = 520
+    Top = 176
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -855,10 +972,11 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 46067.384366423600000000
+    ReportOptions.LastChange = 46157.619946122690000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      ''
+      'var'
+      '  LastTrans: String;'
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       ''
@@ -869,12 +987,68 @@ object FBHPenjualan: TFBHPenjualan
       ''
       'end;'
       ''
+      'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '  LastTrans := <frxDBDataCetakBHP."trans_no">;'
+      'end;'
+      ''
+      'procedure Memo53OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure ReportOnStartReport(Sender: TfrxComponent);'
+      'begin'
+      '  LastTrans := '#39#39';'
+      'end;'
+      ''
+      'procedure Memo53OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  if <frxDBDataCetakBHP."trans_no"> = LastTrans then'
+      '  begin'
+      '    Memo35.Visible := False;'
+      '    Memo53.Visible := False;'
+      '    Memo38.Visible := False;'
+      '    Memo42.Visible := False;'
+      '    Memo43.Visible := False;'
+      '   { Memo39.Text := '#39#39';'
+      '    Memo39.Frame.Typ := Memo39.Frame.Typ - ftTop; }'
+      '    {Memo40.Frame.Typ := Memo40.Frame.Typ - ftTop;'
+      '    Memo41.Frame.Typ := Memo41.Frame.Typ - ftTop;   }'
+      '   { Memo39.Visible := False;'
+      '    Memo40.Visible := False;'
+      '    Memo41.Visible := False; }'
+      '  end'
+      '  else'
+      '  begin'
+      '    Memo35.Visible := True;'
+      '    Memo53.Visible := True;'
+      '    Memo38.Visible := True;'
+      '    Memo42.Visible := True;'
+      '    Memo43.Visible := True;'
+      '  {  Memo39.Text := <frxDBDataCetakBHP."account_code_piutang">;'
+      '    Memo39.Frame.Typ := ftTop;}'
+      ' {   Memo39.Frame.Typ := Memo39.Frame.Typ + ftTop;'
+      '    Memo40.Frame.Typ := Memo39.Frame.Typ + ftTop;'
+      '    Memo41.Frame.Typ := Memo39.Frame.Typ + ftTop; }'
+      '  {  Memo39.Visible := True;'
+      '    Memo40.Visible := True;'
+      '    Memo41.Visible := True; }'
+      '  end;'
+      'end;'
+      ''
       'begin'
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 880
-    Top = 104
+    OnStartReport = 'ReportOnStartReport'
+    Left = 888
+    Top = 120
     Datasets = <
       item
         DataSet = frxDBDataCetakBHP
@@ -1569,6 +1743,8 @@ object FBHPenjualan: TFBHPenjualan
         Height = 29.600000000000000000
         Top = 249.448980000000000000
         Width = 1209.449600000000000000
+        OnAfterPrint = 'MasterData1OnAfterPrint'
+        OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDataCetakBHP
         DataSetName = 'frxDBDataCetakBHP'
         RowCount = 0
@@ -1592,11 +1768,12 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."trans_date"]')
           ParentFont = False
+          Duplicates = dmMerge
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 45.133858270000000000
-          Width = 105.070866141732000000
+          Width = 105.070866140000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'trans_no'
@@ -1611,6 +1788,7 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."trans_no"]')
           ParentFont = False
+          Duplicates = dmMerge
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
@@ -1630,6 +1808,7 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."code_cust"]')
           ParentFont = False
+          Duplicates = dmMerge
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
@@ -1645,7 +1824,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."name_cust"]')
           ParentFont = False
@@ -1705,7 +1884,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_piutang"]')
@@ -1725,7 +1904,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."d_code_lain"]')
           ParentFont = False
@@ -1733,7 +1912,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 699.131610800000000000
-          Width = 91.464566929133900000
+          Width = 91.464566930000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'd_name_lain'
@@ -1744,7 +1923,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."d_name_lain"]')
           ParentFont = False
@@ -1765,7 +1944,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_debet_lain"]')
@@ -1785,7 +1964,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."account_code_penjualan"]')
           ParentFont = False
@@ -1806,7 +1985,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_penjualan"]')
@@ -1826,7 +2005,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."k_code_lain"]')
           ParentFont = False
@@ -1834,7 +2013,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo45: TfrxMemoView
           AllowVectorExport = True
           Left = 1028.483243740000000000
-          Width = 94.110236220472400000
+          Width = 94.110236220000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'k_name_lain'
@@ -1845,7 +2024,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."k_name_lain"]')
           ParentFont = False
@@ -1866,7 +2045,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftBottom]
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_kredit_lain"]')
@@ -1877,6 +2056,8 @@ object FBHPenjualan: TFBHPenjualan
           Left = 536.546437040000000000
           Width = 41.196850390000000000
           Height = 20.000000000000000000
+          OnAfterPrint = 'Memo53OnAfterPrint'
+          OnBeforePrint = 'Memo53OnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'account_code_piutang'
           DataSet = frxDBDataCetakBHP
@@ -1886,7 +2067,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftBottom]
+          Frame.Typ = [ftTop]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."account_code_piutang"]')
           ParentFont = False
@@ -1894,7 +2075,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 367.657504370000000000
-          Width = 88.818897637795300000
+          Width = 88.818897640000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'name_item'
@@ -1929,6 +2110,78 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount"]')
           ParentFont = False
+        end
+        object Line1: TfrxLineView
+          AllowVectorExport = True
+          Left = 578.461538460000000000
+          Top = 0.294609740000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line2: TfrxLineView
+          AllowVectorExport = True
+          Left = 653.846153850000000000
+          Top = -0.218210770000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line4: TfrxLineView
+          AllowVectorExport = True
+          Left = 908.717948720000000000
+          Top = -0.218210770000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line5: TfrxLineView
+          AllowVectorExport = True
+          Left = 987.692307690000000000
+          Top = 0.294609740000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 698.974358970000000000
+          Top = 0.294609740000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 790.769230770000000000
+          Top = -0.218210770000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 867.692307690000000000
+          Top = 0.807430260000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 320.512820510000000000
+          Top = 0.294609740000000000
+          Height = 18.897637800000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
         end
       end
       object Footer1: TfrxFooter
@@ -2050,7 +2303,7 @@ object FBHPenjualan: TFBHPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataCetakBHP."amount_piutang">,MasterData1)]')
+            '[SUM(<frxDBDataCetakBHP."amount_piutang2">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2092,7 +2345,7 @@ object FBHPenjualan: TFBHPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataCetakBHP."amount_penjualan">,MasterData1)]')
+            '[SUM(<frxDBDataCetakBHP."amount_penjualan2">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2122,15 +2375,14 @@ object FBHPenjualan: TFBHPenjualan
           AllowVectorExport = True
           Left = 789.740570000000000000
           Top = 18.897637800000000000
-          Width = 418.771653543307000000
+          Width = 418.771653540000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line49: TfrxLineView
+          Align = baClient
           AllowVectorExport = True
-          Left = 790.407236670000000000
-          Top = 37.795275590000000000
-          Width = 418.771653540000000000
+          Width = 1209.449600000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2204,15 +2456,40 @@ object FBHPenjualan: TFBHPenjualan
           ParentFont = False
           VAlign = vaCenter
         end
+        object Line75: TfrxLineView
+          AllowVectorExport = True
+          Left = 762.333333330000000000
+          Top = 97.732837580000000000
+          Width = 445.984540000000000000
+          Visible = False
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 790.256410260000000000
+          Top = 39.176061540000000000
+          Width = 418.771653540000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
       end
-      object Line75: TfrxLineView
-        AllowVectorExport = True
-        Left = 762.333333330000000000
-        Top = 400.095237580000000000
-        Width = 445.984540000000000000
-        Visible = False
-        Color = clBlack
-        Frame.Typ = [ftTop]
+      object ColumnFooter1: TfrxColumnFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 461.102660000000000000
+        Width = 1209.449600000000000000
+        object Line3: TfrxLineView
+          Align = baClient
+          AllowVectorExport = True
+          Width = 1209.449600000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
       end
     end
   end
@@ -2267,7 +2544,7 @@ object FBHPenjualan: TFBHPenjualan
     BCDToCurrency = False
     DataSetOptions = []
     Left = 952
-    Top = 144
+    Top = 200
   end
   object dsCetak: TDataSource
     DataSet = QCetak
@@ -2335,12 +2612,12 @@ object FBHPenjualan: TFBHPenjualan
     BCDToCurrency = False
     DataSetOptions = []
     Left = 952
-    Top = 88
+    Top = 144
   end
   object dsCetakRincianBarang: TDataSource
     DataSet = QCetakRincianBarang
-    Left = 1033
-    Top = 88
+    Left = 1009
+    Top = 104
   end
   object QCetakdetailKredit: TUniQuery
     Connection = dm.Koneksi
@@ -2392,8 +2669,8 @@ object FBHPenjualan: TFBHPenjualan
     DataSet = QCetakdetailKredit
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 952
-    Top = 216
+    Left = 944
+    Top = 248
   end
   object dsCetakdetailKredit: TDataSource
     DataSet = QCetakdetailKredit
@@ -5071,73 +5348,9 @@ object FBHPenjualan: TFBHPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'WITH debet_details AS ( SELECT a.trans_no, a.account_code, a.acc' +
-        'ount_name, a.db AS amount_debet_lain, ROW_NUMBER() OVER(PARTITIO' +
-        'N BY a.trans_no ORDER BY a.account_code) as rn FROM "public"."VT' +
-        'rans_Journal" a LEFT JOIN t_ak_account b ON b.code = a.account_c' +
-        'ode WHERE a.status_dk = '#39'D'#39'  AND a.db <> 0  AND b.header_code NO' +
-        'T IN ('#39'1104.01'#39') ), kredit_details AS ( SELECT a.trans_no,a.acco' +
-        'unt_code,a.account_name, a.kd AS amount_kredit_lain,ROW_NUMBER()' +
-        ' OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn FRO' +
-        'M "public"."VTrans_Journal" a WHERE a.status_dk = '#39'K'#39' AND a.kd <' +
-        '> 0 AND a.account_code <> '#39'4101.01'#39' ), '#9' item_details AS(select ' +
-        'a.trans_no,a.code_item,a.name_item, a.amount,Upper(a.name_unit) ' +
-        'name_unit, ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.' +
-        'name_item) as rn from t_selling_det a'
-      '), '
-      'row_master AS ( '
-      '    SELECT trans_no, rn FROM debet_details '
-      '    UNION '
-      '    SELECT trans_no, rn FROM kredit_details '
-      '    UNION '
-      '    SELECT trans_no, rn FROM item_details '
-      ')'
-      ''
-      
-        'SELECT DISTINCT a.trans_no,a.trans_date, a.code_cust, a.customer' +
-        '_name_pkp AS name_cust,'
-      'i.code_item,i.name_item,i.amount,i.name_unit,'
-      
-        'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_code ELSE '#39#39' END' +
-        ' AS account_code_piutang,e.account_code AS account_code_piutang2' +
-        ', CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.account_name ELSE '#39#39' E' +
-        'ND AS account_name_p,'
-      
-        'CASE WHEN COALESCE(rm.rn, 1) = 1 THEN e.db ELSE NULL END AS amou' +
-        'nt_piutang,CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.account_code ' +
-        'ELSE '#39#39' END AS account_code_penjualan, CASE WHEN COALESCE(rm.rn,' +
-        ' 1) = 1 THEN f.account_name ELSE '#39#39' END AS account_name_penjuala' +
-        'n,CASE WHEN COALESCE(rm.rn, 1) = 1 THEN f.kd ELSE NULL END AS am' +
-        'ount_penjualan, g.account_code AS d_code_lain,g.account_name AS ' +
-        'd_name_lain, g.amount_debet_lain,h.account_code AS k_code_lain, ' +
-        'h.account_name AS k_name_lain,h.amount_kredit_lain,  a.code_keca' +
-        'matan,a.code_kabupaten,a.code_tp,a.code_karesidenan, rm.rn FROM ' +
-        'get_selling(False) a '
-      'LEFT JOIN row_master rm ON rm.trans_no = a.trans_no'
-      ''
-      
-        'LEFT JOIN ( SELECT trans_no, account_code, account_name, db FROM' +
-        ' "public"."VTrans_Journal" '
-      #9'WHERE account_code='#39'1104.01'#39' ) e ON e.trans_no = a.trans_no '
-      
-        'LEFT JOIN ( SELECT trans_no, account_code, account_name, kd FROM' +
-        ' "public"."VTrans_Journal" '
-      #9'WHERE account_code='#39'4101.01'#39') f ON f.trans_no = a.trans_no  '
-      ''
-      
-        'LEFT JOIN debet_details g ON g.trans_no = a.trans_no AND g.rn = ' +
-        'rm.rn  '
-      
-        'LEFT JOIN kredit_details h ON h.trans_no = a.trans_no AND h.rn =' +
-        ' rm.rn '
-      
-        'LEFT JOIN item_details i ON i.trans_no = a.trans_no AND i.rn = r' +
-        'm.rn  '
-      
-        'WHERE a.trans_date BETWEEN '#39'2026-02-09'#39' AND '#39'2026-02-09'#39'and a.de' +
-        'leted_at IS NULL'
-      ' ORDER BY e.account_code ASC,  a.trans_no ASC, rm.rn ASC;'
-      ' ')
+        'SELECT *,amount_piutang amount_piutang2,amount_penjualan amount_' +
+        'penjualan2 from get_bh_penjualan('#39'2026-01-06'#39','#39'2026-01-06'#39',NULL,' +
+        'NULL,NULL) ')
     Left = 336
     Top = 16
   end
@@ -5155,7 +5368,7 @@ object FBHPenjualan: TFBHPenjualan
       'name_unit=name_unit'
       'account_code_piutang=account_code_piutang'
       'account_code_piutang2=account_code_piutang2'
-      'account_name_p=account_name_p'
+      'account_name_piutang=account_name_piutang'
       'amount_piutang=amount_piutang'
       'account_code_penjualan=account_code_penjualan'
       'account_name_penjualan=account_name_penjualan'
@@ -5170,7 +5383,9 @@ object FBHPenjualan: TFBHPenjualan
       'code_kabupaten=code_kabupaten'
       'code_tp=code_tp'
       'code_karesidenan=code_karesidenan'
-      'rn=rn')
+      'rn=rn'
+      'amount_piutang2=amount_piutang2'
+      'amount_penjualan2=amount_penjualan2')
     DataSet = QCetakBHP
     BCDToCurrency = False
     DataSetOptions = []

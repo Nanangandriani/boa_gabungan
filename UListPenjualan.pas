@@ -395,7 +395,8 @@ begin
       else chkNomorPengganti.Checked:=False;
 
       edKode_Trans.Text:=Dm.Qtemp.FieldByName('code_trans').AsString;
-      edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_trans').AsString)+' ');
+      edNama_Trans.Text:=Dm.Qtemp.FieldByName('name_trans').AsString;
+//      edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(Dm.Qtemp.FieldByName('code_trans').AsString)+' ');
       edNomorFaktur.Text:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
       edNomorTrans.Text:=Dm.Qtemp.FieldByName('trans_no').AsString;
       edSuratJalanTrans.Text:=Dm.Qtemp.FieldByName('no_traveldoc').AsString;
@@ -415,6 +416,20 @@ begin
       strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
       kd_perkiraan_pel:=Dm.Qtemp.FieldByName('account_code').AsString;
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+      edNoPPBJ.Text:=Dm.Qtemp.FieldByName('no_ppbj').AsString;
+
+      if Dm.Qtemp.FieldByName('is_ppn_pajak').AsBoolean=True then
+      begin
+        edNoPPBJ.Visible:=False;
+        Label27.Visible:=False;
+        Label28.Visible:=False;
+        edNoPPBJ.Text:='';
+      end else
+      begin
+        edNoPPBJ.Visible:=True;
+        Label27.Visible:=True;
+        Label28.Visible:=True;
+      end;
 
     end;
   end;

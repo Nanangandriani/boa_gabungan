@@ -2199,6 +2199,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
       Category = 0
       Hint = 'Rencana Ke'
       Visible = ivAlways
+      OnChange = CbRencanaChange
       ItemIndex = -1
     end
     object dxBarEdit3: TdxBarEdit
@@ -2284,6 +2285,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
       Width = 0
       PropertiesClassName = 'TcxCheckBoxProperties'
       Properties.ImmediatePost = True
+      Properties.OnChange = Cb_semuaPropertiesChange
       InternalEditValue = True
     end
   end
@@ -2332,7 +2334,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 896
-    Top = 88
+    Left = 880
+    Top = 96
   end
 end

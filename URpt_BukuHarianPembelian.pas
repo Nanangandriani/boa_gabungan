@@ -188,7 +188,7 @@ begin
   ' yy.item_stock_code,yy.item_name,xx.ak_ppn ppn_account,yy.subtotalrp,xx.ppn ppn_rp,yy.account_pph_code,yy.pph_rp,'+
   ' xx.total grandtotal,xx.ak_htng,xx.ak_ht_name,yy.ak_pemb,yy.ak_pemb_name,xx.ak_ppn,xx.ak_ppn_name,yy.ak_pph,yy.ak_pph_name,'+
   ' yy.group_name,xx.supplier_name,xx.supplier_code,xx.purchase_type from '+
-  ' (select sum(ppn_rp) ppn,sum(grandtotal) total,trans_no,trans_date,faktur_no,ak_ppn,ak_ppn_name,ak_htng, ak_ht_name,'+
+  ' (select sum(ppn_rp) ppn,avg(debt_remaining) total,trans_no,trans_date,faktur_no,ak_ppn,ak_ppn_name,ak_htng, ak_ht_name,'+
   ' supplier_code,supplier_name,purchase_type from (select * from "VBHPembelian") x   '+
   ' where purchase_type='+QuotedStr(CbKategori.EditValue)+' '+
   ' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+''+
@@ -286,7 +286,7 @@ begin
   ' GROUP BY trans_no,trans_date,faktur_no,ak_ppn,ak_ppn_name,ak_htng, ak_ht_name,supplier_code,supplier_name,purchase_type)xx'+
   ' left join (/*Uang muka*/ select  pi.trans_no,pi.trans_date,pi.faktur_no,'''' po_no,0 debt_remaining, '''' item_code,0 qty,'+
   ' '''' unit,'''' item_stock_code,'''' item_name,'''' ppn_account,0 subtotalrp,0 ppn_rp, '''' account_pph_code,pi.um_value '+
-  ' pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,'''' ak_pemb,'''' ak_pemb_name,''''_ppn_name,pi.account_um_code ak_pph,'+
+  ' pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,'''' ak_pemb,'''' ak_pemb_name,''''_ppn_name,ac.account_code ak_pph,'+
   ' ac.account_name ak_pph_name, '''' group_name,sp.supplier_name,pi.supplier_code from t_purchase_invoice pi '+
   ' inner join (select ac.code,ac.account_name,acs.account_code2 account_code from t_ak_account ac '+
   ' inner join t_ak_account_sub acs on ac.code=acs.account_code) ac on pi.account_um_code=ac.account_code '+

@@ -224,7 +224,9 @@ begin
            'FROM '+
 
            '(select trans_no,trans_date as tanggal,supplier_code as kodesup,trans_no as no_inv,faktur_no as nofakturpajak,faktur_date,sj_no,valas,valas_value,due_date,plan_stat,'+
-           '(case when sj_status=1 and fk_status=1 and invoice_status=1 then 1 else 0 end)status,0 as ppnrp,pph_rp,id as urutan,approval_status  from t_purchase_invoice where (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
+           '(case when sj_status=1 and fk_status=1 and invoice_status=1 then 1 else 0 end)status, '+
+           '0 as ppnrp,pph_rp,id as urutan,approval_status  from t_purchase_invoice '+
+           'where deleted_at is null and (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
 
            //Data DO semua Kumpul di terima faktur
 //           'union all '+
@@ -236,7 +238,7 @@ begin
            ')a '+
            'left join '+
            '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph '+
-           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no group by a.trans_no,b.supplier_code,b.valas '+
+           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no and b.deleted_at is null group by a.trans_no,b.supplier_code,b.valas '+
            'order by trans_no,supplier_code)b on a.trans_no=b.trans_no and a.kodesup=b.supplier_code '+
            'left join '+
            't_supplier c on a.kodesup=c.supplier_code '+
@@ -253,7 +255,7 @@ begin
            'left join '+
            '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
            '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no '+
-           ' and (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')a '+
+           ' and b.deleted_at is null and (faktur_date + due_date) between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+')a '+
            'left join '+
            '(select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<=''2025-01-01''  '+
            'group  by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_beli on xxx.no_inv=um_beli.trans_no '+

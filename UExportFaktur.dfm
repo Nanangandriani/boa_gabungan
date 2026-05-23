@@ -139,6 +139,7 @@ object FExportFaktur: TFExportFaktur
       Height = 23
       Text = ''
       TabOrder = 5
+      OnChange = edJenisTransaksiChange
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edJenisTransaksiButtonClick

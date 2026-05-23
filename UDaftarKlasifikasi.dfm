@@ -358,7 +358,7 @@ object FDaftarKlasifikasi: TFDaftarKlasifikasi
               EditButtons = <>
               FieldName = 'kd_barang'
               Footers = <>
-              Visible = False
+              Title.Caption = 'Kode Barang'
             end
             item
               CellButtons = <>

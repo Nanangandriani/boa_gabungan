@@ -146,15 +146,8 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Add('select a.trans_date,a.trans_no,b.customer_code,b.customer_name,a.no_inv,a.sub_total,a.ppn_value,'+
-              'a.pph_value,a.grand_tot,b.kabupaten,UPPER(b.kecamatan) kecamatan,b.code_kabupaten,b.code_kecamatan,b.code_karesidenan from t_sales_returns a '+
-              'left join (select src.*,rs.name kecamatan,rr.name kabupaten,'+
-              'rs.code code_kecamatan,rr.code code_kabupaten,rr.code_karesidenan from t_sales_returns_customer src '+
-              'left join t_region_subdistrict rs on rs.code=src.code_region '+
-              'left join t_region_regency rr on rr.code=rs.code_regency '+
-              'where src.deleted_at is NULL ORDER BY src.created_at desc limit 1 '+
-              ') b on b.trans_no=a.trans_no '+
-              'where a.deleted_at is null');
+       sql.Add('select * from get_sales_returns() '+
+              'where deleted_at is null');
 //       sql.add(' SELECT a.trans_no, a.trans_date, a.code_cust, CASE WHEN d.customer_name_pkp '+
 //               ' IS NULL THEN a.name_cust ELSE d.customer_name_pkp END AS name_cust, d.code_region, '+
 //               ' d.name_region, grand_tot as tot_piutang, sub_total as tot_pejualan, ppn_value as tot_ppn '+

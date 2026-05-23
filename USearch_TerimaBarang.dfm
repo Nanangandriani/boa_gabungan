@@ -23,8 +23,8 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 376
-    ExplicitWidth = 1045
+    ExplicitTop = 384
+    ExplicitWidth = 1047
     object BBatal: TRzBitBtn
       Left = 975
       Top = 1
@@ -85,7 +85,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 969
+      ExplicitLeft = 971
     end
     object BEdit: TRzBitBtn
       Left = 900
@@ -147,7 +147,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 894
+      ExplicitLeft = 896
     end
     object BSelectAll: TRzBitBtn
       Left = 114

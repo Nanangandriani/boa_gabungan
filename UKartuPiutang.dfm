@@ -1051,10 +1051,11 @@ object FKartuPiutang: TFKartuPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45643.600177372700000000
-    ReportOptions.LastChange = 46036.945372106480000000
+    ReportOptions.LastChange = 46140.357943148150000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      ''
+      'var'
+      '  SaldoBerjalan,TotalDebit,TotalKredit: Double;'
       
         'procedure frxDBDKartuPiutangtanggalOnBeforePrint(Sender: TfrxCom' +
         'ponent);'
@@ -1067,13 +1068,55 @@ object FKartuPiutang: TFKartuPiutang
         '    frxDBDKartuPiutangnofakturpajak.Text:=<frxDBDKartuPiutang."t' +
         'rans_no">;'
       '  end;'
+      '                            '
+      'end;'
+      ''
+      'procedure ReportOnStartReport(Sender: TfrxComponent);'
+      'begin'
+      ''
+      'end;'
+      ''
+      'procedure totalsaldokhir1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  TfrxMemoView(Sender).Text := Format('#39'%2.n'#39', [SaldoBerjalan]);'
+      'end;'
+      ''
+      'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
+      'begin'
+      '  SaldoBerjalan := <frxDBDKartuPiutang."saldo">;'
+      '  TotalDebit:=TotalDebit+<frxDBDKartuPiutang."debet">;'
+      '  TotalKredit:=TotalKredit+<frxDBDKartuPiutang."kredit">;      '
+      'end;'
+      ''
+      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '                    '
+      'end;'
+      ''
+      'procedure totaldebit1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      
+        '  TfrxMemoView(Sender).Text := Format('#39'%2.n'#39', [TotalDebit]);    ' +
+        '  '
+      'end;'
+      ''
+      'procedure GroupHeader1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  TotalDebit:=0;'
+      '  TotalKredit:=0;              '
+      'end;'
+      ''
+      'procedure totalkredit1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  TfrxMemoView(Sender).Text := Format('#39'%2.n'#39', [TotalKredit]);  '
       'end;'
       ''
       'begin'
       ''
       'end.')
-    Left = 744
-    Top = 128
+    OnStartReport = 'ReportOnStartReport'
+    Left = 656
+    Top = 144
     Datasets = <
       item
         DataSet = frxDBDKartuPiutang
@@ -1256,7 +1299,7 @@ object FKartuPiutang: TFKartuPiutang
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677180000000000000
-        Top = 434.645950000000000000
+        Top = 453.543600000000000000
         Width = 1182.992890000000000000
         OnBeforePrint = 'PageFooter1OnBeforePrint'
         object Shape1: TfrxShapeView
@@ -1272,6 +1315,7 @@ object FKartuPiutang: TFKartuPiutang
           Top = 3.779527560000000000
           Width = 110.897387830000000000
           Height = 18.897650000000000000
+          OnBeforePrint = 'totalsaldokhir1OnBeforePrint'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1281,11 +1325,6 @@ object FKartuPiutang: TFKartuPiutang
           Font.Style = []
           Frame.Typ = []
           HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[SUM(<frxDBDKartuPiutang."saldo_awal">)+SUM(<frxDBDKartuPiutang.' +
-              '"debet">,MasterData1)-SUM(<frxDBDKartuPiutang."kredit">,MasterDa' +
-              'ta1)]')
           ParentFont = False
         end
         object totalkredit1: TfrxSysMemoView
@@ -1294,6 +1333,7 @@ object FKartuPiutang: TFKartuPiutang
           Top = 3.779527560000000000
           Width = 109.310086230000000000
           Height = 18.897650000000000000
+          OnBeforePrint = 'totalkredit1OnBeforePrint'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1303,8 +1343,6 @@ object FKartuPiutang: TFKartuPiutang
           Font.Style = []
           Frame.Typ = []
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDKartuPiutang."kredit">,MasterData1)]')
           ParentFont = False
         end
         object Memo21: TfrxMemoView
@@ -1360,6 +1398,7 @@ object FKartuPiutang: TFKartuPiutang
           Top = 3.779527560000000000
           Width = 113.119610040000000000
           Height = 18.897650000000000000
+          OnBeforePrint = 'totaldebit1OnBeforePrint'
           DisplayFormat.FormatStr = '%2.n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1369,8 +1408,6 @@ object FKartuPiutang: TFKartuPiutang
           Font.Style = []
           Frame.Typ = []
           HAlign = haRight
-          Memo.UTF8W = (
-            '[SUM(<frxDBDKartuPiutang."debet">,MasterData1)]')
           ParentFont = False
         end
       end
@@ -1434,7 +1471,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo5: TfrxMemoView
           AllowVectorExport = True
           Left = 15.118120000000000000
-          Top = 79.370078740157480000
+          Top = 79.370078740157500000
           Width = 128.504020000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1531,7 +1568,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo11: TfrxMemoView
           AllowVectorExport = True
           Left = 147.401670000000000000
-          Top = 79.370078740157480000
+          Top = 79.370078740157500000
           Width = 7.559060000000000000
           Height = 21.417336670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1800,7 +1837,7 @@ object FKartuPiutang: TFKartuPiutang
         object frxDBDKartuPiutangnama_kabupaten: TfrxMemoView
           AllowVectorExport = True
           Left = 158.740260000000000000
-          Top = 79.370078740157480000
+          Top = 79.370078740157500000
           Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
@@ -2104,7 +2141,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo29: TfrxMemoView
           AllowVectorExport = True
           Left = 15.118110240000000000
-          Top = 108.094488188976400000
+          Top = 108.094488188976000000
           Width = 128.504020000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2120,7 +2157,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo31: TfrxMemoView
           AllowVectorExport = True
           Left = 147.401574800000000000
-          Top = 108.094488188976400000
+          Top = 108.094488188976000000
           Width = 7.559060000000000000
           Height = 21.417336670000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2136,7 +2173,7 @@ object FKartuPiutang: TFKartuPiutang
         object Memo32: TfrxMemoView
           AllowVectorExport = True
           Left = 158.740157480000000000
-          Top = 108.094488188976400000
+          Top = 108.094488188976000000
           Width = 482.035393850000000000
           Height = 18.897650000000000000
           DataSet = frxDBDKartuPiutang
@@ -2159,6 +2196,7 @@ object FKartuPiutang: TFKartuPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
+        Height = 19.083154360000000000
         Top = 374.173470000000000000
         Width = 1182.992890000000000000
       end
@@ -2190,7 +2228,7 @@ object FKartuPiutang: TFKartuPiutang
     PdfA = False
     PDFStandard = psNone
     PDFVersion = pv17
-    Left = 624
-    Top = 320
+    Left = 656
+    Top = 272
   end
 end

@@ -299,7 +299,7 @@ begin
                 'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,'''' faktur_no2 from '+
                 '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,'''' as keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance from '+
                 '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from '+
-                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from t_cash_bank_expenditure_payable a '+
+                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from vexpenditure_payable a '+
                 'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  group by noinv,kodesup,tanggal,acc_balance)y '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real group by voucher )z on y.noinv=z.voucher)xx '+
                 'left join (select no_voucher,sum(paid_amount) jumlah from t_cash_bank_expenditure_det where position=''K'' and code_account<>''1101.01'' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv '+
@@ -347,7 +347,7 @@ begin
                 'left join (select trans_no,po_no,stock_code as kode,qty,unit as jumlah,subtotalrp as nilai1,grandtotal as nilai2, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no group by kodesup,b.po_no,a.valas)a '+
                 'left join(select po_no,supplier_code,sum(um_value)as nilai_um from t_po where um_status=true and po_date<'+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' group by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x  group by kodesup)x on a.supplier_code=x.kodesup '+
                 'left join(select supplier_code as kodesup,sum(bayar)as nilai from '+
-                '(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from (select voucher_no,supplier_code,sum(paid_amount)as bayar from t_cash_bank_expenditure_payable '+
+                '(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from (select voucher_no,supplier_code,sum(paid_amount)as bayar from vexpenditure_payable '+
                 'where supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and account_acc='+Quotedstr(vkd_sup_account)+' and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' group by voucher_no,supplier_code order by voucher_no,supplier_code)a '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real where account_code<>''2142'' group by voucher order by voucher)b 	on a.voucher_no=b.voucher)x  group by supplier_code order by supplier_code)y on a.supplier_code=y.kodesup '+
                 'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then sum(a.total_price*b.valas_value) else sum(b.price+b.ppn_rp) end)nilai from t_purchase_return_det a,t_purchase_return b '+
@@ -364,7 +364,7 @@ begin
                 '/*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit, '+
                 'debit_retur,nilai_pot)kk group by kk.kodesup,kk.saldo_awal)zzz  group by zzz.nomor,zzz.kodesup,zzz.nasup,zzz.address,zzz.telp,zzz.noinv,zzz.tanggal, '+
                 'zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zzz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket,zzz.faktur_no2  ORDER BY nomor ASC)aaa '+
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no group by a.trans_no)x '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x '+
                 'ON aaa.noinv=x.trans_no) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg '+
                 'ORDER BY nomor ASC ';
@@ -378,7 +378,7 @@ begin
         close;
         sql.Clear;
         sql.Text:='select c.item_name,b.unit,sum(b.qty)as tot_qty from '+
-                  '(select distinct invoice_no from t_cash_bank_expenditure_payable where voucher_no='+QuotedStr(QCetak.fieldbyname('noinv').asstring)+')a '+
+                  '(select distinct invoice_no from vexpenditure_payable where voucher_no='+QuotedStr(QCetak.fieldbyname('noinv').asstring)+')a '+
                   'left join t_purchase_invoice_det b on a.invoice_no=b.trans_no '+
                   'left join t_item_stock c on b.item_stock_code=c.item_stock_code '+
                   'group by c.item_name,b.unit order by c.item_name,b.unit';
@@ -486,7 +486,7 @@ begin
                 'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance from '+
                 '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,'''' as keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance from '+
                 '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from '+
-                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from t_cash_bank_expenditure_payable a '+
+                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from vexpenditure_payable a '+
                 'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  group by noinv,kodesup,tanggal,acc_balance)y '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real group by voucher )z on y.noinv=z.voucher)xx '+
                 'left join (select no_voucher,sum(paid_amount) jumlah from t_cash_bank_expenditure_det where position=''K'' and code_account<>''1101.01'' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv '+
@@ -520,7 +520,7 @@ begin
                 'group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit '+
                 'order by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.trans_no)jj '+
 
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no GROUP BY a.trans_no)x ON jj.noinv=x.trans_no ) zz '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x ON jj.noinv=x.trans_no) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)kk)kkk)LLL ';
 
       open;

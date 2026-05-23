@@ -111,8 +111,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     end
   end
   object ActMenu: TActionManager
-    Left = 592
-    Top = 72
+    Left = 552
+    Top = 88
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -897,8 +897,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 472
-    Top = 32
+    Left = 448
+    Top = 40
   end
   object frxReport2: TfrxReport
     Version = '2022.1.3'
@@ -909,14 +909,14 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44945.462862835700000000
-    ReportOptions.LastChange = 45651.476405185180000000
+    ReportOptions.LastChange = 46149.357888657410000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 368
-    Top = 32
+    Left = 344
+    Top = 24
     Datasets = <
       item
         DataSet = frxDBDataset4
@@ -1013,7 +1013,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset3."ket2"]'
-            '[frxDBDataset3."nm"]'
             '[frxDBDataset3."nosj"]')
           ParentFont = False
           Formats = <
@@ -1171,7 +1170,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         object Memo53: TfrxMemoView
           AllowVectorExport = True
           Top = 39.677180000000000000
-          Width = 268.771653540000000000
+          Width = 223.417293540000000000
           Height = 41.574830000000000000
           StretchMode = smMaxHeight
           DataField = 'address'

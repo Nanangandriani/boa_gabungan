@@ -40,7 +40,7 @@ type
     Procedure Autonumberlot;
     procedure Autonumber2;
     procedure AddItemToPembelian(Q: TDataSet; IsReceive: Boolean);
-
+    var pono:string;
   end;
 
 function FSearch_TerimaBarang: TFSearch_TerimaBarang;
@@ -301,12 +301,41 @@ begin
       MemTerimaDet.Next;
     end;
   end;
+  // start cr ds 26-03-2026
+  with dm.qtemp do
+  begin                                                                                                                                                                            //receive_no
+  close;
+  sql.Clear;
+  if fnew_pembelian.Cb_Sumber.Text='PO'  then
+  sql.Text:='select a.* from t_po a left join t_item_receive_det b on a.po_no=b.po_no where a.po_no='+QuotedStr(QMaterial['po_no'])+''
+   //or b.receive_no='+QuotedStr(QMaterial2['receive_no']);
+else
+  sql.Text:='select a.* from t_po a left join t_item_receive_det b on a.po_no=b.po_no where b.receive_no='+QuotedStr(QMaterial2['receive_no']);
 
-  FNew_Pembelian.DBGridDetailpoColEnter(Sender);
-  Close;
+
+  Open;
+  end;
+  pono:=dm.Qtemp['po_no'];
+  if dm.Qtemp['um_status']=true then
+    begin
+      with FNew_Pembelian.QUM do
+      begin
+        close;
+        sql.clear;
+        sql.text:='select a.*,b.supplier_name  from t_advance_payment a  INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+        ' where a.po_no='+QuotedStr(pono);
+        open;
+      end;
+     // fnew_pembelian.EdJum_Um.Value:=Fnew_pembelian.DBGrid_UM.Columns[3].Footer.sumvalue;
+     if VarIsNull(Fnew_pembelian.DBGrid_UM.Columns[3].Footer.SumValue) then
+      fnew_pembelian.EdJum_Um.Value := 0
+      else
+      fnew_pembelian.EdJum_Um.Value :=Fnew_pembelian.DBGrid_UM.Columns[3].Footer.SumValue;
+    end;
+      // End cr ds 26-03-2026
+      FNew_Pembelian.DBGridDetailpoColEnter(Sender);
+      Close;
 end;
-
-
 
 {procedure TFSearch_TerimaBarang.BEditClick(Sender: TObject);
 var i:integer;

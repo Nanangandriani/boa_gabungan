@@ -202,11 +202,22 @@ uses U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UDataModule,
 procedure TFdafajuankeluarkasbank.ActBaruExecute(Sender: TObject);
 begin
    //showmessage(Fdafajuankeluarkasbank.Name);
-   FDataPengajuanPengeluaranKasBank.show;
+   {FDataPengajuanPengeluaranKasBank.show;
    //FKeluarKasBank_Ajuan.show;
    FDataPengajuanPengeluaranKasBank.BSave.Visible:=true;
    FDataPengajuanPengeluaranKasBank.BEdit.Visible:=false;
-   FDaftar_TP.MemTP.EmptyTable;
+   FDaftar_TP.MemTP.EmptyTable;}
+
+    with FDataPengajuanPengeluaranKasBank do
+    begin
+      FDataPengajuanPengeluaranKasBank.Status := 0;
+      BSave.Visible:=true;
+      BEdit.Visible:=false;
+      isCancel:=0;
+      BCorrection.Visible:=False;
+      FDataPengajuanPengeluaranKasBank.Show;
+      FDaftar_TP.MemTP.EmptyTable;
+    end;
 end;
 
 procedure TFdafajuankeluarkasbank.ActDelExecute(Sender: TObject);
@@ -280,15 +291,51 @@ end;
 
 procedure TFdafajuankeluarkasbank.ActUpdateExecute(Sender: TObject);
 begin
-
   if not Qdaf_PengajuanKasBank.FieldByName('deleted_at').IsNull  then
   begin
     ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
     exit;
   end;
 
+
+
       with FDataPengajuanPengeluaranKasBank do
       begin
+        //baca status koreksi
+        with dm.Qtemp do
+        begin
+          Close;
+          Sql.Clear;
+          sql.Text:=' select "voucher_no", "subvoucher", "remark", "entry_date", "trans_date", '+
+                    ' "periode1", "periode2", "amount", "account_code", "account_name", "dk", '+
+                    ' "debit", "kredit", "header_code", "ref_no", "posting", "customer_code", '+
+                    ' "supplier_code", "cash_type", "job_no", "company_code", "tp_code", "trans_year", '+
+                    ' "trans_month", "trans_day", "order_no", "giro_no", "bank_giro_name", '+
+                    ' "giro_due_date", "customer_name", "supplier_name", "to_", "deposit", '+
+                    ' "deposit_date", "tgup", "voucher_code", "to_getout", "status", "approve_status", '+
+                    ' "approval_date", "approval", "app_stat", "currency", "kurs", "plan_to", "bon_no", '+
+                    ' "bank_norek", "bank_name", "amount_origin", "debit_amount_origin", '+
+                    ' "credit_amount_origin", "created_at", "created_by", "updated_at", "updated_by", '+
+                    ' "deleted_at", "deleted_by", "trans_type_code", "trans_type_name", '+
+                    ' "bank_number_account", "bank_name_account", "additional_code", "id", '+
+                    ' "cheque_no", "cheque_date", "cheque_due_date", '+
+                    ' COALESCE(status_correction, 0) AS "status_correction" '+
+                    ' from t_cash_bank_expenditure_submission  '+
+                    ' where voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.fieldbyname('voucher_no').AsString)+'';
+          Open;
+        end;
+        IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+        if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+        begin
+          isCancel := 1;
+        end else begin
+          isCancel := 0;
+        end;
+        // baca status koreksi
+
+        Status := 1;
+
         MemDetailAkun.Close;
         MemDetailAkun.Open;
         MemDetailHutang.Close;
@@ -458,11 +505,11 @@ begin
         Fdafajuankeluarkasbank.Close;
       end;
 
-      with FDataPengajuanPengeluaranKasBank do
+      {with FDataPengajuanPengeluaranKasBank do
       begin
         BEdit.Visible:=true;
         BSave.Visible:=false;
-      end;
+      end; }
 
 
 end;

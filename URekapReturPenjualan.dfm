@@ -608,8 +608,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * from "public"."vrekap_returpenjualan"')
-    Left = 1012
-    Top = 376
+    Left = 796
+    Top = 288
     object QRekapReturPenjualantrans_no: TStringField
       FieldName = 'trans_no'
       Size = 255
@@ -682,7 +682,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46011.472732511570000000
+    ReportOptions.LastChange = 46129.609164108800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -865,7 +865,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Width = 166.552550500000000000
           Height = 20.787401570000000000
           StretchMode = smMaxHeight
-          DataField = 'customer_name'
+          DataField = 'name_cust'
           DataSet = frxDBDBHPenjualan
           DataSetName = 'frxDBDBHPenjualan'
           DisplayFormat.FormatStr = 'dd mmm yy'
@@ -877,7 +877,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDBHPenjualan."customer_name"]')
+            '[frxDBDBHPenjualan."name_cust"]')
           ParentFont = False
         end
         object Memo20: TfrxMemoView
@@ -1432,17 +1432,37 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     UserName = 'frxDBDBHPenjualan'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'trans_date=trans_date'
+      'id=id'
+      'created_at=created_at'
+      'created_by=created_by'
+      'updated_at=updated_at'
+      'updated_by=updated_by'
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'cancel_reason=cancel_reason'
       'trans_no=trans_no'
-      'customer_code=customer_code'
-      'customer_name=customer_name'
       'no_inv=no_inv'
+      'no_inv_tax=no_inv_tax'
+      'trans_date=trans_date'
+      'code_cust=code_cust'
+      'code_type_return=code_type_return'
+      'name_type_return=name_type_return'
+      'description=description'
+      'name_cust=name_cust'
+      'customer_name_pkp=customer_name_pkp'
+      'code_karesidenan=code_karesidenan'
+      'karesidenan=karesidenan'
+      'code_tp=code_tp'
+      'tp=tp'
+      'code_kabupaten=code_kabupaten'
+      'kabupaten=kabupaten'
+      'code_kecamatan=code_kecamatan'
+      'kecamatan=kecamatan'
+      'status_correction=status_correction'
       'sub_total=sub_total'
       'ppn_value=ppn_value'
       'pph_value=pph_value'
-      'grand_tot=grand_tot'
-      'kabupaten=kabupaten'
-      'kecamatan=kecamatan')
+      'grand_tot=grand_tot')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
@@ -1452,20 +1472,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
   object QCetak: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'select a.trans_date,a.trans_no,b.customer_code,b.customer_name,a' +
-        '.no_inv,a.sub_total,a.ppn_value,a.pph_value,a.grand_tot,b.kabupa' +
-        'ten,UPPER(b.kecamatan) kecamatan from t_sales_returns a '
-      
-        'left join (select src.*,rs.name kecamatan,rr.name kabupaten from' +
-        ' t_sales_returns_customer  src '
-      'left join t_region_subdistrict rs on rs.code=src.code_region'
-      'left join t_region_regency rr on rr.code=rs.code_regency'
-      
-        'where src.deleted_at is NULL ORDER BY src.created_at desc limit ' +
-        '1'
-      ') b on b.trans_no=a.trans_no '
-      'where a.deleted_at is null')
+      'select * from get_sales_returns()'
+      'where deleted_at is null')
     Left = 860
     Top = 72
   end

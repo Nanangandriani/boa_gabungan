@@ -208,7 +208,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         end
       end
       object Memo1: TMemo
-        Left = 307
+        Left = 311
         Top = -54
         Width = 369
         Height = 89

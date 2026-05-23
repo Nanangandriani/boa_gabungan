@@ -186,7 +186,8 @@ begin
        close;
        sql.Clear;
        sql.Text:=//'select id,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                 'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to,description from ( '+
+                 'select row_number() OVER (ORDER BY plan_to,tgl,xx.voucher_no,id) AS no_urut,'+
+                 'voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to,description from ( '+
                  'select a.* from ('+
                  {'select a.id,a.voucher_no,b.code_account,b.trans_date as tgl,a.remark as ket,case when a.currency=''USD'' then a.amount*a.kurs else a.amount end jumlah,concat(a.bank_name,''-'',a.cheque_no)as no_cek,a.plan_to,a.bank_name,a.to_ '+
                  'from t_cash_bank_expenditure_submission a '+
@@ -220,7 +221,7 @@ begin
            close;
            sql.Clear;
            sql.Text:=//'select id,voucher_no,tgl, concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to from '+
-                     'select row_number() OVER (ORDER BY id) AS no_urut,voucher_no,tgl, '+
+                     'select row_number() OVER (ORDER BY plan_to,tgl,xx.voucher_no,id) AS no_urut,voucher_no,tgl, '+
                      ' ket,'+
                      //' concat(ket,'' '',''(Rencanake'',plan_to,'')'') AS ket,'+
                      ' concat(to_,'' '',REPLACE(TO_CHAR(jumlah,''FM999G999G999G990.00 ''), '','', ''.''),'' '',no_cek) as ket2,jumlah,no_cek,plan_to,description from ('+
@@ -803,7 +804,7 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='SELECT null as noinv,null	as to_,null as	ket,null as	jumlah,	null as plan_to order by plan_to,noinv';
+        sql.Text:='SELECT null as noinv,null	as to_,null as	ket,null as	jumlah,	null as plan_to,	null as cheque_no  order by plan_to,noinv';
         open;
       end;
     end;
@@ -827,7 +828,7 @@ begin
                 'NULL tgup,''''	voucher_code,'''' to_getout,NULL status,NULL approve_status,NULL approval_date,NULL approval,NULL	app_stat,''''	currency,NULL	kurs,NULL	plan_to,'''' bon_no '+
                 ','''' bank_norek,'''' bank_name,NULL	amount_origin,NULL debit_amount_origin,NULL	credit_amount_origin,NULL	created_at,''''	created_by,NULL	updated_at,''''	updated_by '+
                 ',NULL deleted_at,'''' deleted_by,'''' trans_type_code,'''' trans_type_name,'''' bank_number_account,''''	bank_name_account,'''' additional_code,null "id" '+
-                ','''' cheque_no,Null	cheque_date,Null cheque_due_date,''''	ket,Null jumlah ';
+                ','''' cheque_no,Null	cheque_date,Null cheque_due_date,NULL as status_correction,''''	ket,Null jumlah ';
 
       open;
     end;

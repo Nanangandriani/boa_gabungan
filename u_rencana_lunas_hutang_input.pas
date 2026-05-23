@@ -15,7 +15,7 @@ type
     lblrencanake: TPanel;
     Btutup: TRzBitBtn;
     BHapus: TRzBitBtn;
-    BSimpan: TRzBitBtn;
+    BSave: TRzBitBtn;
     Panel2: TPanel;
     Label2: TLabel;
     Label3: TLabel;
@@ -51,10 +51,11 @@ type
     CbSumber: TRzComboBox;
     Ed_sumber: TEdit;
     id_source: TEdit;
+    BCorrection: TRzBitBtn;
     procedure BdaftarClick(Sender: TObject);
     procedure BtutupClick(Sender: TObject);
     procedure BHapusClick(Sender: TObject);
-    procedure BSimpanClick(Sender: TObject);
+    procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbbankSelect(Sender: TObject);
     procedure btncekClick(Sender: TObject);
@@ -68,13 +69,15 @@ type
     procedure rbkasClick(Sender: TObject);
     procedure DBGrid_RencanaColumns6CellButtons0Click(Sender: TObject;
       var Handled: Boolean);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    vcall:string;
+    vcall, edNoTrans :string;
     stat_lunas:boolean;
     status:Integer;
+    IntStatusKoreksi, iserror, isCancel: integer;
     procedure baru;
     procedure simpan;
     procedure load_rencanake;
@@ -93,7 +96,7 @@ implementation
 
 uses U_daftar_hutang, UDataModule, UMainMenu, UMy_Function,
   u_rencana_lunas_hutang, U_daftar_Nocek, UAkun_Perkiraan_TerimaMat,
-  U_daf_pilih_detail_bayar;
+  U_daf_pilih_detail_bayar, UKoreksi;
 
 var
   RealFRencana_Lunas_Hutang: TFRencana_Lunas_Hutang;
@@ -196,6 +199,8 @@ begin
 end;
 
 procedure TFRencana_Lunas_Hutang.simpan;
+var
+uuid_master : string;
 begin
     //if vcall='Data_Hutang' then
     vcall:='Data_Hutang';
@@ -216,6 +221,7 @@ begin
           Execute;
         end;
 
+        uuid_master:=SelectRow('SELECT * from uuid_generate_v1();');
         MemRencana.first;
         while not MemRencana.Eof do
         begin
@@ -223,14 +229,14 @@ begin
           begin
             close;
             sql.clear;
-            sql.add('insert into t_paid_debt_det(bank,supplier_code,inv_no,faktur_no,faktur_date, '+
+            sql.add('insert into t_paid_debt_det(uuid_master,bank,supplier_code,inv_no,faktur_no,faktur_date, '+
                     'cek_no,cek_date,paid_date,periode1,periode2,periodetempo1,periodetempo2,amount,'+
                     'debt_type,username,npph,pph_account,pph_name '+
                     ',paid_status,exchange_rate,dolar_amount,'+
                     //'approve_status,'+
                     'sj_no,factory_code,plan_to,source_plan_id,created_at,created_by '+
                     ')');
-            sql.add('values(:bnk,:kds,:nv,:nofak,:tglfak,:nck,:tglck,:tgllns,:prd1,:prd2,'+
+            sql.add('values(:uuid_master,:bnk,:kds,:nv,:nofak,:tglfak,:nck,:tglck,:tgllns,:prd1,:prd2,'+
                     ':prdtmp1,:prdtmp2,'+
                     ':jml,:jenhtg,:username,:npphs,:akuns,:pphname '+
                     ',:stat,:kurss,:jum_dol,'+
@@ -246,6 +252,7 @@ begin
             begin
               ParamByName('bnk').Asstring:='';
             end;
+            ParamByName('uuid_master').AsString:=uuid_master;
             ParamByName('kds').AsString:=MemRencana['kd_sup'];
             ParamByName('nv').AsString:=MemRencana['noinv'];
             ParamByName('nofak').AsString:=MemRencana['nofaktur'];
@@ -337,6 +344,24 @@ begin
 
 end;
 
+procedure TFRencana_Lunas_Hutang.BCorrectionClick(Sender: TObject);
+begin
+  if CheckJurnalPosting(edNoTrans)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FList_Rencana_Lunas_Hutang.Name)); //Mendapatkan nama Menu
+
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edNoTrans; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
+end;
+
 procedure TFRencana_Lunas_Hutang.BdaftarClick(Sender: TObject);
 begin
     if (length(txtnocek.Text)=0)and(rbbank.Checked=true) then
@@ -364,7 +389,7 @@ begin
   MemRencana.Delete;
 end;
 
-procedure TFRencana_Lunas_Hutang.BSimpanClick(Sender: TObject);
+procedure TFRencana_Lunas_Hutang.BSaveClick(Sender: TObject);
 begin
    //Simpan;
    //if MemRencana['source_id']=1 then
@@ -690,6 +715,24 @@ begin
       dm.QPerusahaan.Active:=true;
       dm.QPerusahaan.Close;
       dm.QPerusahaan.Open;
+
+  if Status = 0 then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi = 2) then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+  end;
 end;
 
 

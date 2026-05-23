@@ -202,7 +202,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44805.841268819400000000
-    ReportOptions.LastChange = 46036.050667083300000000
+    ReportOptions.LastChange = 46133.399779444440000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1785,7 +1785,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
           Width = 73.834645670000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39'#,##0.00;(#,##0.00);'#39
+          DisplayFormat.FormatStr = '#,##0.00;(#,##0.00);'#39
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4504,7 +4504,6 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Active = True
     Left = 790
     Top = 80
     object QPerusahaancompany_code: TStringField
@@ -8544,7 +8543,7 @@ object FRekap_Ikhtisar_Kas_Kecil: TFRekap_Ikhtisar_Kas_Kecil
         'o,a.order_no)xx'
       'group by tanggal order by tanggal')
     Left = 611
-    Top = 198
+    Top = 174
     object QRekap_KasKecil_ADM2tanggal: TDateField
       FieldName = 'tanggal'
       ReadOnly = True

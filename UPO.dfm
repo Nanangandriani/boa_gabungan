@@ -529,7 +529,7 @@ object FPO: TFPO
     BorderSides = [sdLeft, sdTop, sdRight]
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 996
+    ExplicitWidth = 998
     object Label1: TLabel
       Left = 20
       Top = 12
@@ -2916,7 +2916,7 @@ object FPO: TFPO
       'from t_po A '
       'Inner join t_supplier B on A.supplier_code=B.supplier_code'
       'INNER JOIN t_wh c on a.wh_code=c.wh_code'
-      'order by A.po_date,A.po_no ASC')
+      'order by A.po_date desc,A.po_no desc')
     Left = 320
     Top = 32
   end

@@ -1351,7 +1351,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     MasterFields = 'periode1;periode2;plan_to;supplier_code'
     DetailFields = 'periode1;periode2;plan_to;supplier_code'
     Left = 800
-    Top = 183
+    Top = 159
     ParamData = <
       item
         DataType = ftUnknown

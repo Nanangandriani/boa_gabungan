@@ -1,6 +1,7 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
+  Caption = 'file'
   ClientHeight = 608
   ClientWidth = 1027
   Color = clBtnFace
@@ -5581,8 +5582,8 @@ object FMainMenu: TFMainMenu
     Height = 463
     ResizeStyle = rsUpdate
     StyleName = 'Windows'
-    ExplicitLeft = 160
-    ExplicitHeight = 482
+    ExplicitLeft = 256
+    ExplicitTop = 132
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
@@ -6509,7 +6510,7 @@ object FMainMenu: TFMainMenu
       ''
       'end.')
     Left = 552
-    Top = 16
+    Top = 24
     Datasets = <>
     Variables = <>
     Style = <>
@@ -6573,5 +6574,11 @@ object FMainMenu: TFMainMenu
   object RzVersionInfo1: TRzVersionInfo
     Left = 707
     Top = 65
+  end
+  object TimerCekVersi: TTimer
+    Interval = 3600000
+    OnTimer = TimerCekVersiTimer
+    Left = 361
+    Top = 191
   end
 end

@@ -200,7 +200,9 @@ begin
             'FROM '+
             '(/*transaksi*/ select distinct a.trans_date,a.voucher_no,'+
             //a.description,'+
-            ' case when d.jumlah is null then ''BIAYA ADM & UMUM'' else ''BIAYA PENJUALAN'' end description, '+
+            ' case when debit.jumlah<>0 then a.description '+
+            ' when d.jumlah is null then ''BIAYA ADM & UMUM'' '+
+            ' else ''BIAYA PENJUALAN'' end description, '+
             ' a.actors_name,a.order_no,a.actors_code,a.code,'+
             '(case when debit.jumlah is null then 0 else debit.jumlah end)jumdebit,(case when kredit.jumlah is null then 0 else kredit.jumlah end)jumkredit,'+
             '(case when d.jumlah is null then 0 else d.jumlah end)penjualan,(case when b.jumlah is null then 0 else b.jumlah end)adm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(case when debit.jumlah>0 then 1 else 10 end)urutan from '+

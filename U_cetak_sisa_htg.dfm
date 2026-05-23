@@ -3,7 +3,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   Top = 0
   Caption = 'F_cetak_sisa_htg'
   ClientHeight = 442
-  ClientWidth = 1050
+  ClientWidth = 1138
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object DBGridSisaHutang: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1050
+    Width = 1138
     Height = 315
     Align = alClient
     DataSource = DSisaHutang
@@ -46,6 +46,15 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         Footers = <>
         Title.Caption = 'Supplier'
         Width = 200
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'jangka_kredit'
+        Footers = <>
+        Title.Caption = 'Lama Tempo (Hari)'
+        Width = 75
       end
       item
         CellButtons = <>
@@ -115,7 +124,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1050
+    Width = 1138
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -802,8 +811,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   end
   object DSsupp: TDataSource
     DataSet = Qsupp
-    Left = 1016
-    Top = 88
+    Left = 1008
+    Top = 56
   end
   object Qsupp: TUniQuery
     Connection = dm.Koneksi
@@ -821,7 +830,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44945.462862835700000000
-    ReportOptions.LastChange = 46059.457736157400000000
+    ReportOptions.LastChange = 46134.564062314810000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -885,7 +894,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         object Memo41: TfrxMemoView
           AllowVectorExport = True
           Left = 28.724409450000000000
-          Width = 149.669291340000000000
+          Width = 138.330708660000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
           DataField = 'principle_name'
@@ -893,7 +902,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DataSetName = 'frxDBDataset_Sisa_hutang'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -904,8 +913,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 278.173228350000000000
-          Width = 100.157480310000000000
+          Left = 297.070878350000000000
+          Width = 81.259830310000000000
           Height = 22.677165350000000000
           OnBeforePrint = 'Memo42OnBeforePrint'
           StretchMode = smMaxHeight
@@ -916,7 +925,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -939,7 +948,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -962,7 +971,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -980,7 +989,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -991,9 +1000,9 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 177.637795280000000000
+          Left = 207.874035280000000000
           Top = 0.889610000000000000
-          Width = 100.157480310000000000
+          Width = 88.818890310000000000
           Height = 22.677165350000000000
           OnBeforePrint = 'Memo42OnBeforePrint'
           StretchMode = smMaxHeight
@@ -1004,7 +1013,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -1028,7 +1037,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -1051,7 +1060,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -1070,13 +1079,33 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
             '[LINE#]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo36: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.299212600000000000
+          Width = 43.842519690000000000
+          Height = 22.677165350000000000
+          StretchMode = smMaxHeight
+          DataSet = frxDBDataset_Sisa_Hutang
+          DataSetName = 'frxDBDataset_Sisa_hutang'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDataset_Sisa_hutang."jangka_kredit"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1182,9 +1211,9 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 28.724409448818900000
+          Left = 28.724409450000000000
           Top = 81.283464570000000000
-          Width = 149.669291340000000000
+          Width = 138.330701340000000000
           Height = 58.582677170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1270,9 +1299,9 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 177.637795280000000000
+          Left = 207.874035280000000000
           Top = 81.283464570000000000
-          Width = 100.157480314961000000
+          Width = 88.818890310000000000
           Height = 58.582677170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1358,9 +1387,9 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 278.173228346457000000
+          Left = 297.070878350000000000
           Top = 81.283464570000000000
-          Width = 100.157480314961000000
+          Width = 81.259830310000000000
           Height = 58.582677170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1371,6 +1400,24 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           HAlign = haCenter
           Memo.UTF8W = (
             'Hutang Belum Jatuh Tempo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo35: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.299320000000000000
+          Top = 81.370130000000000000
+          Width = 43.842451340000000000
+          Height = 58.582677170000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Lama Tempo (Hari)')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1401,7 +1448,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           AllowVectorExport = True
           Left = 28.724409450000000000
           Top = 3.779527560000000000
-          Width = 149.669291340000000000
+          Width = 179.905531340000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1442,15 +1489,15 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object SysMemo15: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 177.637795280000000000
+          Left = 207.874015750000000000
           Top = 3.779527560000000000
-          Width = 100.157480310000000000
+          Width = 88.818897640000000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
@@ -1470,7 +1517,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
@@ -1490,7 +1537,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
@@ -1510,7 +1557,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
@@ -1530,7 +1577,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
@@ -1741,240 +1788,241 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select supplier_code principle_code, principle_name, tot_hutang:' +
-        ':numeric tot_hutang,h1,h2,h3,tot_rcn,sum(tot_hutang-h1-h2-h3) as' +
-        ' htg_blm_jatuh_tempo,'#39#39' as ket FROM (SELECT rrr.supplier_code,'#9'r' +
-        'rr.principle_code,'#9'rrr.principle_name,'#9'tot_hutang,'#9'h1,'#9'h2,'#9'h3,'#9't' +
-        'ot_rcn FROM (SELECT * FROM (select supplier_code from t_supplier' +
-        ') s LEFT JOIN (select supp.principle_code,supp.principle_name, (' +
-        'case when hutang.sisa_hutang is null then 0 else hutang.sisa_hut' +
-        'ang end)tot_hutang, (case when mggini.sisa_hutang is null then 0' +
-        ' else mggini.sisa_hutang end)h1,(case when mgglalu.sisa_hutang i' +
-        's null then 0 else mgglalu.sisa_hutang end)h2,(case when mgg_lbh' +
-        '.sisa_hutang is null then 0 else mgg_lbh.sisa_hutang end)h3, (ca' +
-        'se when rcn.tot_rcn is null then 0 else rcn.tot_rcn end)tot_rcn ' +
-        'from (select id,supplier_code as principle_code,supplier_name as' +
-        ' principle_name from t_supplier order by supplier_code)supp left' +
-        ' join (select jj.kodesup,jj.saldo_awal_tahun+jj.kredit -jj.debit' +
-        '-jj.debit_do-jj.debit_retur-jj.nilai_pot sisa_hutang from (selec' +
-        't a.supplier_code as kodesup,case when saldo_awal.initial_balanc' +
-        'e is null then 0 else saldo_awal.initial_balance end saldo_awal_' +
-        'tahun,(case when x.nilai is null then 0 else x.nilai end)kredit,' +
-        ' (case when y.nilai is null then 0 else y.nilai end)debit,(case ' +
-        'when debit_do.nilai is null then 0 else debit_do.nilai end)debit' +
-        '_do, (case when z.nilai is null then 0 else z.nilai end)debit_re' +
-        'tur, (case when xx.nilai_pot is null then 0 else xx.nilai_pot en' +
-        'd)nilai_pot from (select * from t_supplier )a left join (select ' +
-        'kodesup,sum(nilai)-sum(nilai_um) as nilai from (select a.*,(case' +
-        ' when b.nilai_um is null then 0 else b.nilai_um end)nilai_um fro' +
-        'm  (select a.supplier_code as kodesup,b.po_no,(case when a.valas' +
-        '='#39'USD'#39' then sum(nilai*valas_value) else sum(nilai) end)nilai fro' +
-        'm (select * from t_purchase_invoice a INNER JOIN v_ak_account b ' +
-        'on a.account_code=b.account_code2 where b.code='#39'2101.01'#39' and  tr' +
-        'ans_date  between '#39'2024-01-01'#39' and '#39'2025-09-16'#39' )a left join (se' +
-        'lect trans_no,po_no,stock_code as kode,qty,unit as jumlah,grandt' +
-        'otal as nilai, 0 as urutan from t_purchase_invoice_det )b on a.t' +
-        'rans_no=b.trans_no  group by kodesup,b.po_no,a.valas)a left join' +
-        '(select po_no,supplier_code,sum(um_value)as nilai_um from t_po w' +
-        'here um_status=true and po_date<='#39'2025-09-17'#39' group by po_no,sup' +
-        'plier_code order by po_no,supplier_code)b on a.po_no=b.po_no and' +
-        ' a.kodesup=b.supplier_code)x group by kodesup )x on a.supplier_c' +
-        'ode=x.kodesup left join(select supplier_code as kodesup,sum(baya' +
-        'r) as nilai from(select a.voucher_no,a.supplier_code,a.bayar,(ca' +
-        'se when b.saldo is null then 0 else b.saldo end)nilai_kredit fro' +
-        'm (select voucher_no,supplier_code,sum(paid_amount)as bayar,b.co' +
-        'de from t_cash_bank_expenditure_payable a INNER JOIN v_ak_accoun' +
-        't b on a.account_acc= b.account_code2  where b.code='#39'2101.01'#39' an' +
-        'd a.trans_date between '#39'2024-01-01'#39' and '#39'2025-09-17'#39' group by vo' +
-        'ucher_no,supplier_code,b.code order by voucher_no,supplier_code,' +
-        'b.code)a left join (select voucher,sum(saldo)as saldo from t_cre' +
-        'dit_trx_real where account_code<>'#39'2130.02'#39' group by voucher orde' +
-        'r by voucher)b '#9'on a.voucher_no=b.voucher)x group by supplier_co' +
-        'de order by supplier_code)y on a.supplier_code=y.kodesup left jo' +
-        'in(select b.supplier_code as kodesup,(case when b.valas='#39'USD'#39' th' +
-        'en sum(a.total_price*b.valas_value) else sum(a.total_price) end)' +
-        'nilai from t_purchase_return_det a INNER JOIN t_purchase_return ' +
-        'b on a.return_no=b.return_no left join t_purchase_invoice dd on ' +
-        'b.receive_no=dd.trans_no INNER JOIN v_ak_account ee on dd.accoun' +
-        't_code= ee.account_code2 where a.return_no=b.return_no and retur' +
-        'n_date between '#39'2024-01-01'#39' and '#39'2025-09-17'#39' and ee.code='#39'2101.0' +
-        '1'#39' group by b.supplier_code,b.valas order by b.supplier_code)z o' +
-        'n a.supplier_code=z.kodesup left join(select bb.supplier_code,su' +
-        'm(bb.price_rp)+sum(bb.ppnrp)as nilai_pot from t_purchase_discoun' +
-        't bb left join t_purchase_invoice dd on bb.receive_no=dd.ref_no ' +
-        'INNER JOIN v_ak_account ee ON dd.account_code= ee.account_code2 ' +
-        'where bb.discount_date between '#39'2024-01-01'#39' and '#39'2025-09-17'#39' and' +
-        ' ee.code='#39'2101.01'#39' group by bb.supplier_code order by bb.supplie' +
-        'r_code)xx on a.supplier_code=xx.supplier_code left join(select k' +
-        'odesup,sum(nilai)as nilai from (select a.bk_no as noinv,  '#39#39' kod' +
-        'esup, b.tgltrans as tanggal,a.account_code as kode,a.remark,a.pa' +
-        'y as nilai,a.urutan from (select voucher_no ,bk_no ,account_code' +
-        ',remark,pay,4 as urutan from t_payment_detail_real where source_' +
-        'id=3 and account_code='#39'2101.01'#39' )a left join (select distinct vo' +
-        'ucher_no,trans_date as tgltrans from (SELECT a.voucher_no,a.tran' +
-        's_date,b.code_account,b."position",c.code from t_cash_bank_expen' +
-        'diture a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_n' +
-        'o=b.no_voucher INNER JOIN v_ak_account c on b.code_account= c.ac' +
-        'count_code2 )h where h.trans_date between '#39'2024-01-01'#39' and '#39'2025' +
-        '-09-17'#39' and h.code='#39'2101.01'#39' and h.position='#39'D'#39')b on a.bk_no=b.v' +
-        'oucher_no )x group by kodesup)debit_do on a.supplier_code=debit_' +
-        'do.kodesup left join (select * from t_initial_balance_debt where' +
-        ' debt_type='#39'2101.01'#39' and year = (select to_char(debt_date, '#39'YYYY' +
-        #39') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_' +
-        'code= a.supplier_code) jj)hutang on supp.principle_code=hutang.k' +
-        'odesup left join (select kodesup,sum(sisa_hutang)as sisa_hutang ' +
-        'from (SELECT DISTINCT kodesup,SUM ( jumlah ) - SUM ( nil_retur )' +
-        '-sum(pot) - SUM ( bayar ) - SUM ( um ) AS sisa_hutang FROM (SELE' +
-        'CT A.trans_no AS tanggal,'#9'A.supplier_code AS kodesup,C.supplier_' +
-        'name AS nasup,A.trans_no AS no_inv, '#9'A.faktur_no AS nofakturpaja' +
-        'k,A.faktur_date AS tglfaktur,(A.faktur_date + A.due_date ) AS tg' +
-        'ltempo, ( CASE WHEN A.valas = '#39'USD'#39' THEN b.hutang * A.valas_valu' +
-        'e ELSE b.hutang END ) jumlah, ( CASE WHEN A.um_value IS NULL THE' +
-        'N 0 ELSE A.um_value END ) um, '#9'A.valas,( CASE WHEN retur.nil_ret' +
-        'ur IS NULL THEN 0 ELSE retur.nil_retur END ) nil_retur, b.npph,(' +
-        ' CASE WHEN byr.paid_amount IS NULL THEN 0 ELSE byr.paid_amount E' +
-        'ND ) bayar, (case when pot.price_rp is null then 0 else pot.pric' +
-        'e_rp end)pot  FROM (SELECT'#9'*'#9'FROM t_purchase_invoice'#9'a INNER JOI' +
-        'N v_ak_account b on a.account_code=b.account_code2 WHERE b.code ' +
-        '= '#39'2101.01'#39'  AND ( sj_status = 1 ) AND ( fk_status = 1 )'#9'AND ( i' +
-        'nvoice_status = 1 )'#9'and trans_date>='#39'2024-01-01'#39#9'AND ( faktur_da' +
-        'te + due_date ) BETWEEN '#39'2025-09-17'#39#9'AND '#39'2025-09-17'#39')'#9'A LEFT JO' +
-        'IN (SELECT trans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ' +
-        ') AS npph FROM t_purchase_invoice_det  GROUP BY trans_no ORDER B' +
-        'Y trans_no  ) b ON A.trans_no = b.trans_no LEFT JOIN t_supplier ' +
-        'C ON A.supplier_code = C.supplier_code LEFT JOIN (SELECT A.recei' +
-        've_no,'#9'SUM ( A.total_price * b.valas_value ) AS nil_retur '#9'FROM ' +
-        't_purchase_return_det A INNER JOIN t_purchase_return B ON'#9'A.retu' +
-        'rn_no = b.return_no WHERE b.return_date < '#39'2025-09-17'#39#9'GROUP BY ' +
-        'A.receive_no ORDER BY A.receive_no ) retur ON A.trans_no = retur' +
-        '.receive_no LEFT JOIN ( SELECT DISTINCT faktur_no, invoice_no, p' +
-        'aid_amount FROM t_cash_bank_expenditure_payable WHERE trans_date' +
-        ' < '#39'2025-09-17'#39' ) byr ON A.trans_no = byr.invoice_no '#9'left join(' +
-        'select * from t_purchase_discount where discount_date<='#39'2025-09-' +
-        '17'#39')pot on a.trans_no=pot.receive_no '#9') xxx GROUP BY'#9'kodesup uni' +
-        'on all SELECT'#9'kodesup,'#9'SUM ( sisa_hutang ) AS sisa_hutang FROM (' +
-        #9'SELECT kodesup,faktur_no,hutang,'#9'bayar,hutang - bayar AS sisa_h' +
-        'utang FROM (SELECT'#9'x.kodesup,x.faktur_no,x.nilai AS hutang,( CAS' +
-        'E WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar FROM ( SE' +
-        'LECT supplier_code AS kodesup, faktur_no, faktur_no AS no_terima' +
-        ', date as tanggal, debt_amount AS nilai FROM t_initial_balance_d' +
-        'ebt_det a INNER JOIN v_ak_account b on a.debt_type=b.account_cod' +
-        'e2 WHERE b.code ='#39'2101.01'#39' ) x LEFT JOIN (SELECT'#9'supplier_code,f' +
-        'aktur_no,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar FR' +
-        'OM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account b o' +
-        'n a.account_acc=b.account_code2 WHERE'#9'b.code ='#39'2101.01'#39#9'AND tran' +
-        's_date BETWEEN '#39'2024-01-01'#39' AND '#39'2025-09-17'#39' GROUP BY supplier_c' +
-        'ode,faktur_no,invoice_no ORDER BY'#9'supplier_code,faktur_no,invoic' +
-        'e_no) y ON x.kodesup = y.supplier_code '#9'AND x.faktur_no = y.fakt' +
-        'ur_no'#9') A WHERE'#9'hutang - bayar  > 0 ) xx GROUP BY'#9'kodesup'#9')x gro' +
-        'up by kodesup order by kodesup )mggini on supp.principle_code=mg' +
-        'gini.kodesup left join (select kodesup,sum(sisa_hutang)as sisa_h' +
-        'utang from (SELECT DISTINCT kodesup,SUM ( jumlah ) - SUM ( nil_r' +
-        'etur )-sum(pot) - SUM ( bayar ) - SUM ( um ) AS sisa_hutang FROM' +
-        ' (SELECT A.trans_date AS tanggal,'#9'A.supplier_code AS kodesup,C.s' +
-        'upplier_name AS nasup,A.trans_no AS no_inv,A.faktur_no AS nofakt' +
-        'urpajak,A.faktur_date AS tglfaktur,(A.faktur_date + A.due_date )' +
-        ' AS tgltempo, ( CASE WHEN A.valas = '#39'USD'#39' THEN b.hutang * A.vala' +
-        's_value ELSE b.hutang END ) jumlah,'#9'( CASE WHEN A.um_value IS NU' +
-        'LL THEN 0 ELSE A.um_value END ) um, A.valas,( CASE WHEN retur.ni' +
-        'l_retur IS NULL THEN 0 ELSE retur.nil_retur END ) nil_retur, '#9'b.' +
-        'npph,( CASE WHEN byr.bayar IS NULL THEN 0 ELSE byr.bayar END ) b' +
-        'ayar, (case when pot.price_rp is null then 0 else pot.price_rp e' +
-        'nd)pot  FROM (SELECT'#9'*'#9'FROM t_purchase_invoice a INNER JOIN v_ak' +
-        '_account b ON a.account_code=b.account_code2'#9'WHERE b.code ='#39'2101' +
-        '.01'#39'  AND ( sj_status = 1 ) AND ( fk_status = 1 )'#9'AND ( invoice_' +
-        'status = 1 )'#9'and trans_date>='#39'2024-01-01'#39#9'AND ( faktur_date + du' +
-        'e_date ) BETWEEN '#39'2025-09-10'#39#9'AND '#39'2025-09-16'#39')'#9'A LEFT JOIN ( SE' +
-        'LECT trans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ) AS n' +
-        'pph FROM t_purchase_invoice_det  GROUP BY trans_no ORDER BY tran' +
-        's_no ) b ON A.trans_no = b.trans_no'#9'LEFT JOIN t_supplier C ON A.' +
-        'supplier_code = C.supplier_code LEFT JOIN (SELECT A.receive_no,'#9 +
-        'SUM ( A.total_price * b.valas_value ) AS nil_retur '#9'FROM t_purch' +
-        'ase_return_det A INNER JOIN t_purchase_return b ON A.return_no =' +
-        ' b.return_no WHERE b.return_date < '#39'2025-09-17'#39#9'GROUP BY A.recei' +
-        've_no ORDER BY A.receive_no) retur ON A.trans_no = retur.receive' +
-        '_no LEFT JOIN ( SELECT DISTINCT faktur_no as no_inv_supp, invoic' +
-        'e_no as no_lpb,paid_amount as bayar FROM t_cash_bank_expenditure' +
-        '_payable WHERE trans_date < '#39'2025-09-17'#39' ) byr ON A.trans_no = b' +
-        'yr.no_lpb left join (select * from t_purchase_discount where dis' +
-        'count_date<='#39'2025-09-17'#39')pot on a.ref_no=pot.receive_no ) xxx GR' +
-        'OUP BY'#9'kodesup union all SELECT kodesup,'#9'SUM (sisa_hutang ) AS s' +
-        'isa_hutang FROM (SELECT kodesup,faktur_no,hutang,'#9'bayar,hutang -' +
-        ' bayar AS sisa_hutang FROM (SELECT'#9'x.kodesup,x.faktur_no,x.nilai' +
-        ' AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END )' +
-        ' bayar FROM ( SELECT supplier_code AS kodesup, faktur_no, faktur' +
-        '_no AS no_terima, date, debt_amount AS nilai FROM t_initial_bala' +
-        'nce_debt_det a INNER JOIN v_ak_account b on a.debt_type=b.accoun' +
-        't_code2  WHERE b.code = '#39'2101.01'#39') x LEFT JOIN (SELECT'#9'supplier_' +
-        'code as kd_supp,faktur_no AS nofaktur,invoice_no AS no_terima,SU' +
-        'M ( paid_amount ) AS bayar FROM'#9't_cash_bank_expenditure_payable ' +
-        'a INNER JOIN v_ak_account b on a.account_acc=b.account_code2  WH' +
-        'ERE b.code= '#39'2101.01'#39#9'AND trans_date BETWEEN '#39'2024-01-01'#39' AND '#39'2' +
-        '025-09-17'#39' GROUP BY supplier_code,faktur_no,invoice_no ORDER BY'#9 +
-        'supplier_code,faktur_no,invoice_no) y ON x.kodesup = y.kd_supp '#9 +
-        'AND x.faktur_no = y.nofaktur'#9') A WHERE'#9'hutang - bayar  > 0 ) xx ' +
-        'GROUP BY'#9'kodesup'#9')x'#9'group by kodesup order by kodesup )mgglalu o' +
-        'n supp.principle_code=mgglalu.kodesup left join (select kodesup,' +
-        'sum(sisa_hutang)as sisa_hutang from (SELECT DISTINCT kodesup,SUM' +
-        ' ( jumlah ) - SUM ( nil_retur )-sum(pot) - SUM ( bayar ) - SUM (' +
-        ' um ) AS sisa_hutang FROM (SELECT A.trans_date AS tanggal,'#9'A.sup' +
-        'plier_code AS kodesup,C.supplier_name AS nasup,A.trans_no AS no_' +
-        'inv, A.faktur_no AS nofakturpajak,A.faktur_date AS tglfaktur,(A.' +
-        'faktur_date + A.due_date ) AS tgltempo, ( CASE WHEN A.valas = '#39'U' +
-        'SD'#39' THEN b.hutang * A.valas_value ELSE b.hutang END ) jumlah, ( ' +
-        'CASE WHEN A.um_value IS NULL THEN 0 ELSE A.um_value END ) um, '#9'A' +
-        '.valas,( CASE WHEN retur.nil_retur IS NULL THEN 0 ELSE retur.nil' +
-        '_retur END ) nil_retur, b.npph,( CASE WHEN byr.paid_amount IS NU' +
-        'LL THEN 0 ELSE byr.paid_amount END ) bayar, (case when pot.harga' +
-        '_rp is null then 0 else pot.harga_rp end)pot FROM (SELECT'#9'*'#9'FROM' +
-        ' t_purchase_invoice'#9'a INNER JOIN v_ak_account b on a.account_cod' +
-        'e=b.account_code2 WHERE b.code= '#39'2101.01'#39'  AND ( sj_status = 1 )' +
-        ' AND ( fk_status = 1 )'#9'AND ( invoice_status = 1 )'#9'and trans_date' +
-        '>='#39'2024-01-01'#39#9'AND ( faktur_date + due_date ) BETWEEN '#39'2024-01-0' +
-        '1'#39#9'AND '#39'2025-09-09'#39')'#9'A LEFT JOIN ( SELECT trans_no, SUM ( grandt' +
-        'otal ) AS hutang, SUM ( pph_rp ) AS npph FROM t_purchase_invoice' +
-        '_det  GROUP BY trans_no ORDER BY trans_no ) b ON A.trans_no = b.' +
-        'trans_no LEFT JOIN t_supplier C ON A.supplier_code = C.supplier_' +
-        'code LEFT JOIN (SELECT A.receive_no,'#9'SUM ( A.total_price * b.val' +
-        'as_value ) AS nil_retur '#9'FROM t_purchase_return_det A INNER JOIN' +
-        ' t_purchase_return b '#9'ON A.return_no = b.return_no WHERE  b.retu' +
-        'rn_date < '#39'2025-09-17'#39' GROUP BY A.receive_no '#9'ORDER BY A.receive' +
-        '_no ) retur ON A.trans_no = retur.receive_no LEFT JOIN ( SELECT ' +
-        'DISTINCT faktur_no , invoice_no , paid_amount  FROM t_cash_bank_' +
-        'expenditure_payable WHERE trans_date < '#39'2025-09-17'#39' ) byr ON A.t' +
-        'rans_no = byr.invoice_no left join (select receive_no,sum(price_' +
-        'rp)as harga_rp from t_purchase_discount where discount_date<='#39'20' +
-        '25-09-17'#39' group by receive_no order by receive_no ) pot on a.ref' +
-        '_no=pot.receive_no ) xxx GROUP BY'#9'kodesup union all SELECT'#9'kodes' +
-        'up,'#9'SUM ( sisa_hutang ) AS sisa_hutang FROM ( SELECT kodesup,fak' +
-        'tur_no,hutang,'#9'bayar,hutang - bayar AS sisa_hutang FROM (SELECT'#9 +
-        'x.kodesup,x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS N' +
-        'ULL THEN 0 ELSE y.bayar END ) bayar  FROM ( SELECT supplier_code' +
-        ' AS kodesup, faktur_no, faktur_no AS no_terima, date, debt_amoun' +
-        't AS nilai FROM t_initial_balance_debt_det a INNER JOIN v_ak_acc' +
-        'ount b on a.debt_type=b.account_code2 WHERE b.code ='#39'2101.01'#39' ) ' +
-        'x LEFT JOIN (SELECT'#9'supplier_code,faktur_no AS nofaktur,invoice_' +
-        'no AS no_terima,SUM ( paid_amount ) AS bayar FROM t_cash_bank_ex' +
-        'penditure_payable a INNER JOIN v_ak_account b on a.account_acc=b' +
-        '.account_code2 WHERE'#9'b.code = '#39'2101.01'#39#9'AND trans_date BETWEEN '#39 +
-        '2024-01-01'#39' AND '#39'2025-09-17'#39' GROUP BY supplier_code,faktur_no,in' +
-        'voice_no ORDER BY'#9'supplier_code,faktur_no,invoice_no) y ON x.kod' +
-        'esup = y.supplier_code '#9'AND x.faktur_no = y.nofaktur'#9') A WHERE'#9'h' +
-        'utang - bayar  > 0 ) xx GROUP BY'#9'kodesup'#9')x'#9'group by kodesup ord' +
-        'er by kodesup )mgg_lbh on supp.principle_code=mgg_lbh.kodesup le' +
-        'ft join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t' +
-        '_paid_debt_det aa LEFT JOIN t_purchase_invoice bb on aa.inv_no=b' +
-        'b.trans_no INNER JOIN v_ak_account cc ON bb.account_code=cc.acco' +
-        'unt_code2 where (aa.periode1='#39'2025-09-17'#39') and (aa.periode2='#39'202' +
-        '5-09-17'#39') and cc.code='#39'2101.01'#39' group by aa.supplier_code order ' +
-        'by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code' +
-        ' )xxxx on s.supplier_code=xxxx.principle_code) rrr LEFT JOIN (se' +
-        'lect supplier_code,sum(initial_balance) saldo_awal from t_initia' +
-        'l_balance_debt where year='#39'2024'#39' group by supplier_code) saldo_a' +
-        'wal_hut on rrr.supplier_code=saldo_awal_hut.supplier_code where ' +
-        'tot_hutang+case when saldo_awal is NULL then 0 else saldo_awal e' +
-        'nd>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkkk GROUP BY supplier_' +
-        'code,principle_name,tot_hutang,h1,h2,h3,tot_rcn'
+        'select supplier_code principle_code, principle_name, 0 as jangka' +
+        '_kredit, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn,sum(tot' +
+        '_hutang-h1-h2-h3) as htg_blm_jatuh_tempo,'#39#39' as ket FROM (SELECT ' +
+        'rrr.supplier_code,'#9'rrr.principle_code,'#9'rrr.principle_name,'#9'tot_h' +
+        'utang,'#9'h1,'#9'h2,'#9'h3,'#9'tot_rcn FROM (SELECT * FROM (select supplier_' +
+        'code from t_supplier) s LEFT JOIN (select supp.principle_code,su' +
+        'pp.principle_name, (case when hutang.sisa_hutang is null then 0 ' +
+        'else hutang.sisa_hutang end)tot_hutang, (case when mggini.sisa_h' +
+        'utang is null then 0 else mggini.sisa_hutang end)h1,(case when m' +
+        'gglalu.sisa_hutang is null then 0 else mgglalu.sisa_hutang end)h' +
+        '2,(case when mgg_lbh.sisa_hutang is null then 0 else mgg_lbh.sis' +
+        'a_hutang end)h3, (case when rcn.tot_rcn is null then 0 else rcn.' +
+        'tot_rcn end)tot_rcn from (select id,supplier_code as principle_c' +
+        'ode,supplier_name as principle_name from t_supplier order by sup' +
+        'plier_code)supp left join (select jj.kodesup,jj.saldo_awal_tahun' +
+        '+jj.kredit -jj.debit-jj.debit_do-jj.debit_retur-jj.nilai_pot sis' +
+        'a_hutang from (select a.supplier_code as kodesup,case when saldo' +
+        '_awal.initial_balance is null then 0 else saldo_awal.initial_bal' +
+        'ance end saldo_awal_tahun,(case when x.nilai is null then 0 else' +
+        ' x.nilai end)kredit, (case when y.nilai is null then 0 else y.ni' +
+        'lai end)debit,(case when debit_do.nilai is null then 0 else debi' +
+        't_do.nilai end)debit_do, (case when z.nilai is null then 0 else ' +
+        'z.nilai end)debit_retur, (case when xx.nilai_pot is null then 0 ' +
+        'else xx.nilai_pot end)nilai_pot from (select * from t_supplier )' +
+        'a left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai fr' +
+        'om (select a.*,(case when b.nilai_um is null then 0 else b.nilai' +
+        '_um end)nilai_um from  (select a.supplier_code as kodesup,b.po_n' +
+        'o,(case when a.valas='#39'USD'#39' then sum(nilai*valas_value) else sum(' +
+        'nilai) end)nilai from (select * from t_purchase_invoice a INNER ' +
+        'JOIN v_ak_account b on a.account_code=b.account_code2 where b.co' +
+        'de='#39'2101.01'#39' and  trans_date  between '#39'2024-01-01'#39' and '#39'2025-09-' +
+        '16'#39' )a left join (select trans_no,po_no,stock_code as kode,qty,u' +
+        'nit as jumlah,grandtotal as nilai, 0 as urutan from t_purchase_i' +
+        'nvoice_det )b on a.trans_no=b.trans_no  group by kodesup,b.po_no' +
+        ',a.valas)a left join(select po_no,supplier_code,sum(um_value)as ' +
+        'nilai_um from t_po where um_status=true and po_date<='#39'2025-09-17' +
+        #39' group by po_no,supplier_code order by po_no,supplier_code)b on' +
+        ' a.po_no=b.po_no and a.kodesup=b.supplier_code)x group by kodesu' +
+        'p )x on a.supplier_code=x.kodesup left join(select supplier_code' +
+        ' as kodesup,sum(bayar) as nilai from(select a.voucher_no,a.suppl' +
+        'ier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo ' +
+        'end)nilai_kredit from (select voucher_no,supplier_code,sum(paid_' +
+        'amount)as bayar,b.code from t_cash_bank_expenditure_payable a IN' +
+        'NER JOIN v_ak_account b on a.account_acc= b.account_code2  where' +
+        ' b.code='#39'2101.01'#39' and a.trans_date between '#39'2024-01-01'#39' and '#39'202' +
+        '5-09-17'#39' group by voucher_no,supplier_code,b.code order by vouch' +
+        'er_no,supplier_code,b.code)a left join (select voucher,sum(saldo' +
+        ')as saldo from t_credit_trx_real where account_code<>'#39'2130.02'#39' g' +
+        'roup by voucher order by voucher)b '#9'on a.voucher_no=b.voucher)x ' +
+        'group by supplier_code order by supplier_code)y on a.supplier_co' +
+        'de=y.kodesup left join(select b.supplier_code as kodesup,(case w' +
+        'hen b.valas='#39'USD'#39' then sum(a.total_price*b.valas_value) else sum' +
+        '(a.total_price) end)nilai from t_purchase_return_det a INNER JOI' +
+        'N t_purchase_return b on a.return_no=b.return_no left join t_pur' +
+        'chase_invoice dd on b.receive_no=dd.trans_no INNER JOIN v_ak_acc' +
+        'ount ee on dd.account_code= ee.account_code2 where a.return_no=b' +
+        '.return_no and return_date between '#39'2024-01-01'#39' and '#39'2025-09-17'#39 +
+        ' and ee.code='#39'2101.01'#39' group by b.supplier_code,b.valas order by' +
+        ' b.supplier_code)z on a.supplier_code=z.kodesup left join(select' +
+        ' bb.supplier_code,sum(bb.price_rp)+sum(bb.ppnrp)as nilai_pot fro' +
+        'm t_purchase_discount bb left join t_purchase_invoice dd on bb.r' +
+        'eceive_no=dd.ref_no INNER JOIN v_ak_account ee ON dd.account_cod' +
+        'e= ee.account_code2 where bb.discount_date between '#39'2024-01-01'#39' ' +
+        'and '#39'2025-09-17'#39' and ee.code='#39'2101.01'#39' group by bb.supplier_code' +
+        ' order by bb.supplier_code)xx on a.supplier_code=xx.supplier_cod' +
+        'e left join(select kodesup,sum(nilai)as nilai from (select a.bk_' +
+        'no as noinv,  '#39#39' kodesup, b.tgltrans as tanggal,a.account_code a' +
+        's kode,a.remark,a.pay as nilai,a.urutan from (select voucher_no ' +
+        ',bk_no ,account_code,remark,pay,4 as urutan from t_payment_detai' +
+        'l_real where source_id=3 and account_code='#39'2101.01'#39' )a left join' +
+        ' (select distinct voucher_no,trans_date as tgltrans from (SELECT' +
+        ' a.voucher_no,a.trans_date,b.code_account,b."position",c.code fr' +
+        'om t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_' +
+        'det b on a.voucher_no=b.no_voucher INNER JOIN v_ak_account c on ' +
+        'b.code_account= c.account_code2 )h where h.trans_date between '#39'2' +
+        '024-01-01'#39' and '#39'2025-09-17'#39' and h.code='#39'2101.01'#39' and h.position=' +
+        #39'D'#39')b on a.bk_no=b.voucher_no )x group by kodesup)debit_do on a.' +
+        'supplier_code=debit_do.kodesup left join (select * from t_initia' +
+        'l_balance_debt where debt_type='#39'2101.01'#39' and year = (select to_c' +
+        'har(debt_date, '#39'YYYY'#39') from t_tmpsyst)::INTEGER ) saldo_awal on ' +
+        'saldo_awal.supplier_code= a.supplier_code) jj)hutang on supp.pri' +
+        'nciple_code=hutang.kodesup left join (select kodesup,sum(sisa_hu' +
+        'tang)as sisa_hutang from (SELECT DISTINCT kodesup,SUM ( jumlah )' +
+        ' - SUM ( nil_retur )-sum(pot) - SUM ( bayar ) - SUM ( um ) AS si' +
+        'sa_hutang FROM (SELECT A.trans_no AS tanggal,'#9'A.supplier_code AS' +
+        ' kodesup,C.supplier_name AS nasup,A.trans_no AS no_inv, '#9'A.faktu' +
+        'r_no AS nofakturpajak,A.faktur_date AS tglfaktur,(A.faktur_date ' +
+        '+ A.due_date ) AS tgltempo, ( CASE WHEN A.valas = '#39'USD'#39' THEN b.h' +
+        'utang * A.valas_value ELSE b.hutang END ) jumlah, ( CASE WHEN A.' +
+        'um_value IS NULL THEN 0 ELSE A.um_value END ) um, '#9'A.valas,( CAS' +
+        'E WHEN retur.nil_retur IS NULL THEN 0 ELSE retur.nil_retur END )' +
+        ' nil_retur, b.npph,( CASE WHEN byr.paid_amount IS NULL THEN 0 EL' +
+        'SE byr.paid_amount END ) bayar, (case when pot.price_rp is null ' +
+        'then 0 else pot.price_rp end)pot  FROM (SELECT'#9'*'#9'FROM t_purchase' +
+        '_invoice'#9'a INNER JOIN v_ak_account b on a.account_code=b.account' +
+        '_code2 WHERE b.code = '#39'2101.01'#39'  AND ( sj_status = 1 ) AND ( fk_' +
+        'status = 1 )'#9'AND ( invoice_status = 1 )'#9'and trans_date>='#39'2024-01' +
+        '-01'#39#9'AND ( faktur_date + due_date ) BETWEEN '#39'2025-09-17'#39#9'AND '#39'20' +
+        '25-09-17'#39')'#9'A LEFT JOIN (SELECT trans_no, SUM ( grandtotal ) AS h' +
+        'utang, SUM ( pph_rp ) AS npph FROM t_purchase_invoice_det  GROUP' +
+        ' BY trans_no ORDER BY trans_no  ) b ON A.trans_no = b.trans_no L' +
+        'EFT JOIN t_supplier C ON A.supplier_code = C.supplier_code LEFT ' +
+        'JOIN (SELECT A.receive_no,'#9'SUM ( A.total_price * b.valas_value )' +
+        ' AS nil_retur '#9'FROM t_purchase_return_det A INNER JOIN t_purchas' +
+        'e_return B ON'#9'A.return_no = b.return_no WHERE b.return_date < '#39'2' +
+        '025-09-17'#39#9'GROUP BY A.receive_no ORDER BY A.receive_no ) retur O' +
+        'N A.trans_no = retur.receive_no LEFT JOIN ( SELECT DISTINCT fakt' +
+        'ur_no, invoice_no, paid_amount FROM t_cash_bank_expenditure_paya' +
+        'ble WHERE trans_date < '#39'2025-09-17'#39' ) byr ON A.trans_no = byr.in' +
+        'voice_no '#9'left join(select * from t_purchase_discount where disc' +
+        'ount_date<='#39'2025-09-17'#39')pot on a.trans_no=pot.receive_no '#9') xxx ' +
+        'GROUP BY'#9'kodesup union all SELECT'#9'kodesup,'#9'SUM ( sisa_hutang ) A' +
+        'S sisa_hutang FROM ('#9'SELECT kodesup,faktur_no,hutang,'#9'bayar,huta' +
+        'ng - bayar AS sisa_hutang FROM (SELECT'#9'x.kodesup,x.faktur_no,x.n' +
+        'ilai AS hutang,( CASE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar E' +
+        'ND ) bayar FROM ( SELECT supplier_code AS kodesup, faktur_no, fa' +
+        'ktur_no AS no_terima, date as tanggal, debt_amount AS nilai FROM' +
+        ' t_initial_balance_debt_det a INNER JOIN v_ak_account b on a.deb' +
+        't_type=b.account_code2 WHERE b.code ='#39'2101.01'#39' ) x LEFT JOIN (SE' +
+        'LECT'#9'supplier_code,faktur_no,invoice_no AS no_terima,SUM ( paid_' +
+        'amount ) AS bayar FROM t_cash_bank_expenditure_payable a INNER J' +
+        'OIN v_ak_account b on a.account_acc=b.account_code2 WHERE'#9'b.code' +
+        ' ='#39'2101.01'#39#9'AND trans_date BETWEEN '#39'2024-01-01'#39' AND '#39'2025-09-17'#39 +
+        ' GROUP BY supplier_code,faktur_no,invoice_no ORDER BY'#9'supplier_c' +
+        'ode,faktur_no,invoice_no) y ON x.kodesup = y.supplier_code '#9'AND ' +
+        'x.faktur_no = y.faktur_no'#9') A WHERE'#9'hutang - bayar  > 0 ) xx GRO' +
+        'UP BY'#9'kodesup'#9')x group by kodesup order by kodesup )mggini on su' +
+        'pp.principle_code=mggini.kodesup left join (select kodesup,sum(s' +
+        'isa_hutang)as sisa_hutang from (SELECT DISTINCT kodesup,SUM ( ju' +
+        'mlah ) - SUM ( nil_retur )-sum(pot) - SUM ( bayar ) - SUM ( um )' +
+        ' AS sisa_hutang FROM (SELECT A.trans_date AS tanggal,'#9'A.supplier' +
+        '_code AS kodesup,C.supplier_name AS nasup,A.trans_no AS no_inv,A' +
+        '.faktur_no AS nofakturpajak,A.faktur_date AS tglfaktur,(A.faktur' +
+        '_date + A.due_date ) AS tgltempo, ( CASE WHEN A.valas = '#39'USD'#39' TH' +
+        'EN b.hutang * A.valas_value ELSE b.hutang END ) jumlah,'#9'( CASE W' +
+        'HEN A.um_value IS NULL THEN 0 ELSE A.um_value END ) um, A.valas,' +
+        '( CASE WHEN retur.nil_retur IS NULL THEN 0 ELSE retur.nil_retur ' +
+        'END ) nil_retur, '#9'b.npph,( CASE WHEN byr.bayar IS NULL THEN 0 EL' +
+        'SE byr.bayar END ) bayar, (case when pot.price_rp is null then 0' +
+        ' else pot.price_rp end)pot  FROM (SELECT'#9'*'#9'FROM t_purchase_invoi' +
+        'ce a INNER JOIN v_ak_account b ON a.account_code=b.account_code2' +
+        #9'WHERE b.code ='#39'2101.01'#39'  AND ( sj_status = 1 ) AND ( fk_status ' +
+        '= 1 )'#9'AND ( invoice_status = 1 )'#9'and trans_date>='#39'2024-01-01'#39#9'AN' +
+        'D ( faktur_date + due_date ) BETWEEN '#39'2025-09-10'#39#9'AND '#39'2025-09-1' +
+        '6'#39')'#9'A LEFT JOIN ( SELECT trans_no, SUM ( grandtotal ) AS hutang,' +
+        ' SUM ( pph_rp ) AS npph FROM t_purchase_invoice_det  GROUP BY tr' +
+        'ans_no ORDER BY trans_no ) b ON A.trans_no = b.trans_no'#9'LEFT JOI' +
+        'N t_supplier C ON A.supplier_code = C.supplier_code LEFT JOIN (S' +
+        'ELECT A.receive_no,'#9'SUM ( A.total_price * b.valas_value ) AS nil' +
+        '_retur '#9'FROM t_purchase_return_det A INNER JOIN t_purchase_retur' +
+        'n b ON A.return_no = b.return_no WHERE b.return_date < '#39'2025-09-' +
+        '17'#39#9'GROUP BY A.receive_no ORDER BY A.receive_no) retur ON A.tran' +
+        's_no = retur.receive_no LEFT JOIN ( SELECT DISTINCT faktur_no as' +
+        ' no_inv_supp, invoice_no as no_lpb,paid_amount as bayar FROM t_c' +
+        'ash_bank_expenditure_payable WHERE trans_date < '#39'2025-09-17'#39' ) b' +
+        'yr ON A.trans_no = byr.no_lpb left join (select * from t_purchas' +
+        'e_discount where discount_date<='#39'2025-09-17'#39')pot on a.ref_no=pot' +
+        '.receive_no ) xxx GROUP BY'#9'kodesup union all SELECT kodesup,'#9'SUM' +
+        ' (sisa_hutang ) AS sisa_hutang FROM (SELECT kodesup,faktur_no,hu' +
+        'tang,'#9'bayar,hutang - bayar AS sisa_hutang FROM (SELECT'#9'x.kodesup' +
+        ',x.faktur_no,x.nilai AS hutang,( CASE WHEN y.bayar IS NULL THEN ' +
+        '0 ELSE y.bayar END ) bayar FROM ( SELECT supplier_code AS kodesu' +
+        'p, faktur_no, faktur_no AS no_terima, date, debt_amount AS nilai' +
+        ' FROM t_initial_balance_debt_det a INNER JOIN v_ak_account b on ' +
+        'a.debt_type=b.account_code2  WHERE b.code = '#39'2101.01'#39') x LEFT JO' +
+        'IN (SELECT'#9'supplier_code as kd_supp,faktur_no AS nofaktur,invoic' +
+        'e_no AS no_terima,SUM ( paid_amount ) AS bayar FROM'#9't_cash_bank_' +
+        'expenditure_payable a INNER JOIN v_ak_account b on a.account_acc' +
+        '=b.account_code2  WHERE b.code= '#39'2101.01'#39#9'AND trans_date BETWEEN' +
+        ' '#39'2024-01-01'#39' AND '#39'2025-09-17'#39' GROUP BY supplier_code,faktur_no,' +
+        'invoice_no ORDER BY'#9'supplier_code,faktur_no,invoice_no) y ON x.k' +
+        'odesup = y.kd_supp '#9'AND x.faktur_no = y.nofaktur'#9') A WHERE'#9'hutan' +
+        'g - bayar  > 0 ) xx GROUP BY'#9'kodesup'#9')x'#9'group by kodesup order b' +
+        'y kodesup )mgglalu on supp.principle_code=mgglalu.kodesup left j' +
+        'oin (select kodesup,sum(sisa_hutang)as sisa_hutang from (SELECT ' +
+        'DISTINCT kodesup,SUM ( jumlah ) - SUM ( nil_retur )-sum(pot) - S' +
+        'UM ( bayar ) - SUM ( um ) AS sisa_hutang FROM (SELECT A.trans_da' +
+        'te AS tanggal,'#9'A.supplier_code AS kodesup,C.supplier_name AS nas' +
+        'up,A.trans_no AS no_inv, A.faktur_no AS nofakturpajak,A.faktur_d' +
+        'ate AS tglfaktur,(A.faktur_date + A.due_date ) AS tgltempo, ( CA' +
+        'SE WHEN A.valas = '#39'USD'#39' THEN b.hutang * A.valas_value ELSE b.hut' +
+        'ang END ) jumlah, ( CASE WHEN A.um_value IS NULL THEN 0 ELSE A.u' +
+        'm_value END ) um, '#9'A.valas,( CASE WHEN retur.nil_retur IS NULL T' +
+        'HEN 0 ELSE retur.nil_retur END ) nil_retur, b.npph,( CASE WHEN b' +
+        'yr.paid_amount IS NULL THEN 0 ELSE byr.paid_amount END ) bayar, ' +
+        '(case when pot.harga_rp is null then 0 else pot.harga_rp end)pot' +
+        ' FROM (SELECT'#9'*'#9'FROM t_purchase_invoice'#9'a INNER JOIN v_ak_accoun' +
+        't b on a.account_code=b.account_code2 WHERE b.code= '#39'2101.01'#39'  A' +
+        'ND ( sj_status = 1 ) AND ( fk_status = 1 )'#9'AND ( invoice_status ' +
+        '= 1 )'#9'and trans_date>='#39'2024-01-01'#39#9'AND ( faktur_date + due_date ' +
+        ') BETWEEN '#39'2024-01-01'#39#9'AND '#39'2025-09-09'#39')'#9'A LEFT JOIN ( SELECT tr' +
+        'ans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ) AS npph FRO' +
+        'M t_purchase_invoice_det  GROUP BY trans_no ORDER BY trans_no ) ' +
+        'b ON A.trans_no = b.trans_no LEFT JOIN t_supplier C ON A.supplie' +
+        'r_code = C.supplier_code LEFT JOIN (SELECT A.receive_no,'#9'SUM ( A' +
+        '.total_price * b.valas_value ) AS nil_retur '#9'FROM t_purchase_ret' +
+        'urn_det A INNER JOIN t_purchase_return b '#9'ON A.return_no = b.ret' +
+        'urn_no WHERE  b.return_date < '#39'2025-09-17'#39' GROUP BY A.receive_no' +
+        ' '#9'ORDER BY A.receive_no ) retur ON A.trans_no = retur.receive_no' +
+        ' LEFT JOIN ( SELECT DISTINCT faktur_no , invoice_no , paid_amoun' +
+        't  FROM t_cash_bank_expenditure_payable WHERE trans_date < '#39'2025' +
+        '-09-17'#39' ) byr ON A.trans_no = byr.invoice_no left join (select r' +
+        'eceive_no,sum(price_rp)as harga_rp from t_purchase_discount wher' +
+        'e discount_date<='#39'2025-09-17'#39' group by receive_no order by recei' +
+        've_no ) pot on a.ref_no=pot.receive_no ) xxx GROUP BY'#9'kodesup un' +
+        'ion all SELECT'#9'kodesup,'#9'SUM ( sisa_hutang ) AS sisa_hutang FROM ' +
+        '( SELECT kodesup,faktur_no,hutang,'#9'bayar,hutang - bayar AS sisa_' +
+        'hutang FROM (SELECT'#9'x.kodesup,x.faktur_no,x.nilai AS hutang,( CA' +
+        'SE WHEN y.bayar IS NULL THEN 0 ELSE y.bayar END ) bayar  FROM ( ' +
+        'SELECT supplier_code AS kodesup, faktur_no, faktur_no AS no_teri' +
+        'ma, date, debt_amount AS nilai FROM t_initial_balance_debt_det a' +
+        ' INNER JOIN v_ak_account b on a.debt_type=b.account_code2 WHERE ' +
+        'b.code ='#39'2101.01'#39' ) x LEFT JOIN (SELECT'#9'supplier_code,faktur_no ' +
+        'AS nofaktur,invoice_no AS no_terima,SUM ( paid_amount ) AS bayar' +
+        ' FROM t_cash_bank_expenditure_payable a INNER JOIN v_ak_account ' +
+        'b on a.account_acc=b.account_code2 WHERE'#9'b.code = '#39'2101.01'#39#9'AND ' +
+        'trans_date BETWEEN '#39'2024-01-01'#39' AND '#39'2025-09-17'#39' GROUP BY suppli' +
+        'er_code,faktur_no,invoice_no ORDER BY'#9'supplier_code,faktur_no,in' +
+        'voice_no) y ON x.kodesup = y.supplier_code '#9'AND x.faktur_no = y.' +
+        'nofaktur'#9') A WHERE'#9'hutang - bayar  > 0 ) xx GROUP BY'#9'kodesup'#9')x'#9 +
+        'group by kodesup order by kodesup )mgg_lbh on supp.principle_cod' +
+        'e=mgg_lbh.kodesup left join (select aa.supplier_code,sum(aa.amou' +
+        'nt)as tot_rcn from t_paid_debt_det aa LEFT JOIN t_purchase_invoi' +
+        'ce bb on aa.inv_no=bb.trans_no INNER JOIN v_ak_account cc ON bb.' +
+        'account_code=cc.account_code2 where (aa.periode1='#39'2025-09-17'#39') a' +
+        'nd (aa.periode2='#39'2025-09-17'#39') and cc.code='#39'2101.01'#39' group by aa.' +
+        'supplier_code order by aa.supplier_code)rcn on rcn.supplier_code' +
+        '=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_cod' +
+        'e) rrr LEFT JOIN (select supplier_code,sum(initial_balance) sald' +
+        'o_awal from t_initial_balance_debt where year='#39'2024'#39' group by su' +
+        'pplier_code) saldo_awal_hut on rrr.supplier_code=saldo_awal_hut.' +
+        'supplier_code where tot_hutang+case when saldo_awal is NULL then' +
+        ' 0 else saldo_awal end>0 and tot_hutang+h1+h2+h3+tot_rcn >0 )kkk' +
+        'k GROUP BY supplier_code,principle_name,tot_hutang,h1,h2,h3,tot_' +
+        'rcn'
       '')
     Left = 704
     Top = 320
@@ -2017,6 +2065,10 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QCetakSisaHutangjangka_kredit: TIntegerField
+      FieldName = 'jangka_kredit'
+      ReadOnly = True
+    end
   end
   object frxDBDataset_Sisa_Hutang: TfrxDBDataset
     UserName = 'frxDBDataset_Sisa_hutang'
@@ -2030,11 +2082,12 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
       'h3=h3'
       'tot_rcn=tot_rcn'
       'htg_blm_jatuh_tempo=htg_blm_jatuh_tempo'
-      'ket=ket')
+      'ket=ket'
+      'jangka_kredit=jangka_kredit')
     DataSet = QCetakSisaHutang
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 832
+    Left = 848
     Top = 320
   end
   object DSQTgl_Hutang: TDataSource
@@ -2046,8 +2099,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Connection = dm.Koneksi
     SQL.Strings = (
       
-        'select supplier_code principle_code, principle_name, tot_hutang:' +
-        ':numeric tot_hutang,h1,h2,h3,tot_rcn from '
+        'select supplier_code principle_code, principle_name, 0 as jangka' +
+        '_kredit, tot_hutang::numeric tot_hutang,h1,h2,h3,tot_rcn from '
       
         '(SELECT rrr.supplier_code,'#9'rrr.principle_code,'#9'rrr.principle_nam' +
         'e,'#9'tot_hutang,'#9'h1,'#9'h2,'#9'h3,'#9'tot_rcn FROM'
@@ -2442,6 +2495,10 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     end
     object QSisaHutangtot_rcn: TFloatField
       FieldName = 'tot_rcn'
+      ReadOnly = True
+    end
+    object QSisaHutangjangka_kredit: TIntegerField
+      FieldName = 'jangka_kredit'
       ReadOnly = True
     end
   end

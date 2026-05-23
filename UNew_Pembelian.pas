@@ -8,7 +8,26 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemDS, DBAccess, Uni,
   Vcl.StdCtrls, RzBtnEdt, RzEdit, Vcl.Mask, RzCmboBx, RzButton, Vcl.ExtCtrls,
   MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzPanel,
-  DataDriverEh;
+  DataDriverEh, Vcl.WinXCtrls, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore, dxSkinBasic,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkroom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful,
+  dxSkinOffice2016Dark, dxSkinOffice2019Black, dxSkinOffice2019Colorful,
+  dxSkinOffice2019DarkGray, dxSkinOffice2019White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinTheBezier, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, cxCheckBox, dxToggleSwitch, Vcl.Buttons,
+  Vcl.Samples.Gauges,DateUtils;
 
 type
   TFNew_Pembelian = class(TForm)
@@ -172,6 +191,16 @@ type
     Label31: TLabel;
     tgl_jatuhtempo: TRzDateTimeEdit;
     MemterimaDetheader_code: TStringField;
+    Btn_no: TSpeedButton;
+    ckno_penganti: TCheckBox;
+    Ckcicilan: TCheckBox;
+    TabCicilan: TRzTabSheet;
+    DBGridEh1: TDBGridEh;
+    MemDetail: TMemTableEh;
+    DataSource1: TDataSource;
+    Edcicilan: TRzNumericEdit;
+    Bcicilan: TBitBtn;
+    Gauge1: TGauge;
     procedure Button1Click(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -180,7 +209,6 @@ type
     procedure DBGridDetailpoColumns0EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridDetailpoColEnter(Sender: TObject);
-    procedure BSimpanClick(Sender: TObject);
     procedure DtterimaChange(Sender: TObject);
     procedure CksjClick(Sender: TObject);
     procedure CkFkClick(Sender: TObject);
@@ -213,13 +241,22 @@ type
     procedure Edkd_suppChange(Sender: TObject);
     procedure EdjatuhtempoChange(Sender: TObject);
     procedure DBGridDetailpoKeyPress(Sender: TObject; var Key: Char);
+    procedure DBGrid_UMColExit(Sender: TObject);
+    procedure EdJum_UmChange(Sender: TObject);
+    procedure Btn_noClick(Sender: TObject);
+    procedure ckno_pengantiClick(Sender: TObject);
+    procedure CkcicilanClick(Sender: TObject);
+    procedure BcicilanClick(Sender: TObject);
+    procedure EdcicilanChange(Sender: TObject);
+    procedure EdJum_totalhutChange(Sender: TObject);
+    procedure BSimpanClick(Sender: TObject);
   private
     { Private declarations }
       function IsItemExist(const AItemStockCode: string): Boolean;
   public
     { Public declarations }
     IntStatusKoreksi, iserror, isCancel: integer;
-    trans_no: string;
+    trans_no,strNoTransaksiDiGanti:String;
     Procedure clear;
     Procedure SimpanStok;
     Procedure Edit;
@@ -233,6 +270,7 @@ type
     procedure Load_Currency;
     procedure Load_ref_receive;
     Procedure Hitungdet;
+    Procedure Simpan;
   end;
 
 //var
@@ -240,8 +278,8 @@ function
   FNew_Pembelian: TFNew_Pembelian;
 var
    thn,bln,status_pos,kd_akppn,kd_akpph,kd_ak_pemb,kd_akbea,Nofk,nopo,nourut,jenis_pembelian,kd_urut,tgl:String;
-   status,status_sj,status_fk,status_inv,stts:Integer;
-   jmlh_hutang,sisa_hutang,jmlh_bayar,ppn_rp,grandtotal:real;
+   status,status_sj,status_fk,status_inv,stts,vTotalBulan,status_cicilan:Integer;
+   jmlh_hutang,sisa_hutang,jmlh_bayar,ppn_rp,vNilaiPerbulan,grandtotal:real;
    Dtdate:tdatetime;
 
 implementation
@@ -250,7 +288,8 @@ implementation
 
 uses UDataModule, UMainMenu, UMy_Function, USearch_TerimaBarang,
   UAkun_Perkiraan_TerimaMat, UPembelian,USupp_Pembelian, UCari_UM,
-  USearch_Supplier, UKoreksi, maenangka;
+  USearch_Supplier, UKoreksi, maenangka, UListNoTransaksi;
+//  UNew_Cililan_Pembelian;
 
 var
   realfnew_pemb : TFNew_Pembelian;
@@ -262,6 +301,18 @@ begin
     fNew_pembelian:= realfnew_pemb
   else
     Application.CreateForm(TFNew_Pembelian, Result);
+end;
+
+function NamaBulan(Bulan: Integer): string;   //ds cr 24-04-2026
+const
+  Nama: array[1..12] of string =
+    ('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+begin
+  if (Bulan >= 1) and (Bulan <= 12) then
+    Result := Nama[Bulan]
+  else
+    Result := 'Bulan tidak valid';
 end;
 
 function TFNew_Pembelian.IsItemExist(
@@ -350,207 +401,7 @@ begin
       end;
 end;
 
-procedure TFNew_Pembelian.BBatalClick(Sender: TObject);
-begin
-  Close;
-  FPembelian.ActRoExecute(sender);
-end;
-
-procedure TFNew_Pembelian.BCorrectionClick(Sender: TObject);
-begin
-   iserror:=0;
-   if CheckJurnalPosting(edNo.Text)>0 then
-   begin
-      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
-      iserror:=1;
-   end;
-
-   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
-                'where link='+QuotedStr(FPembelian.Name)); //Mendapatkan nama Menu
-   FKoreksi.Status:=0;
-   FKoreksi.vnotransaksi:=EdNo.Text; //Mendapatkan Nomor Transaksi
-   FKoreksi.ShowModal;
-end;
-
-procedure TFNew_Pembelian.AutonumberCome;
-begin
-
-end;
-
-procedure TFNew_Pembelian.BEditClick(Sender: TObject);
-begin
-    if Edno_Faktur.Text=''  then
-    begin
-      MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
-      Edno_Faktur.SetFocus;
-      Exit;
-    end;
-
-    MemterimaDet.First;
-    while not MemterimaDet.Eof do
-    begin
-      DBGridDetailpoColEnter(sender);
-      MemterimaDet.Next;
-    end;
-    EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
-
-    if messageDlg ('Anda Yakin Simpan Pembelian No.'+EdNo.text+' '+'?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
-    begin
-      Dtdate:=now();
-      MemterimaDet.First;
-      while not MemterimaDet.Eof do
-      begin
-        if DBGridDetailpo.Fields[0].AsString='' then
-        begin
-          MemterimaDet.Delete;
-        end;
-        MemterimaDet.Next;
-      end;
-
-      MemterimaDet.First;
-      while not MemterimaDet.Eof do
-      begin
-        if MemterimaDet['kd_material']='' then
-        begin
-          MemterimaDet.Delete;
-        end;
-        MemterimaDet.Next;
-      end;
-      //23-11-2023 menambahkan proteksi kalau sudah dibuatkan retur tidak bisa di edit
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT * FROM t_purchase_return where receive_no='+quotedstr(EdNo.text);
-        ExecSQL;
-      end;
-      if dm.Qtemp.RecordCount > 0 then
-      begin
-        MessageDlg('No. terima ini sudah dibuatkan retur,untuk melanjutkan update harus batalkan/hapus returnya terlebih dahulu',MtWarning,[MbOk],0);
-        EdNo.SetFocus;
-        Exit;
-      end;
-
-      //23-11-2023 menambahkan proteksi kalau sudah dibuatkan potongan tidak bisa di edit
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT * FROM t_purchase_discount where receive_no='+quotedstr(EdNo.text);
-        ExecSQL;
-      end;
-      if dm.Qtemp.RecordCount > 0 then
-      begin
-        MessageDlg('No. terima ini sudah dibuatkan potongan pembelian,untuk melanjutkan update harus batalkan/hapus potongan pembeliannya terlebih dahulu',MtWarning,[MbOk],0);
-        EdNo.SetFocus;
-        Exit;
-      end;
-
-      //2023 menambahkan proteksi kalau sudah dibuatkan rencana pembayaran tidak bisa di edit
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT * FROM t_paid_debt_det where faktur_no='+quotedstr(Edno_Faktur.text)+' and inv_no='+QuotedStr(edno.Text);
-        ExecSQL;
-      end;
-      if dm.Qtemp.RecordCount > 0 then
-      begin
-        MessageDlg('No. Faktur Sudah di Ajukan Pembayaran',MtWarning,[MbOk],0);
-        EdNo.SetFocus;
-        Exit;
-      end;
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT * FROM t_purchase_invoice where faktur_no='+quotedstr(edno_faktur.text)+' and trans_no<>'+QuotedStr(EdNo.Text);
-        ExecSQL;
-      end;
-      if dm.Qtemp.RecordCount > 0 then
-      begin
-        MessageDlg('No. Faktur Sudah Terpakai',MtWarning,[MbOk],0);
-        EdNo.SetFocus;
-        Exit;
-      end;
-      if EdNo.Text='' then
-      begin
-        MessageDlg('No. Terima Tidak boleh Kosong ',MtWarning,[MbOk],0);
-        EdNo.SetFocus;
-        Exit;
-      end;
-     { if EdNoSPB.Text='' then
-      begin
-        MessageDlg('No. SP Tidak boleh Kosong ',MtWarning,[MbOk],0);
-        EdNoSPB.SetFocus;
-        Exit;
-      end;    }
-      if  Dtterima.Text='' then
-      begin
-        MessageDlg('Tanggal Tidak boleh Kosong ',MtWarning,[MbOk],0);
-        Dtterima.SetFocus;
-        Exit;
-      end;
-      if EdSJ.Text='' then
-      begin
-        MessageDlg('Surat Jalan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-        EdSJ.SetFocus;
-        Exit;
-      end;
-      if Edkd_akun.Text='' then
-      begin
-        MessageDlg('Akun Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
-        Edkd_akun.SetFocus;
-        Exit;
-      end;
-      if not dm.koneksi.InTransaction then
-      dm.koneksi.StartTransaction;
-      try
-      begin
-          if status=1 then
-          begin
-            self.Edit;
-          end;
-          if status=2 then
-          begin
-            Self.Posting;
-          end;
-          //SimpanStok;
-          dm.koneksi.Commit;
-          Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-          BBatalClick(sender);
-      end
-      Except
-      on E :Exception do
-      begin
-       MessageDlg(E.Message,mtError,[MBok],0);
-       dm.koneksi.Rollback;
-      end;
-      end;
-    end;
-end;
-
-procedure TFNew_Pembelian.BPostingClick(Sender: TObject);
-begin
-    MemterimaDet.First;
-    while not MemterimaDet.Eof do
-    begin
-      DBGridDetailpoColEnter(sender);
-      MemterimaDet.Next;
-    end;
-    EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
-    if status_pos='POSTING' then
-    begin
-      ShowMessage('Data Sudah Di Posting');
-    end else
-    if status_pos<>'POSTING' then
-    begin
-      Posting;
-    end;
-    BBatalClick(sender);
-end;
-
-procedure TFNew_Pembelian.BSimpanClick(Sender: TObject);
+Procedure TFNew_Pembelian.Simpan;
 var
   AkunDetail   : string;
   AkunPembelian: string;
@@ -576,18 +427,18 @@ begin
         MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
         Exit;
       end;
-      DtterimaChange(sender);
-      Autonumber;
-      Edth.Text:=vthn;
+     // DtterimaChange(sender);
+    //  Autonumber;
+   {   Edth.Text:=vthn;
       Edbln.Text:=vbln;
       edhari.Text:=vtgl;
-      MemterimaDet.First;
+    {  MemterimaDet.First;
       while not MemterimaDet.Eof do
       begin
-        DBGridDetailpoColEnter(sender);
+      //  DBGridDetailpoColEnter(sender);
         MemterimaDet.Next;
       end;
-      EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
+      EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;  }
 
       if messageDlg ('Anda Yakin Simpan Pembelian No.'+EdNo.text+' '+'?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
@@ -659,10 +510,10 @@ begin
           Exit;
         end;
 
-      if not dm.koneksi.InTransaction then
+     { if not dm.koneksi.InTransaction then
       dm.koneksi.StartTransaction;
         try
-        begin
+        begin    }
 
            //SimpanStok;
            if MemterimaDet['ppn_rp']<>0 then
@@ -726,11 +577,13 @@ begin
                   sql.Text:=' insert into t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                             ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                             ' debt_remaining,ppn_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code,ppn_account,pph_account,account_pemb,tgl_jatuh_tempo)values(:parno_terima,'+
+                            ' pph_rp,sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,pic2,order_no,ref_no,ref_code,'+
+                            ' ppn_account,pph_account,account_pemb,tgl_jatuh_tempo,status_installment,installment_period)values(:parno_terima,'+
                             ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                             ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                             ' :parsisa_hutang,:parppn_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,:parorder_no,:parref_no,:ref_code,:ppn_account,:pph_account,:account_pemb,:tgl_jatuh_tempo)';
+                            ' :parthn,:parbea,:parpph,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parpic2,'+
+                            ' :parorder_no,:parref_no,:ref_code,:ppn_account,:pph_account,:account_pemb,:tgl_jatuh_tempo,:status_ccln,:jumlah_ccln)';
                             ParamByName('parno_terima').Value:=EdNo.Text;
                             //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                             ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
@@ -744,8 +597,10 @@ begin
                             ParamByName('parjatuh_tempo').Value:=Edjatuhtempo.Text;
                             ParamByName('parjenis_pembelian').Value:=Edjenis.Text;
                             ParamByName('parjmlh_hutang').Value:=DBGridDetailpo.Columns[25].Footer.sumvalue;
-                            ParamByName('parjmlh_bayar').Value:=0;
-                            ParamByName('parsisa_hutang').Value:=EdSisaHutang.Value;
+                           //off ds 08-04-2026 ParamByName('parjmlh_bayar').Value:=0;
+                            ParamByName('parjmlh_bayar').Value:=EdJum_Um.Value+EdJum_PotPem.Value;
+                           //off ds 08-04-2026 ParamByName('parsisa_hutang').Value:=EdSisaHutang.Value;
+                            ParamByName('parsisa_hutang').Value:=EdJum_totalhut.Value;
                             ParamByName('parppn_rp').Value:=DBGridDetailpo.Columns[18].Footer.SumValue;
                             ParamByName('parpic').Value:=Nm;
                             ParamByName('parstatus').Value:='Created';
@@ -760,7 +615,8 @@ begin
                             ParamByName('parpib').Value:=EdPIB.text;
                             ParamByName('parjenispo').Value:=Edjenispo.Text;
                             ParamByName('parkd_akunum').Value:=Edkd_akunum.Text;
-                            ParamByName('parum').Value:=EdNilai_um.Value;
+                        //off 08-04-2026  ParamByName('parum').Value:=EdNilai_um.Value;
+                          ParamByName('parum').Value:=EdJum_Um.Value;        // cr ds 08-04-2026
                             ParamByName('partgl_no').Value:=Edhari.Text;
                             //ParamByName('partgl_no').Value:=FormatDateTime('dd',Dtterima.Date);
                             ParamByName('parpic2').Value:=Nm;
@@ -772,7 +628,8 @@ begin
                             //ParamByName('account_pemb').Value:=kd_ak_pemb;
                             ParamByName('account_pemb').Value:=AkunPembelian;
                             ParamByName('tgl_jatuh_tempo').Value:=FormatDateTime('yyyy-mm-dd',tgl_jatuhtempo.Date);
-
+                            ParamByName('status_ccln').Value:=IntToStr(status_cicilan);
+                            ParamByName('jumlah_ccln').Value  :=Edcicilan.Text;
                   ExecSQL;
               end;
               MemterimaDet.First;
@@ -984,6 +841,7 @@ begin
                 sql.Text:='select * from t_purchase_invoice -- 1';
                 ExecSQL;
               end;
+           //   ShowMessage('test 1');
               with dm.Qtemp do
               begin
                 close;
@@ -991,11 +849,13 @@ begin
                 sql.Text:=' insert into t_purchase_invoice(trans_no,trans_date,remark,spb_no,sj_no,faktur_no,'+
                           ' supplier_code,faktur_date,due_date,purchase_type,debt_amount,payment_amount,'+
                           ' debt_remaining,ppn_rp,pph_rp,pic,status,valas,valas_value,account_code,trans_month,trans_year,import_duty,'+
-                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no,ref_code,ppn_account,pph_account,account_pemb,tgl_jatuh_tempo)values(:parno_terima,'+
+                          ' sbu_code,pib_no,po_type,faktur2_date,account_um_code,um_value,trans_day,order_no,ref_no,ref_code,ppn_account,pph_account,account_pemb,'+
+                          ' tgl_jatuh_tempo,status_installment,installment_period)values(:parno_terima,'+
                           ' :partgl_terima,:parket,:parnospb,:parnosj,:parnofaktur,:parkd_supplier,'+
                           ' :partgl_faktur,:parjatuh_tempo,:parjenis_pembelian,:parjmlh_hutang,:parjmlh_bayar,'+
                           ' :parsisa_hutang,:parppn_rp,:parpph_rp,:parpic,:parstatus,:parvalas,:parnilai_valas,:parkd_akun,:parbln,'+
-                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no,:ref_code,:ppn_account,:pph_account,:account_pemb,:tgl_jatuh_tempo)';
+                          ' :parthn,:parbea,:parsbu,:parpib,:parjenispo,:partgl_faktur2,:parkd_akunum,:parum,:partgl_no,:parorder_no,:parref_no,:ref_code,:ppn_account,'+
+                          ' :pph_account,:account_pemb,:tgl_jatuh_tempo,:status_ccln,:jumlah_ccln)';
                           ParamByName('parno_terima').Value:=EdNo.Text;
                           //ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtterima.Date);
                           ParamByName('partgl_terima').Value:=FormatDateTime('yyyy-mm-dd',Dtfaktur.Date);
@@ -1009,8 +869,10 @@ begin
                           ParamByName('parjatuh_tempo').Value:=Edjatuhtempo.Text;
                           ParamByName('parjenis_pembelian').Value:=Edjenis.Text;
                           ParamByName('parjmlh_hutang').Value:=DBGridDetailpo.Columns[25].Footer.sumvalue;
-                          ParamByName('parjmlh_bayar').Value:=0;
-                          ParamByName('parsisa_hutang').Value:=EdSisaHutang.Value;
+                          //off ds 08-04-2026 ParamByName('parjmlh_bayar').Value:=0;
+                          ParamByName('parjmlh_bayar').Value:=EdJum_Um.Value+EdJum_PotPem.Value;
+                          //off ds 08-04-2026 ParamByName('parsisa_hutang').Value:=EdSisaHutang.Value;
+                          ParamByName('parsisa_hutang').Value:=EdJum_totalhut.Value;
                           ParamByName('parppn_rp').Value:=DBGridDetailpo.Columns[18].Footer.SumValue+DBGridDetailpo.Columns[19].Footer.SumValue;
                           ParamByName('parpph_rp').Value:=DBGridDetailpo.Columns[21].Footer.SumValue;
                           ParamByName('parpic').Value:=Nm;
@@ -1018,17 +880,18 @@ begin
                           ParamByName('parvalas').Value:=EdValas.Text;
                           ParamByName('parnilai_valas').Value:=EdNilai_Valas.Text;
                           ParamByName('parkd_akun').Value:=Edkd_akun.Text;
-                          ParamByName('parbln').Value:=vbln;//Edbln.Text;
-                          ParamByName('parthn').Value:=vthn;
+                          ParamByName('parbln').Value:=Edbln.Text;
+                          ParamByName('parthn').Value:=Edth.text;
                           ParamByName('parbea').Value:=DBGridDetailpo.Columns[23].Footer.sumvalue;
                           ParamByName('parsbu').Value:=edsbu.text;
                           ParamByName('parpib').Value:=EdPIB.text;
                           ParamByName('parjenispo').Value:=Edjenispo.Text;
                           ParamByName('parkd_akunum').Value:=Edkd_akunum.Text;
-                          ParamByName('parum').Value:=EdNilai_um.Value;
-                          ParamByName('partgl_no').Value:=vtgl;//Edhari.Text;
+                        //off 08-04-2026  ParamByName('parum').Value:=EdNilai_um.Value;
+                          ParamByName('parum').Value:=EdJum_Um.Value;        // cr ds 08-04-2026
+                          ParamByName('partgl_no').Value:=Edhari.Text;
                           //ParamByName('partgl_no').Value:=FormatDateTime('dd',Dtterima.Date);
-                          ParamByName('parorder_no').Value:=order_no;
+                          ParamByName('parorder_no').Value:=edurut.text;//order_no;
                           ParamByName('parref_no').Value:=Cb_Ref.text;
                           ParamByName('ref_code').Value:=Edkd_sumber.text;
                           ParamByName('ppn_account').Value:=kd_akppn;
@@ -1036,9 +899,11 @@ begin
                           //ParamByName('account_pemb').Value:=kd_ak_pemb;
                           ParamByName('account_pemb').Value:=AkunPembelian;
                           ParamByName('tgl_jatuh_tempo').Value:=FormatDateTime('yyyy-mm-dd',tgl_jatuhtempo.Date);
+                          ParamByName('status_ccln').Value:=IntToStr(status_cicilan);
+                          ParamByName('jumlah_ccln').Value  :=Edcicilan.Text;
                 ExecSQL;
               end;
-
+            //  ShowMessage('test 2');
               MemterimaDet.First;
               while not MemterimaDet.Eof do
               begin
@@ -1066,25 +931,6 @@ begin
                                AkunDetail := MemterimaDet['kd_akun'];
                                HeaderCode := MemterimaDet['header_code'];
                                AkunPembelian:=MemterimaDet['header_code'];
-
-
-
-
-                                {if Copy(AkunDetail, 1, 7) = '1110.01' then
-                                begin
-                                   AkunPembelian   := '5101.01';
-                                   HeaderCode      := '1110.01';
-                                end
-                                else
-                                begin
-                                   AkunPembelian   := Copy(AkunDetail, 1, 7);
-                                   HeaderCode      := Copy(AkunDetail, 1, 7);
-                                end;}
-                                //if edjenis.Text = 'DAGANG' then
-                                  //AkunPembelian := GetAkunPembelianDagang
-                                //else
-                                  //AkunPembelian := GetHeaderCode(AkunDetail);
-
                               ParamByName('parkd_material_stok').Value:=MemterimaDet['item_stock_code'];
                               //ParamByName('parkd_material_stok').Value:=MemterimaDet['kd_material'];
                               ParamByName('parkd_stok').Value:=MemterimaDet['kd_stok'];
@@ -1141,6 +987,21 @@ begin
                               ParamByName('item_code').Value:=MemterimaDet['kd_material'];
                               ParamByName('header_code').Value:=HeaderCode;
                               //ParamByName('header_code').Value:=GetHeaderCode(AkunDetail);
+                               {if Copy(AkunDetail, 1, 7) = '1110.01' then
+                                begin
+                                   AkunPembelian   := '5101.01';
+                                   HeaderCode      := '1110.01';
+                                end
+                                else
+                                begin
+                                   AkunPembelian   := Copy(AkunDetail, 1, 7);
+                                   HeaderCode      := Copy(AkunDetail, 1, 7);
+                                end;}
+                                //if edjenis.Text = 'DAGANG' then
+                                  //AkunPembelian := GetAkunPembelianDagang
+                                //else
+                                  //AkunPembelian := GetHeaderCode(AkunDetail);
+
                     ExecSQL;
                  end;
 
@@ -1205,18 +1066,321 @@ begin
                  end; }
 
           end;
-          dm.koneksi.Commit;
+                  //cr ds 23-04-2026
+                 if  Ckcicilan.Checked=true then
+                 begin
+                   MemDetail.First;
+                  while not MemDetail.Eof do
+                  begin
+                    with dm.qtemp do
+                    begin
+                        close;
+                        sql.Clear;
+                        sql.Text:='Insert into t_purchase_installment(trans_no,trans_month,trans_year,amount,order_no)'+
+                        'values(:trans_no,:tmonth,:tyear,:amount,:no)';
+                        ParamByName('trans_no').Value:=EdNo.Text;
+                        ParamByName('tmonth').Value:=MemDetail['angkabulan'];
+                        ParamByName('tyear').Value:=MemDetail['tahun'];
+                        ParamByName('amount').Value:=MemDetail['amount'];
+                        ParamByName('no').Value:=MemDetail['nourut'];
+                        ExecSQL;
+                    end;
+                    MemDetail.Next;
+                  end;
+                 end;
+              If ckno_penganti.Checked=True then
+              begin
+                with dm.Qtemp do
+                begin
+                  close;
+                  sql.clear;
+                  sql.Text:='UPDATE "public"."t_purchase_invoice" SET'+
+                            ' trans_no_replacement='+QuotedStr(EdNo.Text)+
+                            ' Where trans_no='+QuotedStr(strNoTransaksiDiGanti);
+                  ExecSQL;
+                end;
+              end;
+       //   dm.koneksi.Commit;
           Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-          BBatalClick(sender);
-        end
+        //  BBatalClick(sender);
+       { end
         Except
         on E :Exception do
         begin
           MessageDlg(E.Message,mtError,[MBok],0);
           dm.koneksi.Rollback;
         end;
+      end;   }
+    end;
+end;
+
+procedure TFNew_Pembelian.BBatalClick(Sender: TObject);
+begin
+  Close;
+  FPembelian.ActRoExecute(sender);
+end;
+
+procedure TFNew_Pembelian.BcicilanClick(Sender: TObject);
+var
+  i: Integer;
+  TglLoop: TDateTime;
+begin
+  Gauge1.Visible:=true;
+  MemDetail.EmptyTable;
+  MemDetail.Active := True;
+  // Progress bar
+  Gauge1.MinValue := 0;
+  Gauge1.MaxValue := vTotalBulan;
+  Gauge1.Progress := 0;
+  Gauge1.Visible := True;
+  for i := 0 to vTotalBulan - 1 do
+  begin
+    // Geser bulan otomatis
+    TglLoop := IncMonth(dtfaktur2.Date, i);
+    MemDetail.Append;
+    MemDetail['ANGKABULAN'] := MonthOf(TglLoop);
+    MemDetail['NAMABULAN']  := NamaBulan(MonthOf(TglLoop));
+    MemDetail['TAHUN']      := YearOf(TglLoop);
+    MemDetail['amount']     := vNilaiPerbulan;
+    MemDetail['NOURUT']     := i;
+    MemDetail.Post;
+    Gauge1.Progress := i + 1;
+  end;
+  MemDetail.SortByFields('NOURUT');
+  Gauge1.Progress := Gauge1.MaxValue;
+  ShowMessage('Proses perhitungan selesai.');
+  Gauge1.Visible:=false;
+end;
+
+procedure TFNew_Pembelian.BCorrectionClick(Sender: TObject);
+begin
+   iserror:=0;
+   if CheckJurnalPosting(edNo.Text)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+      iserror:=1;
+   end;
+   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FPembelian.Name)); //Mendapatkan nama Menu
+   FKoreksi.Status:=0;
+   FKoreksi.vnotransaksi:=EdNo.Text; //Mendapatkan Nomor Transaksi
+   FKoreksi.ShowModal;
+end;
+
+procedure TFNew_Pembelian.AutonumberCome;
+begin
+
+end;
+
+procedure TFNew_Pembelian.BEditClick(Sender: TObject);
+begin
+    if Edno_Faktur.Text=''  then
+    begin
+      MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      Edno_Faktur.SetFocus;
+      Exit;
+    end;
+
+    MemterimaDet.First;
+    while not MemterimaDet.Eof do
+    begin
+      DBGridDetailpoColEnter(sender);
+      MemterimaDet.Next;
+    end;
+    EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
+
+    if messageDlg ('Anda Yakin Simpan Pembelian No.'+EdNo.text+' '+'?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+      Dtdate:=now();
+      MemterimaDet.First;
+      while not MemterimaDet.Eof do
+      begin
+        if DBGridDetailpo.Fields[0].AsString='' then
+        begin
+          MemterimaDet.Delete;
+        end;
+        MemterimaDet.Next;
+      end;
+
+      MemterimaDet.First;
+      while not MemterimaDet.Eof do
+      begin
+        if MemterimaDet['kd_material']='' then
+        begin
+          MemterimaDet.Delete;
+        end;
+        MemterimaDet.Next;
+      end;
+      //23-11-2023 menambahkan proteksi kalau sudah dibuatkan retur tidak bisa di edit
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_purchase_return where receive_no='+quotedstr(EdNo.text);
+        ExecSQL;
+      end;
+      if dm.Qtemp.RecordCount > 0 then
+      begin
+        MessageDlg('No. terima ini sudah dibuatkan retur,untuk melanjutkan update harus batalkan/hapus returnya terlebih dahulu',MtWarning,[MbOk],0);
+        EdNo.SetFocus;
+        Exit;
+      end;
+
+      //23-11-2023 menambahkan proteksi kalau sudah dibuatkan potongan tidak bisa di edit
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_purchase_discount where receive_no='+quotedstr(EdNo.text);
+        ExecSQL;
+      end;
+      if dm.Qtemp.RecordCount > 0 then
+      begin
+        MessageDlg('No. terima ini sudah dibuatkan potongan pembelian,untuk melanjutkan update harus batalkan/hapus potongan pembeliannya terlebih dahulu',MtWarning,[MbOk],0);
+        EdNo.SetFocus;
+        Exit;
+      end;
+
+      //2023 menambahkan proteksi kalau sudah dibuatkan rencana pembayaran tidak bisa di edit
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_paid_debt_det where faktur_no='+quotedstr(Edno_Faktur.text)+' and inv_no='+QuotedStr(edno.Text);
+        ExecSQL;
+      end;
+      if dm.Qtemp.RecordCount > 0 then
+      begin
+        MessageDlg('No. Faktur Sudah di Ajukan Pembayaran',MtWarning,[MbOk],0);
+        EdNo.SetFocus;
+        Exit;
+      end;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * FROM t_purchase_invoice where faktur_no='+quotedstr(edno_faktur.text)+' and trans_no<>'+QuotedStr(EdNo.Text);
+        ExecSQL;
+      end;
+      if dm.Qtemp.RecordCount > 0 then
+      begin
+        MessageDlg('No. Faktur Sudah Terpakai',MtWarning,[MbOk],0);
+        EdNo.SetFocus;
+        Exit;
+      end;
+      if EdNo.Text='' then
+      begin
+        MessageDlg('No. Terima Tidak boleh Kosong ',MtWarning,[MbOk],0);
+        EdNo.SetFocus;
+        Exit;
+      end;
+     { if EdNoSPB.Text='' then
+      begin
+        MessageDlg('No. SP Tidak boleh Kosong ',MtWarning,[MbOk],0);
+        EdNoSPB.SetFocus;
+        Exit;
+      end;    }
+      if  Dtterima.Text='' then
+      begin
+        MessageDlg('Tanggal Tidak boleh Kosong ',MtWarning,[MbOk],0);
+        Dtterima.SetFocus;
+        Exit;
+      end;
+      if EdSJ.Text='' then
+      begin
+        MessageDlg('Surat Jalan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+        EdSJ.SetFocus;
+        Exit;
+      end;
+      if Edkd_akun.Text='' then
+      begin
+        MessageDlg('Akun Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+        Edkd_akun.SetFocus;
+        Exit;
+      end;
+      if not dm.koneksi.InTransaction then
+      dm.koneksi.StartTransaction;
+      try
+      begin
+          if status=1 then
+          begin
+            self.Edit;
+          end;
+          if status=2 then
+          begin
+            Self.Posting;
+          end;
+          //SimpanStok;
+          dm.koneksi.Commit;
+          Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
+          BBatalClick(sender);
+      end
+      Except
+      on E :Exception do
+      begin
+       MessageDlg(E.Message,mtError,[MBok],0);
+       dm.koneksi.Rollback;
+      end;
       end;
     end;
+end;
+
+procedure TFNew_Pembelian.BPostingClick(Sender: TObject);
+begin
+    MemterimaDet.First;
+    while not MemterimaDet.Eof do
+    begin
+      DBGridDetailpoColEnter(sender);
+      MemterimaDet.Next;
+    end;
+    EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
+    if status_pos='POSTING' then
+    begin
+      ShowMessage('Data Sudah Di Posting');
+    end else
+    if status_pos<>'POSTING' then
+    begin
+      Posting;
+    end;
+    BBatalClick(sender);
+end;
+
+procedure TFNew_Pembelian.BSimpanClick(Sender: TObject);
+begin
+ if not dm.Koneksi.InTransaction then
+       dm.Koneksi.StartTransaction;
+      try
+
+        if Status=0 then
+        begin
+            if ckno_penganti.Checked=False then Autonumber;
+            MemterimaDet.First;
+            while not MemterimaDet.Eof do
+          begin
+      //  DBGridDetailpoColEnter(sender);
+            MemterimaDet.Next;
+          end;
+          EdSisaHutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue-EdNilai_um.Value;
+            Simpan;
+            Dm.Koneksi.Commit;
+        end
+        else if Status = 1 then
+        begin
+          if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
+          begin
+            edit;
+            Dm.Koneksi.Commit;
+          end;
+        end;
+        BBatalClick(sender);
+      Except on E :Exception do
+        begin
+          begin
+            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+            Dm.koneksi.Rollback ;
+          end;
+        end;
+      end;
 end;
 
 procedure TFNew_Pembelian.Button1Click(Sender: TObject);
@@ -1226,7 +1390,7 @@ end;
 
 procedure TFNew_Pembelian.Cb_RefSelect(Sender: TObject);
 begin
-     if Cb_Sumber.ItemIndex=0 then
+    { if Cb_Sumber.ItemIndex=0 then
      begin
        with dm.Qtemp do
        begin
@@ -1297,7 +1461,7 @@ begin
        Qterima_barang.Close;
        Qterima_barang.Open;
        DBGridBarang.FinishLoadingStatus();}
-     end
+   {  end
      else
      if Cb_Sumber.ItemIndex=2 then
      begin
@@ -1330,9 +1494,9 @@ begin
       begin
         EdJum_um.Value:=0;
       end;                   }
-      EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
+   {   EdJum_Hutang.value:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
       EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
-end;
+}end;
 
 procedure TFNew_Pembelian.Cb_SumberSelect(Sender: TObject);
 begin
@@ -1414,20 +1578,53 @@ begin
      end;
 end;
 
+procedure TFNew_Pembelian.CkcicilanClick(Sender: TObject);
+begin
+  if CkCicilan.Checked=true then
+  begin
+    status_cicilan:=1;
+    TabCicilan.TabVisible:=true;
+    MemDetail.Close;
+    MemDetail.Open;
+    DBGridEh1.Columns[0].PickList.Clear;
+       var i: Integer;
+      for i := 2020 to 3000 do
+    DBGridEh1.Columns[0].PickList.Add(IntToStr(i));
+    DBGridEh1.Columns[1].PickList.Clear;
+       var i2: Integer;
+      for i2 := 1 to 12 do
+    DBGridEh1.Columns[1].PickList.Add(IntToStr(i2));
+    Edcicilan.visible:=true;
+    Bcicilan.Visible:=true;
+  end;
+  if CkCicilan.Checked=false then
+  begin
+   status_cicilan:=0;
+   TabCicilan.TabVisible:=false;
+   Edcicilan.visible:=false;
+   Bcicilan.Visible:=false;
+  end;
+end;
+
 procedure TFNew_Pembelian.CkFkClick(Sender: TObject);
 begin
     if CkFk.Checked=True then status_fk:=1 else status_fk:=0;
     stts:=status_sj+status_fk+status_inv;
-    if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
-    if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
+ //   if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
+  //  if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
 end;
 
 procedure TFNew_Pembelian.CkInvClick(Sender: TObject);
 begin
     if CkInv.Checked=True then status_inv:=1 else status_inv:=0;
     stts:=status_sj+status_fk+status_inv;
-    if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
-    if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
+ //   if stts=3 then BPosting.visible:=True else BPosting.Visible:=False;
+  //  if status_pos='POSTING' then BPosting.Enabled:=False else BPosting.Enabled:=True;
+end;
+
+procedure TFNew_Pembelian.ckno_pengantiClick(Sender: TObject);
+begin
+  if ckno_penganti.Checked=true then Btn_no.Enabled:=true else Btn_no.Enabled:=false;
 end;
 
 procedure TFNew_Pembelian.CksjClick(Sender: TObject);
@@ -1539,13 +1736,12 @@ begin
           END;
         end;
 
-
-
         MemterimaDet['grandtotal']:=MemterimaDet['Subtotal']+MemterimaDet['pemb_dpp']+(MemterimaDet['ppn_rp']+MemterimaDet['pemb_ppn'])-MemterimaDet['pph_rp'];
 
         MemterimaDet.Post;
         //Self.Totalpo;
-
+        //cr ds 26-03-2026
+        EdJum_Um.Value:=DBGrid_UM.Columns[3].Footer.sumvalue;
     Except;
     end;
 end;
@@ -1902,6 +2098,11 @@ begin
      Key := UpCase(Key);
 end;
 
+procedure TFNew_Pembelian.DBGrid_UMColExit(Sender: TObject);
+begin
+  EdJum_Um.Value:=DBGrid_UM.Columns[3].Footer.sumvalue;
+end;
+
 procedure TFNew_Pembelian.dtfaktur2Change(Sender: TObject);
 var tglFaktur : TDateTime;
     tempoHari : Integer;
@@ -1910,6 +2111,9 @@ begin
     tempoHari := StrToIntDef(edjatuhtempo.Text, 0);
     tgl_jatuhtempo.Date := tglFaktur + tempoHari;
     dtfaktur.Date:=dtfaktur2.Date;
+    Edhari.Text:=FormatDateTime('dd',dtfaktur2.Date);
+    edbln.Text:=FormatDateTime('mm',dtfaktur2.Date);
+    Edth.text:=FormatDateTime('yyyy',dtfaktur2.Date);
 end;
 
 procedure TFNew_Pembelian.DtterimaChange(Sender: TObject);
@@ -2046,9 +2250,12 @@ begin
   idmenu:=dm.Qtemp['submenu_code'];
  // idmenu:='M11004';
   //strday2:=Dtterima.Date;
-  strday2:=Dtfaktur.Date;
+  strday2:=Dtfaktur2.Date;
   EdNo.Text:=getNourut(strday2,'t_purchase_invoice','');
   Edurut.Text:=order_no;
+  Edth.Text:=vthn;
+  Edbln.Text:=vbln;
+  Edhari.Text:=vtgl;
 end;
 
 procedure TFNew_Pembelian.SimpanStok;
@@ -2104,6 +2311,20 @@ begin
         end;
         MemterimaDet.Next;
     end;
+end;
+
+procedure TFNew_Pembelian.Btn_noClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='pembelian';
+  FListNoTransaksi.update_grid('trans_no','order_no','t_Purchase_invoice','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtfaktur2.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY trans_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
+procedure TFNew_Pembelian.EdcicilanChange(Sender: TObject);
+begin
+  vTotalBulan:=strtoint(Edcicilan.Text);
+  vNilaiPerbulan:=EdJum_totalhut.Value/Edcicilan.Value;
 end;
 
 procedure TFNew_Pembelian.EdCurrChange(Sender: TObject);
@@ -2176,7 +2397,9 @@ begin
         'um_value = :pum, '+
         'ref_no = :prefno, '+
         'ref_code = :prefcode, '+
-        'tgl_jatuh_tempo = :ptgl_jt '+
+        'tgl_jatuh_tempo = :ptgl_jt ,'+
+        'status_installment = :status_ccln,'+
+        'installment_period = :jumlah_ccln '+
         'WHERE trans_no = :pno';
 
       ParamByName('pno').Value          := EdNo.Text;
@@ -2189,7 +2412,7 @@ begin
       ParamByName('pjatuh').Value       := Edjatuhtempo.Text;
       ParamByName('pjenis').Value       := Edjenis.Text;
       ParamByName('phutang').Value      := DBGridDetailpo.Columns[25].Footer.SumValue;
-      ParamByName('psisa').Value        := EdSisaHutang.Value;
+      ParamByName('psisa').Value        := edjum_totalhut.value;//off 08-04-2026EdSisaHutang.Value;
       ParamByName('pppn').Value         := DBGridDetailpo.Columns[18].Footer.SumValue;
       ParamByName('ppph').Value         := DBGridDetailpo.Columns[21].Footer.SumValue;
       ParamByName('pvalas').Value       := EdValas.Text;
@@ -2199,10 +2422,12 @@ begin
       ParamByName('ppib').Value         := EdPIB.Text;
       ParamByName('pjenispo').Value     := Edjenispo.Text;
       ParamByName('pakunum').Value      := Edkd_akunum.Text;
-      ParamByName('pum').Value          := EdNilai_um.Value;
+      ParamByName('pum').Value          := edjum_um.value;//off 08-04-2026 EdNilai_um.Value;
       ParamByName('prefno').Value       := Cb_Ref.Text;
       ParamByName('prefcode').Value     := Edkd_sumber.Text;
       ParamByName('ptgl_jt').Value      := FormatDateTime('yyyy-mm-dd', tgl_jatuhtempo.Date);
+      ParamByName('status_ccln').Value  :=IntToStr(status_cicilan);
+      ParamByName('jumlah_ccln').Value  :=Edcicilan.Text;
 
       ExecSQL;
     end;
@@ -2547,6 +2772,36 @@ begin
            ExecSQL;
         end;
     end;}
+                      //cr ds 06-05-2026
+
+                 if  Ckcicilan.Checked=true then
+                 begin
+                 with dm.Qtemp do
+                 begin
+                   close;
+                   sql.Clear;
+                   sql.Text:='delete from t_purchase_installment where trans_no='+QuotedStr(EdNo.Text);
+                   Execute;
+                 end;
+                   MemDetail.First;
+                  while not MemDetail.Eof do
+                  begin
+                    with dm.qtemp do
+                    begin
+                        close;
+                        sql.Clear;
+                        sql.Text:='Insert into t_purchase_installment(trans_no,trans_month,trans_year,amount,order_no)'+
+                        'values(:trans_no,:tmonth,:tyear,:amount,:no)';
+                        ParamByName('trans_no').Value:=EdNo.Text;
+                        ParamByName('tmonth').Value:=MemDetail['angkabulan'];
+                        ParamByName('tyear').Value:=MemDetail['tahun'];
+                        ParamByName('amount').Value:=MemDetail['amount'];
+                        ParamByName('no').Value:=MemDetail['nourut'];
+                        ExecSQL;
+                    end;
+                    MemDetail.Next;
+                  end;
+                 end;
 end;
 
 procedure TFNew_Pembelian.EdjatuhtempoChange(Sender: TObject);
@@ -2582,6 +2837,7 @@ end;
 procedure TFNew_Pembelian.EdJum_HutangChange(Sender: TObject);
 begin
    EdJum_Hutang.Value:=DBGridDetailpo.Columns[25].Footer.sumvalue;
+   EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
 end;
 
 procedure TFNew_Pembelian.EdJum_PotPemChange(Sender: TObject);
@@ -2590,6 +2846,16 @@ begin
 end;
 
 procedure TFNew_Pembelian.EdJum_ReturPembChange(Sender: TObject);
+begin
+  EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
+end;
+
+procedure TFNew_Pembelian.EdJum_totalhutChange(Sender: TObject);
+begin
+  vNilaiPerbulan:=EdJum_totalhut.Value/Edcicilan.Value;
+end;
+
+procedure TFNew_Pembelian.EdJum_UmChange(Sender: TObject);
 begin
   EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
 end;
@@ -2668,6 +2934,7 @@ begin
     jenis_tr:='pemb';
       Show;
       if Qsupplier.Active=False then Qsupplier.Active:=True;
+      MemterimaDet.EmptyTable;
     end;
   {  with FSearch_Supplier do
     begin
@@ -2756,6 +3023,7 @@ begin
    if MemterimaDet.Active=False then  MemterimaDet.Active:=True;
    if Memterima_barang.Active=False then  Memterima_barang.Active:=True;
    PGFaktur.ActivePage:=TabBarang2;
+   TabCicilan.TabVisible:=false;
 
    {
    if memUM.Active=false then  memUM.Active:=true;

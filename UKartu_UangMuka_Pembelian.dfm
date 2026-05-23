@@ -1,9 +1,9 @@
-object FPembelian: TFPembelian
+object FKartu_UangMuka_Pembelian: TFKartu_UangMuka_Pembelian
   Left = 0
   Top = 0
-  Caption = 'Form Faktur Pembelian'
-  ClientHeight = 549
-  ClientWidth = 1006
+  Caption = 'Kartu Uang Muka Pembelia'
+  ClientHeight = 442
+  ClientWidth = 1146
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,116 +15,30 @@ object FPembelian: TFPembelian
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
-  object dxRibbon1: TdxRibbon
+  object DBGrid: TDBGridEh
     Left = 0
-    Top = 0
-    Width = 1006
-    Height = 127
-    BarManager = dxBarManager1
-    Style = rs2010
-    ColorSchemeName = 'Blue'
-    Contexts = <>
-    TabOrder = 0
-    TabStop = False
-    object dxRibbon1Tab1: TdxRibbonTab
-      Active = True
-      Caption = 'Home'
-      Groups = <
-        item
-          ToolbarName = 'dxBarManager1Bar1'
-        end
-        item
-          ToolbarName = 'dxBarManager1Bar2'
-        end>
-      Index = 0
-    end
-  end
-  object DBGridTerima1: TDBGridEh
-    Left = 0
-    Top = 169
-    Width = 1006
-    Height = 380
+    Top = 127
+    Width = 1146
+    Height = 315
     Align = alClient
-    DataGrouping.GroupLevels = <
-      item
-        ColumnName = 'Column_18_trans_year'
-      end
-      item
-        ColumnName = 'Column_17_trans_month'
-      end
-      item
-        ColumnName = 'Column_23_tgl'
-      end>
-    DataSource = Dsterima_material
+    AutoFitColWidths = True
+    DataSource = DS_Kartu_UangMuka
     DrawMemoText = True
     DynProps = <>
-    RowDetailPanel.Active = True
-    RowDetailPanel.Height = 200
+    IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
-    TabOrder = 1
+    TabOrder = 0
     TitleParams.MultiTitle = True
-    OnGetCellParams = DBGridTerima1GetCellParams
     Columns = <
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'purchase_type'
+        FieldName = 'supplier_code'
         Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Jenis Pembelian'
         Visible = False
-        Width = 110
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. Trans'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status_app'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Status Approval'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_date'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tanggal'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'spb_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. SP'
-        Width = 0
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sj_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Surat Jalan'
-        Width = 100
       end
       item
         CellButtons = <>
@@ -132,730 +46,927 @@ object FPembelian: TFPembelian
         EditButtons = <>
         FieldName = 'supplier_name'
         Footers = <>
-        ReadOnly = True
         Title.Caption = 'Nama Supplier'
-        Width = 200
+        Width = 350
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'faktur_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. Faktur'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'faktur_date'
-        Footers = <>
-        Title.Caption = 'Tanggal Terima Dokumen'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'remark'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Keterangan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_code'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Akun Perkiraan|Kode'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_name'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Akun Perkiraan|Nama'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Status'
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sj_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Konf.'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'fk_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Pref. Dok.'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'invoice_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Invoice'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'pic'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'PIC'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Bulan'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tahun'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'correction_status'
-        Footers = <>
-        ReadOnly = True
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_day'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tanggal'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'SBU'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'due_date'
-        Footers = <>
-        Title.Caption = 'Tempo Pembayaran'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgl'
+        FieldName = 'tanggal'
         Footers = <>
         Title.Caption = 'Tanggal'
-        Visible = False
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'tgl_jatuh_tempo'
+        FieldName = 'noref'
         Footers = <>
-        Title.Caption = 'Tanggal Jatuh Tempo'
-        Width = 80
+        Title.Caption = 'Nomor Referensi'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'saldo_awal'
+        Footers = <>
+        Visible = False
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'debit'
+        Footers = <>
+        Title.Caption = 'Jumlah | Debit'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kredit'
+        Footers = <>
+        Title.Caption = 'Jumlah | Kredit'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'saldo'
+        Footers = <>
+        Title.Caption = 'Jumlah | Saldo'
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
-      object DBGridEh3: TDBGridEh
+      object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 969
-        Height = 198
+        Width = 0
+        Height = 0
         Align = alClient
-        DataSource = DsTerimaDet
         DynProps = <>
-        FooterRowCount = 1
-        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
         TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_stock_code'
-            Footers = <>
-            Title.Caption = 'Kode Barang'
-            Width = 70
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_name'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 170
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'stock_code'
-            Footers = <>
-            Title.Caption = 'No. Kedatangan'
-            Width = 120
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty_po'
-            Footers = <>
-            Title.Caption = 'PO|Kuantum'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit_po'
-            Footers = <>
-            Title.Caption = 'PO|Satuan'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Terima|Kuantum'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit'
-            Footers = <>
-            Title.Caption = 'Terima|Satuan'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty_difference'
-            Footers = <>
-            Title.Caption = 'Terima|Selisih'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'price'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.Value = 'Total'
-            Footer.ValueType = fvtStaticText
-            Footers = <>
-            Title.Caption = 'Harga|Satuan'
-            Width = 115
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'subtotal'
-            Footer.DisplayFormat = '0.0000#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga|Sub Total'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pemb_dpp'
-            Footer.DisplayFormat = '#.##0.00'
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga|Pembulatan'
-            Width = 80
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn'
-            Footers = <>
-            Title.Caption = 'PPN|%'
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_rp'
-            Footer.DisplayFormat = '#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN|Nominal'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_pembulatan'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN|Pembulatan'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pph_rp'
-            Footer.DisplayFormat = '#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPH'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'grandtotal'
-            Footer.DisplayFormat = '0.0000#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Grand Total'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'wh_name'
-            Footers = <>
-            Title.Caption = 'Gudang'
-            Width = 180
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'account_code'
-            Footers = <>
-            Title.Caption = 'Kode Akun'
-            Width = 80
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'wh_code'
-            Footers = <>
-            Width = 0
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_no'
-            Footers = <>
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
-      object DBGridOrder: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 969
-        Height = 198
-        Align = alClient
-        DataSource = DsTerimaDet
-        DynProps = <>
-        FooterRowCount = 1
-        RowDetailPanel.Height = 150
-        SearchPanel.Enabled = True
-        SumList.Active = True
-        TabOrder = 1
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_no'
-            Footers = <>
-            Title.Caption = 'No Transaksi'
-            Width = 0
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_code'
-            Footers = <>
-            Title.Caption = 'Kode Barang'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_name'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit'
-            Footers = <>
-            Title.Caption = 'Terima|Satuan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Terima|Kuantum'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'price'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'price'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|Satuan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'grandtotal'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'grandtotal'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|Jumlah'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'subtotalrp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'subtotalrp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|DPP'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_rp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'ppn_rp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pph_rp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'pph_rp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPH'
-            Width = 100
-          end>
+        Visible = False
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
     end
   end
-  object RzPanel1: TRzPanel
+  object dxRibbon1: TdxRibbon
     Left = 0
-    Top = 127
-    Width = 1006
-    Height = 42
-    Align = alTop
-    Color = 15987699
-    TabOrder = 2
-    ExplicitWidth = 1002
-    object Label1: TLabel
-      Left = 20
-      Top = 12
-      Width = 40
-      Height = 15
-      Caption = 'Periode'
+    Top = 0
+    Width = 1146
+    Height = 127
+    BarManager = dxBarManager1
+    Style = rs2010
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 1
+    TabStop = False
+    object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
+      Caption = 'Home'
+      Groups = <
+        item
+          ToolbarName = 'dxBarManager1Bar1'
+        end>
+      Index = 0
     end
-    object Label2: TLabel
-      Left = 167
-      Top = 13
-      Width = 19
-      Height = 15
-      Caption = 'S/D'
+  end
+  object DS_Kartu_UangMuka: TDataSource
+    DataSet = Mem_Kartu_UangMuka
+    Left = 376
+    Top = 264
+  end
+  object frxReport1: TfrxReport
+    Version = '2022.1.3'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44805.841268819400000000
+    ReportOptions.LastChange = 46148.408978090280000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 792
+    Top = 208
+    Datasets = <
+      item
+        DataSet = frxDBDKartuUangMukaHutang
+        DataSetName = 'frxDBDKartuUangMukaHutang'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
     end
-    object DTP1: TDateTimePicker
-      Left = 75
-      Top = 10
-      Width = 81
-      Height = 23
-      Date = 45982.000000000000000000
-      Time = 0.399360370371141500
-      TabOrder = 0
+    object Page1: TfrxReportPage
+      HGuides.Strings = (
+        '107'
+        '97'
+        '100')
+      VGuides.Strings = (
+        '3,77953')
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 330.000000000000000000
+      PaperSize = 10000
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+      MirrorMode = []
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 214.582677170000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Top = 16.645640000000000000
+          Width = 755.906000000000000000
+          Height = 37.795300000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold, fsUnderline]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'KARTU UANG MUKA PEMBELIAN')
+          ParentFont = False
+        end
+        object SysMemo8: TfrxSysMemoView
+          AllowVectorExport = True
+          Left = 646.094930000000000000
+          Top = 12.984230000000000000
+          Width = 106.795300000000000000
+          Height = 26.779530000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            'Hal. [PAGE#] dari [TOTALPAGES#]')
+          ParentFont = False
+        end
+        object prsh: TfrxMemoView
+          AllowVectorExport = True
+          Left = 0.779530000000000000
+          Top = 3.866110000000000000
+          Width = 260.842610000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'MAB')
+          ParentFont = False
+          VAlign = vaBottom
+        end
+        object prsh_alamat: TfrxMemoView
+          AllowVectorExport = True
+          Top = 25.204700000000000000
+          Width = 253.228346460000000000
+          Height = 52.913420000000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Alamat Perusahaan')
+          ParentFont = False
+        end
+        object Shape1: TfrxShapeView
+          AllowVectorExport = True
+          Top = 81.102350000000000000
+          Width = 755.905511811024000000
+          Height = 0.102350000000000000
+          Frame.Typ = []
+        end
+        object Memo3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 13.000000000000000000
+          Top = 90.708661420000000000
+          Width = 80.488250000000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Nama')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Shape4: TfrxShapeView
+          AllowVectorExport = True
+          Top = 83.102350000000000000
+          Width = 755.905511811024000000
+          Height = 0.102350000000000000
+          Frame.Typ = []
+        end
+        object Memo6: TfrxMemoView
+          AllowVectorExport = True
+          Left = 97.000000000000000000
+          Top = 90.708661420000000000
+          Width = 11.488250000000000000
+          Height = 18.897637800000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+        end
+        object Memo18: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Top = 90.708661420000000000
+          Width = 588.488250000000000000
+          Height = 18.897637800000000000
+          DataSetName = 'frxDBDatasetUM'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."supplier_name"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object periode: TfrxMemoView
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Top = 40.763760000000000000
+          Width = 755.906000000000000000
+          Height = 41.574830000000000000
+          DisplayFormat.FormatStr = 'dd mmm yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '  ')
+          ParentFont = False
+        end
+        object Memo54: TfrxMemoView
+          AllowVectorExport = True
+          Top = 182.078740160000000000
+          Width = 61.816474860000000000
+          Height = 32.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Tanggal')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo55: TfrxMemoView
+          AllowVectorExport = True
+          Left = 61.975001280000000000
+          Top = 182.078740160000000000
+          Width = 140.052089640000000000
+          Height = 32.503937010000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'No. Referensi')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 202.651120530000000000
+          Top = 182.078740160000000000
+          Width = 264.325257420000000000
+          Height = 32.503937010000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Keterangan')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 467.346456690000000000
+          Top = 182.078740160000000000
+          Width = 96.377952760000000000
+          Height = 32.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Debet')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo19: TfrxMemoView
+          AllowVectorExport = True
+          Left = 13.000000000000000000
+          Top = 113.385826770000000000
+          Width = 80.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Alamat')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          AllowVectorExport = True
+          Left = 97.000000000000000000
+          Top = 113.385826770000000000
+          Width = 11.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':        ')
+          ParentFont = False
+        end
+        object Memo21: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Top = 114.385826770000000000
+          Width = 588.488250000000000000
+          Height = 37.897650000000000000
+          DataSetName = 'frxDBDatasetUM'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."address"]')
+          ParentFont = False
+        end
+        object Memo22: TfrxMemoView
+          AllowVectorExport = True
+          Left = 13.000000000000000000
+          Top = 154.960629920000000000
+          Width = 80.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'No. Telepon')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 97.000000000000000000
+          Top = 154.960629920000000000
+          Width = 11.488250000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+        end
+        object Memo24: TfrxMemoView
+          AllowVectorExport = True
+          Left = 113.385826770000000000
+          Top = 154.960629920000000000
+          Width = 588.488250000000000000
+          Height = 18.897650000000000000
+          DataSetName = 'frxDBDatasetUM'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."telp"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 564.000000000000000000
+          Top = 182.102350000000000000
+          Width = 96.377952760000000000
+          Height = 32.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Kredit')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo26: TfrxMemoView
+          AllowVectorExport = True
+          Left = 660.000000000000000000
+          Top = 182.102350000000000000
+          Width = 96.377952760000000000
+          Height = 32.456692910000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Saldo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 28.346456690000000000
+        Top = 294.803340000000000000
+        Width = 755.906000000000000000
+        DataSet = frxDBDKartuUangMukaHutang
+        DataSetName = 'frxDBDKartuUangMukaHutang'
+        RowCount = 0
+        Stretched = True
+        object Memo10: TfrxMemoView
+          AllowVectorExport = True
+          Width = 61.816474860000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[IIF(<frxDBDKartuUangMukaHutang."tanggal"> = 0, '#39#39','
+            
+              'FormatDateTime('#39'dd-mm-yyyy'#39', <frxDBDKartuUangMukaHutang."tanggal' +
+              '">))]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 61.975001290000000000
+          Width = 140.564910150000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."noref"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          AllowVectorExport = True
+          Left = 467.346456690000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."debit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 203.163941040000000000
+          Width = 263.812436910000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."keterangan"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          AllowVectorExport = True
+          Left = 564.000000000000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."kredit"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo28: TfrxMemoView
+          AllowVectorExport = True
+          Left = 660.000000000000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          StretchMode = smMaxHeight
+          DataSetName = 'frxDBDKartuUMPenjualan'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[frxDBDKartuUangMukaHutang."saldo"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object ReportSummary1: TfrxReportSummary
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 28.346456690000000000
+        Top = 385.512060000000000000
+        Width = 755.906000000000000000
+        object Memo58: TfrxMemoView
+          AllowVectorExport = True
+          Width = 62.329295370000000000
+          Height = 28.346456690000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo59: TfrxMemoView
+          AllowVectorExport = True
+          Left = 61.975001270000000000
+          Width = 142.103371710000000000
+          Height = 28.346456690000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo60: TfrxMemoView
+          AllowVectorExport = True
+          Left = 467.346456690000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDKartuUangMukaHutang."debit">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo61: TfrxMemoView
+          AllowVectorExport = True
+          Left = 203.163941040000000000
+          Width = 263.812436910000000000
+          Height = 28.346456690000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'TOTAL')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo62: TfrxMemoView
+          AllowVectorExport = True
+          Left = 564.000000000000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftRight, ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[SUM(<frxDBDKartuUangMukaHutang."kredit">,MasterData1,3)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo63: TfrxMemoView
+          AllowVectorExport = True
+          Left = 659.992125980000000000
+          Width = 96.377952760000000000
+          Height = 28.346456690000000000
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftBottom]
+          HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDKartuUangMukaHutang."saldo_awal">)+SUM(<frxDBDKartuU' +
+              'angMukaHutang."debit">,MasterData1)-SUM(<frxDBDKartuUangMukaHuta' +
+              'ng."kredit">,MasterData1)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
     end
-    object DTP2: TDateTimePicker
-      Left = 194
-      Top = 10
-      Width = 81
-      Height = 23
-      Date = 45982.000000000000000000
-      Time = 0.399360370371141500
-      TabOrder = 1
+  end
+  object frxDBDKartuUangMukaHutang: TfrxDBDataset
+    UserName = 'frxDBDKartuUangMukaHutang'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'supplier_code=supplier_code'
+      'supplier_name=supplier_name'
+      'tanggal=tanggal'
+      'noref=noref'
+      'saldo_awal=saldo_awal'
+      'debit=debit'
+      'kredit=kredit'
+      'saldo=saldo'
+      'address=address'
+      'telp=telp'
+      'keterangan=keterangan')
+    DataSet = QKartu_UangMuka
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 625
+    Top = 304
+  end
+  object QKartu_UangMuka: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      'SELECT * FROM "kartu_uangmuka_hutang"('
+      '    '#39'SP20328'#39','
+      '    '#39'2025-01-26'#39','
+      '    '#39'2026-05-05'#39
+      ');')
+    Left = 376
+    Top = 216
+    object QKartu_UangMukasupplier_code: TMemoField
+      FieldName = 'supplier_code'
+      ReadOnly = True
+      BlobType = ftMemo
     end
-    object Cari: TRzBitBtn
-      Left = 291
-      Top = 9
-      Width = 70
-      Caption = 'Cari'
-      TabOrder = 2
-      OnClick = CariClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000830E0000830E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8820982E8E8E8E8E8E8E8E8E8E8E8E8E8AC81ACE85E5E5E5E5E
-        5E5E5E5E5E5E82090909E88181818181818181818181AC818181E85ED7D7D7D7
-        D7D7D7D7D7DF09090982E881E8E8E8E8E8E8E8E8E8DF818181ACE85ED7E3E3E3
-        E3E3DFDFDF09090982E8E881E8ACACACACACDFDFDF818181ACE8E85ED7D7D7D7
-        E35DB3B3D7880982E8E8E881E8E8E8E8AC81E3E3D7E381ACE8E8E85ED7E3E3E3
-        81E6B3B3B3D756E8E8E8E881E8ACACAC81E3E3E3E3D756E8E8E8E85ED7D7D7D7
-        81E6D7E6B3B356E8E8E8E881E8E8E8E881E3D7E3E3E356E8E8E8E85ED7E3E3E3
-        81E6D7D7E6B356E8E8E8E881E8ACACAC81E3D7D7E3E356E8E8E8E85ED7D7D7D7
-        D781E6E6E65DDFE8E8E8E881E8E8E8E8E881E3E3E381DFE8E8E8E85ED7E3E3E3
-        E3E3818181E35EE8E8E8E881E8ACACACACAC818181E381E8E8E8E85ED7D7D7D7
-        D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3E3
-        E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7D7
-        D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E381E8E8E8E8E85ED7D7D7D7
-        D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E5E
-        5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
+    object QKartu_UangMukasupplier_name: TMemoField
+      FieldName = 'supplier_name'
+      ReadOnly = True
+      BlobType = ftMemo
     end
+    object QKartu_UangMukatanggal: TDateField
+      FieldName = 'tanggal'
+      ReadOnly = True
+    end
+    object QKartu_UangMukanoref: TMemoField
+      FieldName = 'noref'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartu_UangMukasaldo_awal: TFloatField
+      FieldName = 'saldo_awal'
+      ReadOnly = True
+    end
+    object QKartu_UangMukadebit: TFloatField
+      FieldName = 'debit'
+      ReadOnly = True
+    end
+    object QKartu_UangMukakredit: TFloatField
+      FieldName = 'kredit'
+      ReadOnly = True
+    end
+    object QKartu_UangMukasaldo: TFloatField
+      FieldName = 'saldo'
+      ReadOnly = True
+    end
+    object QKartu_UangMukaaddress: TMemoField
+      FieldName = 'address'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartu_UangMukatelp: TMemoField
+      FieldName = 'telp'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QKartu_UangMukaketerangan: TMemoField
+      FieldName = 'keterangan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+  end
+  object Mem_Kartu_UangMuka: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 440
+    Top = 216
+    object Mem_Kartu_UangMukasupplier_code: TMemoField
+      FieldName = 'supplier_code'
+      BlobType = ftMemo
+    end
+    object Mem_Kartu_UangMukasupplier_name: TMemoField
+      FieldName = 'supplier_name'
+      BlobType = ftMemo
+    end
+    object Mem_Kartu_UangMukatanggal: TDateField
+      FieldName = 'tanggal'
+    end
+    object Mem_Kartu_UangMukanoref: TMemoField
+      FieldName = 'noref'
+      BlobType = ftMemo
+    end
+    object Mem_Kartu_UangMukasaldo_awal: TFloatField
+      FieldName = 'saldo_awal'
+    end
+    object Mem_Kartu_UangMukadebit: TFloatField
+      FieldName = 'debit'
+    end
+    object Mem_Kartu_UangMukakredit: TFloatField
+      FieldName = 'kredit'
+    end
+    object Mem_Kartu_UangMukasaldo: TFloatField
+      FieldName = 'saldo'
+    end
+  end
+  object DataSetDriverEh1: TDataSetDriverEh
+    ProviderDataSet = QKartu_UangMuka
+    Left = 440
+    Top = 264
   end
   object ActMenu: TActionManager
-    Left = 600
-    Top = 48
+    Left = 217
+    Top = 184
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
-      OnExecute = ActBaruExecute
     end
     object ActUpdate: TAction
       Caption = 'Update  '
-      OnExecute = ActUpdateExecute
     end
-    object ActRo: TAction
+    object ActRO: TAction
       Caption = 'Refresh  '
-      OnExecute = ActRoExecute
     end
     object ActDel: TAction
       Caption = 'Delete  '
-      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
-      OnExecute = ActPrintExecute
     end
     object ActApp: TAction
       Caption = 'Approve  '
       Enabled = False
-      Visible = False
     end
     object ActReject: TAction
       Caption = 'Reject  '
       Enabled = False
-      Visible = False
     end
     object ActClose: TAction
-      Caption = 'CLose Kontrak    '
+      Caption = 'CLose PO    '
       Enabled = False
     end
   end
@@ -873,8 +984,8 @@ object FPembelian: TFPembelian
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 688
-    Top = 48
+    Left = 161
+    Top = 184
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -883,58 +994,47 @@ object FPembelian: TFPembelian
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 56
-      FloatClientHeight = 123
+      FloatClientWidth = 273
+      FloatClientHeight = 225
       ItemLinks = <
         item
+          UserDefine = [udWidth]
+          UserWidth = 109
           Visible = True
-          ItemName = 'dxBarBaru'
+          ItemName = 'code_supp'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 342
+          Visible = True
+          ItemName = 'supp_name'
+        end
+        item
+          BeginGroup = True
+          UserDefine = [udWidth]
+          UserWidth = 157
+          Visible = True
+          ItemName = 'dtp1'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 155
+          Visible = True
+          ItemName = 'dtp2'
         end
         item
           Visible = True
-          ItemName = 'dxBarUpdate'
+          ItemName = 'dxBarLargeButton5'
         end
         item
           Visible = True
-          ItemName = 'dxbarRefresh'
+          ItemName = 'dxRefresh'
         end
         item
           Visible = True
-          ItemName = 'dxBarDelete'
+          ItemName = 'dxBarLargeButton4'
         end>
-      OneOnRow = False
-      Row = 0
-      UseOwnFont = False
-      Visible = True
-      WholeRow = False
-    end
-    object dxBarManager1Bar2: TdxBar
-      Caption = 'Report'
-      CaptionButtons = <>
-      DockedLeft = 125
-      DockedTop = 0
-      FloatLeft = 850
-      FloatTop = 2
-      FloatClientWidth = 0
-      FloatClientHeight = 0
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarSubItem1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton3'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton2'
-        end>
-      OneOnRow = False
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -1173,9 +1273,10 @@ object FPembelian: TFPembelian
         BFC080A205F60000000049454E44AE426082}
     end
     object dxBarBaru: TdxBarLargeButton
-      Action = ActBaru
       Caption = 'New'
       Category = 0
+      Hint = 'New'
+      Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
@@ -1310,8 +1411,10 @@ object FPembelian: TFPembelian
         0F208A3B0000000049454E44AE426082}
     end
     object dxBarUpdate: TdxBarButton
-      Action = ActUpdate
+      Caption = 'Update'
       Category = 0
+      Hint = 'Update'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1348,8 +1451,10 @@ object FPembelian: TFPembelian
         82}
     end
     object dxbarRefresh: TdxBarButton
-      Action = ActRo
+      Caption = 'Refresh'
       Category = 0
+      Hint = 'Refresh'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1382,8 +1487,10 @@ object FPembelian: TFPembelian
         02FE19007E4E40427BAAAF350000000049454E44AE426082}
     end
     object dxBarDelete: TdxBarButton
-      Action = ActDel
+      Caption = 'Delete'
       Category = 0
+      Hint = 'Delete'
+      Visible = ivAlways
       Glyph.SourceDPI = 96
       Glyph.Data = {
         89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
@@ -1422,190 +1529,17 @@ object FPembelian: TFPembelian
         3054984063CAF86CB8EBD6C1E0E5D94510D493FE02FE19007AE4A9BBD87973BB
         0000000049454E44AE426082}
     end
+    object datetimepicker1: TcxBarEditItem
+      Caption = 'Pilih Tanggal'
+      Category = 0
+      Hint = 'Pilih Tanggal'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
     object dxBarLargeButton1: TdxBarLargeButton
-      Action = ActPrint
-      Category = 0
-      Visible = ivNever
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
-        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
-        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
-        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
-        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
-        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
-        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
-        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
-        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
-        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
-        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
-        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
-        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
-        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
-        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
-        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
-        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
-        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
-        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
-        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
-        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
-        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
-        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
-        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
-        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
-        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
-        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
-        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
-        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
-        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
-        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
-        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
-        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
-        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
-        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
-        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
-        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
-        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
-        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
-        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
-        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
-        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
-        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
-        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
-        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
-        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
-        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
-        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
-        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
-        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
-        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
-    end
-    object dxBarLargeButton2: TdxBarLargeButton
-      Caption = 'Print Jurnal'
-      Category = 0
-      Hint = 'Print Jurnal'
-      Visible = ivAlways
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
-        F40000001974455874536F6674776172650041646F626520496D616765526561
-        647971C9653C0000000E744558745469746C65005072696E7465723BE7BF61C5
-        0000060E49444154785EA5575D885655177EF63967DEF9719A19474B25132C8B
-        4253340AEBD31C6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FA
-        A5FAAE0215ED2AA48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FB
-        BC338C32B45F16FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEA
-        E43789487A00A0F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E4
-        35112FC3D423F11E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3
-        A6ADE77062EC31C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC039
-        8702CA5614F4258B08EA4B221E894B417B503000307D02DAC27B22C1092E0119
-        4408A002CA978522E42380D479286510A39F660A9431701EB01CB60F51062270
-        013F824E54C50A571048A64C8110626A05A481731ED64559F9D3081C5411D55A
-        60BF3401A4525505C4F8F0D753403428A00D835BEB0248008D05588245E048D0
-        A6099434054E1A1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E4088
-        3EBEFFC5353F2739059811FA800260825972CA0AE0B7777DB960DEFC85BD499A
-        3E74B2EFE8BC2C4D906B4D05185210A078765172462B6A44444504F8592935FE
-        B775D739E53C962C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78
-        E1ED771CBE7FE96D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB8
-        0E33A2228249943A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F2444747
-        7B4FEB8C8EC776BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CC
-        C748BE5201067200A7A290BF943E10E49548D4596E64BC5F2EEB68AE65987953
-        2BFEB37C61C7E5CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970
-        FEF471BCF4CA31DE3144DC303C1AAA718ACE082C5BB108B22E91652986477334
-        8DCF495A5B0DA0C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD
-        85C06436C14F54FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA
-        58A469C28D477887F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C0
-        1A53DE564A722AACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871
-        F22CB2A65A0CB46CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129
-        E3A075242094B630E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961B
-        E2989416EEA25A4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B
-        8FF7ECC07B7BBEC0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D7
-        78E47763F3AB2FA2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB
-        0C6CDBB2096992909AD31C9188751435171EAF694D249840AC01564019A44440
-        3928BE09D4651455548B7D8A122C1510D552684C9854960B90300B0584739E19
-        266982BAD2CC1055A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B1
-        31E2881CC98809D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57
-        865F93DD1F1CC4D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2
-        028E9B033722D4254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780
-        BB9A711E17071545C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B4
-        62C221730EA502CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B0
-        1CCF1E57256D14081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C
-        747D025097344363B9E64621B56532172E0FD2CC9129EDB8854AE383919FC768
-        5E9C9A598140C6C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB
-        2FAF8DD5EBBD02C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B
-        0CD8609ED51B1A18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FD
-        D0FEDEFD00BE06500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C839
-        7CC20F469F401081C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E2552252
-        3917A6005AB4E11CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780
-        618940304B46047C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291D
-        CB53228C564703F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3
-        FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
-        4E44AE426082}
-      OnClick = dxBarLargeButton2Click
-    end
-    object dxBarLargeButton3: TdxBarLargeButton
-      Caption = 'Print Kolektif'
-      Category = 0
-      Hint = 'Print Kolektif'
-      Visible = ivAlways
-      LargeGlyph.SourceDPI = 96
-      LargeGlyph.Data = {
-        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
-        F40000001974455874536F6674776172650041646F626520496D616765526561
-        647971C9653C00000018744558745469746C65005072696E74417265613B5072
-        696E7465723B15F0EBCC000005FE49444154785EAD965DA85DD511C77F6B9F73
-        6EEEB937F891BC24ADFD8814436892B61492078DD76092068C52A462420AD5D2
-        561A695A0B7D2906853E081662C5121F0246F1A32A82FD80B692D43449A5C5D0
-        2631166A5B0858A5366DD2C47BCEF1ECBDD79A290C6BAFBD7738E8453AB0587B
-        669F3DF39FFFCC9A751C50AD2C2EC7FF4F04088002AAAA5C2ADDB8674FBCF8A7
-        4359D6995314D4011A1728516D5A3499EA67D5A4E394E0C391AF6F5FBF19F024
-        990CA0E35C36B763DB6A2A3974ECAF6CDA700D9345271275F0E81B6CBE7E6502
-        70E08513730D56950952BD7497D2331CE575765A67A7D4BADAAA6D83518ED912
-        435AC5E0831840B44DB7DAB2542274D7AA8526BB82807315280780738A040560
-        21009C8A1A858398F9A9FFC089A75F4F016B700EA559EB08D401E2D05F9F32E3
-        4CBF8744E40B01604E366D58694C38E0C433A7F9DCBA15ADB24B8DA266CDD58C
-        9D7CF50CB76C5D6B4A9639F6FFE4F8821940441B8E4D4723A535EDA6A78CAD4C
-        12EBED4054508D8A1AC00533E02C2044072002C10CD16E46489A6DB41A512475
-        690217C52DA8041AA904CBC69AC808A8C0D1080A2DC00A04D1D4CCE022ABB030
-        062A47B629C680080A2DBBE262507BAEC144CA55303D0344A495BD736E2200B3
-        4A0089F5276613A4CE52A998D0140C550B12DF1242C08BE050028E20A1356B00
-        7D9F63283190A0B1097D1000B41EB5066C510796F633A63245C441ACBF5EB518
-        F125E0D00C3EF191CB00A68002104CD0490008AA3130B8D8035E1A134D416C09
-        CB673B9C3BF316F9E0BDD870F56F9EFAD9C9041A94870E1CFDB72F8BDF7CEF1B
-        9B6E02CA8900E2286ED75320D40CD49D1E04098EF973EFB26BE7B56D6FEDCB2A
-        C9C38F1DB931C6F2A9142D00D1B1128F8E8360255000D2119560A0CA3290E71E
-        51655C847454810623A6D09FEE31CE8B2A5627E18CAB7D1748235B51423056B8
-        A2EF98ED4246862F857C9C938F4B03E023705781B0DD8126F00616E86342007C
-        5CA175178892467150A50C8125D319332E70F1ED738C2F0ED120BCFA87437C72
-        C5E731903E95A9392F9B6C18D81D77DDF7CF4FAFB90E09F2CE68F4EEB3BF78EE
-        911FFCF9E4D1F9AC6640D2A762C8B1ECFA5DB8F0F659AEBA7C9A8DEBAEE66BB7
-        AF67341C91E725A2B15422041B5C42102184F81CD418288AD2BEF9F657E7D832
-        B76AD967D77CEA3B5B6FDD753FD06B3180282A009823EF05F525A30B0396AD5C
-        8673CE9C17E331AF9F38C297BE7C84854AA7AB06ACD3C9F8E8F22BF96336B513
-        D8D3BA8CA471E1587621507A47917B5495BCB426A4BF688AE9A54B9859BC9899
-        D959007ABD29BABD2EAAE07D892F3DA08C8723068379C683F3C65651069C03EF
-        C312C3554D29A97A4000048993508227F860C1013B199B36AEE3859FFE965EAF
-        877319B53840D38673A80A659173EBCD7378F3E30147693B9D0603C2AF5E3E1D
-        3BD66AC7DF5F7B93FEC7165114DE90AB421184EDB76D231F17BC74F015CE9DBF
-        6081501A8135E94B975CC1CD5BAF65E7F65B18E642510A8A92171EC0D50050B6
-        DEB09A321E2BF43536DFB08A221FB1FFD9E3144530C7A50F5C0C813BEFB88D6F
-        7D73279DCCF13E62B40FDF2B383F3F0685C27B006BCC1600AD6640842E663066
-        280B4FE16309BC8083B3FF1DF1AFF3A3943CDAAC8233B0498D3B40590AB6FBC4
-        409CBE71DA75B30CEC7C74AD633330006519CC6FE1853B77EDE5C3C8817DDFB5
-        A38D9A4F80AC62C0E7797EF8E1FD8737D68352F8CBDFDEE1E3CB67C88B224DBC
-        323271D3173670F757AEE7D15325AA0AAD19EB903884EE5EDBE391C70F73F0E5
-        DF9B0F6310C5C7A6EE0202140FDEFBC56D40AF31AF5D7C7FF91DF71C78A38CC8
-        BD28FB1EDACD8B3F3F6E0EF3A0D000E0C5E844AB6126624DBCEF47BBADBF8C01
-        874D5940AB12F80A08B5B80826BCF58F378F3DF5E4D90D69BC026B565F634772
-        EC05119268BAB6D576EFAD87F8FE9EC75A97A42FC7C780DCD1964BF52CB2D207
-        A623A02EB078F79EE74FDF73D7164893DF2570666B8C83BD8FBEC4BE07767C06
-        18342EA23130EA36EB0768FBFF5B62C503C3465946C3C1FCEF7EF8E35F5E17FF
-        1726E49A584A0AE3F1E815E06C0D205D39C1B501401B40AD4E6065B6C18AE352
-        A9090831DB614C46A845FF07DB53B9A7908EAFDA0000000049454E44AE426082}
-      OnClick = dxBarLargeButton3Click
-    end
-    object dxBarSubItem1: TdxBarSubItem
       Caption = 'Print'
       Category = 0
+      Hint = 'Print'
       Visible = ivAlways
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
@@ -1660,288 +1594,322 @@ object FPembelian: TFPembelian
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarButton8'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton9'
-        end>
     end
     object dxBarButton8: TdxBarButton
-      Caption = 'Print A5'
+      Caption = 'New Button'
       Category = 0
-      Hint = 'Print A5'
+      Hint = 'New Button'
       Visible = ivAlways
-      OnClick = dxBarButton8Click
     end
-    object dxBarButton9: TdxBarButton
-      Caption = 'Print A4'
+    object dxBarLargeButton2: TdxBarLargeButton
       Category = 0
-      Hint = 'Print A4'
       Visible = ivAlways
-      OnClick = dxBarButton9Click
+    end
+    object dxBarLargeButton3: TdxBarLargeButton
+      Category = 0
+      Visible = ivAlways
+    end
+    object DateTimePicker2: TcxBarEditItem
+      Caption = 'Pilih Tanggal'
+      Category = 0
+      Hint = 'Pilih Tanggal'
+      Visible = ivNever
+    end
+    object code_supp: TcxBarEditItem
+      Caption = 'Supplier           : '
+      Category = 0
+      Hint = 'Supplier           : '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = Ed_supplierPropertiesButtonClick
+    end
+    object Jenis_Hutang: TdxBarCombo
+      Caption = 'Jenis Hutang    :'
+      Category = 0
+      Hint = 'Jenis Hutang    :'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
+    object Cb_Valas: TdxBarCombo
+      Caption = 'Valas                : '
+      Category = 0
+      Hint = 'Valas                : '
+      Visible = ivAlways
+      Text = 'IDR'
+      ItemIndex = -1
+    end
+    object dtp1: TcxBarEditItem
+      Caption = 'Tanggal Awal  :'
+      Category = 0
+      Hint = 'Tanggal Awal  :'
+      Visible = ivAlways
+      Width = 150
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarLargeButton4: TdxBarLargeButton
+      Caption = 'Print'
+      Category = 0
+      Hint = 'Print'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+        54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+        6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+        A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+        FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+        F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+        1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+        C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+        8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+        22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+        571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+        05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+        1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+        39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+        4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+        2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+        6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+        3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+        BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+        00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+        CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+        DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+        C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+        FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+        87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+        ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+        6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+        30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+        4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+        C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+        A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+        909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+        55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+        55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+        D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+        D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+        254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+        45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+        CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+        081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+        63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+        C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+        C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+        18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+        500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+        81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+        1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+        7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+        F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+        609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton4Click
+    end
+    object dtp2: TcxBarEditItem
+      Caption = 'Tanggal Akhir  :'
+      Category = 0
+      Hint = 'Tanggal Akhir  :'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxRefresh: TdxBarLargeButton
+      Caption = 'Cari'
+      Category = 0
+      Hint = 'Cari'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+        462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D22D0
+        A1D0BBD0BED0B95F312220786D6C6E733D22687474703A2F2F7777772E77332E
+        6F72672F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A
+        2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D2230707822
+        20793D22307078222076696577426F783D223020302033322033322220737479
+        6C653D22656E61626C652D6261636B67726F756E643A6E657720302030203332
+        2033323B2220786D6C3A73706163653D227072657365727665223E262331333B
+        262331303B3C7374796C6520747970653D22746578742F6373732220786D6C3A
+        73706163653D227072657365727665223E2E426C61636B7B66696C6C3A233732
+        373237323B7D262331333B262331303B2623393B2E426C75657B66696C6C3A23
+        3131373744373B7D3C2F7374796C653E0D0A3C672069643D22D0A1D0BBD0BED0
+        B95F32223E0D0A09093C7061746820636C6173733D22426C61636B2220643D22
+        4D31332C31374C322C32386C322C326C31312D31316C312D316C2D322D324C31
+        332C31377A222F3E0D0A09093C673E0D0A0909093C673E0D0A090909093C7061
+        746820636C6173733D22426C75652220643D224D32302C34632D342E342C302D
+        382C332E362D382C3873332E362C382C382C3873382D332E362C382D38533234
+        2E342C342C32302C347A204D32302C3138632D332E332C302D362D322E372D36
+        2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
+        2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
+        2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = dxRefreshClick
+    end
+    object ed_code_supp: TcxBarEditItem
+      Caption = '                             '
+      Category = 0
+      Enabled = False
+      Hint = '                             '
+      Visible = ivNever
+    end
+    object dxBarEdit1: TdxBarEdit
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+    end
+    object supp_name: TdxBarEdit
+      Caption = '                           '
+      Category = 0
+      Hint = '                           '
+      Visible = ivAlways
+    end
+    object dxBarLargeButton5: TdxBarLargeButton
+      Category = 0
+      Visible = ivAlways
+    end
+    object CbRencana: TdxBarCombo
+      Caption = 'Rencana Ke'
+      Category = 0
+      Hint = 'Rencana Ke'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
+    object dxBarEdit3: TdxBarEdit
+      Category = 0
+      Visible = ivNever
+    end
+    object dxBarLargeButton6: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton7: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton8: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton9: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton10: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton11: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton12: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton13: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton14: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton15: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object cxBarEditItem1: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+    end
+    object Cb_semua: TcxBarEditItem
+      Caption = 'Semua'
+      Category = 0
+      Hint = 'Semua'
+      Visible = ivAlways
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+      InternalEditValue = True
     end
   end
-  object Rpt: TfrxReport
-    Version = '2022.1.3'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 46060.443445775460000000
-    ReportOptions.LastChange = 46060.443445775460000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
-    OnReportPrint = 'ReportOnReportPrint'
-    Left = 694
-    Top = 82
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[Page#]')
-        end
-      end
-    end
-  end
-  object DbLPB: TfrxDBDataset
-    UserName = 'DbLPB'
+  object frxDBDatasetPers: TfrxDBDataset
+    UserName = 'frxDBDatasetPers'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'trans_no=trans_no'
-      'order_no=order_no'
-      'trans_date=trans_date'
-      'po_no=po_no'
+      'company_code=company_code'
+      'company_name=company_name'
+      'address=address'
+      'telp=telp'
+      'email=email'
+      'npwp=npwp'
+      'city=city'
+      'address2=address2'
+      'id=id'
+      'created_at=created_at'
       'created_by=created_by'
-      'remark=remark'
-      'spb_no=spb_no'
-      'sj_no=sj_no'
-      'faktur_no=faktur_no'
-      'import_duty=import_duty'
-      'faktur_date=faktur_date'
-      'due_date=due_date'
-      'supplier_code=supplier_code'
-      'account_code=account_code'
-      'purchase_type=purchase_type'
-      'debt_amount=debt_amount'
-      'payment_amount=payment_amount'
-      'debt_remaining=debt_remaining'
-      'status=status'
-      'valas=valas'
-      'valas_value=valas_value'
       'updated_at=updated_at'
       'updated_by=updated_by'
-      'pib_no=pib_no'
-      'correction_status=correction_status'
-      'plan_stat=plan_stat'
-      'approval_status=approval_status'
-      'approval=approval'
-      'sbu_code=sbu_code'
-      'trans_month=trans_month'
-      'trans_year=trans_year'
-      'tgl_jatuh_tempo=tgl_jatuh_tempo'
-      'vehicle_no=vehicle_no'
-      'driver=driver'
-      'supplier_name=supplier_name'
-      'item_name=item_name'
-      'item_stock_code=item_stock_code'
-      'unit=unit'
-      'qty=qty'
-      'ppn_rp=ppn_rp'
-      'pph_rp=pph_rp'
-      'ppn_pembulatan=ppn_pembulatan'
-      'subtotalrp=subtotalrp'
-      'grandtotal=grandtotal'
-      'subtotal=subtotal'
-      'price=price'
-      'ttd=ttd'
-      'account_pph_code=account_pph_code'
-      'um_value=um_value')
-    DataSet = QReportLPB
+      'deleted_at=deleted_at'
+      'deleted_by=deleted_by'
+      'type_of_business=type_of_business'
+      'latitude=latitude'
+      'longitude=longitude'
+      'tax_status=tax_status'
+      'currency=currency'
+      'fp_name=fp_name'
+      'kk_year=kk_year'
+      'kkas_year=kkas_year'
+      #13#10'inventory_date='#13#10'inventory_date'
+      #13#10'month_sa_acc='#13#10'month_sa_acc'
+      'item_date=item_date'
+      'debt_date=debt_date'
+      'expenditure_date=expenditure_date'
+      'serial_no=serial_no'
+      'reporter=reporter'
+      'position=position')
+    DataSet = QPerusahaan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 646
-    Top = 10
-  end
-  object QReportLPB: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,' +
-        'a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'
-      
-        '           '#9'a.faktur_date,a.due_date,a.supplier_code,a.account_c' +
-        'ode,a.purchase_type,a.debt_amount, '
-      
-        #9'        a.payment_amount,a.debt_remaining,a.status,a.valas,a.va' +
-        'las_value,a.updated_at,a.updated_by,          '
-      
-        'a.pib_no,'#9'a.correction_status,a.plan_stat,a.approval_status,a.ap' +
-        'proval,a.sbu_code, a.trans_month,          '
-      
-        ' a.trans_year,a.tgl_jatuh_tempo,C.vehicle_no,C.driver,D.supplier' +
-        '_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,e.pph_' +
-        'rp,e.ppn_pembulatan,e.subtotalrp,'
-      
-        ' e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_v' +
-        'alue'
-      
-        ' from        t_purchase_invoice A Left join t_spb C on A.spb_no=' +
-        'C.spb_no inner join'
-      
-        '             t_purchase_invoice_det E on A.trans_no=E.trans_no i' +
-        'nner join t_supplier D '
-      
-        '             on A.supplier_code=D.supplier_code inner join t_ite' +
-        'm_stock F on'
-      
-        '             E.item_stock_code=F. item_stock_code left JOIN t_us' +
-        'er g on a.created_by=g.user_name '
-      'order by e.id asc')
-    Left = 638
-    Top = 82
-  end
-  object DsTerimaDet: TDataSource
-    DataSet = QTerimaDet
-    Left = 560
-    Top = 64
-  end
-  object QTerimaDet: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'SELECT'
-      
-        '        a.trans_no,a.item_stock_code, a.stock_code, a.qty, a.uni' +
-        't, a.wh_code, a.trans_year, a.qty_difference, a.unit_po, '
-      
-        #9'a.qty_po, a.notes, a.receive_no, a.po_no, b.item_name, a.pph_rp' +
-        ', a.ppn_rp, a.grandtotal, a.subtotal, a.price, a.ppn, '
-      
-        #9'a.pph ,a.account_code,a.ppn_pembulatan,a.account_pph_code,a.dut' +
-        'y_account_code,a.import_duty,a.order_no,a.subtotalrp,'
-      '        a.pemb_dpp,c.wh_code,a.header_code --,d.ref_no'
-      ',b.item_code'
-      ''
-      'FROM t_purchase_invoice_det AS "a"'
-      
-        #9'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stoc' +
-        'k_code'
-      '        INNER JOIN t_wh'#9'c on a.wh_code=c.wh_code'
-      
-        '        -- INNER JOIN purchase.t_purchase_invoice d on a.trans_n' +
-        'o=d.trans_no'
-      'ORDER BY a.id desc')
-    MasterSource = Dsterima_material
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Left = 536
-    Top = 16
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'FPB/003/13/XI/2025/HLJ'
-      end>
-  end
-  object DataSetDriverEh1: TDataSetDriverEh
-    ProviderDataSet = Qterima_material
-    Left = 400
+    Left = 969
     Top = 72
   end
-  object Dsterima_material: TDataSource
-    DataSet = Memterima_material
-    Left = 400
-    Top = 24
-  end
-  object Memterima_material: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DataSetDriverEh1
-    Left = 320
-    Top = 88
-  end
-  object Qterima_material: TUniQuery
+  object QPerusahaan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'select (case WHEN a."approval_status"='#39'0'#39' THEN '#39'PENGAJUAN'#39' else ' +
-        #39'REJECT'#39' END) AS status_app,a.*, b.supplier_name,'
-      
-        ' c.account_name, d.account_name as nm_perk,to_char(trans_date,'#39'd' +
-        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln,e.ref_name, e.id as id_ref ' +
-        ' from '
-      
-        't_purchase_invoice a Left join t_supplier b on a.supplier_code=b' +
-        '.supplier_code'
-      'left join t_ak_account c on a.account_code=c.code'
-      'left join t_ak_account d on a.account_um_code=d.code'
-      'left join t_ref_item_receive e on a.ref_code=e.ref_code'
-      'order by a.id desc')
-    Left = 320
-    Top = 40
+      'select * from t_company')
+    Left = 896
+    Top = 72
   end
 end

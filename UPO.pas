@@ -1006,7 +1006,7 @@ begin
                'WHERE a.trans_category='+QuotedStr(RzComboBox1.Text)+' '+
                'and a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
                'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
-               'Order by a.po_date,A.po_no ASC ';
+               'Order by a.po_date desc,A.po_no desc ';
      open;
    end;
    //Qpo.Close;

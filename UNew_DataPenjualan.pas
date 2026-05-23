@@ -26,7 +26,9 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue, cxCheckBox, dxToggleSwitch;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxCheckBox, dxToggleSwitch,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, frxClass,
+  frxDBSet;
 
 type
   TFNew_Penjualan = class(TForm)
@@ -146,6 +148,13 @@ type
     MemDetailPOTONGAN_ADD_ON: TCurrencyField;
     btnNoTransaksi: TRzBitBtn;
     chkNomorPengganti: TRzCheckBox;
+    edNoPPBJ: TEdit;
+    Label27: TLabel;
+    Label28: TLabel;
+    QUangMuka: TUniQuery;
+    Report: TfrxReport;
+    frxDBDatasetUangMuka: TfrxDBDataset;
+    BCetakBuktiPenarikanUangMuka: TRzBitBtn;
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure edNamaSumberButtonClick(Sender: TObject);
     procedure edKode_TransButtonClick(Sender: TObject);
@@ -189,12 +198,13 @@ type
     procedure btnNoTransaksiClick(Sender: TObject);
     procedure chkNomorPenggantiClick(Sender: TObject);
     procedure edNomorTransChange(Sender: TObject);
+    procedure BCetakBuktiPenarikanUangMukaClick(Sender: TObject);
   private
     { Private declarations }
   tot_dpp, tot_ppn, tot_pph, tot_pot, tot_menej_fee, tot_grand, tot_jumlah, tot_harga_sblm_pot,tot_uang_muka,tot_dipotong_uang_muka : real;
   public
     { Public declarations }
-    stat_menej_fee_jual, stat_proses : Boolean;
+    stat_menej_fee_jual, stat_proses,is_ppn_pajak : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
     strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
@@ -445,7 +455,10 @@ begin
   begin
     Close;
     Sql.Clear;
-    Sql.Text:='SELECT * FROM t_cash_bank_acceptance_receivable WHERE no_invoice='+QuotedStr(edNomorTrans.Text);
+//    Sql.Text:='SELECT * FROM t_cash_bank_acceptance_receivable WHERE no_invoice='+QuotedStr(edNomorTrans.Text);
+    SQL.Text:='SELECT a.* FROM t_cash_bank_acceptance_receivable a '+
+              'LEFT JOIN t_cash_bank_acceptance b on b.voucher_no=a.voucher_no '+
+              'WHERE a.no_invoice = '+QuotedStr(edNomorTrans.Text)+' AND b.deleted_at is NULL';
     Open;
   end;
 
@@ -515,7 +528,7 @@ begin
                   ' Values( '+
                   ' '+QuotedStr(edNomorTrans.Text)+', '+
                   ' '+QuotedStr(MemUangMuka['no_trans_down_payment'])+', '+
-                   ' '+QuotedStr(MemUangMuka['voucher_no'])+', '+
+                  ' '+QuotedStr(MemUangMuka['voucher_no'])+', '+
                   ' '+QuotedStr(MemUangMuka['uang_muka_dipakai'])+', '+
                   ' '+QuotedStr(MemUangMuka['sisa_uang_muka'])+' );';
         ExecSQL;
@@ -675,6 +688,34 @@ begin
     edTotPPN.Value:=0;
     edTotBersih.Value:=0;
     strNoTransaksiDiGanti:='';
+  end;
+end;
+
+procedure TFNew_Penjualan.BCetakBuktiPenarikanUangMukaClick(Sender: TObject);
+var no_uang_muka: String;
+begin
+  no_uang_muka:=MemUangMuka['no_trans_down_payment'];
+//  ShowMessage(no_uang_muka);
+  with QUangMuka do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT a.trans_no,b.trans_date,a.trans_no_down_payment,a.voucher_no,'+
+              'a.paid_amount,b.code_cust,b.customer_name_pkp customer_name, '+
+              'concat(''Uang Muka Untuk Nota '',a.trans_no) as description from t_selling_down_payment a '+
+              'LEFT JOIN get_selling(false) b on b.trans_no=a.trans_no AND b.deleted_at IS NULL '+
+              'WHERE a.trans_no_down_payment='+QuotedStr(no_uang_muka);
+    Open;
+  end;
+
+  if QUangMuka.RecordCount>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/rpt_buktipengeluaran_uangmuka_penjualan'+ '.fr3');
+    SetMemo(Report,'PRSH',FHomeLogin.vKodePRSH);
+    Report.ShowReport();
+  end else begin
+    MessageDlg('Tidak ada data yang dicetak..!!',mtInformation,[mbRetry],0);
   end;
 end;
 
@@ -1047,6 +1088,7 @@ begin
   UangMukaAda:=0;
   strUangMuka:='';
   strLanjutUangMuka:=1;
+
   with dm.Qtemp do
   begin
     Close;
@@ -1101,7 +1143,6 @@ begin
 //    tot_pot:=Round(DBGridDetail.Columns[8].Footer.SumValue);
 //    tot_menej_fee:=Round(DBGridDetail.Columns[18].Footer.SumValue);
 //    tot_grand:=Round(DBGridDetail.Columns[19].Footer.SumValue);
-
 //    tot_jumlah:=0;
 //    tot_dpp:=0;
 //    tot_ppn:=0;
@@ -1117,6 +1158,11 @@ begin
       MemUangMuka.First;
       while not MemUangMuka.Eof do
       begin
+        if MemUangMuka['uang_muka_dipakai']>MemUangMuka['sisa_uang_muka'] then
+        begin
+          MessageDlg('Nilai input melebihi sisa uang muka yang tersedia..!!',mtInformation,[mbRetry],0);
+          Exit;
+        end;
         tot_uang_muka:=tot_uang_muka+MemUangMuka['uang_muka_dipakai'];
         MemUangMuka.Next;
       end;
@@ -1180,6 +1226,18 @@ begin
           MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
           Exit;
         end;
+
+        if tot_dipotong_uang_muka<0 then
+        begin
+          MessageDlg('Uang Muka Lebih Besar Dari Total Bersih..!!',mtInformation,[mbRetry],0);
+          Exit;
+        end;
+
+//        if (is_ppn_pajak=False) AND (TRIM(edNoPPBJ.Text)='') then
+//        begin
+//          MessageDlg('No PPBJ Wajib Diisi..!!',mtInformation,[mbRetry],0);
+//          exit;
+//        end;
         {else if edNomorFaktur.Text='' then
         begin
           MessageDlg('Data Faktur Wajib Diisi..!!',mtInformation,[mbRetry],0);
@@ -1200,15 +1258,18 @@ begin
 
         if (chkNomorPengganti.Checked=True) AND (edNomorTrans.Text<>'') then
         begin
-          with dm.Qtemp2 do
+          if status=0 then
           begin
-            close;
-            sql.Clear;
-            sql.Text:='SELECT * FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text);
-            open;
+            with dm.Qtemp2 do
+            begin
+              close;
+              sql.Clear;
+              sql.Text:='SELECT * FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text);
+              open;
+            end;
           end;
 
-          if dm.Qtemp2.RecordCount>0 then
+          if (dm.Qtemp2.RecordCount>0) AND (status=0) then
           begin
             MessageDlg('No Transaksi Sudah Ada..!!',mtInformation,[mbRetry],0);
             Exit;
@@ -1336,7 +1397,7 @@ begin
   end else if MemDetail.RecordCount<>0 then
   begin
   //ShowMessage('A');
-  //insert Temp Angka potongmPenjualan
+
     get_uuid:=SelectRow('SELECT gen_random_uuid()::TEXT AS clean_uuid;');
     SimpanTempDetail;
     with FRincianPot_Penjualan do
@@ -1434,6 +1495,7 @@ begin
   chkNomorPengganti.Checked:=False;
   btnNoTransaksi.Visible:=False;
   strNoTransaksiDiGanti:='';
+  edNoPPBJ.Clear;
 end;
 
 procedure TFNew_Penjualan.DBGridDetailCellClick(Column: TColumnEh);
@@ -1677,6 +1739,7 @@ begin
     btnNoTransaksi.Visible:=False;
     chkNomorPengganti.Enabled:=False;
   end else begin
+    BCetakBuktiPenarikanUangMuka.Visible:=False;
     btAddDetail.Visible:=True;
     SpeedButton1.Visible:=True;
     spJatuhTempo.Enabled:=True;
@@ -1684,7 +1747,26 @@ begin
     btMasterSumber.Visible:=True;
     dtTanggal.Date:=NOW;
     edKode_Trans.Text:=SelectRow('select value_parameter from t_parameter where key_parameter=''default_kode_tax'' ');
-    edNama_Trans.Text:=SelectRow('select name from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' ');
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_sales_transaction_source where code='+QuotedStr(edKode_Trans.Text)+' and deleted_at is NULL';
+      open;
+    end;
+    edNama_Trans.Text:=dm.Qtemp2.FieldByName('name').AsString;
+    is_ppn_pajak:=dm.Qtemp2.FieldByName('is_ppn_pajak').AsBoolean;
+    if dm.Qtemp2.FieldByName('is_ppn_pajak').AsBoolean=True then
+    begin
+      edNoPPBJ.Visible:=False;
+      Label27.Visible:=False;
+      Label28.Visible:=False;
+      edNoPPBJ.Text:='';
+    end else begin
+      edNoPPBJ.Visible:=True;
+      Label27.Visible:=True;
+      Label28.Visible:=True;
+    end;
     btnNoTransaksi.Visible:=False;
     chkNomorPengganti.Enabled:=True;
   end;
@@ -1788,7 +1870,7 @@ begin
             ' "sub_total", "ppn_value", "pph_value", "tot_piece_value", "tot_menj_fee", "grand_tot", '+
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",pembulatan_value,'+
             'tot_before_piece,amount_down_payment,grand_tot_amount_down_payment,'+
-            'load_conversion,po_order,sbu_code,word_amount,leader_name,is_no_replacement) '+
+            'load_conversion,po_order,sbu_code,word_amount,leader_name,is_no_replacement,no_ppbj) '+
             ' VALUES (  '+
             ' NOW(), :parcreated_by, :parcode_trans, '+
             ' :parno_inv_tax, :partrans_no, :parno_traveldoc, :partrans_date, :parcode_cust, '+
@@ -1796,7 +1878,7 @@ begin
             ' :parsub_total, :parppn_value, :parpph_value, :partot_piece_value, :partot_menj_fee, :pargrand_tot, '+
             ' :parorder_no, :paradditional_code, :partrans_day, :partrans_month, :partrans_year, '+
             ' :parpembulatan_value,:partot_before_piece,:paramount_down_payment,'+
-            ':pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order,:parsbu_code,:parword_amount,:parleader_name,:paris_no_replacement)';
+            ':pargrand_tot_amount_down_payment,:parload_conversion,:parpo_order,:parsbu_code,:parword_amount,:parleader_name,:paris_no_replacement,:parno_ppbj)';
             parambyname('parcreated_by').Value:=Nm;
             parambyname('parcode_trans').Value:=edKode_Trans.Text;
             parambyname('parno_inv_tax').Value:=edNomorFaktur.Text;
@@ -1841,6 +1923,7 @@ begin
             if chkNomorPengganti.Checked=True then
             parambyname('paris_no_replacement').Value:=True
             else parambyname('paris_no_replacement').Value:=False;
+            parambyname('parno_ppbj').Value:=edNoPPBJ.Text;
     ExecSQL;
   end;
 
@@ -1915,6 +1998,7 @@ begin
             ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+', '+
             ' load_conversion='+QuotedStr(SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' '))+' '+
             ',word_amount='+QuotedStr(terbilang)+' '+
+            ',no_ppbj='+QuotedStr(edNoPPBJ.Text)+' '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');
     ExecSQL;
   end;
@@ -2033,6 +2117,7 @@ begin
   MemUangMuka.EmptyTable;
   if dm.Qtemp2.RecordCount>0 then
   begin
+    BCetakBuktiPenarikanUangMuka.Visible:=True;
     cbUangMuka.Checked:=True;
     Dm.Qtemp2.first;
     while not Dm.Qtemp2.Eof do
@@ -2048,6 +2133,7 @@ begin
     TabUangMuka.TabVisible:=True;
   end else
   begin
+    BCetakBuktiPenarikanUangMuka.Visible:=False;
     cbUangMuka.Checked:=False;
     TabUangMuka.TabVisible:=False;
   end;
@@ -2173,6 +2259,7 @@ begin
     end else begin
       TabUangMuka.TabVisible:=False;
 
+
       if cbUangMuka.Focused then
       begin
         MessageDlg('Tidak Ada Data Uang Muka Yang Dibayarkan..!!', mtInformation, [mbOK], 0);
@@ -2181,9 +2268,12 @@ begin
 //      MessageDlg('Tidak Ada Data Uang Muka Yang Dibayarkan..!!',mtInformation,[mbRetry],0);
 //      cbUangMuka.Checked:=False;
     end;
+    RzPageControl1.ActivePage:=TabUangMuka;
   end else
   begin
     TabUangMuka.TabVisible:=False;
+    MemUangMuka.EmptyTable;
+    RzPageControl1.ActivePage:=TabSDetailPel;
   end;
 end;
 

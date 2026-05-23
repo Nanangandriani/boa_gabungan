@@ -459,6 +459,13 @@ begin
       open;
     end;
 
+    if Dm.Qtemp3.RecordCount=0 then
+    begin
+      MessageDlg('Harga Klasifikasi Produk '+dm.Qtemp3.FieldByName('NAMABARANG').AsString+' Tidak Ditemukan Cek Kembali di Master Klasifikasi ..!!',mtInformation,[mbRetry],0);
+      Exit;
+    end;
+
+
     stat_klasifikasi:=Dm.Qtemp3.fieldbyname('stat_klasifikasi').Value;
     hjual:=Dm.Qtemp3.fieldbyname('HARGAJUAL').Value;
     {disc:=fmainmenu.qexec.fieldbyname('disc').asfloat+fmainmenu.qexec.fieldbyname('disc1').asfloat+fmainmenu.qexec.fieldbyname('disc2').asfloat+
@@ -558,6 +565,12 @@ begin
                 ' d.limit2 >= '+QuotedSTR(IntToStr(batasQtyPerItem))+'  LIMIT 1 ');
       end;
       open;
+    end;
+
+    if Dm.Qtemp3.RecordCount=0 then
+    begin
+      MessageDlg('Harga Klasifikasi Tidak Ditemukan Cek Kembali di Master Klasifikasi ..!!',mtInformation,[mbRetry],0);
+      Exit;
     end;
 
     {if FMainMenu.qexec3.fieldbyname('HARGAJUAL').asfloat<>0 then

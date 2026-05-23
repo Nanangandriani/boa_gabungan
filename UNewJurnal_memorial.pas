@@ -55,6 +55,8 @@ type
     Label7: TLabel;
     CbHarta: TComboBox;
     BCorrection: TRzBitBtn;
+    Btn_no: TSpeedButton;
+    ckno_penganti: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure RzBitBtn1Click(Sender: TObject);
@@ -71,10 +73,13 @@ type
     procedure cbbulanSelect(Sender: TObject);
     procedure DTtglChange(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
+    procedure ckno_pengantiClick(Sender: TObject);
+    procedure Btn_noClick(Sender: TObject);
   private
     { Private declarations }
   public
      IntStatusKoreksi, iserror, isCancel: integer;
+     strNoTransaksiDiGanti:string;
     { Public declarations }
     procedure Clear;
     procedure Save;
@@ -92,7 +97,7 @@ implementation
 
 uses //browse_akun_kredit,Ubrowse_daftar_penerimaan_pembayaran_piutang,
 UDataModule, UListJurnal_memorial,UCari_ket_memorial, UCari_SumberMemorial, UMainmenu,
-  browse_akun_kredit, UMy_Function, UKoreksi, UListKoreksi;
+  browse_akun_kredit, UMy_Function, UKoreksi, UListKoreksi, UListNoTransaksi;
 var
   RealFNew_JurnalMemo: TFNewJurnal_memo;
 
@@ -341,7 +346,7 @@ begin
                 'updated_at=now(),notes=:parketerangan,bk_no=:parno_bk,'+
                 'faktur_no=:parno_faktur, other_source=:os, memorial_source=:memorial_source,'+
                // ' order_no=:order_no,
-                ' trans_day=:hr, '+
+                //' trans_day=:hr, '+
                 'rounding_status=:parstatus_pembulatan, post_status=:parstatus_post, '+
                 ' status_correction=0 '+
                 'where memo_no=:parno_bukti_memo';
@@ -605,6 +610,14 @@ begin
   end;
 end;
 
+procedure TFNewJurnal_memo.Btn_noClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='';
+  FListNoTransaksi.update_grid('memo_no','order_no','t_memorial_journal','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',DTtgl.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY memo_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFNewJurnal_memo.cbbulanSelect(Sender: TObject);
 begin
   bulan1:=cbbulan.ItemIndex;
@@ -700,6 +713,11 @@ begin
     cbjenis.Enabled:=false;
     status_sumber:=0;
   end;
+end;
+
+procedure TFNewJurnal_memo.ckno_pengantiClick(Sender: TObject);
+begin
+  if ckno_penganti.Checked=true then Btn_no.Enabled:=true else Btn_no.Enabled:=false;
 end;
 
 end.

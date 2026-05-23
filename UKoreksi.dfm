@@ -187,7 +187,8 @@ object FKoreksi: TFKoreksi
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 238
+      ExplicitLeft = 236
+      ExplicitTop = -1
     end
     object BtnReject: TRzBitBtn
       Left = 151

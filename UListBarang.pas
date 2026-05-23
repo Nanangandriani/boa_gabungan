@@ -253,6 +253,7 @@ begin
       edQtyKelipatanBundling.Value:=MemMaterial['qty_bundle_sell'];
       edTambahanQtyBundling.Value:=MemMaterial['add_on_qty_bundle_sell'];
       cbSatuanBundling.Text:=MemMaterial['unit_of_measure_bundle_sell'];
+      EdHSCode.Text:=MemMaterial['hs_code'];
       //
       if MemMaterial['lot_status']='false' then Ck_NoUrut.Checked:=false else Ck_NoUrut.Checked:=true;
     end;

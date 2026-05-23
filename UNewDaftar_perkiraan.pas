@@ -101,7 +101,7 @@ implementation
 {$R *.dfm}
 
 uses Udaftar_perkiraan, UNew_HeaderPerkiraan, UNew_Posting,
-  UCari_Modul, UDataModule, UNew_JenisAkun, UNew_KategoriAkun;
+  UCari_Modul, UDataModule, UNew_JenisAkun, UNew_KategoriAkun, UMainMenu;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFNew_PerkBank: TFNewdaftar_perkiraan_bank;
@@ -533,9 +533,9 @@ begin
     close;
     sql.Clear;
     sql.Text:='Insert Into t_ak_account(code,header_code,account_name,posting_id,posisi_dk,group_id,'+
-    'type_id,category_code,balance_status,cost_st_id,lr_st_id,balance_st_id,balance_post_st_id) '+
+    'type_id,category_code,balance_status,cost_st_id,lr_st_id,balance_st_id,balance_post_st_id,created_by) '+
     'Values (:parkode,:parkode_header,:parnama_perkiraan,:parposting,:parposisi_dk,:parkelompok_akun,'+
-    ':parid_jenis_akun,:parkd_kategori_akun,:status_neraca,:cost_id,:lr_id,:balance_id,:balance_post_id)';
+    ':parid_jenis_akun,:parkd_kategori_akun,:status_neraca,:cost_id,:lr_id,:balance_id,:balance_post_id,:pic)';
     parambyname('parkode').Value:=edkode.Text;
     parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
@@ -564,6 +564,7 @@ begin
     parambyname('lr_id').Value:=id_lr;
     parambyname('balance_id').Value:=id_nr;
     parambyname('balance_post_id').Value:=id_posnr;
+    parambyname('pic').Value:=Nm;
     execsql;
   end;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -687,7 +688,7 @@ begin
     Sql.Text :='update t_ak_account set header_code=:parkode_header,account_name=:parnama_perkiraan,'+
     'posting_id=:parposting,posisi_dk=:parposisi_dk,group_id=:parkelompok_akun,type_id=:parid_jenis_akun,'+
     'category_code=:parkd_kategori_akun,balance_status=:parstatus_neraca,cost_st_id=:cost_id,'+
-    'lr_st_id=:lr_id,balance_st_id=:balance_id,balance_post_st_id=:balance_post_id where code=:parkode';
+    'lr_st_id=:lr_id,balance_st_id=:balance_id,balance_post_st_id=:balance_post_id,updated_at=now(),updated_by=:pic where code=:parkode';
     parambyname('parkode').Value:=edkode.Text;
     parambyname('parkode_header').Value:=dm.QTemp1.FieldByName('header_code').AsString;
     parambyname('parnama_perkiraan').Value:=ednama_perkiraan.Text;
@@ -716,6 +717,7 @@ begin
     parambyname('lr_id').Value:=id_lr;
     parambyname('balance_id').Value:=id_nr;
     parambyname('balance_post_id').Value:=id_posnr;
+    parambyname('pic').Value:=Nm;
     ExecSql;
   end;
   MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

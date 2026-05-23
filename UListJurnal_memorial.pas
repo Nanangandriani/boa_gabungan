@@ -107,7 +107,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDatamodule, UNewJurnal_memorial, UMainMenu, UMy_Function;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
+uses UDatamodule, UNewJurnal_memorial, UMainMenu, UMy_Function, UKoreksi;//, UNewJurnal_memorial;//, UNewJurnal_memorial;
 var
 //  FPakai_BahanPersbu: TFPakai_BahanPersbu;
   RealFMemorial: TFlist_jurnal_memorial;
@@ -144,46 +144,33 @@ begin
 end;
 
 procedure TFList_jurnal_memorial.ActDelExecute(Sender: TObject);
+var
+  OldNo, NewNo: string;
 begin
- {if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
-  begin
-    with Dm.Qtemp do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='Delete From t_jurnal_memorial where no_bukti_memo = '+QuotedStr(DBGridEh1.Fields[0].AsString);
-      execsql;
-    end;
-    with Dm.Qtemp2 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='Delete From t_jurnal_memorial_detail where no_bukti_memo = '+QuotedStr(DBGridEh1.Fields[0].AsString);
-      execsql;
-    end;
-    Refresh;
-    MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
-  end;            }
+    OldNo := DBGrideh1.Fields[1].AsString;
+    NewNo := OldNo + '-DEL';
+    FNewJurnal_memo.iserror:=0;
+   if CheckJurnalPosting(DBGrideh1.Fields[1].AsString)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+      FNewjurnal_memo.iserror:=1;
+   end;
 
-  if CheckJurnalPosting(DBGridEh1.Fields[0].AsString)>0 then
-  begin
-    MessageDlg('Memorial sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
-  end else begin
-
-    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGrideh1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
-      if not dm.Koneksi.InTransaction then
+     { if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
         with dm.Qtemp do
         begin
           close;
           sql.clear;
-          sql.Text:=' UPDATE "public"."t_jurnal_memorial"  SET '+
+        {  sql.Text:=' UPDATE "public"."t_jurnal_memorial"  SET '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(Nm)+'  '+
-                    ' WHERE "no_bukti_memo"='+QuotedStr(DBGridEh1.Fields[0].AsString);
-          ExecSQL;
+                    ' WHERE "no_bukti_memo"='+QuotedStr(DBGridEh1.Fields[0].AsString);    }
+
+      {    ExecSQL;
         end;
         MessageDlg('Proses Hapus Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;
@@ -194,9 +181,15 @@ begin
             Dm.koneksi.Rollback ;
           end;
         end;
-      end;
-    end;
-  end;
+      end;}
+          FKoreksi.vcall:=SelectRow('select Upper(b.submenu) menu from t_menu a '+
+                        'left join t_menu_sub b on b.menu_code=a.menu_code '+
+                        'where link='+QuotedStr(FList_jurnal_memorial.Name)); //Mendapatkan nama Menu
+          FKoreksi.Status:=0;
+          FKoreksi.AksiTipe:='DELETE';
+          FKoreksi.vnotransaksi:=MemTableEh1.FieldByName('memo_no').AsString;
+          FKoreksi.ShowModal;
+        end;
 end;
 
 procedure TFList_jurnal_memorial.ActPrintExecute(Sender: TObject);
@@ -263,8 +256,7 @@ begin
   end;
 
   FNewJurnal_memo.IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
-
-
+  if FNewJurnal_memo.IntStatusKoreksi=1 then FNewJurnal_memo.bSave.enabled:=true else FNewJurnal_memo.bSave.enabled:=false;
 
   FNewJurnal_memo.Show;
   if dm.Qtemp.FieldByName('post_status').AsInteger=0 then

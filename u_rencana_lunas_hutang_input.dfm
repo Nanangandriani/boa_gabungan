@@ -227,7 +227,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Width = 100
       Height = 34
       Align = alRight
-      Caption = 'Tutup'
+      Caption = 'Close'
       TabOrder = 0
       OnClick = BtutupClick
       Glyph.Data = {
@@ -348,15 +348,15 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       NumGlyphs = 2
       ExplicitLeft = 555
     end
-    object BSimpan: TRzBitBtn
+    object BSave: TRzBitBtn
       Left = 661
       Top = 1
       Width = 100
       Height = 34
       Align = alRight
-      Caption = 'Simpan'
+      Caption = 'Save'
       TabOrder = 2
-      OnClick = BSimpanClick
+      OnClick = BSaveClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000730E0000730E00000001000000000000000000003300
@@ -410,6 +410,17 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 655
+    end
+    object BCorrection: TRzBitBtn
+      Left = 463
+      Top = 1
+      Width = 98
+      Height = 34
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 3
+      OnClick = BCorrectionClick
+      ExplicitLeft = 359
     end
   end
   object Panel2: TPanel
@@ -767,7 +778,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
     end
     object Bdaftar: TRzBitBtn
       Left = 645
-      Top = 64
+      Top = 93
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'

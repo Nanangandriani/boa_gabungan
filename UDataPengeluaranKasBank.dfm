@@ -824,6 +824,17 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       NumGlyphs = 2
       ExplicitLeft = 876
     end
+    object BCorrection: TRzBitBtn
+      Left = 784
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 6
+      OnClick = BCorrectionClick
+      ExplicitLeft = 778
+    end
   end
   object Panel5: TPanel
     Left = 0
@@ -1165,8 +1176,10 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
         Align = alClient
         DataSource = DSDetailAkun
         DynProps = <>
+        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
@@ -1214,6 +1227,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             DynProps = <>
             EditButtons = <>
             FieldName = 'debit'
+            Footer.FieldName = 'debit'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Jumlah | Debit'
             Width = 150
@@ -1961,6 +1976,6 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
     Left = 920
-    Top = 184
+    Top = 168
   end
 end

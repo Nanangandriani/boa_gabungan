@@ -128,7 +128,6 @@ begin
   strKodeKaresTP:=SelectRow('SELECT value_parameter from t_parameter WHERE key_parameter=''karesidenan_tp'';');
   if (FNew_Penjualan.chkNomorPengganti.Checked=True) AND (FNew_Penjualan.edNomorTrans.Text<>'') AND (FNew_Penjualan.kd_kares<>'') then
   begin
-    
     strWhereTPKares:= ' WHERE '+strKodeKaresTP+'='+QuotedStr(FNew_Penjualan.kd_kares);
   end;
 
@@ -183,7 +182,6 @@ begin
           MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname(strKodeKaresTP).value;
           if Dm.Qtemp.fieldbyname('po_order').value<>NULL then
           MemMasterData['PO_ORDER']:=Dm.Qtemp.fieldbyname('po_order').value else MemMasterData['PO_ORDER']:='';
-
           MemMasterData.post;
           progress.Progress:= progress.Progress+1;
           Dm.Qtemp.next;

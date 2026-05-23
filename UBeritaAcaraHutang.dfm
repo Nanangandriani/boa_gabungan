@@ -23,8 +23,6 @@ object FBeritaAcaraHutang: TFBeritaAcaraHutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -96
-    ExplicitWidth = 1050
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -204,7 +202,7 @@ object FBeritaAcaraHutang: TFBeritaAcaraHutang
   object MemSisaHutang: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 392
+    Left = 408
     Top = 280
     object MemSisaHutangkodesup: TStringField
       FieldName = 'kodesup'

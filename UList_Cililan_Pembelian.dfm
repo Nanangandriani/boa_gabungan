@@ -1,31 +1,118 @@
-object FPembelian: TFPembelian
+object FList_Cicilan_Pembelian: TFList_Cicilan_Pembelian
   Left = 0
   Top = 0
-  Caption = 'Form Faktur Pembelian'
-  ClientHeight = 549
-  ClientWidth = 1006
+  Caption = 'LIst Cicilan Pembelian'
+  ClientHeight = 589
+  ClientWidth = 1059
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   TextHeight = 15
+  object DBGridCicilan: TDBGridEh
+    Left = 0
+    Top = 127
+    Width = 1059
+    Height = 462
+    Align = alClient
+    DataGrouping.Active = True
+    DataGrouping.GroupLevels = <
+      item
+        ColumnName = 'Column_0_supplier_name'
+      end
+      item
+        ColumnName = 'Column_1_trans_no'
+      end>
+    DataSource = DsCicilan
+    DynProps = <>
+    TabOrder = 0
+    Columns = <
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'supplier_name'
+        Footers = <>
+        Title.Caption = 'Nama Supplier'
+        Width = 205
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_no'
+        Footers = <>
+        Title.Caption = 'No Faktur / Transaksi'
+        Width = 173
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_date'
+        Footers = <>
+        Title.Caption = 'Tanggal'
+        Width = 125
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_year'
+        Footers = <>
+        Title.Caption = 'Tahun'
+        Width = 116
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'trans_month'
+        Footers = <>
+        Title.Caption = 'Bulan'
+        Width = 109
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'amount'
+        Footers = <>
+        Title.Caption = 'Amount'
+        Width = 186
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'voucher_no'
+        Footers = <>
+        Title.Caption = 'No Voucher'
+        Width = 235
+      end>
+    object RowDetailData: TRowDetailPanelControlEh
+    end
+  end
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1006
+    Width = 1059
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 0
+    TabOrder = 1
     TabStop = False
+    ExplicitWidth = 884
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -39,825 +126,25 @@ object FPembelian: TFPembelian
       Index = 0
     end
   end
-  object DBGridTerima1: TDBGridEh
-    Left = 0
-    Top = 169
-    Width = 1006
-    Height = 380
-    Align = alClient
-    DataGrouping.GroupLevels = <
-      item
-        ColumnName = 'Column_18_trans_year'
-      end
-      item
-        ColumnName = 'Column_17_trans_month'
-      end
-      item
-        ColumnName = 'Column_23_tgl'
-      end>
-    DataSource = Dsterima_material
-    DrawMemoText = True
-    DynProps = <>
-    RowDetailPanel.Active = True
-    RowDetailPanel.Height = 200
-    SearchPanel.Enabled = True
-    TabOrder = 1
-    TitleParams.MultiTitle = True
-    OnGetCellParams = DBGridTerima1GetCellParams
-    Columns = <
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'purchase_type'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Jenis Pembelian'
-        Visible = False
-        Width = 110
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. Trans'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status_app'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Status Approval'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_date'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tanggal'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'spb_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. SP'
-        Width = 0
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sj_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Surat Jalan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'supplier_name'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Nama Supplier'
-        Width = 200
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'faktur_no'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'No. Faktur'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'faktur_date'
-        Footers = <>
-        Title.Caption = 'Tanggal Terima Dokumen'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'remark'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Keterangan'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_code'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Akun Perkiraan|Kode'
-        Width = 80
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'account_name'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Akun Perkiraan|Nama'
-        Width = 100
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'status'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Status'
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sj_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Konf.'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'fk_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Pref. Dok.'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        Checkboxes = True
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'invoice_status'
-        Footers = <>
-        Title.Caption = 'Ceklis Dokumen|Invoice'
-        Visible = False
-        Width = 60
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'pic'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'PIC'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_month'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Bulan'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_year'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tahun'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'correction_status'
-        Footers = <>
-        ReadOnly = True
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'trans_day'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'Tanggal'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'sbu_code'
-        Footers = <>
-        ReadOnly = True
-        Title.Caption = 'SBU'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'due_date'
-        Footers = <>
-        Title.Caption = 'Tempo Pembayaran'
-        Width = 70
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgl'
-        Footers = <>
-        Title.Caption = 'Tanggal'
-        Visible = False
-      end
-      item
-        CellButtons = <>
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'tgl_jatuh_tempo'
-        Footers = <>
-        Title.Caption = 'Tanggal Jatuh Tempo'
-        Width = 80
-      end>
-    object RowDetailData: TRowDetailPanelControlEh
-      object DBGridEh3: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 969
-        Height = 198
-        Align = alClient
-        DataSource = DsTerimaDet
-        DynProps = <>
-        FooterRowCount = 1
-        IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-        OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
-        SumList.Active = True
-        TabOrder = 0
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_stock_code'
-            Footers = <>
-            Title.Caption = 'Kode Barang'
-            Width = 70
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_name'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 170
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'stock_code'
-            Footers = <>
-            Title.Caption = 'No. Kedatangan'
-            Width = 120
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty_po'
-            Footers = <>
-            Title.Caption = 'PO|Kuantum'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit_po'
-            Footers = <>
-            Title.Caption = 'PO|Satuan'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Terima|Kuantum'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit'
-            Footers = <>
-            Title.Caption = 'Terima|Satuan'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty_difference'
-            Footers = <>
-            Title.Caption = 'Terima|Selisih'
-            Width = 60
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'price'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.Value = 'Total'
-            Footer.ValueType = fvtStaticText
-            Footers = <>
-            Title.Caption = 'Harga|Satuan'
-            Width = 115
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'subtotal'
-            Footer.DisplayFormat = '0.0000#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga|Sub Total'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pemb_dpp'
-            Footer.DisplayFormat = '#.##0.00'
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga|Pembulatan'
-            Width = 80
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn'
-            Footers = <>
-            Title.Caption = 'PPN|%'
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_rp'
-            Footer.DisplayFormat = '#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN|Nominal'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_pembulatan'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN|Pembulatan'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pph_rp'
-            Footer.DisplayFormat = '#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPH'
-            Width = 90
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.0000'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'grandtotal'
-            Footer.DisplayFormat = '0.0000#,##'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -11
-            Footer.Font.Name = 'Tahoma'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Grand Total'
-            Width = 130
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'wh_name'
-            Footers = <>
-            Title.Caption = 'Gudang'
-            Width = 180
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'account_code'
-            Footers = <>
-            Title.Caption = 'Kode Akun'
-            Width = 80
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'wh_code'
-            Footers = <>
-            Width = 0
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_no'
-            Footers = <>
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
-      object DBGridOrder: TDBGridEh
-        Left = 0
-        Top = 0
-        Width = 969
-        Height = 198
-        Align = alClient
-        DataSource = DsTerimaDet
-        DynProps = <>
-        FooterRowCount = 1
-        RowDetailPanel.Height = 150
-        SearchPanel.Enabled = True
-        SumList.Active = True
-        TabOrder = 1
-        TitleParams.MultiTitle = True
-        Columns = <
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'trans_no'
-            Footers = <>
-            Title.Caption = 'No Transaksi'
-            Width = 0
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_code'
-            Footers = <>
-            Title.Caption = 'Kode Barang'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'item_name'
-            Footers = <>
-            Title.Caption = 'Nama Barang'
-            Width = 150
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'unit'
-            Footers = <>
-            Title.Caption = 'Terima|Satuan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'qty'
-            Footers = <>
-            Title.Caption = 'Terima|Kuantum'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'price'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'price'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|Satuan'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'grandtotal'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'grandtotal'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|Jumlah'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'subtotalrp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'subtotalrp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'Harga Beli|DPP'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'ppn_rp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'ppn_rp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPN'
-            Width = 100
-          end
-          item
-            CellButtons = <>
-            DisplayFormat = '#,##0.00'
-            DynProps = <>
-            EditButtons = <>
-            FieldName = 'pph_rp'
-            Footer.DisplayFormat = '#,##0.00'
-            Footer.FieldName = 'pph_rp'
-            Footer.Font.Charset = DEFAULT_CHARSET
-            Footer.Font.Color = clWindowText
-            Footer.Font.Height = -12
-            Footer.Font.Name = 'Segoe UI'
-            Footer.Font.Style = [fsBold]
-            Footer.ValueType = fvtSum
-            Footers = <>
-            Title.Caption = 'PPH'
-            Width = 100
-          end>
-        object RowDetailData: TRowDetailPanelControlEh
-        end
-      end
-    end
+  object MemCicilan: TMemTableEh
+    Params = <>
+    DataDriver = DataSetDriverEh1
+    Left = 424
+    Top = 72
   end
-  object RzPanel1: TRzPanel
-    Left = 0
-    Top = 127
-    Width = 1006
-    Height = 42
-    Align = alTop
-    Color = 15987699
-    TabOrder = 2
-    ExplicitWidth = 1002
-    object Label1: TLabel
-      Left = 20
-      Top = 12
-      Width = 40
-      Height = 15
-      Caption = 'Periode'
-    end
-    object Label2: TLabel
-      Left = 167
-      Top = 13
-      Width = 19
-      Height = 15
-      Caption = 'S/D'
-    end
-    object DTP1: TDateTimePicker
-      Left = 75
-      Top = 10
-      Width = 81
-      Height = 23
-      Date = 45982.000000000000000000
-      Time = 0.399360370371141500
-      TabOrder = 0
-    end
-    object DTP2: TDateTimePicker
-      Left = 194
-      Top = 10
-      Width = 81
-      Height = 23
-      Date = 45982.000000000000000000
-      Time = 0.399360370371141500
-      TabOrder = 1
-    end
-    object Cari: TRzBitBtn
-      Left = 291
-      Top = 9
-      Width = 70
-      Caption = 'Cari'
-      TabOrder = 2
-      OnClick = CariClick
-      Glyph.Data = {
-        36060000424D3606000000000000360400002800000020000000100000000100
-        08000000000000020000830E0000830E00000001000000000000000000003300
-        00006600000099000000CC000000FF0000000033000033330000663300009933
-        0000CC330000FF33000000660000336600006666000099660000CC660000FF66
-        000000990000339900006699000099990000CC990000FF99000000CC000033CC
-        000066CC000099CC0000CCCC0000FFCC000000FF000033FF000066FF000099FF
-        0000CCFF0000FFFF000000003300330033006600330099003300CC003300FF00
-        330000333300333333006633330099333300CC333300FF333300006633003366
-        33006666330099663300CC663300FF6633000099330033993300669933009999
-        3300CC993300FF99330000CC330033CC330066CC330099CC3300CCCC3300FFCC
-        330000FF330033FF330066FF330099FF3300CCFF3300FFFF3300000066003300
-        66006600660099006600CC006600FF0066000033660033336600663366009933
-        6600CC336600FF33660000666600336666006666660099666600CC666600FF66
-        660000996600339966006699660099996600CC996600FF99660000CC660033CC
-        660066CC660099CC6600CCCC6600FFCC660000FF660033FF660066FF660099FF
-        6600CCFF6600FFFF660000009900330099006600990099009900CC009900FF00
-        990000339900333399006633990099339900CC339900FF339900006699003366
-        99006666990099669900CC669900FF6699000099990033999900669999009999
-        9900CC999900FF99990000CC990033CC990066CC990099CC9900CCCC9900FFCC
-        990000FF990033FF990066FF990099FF9900CCFF9900FFFF99000000CC003300
-        CC006600CC009900CC00CC00CC00FF00CC000033CC003333CC006633CC009933
-        CC00CC33CC00FF33CC000066CC003366CC006666CC009966CC00CC66CC00FF66
-        CC000099CC003399CC006699CC009999CC00CC99CC00FF99CC0000CCCC0033CC
-        CC0066CCCC0099CCCC00CCCCCC00FFCCCC0000FFCC0033FFCC0066FFCC0099FF
-        CC00CCFFCC00FFFFCC000000FF003300FF006600FF009900FF00CC00FF00FF00
-        FF000033FF003333FF006633FF009933FF00CC33FF00FF33FF000066FF003366
-        FF006666FF009966FF00CC66FF00FF66FF000099FF003399FF006699FF009999
-        FF00CC99FF00FF99FF0000CCFF0033CCFF0066CCFF0099CCFF00CCCCFF00FFCC
-        FF0000FFFF0033FFFF0066FFFF0099FFFF00CCFFFF00FFFFFF00000080000080
-        000000808000800000008000800080800000C0C0C00080808000191919004C4C
-        4C00B2B2B200E5E5E500C8AC2800E0CC6600F2EABF00B59B2400D8E9EC009933
-        6600D075A300ECC6D900646F710099A8AC00E2EFF10000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000E8E8E8E8E8E8
-        E8E8E8E8E8E8E8820982E8E8E8E8E8E8E8E8E8E8E8E8E8AC81ACE85E5E5E5E5E
-        5E5E5E5E5E5E82090909E88181818181818181818181AC818181E85ED7D7D7D7
-        D7D7D7D7D7DF09090982E881E8E8E8E8E8E8E8E8E8DF818181ACE85ED7E3E3E3
-        E3E3DFDFDF09090982E8E881E8ACACACACACDFDFDF818181ACE8E85ED7D7D7D7
-        E35DB3B3D7880982E8E8E881E8E8E8E8AC81E3E3D7E381ACE8E8E85ED7E3E3E3
-        81E6B3B3B3D756E8E8E8E881E8ACACAC81E3E3E3E3D756E8E8E8E85ED7D7D7D7
-        81E6D7E6B3B356E8E8E8E881E8E8E8E881E3D7E3E3E356E8E8E8E85ED7E3E3E3
-        81E6D7D7E6B356E8E8E8E881E8ACACAC81E3D7D7E3E356E8E8E8E85ED7D7D7D7
-        D781E6E6E65DDFE8E8E8E881E8E8E8E8E881E3E3E381DFE8E8E8E85ED7E3E3E3
-        E3E3818181E35EE8E8E8E881E8ACACACACAC818181E381E8E8E8E85ED7D7D7D7
-        D7D7D7D7D7D75EE8E8E8E881E8E8E8E8E8E8E8E8E8E881E8E8E8E85ED7E3E3E3
-        E3E3D75E5E5E5EE8E8E8E881E8ACACACACACE881818181E8E8E8E85ED7D7D7D7
-        D7D7D75EE35EE8E8E8E8E881E8E8E8E8E8E8E881E381E8E8E8E8E85ED7D7D7D7
-        D7D7D75E5EE8E8E8E8E8E881E8E8E8E8E8E8E88181E8E8E8E8E8E85E5E5E5E5E
-        5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8E8
-        E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
-      NumGlyphs = 2
-    end
+  object DsCicilan: TDataSource
+    DataSet = MemCicilan
+    Left = 512
+    Top = 56
   end
-  object ActMenu: TActionManager
-    Left = 600
-    Top = 48
-    StyleName = 'Platform Default'
-    object ActBaru: TAction
-      Caption = 'Baru  '
-      OnExecute = ActBaruExecute
-    end
-    object ActUpdate: TAction
-      Caption = 'Update  '
-      OnExecute = ActUpdateExecute
-    end
-    object ActRo: TAction
-      Caption = 'Refresh  '
-      OnExecute = ActRoExecute
-    end
-    object ActDel: TAction
-      Caption = 'Delete  '
-      OnExecute = ActDelExecute
-    end
-    object ActPrint: TAction
-      Caption = 'Print  '
-      OnExecute = ActPrintExecute
-    end
-    object ActApp: TAction
-      Caption = 'Approve  '
-      Enabled = False
-      Visible = False
-    end
-    object ActReject: TAction
-      Caption = 'Reject  '
-      Enabled = False
-      Visible = False
-    end
-    object ActClose: TAction
-      Caption = 'CLose Kontrak    '
-      Enabled = False
-    end
+  object QCicilan: TUniQuery
+    Connection = dm.Koneksi
+    SQL.Strings = (
+      
+        'select * from v_purchase_installment order by trans_year asc,cas' +
+        't(trans_month as integer) asc')
+    Left = 424
+    Top = 136
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -883,8 +170,8 @@ object FPembelian: TFPembelian
       DockedTop = 0
       FloatLeft = 930
       FloatTop = 3
-      FloatClientWidth = 56
-      FloatClientHeight = 123
+      FloatClientWidth = 51
+      FloatClientHeight = 102
       ItemLinks = <
         item
           Visible = True
@@ -901,6 +188,20 @@ object FPembelian: TFPembelian
         item
           Visible = True
           ItemName = 'dxBarDelete'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'dtawal'
+        end
+        item
+          Visible = True
+          ItemName = 'dtakhir'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'dxBarButton10'
         end>
       OneOnRow = False
       Row = 0
@@ -911,28 +212,16 @@ object FPembelian: TFPembelian
     object dxBarManager1Bar2: TdxBar
       Caption = 'Report'
       CaptionButtons = <>
-      DockedLeft = 125
+      DockedLeft = 384
       DockedTop = 0
       FloatLeft = 850
       FloatTop = 2
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 84
+      FloatClientHeight = 183
       ItemLinks = <
         item
           Visible = True
           ItemName = 'dxBarLargeButton1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarSubItem1'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton3'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
       Row = 0
@@ -1540,7 +829,6 @@ object FPembelian: TFPembelian
         CB53228C564703F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3
         FD77EC2BF95211609209DC78B818F9E4F10F4824A6D94EC853CD000000004945
         4E44AE426082}
-      OnClick = dxBarLargeButton2Click
     end
     object dxBarLargeButton3: TdxBarLargeButton
       Caption = 'Print Kolektif'
@@ -1601,7 +889,6 @@ object FPembelian: TFPembelian
         18342EA23130EA36EB0768FBFF5B62C503C3465946C3C1FCEF7EF8E35F5E17FF
         1726E49A584A0AE3F1E815E06C0D205D39C1B501401B40AD4E6065B6C18AE352
         A9090831DB614C46A845FF07DB53B9A7908EAFDA0000000049454E44AE426082}
-      OnClick = dxBarLargeButton3Click
     end
     object dxBarSubItem1: TdxBarSubItem
       Caption = 'Print'
@@ -1675,273 +962,100 @@ object FPembelian: TFPembelian
       Category = 0
       Hint = 'Print A5'
       Visible = ivAlways
-      OnClick = dxBarButton8Click
     end
     object dxBarButton9: TdxBarButton
       Caption = 'Print A4'
       Category = 0
       Hint = 'Print A4'
       Visible = ivAlways
-      OnClick = dxBarButton9Click
+    end
+    object cxBarEditItem1: TcxBarEditItem
+      Caption = 'Sudah lunas'
+      Category = 0
+      Hint = 'Sudah lunas'
+      Visible = ivAlways
+      ShowCaption = True
+      Width = 0
+      PropertiesClassName = 'TcxCheckBoxProperties'
+      Properties.ImmediatePost = True
+    end
+    object dtawal: TcxBarEditItem
+      Caption = 'Tanggal Awal '
+      Category = 0
+      Hint = 'Tanggal Awal '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dtakhir: TcxBarEditItem
+      Caption = 'Tanggal Akhir'
+      Category = 0
+      Hint = 'Tanggal Akhir'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarButton10: TdxBarButton
+      Caption = 'Cari    '
+      Category = 0
+      Hint = 'Cari    '
+      Visible = ivAlways
+      Glyph.SourceDPI = 96
+      Glyph.Data = {
+        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+        61000000097048597300000EC200000EC20115284A8000000012744558745469
+        746C650046696E643B5365617263683BAD078F620000016A49444154785EA591
+        CD4A02611486BD8A46A789F1278568DFD65DB408341A1DB5C69F748CB983C84D
+        942EEC565A0981E6FC383FB60964EA0A0A6951B619086C33703A332048F6CDC6
+        17DE8FB3799F73CE774200B096FD67A16DD14CC71B660FFD1EAB1B9E7BD19A99
+        0EAD6A159014CD56B26941EA7C0C471D1BB2373624C43144AB06B015BD1504F0
+        3B27450B326D1BA65F3FB090571F5E4D802D8F80A98C0E8800EC64ED4A8F7EE0
+        AF5E3FE6906A18C008EA3D11106F584EF1F60548CA759E8139D1666440DD740A
+        5D32806BDB0850C880E89961ED4816BC7DCEFF5D2151D7812E05ACE09D8AAD99
+        AEF761D3D9D22762BD7FF9049B25052225B51D7846B632BAC07341ACAA43F67A
+        0219342B6818D6BC30448AAA4BF3324F02F862CACADE96A0F79953CDA105348E
+        4D17D52E861180531414974208014056981F4A1886302F4398935D8A93791280
+        0CE18612951F009597813AEE7F1300C1DAC83D34A97CDFD9E00677CB8075BC3E
+        E0171A811CE8F7E0E9CD0000000049454E44AE426082}
+      OnClick = dxBarButton10Click
     end
   end
-  object Rpt: TfrxReport
-    Version = '2022.1.3'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 46060.443445775460000000
-    ReportOptions.LastChange = 46060.443445775460000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
-    OnReportPrint = 'ReportOnReportPrint'
-    Left = 694
-    Top = 82
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
+  object ActMenu: TActionManager
+    Left = 600
+    Top = 48
+    StyleName = 'Platform Default'
+    object ActBaru: TAction
+      Caption = 'Baru  '
     end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      Frame.Typ = []
-      MirrorMode = []
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[Page#]')
-        end
-      end
+    object ActUpdate: TAction
+      Caption = 'Update  '
     end
-  end
-  object DbLPB: TfrxDBDataset
-    UserName = 'DbLPB'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      'trans_no=trans_no'
-      'order_no=order_no'
-      'trans_date=trans_date'
-      'po_no=po_no'
-      'created_by=created_by'
-      'remark=remark'
-      'spb_no=spb_no'
-      'sj_no=sj_no'
-      'faktur_no=faktur_no'
-      'import_duty=import_duty'
-      'faktur_date=faktur_date'
-      'due_date=due_date'
-      'supplier_code=supplier_code'
-      'account_code=account_code'
-      'purchase_type=purchase_type'
-      'debt_amount=debt_amount'
-      'payment_amount=payment_amount'
-      'debt_remaining=debt_remaining'
-      'status=status'
-      'valas=valas'
-      'valas_value=valas_value'
-      'updated_at=updated_at'
-      'updated_by=updated_by'
-      'pib_no=pib_no'
-      'correction_status=correction_status'
-      'plan_stat=plan_stat'
-      'approval_status=approval_status'
-      'approval=approval'
-      'sbu_code=sbu_code'
-      'trans_month=trans_month'
-      'trans_year=trans_year'
-      'tgl_jatuh_tempo=tgl_jatuh_tempo'
-      'vehicle_no=vehicle_no'
-      'driver=driver'
-      'supplier_name=supplier_name'
-      'item_name=item_name'
-      'item_stock_code=item_stock_code'
-      'unit=unit'
-      'qty=qty'
-      'ppn_rp=ppn_rp'
-      'pph_rp=pph_rp'
-      'ppn_pembulatan=ppn_pembulatan'
-      'subtotalrp=subtotalrp'
-      'grandtotal=grandtotal'
-      'subtotal=subtotal'
-      'price=price'
-      'ttd=ttd'
-      'account_pph_code=account_pph_code'
-      'um_value=um_value')
-    DataSet = QReportLPB
-    BCDToCurrency = False
-    DataSetOptions = []
-    Left = 646
-    Top = 10
-  end
-  object QReportLPB: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select a.trans_no,a.order_no,a.trans_date,a.po_no,a. created_by,' +
-        'a.remark,a.spb_no,a.sj_no,a.faktur_no, a.import_duty,'
-      
-        '           '#9'a.faktur_date,a.due_date,a.supplier_code,a.account_c' +
-        'ode,a.purchase_type,a.debt_amount, '
-      
-        #9'        a.payment_amount,a.debt_remaining,a.status,a.valas,a.va' +
-        'las_value,a.updated_at,a.updated_by,          '
-      
-        'a.pib_no,'#9'a.correction_status,a.plan_stat,a.approval_status,a.ap' +
-        'proval,a.sbu_code, a.trans_month,          '
-      
-        ' a.trans_year,a.tgl_jatuh_tempo,C.vehicle_no,C.driver,D.supplier' +
-        '_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp,e.pph_' +
-        'rp,e.ppn_pembulatan,e.subtotalrp,'
-      
-        ' e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_v' +
-        'alue'
-      
-        ' from        t_purchase_invoice A Left join t_spb C on A.spb_no=' +
-        'C.spb_no inner join'
-      
-        '             t_purchase_invoice_det E on A.trans_no=E.trans_no i' +
-        'nner join t_supplier D '
-      
-        '             on A.supplier_code=D.supplier_code inner join t_ite' +
-        'm_stock F on'
-      
-        '             E.item_stock_code=F. item_stock_code left JOIN t_us' +
-        'er g on a.created_by=g.user_name '
-      'order by e.id asc')
-    Left = 638
-    Top = 82
-  end
-  object DsTerimaDet: TDataSource
-    DataSet = QTerimaDet
-    Left = 560
-    Top = 64
-  end
-  object QTerimaDet: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      'SELECT'
-      
-        '        a.trans_no,a.item_stock_code, a.stock_code, a.qty, a.uni' +
-        't, a.wh_code, a.trans_year, a.qty_difference, a.unit_po, '
-      
-        #9'a.qty_po, a.notes, a.receive_no, a.po_no, b.item_name, a.pph_rp' +
-        ', a.ppn_rp, a.grandtotal, a.subtotal, a.price, a.ppn, '
-      
-        #9'a.pph ,a.account_code,a.ppn_pembulatan,a.account_pph_code,a.dut' +
-        'y_account_code,a.import_duty,a.order_no,a.subtotalrp,'
-      '        a.pemb_dpp,c.wh_code,a.header_code --,d.ref_no'
-      ',b.item_code'
-      ''
-      'FROM t_purchase_invoice_det AS "a"'
-      
-        #9'INNER JOIN t_item_stock AS b ON a.item_stock_code = b.item_stoc' +
-        'k_code'
-      '        INNER JOIN t_wh'#9'c on a.wh_code=c.wh_code'
-      
-        '        -- INNER JOIN purchase.t_purchase_invoice d on a.trans_n' +
-        'o=d.trans_no'
-      'ORDER BY a.id desc')
-    MasterSource = Dsterima_material
-    MasterFields = 'trans_no'
-    DetailFields = 'trans_no'
-    Left = 536
-    Top = 16
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'trans_no'
-        ParamType = ptInput
-        Value = 'FPB/003/13/XI/2025/HLJ'
-      end>
+    object ActRo: TAction
+      Caption = 'Refresh  '
+      OnExecute = ActRoExecute
+    end
+    object ActDel: TAction
+      Caption = 'Delete  '
+    end
+    object ActPrint: TAction
+      Caption = 'Print  '
+    end
+    object ActApp: TAction
+      Caption = 'Approve  '
+      Enabled = False
+      Visible = False
+    end
+    object ActReject: TAction
+      Caption = 'Reject  '
+      Enabled = False
+      Visible = False
+    end
+    object ActClose: TAction
+      Caption = 'CLose Kontrak    '
+      Enabled = False
+    end
   end
   object DataSetDriverEh1: TDataSetDriverEh
-    ProviderDataSet = Qterima_material
-    Left = 400
-    Top = 72
-  end
-  object Dsterima_material: TDataSource
-    DataSet = Memterima_material
-    Left = 400
-    Top = 24
-  end
-  object Memterima_material: TMemTableEh
-    FetchAllOnOpen = True
-    Params = <>
-    DataDriver = DataSetDriverEh1
-    Left = 320
-    Top = 88
-  end
-  object Qterima_material: TUniQuery
-    Connection = dm.Koneksi
-    SQL.Strings = (
-      
-        'select (case WHEN a."approval_status"='#39'0'#39' THEN '#39'PENGAJUAN'#39' else ' +
-        #39'REJECT'#39' END) AS status_app,a.*, b.supplier_name,'
-      
-        ' c.account_name, d.account_name as nm_perk,to_char(trans_date,'#39'd' +
-        'd'#39') tgl,to_char(trans_date,'#39'mm'#39') bln,e.ref_name, e.id as id_ref ' +
-        ' from '
-      
-        't_purchase_invoice a Left join t_supplier b on a.supplier_code=b' +
-        '.supplier_code'
-      'left join t_ak_account c on a.account_code=c.code'
-      'left join t_ak_account d on a.account_um_code=d.code'
-      'left join t_ref_item_receive e on a.ref_code=e.ref_code'
-      'order by a.id desc')
-    Left = 320
-    Top = 40
+    ProviderDataSet = QCicilan
+    Left = 512
+    Top = 128
   end
 end

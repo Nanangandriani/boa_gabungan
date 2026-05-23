@@ -1139,11 +1139,31 @@ begin
     FNew_Penjualan.edNamaSumber.Text:=MemMasterData['NM_MASTER'];
     FNew_Penjualan.vFormSumber:=SelectRow('SELECT form_target from t_selling_source where code='+QuotedStr(MemMasterData['KD_MASTER'])+' ');
   end;
+//  if vcall='kode_trans_penjualan' then
+//  begin
+//    FNew_Penjualan.edKode_Trans.Text:=MemMasterData['KD_MASTER'];
+//    FNew_Penjualan.edNama_Trans.Text:=MemMasterData['NM_MASTER'];
+//  end;
+
   if vcall='kode_trans_penjualan' then
   begin
     FNew_Penjualan.edKode_Trans.Text:=MemMasterData['KD_MASTER'];
     FNew_Penjualan.edNama_Trans.Text:=MemMasterData['NM_MASTER'];
+    FNew_Penjualan.is_ppn_pajak:=StrToBool(SelectRow('SELECT is_ppn_pajak from t_sales_transaction_source where deleted_at IS NULL and code='+QuotedStr(MemMasterData['KD_MASTER'])+' '));
+    if FNew_Penjualan.is_ppn_pajak=True then
+    begin
+      FNew_Penjualan.edNoPPBJ.Visible:=False;
+      FNew_Penjualan.edNoPPBJ.Text:='';
+      FNew_Penjualan.Label27.Visible:=False;
+      FNew_Penjualan.Label28.Visible:=False;
+    end else
+    begin
+      FNew_Penjualan.edNoPPBJ.Visible:=True;
+      FNew_Penjualan.Label27.Visible:=True;
+      FNew_Penjualan.Label28.Visible:=True;
+    end;
   end;
+
   if vcall='m_provinsi' then
   begin
     FMasterWilayahAdministratif.edKodeProvinsi.Text:=MemMasterData['KD_MASTER'];

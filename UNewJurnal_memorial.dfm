@@ -3,8 +3,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Jurnal Memorial'
-  ClientHeight = 466
-  ClientWidth = 815
+  ClientHeight = 525
+  ClientWidth = 845
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,15 +19,15 @@ object FNewJurnal_memo: TFNewJurnal_memo
   TextHeight = 13
   object Panel2: TPanel
     Left = 0
-    Top = 434
-    Width = 815
+    Top = 493
+    Width = 845
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 425
-    ExplicitWidth = 809
+    ExplicitTop = 433
+    ExplicitWidth = 811
     object BBatal: TRzBitBtn
-      Left = 739
+      Left = 769
       Top = 1
       Height = 30
       Align = alRight
@@ -86,10 +86,10 @@ object FNewJurnal_memo: TFNewJurnal_memo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 733
+      ExplicitLeft = 735
     end
     object BSave: TRzBitBtn
-      Left = 654
+      Left = 684
       Top = 1
       Width = 85
       Height = 30
@@ -149,10 +149,10 @@ object FNewJurnal_memo: TFNewJurnal_memo
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 648
+      ExplicitLeft = 650
     end
     object BCorrection: TRzBitBtn
-      Left = 575
+      Left = 605
       Top = 1
       Width = 79
       Height = 30
@@ -160,28 +160,27 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Caption = 'Submit Correction'
       TabOrder = 2
       OnClick = BCorrectionClick
-      ExplicitLeft = 569
+      ExplicitLeft = 571
     end
   end
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 815
+    Width = 845
     Height = 201
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 809
     object Label1: TLabel
       Left = 10
-      Top = 54
+      Top = 72
       Width = 84
       Height = 13
       Caption = 'No Bukti Memorial'
     end
     object Label2: TLabel
       Left = 100
-      Top = 54
+      Top = 72
       Width = 4
       Height = 13
       Caption = ':'
@@ -202,21 +201,21 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object Label11: TLabel
       Left = 10
-      Top = 87
+      Top = 105
       Width = 56
       Height = 13
       Caption = 'Keterangan'
     end
     object Label12: TLabel
       Left = 100
-      Top = 87
+      Top = 105
       Width = 4
       Height = 13
       Caption = ':'
     end
     object SpeedButton1: TSpeedButton
       Left = 405
-      Top = 87
+      Top = 102
       Width = 23
       Height = 22
       Caption = '...'
@@ -245,9 +244,18 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Caption = 'Kelompok Harta'
       Visible = False
     end
+    object Btn_no: TSpeedButton
+      Left = 405
+      Top = 70
+      Width = 23
+      Height = 20
+      Caption = '...'
+      Enabled = False
+      OnClick = Btn_noClick
+    end
     object edno_bukti_memorial: TEdit
       Left = 122
-      Top = 51
+      Top = 69
       Width = 277
       Height = 21
       Enabled = False
@@ -264,9 +272,9 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object Memket: TRzMemo
       Left = 122
-      Top = 84
+      Top = 102
       Width = 277
-      Height = 101
+      Height = 77
       Color = clBtnHighlight
       TabOrder = 2
     end
@@ -342,7 +350,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     end
     object Edkd_ket: TRzEdit
       Left = 10
-      Top = 119
+      Top = 137
       Width = 56
       Height = 21
       Text = ''
@@ -426,16 +434,25 @@ object FNewJurnal_memo: TFNewJurnal_memo
         'November'
         'Desember')
     end
+    object ckno_penganti: TCheckBox
+      Left = 122
+      Top = 46
+      Width = 126
+      Height = 17
+      Caption = 'Nomor Penganti'
+      TabOrder = 10
+      OnClick = ckno_pengantiClick
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
     Top = 201
-    Width = 815
+    Width = 845
     Height = 41
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 809
+    ExplicitWidth = 811
     object Label9: TLabel
       Left = 8
       Top = 12
@@ -462,8 +479,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
   object DBGridgrn: TDBGridEh
     Left = 0
     Top = 242
-    Width = 815
-    Height = 192
+    Width = 845
+    Height = 251
     Align = alClient
     AllowedOperations = [alopInsertEh, alopUpdateEh, alopDeleteEh]
     DataSource = DataSource1

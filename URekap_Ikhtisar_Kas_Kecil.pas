@@ -299,7 +299,13 @@ begin
                 'where a.deleted_at is null and a.code_account=b.code and b.type_id=2 and b.category_code=''2KEP'')b15 on a.voucher_no=b15.voucher_no '+
 
                 'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no)xx '+
-                'group by tanggal order by tanggal ';
+                'group by tanggal '+
+                'union all '+
+                'select null as "tanggal", 0 as "total", 0 as "b1", 0 as "b2", '+
+                '0 as "b3", 0 as "b4", 0 as "b5", 0 as "b6", 0 as "b7", 0 as "b8", '+
+                '0 as "b9", 0 as "b10", 0 as "b11", 0 as "b12", 0 as "b13", '+
+                '0 as "b14", 0 as "b15" '+
+                'order by tanggal ';
     subquerypenj:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
                 'sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10 from '+
                 '(select a.tanggal,a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
@@ -355,7 +361,13 @@ begin
 
                 //'left join (select voucher_no,amount,a.deleted_at from (SELECT a.voucher_no,a.amount,b.code_account,a.deleted_at FROM t_petty_cash a '+
                 //'INNER JOIN t_petty_cash_det b ON a.voucher_no=b.voucher_no GROUP BY a.voucher_no,b.code_account) a,t_ak_account b where a.deleted_at is null and a.code_account=b.code and b.type_id=4 and b.category_code=''4PEN'')b11 on a.voucher_no=b11.voucher_no '+
-                'where a.voucher_no is not null order by a.trans_date,a.voucher_no,a.order_no)xx group by tanggal order by tanggal ';
+                'where a.voucher_no is not null order by a.trans_date,a.voucher_no,'+
+                ' a.order_no)xx group by tanggal '+
+                'union all '+
+                ' select null as "tanggal", 0 as "total", 0 as "b1", 0 as "b2", '+
+                ' 0 as "b3", 0 as "b4", 0 as "b5", 0 as "b6", 0 as "b7", 0 as "b8", '+
+                ' 0 as "b9", 0 as "b10" '+
+                ' order by tanggal ';
 
 
     with QRekap_KasKecil_ADM2 do
@@ -372,7 +384,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=subquerypenj;
-            open;
+      open;
     end;
 
     with dm.qtemp do

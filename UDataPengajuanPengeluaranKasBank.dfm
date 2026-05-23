@@ -724,8 +724,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       ExplicitLeft = 951
     end
     object Edautocode: TEdit
-      Left = 712
-      Top = 4
+      Left = 339
+      Top = 6
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -805,6 +805,17 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 876
+    end
+    object BCorrection: TRzBitBtn
+      Left = 784
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 5
+      OnClick = BCorrectionClick
+      ExplicitLeft = 778
     end
   end
   object Panel5: TPanel
@@ -1234,16 +1245,18 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Width = 1108
     Height = 196
     Hint = ''
-    ActivePage = TabDetailFaktur
+    ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 3
     ExplicitWidth = 1102
     ExplicitHeight = 187
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
+      ExplicitWidth = 1098
+      ExplicitHeight = 162
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -1336,8 +1349,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
-      ExplicitWidth = 1098
-      ExplicitHeight = 162
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -1648,11 +1659,11 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 872
+    Left = 888
     Top = 232
   end
   object DSTP: TDataSource
-    Left = 984
+    Left = 1000
     Top = 232
   end
 end

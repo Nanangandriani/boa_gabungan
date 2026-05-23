@@ -25,7 +25,7 @@ object FNew_PO: TFNew_PO
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1202
+    ExplicitWidth = 1204
     object Label1: TLabel
       Left = 24
       Top = 68
@@ -216,7 +216,6 @@ object FNew_PO: TFNew_PO
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
-      Visible = False
     end
     object Label39: TLabel
       Left = 714
@@ -590,13 +589,12 @@ object FNew_PO: TFNew_PO
       Text = ''
       FocusColor = clInfoBk
       TabOrder = 28
-      Visible = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
     object Edkd_akun: TRzEdit
-      Left = 729
-      Top = 215
+      Left = 968
+      Top = 169
       Width = 164
       Height = 23
       Text = ''
@@ -753,7 +751,7 @@ object FNew_PO: TFNew_PO
     Height = 122
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1202
+    ExplicitWidth = 1204
     object Label7: TLabel
       Left = 832
       Top = 48
@@ -925,8 +923,8 @@ object FNew_PO: TFNew_PO
     Height = 35
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 1202
-    ExplicitHeight = 26
+    ExplicitWidth = 1204
+    ExplicitHeight = 34
     object BBatal: TRzBitBtn
       Left = 1132
       Top = 1
@@ -987,8 +985,8 @@ object FNew_PO: TFNew_PO
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1126
-      ExplicitHeight = 24
+      ExplicitLeft = 1128
+      ExplicitHeight = 32
     end
     object BSimpan: TRzBitBtn
       Left = 1057
@@ -1051,8 +1049,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1051
-      ExplicitHeight = 24
+      ExplicitLeft = 1053
+      ExplicitHeight = 32
     end
     object BEdit: TRzBitBtn
       Left = 982
@@ -1115,8 +1113,8 @@ object FNew_PO: TFNew_PO
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 976
-      ExplicitHeight = 24
+      ExplicitLeft = 978
+      ExplicitHeight = 32
     end
     object RzBitBtn2: TRzBitBtn
       Left = 1
@@ -1179,7 +1177,7 @@ object FNew_PO: TFNew_PO
         AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
         E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
       NumGlyphs = 2
-      ExplicitHeight = 24
+      ExplicitHeight = 32
     end
     object RzBitBtn3: TRzBitBtn
       Left = 856
@@ -1197,7 +1195,7 @@ object FNew_PO: TFNew_PO
     Height = 265
     Align = alTop
     TabOrder = 3
-    ExplicitWidth = 1202
+    ExplicitWidth = 1204
     object DBGridDetail: TDBGridEh
       Left = 1
       Top = 1

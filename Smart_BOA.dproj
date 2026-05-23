@@ -96,15 +96,15 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>2060</VerInfo_Locale>
+        <VerInfo_Locale>13324</VerInfo_Locale>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_UnitSearchPath>C:\Komponen Delphi\ExcelExport;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.91.0.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.91.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>91</VerInfo_MinorVer>
-        <VerInfo_Build>3</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.103.0.2;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.103.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>103</VerInfo_MinorVer>
+        <VerInfo_Build>2</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1430,6 +1430,18 @@
         </DCCReference>
         <DCCReference Include="UListNoTransaksi.pas">
             <Form>FListNoTransaksi</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ULap_Buku_Kas_Kecil.pas">
+            <Form>FLap_Buku_Kas_Kecil</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UBeritaAcaraHutang.pas">
+            <Form>FBeritaAcaraHutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UKartu_UangMuka_Pembelian.pas">
+            <Form>FKartu_UangMuka_Pembelian</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

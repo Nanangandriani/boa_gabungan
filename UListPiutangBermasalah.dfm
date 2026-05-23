@@ -3,7 +3,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   Top = 0
   Caption = 'Piutang Bermasalah'
   ClientHeight = 442
-  ClientWidth = 771
+  ClientWidth = 1010
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 771
+    Width = 1010
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,6 +25,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 771
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -43,7 +44,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   object DBGridPiutangBermasalah: TDBGridEh
     Left = 0
     Top = 127
-    Width = 771
+    Width = 1010
     Height = 315
     Align = alClient
     DataSource = DsPenjualan
@@ -54,6 +55,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
     TabOrder = 1
+    OnAdvDrawDataCell = DBGridPiutangBermasalahAdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -62,6 +64,17 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         FieldName = 'id'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = 'dd/mm/yyyy'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'created_at'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Tanggal Buat'
+        Width = 92
       end
       item
         CellButtons = <>
@@ -126,17 +139,6 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
       end
       item
         CellButtons = <>
-        DisplayFormat = 'dd/mm/yyyy'
-        DynProps = <>
-        EditButtons = <>
-        FieldName = 'created_at'
-        Footers = <>
-        Title.Alignment = taCenter
-        Title.Caption = 'Tanggal Buat'
-        Width = 92
-      end
-      item
-        CellButtons = <>
         DynProps = <>
         EditButtons = <>
         FieldName = 'created_by'
@@ -198,6 +200,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     end
     object ActDel: TAction
       Caption = 'Delete'
+      OnExecute = ActDelExecute
     end
     object ActPrint: TAction
       Caption = 'Print  '
@@ -229,8 +232,8 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 656
-    Top = 8
+    Left = 592
+    Top = 65528
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -295,6 +298,19 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
       FloatClientHeight = 0
       ItemLinks = <
         item
+          UserDefine = [udWidth]
+          UserWidth = 104
+          Visible = True
+          ItemName = 'dtAwal'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 102
+          Visible = True
+          ItemName = 'dtAkhir'
+        end
+        item
+          BeginGroup = True
           UserDefine = [udWidth]
           UserWidth = 202
           Visible = True
@@ -1195,9 +1211,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end>
     end
     object edKaresidenan: TcxBarEditItem
-      Caption = 'TP                '
+      Caption = 'TP                 '
       Category = 0
-      Hint = 'TP                '
+      Hint = 'TP                 '
       Visible = ivAlways
       OnChange = edKaresidenanChange
       PropertiesClassName = 'TcxButtonEditProperties'
@@ -1356,17 +1372,35 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         3C1A0000000049454E44AE426082}
       OnClick = dxBarLargeButton10Click
     end
+    object dtAwal: TcxBarEditItem
+      Caption = 'Tanggal Awal'
+      Category = 0
+      Hint = 'Tanggal Awal'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dtAkhir: TcxBarEditItem
+      Caption = 'Tanggal Akhir'
+      Category = 0
+      Hint = 'Tanggal Akhir'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
   end
   object QPiutangBermasalah: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from vpiutangbermasalah')
-    Left = 712
-    Top = 64
+      
+        'SELECT * from get_piutang_bermasalah() WHERE (created_at BETWEEN' +
+        ' '#39'2026-04-01'#39' AND  '#39'2026-04-13'#39')  AND code_karesidenan='#39'JKT'#39' AND' +
+        ' status=True')
+    Left = 576
+    Top = 152
   end
   object DsPenjualan: TDataSource
     DataSet = QPiutangBermasalah
-    Left = 704
+    Left = 664
+    Top = 65520
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1377,7 +1411,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45904.561984745370000000
+    ReportOptions.LastChange = 46125.435931377320000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1504,11 +1538,13 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         DataSet = frxDBDataPiutangBermasalah
         DataSetName = 'frxDBDataPiutangBermasalah'
         RowCount = 0
+        Stretched = True
         object Memo20: TfrxMemoView
           AllowVectorExport = True
           Left = 3.338590000000000000
           Width = 34.015770000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1522,10 +1558,11 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 43.031540000000000000
-          Width = 181.417440000000000000
+          Left = 40.980257950000000000
+          Width = 183.468722050000000000
           Height = 18.897650000000000000
-          DataField = 'note'
+          StretchMode = smMaxHeight
+          DataField = 'customer_name'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
           Font.Charset = DEFAULT_CHARSET
@@ -1535,13 +1572,14 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDataPiutangBermasalah."note"]')
+            '[frxDBDataPiutangBermasalah."customer_name"]')
           ParentFont = False
         end
         object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 227.905511811024000000
+          Left = 227.905511810000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1549,17 +1587,19 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         object Line5: TfrxLineView
           AllowVectorExport = True
           Left = 38.551181100000000000
-          Height = 26.456692913385800000
+          Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 236.244280000000000000
-          Width = 139.842610000000000000
+          Left = 230.090433850000000000
+          Width = 145.996456150000000000
           Height = 18.897650000000000000
-          DataField = 'regency'
+          StretchMode = smMaxHeight
+          DataField = 'kabupaten'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
           Font.Charset = DEFAULT_CHARSET
@@ -1569,16 +1609,17 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDataPiutangBermasalah."regency"]')
+            '[frxDBDataPiutangBermasalah."kabupaten"]')
           ParentFont = False
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 382.000000000000000000
+          Left = 381.487179490000000000
           Top = 0.228200000000000000
-          Width = 128.084106670000000000
+          Width = 128.596927180000000000
           Height = 18.897650000000000000
-          DataField = 'subdistrict'
+          StretchMode = smMaxHeight
+          DataField = 'kecamatan'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
           Font.Charset = DEFAULT_CHARSET
@@ -1588,23 +1629,25 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDataPiutangBermasalah."subdistrict"]')
+            '[frxDBDataPiutangBermasalah."kecamatan"]')
           ParentFont = False
         end
         object Line7: TfrxLineView
           AllowVectorExport = True
           Left = 379.685039370000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 620.709030000000000000
+          Left = 636.709030000000000000
           Top = 0.881880000000000000
-          Width = 79.724490000000000000
+          Width = 71.006541280000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'date_nota'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
@@ -1616,16 +1659,18 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           Font.Name = 'arial'
           Font.Style = []
           Frame.Typ = []
+          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDataPiutangBermasalah."date_nota"]')
           ParentFont = False
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 704.638220000000000000
+          Left = 711.407450770000000000
           Top = 1.000000000000000000
-          Width = 125.078850000000000000
+          Width = 137.899362820000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'amount'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
@@ -1646,6 +1691,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           AllowVectorExport = True
           Left = 509.905511810000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1653,31 +1699,35 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         object Line55: TfrxLineView
           AllowVectorExport = True
           Height = 26.456710000000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line4: TfrxLineView
           AllowVectorExport = True
-          Left = 620.220472440945000000
+          Left = 636.220472440000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line8: TfrxLineView
           AllowVectorExport = True
-          Left = 700.724409448819000000
+          Left = 709.724409450000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 511.774583330000000000
-          Width = 106.896413330000000000
+          Left = 510.518173070000000000
+          Width = 124.845131280000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           DataField = 'trans_no_nota'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
@@ -1693,17 +1743,19 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line9: TfrxLineView
           AllowVectorExport = True
-          Left = 835.275590551181000000
+          Left = 851.275590550000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 838.614720000000000000
-          Width = 355.630180000000000000
+          Left = 852.460873840000000000
+          Width = 341.784026160000000000
           Height = 22.677180000000000000
+          StretchMode = smMaxHeight
           DataField = 'note'
           DataSet = frxDBDataPiutangBermasalah
           DataSetName = 'frxDBDataPiutangBermasalah'
@@ -1721,6 +1773,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           AllowVectorExport = True
           Left = 1197.551950000000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1797,9 +1850,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo92: TfrxMemoView
           AllowVectorExport = True
-          Left = 43.354360000000000000
+          Left = 40.790257440000000000
           Top = 3.779530000000000000
-          Width = 181.417440000000000000
+          Width = 183.981542560000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1851,9 +1904,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 622.275820000000000000
+          Left = 635.198896920000000000
           Top = 1.881880000000000000
-          Width = 75.590600000000000000
+          Width = 73.539317950000000000
           Height = 30.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1871,7 +1924,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
           AllowVectorExport = True
           Left = 511.501546670000000000
           Top = 1.984230000000000000
-          Width = 107.821583330000000000
+          Width = 114.488250000000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1887,7 +1940,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line14: TfrxLineView
           AllowVectorExport = True
-          Left = 620.354670000000000000
+          Left = 636.354670000000000000
           Top = 0.204700000000000000
           Height = 35.692950000000000000
           Color = clBlack
@@ -1896,7 +1949,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line2: TfrxLineView
           AllowVectorExport = True
-          Left = 700.756340000000000000
+          Left = 709.756340000000000000
           Top = 0.440940000000000000
           Height = 35.692950000000000000
           Color = clBlack
@@ -1905,9 +1958,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 705.118430000000000000
+          Left = 710.862019740000000000
           Top = 1.322820000000000000
-          Width = 124.724490000000000000
+          Width = 137.545002820000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1923,7 +1976,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line11: TfrxLineView
           AllowVectorExport = True
-          Left = 835.276130000000000000
+          Left = 851.276130000000000000
           Height = 35.692950000000000000
           Color = clBlack
           Frame.Typ = []
@@ -1931,8 +1984,8 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 839.055660000000000000
-          Width = 355.275820000000000000
+          Left = 852.901813850000000000
+          Width = 341.429666150000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1984,7 +2037,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line49: TfrxLineView
           AllowVectorExport = True
-          Left = 700.590551180000000000
+          Left = 709.590551180000000000
           Top = 0.125850000000000000
           Height = 26.456710000000000000
           Color = clBlack
@@ -1993,9 +2046,9 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 705.858690000000000000
+          Left = 710.576638720000000000
           Top = 1.000000000000000000
-          Width = 125.078850000000000000
+          Width = 138.412183330000000000
           Height = 18.897650000000000000
           DataSetName = 'frxdbpiutangmslh'
           DisplayFormat.FormatStr = '%0.n'
@@ -2013,7 +2066,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
         end
         object Line15: TfrxLineView
           AllowVectorExport = True
-          Left = 835.276130000000000000
+          Left = 851.276130000000000000
           Height = 26.456710000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2038,10 +2091,18 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
       'updated_by=updated_by'
       'deleted_by=deleted_by'
       'deleted_at=deleted_at'
-      'name_cust=name_cust'
+      'customer_name=customer_name'
+      'code_tp=code_tp'
+      'tp=tp'
+      'code_karesidenan=code_karesidenan'
+      'karesidenan=karesidenan'
+      'code_kabupaten=code_kabupaten'
+      'kabupaten=kabupaten'
+      'code_kecamatan=code_kecamatan'
+      'kecamatan=kecamatan'
+      'status=status'
       'code_region=code_region'
-      'subdistrict=subdistrict'
-      'regency=regency')
+      'code_regency=code_regency')
     DataSet = QPiutangBermasalah
     BCDToCurrency = False
     DataSetOptions = []

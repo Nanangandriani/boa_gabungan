@@ -356,7 +356,10 @@ uses
   UKelompokBiayaWilayah in 'UKelompokBiayaWilayah.pas' {FKelompokBiayaWilayah},
   UListKelompokBiayaWilayah in 'UListKelompokBiayaWilayah.pas' {FListKelompokBiayaWilayah},
   UKartuUangMukaPenjualan in 'UKartuUangMukaPenjualan.pas' {FKartuUangMukaPenjualan},
-  UListNoTransaksi in 'UListNoTransaksi.pas' {FListNoTransaksi};
+  UListNoTransaksi in 'UListNoTransaksi.pas' {FListNoTransaksi},
+  ULap_Buku_Kas_Kecil in 'ULap_Buku_Kas_Kecil.pas' {FLap_Buku_Kas_Kecil},
+  UBeritaAcaraHutang in 'UBeritaAcaraHutang.pas' {FBeritaAcaraHutang},
+  UKartu_UangMuka_Pembelian in 'UKartu_UangMuka_Pembelian.pas' {FKartu_UangMuka_Pembelian};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -542,6 +545,7 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFKelompokBiayaWilayah, FKelompokBiayaWilayah);
   Application.CreateForm(TFListKelompokBiayaWilayah, FListKelompokBiayaWilayah);
   Application.CreateForm(TFListNoTransaksi, FListNoTransaksi);
+  Application.CreateForm(TFBeritaAcaraHutang, FBeritaAcaraHutang);
   //  Application.CreateForm(TFKartuUangMukaPenjualan, FKartuUangMukaPenjualan);
   //  Application.CreateForm(TFRegisterCekMundur, FRegisterCekMundur);
   //  Application.CreateForm(TFDaftarPenggunaanFakturPajak, FDaftarPenggunaanFakturPajak);

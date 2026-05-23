@@ -144,6 +144,7 @@ type
     QTP_Real: TUniQuery;
     BEdit: TRzBitBtn;
     Ed_kd_bank: TEdit;
+    BCorrection: TRzBitBtn;
     procedure edNamaJenisTransButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -177,11 +178,13 @@ type
     procedure CbGroup_BiayaChange(Sender: TObject);
     procedure Btn_daf_tpClick(Sender: TObject);
     procedure Ed_kd_bankChange(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang, vhutang_debit : Currency;
   public
     { Public declarations }
+    IntStatusKoreksi, iserror, isCancel: integer;
     Status,KetemuCekPosisiDK : Integer;
     next_proses:boolean;
     akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya,id_module : String;
@@ -217,7 +220,7 @@ implementation
 
 uses UDataModule, UCari_DaftarPerk, UMasterData, USearch_Supplier,
   udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin,
-  Utrx_deposito, Udaftar_TP;
+  Utrx_deposito, Udaftar_TP, UKoreksi;
 
 //var
   //RealFDataPengeluaranKasBank: TFDataPengeluaranKasBank;
@@ -429,6 +432,7 @@ begin
             ' "trans_type_name" = '+QuotedStr(Cb_Jenis_Trans.Text)+', '+
             ' "bank_number_account" = NULL, '+
             ' "bank_name_account" = NULL, '+
+            ' "status_correction"= 0, '+
             ' "additional_code" = '+QuotedStr(Ed_Additional.Text)+', '+
             ' "module_id" = '+QuotedStr(Ed_id_modul.Text)+', '+
             ' "cheque_no" = '+QuotedStr(Ed_nocek.Text)+', '+
@@ -896,6 +900,24 @@ procedure TFDataPengeluaranKasBank.BBatalClick(Sender: TObject);
 begin
   Clear;
   Close;
+end;
+
+procedure TFDataPengeluaranKasBank.BCorrectionClick(Sender: TObject);
+begin
+  if CheckJurnalPosting(edNoTrans.Text)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+    iserror:=1;
+  end;
+  if iserror=0 then
+  begin
+    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(Fdaf_pengeluaran_kas_bank.Name)); //Mendapatkan nama Menu
+
+    FKoreksi.Status:=0;
+    FKoreksi.vnotransaksi:=edNoTrans.Text; //Mendapatkan Nomor Transaksi
+    FKoreksi.ShowModal;
+  end;
 end;
 
 procedure TFDataPengeluaranKasBank.BitBtn1Click(Sender: TObject);
@@ -1531,6 +1553,27 @@ begin
    load_group_biaya;
    edKodeMataUang.Text:='IDR';
    edKodeMataUangChange(sender);
+
+  if Status = 0 then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+    dtTrans.Enabled := True;
+  end
+  else if (Status = 1) and (IntStatusKoreksi = 2) then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+
+    dtTrans.Enabled := False;
+  end;
 end;
 
 
@@ -1758,12 +1801,12 @@ begin
   MemDetailAkun.First;
   while not MemDetailAkun.Eof do
   begin
-    vtotal_debit:=vtotal_debit+MemDetailAkun['debit'];
-    vtotal_kredit:=vtotal_kredit+MemDetailAkun['kredit'];
+    vtotal_debit:=vtotal_debit+MemDetailAkun.FieldByName('debit').AsCurrency; //MemDetailAkun['debit'];
+    vtotal_kredit:=vtotal_kredit+MemDetailAkun.FieldByName('kredit').AsCurrency; //MemDetailAkun['kredit'];
     if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
-    vhutang_debit:=MemDetailAkun['debit'];
+    vhutang_debit:=MemDetailAkun.FieldByName('debit').AsCurrency; //MemDetailAkun['debit'];
     if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code_um from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
-    vhutang_debit:=MemDetailAkun['debit'];
+    vhutang_debit:=MemDetailAkun.FieldByName('kredit').AsCurrency; //MemDetailAkun['debit'];
 
     MemDetailAkun.Next;
   end;
@@ -1776,10 +1819,12 @@ begin
     exit;
   end;
 
-  if vtotal_debit <> edJumlah.Value then
+  //if vtotal_debit <> edJumlah.Value then
+  if Abs(vtotal_debit - edJumlah.Value) > 0.01 then
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Dengan Total Penerimaan Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(vtotal_debit)+'0'+FloatToStr(edJumlah.Value));
+    //ShowMessage(FloatToStr(vtotal_debit)+'-0-'+FloatToStr(edJumlah.Value));
+    //ShowMessage(FloatToStr(vtotal_debit-edJumlah.Value));
     next_proses:=false;
     exit;
   end;

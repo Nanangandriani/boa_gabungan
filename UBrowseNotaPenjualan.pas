@@ -70,7 +70,7 @@ begin
     begin
       FNew_PiutangBermasalah.edNoNota.Text:=Qselling.FieldValues['trans_no'];
       FNew_PiutangBermasalah.dtTglNota.Date:=Qselling.FieldValues['trans_date'];
-      FNew_PiutangBermasalah.edJumlahPiutang.Text:=Qselling.FieldValues['grand_tot'];
+      FNew_PiutangBermasalah.edJumlahPiutang.Value:=Qselling.FieldValues['sisa_piutang'];
     end;
   end;
   Close;
@@ -109,7 +109,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT * FROM get_piutang_invoice((SELECT get_end_of_month((SELECT NOW())::DATE))) WHERE sisa_piutang>0 '+strWhereTgl+strKodePelanggan;
+      sql.Text:='SELECT * FROM get_piutang_invoice((SELECT get_end_of_month((SELECT NOW())::DATE))) WHERE sisa_piutang>0 '+strWhereTgl+strWhereKodePelanggan;
 //      sql.Text:='SELECT * FROM t_selling WHERE deleted_at is NULL '+strWhereTgl+strWhereKodePelanggan;
       open;
     end;

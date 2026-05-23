@@ -3,7 +3,7 @@ object FNew_Pembelian: TFNew_Pembelian
   Top = 0
   Caption = 'Form New Faktur Pembelian'
   ClientHeight = 783
-  ClientWidth = 1117
+  ClientWidth = 1501
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,14 +26,14 @@ object FNew_Pembelian: TFNew_Pembelian
   object Panel1: TPanel
     Left = 0
     Top = 751
-    Width = 1117
+    Width = 1501
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 742
-    ExplicitWidth = 1111
+    ExplicitTop = 750
+    ExplicitWidth = 1497
     object BBatal: TRzBitBtn
-      Left = 1041
+      Left = 1425
       Top = 1
       Height = 30
       Align = alRight
@@ -92,10 +92,10 @@ object FNew_Pembelian: TFNew_Pembelian
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1035
+      ExplicitLeft = 1421
     end
     object BSimpan: TRzBitBtn
-      Left = 966
+      Left = 1350
       Top = 1
       Height = 30
       Align = alRight
@@ -154,10 +154,11 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 960
+      ExplicitLeft = 1344
+      ExplicitTop = 4
     end
     object BEdit: TRzBitBtn
-      Left = 891
+      Left = 1275
       Top = 1
       Height = 30
       Align = alRight
@@ -216,14 +217,15 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 885
+      ExplicitLeft = 1271
     end
     object BPosting: TRzBitBtn
-      Left = 816
+      Left = 1200
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Posting'
+      Enabled = False
       TabOrder = 3
       Visible = False
       OnClick = BPostingClick
@@ -279,10 +281,10 @@ object FNew_Pembelian: TFNew_Pembelian
         D7D7D7D7D7091009E8E881AC81D7D7D7D7D7D7D7D781AC81E8E8090909090909
         0909090909090909E8E88181818181818181818181818181E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 810
+      ExplicitLeft = 1196
     end
     object Button1: TButton
-      Left = 643
+      Left = 1027
       Top = 1
       Width = 75
       Height = 30
@@ -291,10 +293,10 @@ object FNew_Pembelian: TFNew_Pembelian
       TabOrder = 4
       Visible = False
       OnClick = Button1Click
-      ExplicitLeft = 637
+      ExplicitLeft = 1023
     end
     object BCorrection: TRzBitBtn
-      Left = 718
+      Left = 1102
       Top = 1
       Width = 98
       Height = 30
@@ -302,17 +304,17 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Submit Correction'
       TabOrder = 5
       OnClick = BCorrectionClick
-      ExplicitLeft = 712
+      ExplicitLeft = 1098
     end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1117
+    Width = 1501
     Height = 249
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1111
+    ExplicitWidth = 1497
     object Label1: TLabel
       Left = 28
       Top = 256
@@ -323,7 +325,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object Label3: TLabel
       Left = 28
-      Top = 159
+      Top = 177
       Width = 50
       Height = 15
       Caption = 'No. Trans'
@@ -379,8 +381,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Supplier'
     end
     object Label21: TLabel
-      Left = 394
-      Top = 159
+      Left = 528
+      Top = 160
       Width = 84
       Height = 15
       Caption = 'Jenis Pembelian'
@@ -409,8 +411,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Visible = False
     end
     object Lblakun: TLabel
-      Left = 990
-      Top = 150
+      Left = 985
+      Top = 190
       Width = 46
       Height = 15
       Caption = 'Lain-lain'
@@ -445,8 +447,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Currency'
     end
     object Label16: TLabel
-      Left = 28
-      Top = 196
+      Left = 531
+      Top = 224
       Width = 36
       Height = 15
       Caption = 'No.Ref'
@@ -466,6 +468,15 @@ object FNew_Pembelian: TFNew_Pembelian
       Height = 15
       Caption = 'Tgl. Jatuh Tempo'
     end
+    object Btn_no: TSpeedButton
+      Left = 391
+      Top = 176
+      Width = 23
+      Height = 22
+      Caption = '...'
+      Enabled = False
+      OnClick = Btn_noClick
+    end
     object EdNoSPB: TRzComboBox
       Left = 175
       Top = 256
@@ -477,7 +488,7 @@ object FNew_Pembelian: TFNew_Pembelian
     end
     object EdNo: TEdit
       Left = 175
-      Top = 156
+      Top = 174
       Width = 210
       Height = 23
       Color = clInfoBk
@@ -514,7 +525,7 @@ object FNew_Pembelian: TFNew_Pembelian
     object Edno_Faktur: TEdit
       Left = 175
       Top = 99
-      Width = 168
+      Width = 206
       Height = 23
       CharCase = ecUpperCase
       TabOrder = 5
@@ -558,8 +569,8 @@ object FNew_Pembelian: TFNew_Pembelian
       OnButtonClick = EdNm_suppButtonClick
     end
     object Edjenis: TRzComboBox
-      Left = 494
-      Top = 156
+      Left = 640
+      Top = 157
       Width = 210
       Height = 23
       CharCase = ecUpperCase
@@ -635,8 +646,8 @@ object FNew_Pembelian: TFNew_Pembelian
       end
     end
     object Edbea: TRzNumericEdit
-      Left = 990
-      Top = 169
+      Left = 985
+      Top = 209
       Width = 92
       Height = 23
       TabOrder = 14
@@ -653,8 +664,8 @@ object FNew_Pembelian: TFNew_Pembelian
       DisplayFormat = ',0;(,0)'
     end
     object Edjenispo: TRzComboBox
-      Left = 391
-      Top = 187
+      Left = 387
+      Top = 72
       Width = 89
       Height = 23
       CharCase = ecUpperCase
@@ -707,26 +718,29 @@ object FNew_Pembelian: TFNew_Pembelian
       Visible = False
     end
     object Edth: TEdit
-      Left = 921
-      Top = 187
+      Left = 1009
+      Top = 188
       Width = 58
       Height = 23
+      TabStop = False
       TabOrder = 21
       Visible = False
     end
     object Edbln: TEdit
-      Left = 857
-      Top = 187
+      Left = 945
+      Top = 188
       Width = 58
       Height = 23
+      TabStop = False
       TabOrder = 22
       Visible = False
     end
     object Edhari: TEdit
-      Left = 792
-      Top = 187
+      Left = 880
+      Top = 188
       Width = 58
       Height = 23
+      TabStop = False
       TabOrder = 23
       Visible = False
     end
@@ -748,8 +762,8 @@ object FNew_Pembelian: TFNew_Pembelian
       OnChange = EdCurrChange
     end
     object Cb_Ref: TRzComboBox
-      Left = 177
-      Top = 187
+      Left = 640
+      Top = 222
       Width = 206
       Height = 23
       Enabled = False
@@ -771,8 +785,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Visible = False
     end
     object Edkd_akun: TRzEdit
-      Left = 713
-      Top = 156
+      Left = 859
+      Top = 157
       Width = 101
       Height = 23
       Text = ''
@@ -783,8 +797,8 @@ object FNew_Pembelian: TFNew_Pembelian
       OnChange = Edkd_akunChange
     end
     object Edkd_akunum: TRzEdit
-      Left = 820
-      Top = 155
+      Left = 966
+      Top = 156
       Width = 159
       Height = 23
       Text = ''
@@ -801,17 +815,55 @@ object FNew_Pembelian: TFNew_Pembelian
       EditType = etDate
       TabOrder = 30
     end
+    object ckno_penganti: TCheckBox
+      Left = 174
+      Top = 154
+      Width = 126
+      Height = 17
+      Caption = 'Nomor Penganti'
+      TabOrder = 31
+      OnClick = ckno_pengantiClick
+    end
+    object Ckcicilan: TCheckBox
+      Left = 175
+      Top = 207
+      Width = 97
+      Height = 17
+      Caption = 'Cicilan'
+      TabOrder = 32
+      OnClick = CkcicilanClick
+    end
+    object Edcicilan: TRzNumericEdit
+      Left = 328
+      Top = 203
+      Width = 57
+      Height = 23
+      TabOrder = 33
+      Visible = False
+      OnChange = EdcicilanChange
+      DisplayFormat = ',0;(,0)'
+    end
+    object Bcicilan: TBitBtn
+      Left = 391
+      Top = 204
+      Width = 98
+      Height = 28
+      Caption = 'Hitung Cicilan'
+      TabOrder = 34
+      Visible = False
+      OnClick = BcicilanClick
+    end
   end
   object RzPanel1: TRzPanel
     Left = 0
     Top = 249
-    Width = 1117
+    Width = 1501
     Height = 502
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1111
-    ExplicitHeight = 493
+    ExplicitWidth = 1497
+    ExplicitHeight = 501
     object Label26: TLabel
       Left = 41
       Top = 185
@@ -910,15 +962,15 @@ object FNew_Pembelian: TFNew_Pembelian
     object PGFaktur: TRzPageControl
       Left = 2
       Top = 2
-      Width = 1113
+      Width = 1497
       Height = 359
       Hint = ''
-      ActivePage = TabBarang2
+      ActivePage = TabCicilan
       Align = alClient
-      TabIndex = 0
+      TabIndex = 3
       TabOrder = 6
-      ExplicitWidth = 1107
-      ExplicitHeight = 350
+      ExplicitWidth = 1493
+      ExplicitHeight = 358
       FixedDimension = 21
       object TabBarang2: TRzTabSheet
         Color = 15987699
@@ -926,7 +978,7 @@ object FNew_Pembelian: TFNew_Pembelian
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1109
+          Width = 1493
           Height = 334
           Align = alClient
           DataSource = DsTerimadet
@@ -1326,12 +1378,10 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitWidth = 1103
-        ExplicitHeight = 325
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1109
+          Width = 1493
           Height = 334
           Align = alClient
           DataGrouping.GroupLevels = <
@@ -1346,6 +1396,7 @@ object FNew_Pembelian: TFNew_Pembelian
           SumList.Active = True
           TabOrder = 0
           TitleParams.MultiTitle = True
+          OnColExit = DBGrid_UMColExit
           Columns = <
             item
               CellButtons = <>
@@ -1419,7 +1470,7 @@ object FNew_Pembelian: TFNew_Pembelian
         object DBGridReturPemb: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1109
+          Width = 1493
           Height = 334
           Align = alClient
           DynProps = <>
@@ -1524,7 +1575,7 @@ object FNew_Pembelian: TFNew_Pembelian
         object DBGridPotPemb: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1109
+          Width = 1493
           Height = 334
           Align = alClient
           DynProps = <>
@@ -1592,7 +1643,7 @@ object FNew_Pembelian: TFNew_Pembelian
         object DBGridBarang: TDBGridEh
           Left = 0
           Top = 0
-          Width = 1109
+          Width = 1493
           Height = 334
           Align = alClient
           DynProps = <>
@@ -1921,17 +1972,84 @@ object FNew_Pembelian: TFNew_Pembelian
           end
         end
       end
+      object TabCicilan: TRzTabSheet
+        Color = 15987699
+        Caption = 'Cicilan'
+        ExplicitWidth = 1489
+        ExplicitHeight = 333
+        object DBGridEh1: TDBGridEh
+          Left = 0
+          Top = 0
+          Width = 1493
+          Height = 334
+          Align = alClient
+          DataSource = DataSource1
+          DynProps = <>
+          FooterRowCount = 1
+          SumList.Active = True
+          TabOrder = 0
+          Columns = <
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'tahun'
+              Footers = <>
+              Title.Caption = 'Tahun'
+              Width = 87
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'namabulan'
+              Footers = <>
+              Title.Caption = 'Bulan'
+              Width = 156
+            end
+            item
+              CellButtons = <>
+              DisplayFormat = '#,##0.00'
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'amount'
+              Footer.DisplayFormat = '#,##0.00'
+              Footer.ValueType = fvtSum
+              Footers = <>
+              Title.Caption = 'Amount'
+              Width = 186
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'angkabulan'
+              Footers = <>
+              Title.Caption = 'Bulanno'
+              Width = 112
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'nourut'
+              Footers = <>
+            end>
+          object RowDetailData: TRowDetailPanelControlEh
+          end
+        end
+      end
     end
     object RzPanel2: TRzPanel
       Left = 2
       Top = 361
-      Width = 1113
+      Width = 1497
       Height = 139
       Align = alBottom
       Color = 15987699
       TabOrder = 7
-      ExplicitTop = 352
-      ExplicitWidth = 1107
+      ExplicitTop = 360
+      ExplicitWidth = 1493
       object Label28: TLabel
         Left = 26
         Top = 81
@@ -1968,6 +2086,14 @@ object FNew_Pembelian: TFNew_Pembelian
         Height = 15
         Caption = 'Total Hutang'
       end
+      object Gauge1: TGauge
+        Left = 407
+        Top = 116
+        Width = 642
+        Height = 20
+        Progress = 0
+        Visible = False
+      end
       object EdJum_Hutang: TRzNumericEdit
         Left = 173
         Top = 19
@@ -1983,6 +2109,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 157
         Height = 23
         TabOrder = 1
+        OnChange = EdJum_UmChange
         DisplayFormat = '#,##0.00'
       end
       object EdJum_PotPem: TRzNumericEdit
@@ -2010,6 +2137,7 @@ object FNew_Pembelian: TFNew_Pembelian
         Width = 157
         Height = 23
         TabOrder = 4
+        OnChange = EdJum_totalhutChange
         DisplayFormat = '#,##0.00'
       end
     end
@@ -2019,8 +2147,8 @@ object FNew_Pembelian: TFNew_Pembelian
     SQL.Strings = (
       'Select * from t_material_stok'
       ' order by kd_material_stok desc')
-    Left = 1066
-    Top = 173
+    Left = 1146
+    Top = 53
   end
   object DsTerimadet: TDataSource
     DataSet = MemterimaDet
@@ -2028,8 +2156,8 @@ object FNew_Pembelian: TFNew_Pembelian
     Top = 91
   end
   object DsMaterial: TDataSource
-    Left = 1010
-    Top = 181
+    Left = 1194
+    Top = 21
   end
   object MemterimaDet: TMemTableEh
     Params = <>
@@ -2603,5 +2731,65 @@ object FNew_Pembelian: TFNew_Pembelian
     DataSet = QRetur_pemb
     Left = 547
     Top = 313
+  end
+  object MemDetail: TMemTableEh
+    Params = <>
+    Left = 232
+    Top = 264
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object voucher_no: TMTStringDataFieldEh
+          FieldName = 'voucher_no'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object nourut: TMTNumericDataFieldEh
+          FieldName = 'nourut'
+          NumericDataType = fdtSmallintEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object tahun: TMTStringDataFieldEh
+          FieldName = 'tahun'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object angkabulan: TMTStringDataFieldEh
+          FieldName = 'angkabulan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object amount: TMTNumericDataFieldEh
+          FieldName = 'amount'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 30
+          DisplayFormat = '#,##0.00'
+          currency = False
+          Precision = 30
+        end
+        object status: TMTStringDataFieldEh
+          FieldName = 'status'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+        end
+        object namabulan: TMTStringDataFieldEh
+          FieldName = 'namabulan'
+          StringDataType = fdtStringEh
+          DisplayWidth = 30
+          Size = 30
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = MemDetail
+    Left = 304
+    Top = 264
   end
 end

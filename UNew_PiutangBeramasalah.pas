@@ -30,7 +30,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    strKodePelanggan,strID: String;
+    strKodePelanggan,strID,strNoNotaPrev: String;
     Status: Integer;
     procedure Clear;
     procedure Save;
@@ -77,7 +77,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.text:='UPDATE t_selling_receivables  SET customer_code='+QuotedStr(strKodePelanggan)+', '+
+    sql.text:='UPDATE t_selling_receivables SET customer_code='+QuotedStr(strKodePelanggan)+', '+
               'trans_no_nota='+QuotedStr(edNoNota.Text)+', '+
               'amount='+QuotedStr(FloatToStr(edJumlahPiutang.Value))+', '+
               'date_nota='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTglNota.Date))+', '+
@@ -94,7 +94,23 @@ end;
 
 procedure TFNew_PiutangBermasalah.BSaveClick(Sender: TObject);
 begin
-  if edPelanggan.Text='' then
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_selling_receivables where trans_no_nota='+QuotedStr(edNoNota.Text)+' AND deleted_at is NULL';
+    open;
+  end;
+
+  if (dm.Qtemp2.RecordCount>0) AND (Status=0) then
+  begin
+    MessageDlg('No Nota Sudah Ada Di Piutang Bermasalah..!!',mtInformation,[mbRetry],0);
+  end
+  else if (dm.Qtemp2.RecordCount>0) AND (Status=1) AND (edNoNota.Text<>strNoNotaPrev) then
+  begin
+    MessageDlg('No Nota Sudah Ada Di Piutang Bermasalah..!!',mtInformation,[mbRetry],0);
+  end
+  else if edPelanggan.Text='' then
   begin
     MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
   end

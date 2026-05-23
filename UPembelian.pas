@@ -109,7 +109,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Pembelian, UMy_Function, UMainMenu, UHomeLogin, UDataModule,
-  UCetak_LPBKolektif;
+  UCetak_LPBKolektif, UKoreksi;
 var
   RealFPembelian: TFPembelian;
 // implementasi function
@@ -150,7 +150,7 @@ begin
       FNew_Pembelian.iserror:=1;
    end;
 
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridTerima1.Fields[1].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
     {with dm.Qtemp do
     begin
@@ -178,7 +178,8 @@ begin
       parambyname('deleted_by').AsString:=Nm;
       Execute;
     end;}
-    with dm.Qtemp do
+  { off 30-03-2026
+   with dm.Qtemp do
     begin
       Close;
       sql.Clear;
@@ -200,8 +201,48 @@ begin
       ParamByName('old_no').AsString := OldNo;
       Execute;
     end;
-    ActROExecute(sender);
-    ShowMessage('Data Berhasil di Hapus');
+    ActROExecute(sender);   }
+    //cr ds 30-03-2026
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT a.* FROM t_cash_bank_expenditure_payable a '+
+                  'left join t_cash_bank_expenditure b on b.voucher_no=a.voucher_no WHERE a.invoice_no='+QuotedStr(Qterima_material.FieldByName('trans_no').AsString)+' AND b.deleted_at is NULL';
+        open;
+      end;
+
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+                  'no_transaksi='+QuotedStr(Qterima_material.FieldByName('trans_no').AsString)+' and status=0 and deleted_at is null';
+        open;
+      end;
+
+      if dm.Qtemp2.RecordCount>0 then
+      begin
+        MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+      end else if dm.Qtemp.RecordCount>0 then
+      begin
+        MessageDlg('Nota sudah ada  pembayaran..!!',mtInformation,[mbRetry],0);
+      end else if CheckJurnalPosting(Memterima_material.FieldByName('trans_no').AsString)>0 then
+      begin
+        MessageDlg('Nota sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+      end else begin
+        if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+        begin
+          FKoreksi.vcall:=SelectRow('select Upper(b.submenu) menu from t_menu a '+
+                        'left join t_menu_sub b on b.menu_code=a.menu_code '+
+                        'where link='+QuotedStr(Fpembelian.Name)); //Mendapatkan nama Menu
+          FKoreksi.Status:=0;
+          FKoreksi.AksiTipe:='DELETE';
+          FKoreksi.vnotransaksi:=Memterima_material.FieldByName('trans_no').AsString;
+          FKoreksi.ShowModal;
+        end;
+      end;
+     // ShowMessage('Data Berhasil di Hapus');
     end;
 end;
 
@@ -250,12 +291,14 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''approved'' '+
+      sql.Text:=' Select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE'' '+
                 ' END) AS status_app,a.*,b.supplier_name,c.account_name,d.account_name as nm_perk ,to_char(trans_date,''dd'') tgl '+
                 ' ,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref  from t_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                 ' left join t_ak_account c on a.account_code=c.code '+
                 ' left join t_ak_account d on a.account_um_code=d.code '+
-                ' left join t_ref_item_receive e on a.ref_code=e.ref_code order by a.id desc';
+                ' left join t_ref_item_receive e on a.ref_code=e.ref_code '+
+                '  where a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+''+
+                ' order by a.trans_date  desc,a.trans_no desc';
       ExecSQL;
     end;
     end else
@@ -272,7 +315,7 @@ begin
                 ' left join t_ak_account d on a.account_um_code=d.code '+
                 ' left join t_ref_item_receive e on a.ref_code=e.ref_code'+
                 ' where a.sbu_code='+QuotedStr(kdsbu)+''+
-                ' order by a.ref_no Desc ';
+                ' order by a.trans_date  desc,a.trans_no desc';// ,a.ref_no desc ';
       ExecSQL;
     end;
     end;
@@ -334,7 +377,7 @@ begin
       Caption:='Update Faktur Pembelian';
       //BSimpan.Visible:=False;
       //BEdit.Visible:=True;
-      BEdit.Caption:='Simpan';
+    //  BEdit.Caption:='Simpan';
       MemterimaDet.EmptyTable;
       EdNoSPB.ReadOnly:=false;
     end;
@@ -376,6 +419,9 @@ begin
         if Memterima_material['invoice_status']=0 then
            CkInv.Checked:=False
         else CkInv.Checked:=True;
+        if Memterima_material['status_installment']=true then
+           Ckcicilan.Checked:=true
+        else Ckcicilan.Checked:=false;
 
         status_pos:=Memterima_material['status'];
         EdSisaHutang.Value:=Memterima_material.FieldByName('debt_remaining').AsFloat;
@@ -388,6 +434,8 @@ begin
         else
            GBDok.Enabled:=True;
         Edum.Value:=Memterima_material.FieldByName('um_value').AsFloat;
+        if Memterima_material['installment_period'] = null then Edcicilan.value:=0 else
+        Edcicilan.value:=Memterima_material['installment_period'];
 
       end;
     end;
@@ -436,6 +484,33 @@ begin
         end;
       end;
     end;
+    if FNew_Pembelian.Ckcicilan.checked=true then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from "v_purchase_installment" where trans_no='+QuotedStr(Memterima_material['trans_no']);
+        Open;
+      end;
+      FNew_Pembelian.MemDetail.active:=true;
+      dm.Qtemp.First;
+      while not dm.Qtemp.Eof do
+      begin
+        With FNew_Pembelian do
+        begin
+          MemDetail.insert;
+          MemDetail['nourut']:=dm.Qtemp['order_no'];
+          MemDetail['angkabulan']:=dm.Qtemp['trans_month'];
+          MemDetail['tahun']:=dm.Qtemp['trans_year'];
+          MemDetail['amount']:=dm.Qtemp['amount'];
+          MemDetail['status']:=dm.Qtemp['status'];
+          MemDetail['voucher_no']:=dm.Qtemp['voucher_no'];
+          memdetail.post;
+        end;
+        dm.Qtemp.Next;
+      end;
+    end;
     //FNew_Pembelian.EdNilai_ValasChange(sender);
     FNew_Pembelian.DBGridDetailpoColEnter(Sender);
     FNew_Pembelian.Cb_RefSelect(sender);
@@ -449,14 +524,14 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:='select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''REJECT'' END) AS status_app,a.*, b.supplier_name, '+
+       sql.Text:='select (case WHEN a."approval_status"=''0'' THEN ''PENGAJUAN'' else ''APPROVE'' END) AS status_app,a.*, b.supplier_name, '+
                  'c.account_name, d.account_name as nm_perk,to_char(trans_date,''dd'') tgl,to_char(trans_date,''mm'') bln,e.ref_name, e.id as id_ref  from '+
                  't_purchase_invoice a Left join t_supplier b on a.supplier_code=b.supplier_code '+
                  'left join t_ak_account c on a.account_code=c.code '+
                  'left join t_ak_account d on a.account_um_code=d.code '+
                  'left join t_ref_item_receive e on a.ref_code=e.ref_code '+
                  'where a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
-                 'order by a.id desc ';
+                 'order by a.trans_date desc,a.trans_no desc';//,a.id asc ';
        open;
    end;
    Qterima_material.Close;

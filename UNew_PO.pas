@@ -1107,7 +1107,7 @@ begin
       status_um:='0';
       NoTransUM.visible:=false;
       Ednm_akun.visible:=false;
-      Edkd_akun.Visible:=false;
+    //  Edkd_akun.Visible:=false;
       Label38.Visible:=false;
       EdUM.visible:=false;
     end;
@@ -1140,7 +1140,7 @@ begin
   status_um:='0';
   NoTransUM.visible:=false;
   Ednm_akun.visible:=false;
-  Edkd_akun.Visible:=false;
+ // Edkd_akun.Visible:=false;
   Label38.Visible:=false;
   EdUM.visible:=false;
 end;

@@ -527,7 +527,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     DataSet = Qsaldo_bank
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 664
+    Left = 688
     Top = 22
   end
   object Qsaldo_bank: TUniQuery
@@ -4703,7 +4703,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     DataSet = QHut_Aktiva
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 688
+    Left = 696
     Top = 202
   end
   object QHut_Aktiva: TUniQuery
@@ -4774,7 +4774,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         'GROUP BY a.supplier_code,a.periode1,a.periode2,a.plan_to ORDER B' +
         'Y plan_to)z)zz on xxx.supplier_code=zz.supplier_code and xxx.pla' +
         'n_to=zz.plan_to')
-    Active = True
     Left = 616
     Top = 200
   end
@@ -4953,7 +4952,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       '--and b.code_account=a.rek_no '
       '   and a.bank_norek='#39'1390018704530'#39' '
       '--and a.trans_date between '#39'2025-01-06'#39' and '#39'2025-01-06'#39)
-    Left = 635
+    Left = 595
     Top = 414
   end
   object frxReport1: TfrxReport
@@ -4965,7 +4964,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45677.603257696800000000
-    ReportOptions.LastChange = 46080.445957222230000000
+    ReportOptions.LastChange = 46128.612887488420000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -6203,7 +6202,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 30.614173228346500000
+          Left = 30.614173230000000000
           Width = 113.385826770000000000
           Height = 37.795275590000000000
           DataSet = frxDBDataset_SaldoBank
@@ -6229,7 +6228,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 143.622047244094000000
+          Left = 143.622047240000000000
           Width = 113.385826770000000000
           Height = 37.795275590000000000
           StretchMode = smMaxHeight
@@ -6252,8 +6251,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 257.007874015748000000
-          Width = 68.031496062992100000
+          Left = 257.007874020000000000
+          Width = 68.031496060000000000
           Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataField = 'due_date'
@@ -6294,7 +6293,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Width = 30.614173228346500000
+          Width = 30.614173230000000000
           Height = 37.795275590000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDataset_SaldoBank
@@ -6333,6 +6332,61 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
           Color = clBlack
           Frame.Typ = [ftTop]
         end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 325.417322830000000000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line7: TfrxLineView
+          AllowVectorExport = True
+          Left = 437.669291340000000000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = 257.008040000000000000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Left = 143.622140000000000000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line10: TfrxLineView
+          AllowVectorExport = True
+          Left = 30.992125984251970000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line11: TfrxLineView
+          AllowVectorExport = True
+          Left = 755.905511811023600000
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
+        object Line12: TfrxLineView
+          AllowVectorExport = True
+          Height = 37.795300000000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftLeft]
+        end
       end
       object Footer1: TfrxFooter
         FillType = ftBrush
@@ -6346,7 +6400,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         Width = 755.906000000000000000
         object Memo142: TfrxMemoView
           AllowVectorExport = True
-          Width = 30.614173228346500000
+          Width = 30.614173230000000000
           Height = 69.921259840000000000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
@@ -6474,7 +6528,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
         object Line5: TfrxLineView
           AllowVectorExport = True
           Left = 437.669291340000000000
-          Height = 69.921259842519700000
+          Height = 69.921259840000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
@@ -8206,7 +8260,7 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       ''
       'end.')
     Left = 528
-    Top = 288
+    Top = 264
     Datasets = <
       item
         DataSet = frxDBDatasetPers
@@ -10990,8 +11044,8 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
       'begin'
       ''
       'end.')
-    Left = 352
-    Top = 224
+    Left = 368
+    Top = 240
     Datasets = <>
     Variables = <>
     Style = <>
@@ -11014,7 +11068,6 @@ object Fsaldo_bank_rencana_pelunasan_hutang: TFsaldo_bank_rencana_pelunasan_huta
     MasterSource = dsQsaldo_bank
     MasterFields = 'rekening_no'
     DetailFields = 'bank_norek'
-    Active = True
     Left = 43
     Top = 446
     ParamData = <

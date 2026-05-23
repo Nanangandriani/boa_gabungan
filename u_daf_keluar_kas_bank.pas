@@ -195,8 +195,15 @@ end;}
 
 procedure TFdaf_pengeluaran_kas_bank.ActBaruExecute(Sender: TObject);
 begin
-   FDataPengeluaranKasBank.Status := 0;
-   FDataPengeluaranKasBank.Show;
+    with FDataPengeluaranKasBank do
+    begin
+      FDataPengeluaranKasBank.Status := 0;
+      BSave.Visible:=true;
+      BEdit.Visible:=false;
+      isCancel:=0;
+      BCorrection.Visible:=False;
+      FDataPengeluaranKasBank.Show;
+    end;
    //FDataPengeluaranKasBank.BSave.Visible:=True;
    //FDataPengeluaranKasBank.BEdit.Visible:=False;
 end;
@@ -259,9 +266,42 @@ begin
     exit;
   end;
 
-
       with FDataPengeluaranKasBank do
       begin
+        //baca status koreksi
+        with dm.Qtemp do
+        begin
+          Close;
+          Sql.Clear;
+          sql.Text:=' SELECT "voucher_no", "voucher_tmp", "subvoucher", "remark", '+
+                    ' "entry_date", "trans_date", "periode1", "periode2", "amount", '+
+                    ' "account_code", "group_code", "group_name", "tp_code", "account_name", '+
+                    ' "dk", "perpetrator_id", "debit", "kredit", "header_code", "ref_no", '+
+                    ' "posting", "customer_code", "supplier_code", "cash_type", "job_no", '+
+                    ' "company_code", "trans_year", "trans_month", "trans_day", "order_no", '+
+                    ' "giro_no", "bank_giro_name", "giro_due_date", "customer_name", '+
+                    ' "supplier_name", "to_", "deposit", "deposit_date", "tgup", '+
+                    ' "voucher_code", "to_getout", "stat", "time_lock", "update_time",'+
+                    ' "stat_lock", "currency", "kurs", "bon_no", "post_status", "created_at",'+
+                    ' "created_by", "updated_at", "updated_by", "deleted_at", "deleted_by",'+
+                    ' "bank_norek", "bank_name", "cek_no", "trans_type_code",'+
+                    ' "trans_type_name", "bank_number_account", "bank_name_account",'+
+                    ' "additional_code", "id", "module_id", "cheque_no", "cheque_date",'+
+                    ' "cheque_due_date", COALESCE(status_correction, 0) AS "status_correction" '+
+                    ' from t_cash_bank_expenditure  '+
+                    ' where voucher_no='+QuotedStr(QDaf_Pengeluaran_Kas_Bank.fieldbyname('voucher_no').AsString)+'';
+          Open;
+        end;
+        IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+        if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+        begin
+          isCancel := 1;
+        end else begin
+          isCancel := 0;
+        end;
+        // baca status koreksi
+
         Status := 1;
         MemDetailAkun.EmptyTable;
         MemDetailHutang.EmptyTable;

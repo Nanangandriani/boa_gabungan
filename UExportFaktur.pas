@@ -66,6 +66,7 @@ type
     procedure cbTandaiClick(Sender: TObject);
     procedure dtTglDariChange(Sender: TObject);
     procedure dtTglSampaiChange(Sender: TObject);
+    procedure edJenisTransaksiChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -351,16 +352,18 @@ begin
       Close;
       SQL.Clear;
       SQL.Text:='select DISTINCT a.trans_date tgl_faktur_xml,''Normal'' jenis_faktur'+
-                  ',a.code_trans kode_trans_pajak,a.trans_no referensi,(select nitku from t_company) id_tku_penjual '+
+                  ',a.code_trans kode_trans_pajak,a.trans_no referensi,COALESCE((select nitku from t_company),'''') id_tku_penjual '+
                  //', case when b.npwp is NULL then 0 else b.npwp end npwp_nik_pembeli '+
                  ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
                  ', ''TIN'' jnis_id_pembeli,''IDN'' negara_pembeli'+
                  ', ''0'' nomor_dok_pembeli, b.customer_name_pkp nama_pembeli,c.address alamat_pembeli '+
   //               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
                  ',case when b.email=''-'' then '''' else b.email end email,'+
-                 'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli from t_selling a '+
+                 'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli,COALESCE(a.no_ppbj,'''') no_ppbj, '+
+                 'a.code_trans,d.is_ppn_pajak from t_selling a '+
                  'left join t_selling_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
                  'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''002'' '+
+                 'LEFT JOIN t_sales_transaction_source d on d.code=a.code_trans '+
                  'where a.trans_no in ('+SQLText+') AND a.deleted_at IS NULL ORDER BY a.trans_date ASC, a.trans_no ASC ';
       Open;
     end;
@@ -426,26 +429,30 @@ begin
           else
             GoodsNode.AddChild('TrxCode').Text := dm.Qtemp.FieldByName('kode_trans_pajak').Value;
 
-          if Length(edKetTambahan.Text) = 0 then
+          if TRIM(edKetTambahan.Text) = '' then
             GoodsNode.AddChild('AddInfo') // Biarkan kosong untuk menghasilkan <AddInfo />
           else
-            GoodsNode.AddChild('AddInfo').Text := edKetTambahan.Text;
+            GoodsNode.AddChild('AddInfo').Text := strKodeKetTambahan;
 
-          GoodsNode.AddChild('CustomDoc');
-          //GoodsNode.AddChild('CustomDoc').Text := '';
-          GoodsNode.AddChild('CustomDocMonthYear');
+          if TRIM(dm.Qtemp.FieldByName('no_ppbj').Value)='' then
+            GoodsNode.AddChild('CustomDoc')
+          else GoodsNode.AddChild('CustomDoc').Text := dm.Qtemp.FieldByName('no_ppbj').Value;
 
-          if Length(dm.Qtemp.FieldByName('referensi').Value) = 0 then
+          if dm.Qtemp.FieldByName('is_ppn_pajak').AsBoolean=False then
+            GoodsNode.AddChild('CustomDocMonthYear').Text := FormatDateTime('mmyyyy', dm.Qtemp.FieldByName('tgl_faktur_xml').AsDateTime)
+          else GoodsNode.AddChild('CustomDocMonthYear');
+
+          if TRIM(dm.Qtemp.FieldByName('referensi').Value) = '' then
             GoodsNode.AddChild('RefDesc') // Biarkan kosong untuk menghasilkan <RefDesc />
           else
             GoodsNode.AddChild('RefDesc').Text := dm.Qtemp.FieldByName('referensi').Value;
 
-          if Length(strKodeCapFasilitas) = 0 then
+          if TRIM(strKodeCapFasilitas) = '' then
             GoodsNode.AddChild('FacilityStamp') // Biarkan kosong untuk menghasilkan <FacilityStamp />
           else
             GoodsNode.AddChild('FacilityStamp').Text := strKodeCapFasilitas;
 
-          if Length(dm.Qtemp.FieldByName('id_tku_penjual').Value) = 0 then
+          if TRIM(dm.Qtemp.FieldByName('id_tku_penjual').Value) = '' then
             GoodsNode.AddChild('SellerIDTKU') // Biarkan kosong untuk menghasilkan <SellerIDTKU />
           else
             GoodsNode.AddChild('SellerIDTKU').Text := dm.Qtemp.FieldByName('id_tku_penjual').Value;
@@ -528,7 +535,9 @@ begin
             GoodNode := GoodServiceNode.AddChild('GoodService');
             GoodNode.AddChild('Opt').Text := strKdBarangJasa;
             GoodNode.AddChild('Code').Text := dm.Qtemp1.FieldByName('kode_brg').AsString;
-            GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
+            if (dm.Qtemp.FieldByName('is_ppn_pajak').AsBoolean=False) AND (TRIM(dm.Qtemp1.FieldByName('hs_code').AsString)<>'') then
+            GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString+'#'+dm.Qtemp1.FieldByName('hs_code').AsString
+            else GoodNode.AddChild('Name').Text := dm.Qtemp1.FieldByName('nama_brg').AsString;
             GoodNode.AddChild('Unit').Text := dm.Qtemp1.FieldByName('kd_satuan_pajak').AsString;
 //            GoodNode.AddChild('Price').Text := stringreplace(dm.Qtemp1.FieldByName('harga_satuan_coretax').Value, ',', '.',[rfReplaceAll, rfIgnoreCase]);
             GoodNode.AddChild('Price').Text := StringReplace(FormatFloat('0.00', Price), ',', '.', [rfReplaceAll]);
@@ -591,6 +600,17 @@ end;
 procedure TFExportFaktur.RzBitBtn1Click(Sender: TObject);
 var strKares: String;
 begin
+  if edJenisTransaksi.Text='' then
+  begin
+    MessageDlg('Jenis Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+  if cbExport.Text='' then
+  begin
+    MessageDlg('Export Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    Exit;
+  end;
+
   if cbExport.ItemIndex=0 then
   begin
     if edKaresidenan.Text='' then
@@ -607,7 +627,8 @@ begin
                 'a.customer_name_pkp,a.grand_tot,b.karesidenan,b.code_karesidenan from get_selling(NULL) a '+
                 'LEFT JOIN get_customer() b ON b.customer_code=a.code_cust '+
                 'WHERE a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglDari.Date))+' AND '+
-                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND a.deleted_at is NULL AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') order by a.trans_date ASC,a.trans_no ASC ';
+                ' '+QuotedStr(FormatDateTime('yyy-mm-dd',dtTglSampai.Date))+ strKares+' AND a.deleted_at is NULL '+
+                ' AND a.code_trans='+QuotedStr(kode_jenis_transaksi)+' AND (a.no_inv_tax_coretax IS NULL OR a.no_inv_tax_coretax='''') order by a.trans_date ASC,a.trans_no ASC ';
       open;
     end;
     cbTandai.Checked:=False;
@@ -791,6 +812,14 @@ begin
   FMasterData.vcall:='kode_trans_export_faktur';
   FMasterData.update_grid('code','name','description','t_sales_transaction_source','WHERE	deleted_at IS NULL ORDER BY code desc');
   FMasterData.ShowModal;
+end;
+
+procedure TFExportFaktur.edJenisTransaksiChange(Sender: TObject);
+begin
+  strKodeCapFasilitas:='';
+  strKodeKetTambahan:='';
+  edCapFasilitas.Text:='';
+  edKetTambahan.Text:='';
 end;
 
 procedure TFExportFaktur.edKaresidenanButtonClick(Sender: TObject);

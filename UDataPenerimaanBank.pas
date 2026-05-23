@@ -381,7 +381,23 @@ begin
         close;
         sql.Clear;
         sql.Text:='UPDATE t_dpp SET cheque_amount1='+strCheque1+','+
-                  'name_bank_cheque='+strNamaBank+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+                  'name_bank_cheque='+strNamaBank+' '+
+                  'WHERE id= ( '+
+                  'SELECT id FROM ( '+
+                  'SELECT id FROM t_dpp '+
+                  'WHERE no_invoice = '+QuotedStr(MemDetailPiutang['no_tagihan'])+' '+
+                  'AND date_dpp < '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+                  'ORDER BY date_dpp DESC '+
+                  'LIMIT 1 '+
+                  ') AS tmp '+
+                  ')';
+
+
+//                  ( SELECT id FROM ( no_invoice='+QuotedStr(MemDetailPiutang['no_tagihan'])+' and '+
+//                  'date_dpp<'+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+//                  'ORDER BY date_dpp DESC LIMIT 1';
+//                  id='+QuotedStr(MemDetailPiutang['id_dpp'])
+
         ExecSQL;
       end;
     end else begin
@@ -390,7 +406,21 @@ begin
         close;
         sql.Clear;
         sql.Text:='UPDATE t_dpp SET cash='+strCash+',receipt='+strReceipt+',bank_receipt='+strNamaBank+','+
-                  'date_receipt='+strDateTrans+' WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
+                  'date_receipt='+strDateTrans+' '+
+                  'WHERE id= ( '+
+                  'SELECT id FROM ( '+
+                  'SELECT id FROM t_dpp '+
+                  'WHERE no_invoice = '+QuotedStr(MemDetailPiutang['no_tagihan'])+' '+
+                  'AND date_dpp < '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+                  'ORDER BY date_dpp DESC '+
+                  'LIMIT 1 '+
+                  ') AS tmp '+
+                  ')';
+
+//                  'WHERE no_invoice='+QuotedStr(MemDetailPiutang['no_tagihan'])+' and '+
+//                  'date_dpp<'+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+//                  'ORDER BY date_dpp DESC LIMIT 1';
+//                  id='+QuotedStr(MemDetailPiutang['id_dpp']);
         ExecSQL;
       end;
     end;
@@ -1402,7 +1432,6 @@ begin
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Dengan No . '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
-
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -2054,14 +2083,13 @@ begin
 //    edKaresidenan.Text:='';
     if cbJenisTransaksi.Text='PIUTANG' then
     begin
-      MemDetailAkun.Active:=False;
-      MemDetailAkun.Active:=True;
-      MemDetailAkun.EmptyTable;
+      RefreshGridDetailAkun;
+
       MemDetailPiutang.Active:=False;
       MemDetailPiutang.Active:=True;
       MemDetailPiutang.EmptyTable;
     end;
-    with dm.Qtemp do
+    with dm.Qtemp2 do
     begin
       close;
       sql.Clear;
@@ -2069,10 +2097,10 @@ begin
                 'left join t_region_karesidenan b on b.code=a.code_karesidenan WHERE voucher_no='+QuotedStr(strNoTransaksiDiGanti)+';';
       open;
     end;
-    if dm.Qtemp.RecordCount>0 then
+    if dm.Qtemp2.RecordCount>0 then
     begin
-      kd_kares:=dm.Qtemp.FieldValues['code_karesidenan'];
-      edKaresidenan.Text:=dm.Qtemp.FieldValues['karesidenan'];
+      kd_kares:=dm.Qtemp2.FieldValues['code_karesidenan'];
+      edKaresidenan.Text:=dm.Qtemp2.FieldValues['karesidenan'];
     end;
   end;
 end;

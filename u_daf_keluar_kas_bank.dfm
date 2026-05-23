@@ -133,7 +133,7 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 954
+    ExplicitWidth = 956
     object Label1: TLabel
       Left = 21
       Top = 13
@@ -1397,7 +1397,6 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         'r"='#39'KK/0001/04/12/2024'#39' AND c."position" ='#39'K'#39')zz on x.voucher_no' +
         '=zz.no_voucher'
       #9)
-    Active = True
     Left = 760
     Top = 32
   end
@@ -2543,7 +2542,6 @@ object Fdaf_pengeluaran_kas_bank: TFdaf_pengeluaran_kas_bank
         'osition" ='#39'D'#39' AND LEFT(code_account_header,4) NOT IN ('#39'2101'#39','#39'21' +
         '02'#39')) xx  LEFT JOIN t_ak_account aa on xx.account_acc=aa.code  )' +
         't ORDER BY urut, faktur_date;')
-    Active = True
     Left = 48
     Top = 240
   end

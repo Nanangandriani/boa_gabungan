@@ -1250,7 +1250,7 @@ object FDaftar_Hutang: TFDaftar_Hutang
         'GROUP BY tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfak' +
         'tur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun' +
         '_pph, plan_stat, status, urutan,approval_status,bayar,rencanake')
-    Left = 656
+    Left = 624
     Top = 173
     object QUang_Muka_Pembeliantanggal: TDateField
       FieldName = 'tanggal'

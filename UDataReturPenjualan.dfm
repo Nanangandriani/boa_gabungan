@@ -24,7 +24,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 176
+    ExplicitWidth = 963
+    ExplicitHeight = 181
     object Label39: TLabel
       Left = 20
       Top = 89
@@ -303,11 +304,12 @@ object FDataReturPenjualan: TFDataReturPenjualan
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
+    ExplicitTop = 181
+    ExplicitWidth = 963
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
       ExplicitWidth = 959
-      ExplicitHeight = 363
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
@@ -532,7 +534,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
         Align = alBottom
         Color = 15987699
         TabOrder = 1
-        ExplicitTop = 248
         ExplicitWidth = 959
         object RzLabel2: TRzLabel
           Left = 638

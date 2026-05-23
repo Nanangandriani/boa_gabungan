@@ -974,7 +974,7 @@ object FListKasKecil: TFListKasKecil
   end
   object UniQuery1: TUniQuery
     Left = 760
-    Top = 48
+    Top = 32
   end
   object frxReport1: TfrxReport
     Version = '2022.1.3'

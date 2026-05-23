@@ -171,6 +171,9 @@ end;
 procedure TFList_Rencana_Lunas_Hutang.ActBaruExecute(Sender: TObject);
 begin
    FRencana_Lunas_Hutang.vcall:='new';
+   FRencana_Lunas_Hutang.BSave.Visible:=true;
+   FRencana_Lunas_Hutang.isCancel:=0;
+   FRencana_Lunas_Hutang.BCorrection.Visible:=False;
    FRencana_Lunas_Hutang.Show;
 end;
 
@@ -239,7 +242,7 @@ begin
     Sql.Text:=' SELECT bank,supplier_code,inv_no,faktur_no,faktur_date,cek_no,cek_date,'+
               ' paid_date,periode1,periode2,periodetempo1,periodetempo2,amount,debt_type,'+
               ' username,npph,pph_account,pph_name ,paid_status,exchange_rate,dolar_amount,'+
-              ' approve_status,sj_no,factory_code,plan_to,source_plan_id '+
+              ' approve_status,sj_no,factory_code,plan_to,source_plan_id, deleted_at, status_correction, uuid_master '+
               ' from t_paid_debt_det  '+
               ' where paid_status='+IntToStr(CBstatus.ItemIndex)+' and  '+
               ' periode1 ='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+
@@ -255,10 +258,24 @@ begin
     ShowMessage('Tidak Ditemukan Data') ;
     Exit;
   end;
+
   if dm.Qtemp.RecordCount<>0 then
   begin
   with FRencana_Lunas_Hutang do
   begin
+        //baca status koreksi
+        IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+        edNoTrans:=Dm.Qtemp.FieldValues['uuid_master'];
+        if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+        begin
+          isCancel := 1;
+        end else begin
+          isCancel := 0;
+        end;
+        // baca status koreksi
+        Status := 1;
+
+
     MemRencana.active:=false;
     MemRencana.active:=true;
     MemRencana.EmptyTable;

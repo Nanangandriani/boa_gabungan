@@ -1603,7 +1603,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 46041.603501481500000000
+    ReportOptions.LastChange = 46129.453192557870000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1798,8 +1798,8 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Left = 590.551421780000000000
           Top = 22.832395950000000000
-          Width = 220.319018700000000000
-          Height = 49.889763779527600000
+          Width = 193.652352030000000000
+          Height = 49.889763780000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1833,7 +1833,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         object Memo3: TfrxMemoView
           AllowVectorExport = True
           Top = 0.641929530000000000
-          Width = 810.989488100000000000
+          Width = 938.168975280000000000
           Height = 22.260967380000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1849,7 +1849,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 811.173780000000000000
+          Left = 938.173780000000000000
           Top = 0.754792860000000000
           Width = 367.748031500000000000
           Height = 22.260977140000000000
@@ -1867,28 +1867,28 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 1178.797157140000000000
-          Top = 0.661417320000000000
-          Width = 127.045454760000000000
-          Height = 72.139146670000000000
+          Left = 784.130490470000000000
+          Top = 22.712699370000000000
+          Width = 153.712121430000000000
+          Height = 50.087864620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            'KETERANGAN')
+            'Nama PKP')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 811.173780000000000000
+          Left = 938.173780000000000000
           Top = 49.472480000000000000
           Width = 114.160693420000000000
-          Height = 23.055118110236200000
+          Height = 23.055118110000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1903,10 +1903,10 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 925.519039890000000000
+          Left = 1052.519039890000000000
           Top = 49.472480000000000000
           Width = 112.255931520000000000
-          Height = 23.055118110236200000
+          Height = 23.055118110000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1921,10 +1921,10 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 1037.945580000000000000
+          Left = 1164.945580000000000000
           Top = 49.472480000000000000
-          Width = 37.476922290000000000
-          Height = 23.055118110236200000
+          Width = 41.574803150000000000
+          Height = 23.055118110000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1939,10 +1939,10 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 1075.289081970000000000
+          Left = 1207.417287100000000000
           Top = 49.472480000000000000
-          Width = 102.984626920000000000
-          Height = 23.055118110236200000
+          Width = 97.856421790000000000
+          Height = 23.055118110000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1957,7 +1957,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object nm_periode: TfrxMemoView
           AllowVectorExport = True
-          Left = 811.173780000000000000
+          Left = 938.173780000000000000
           Top = 23.068645710000000000
           Width = 367.748031500000000000
           Height = 26.962882090000000000
@@ -2067,14 +2067,14 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         Width = 1306.205568000000000000
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Width = 811.204917390000000000
-          Height = 25.322834645669300000
+          Width = 784.025430210000000000
+          Height = 25.322834650000000000
           StretchMode = smMaxHeight
           DataSet = FLaporanHarianSisaNota.frxDBDatasetLapHarianSisaNota
           DataSetName = 'frxDBDatasetLapHarianSisaNota'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
@@ -2086,7 +2086,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 810.764705880000000000
+          Left = 937.764705880000000000
           Top = 0.755905510000000000
           Width = 114.141732280000000000
           Height = 24.566929130000000000
@@ -2097,7 +2097,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftBottom]
@@ -2110,7 +2110,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 924.606299210000000000
+          Left = 1051.606299210000000000
           Top = 0.898285880000000000
           Width = 113.385826770000000000
           Height = 24.566929130000000000
@@ -2121,7 +2121,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftBottom]
@@ -2134,9 +2134,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 1075.275590550000000000
+          Left = 1206.890975170000000000
           Top = 0.898285880000000000
-          Width = 103.974062070000000000
+          Width = 99.358677450000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
@@ -2145,7 +2145,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftBottom]
@@ -2158,9 +2158,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 1178.834645670000000000
+          Left = 784.251968503937000000
           Top = 0.755905510000000000
-          Width = 127.748031500000000000
+          Width = 153.448818897638000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
@@ -2169,7 +2169,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftBottom]
@@ -2178,9 +2178,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 1037.858267720000000000
+          Left = 1164.858267720000000000
           Top = 0.898285880000000000
-          Width = 38.091709120000000000
+          Width = 41.574803150000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
@@ -2189,15 +2189,14 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
           Memo.UTF8W = (
             
               '[AVG(<frxDBDatasetRekapMonitoringTargetOmset."persen_qty">,Maste' +
-              'rData1)]')
+              'rData1,2)]')
           ParentFont = False
         end
       end
@@ -2229,7 +2228,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftRight]
@@ -2251,7 +2250,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2262,9 +2261,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 591.118110236221000000
+          Left = 591.118110240000000000
           Top = 0.669760000000000000
-          Width = 220.780652420000000000
+          Width = 193.088344730000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'customer_name'
@@ -2272,7 +2271,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -2282,7 +2281,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 811.333333330000000000
+          Left = 938.333333330000000000
           Top = 0.662956670000000000
           Width = 113.385826770000000000
           Height = 18.897650000000000000
@@ -2294,7 +2293,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -2305,7 +2304,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 925.500000000000000000
+          Left = 1052.500000000000000000
           Top = 0.669760000000000000
           Width = 111.988250010000000000
           Height = 18.897650000000000000
@@ -2317,7 +2316,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -2348,9 +2347,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 1038.000000000000000000
+          Left = 1165.000000000000000000
           Top = 0.662956670000000000
-          Width = 37.821583340000000000
+          Width = 41.574803150000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'persen_qty'
@@ -2360,20 +2359,19 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
-          HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapMonitoringTargetOmset."persen_qty"]')
           ParentFont = False
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 1075.166666670000000000
+          Left = 1206.782051290000000000
           Top = 0.662956670000000000
-          Width = 102.821583330000000000
+          Width = 98.206198710000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
           DataField = 'selisih_qty'
@@ -2383,7 +2381,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
@@ -2394,20 +2392,22 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 1178.834645670000000000
+          Left = 784.251968500000000000
           Top = 0.662956670000000000
-          Width = 126.992125984252000000
+          Width = 153.448818900000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
+          DataField = 'customer_name_pkp'
           DataSet = frxDBDatasetRekapMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftBottom]
-          HAlign = haRight
+          Frame.Typ = [ftLeft, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDatasetRekapMonitoringTargetOmset."customer_name_pkp"]')
           ParentFont = False
         end
         object Memo24: TfrxMemoView
@@ -2423,7 +2423,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft]
@@ -2445,7 +2445,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           DataSetName = 'frxDBDatasetRekapMonitoringTargetOmset'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]

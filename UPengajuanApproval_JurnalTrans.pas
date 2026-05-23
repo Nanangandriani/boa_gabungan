@@ -114,6 +114,10 @@ type
     Qkas: TUniQuery;
     DataSetDriverEh3: TDataSetDriverEh;
     VirtualTable1: TVirtualTable;
+    Ckapp: TCheckBox;
+    Ckapp_penj: TCheckBox;
+    Ckapp_kas: TCheckBox;
+    CkApp_Memo: TCheckBox;
     procedure Ednm_kabButtonClick(Sender: TObject);
     procedure BTampil_PembClick(Sender: TObject);
     procedure BTampil_PenjClick(Sender: TObject);
@@ -244,11 +248,19 @@ begin
       ' GROUP BY status_app,trans_no,faktur_no,sj_no,supplier_name,account_name, '+
       ' nm_perk,tgl,bln,approved_status,trans_date,stat_balance';}
       // update Ds 17-02-2026
-      SQL.Text:=' select  subtot,grandtot,ppn,status_app,cast(trans_no as varchar(100)) trans_no ,faktur_no,sj_no,supplier_name,account_name,'+
-                ' nm_perk,tgl,bln,approval_status,trans_date,stat_balance,purchase_type from v_app_purchase_invoice where '+
-                ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+''+
-                ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+'';
-      open;
+      if Ckapp.Checked=true then
+      begin
+        SQL.Text:=' select  subtot,grandtot,ppn,status_app,cast(trans_no as varchar(100)) trans_no ,faktur_no,sj_no,supplier_name,account_name,'+
+                  ' nm_perk,tgl,bln,approval_status,trans_date,stat_balance,purchase_type from v_app_purchase_invoice where '+
+                  ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+''+
+                  ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+' and approval_status=True';
+        open;
+      end else
+        SQL.Text:=' select  subtot,grandtot,ppn,status_app,cast(trans_no as varchar(100)) trans_no ,faktur_no,sj_no,supplier_name,account_name,'+
+                  ' nm_perk,tgl,bln,approval_status,trans_date,stat_balance,purchase_type from v_app_purchase_invoice where '+
+                  ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulai.date))+''+
+                  ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+' and approval_status=false';
+        open;
     end;
   QPembelian.first;
   while not QPembelian.Eof do
@@ -337,12 +349,27 @@ begin
     ' GROUP BY a.created_at,a.no_inv_tax,a.trans_no,"a".pph_value,"a".ppn_value,"a".sub_total,"a".grand_tot,'+
     '	"a".name_cust,"a".code_cust,"a".trans_date,b.approved_status,cek_balance.stat_balance '+
     ' ORDER BY created_at DESC ';     }
-    sql.Text:='select x.created_at, x.faktur_no,cast(x.trans_no as varchar(100)) trans_no,x.pph_value,x.ppn,'+
-    ' x.subtot,x.grand_tot,x.name_cust,x.code_cust,x.trans_date,x.approval_status,x.stat_balance,x.code_karesidenan,'+
-    ' x.karesidenan,x.code_tp,x.tp,x.code_kecamatan,x.kecamatan, x.code_kabupaten,x.kabupaten'+
-    '  from "v_app_selling" x where x.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+''+
-    ' and x.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+vKaresidenan+vTP+vKabupaten;
-    ExecSQL;
+    //cr ds 13-05-2026
+    if ckapp_penj.Checked=True then
+    begin
+      sql.Text:='select x.created_at, x.faktur_no,cast(x.trans_no as varchar(100)) trans_no,x.pph_value,x.ppn,'+
+      ' x.subtot,x.grand_tot,x.name_cust,x.code_cust,x.trans_date,x.approval_status,x.stat_balance,x.code_karesidenan,'+
+      ' x.karesidenan,x.code_tp,x.tp,x.code_kecamatan,x.kecamatan, x.code_kabupaten,x.kabupaten'+
+      '  from "v_app_selling" x where x.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+''+
+      ' and x.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+vKaresidenan+vTP+vKabupaten+''+
+      ' and approval_status=True' ;
+      ExecSQL;
+    end;
+    if ckapp_penj.Checked=False then
+    begin
+      sql.Text:='select x.created_at, x.faktur_no,cast(x.trans_no as varchar(100)) trans_no,x.pph_value,x.ppn,'+
+      ' x.subtot,x.grand_tot,x.name_cust,x.code_cust,x.trans_date,x.approval_status,x.stat_balance,x.code_karesidenan,'+
+      ' x.karesidenan,x.code_tp,x.tp,x.code_kecamatan,x.kecamatan, x.code_kabupaten,x.kabupaten'+
+      '  from "v_app_selling" x where x.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtmulaipenj.date))+''+
+      ' and x.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesaipenj.date))+''+vKaresidenan+vTP+vKabupaten+''+
+      ' and approval_status=False ' ;
+      ExecSQL;
+    end;
   end;
 // qpenjualan.First;
   qpenjualan.open;
@@ -414,7 +441,7 @@ begin
       ' inner join t_ak_account b on A.account_code=b.code or left(A.account_code,7)=b.code '+
       ' INNER JOIN t_ak_module c ON a.module_id=c.id '+
       ' where trans_date >= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtAwalMemorial.Date))+''+
-      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtAkhirMemorial.Date))+''+
+      ' and trans_date<= '+QuotedStr(FormatDateTime('yyy-mm-dd',dtAkhirMemorial.Date))+' '+
       ' GROUP BY a.trans_no,a.trans_date , a.account_code,b.account_name,c.module_name,a.module_id,status_dk  '+
       ' order by a.trans_no,status_dk ASC';
       Execute;
@@ -454,25 +481,51 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
-              ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
-              ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
-              ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
-              ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
-              ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
-              ' GROUP BY trans_no) a '+
-              ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
-              ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
-              ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
-              ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
-              ' on a.memo_no=cek_balance.jurnal_no'+
-              ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
-              ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
-              ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
-              ' and status_dk=''D'' GROUP BY a.memo_no, a.trans_date, a.notes, '+
-              ' b.approved_status,b.module_id,cek_balance.stat_balance '+
-              ' ORDER BY "a".trans_date DESC ';
-    execute;
+    // cr ds 13-05-2026
+    if CkApp_Memo.Checked=true then
+    begin
+      sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
+                ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
+                ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
+                ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
+                ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+                ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+                ' GROUP BY trans_no) a '+
+                ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+                ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+                ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+                ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+                ' on a.memo_no=cek_balance.jurnal_no'+
+                ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
+                ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
+                ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
+                ' and status_dk=''D'' and approved_status=true GROUP BY a.memo_no, a.trans_date, a.notes, '+
+                ' b.approved_status,b.module_id,cek_balance.stat_balance '+
+                ' ORDER BY "a".trans_date DESC ';
+      execute;
+    end;
+    if CkApp_Memo.Checked=false then
+    begin
+      sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
+                ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
+                ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
+                ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
+                ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
+                ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
+                ' GROUP BY trans_no) a '+
+                ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
+                ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
+                ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
+                ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
+                ' on a.memo_no=cek_balance.jurnal_no'+
+                ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
+                ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
+                ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
+                ' and status_dk=''D'' and approved_status=False GROUP BY a.memo_no, a.trans_date, a.notes, '+
+                ' b.approved_status,b.module_id,cek_balance.stat_balance '+
+                ' ORDER BY "a".trans_date DESC ';
+      execute;
+    end;
   end;
   dm.Qtemp.First;
   while not dm.Qtemp.Eof do
@@ -1125,12 +1178,25 @@ begin
     ' GROUP BY a.voucher_no, a.trans_date, a.created_at, a.paid_amount, '+
     ' a.description,b.approved_status,b.module_id, cek_balance.stat_balance'+
     ' ORDER BY "a".created_at DESC ';    }
-    sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
-    ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
-    ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
-    ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
-    ' '+vKaresidenan+vtp+vKabupaten+'';                             // cr ds 19-02-2026
-    execute;
+    //cr ds 13-05-2026
+    if ckapp_kas.Checked=true then
+    begin
+      sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
+      ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
+      ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
+      ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
+      ' '+vKaresidenan+vtp+vKabupaten+' and approved_status=true ';                             // cr ds 19-02-2026
+      execute;
+    end;
+    if ckapp_kas.Checked=false then
+    begin
+      sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
+      ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
+      ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
+      ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
+      ' '+vKaresidenan+vtp+vKabupaten+' and approved_status=False ';                             // cr ds 19-02-2026
+      execute;
+    end;
   end;
   Qkas.First;
   while not Qkas.Eof do

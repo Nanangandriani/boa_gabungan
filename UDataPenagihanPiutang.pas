@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.StdCtrls, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.ExtCtrls, frxClass, frxDBSet,
-  MemDS, DBAccess, Uni;
+  MemDS, DBAccess, Uni, System.Notification;
 
 type
   TFDataPenagihanPiutang = class(TForm)
@@ -716,7 +716,15 @@ end;
 procedure TFDataPenagihanPiutang.FormShow(Sender: TObject);
 begin
 //  if edKodeKolektor.Text<>'' then RefreshGrid;
-    if Status=0 then btTampilkan.Enabled:=True else btTampilkan.Enabled:=False;
+    if Status=0 then
+    begin
+      btTampilkan.Enabled:=True;
+      BtnCetakDpp.Visible:=False;
+    end
+    else begin
+      btTampilkan.Enabled:=False;
+      BtnCetakDpp.Visible:=True;
+    end;
 end;
 
 procedure TFDataPenagihanPiutang.RzBitBtn1Click(Sender: TObject);

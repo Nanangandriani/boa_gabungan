@@ -1967,8 +1967,8 @@ object Fdafajuankeluarkasbank: TFdafajuankeluarkasbank
         'x."code_account_header" = y.code)C WHERE c."no_voucher"='#39#39')zz on' +
         ' x.voucher_no=zz.no_voucher'
       '')
-    Left = 816
-    Top = 120
+    Left = 824
+    Top = 112
   end
   object frxDBDBukti_Ajuan_Keluar: TfrxDBDataset
     UserName = 'frxDBDBuktiAjuan'

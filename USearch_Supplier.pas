@@ -42,7 +42,7 @@ uses UNew_KontrakKerjasama, Unew_spb, UNew_PO, UInput_um, UNewDeliveryOrder,UNew
   UApproval_Keluar_Kas_Bank, U_Data_rencana_lunas_hutang_pengajuan,
   UDataPengajuanPengeluaranKasBank, UMy_Function, URpt_Rekap_Pembelian,ULap_Kartu_Hutang,
   UNew_Pembelian, U_Kartu_Hutang_UM, ULap_Rencana_Pelunasan_Hutang,
-  UDaftar_UM_Pemb;
+  UDaftar_UM_Pemb, UKartu_UangMuka_Pembelian;
 
 var
   RealFSearch_Supplier: TFSearch_Supplier;
@@ -89,7 +89,11 @@ begin
       FNewDeliveryOrder.edKodeVendorTransMuatan.Text:=QSupplier['supplier_code'];
       FNewDeliveryOrder.edNamaVendorTransMuatan.Text:=QSupplier['supplier_name'];
     end;
-
+    if vcall='Kartu_UangMuka_Pembelian' then
+    begin
+      FKartu_UangMuka_Pembelian.code_supp.EditValue:=QSupplier['supplier_code'];
+      FKartu_UangMuka_Pembelian.supp_name.Text:=QSupplier['supplier_name'];
+    end;
 
     if vcall='keluar_kas_bank_ajuan' then
     begin

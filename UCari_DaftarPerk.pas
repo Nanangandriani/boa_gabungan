@@ -95,7 +95,7 @@ begin
 //      begin
 //        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
 //      end else begin
-        FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+      FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
 //      end;
 
       FDataPenerimaanBank.MemDetailAkun['debit']:=0;
@@ -113,9 +113,9 @@ begin
       FDataKasKecil.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
       FDataKasKecil.MemDetailAkun['kredit']:=0;
       FDataKasKecil.MemDetailAkun['debit']:=0;
+      FDataKasKecil.MemDetailAkun['keterangan']:='-';
       FDataKasKecil.MemDetailAkun['kd_group_biaya']:=SelectRow('SELECT cost_st_id from t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
       FDataKasKecil.MemDetailAkun['nm_group_biaya']:=SelectRow('SELECT cost_type from t_ak_type_cost a left join t_ak_account b on a.id=b.cost_st_id where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
-      FDataKasKecil.MemDetailAkun['keterangan']:='-';
       FDataKasKecil.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
       FDataKasKecil.MemDetailAkun.post;
       QDaftar_Perk.Close;

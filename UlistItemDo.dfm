@@ -20,8 +20,8 @@ object FListDo: TFListDo
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 401
-    ExplicitWidth = 622
+    ExplicitTop = 409
+    ExplicitWidth = 624
     object BBatal: TRzBitBtn
       Left = 552
       Top = 1
@@ -81,7 +81,7 @@ object FListDo: TFListDo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 546
+      ExplicitLeft = 548
     end
     object BEdit: TRzBitBtn
       Left = 477
@@ -143,7 +143,7 @@ object FListDo: TFListDo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 471
+      ExplicitLeft = 473
     end
     object Cb_All: TCheckBox
       Left = 8
@@ -230,7 +230,7 @@ object FListDo: TFListDo
     BorderSides = [sdLeft, sdTop, sdRight]
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 622
+    ExplicitWidth = 624
     object Label1: TLabel
       Left = 31
       Top = 18

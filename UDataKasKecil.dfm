@@ -886,8 +886,8 @@ object FDataKasKecil: TFDataKasKecil
   object MemDetailHutang: TMemTableEh
     Active = True
     Params = <>
-    Left = 784
-    Top = 319
+    Left = 744
+    Top = 303
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
       Size = 500

@@ -315,6 +315,8 @@ begin
              '&delivery_date=' + FormatDateTime('yyyy-mm-dd', FNew_SalesOrder.dtTanggal_Kirim.Date) +
              strKodeKaresidenan;
     Vpath := '/order';
+//    Memo1.Text:=BaseUrl + Vpath + vBody;
+//    Exit;
     url := BaseUrl + Vpath + vBody;
     edlink.Text := url;
     Memo1.Text := 'Mengambil data...';
@@ -334,6 +336,7 @@ begin
       except
         on E: EIdHTTPProtocolException do
         begin
+//          Memo1.Text:=BaseUrl + Vpath + vBody;
           ShowMessage('Data tidak ditemukan atau server mengembalikan error.');
           Exit;
         end;
@@ -392,9 +395,6 @@ begin
       ShowMessage('Kesalahan fatal: ' + E.Message);
   end;
 end;
-
-
-
 
 //procedure TFListOrderTelemarketing.btGetDataProspekClick(Sender: TObject);
 //var
@@ -550,28 +550,28 @@ begin
 
     if  Dm.Qtemp.RecordCount<>0 then
     begin
-    max:= Dm.Qtemp.RecordCount;
-    progress.Progress:=0;
-    progress.MaxValue:= max;
-    Dm.Qtemp.first;
-    while not Dm.Qtemp.Eof do
-    begin
-     MemMasterData.insert;
-     MemMasterData['ticket_number']:=Dm.Qtemp.fieldbyname('ticket_number').value;
-     MemMasterData['order_date']:=Dm.Qtemp.fieldbyname('order_date').value;
-     MemMasterData['sent_date']:=Dm.Qtemp.fieldbyname('sent_date').value;
-     MemMasterData['outlet_name']:=Dm.Qtemp.fieldbyname('outlet_name').value;
-     MemMasterData['status_name']:=Dm.Qtemp.fieldbyname('status_name').value;
-     MemMasterData['outlet_code']:=Dm.Qtemp.fieldbyname('outlet_code').value;
-     MemMasterData['payment_term']:=Dm.Qtemp.fieldbyname('payment_term').value;
-     MemMasterData['address']:=Dm.Qtemp.fieldbyname('address').value;
-     MemMasterData['tp']:=Dm.Qtemp.fieldbyname('tp').value;
-     MemMasterData['kabupaten']:=Dm.Qtemp.fieldbyname('kabupaten').value;
-     MemMasterData['kecamatan']:=Dm.Qtemp.fieldbyname('kecamatan').value;
-     MemMasterData.post;
-     progress.Progress:= progress.Progress+1;
-     Dm.Qtemp.next;
-    end;
+      max:= Dm.Qtemp.RecordCount;
+      progress.Progress:=0;
+      progress.MaxValue:= max;
+      Dm.Qtemp.first;
+      while not Dm.Qtemp.Eof do
+      begin
+        MemMasterData.insert;
+        MemMasterData['ticket_number']:=Dm.Qtemp.fieldbyname('ticket_number').value;
+        MemMasterData['order_date']:=Dm.Qtemp.fieldbyname('order_date').value;
+        MemMasterData['sent_date']:=Dm.Qtemp.fieldbyname('sent_date').value;
+        MemMasterData['outlet_name']:=Dm.Qtemp.fieldbyname('outlet_name').value;
+        MemMasterData['status_name']:=Dm.Qtemp.fieldbyname('status_name').value;
+        MemMasterData['outlet_code']:=Dm.Qtemp.fieldbyname('outlet_code').value;
+        MemMasterData['payment_term']:=Dm.Qtemp.fieldbyname('payment_term').value;
+        MemMasterData['address']:=Dm.Qtemp.fieldbyname('address').value;
+        MemMasterData['tp']:=Dm.Qtemp.fieldbyname('tp').value;
+        MemMasterData['kabupaten']:=Dm.Qtemp.fieldbyname('kabupaten').value;
+        MemMasterData['kecamatan']:=Dm.Qtemp.fieldbyname('kecamatan').value;
+        MemMasterData.post;
+        progress.Progress:= progress.Progress+1;
+        Dm.Qtemp.next;
+      end;
     end;
   finally
   DBGrid.FinishLoadingStatus();

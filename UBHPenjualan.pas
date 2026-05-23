@@ -176,6 +176,7 @@ type
     QBHPenjualanExportamount_penjualan: TFloatField;
     QCetakBHP: TUniQuery;
     frxDBDataCetakBHP: TfrxDBDataset;
+    dxBarLargeButton4: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure btSearchClick(Sender: TObject);
     procedure QBHPenjualanakn_debet_lainGetText(Sender: TField;
@@ -195,6 +196,7 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure edTPPropertiesButtonClick(Sender: TObject; AButtonIndex: Integer);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dxBarLargeButton4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -251,7 +253,7 @@ begin
     with QCetakBHP do
     begin
       close;
-      sql.Text:='SELECT * FROM get_bh_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
+      sql.Text:='SELECT *,amount_piutang amount_piutang2,amount_penjualan amount_penjualan2 FROM get_bh_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
 //      sql.Text:='WITH debet_details AS ( SELECT a.trans_no, a.account_code, a.account_name, a.db AS amount_debet_lain, '+
 //                'ROW_NUMBER() OVER(PARTITION BY a.trans_no ORDER BY a.account_code) as rn FROM "public"."VTrans_Journal" a '+
 //                'LEFT JOIN t_ak_account b ON b.code = a.account_code '+
@@ -293,8 +295,6 @@ begin
 
       Open;
     end;
-
-
 
     if QCetakBHP.RecordCount=0 then
     begin
@@ -898,6 +898,88 @@ begin
 
     end;
 //  end;
+end;
+
+procedure TFBHPenjualan.dxBarLargeButton4Click(Sender: TObject);
+var strKab,strTP,strKaresidenan,
+  tgl1,bulan1,tahun1,tgl2,bulan2,tahun2: STRING;
+begin
+  tgl1:=FormatDateTime('DD', dtAwal.EditValue);
+  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
+  tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
+
+  tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
+  bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
+  tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
+
+  strKab := 'NULL';
+  strKaresidenan := 'NULL';
+  strTP := 'NULL';
+  if edKabupaten.EditValue<>'' then
+  strKab:=QuotedStr(vkd_kab)+' ';
+
+  if edKaresidenan.EditValue<>'' then strKaresidenan:=QuotedStr(vkd_kares);
+
+  if edTp.EditValue<>'' then strTP:=QuotedStr(vkd_tp);
+
+  with QCetakBHP do
+  begin
+    close;
+//    sql.Text:='SELECT * FROM get_bh_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
+    sql.Text:='SELECT trans_no,trans_date,code_cust,name_cust,code_item,name_item,amount,name_unit, '+
+              'COALESCE(NULLIF(account_code_piutang, ''''), '+
+              'FIRST_VALUE(NULLIF(account_code_piutang, '''')) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as account_code_piutang, '+
+              'COALESCE(NULLIF(account_code_piutang2, ''''), '+
+              'FIRST_VALUE(NULLIF(account_code_piutang2, '''')) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as account_code_piutang2, '+
+              'COALESCE(NULLIF(amount_piutang, 0), '+
+              'FIRST_VALUE(NULLIF(amount_piutang, 0)) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as amount_piutang, '+
+              'COALESCE(NULLIF(account_code_penjualan, ''''), '+
+              'FIRST_VALUE(NULLIF(account_code_penjualan, '''')) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as account_code_penjualan, '+
+              'COALESCE(NULLIF(account_name_penjualan, ''''), '+
+              'FIRST_VALUE(NULLIF(account_name_penjualan, '''')) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as account_name_penjualan, '+
+              'COALESCE(NULLIF(amount_penjualan, 0), '+
+              'FIRST_VALUE(NULLIF(amount_penjualan, 0)) OVER(PARTITION BY trans_no ORDER BY (SELECT NULL))) as amount_penjualan, d_code_lain,'+
+              'd_name_lain,amount_debet_lain,k_code_lain,k_name_lain,amount_kredit_lain,code_kecamatan,code_kabupaten,code_tp,code_karesidenan,rn '+
+              ',amount_piutang amount_piutang2,amount_penjualan amount_penjualan2 '+
+              'FROM get_bh_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+') '+
+              'ORDER BY trans_date ASC,trans_no ASC, rn ASC';
+    Open;
+  end;
+
+  if QCetakBHP.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+
+  if QCetakBHP.RecordCount<>0 then
+  begin
+
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanTemplate2'+ '.fr3');
+    SetMemo(Report,'kodeprsh',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'periode',UpperCase(formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue)));
+
+
+    if edTP.EditValue<>'' then
+    begin
+      SetMemo(Report,'karesidenan',+edTP.EditValue);
+    end else begin
+      SetMemo(Report,'karesidenan','SEMUA TP');
+    end;
+    if (edKabupaten.EditValue<>'') then
+    begin
+      SetMemo(Report,'kabupaten',+edKabupaten.EditValue);
+    end else begin
+      SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
+    end;
+
+    Report.ShowReport();
+
+
+
+  end;
+
 end;
 
 procedure TFBHPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;

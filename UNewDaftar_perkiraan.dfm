@@ -38,8 +38,8 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 495
-    ExplicitWidth = 592
+    ExplicitTop = 503
+    ExplicitWidth = 594
     object BBatal: TRzBitBtn
       Left = 522
       Top = 1
@@ -100,7 +100,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 516
+      ExplicitLeft = 518
     end
     object BSave: TRzBitBtn
       Left = 437
@@ -163,7 +163,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 431
+      ExplicitLeft = 433
     end
   end
   object RzPanel1: TRzPanel
@@ -174,7 +174,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 592
+    ExplicitWidth = 594
     object Label16: TLabel
       Left = 13
       Top = 42
@@ -268,6 +268,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 44
       Height = 13
       Caption = 'Group BY'
+      Visible = False
     end
     object Label8: TLabel
       Left = 286
@@ -275,6 +276,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 48
       Height = 13
       Caption = 'Group L/R'
+      Visible = False
     end
     object SpeedButton3: TSpeedButton
       Left = 561
@@ -282,6 +284,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 23
       Height = 22
       Caption = '+'
+      Visible = False
       OnClick = SpeedButton3Click
     end
     object Btnlr: TSpeedButton
@@ -290,6 +293,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 23
       Height = 22
       Caption = '+'
+      Visible = False
       OnClick = BtnlrClick
     end
     object edkode: TEdit
@@ -430,6 +434,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 180
       Height = 21
       TabOrder = 13
+      Visible = False
       OnKeyPress = cbmodulKeyPress
       OnSelect = Cb_lrSelect
       Items.Strings = (
@@ -441,6 +446,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
       Width = 180
       Height = 21
       TabOrder = 14
+      Visible = False
       OnChange = CBjenis_akunChange
       OnKeyPress = cbmodulKeyPress
       OnSelect = Cb_bySelect
@@ -475,7 +481,7 @@ object FNewdaftar_perkiraan_bank: TFNewdaftar_perkiraan_bank
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 592
+    ExplicitWidth = 594
     object RzBitBtn4: TRzBitBtn
       Left = 2
       Top = 2

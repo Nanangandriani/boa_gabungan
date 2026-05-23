@@ -192,7 +192,7 @@ begin
                 'a.payment_amount,a.debt_remaining,a.status,a.valas,a.valas_value, '+
                 'a.pib_no,	a.correction_status,a.plan_stat,a.approval_status,a.approval,a.sbu_code, a.trans_month,a.trans_year, '+
                 'C.vehicle_no,C.driver,D.supplier_name,F.item_name,e.item_stock_code,e.unit,e.qty,e.ppn_rp, e.pph_rp,e.ppn_pembulatan, '+
-                'e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value  from t_item_receive A '+
+                'e.subtotalrp,e.grandtotal,e.subtotal,e.price,g.ttd,e.account_pph_code,a.um_value,f.item_code  from t_item_receive A '+
                 'Left join t_spb C on A.spb_no=C.spb_no '+
                 'inner join t_item_receive_det E on A.receive_no=E.receive_no '+
                 'inner join t_supplier D on A.supplier_code=D.supplier_code '+

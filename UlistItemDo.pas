@@ -131,9 +131,9 @@ begin
      sql.Clear;
      sql.Text:='select a.notrans,a.date_trans,a.type_do_code,a.type_do_name,b.vendor_code,b.vendor_name,a.status,(SELECT SUM(grand_total) from t_delivery_order_cost WHERE notrans=a.notrans) total_biaya from t_delivery_order a '+
                'LEFT JOIN t_delivery_order_services b on b.notrans=a.notrans  '+
-                ' LEFT JOIN t_po c on a.notrans=c.contract_no'+
-               'WHERE a.date_trans='+QuotedStr(FormatDateTime('yyyy-mm-dd',DT_tgl_do.Date))+' and'+
-               ' a.deleted_at is NULL AND a.status=6 and c.contract_no is null';
+               'LEFT JOIN t_po c on a.notrans=c.contract_no '+
+               'WHERE a.date_trans='+QuotedStr(FormatDateTime('yyyy-mm-dd',DT_tgl_do.Date))+' and '+
+               'a.deleted_at is NULL AND a.status=6 and c.contract_no is null';
      open;
    end;
 end;

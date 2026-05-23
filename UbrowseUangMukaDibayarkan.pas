@@ -99,7 +99,6 @@ begin
 
       if isValidasi=0 then
       begin
-
         MemUangMuka.insert;
         MemUangMuka['no_trans_down_payment']:=Qdetail.FieldByName('no_trans_down_payment').AsString;
     //    MemUangMuka['trans_date']:=Qdetail.FieldByName('trans_date').AsString;

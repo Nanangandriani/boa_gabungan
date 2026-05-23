@@ -55,6 +55,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'status_correction'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Status'
         Width = 90
       end
@@ -64,6 +65,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'request_type'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Tipe Pengajuan'
         Width = 86
       end
@@ -73,6 +75,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'code'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Kode Koreksi'
         Width = 123
       end
@@ -82,6 +85,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'menu'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Modul'
         Width = 134
       end
@@ -91,6 +95,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'submenu'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Menu Transaksi'
         Width = 205
       end
@@ -100,6 +105,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'no_transaksi'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'No Transaksi'
         Width = 135
       end
@@ -109,6 +115,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'created_at'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Tanggal Buat'
         Width = 80
       end
@@ -118,6 +125,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'created_by'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Dibuat Oleh'
         Width = 167
       end
@@ -127,6 +135,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'note'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Keterangan Pengajuan'
         Width = 297
       end
@@ -136,6 +145,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'approved_rejected_at'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Tanggal Disetujui/Ditolak'
         Width = 94
       end
@@ -145,6 +155,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'approved_rejected_by'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Disetujui/Ditolak Oleh'
         Width = 146
       end
@@ -154,6 +165,7 @@ object FListKoreksi: TFListKoreksi
         EditButtons = <>
         FieldName = 'note_approve'
         Footers = <>
+        ReadOnly = True
         Title.Caption = 'Catatan Distujui/Ditolak'
         Width = 323
       end>

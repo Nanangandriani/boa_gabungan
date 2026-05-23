@@ -282,7 +282,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='UPDATE "public"."t_sales_returns" SET'+
+      sql.Text:=' UPDATE "public"."t_sales_returns" SET'+
                 ' trans_no_replacement='+QuotedStr(edNoTrans.Text)+
                 ' Where trans_no='+QuotedStr(strNoTransaksiDiGanti);
       ExecSQL;
@@ -493,7 +493,6 @@ begin
           end;
 
 //          ShowMessage('total'+FloatToStr(MemDetail['GRAND_TOTAL']));
-
           MemDetail.Post;
         end;
 

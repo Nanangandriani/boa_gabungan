@@ -92,8 +92,8 @@ object FSearch_Supplier: TFSearch_Supplier
     Align = alBottom
     TabOrder = 1
     Visible = False
-    ExplicitTop = 417
-    ExplicitWidth = 656
+    ExplicitTop = 425
+    ExplicitWidth = 960
     object BBatal: TRzBitBtn
       Left = 888
       Top = 1
@@ -153,7 +153,7 @@ object FSearch_Supplier: TFSearch_Supplier
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 580
+      ExplicitLeft = 884
     end
     object BSimpan: TRzBitBtn
       Left = 813
@@ -214,7 +214,7 @@ object FSearch_Supplier: TFSearch_Supplier
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 505
+      ExplicitLeft = 809
     end
   end
   object QSupplier: TUniQuery

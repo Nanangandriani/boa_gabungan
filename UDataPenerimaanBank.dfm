@@ -519,18 +519,16 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     Width = 1205
     Height = 287
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     ExplicitWidth = 1201
     ExplicitHeight = 286
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1197
-      ExplicitHeight = 261
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -627,6 +625,8 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
+      ExplicitWidth = 1197
+      ExplicitHeight = 261
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 43
@@ -725,6 +725,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         Align = alTop
         Color = 15987699
         TabOrder = 1
+        ExplicitWidth = 1197
         object RzButton1: TRzButton
           Left = 9
           Top = 8

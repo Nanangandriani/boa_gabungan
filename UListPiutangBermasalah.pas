@@ -26,7 +26,7 @@ uses
   DynVarsEh, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni, dxBarExtItems,
   dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, cxButtonEdit, cxBarEditItem;
+  DBAxisGridsEh, DBGridEh, dxRibbon, cxButtonEdit, cxBarEditItem, cxCalendar;
 
 type
   TFListPiutangBermasalah = class(TForm)
@@ -78,6 +78,8 @@ type
     edKecamatan: TcxBarEditItem;
     dxBarLargeButton9: TdxBarLargeButton;
     dxBarLargeButton10: TdxBarLargeButton;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
     procedure ActBaruExecute(Sender: TObject);
     procedure dxBarLargeButton6Click(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -96,6 +98,10 @@ type
     procedure dxBarLargeButton3Click(Sender: TObject);
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton10Click(Sender: TObject);
+    procedure ActDelExecute(Sender: TObject);
+    procedure DBGridPiutangBermasalahAdvDrawDataCell(Sender: TCustomDBGridEh;
+      Cell, AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -114,7 +120,8 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PiutangBeramasalah, UMasterData, UMy_Function, UHomeLogin;
+uses UNew_PiutangBeramasalah, UMasterData, UMy_Function, UHomeLogin,
+  UDataModule, UKoreksi;
 var
   listpiutangbermasalah : TFListPiutangBermasalah;
 
@@ -135,6 +142,57 @@ begin
   edKabupaten.EditValue:='';
   edKecamatan.EditValue:='';
   QPiutangBermasalah.Close;
+  dtAwal.EditValue:=Date;
+  dtAkhir.EditValue:=Date;
+end;
+
+procedure TFListPiutangBermasalah.DBGridPiutangBermasalahAdvDrawDataCell(
+  Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
+  const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+end;
+
+procedure TFListPiutangBermasalah.ActDelExecute(Sender: TObject);
+var strSubMenuCode: String;
+begin
+  strSubMenuCode:=SelectRow('SELECT submenu_code from t_menu_sub where link=''FListPiutangBermasalah'';');
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE menu_trans='+QuotedStr(strSubMenuCode)+' AND is_delete =true and '+
+              'no_transaksi='+QuotedStr(QPiutangBermasalah.FieldByName('trans_no_nota').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Piutang bermasalah ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListPiutangBermasalah'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QPiutangBermasalah.FieldByName('trans_no_nota').AsString;
+      FKoreksi.ShowModal;
+    end;
+  end;
 end;
 
 procedure TFListPiutangBermasalah.ActROExecute(Sender: TObject);
@@ -156,8 +214,9 @@ begin
     strKodePelanggan:=QPiutangBermasalah.FieldValues['customer_code'];
     edPelanggan.Text:=QPiutangBermasalah.FieldValues['customer_name'];
     edNoNota.Text:=QPiutangBermasalah.FieldValues['trans_no_nota'];
+    strNoNotaPrev:=QPiutangBermasalah.FieldValues['trans_no_nota'];
     dtTglNota.Date:=QPiutangBermasalah.FieldValues['date_nota'];
-    edJumlahPiutang.Text:=QPiutangBermasalah.FieldValues['amount'];
+    edJumlahPiutang.Value:=QPiutangBermasalah.FieldValues['amount'];
     MemKet.Text:=QPiutangBermasalah.FieldValues['note'];
     Status:=1;
   end;
@@ -269,13 +328,13 @@ begin
 
   if edKecamatan.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_region='+QuotedStr(StrKecamatanID)+' and status=True';
+    strWhereWilayah:='AND code_kecamatan='+QuotedStr(StrKecamatanID)+' AND status=True';
   end else if edKabupaten.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_regency='+QuotedStr(StrKabupatenID)+' and status=True';
+    strWhereWilayah:='AND code_kabupaten='+QuotedStr(StrKabupatenID)+' AND status=True';
   end else if edKaresidenan.EditValue<>'' then
   begin
-    strWhereWilayah:='WHERE code_karesidenan='+QuotedStr(StrKaresidananID)+' and status=True';
+    strWhereWilayah:='AND code_karesidenan='+QuotedStr(StrKaresidananID)+' AND status=True';
   end else begin
     strWhereWilayah:='';
   end;
@@ -287,7 +346,8 @@ begin
      close;
      sql.Clear;
      sql.Text:= 'SELECT * from get_piutang_bermasalah() '+
-                ' '+strWhereWilayah;
+                'WHERE (created_at BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+strWhereWilayah;
 //                'EXTRACT(YEAR FROM a.created_at)='+edTahun.Text+' AND '+
 //                'EXTRACT(MONTH FROM a.created_at)='+(IntToStr(mm))+' AND '+
 //                'a.deleted_at is null ORDER BY a.created_at DESC;';
@@ -311,6 +371,7 @@ procedure TFListPiutangBermasalah.ActBaruExecute(Sender: TObject);
 begin
   FNew_PiutangBermasalah.Clear;
   FNew_PiutangBermasalah.Status:=0;
+  FNew_PiutangBermasalah.strNoNotaPrev:='';
   FNew_PiutangBermasalah.ShowModal;
 end;
 

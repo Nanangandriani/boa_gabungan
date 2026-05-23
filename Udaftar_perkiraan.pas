@@ -157,10 +157,11 @@ begin
       CBposting.Text:=FieldByName('posting').AsString;
       CbKategori.Text:=FieldByName('category').AsString;
       CBjenis_akun.Text:=FieldByName('type').AsString;
-      CBposisi_d_k.Text:=FieldByName('posisi_dk').AsString;
+      CBposisi_d_k.Text:=FieldByName('posisi_dk2').AsString;     //cr ds 16-03-2026 Sebelumnya posisi_dk diganti posisi_dk2
       CBkelompok_akun.Text:=FieldByName('group').AsString;
       statusnl:=FieldByName('balance_status').AsString;
      //cr ds gabungan 07-08-2023
+      FNewdaftar_perkiraan_bank.id_nr:=FieldByName('balance_st_id').value;     //cr ds 16-03-2026
       Cb_neraca.Text:=FieldByName('type_balance').AsString;
       Cb_by.Text:=FieldByName('cost_type').AsString;
       Cb_PosNR.Text:=FieldByName('post_name').AsString;
