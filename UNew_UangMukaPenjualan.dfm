@@ -13,6 +13,7 @@ object FNew_UangMukaPenjualan: TFNew_UangMukaPenjualan
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   TextHeight = 15
   object Label39: TLabel
     Left = 12

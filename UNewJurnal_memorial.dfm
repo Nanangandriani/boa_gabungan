@@ -24,8 +24,8 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 433
-    ExplicitWidth = 811
+    ExplicitTop = 492
+    ExplicitWidth = 841
     object BBatal: TRzBitBtn
       Left = 769
       Top = 1
@@ -86,7 +86,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 735
+      ExplicitLeft = 765
     end
     object BSave: TRzBitBtn
       Left = 684
@@ -149,7 +149,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 650
+      ExplicitLeft = 680
     end
     object BCorrection: TRzBitBtn
       Left = 605
@@ -160,7 +160,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
       Caption = 'Submit Correction'
       TabOrder = 2
       OnClick = BCorrectionClick
-      ExplicitLeft = 571
+      ExplicitLeft = 601
     end
   end
   object RzPanel1: TRzPanel
@@ -171,6 +171,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Align = alTop
     Color = 15987699
     TabOrder = 1
+    ExplicitWidth = 841
     object Label1: TLabel
       Left = 10
       Top = 72
@@ -452,7 +453,7 @@ object FNewJurnal_memo: TFNewJurnal_memo
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 811
+    ExplicitWidth = 841
     object Label9: TLabel
       Left = 8
       Top = 12
@@ -518,11 +519,11 @@ object FNewJurnal_memo: TFNewJurnal_memo
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,###;(#,#0.00);#,#0'
+        DisplayFormat = '#,##0.00;(#,##0.00);0'
         DynProps = <>
         EditButtons = <>
         FieldName = 'debit'
-        Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+        Footer.DisplayFormat = '#,##0.00;(#,##0.00);0'
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
         Footer.Font.Height = -11
@@ -536,11 +537,11 @@ object FNewJurnal_memo: TFNewJurnal_memo
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,###;(#,#0.00);#,#0'
+        DisplayFormat = '#,##0.00;(#,##0.00);0'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kredit'
-        Footer.DisplayFormat = '#,###;(#,#0.00);#,#0'
+        Footer.DisplayFormat = '#,##0.00;(#,##0.00);0'
         Footer.Font.Charset = DEFAULT_CHARSET
         Footer.Font.Color = clWindowText
         Footer.Font.Height = -11

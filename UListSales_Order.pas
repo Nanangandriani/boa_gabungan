@@ -114,7 +114,7 @@ procedure TFSalesOrder.Refresh;
 var mm: Integer;
 strKaresidenan:String;
 begin
-//  mm:=cbBulan.ItemIndex+1;
+
   strKaresidenan:='';
   if edKaresidenan.EditValue<>'' then
   begin
@@ -131,9 +131,6 @@ begin
        sql.Text:='SELECT * FROM get_sales_order() '+
                  'WHERE (order_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
-//               'where EXTRACT(YEAR FROM order_date)='+edTahun.Text+' AND '+
-//               'EXTRACT(MONTH FROM order_date)='+(IntToStr(mm))+' ');
-//       sql.add( vBatas_Data );
                   'order by order_date Desc,notrans Desc ';
        open;
    end;
@@ -357,7 +354,6 @@ begin
   if F = nil then Exit;
   if not F.IsNull then
     Params.Font.Color := clRed;
-
 end;
 
 procedure TFSalesOrder.DBGridOrderDrawColumnCell(Sender: TObject;

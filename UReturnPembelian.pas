@@ -26,7 +26,8 @@ uses
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, dxBar, cxClasses,
   MemTableDataEh, Data.DB, MemTableEh, DataDriverEh, frxClass, MemDS, DBAccess,
-  Uni, frxDBSet,Xml.xmldom,Xml.XMLIntf,Xml.XmlDoc,ComObj;
+  Uni, frxDBSet,Xml.xmldom,Xml.XMLIntf,Xml.XmlDoc,ComObj, RzButton,
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, RzPanel;
 
 type
   TFReturnPembelian = class(TForm)
@@ -95,6 +96,12 @@ type
     QReturnPembeliantotal_price: TFloatField;
     QReturnPembelianppn: TFloatField;
     QReturnPembelianppnrp: TFloatField;
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    DTP1: TDateTimePicker;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     procedure ActBaruExecute(Sender: TObject);
     procedure dxbarRefreshClick(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
@@ -105,6 +112,7 @@ type
     procedure dxBarButton9Click(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -190,14 +198,19 @@ procedure TFReturnPembelian.ActRoExecute(Sender: TObject);
 begin
     DBGridReturnPemb.StartLoadingStatus();
     DBGridReturnPemb.FinishLoadingStatus();
-    QReturnPembelian.Close;
-    MemReturn.Close;
-    QDetail.Close;
-    if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
-    if MemReturn.Active=False then MemReturn.Active:=True;
-    if QDetail.Active=False then QDetail.Active:=True;
-    if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
-    if QRptDet.Active=False then QRptDet.Active:=True;
+  QReturnPembelian.Close;
+  MemReturn.Active:=false;
+  QDetail.Close;
+  with QReturnPembelian do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' Select * from "v_purchase_return" where return_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP1.date))+' and '+
+              ' return_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP2.date))+'';
+    open;
+  end;
+    MemReturn.Active:=true;
+    QDetail.Active:=True;
 end;
 
 procedure TFReturnPembelian.ActUpdateExecute(Sender: TObject);
@@ -238,6 +251,21 @@ begin
       end;
     end;
     FNew_returnPemb.DBGridEh3ColEnter(sender);
+end;
+
+procedure TFReturnPembelian.CariClick(Sender: TObject);
+begin
+  QReturnPembelian.Close;
+  MemReturn.Active:=false;
+  with QReturnPembelian do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' Select * from "v_purchase_return" where return_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP1.date))+' and '+
+              ' return_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP2.date))+'';
+    open;
+  end;
+  MemReturn.Active:=true;
 end;
 
 procedure TFReturnPembelian.dxBarButton8Click(Sender: TObject);

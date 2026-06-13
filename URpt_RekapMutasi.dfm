@@ -408,7 +408,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44708.624305300900000000
-    ReportOptions.LastChange = 46155.695411875000000000
+    ReportOptions.LastChange = 46158.441649699070000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo30OnBeforePrint(Sender: TfrxComponent);'
@@ -904,7 +904,6 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
           Width = 75.590551180000000000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
-          DataField = 'kdadm'
           DataSet = DbRekap_mutasi
           DataSetName = 'DbRekap_mutasi'
           DisplayFormat.FormatStr = '#,##0.00;-#,##0.00;'#39#39' '
@@ -917,7 +916,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
           Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '[DbRekap_mutasi."kdadm"]')
+            '[SUM(<DbRekap_mutasi."kdpb">,MasterData1,3)]')
           ParentFont = False
           VAlign = vaCenter
         end

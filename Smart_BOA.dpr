@@ -359,7 +359,12 @@ uses
   UListNoTransaksi in 'UListNoTransaksi.pas' {FListNoTransaksi},
   ULap_Buku_Kas_Kecil in 'ULap_Buku_Kas_Kecil.pas' {FLap_Buku_Kas_Kecil},
   UBeritaAcaraHutang in 'UBeritaAcaraHutang.pas' {FBeritaAcaraHutang},
-  UKartu_UangMuka_Pembelian in 'UKartu_UangMuka_Pembelian.pas' {FKartu_UangMuka_Pembelian};
+  UKartu_UangMuka_Pembelian in 'UKartu_UangMuka_Pembelian.pas' {FKartu_UangMuka_Pembelian},
+  UListApproveDaftarPenagihanPiutang in 'UListApproveDaftarPenagihanPiutang.pas' {FListApproveDaftarPenagihanPiutang},
+  UNoteCancel2 in 'UNoteCancel2.pas' {FNoteCancel2},
+  UImage in 'UImage.pas' {FImage},
+  UExportReport in 'UExportReport.pas' {FExportReport},
+  UDataApproveDaftarPenagihanPiutang in 'UDataApproveDaftarPenagihanPiutang.pas' {FDataApproveDaftarPenagihanPiutang};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -546,6 +551,10 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFListKelompokBiayaWilayah, FListKelompokBiayaWilayah);
   Application.CreateForm(TFListNoTransaksi, FListNoTransaksi);
   Application.CreateForm(TFBeritaAcaraHutang, FBeritaAcaraHutang);
+  Application.CreateForm(TFNoteCancel2, FNoteCancel2);
+  Application.CreateForm(TFImage, FImage);
+  Application.CreateForm(TFDataApproveDaftarPenagihanPiutang, FDataApproveDaftarPenagihanPiutang);
+  //  Application.CreateForm(TFExportReport, FExportReport);
   //  Application.CreateForm(TFKartuUangMukaPenjualan, FKartuUangMukaPenjualan);
   //  Application.CreateForm(TFRegisterCekMundur, FRegisterCekMundur);
   //  Application.CreateForm(TFDaftarPenggunaanFakturPajak, FDaftarPenggunaanFakturPajak);

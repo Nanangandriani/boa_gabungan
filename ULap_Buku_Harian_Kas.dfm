@@ -2,8 +2,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   Left = 0
   Top = 0
   Caption = 'Laporan Buku Harian Kas'
-  ClientHeight = 442
-  ClientWidth = 707
+  ClientHeight = 592
+  ClientWidth = 924
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   object DBGridBukuHarianKas: TDBGridEh
     Left = 0
     Top = 127
-    Width = 707
-    Height = 315
+    Width = 924
+    Height = 465
     Align = alClient
     DataSource = DSBHKas
     DrawMemoText = True
@@ -59,10 +59,20 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         DisplayFormat = '#,##0.00'
         DynProps = <>
         EditButtons = <>
+        FieldName = 'sa'
+        Footers = <>
+        Title.Caption = 'Saldo Awal'
+        Width = 150
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'db'
         Footers = <>
         Title.Caption = 'Debet'
-        Width = 100
+        Width = 160
       end
       item
         CellButtons = <>
@@ -72,13 +82,23 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         FieldName = 'kredit'
         Footers = <>
         Title.Caption = 'Kredit'
-        Width = 100
+        Width = 160
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'saldo'
+        Footers = <>
+        Title.Caption = 'Saldo'
+        Width = 160
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 604
+        Width = 887
         Height = 118
         Align = alClient
         DynProps = <>
@@ -92,7 +112,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 707
+    Width = 924
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -100,6 +120,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 707
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -111,8 +132,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     end
   end
   object ActMenu: TActionManager
-    Left = 552
-    Top = 88
+    Left = 592
+    Top = 72
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '
@@ -897,8 +918,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 448
-    Top = 40
+    Left = 472
+    Top = 32
   end
   object frxReport2: TfrxReport
     Version = '2022.1.3'
@@ -909,14 +930,14 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44945.462862835700000000
-    ReportOptions.LastChange = 46149.357888657410000000
+    ReportOptions.LastChange = 45651.476405185180000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 344
-    Top = 24
+    Left = 368
+    Top = 32
     Datasets = <
       item
         DataSet = frxDBDataset4
@@ -1013,6 +1034,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset3."ket2"]'
+            '[frxDBDataset3."nm"]'
             '[frxDBDataset3."nosj"]')
           ParentFont = False
           Formats = <
@@ -1170,7 +1192,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
         object Memo53: TfrxMemoView
           AllowVectorExport = True
           Top = 39.677180000000000000
-          Width = 223.417293540000000000
+          Width = 268.771653540000000000
           Height = 41.574830000000000000
           StretchMode = smMaxHeight
           DataField = 'address'
@@ -2018,7 +2040,7 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Top = 272
   end
   object DataSetDriverEh1: TDataSetDriverEh
-    ProviderDataSet = QBHKas
+    ProviderDataSet = QKet
     Left = 208
     Top = 272
   end

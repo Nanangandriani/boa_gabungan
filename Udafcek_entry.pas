@@ -131,7 +131,7 @@ end;
 
 procedure TFDaf_EntryCek.ActBaruExecute(Sender: TObject);
 begin
-    Status:=0;
+    status:=0;
     if not assigned(FImportnocek) then
     FImportnocek:=TFImportnocek.create(application);
     FImportnocek.show;

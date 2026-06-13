@@ -157,7 +157,7 @@ begin
                 'AND c.deleted_at IS NULL '+
                 'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no = a.voucher_no '+
                 'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
-                'ORDER BY voucher_no ASC, account_name = ''Piutang Barang Dagang'' ASC;';
+                'ORDER BY voucher_no ASC, account_name = ''Piutang Barang Dagang'' ASC, position DESC;';
 //      sql.Text:='SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust,a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from '+
 //              '( select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank",  "account_name_bank", '+
 //              '"for_acceptance", "description", "module_id",word_amount,code_type_trans,paid_amount tot_paid_amount  from "public"."t_cash_bank_acceptance"  a   WHERE deleted_at is null) a '+

@@ -965,9 +965,9 @@ object FNew_Pembelian: TFNew_Pembelian
       Width = 1497
       Height = 359
       Hint = ''
-      ActivePage = TabCicilan
+      ActivePage = TabBarang2
       Align = alClient
-      TabIndex = 3
+      TabIndex = 0
       TabOrder = 6
       ExplicitWidth = 1493
       ExplicitHeight = 358

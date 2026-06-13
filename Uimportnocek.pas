@@ -44,9 +44,12 @@ type
     { Private declarations }
   public
     { Public declarations }
+    next_process: boolean;
     status:integer;
+    v_adacek_no:string;
     procedure clear;
     procedure update;
+    procedure validasi_data;
 
   end;
 
@@ -60,6 +63,51 @@ implementation
 {$R *.dfm}
 
 uses UMainMenu, UDataModule, Udafcek_entry, UHomeLogin, UCari_Menu;
+
+procedure TFImportnocek.validasi_data;
+var i_cek,j_cek:integer;
+    no_faktur_cek,no_urut_cek:string;
+    trans_no_cek:integer;
+begin
+  v_adacek_no:='';
+  for i_cek:=SpinEdit1.Value to SpinEdit2.Value do
+      begin
+         j_cek:=j_cek+1;
+         if i_cek<=9 then
+         no_urut_cek:='0000000'+inttostr(i_cek);
+         if (i_cek>9) and (i_cek<100) then
+         no_urut_cek:='000000'+inttostr(i_cek);
+         if (i_cek>=100) and (i_cek<1000) then
+         no_urut_cek:='00000'+inttostr(i_cek);
+         if (i_cek>=1000) and (i_cek<10000) then
+         no_urut_cek:='0000'+inttostr(i_cek);
+         if (i_cek>=10000) and (i_cek<100000) then
+         no_urut_cek:='000'+inttostr(i_cek);
+         if (i_cek>=100000) and (i_cek<1000000) then
+         no_urut_cek:='00'+inttostr(i_cek);
+         if (i_cek>=1000000) and (i_cek<10000000) then
+         no_urut_cek:='0'+inttostr(i_cek);
+         if  (i_cek>10000000) then
+         no_urut_cek:=inttostr(i_cek);
+
+         no_faktur_cek:=Ed_header.Text+no_urut_cek;
+         with MyQuery1 do
+         begin
+            Close;
+            sql.Clear;
+            sql.Add('select cek_no from t_nocek where cek_no='+QuotedStr(no_faktur_cek)+'');
+            open;
+         end;
+
+          next_process:=true;
+         if MyQuery1.RecordCount<>0 then
+         begin
+          next_process:=false;
+          v_adacek_no:=v_adacek_no+','+no_faktur_cek;
+         end;
+
+      end;
+end;
 
 procedure TFImportnocek.BProsesClick(Sender: TObject);
 var i,j:integer;
@@ -96,6 +144,14 @@ begin
 
    if Application.MessageBox('Import data No.Cek/BG akan diproses?','confirm',mb_yesno or mb_iconquestion)=id_yes then
    begin
+   validasi_data;
+   if next_process=false then
+   begin
+    ShowMessage('Ditemukan Data Nomor Cek Yang Sudah Terdaftar !!! ('+v_adacek_no+')')
+   end;
+
+   if next_process=true then
+   begin
       with dm.Qtemp do
       begin
         close;
@@ -105,6 +161,7 @@ begin
         trans_no:=fieldbyname('transno').AsInteger+1;
               //showmessage(inttostr(trans_no));
       end;
+
       with dm.Qtemp do
       begin
         close;
@@ -189,6 +246,7 @@ begin
       showmessage('Proses import No. Cek berhasil !');
       FDaf_EntryCek.qnocek.close;
       FDaf_EntryCek.qnocek.open;
+   end;
    end;
  end
  else

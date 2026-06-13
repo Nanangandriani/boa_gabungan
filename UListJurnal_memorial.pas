@@ -28,7 +28,7 @@ uses
   dxSkinBasic, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
   dxSkinOffice2019Black, dxSkinOffice2019Colorful, dxSkinOffice2019DarkGray,
   dxSkinOffice2019White, dxSkinTheBezier, dxSkinVisualStudio2013Blue,
-  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore;
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxCore, Vcl.ComCtrls;
 
 type
   TFList_jurnal_memorial = class(TForm)
@@ -79,6 +79,12 @@ type
     ActApp: TAction;
     ActReject: TAction;
     ActClose: TAction;
+    RzPanel1: TRzPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    DTP1: TDateTimePicker;
+    DTP2: TDateTimePicker;
+    Cari: TRzBitBtn;
     procedure FormShow(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -93,6 +99,7 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
+    procedure CariClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -124,10 +131,17 @@ procedure TFList_jurnal_memorial.Refresh;
 begin
   DBGridEh1.StartLoadingStatus();
     try
-      Qlist_jurnal.Close;
-      Qlist_jurnal.Open;
-      MemTableEh1.Close;
-      MemTableEh1.Open;
+     Qlist_jurnal.Close;
+      MemTableEh1.Active:=false;
+      with Qlist_jurnal do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' Select * from "v_memorial_juornal" where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP1.date))+' and '+
+                  ' trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP2.date))+'';
+        open;
+      end;
+      MemTableEh1.Active:=true;
       Qjurnal_detail.Close;
       Qjurnal_detail.Open;
     finally
@@ -319,6 +333,11 @@ begin
   begin
     MessageDlg('Maaf Memorial '+DBGridEh1.Fields[0].AsString+' belum ada approval koreksi, tidak dapat diubah..!!',mtInformation,[MBOK],0);
   end;
+end;
+
+procedure TFList_jurnal_memorial.CariClick(Sender: TObject);
+begin
+  refresh;
 end;
 
 procedure TFList_jurnal_memorial.DBGridEh1AdvDrawDataCell(

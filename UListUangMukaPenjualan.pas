@@ -87,6 +87,9 @@ type
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActDelExecute(Sender: TObject);
     procedure dxBarLargeButton1Click(Sender: TObject);
+    procedure DBGridAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -102,38 +105,85 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_UangMukaPenjualan, UHomeLogin, UDataModule, UMy_Function, UMainMenu;
+uses UNew_UangMukaPenjualan, UHomeLogin, UDataModule, UMy_Function, UMainMenu,
+  UKoreksi;
 
 procedure TFListUangMukaPenjualan.ActDelExecute(Sender: TObject);
 begin
-  if not dm.Koneksi.InTransaction then
-    dm.Koneksi.StartTransaction;
-  try
-    if MessageDlg('Anda Yakin Mau Hapus Uang Muka Dengan No. '+QUangMukaPenjualan.FieldValues['no_trans']+' '+ '?', mtInformation, [mbYes]+[mbNo],0) = mrYes then
-    begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT a.* from t_cash_bank_acceptance_down_payment a '+
+              'left join t_cash_bank_acceptance b on b.voucher_no=a.voucher_no '+
+              'WHERE a.no_trans_down_payment='+QuotedStr(QUangMukaPenjualan.FieldByName('trans_no').AsString)+' and b.deleted_at is null';
+    open;
+  end;
 
-      with dm.Qtemp do
-      begin
-        Close;
-        SQL.Clear;
-        SQL.Text:='UPDATE t_down_payment_sales SET deleted_at=NOW(), '+
-                  'deleted_by='+QuotedStr(Nm)+' '+
-                  'WHERE no_trans='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans'])+' ';
-        ExecSQL;
-      end;
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QUangMukaPenjualan.FieldByName('no_trans').AsString)+' and status=0 and deleted_at is null';
+    open;
+  end;
 
-      if dm.Koneksi.InTransaction then
-        dm.Koneksi.Commit;
-      MessageDlg('Hapus Berhasil ..!!',mtInformation,[MBOK],0);
-      Refresh;
-    end;
-  Except on E :Exception do
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Uang Muka Penjualan ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Uang Muka Penjualan sudah ada pembayaran..!!',mtInformation,[mbRetry],0);
+  end else if (QUangMukaPenjualan.FindField('deleted_at') <> nil) and (not QUangMukaPenjualan.FieldByName('deleted_at').IsNull) then
+  begin
+    MessageDlg('Uang Muka Penjualan sudah dihapus..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
-      MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-      if dm.Koneksi.InTransaction then
-        Dm.koneksi.Rollback ;
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListUangMukaPenjualan'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QUangMukaPenjualan.FieldByName('no_trans').AsString;
+      FKoreksi.ShowModal;
+
+//      FNoteCancel.vtbl:='t_selling';
+//      FNoteCancel.vfieldtransno:='trans_no';
+//      FNoteCancel.edNoTransaksi.Text:=QPenjualan.FieldByName('trans_no').AsString;
+//      FNoteCancel.ShowModal;
     end;
   end;
+
+
+//  if not dm.Koneksi.InTransaction then
+//    dm.Koneksi.StartTransaction;
+//  try
+//    if MessageDlg('Anda Yakin Mau Hapus Uang Muka Dengan No. '+QUangMukaPenjualan.FieldValues['no_trans']+' '+ '?', mtInformation, [mbYes]+[mbNo],0) = mrYes then
+//    begin
+//
+//      with dm.Qtemp do
+//      begin
+//        Close;
+//        SQL.Clear;
+//        SQL.Text:='UPDATE t_down_payment_sales SET deleted_at=NOW(), '+
+//                  'deleted_by='+QuotedStr(Nm)+' '+
+//                  'WHERE no_trans='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans'])+' ';
+//        ExecSQL;
+//      end;
+//
+//      if dm.Koneksi.InTransaction then
+//        dm.Koneksi.Commit;
+//      MessageDlg('Hapus Berhasil ..!!',mtInformation,[MBOK],0);
+//      Refresh;
+//    end;
+//  Except on E :Exception do
+//    begin
+//      MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+//      if dm.Koneksi.InTransaction then
+//        Dm.koneksi.Rollback ;
+//    end;
+//  end;
 end;
 
 procedure TFListUangMukaPenjualan.ActROExecute(Sender: TObject);
@@ -170,6 +220,13 @@ begin
     kd_kares:='0';
   end;
 
+  if (QUangMukaPenjualan.FindField('deleted_at') <> nil) and (not QUangMukaPenjualan.FieldByName('deleted_at').IsNull) then
+  begin
+    FNew_UangMukaPenjualan.isCancel := 1;
+  end else begin
+    FNew_UangMukaPenjualan.isCancel:=0;
+  end;
+
   with dm.Qtemp2 do
   begin
     close;
@@ -188,6 +245,25 @@ begin
   end;
 
   FNew_UangMukaPenjualan.ShowModal;
+end;
+
+procedure TFListUangMukaPenjualan.DBGridAdvDrawDataCell(Sender: TCustomDBGridEh;
+  Cell, AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
 end;
 
 procedure TFListUangMukaPenjualan.ExportToExcel;
@@ -326,8 +402,8 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select a.no_trans,a.trans_date,a.customer_code,c.account_name,b.customer_name,'+
-                'a.account_code,a.grand_tot,(SELECT array_to_string(array_agg(trans_no), '', '') '+
+      Sql.Text:='select a.no_trans,a.trans_date,a.customer_code,c.account_name,b.customer_name,b.customer_name_pkp,'+
+                'a.account_code,a.grand_tot,a.deleted_at,(SELECT array_to_string(array_agg(trans_no), '', '') '+
                 'FROM t_selling_down_payment '+
                 'WHERE trans_no_down_payment = a.no_trans) trans_no ,e.sisa_uang_muka,e.voucher_no, e.no_rekening, e.name_bank from t_down_payment_sales a '+
 		            'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
@@ -335,7 +411,7 @@ begin
 //                'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.no_trans '+
                 'LEFT JOIN get_down_payment_sales() e on e.no_trans_down_payment=a.no_trans '+
                 'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
-                'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' and a.deleted_at is NULL ORDER BY a.trans_date DESC, a.no_trans DESC;';
+                'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' ORDER BY a.trans_date DESC, a.no_trans DESC;';
       Open;
     end;
   finally
@@ -347,6 +423,7 @@ procedure TFListUangMukaPenjualan.ActBaruExecute(Sender: TObject);
 begin
   FNew_UangMukaPenjualan.Clear;
   Status:=0;
+  FNew_UangMukaPenjualan.isCancel:=0;
   FNew_UangMukaPenjualan.BSave.Enabled:=True;
   FNew_UangMukaPenjualan.ShowModal;
 end;

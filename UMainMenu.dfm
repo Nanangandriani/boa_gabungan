@@ -5609,16 +5609,17 @@ object FMainMenu: TFMainMenu
       VersionInfo = RzVersionInfo1
     end
     object Load: TRzProgressStatus
-      Left = 459
+      Left = 417
       Top = 0
+      Width = 176
       Height = 19
       Align = alLeft
       ParentShowHint = False
+      Visible = False
       PartsComplete = 0
       Percent = 0
+      ShowPercent = True
       TotalParts = 0
-      ExplicitLeft = 465
-      ExplicitTop = 2
     end
     object RzClockStatus1: TRzClockStatus
       Left = 693
@@ -5631,11 +5632,10 @@ object FMainMenu: TFMainMenu
     object StatusUser: TRzGlyphStatus
       Left = 226
       Top = 0
-      Width = 233
+      Width = 191
       Height = 19
       Align = alLeft
       Caption = ''
-      ExplicitLeft = 176
     end
     object RzStatusPane1: TRzStatusPane
       Left = 181
@@ -5672,13 +5672,13 @@ object FMainMenu: TFMainMenu
       ExplicitTop = 2
     end
     object RzStatusPane2: TRzStatusPane
-      Left = 559
+      Left = 417
       Top = 0
       Height = 19
       Align = alLeft
       Caption = ''
-      ExplicitLeft = 1027
-      ExplicitHeight = 20
+      ExplicitLeft = 565
+      ExplicitTop = 2
     end
   end
   object dxRibbon1: TdxRibbon

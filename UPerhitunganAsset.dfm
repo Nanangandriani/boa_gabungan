@@ -42,7 +42,7 @@ object FPerhitunganAsset: TFPerhitunganAsset
     TabOrder = 0
     Visible = False
     VisualStyle = vsGradient
-    ExplicitWidth = 1138
+    ExplicitWidth = 1140
   end
   object Panel1: TPanel
     Left = 0
@@ -51,7 +51,7 @@ object FPerhitunganAsset: TFPerhitunganAsset
     Height = 290
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1138
+    ExplicitWidth = 1140
     object GroupBox1: TGroupBox
       Left = 16
       Top = 11
@@ -706,8 +706,8 @@ object FPerhitunganAsset: TFPerhitunganAsset
     Align = alBottom
     ParentBackground = False
     TabOrder = 2
-    ExplicitTop = 574
-    ExplicitWidth = 1138
+    ExplicitTop = 582
+    ExplicitWidth = 1140
     object bt_Proses: TRzBitBtn
       Left = 825
       Top = 1
@@ -776,7 +776,7 @@ object FPerhitunganAsset: TFPerhitunganAsset
         0909090909090909E8E88181818181818181818181818181E8E8}
       Layout = blGlyphTop
       NumGlyphs = 2
-      ExplicitLeft = 819
+      ExplicitLeft = 821
     end
     object bt_Tutup: TRzBitBtn
       Left = 984
@@ -846,7 +846,7 @@ object FPerhitunganAsset: TFPerhitunganAsset
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       Layout = blGlyphTop
       NumGlyphs = 2
-      ExplicitLeft = 978
+      ExplicitLeft = 980
     end
     object btHitung: TRzBitBtn
       Left = 1

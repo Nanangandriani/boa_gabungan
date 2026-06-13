@@ -336,7 +336,7 @@ begin
       except
         on E: EIdHTTPProtocolException do
         begin
-//          Memo1.Text:=BaseUrl + Vpath + vBody;
+          Memo1.Text:=BaseUrl + Vpath + vBody;
           ShowMessage('Data tidak ditemukan atau server mengembalikan error.');
           Exit;
         end;

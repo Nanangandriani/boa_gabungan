@@ -37,6 +37,7 @@ type
     MemMasterDataPAYMENT_TERM: TSmallintField;
     MemMasterDataKD_KARES: TStringField;
     MemMasterDataPO_ORDER: TStringField;
+    MemMasterDataNM_PKP: TStringField;
     procedure btTampilkanClick(Sender: TObject);
     procedure btGetDataProspekClick(Sender: TObject);
     procedure DBGridCustomerDblClick(Sender: TObject);
@@ -174,11 +175,12 @@ begin
           MemMasterData.insert;
           MemMasterData['KD_PELANGGAN']:=Dm.Qtemp.fieldbyname('code_cust').value;
           MemMasterData['NM_PELANGGAN']:=Dm.Qtemp.fieldbyname('name_cust').value;
+          MemMasterData['NM_PKP']:=Dm.Qtemp.fieldbyname('customer_name_pkp').value;
           MemMasterData['KD_WILAYAH']:=Dm.Qtemp.fieldbyname('code_region').value;
           MemMasterData['WILAYAH']:=Dm.Qtemp.fieldbyname('name_region').value;
           MemMasterData['NO_REFF']:=Dm.Qtemp.fieldbyname('notrans').value;
           MemMasterData['PAYMENT_TERM']:=Dm.Qtemp.fieldbyname('payment_term').value;
-         
+
           MemMasterData['KD_KARES']:=Dm.Qtemp.fieldbyname(strKodeKaresTP).value;
           if Dm.Qtemp.fieldbyname('po_order').value<>NULL then
           MemMasterData['PO_ORDER']:=Dm.Qtemp.fieldbyname('po_order').value else MemMasterData['PO_ORDER']:='';

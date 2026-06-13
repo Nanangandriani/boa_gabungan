@@ -167,7 +167,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_selling_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edKodeOrder.Text) ;
+    sql.Text:='UPDATE t_sales_order_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edKodeOrder.Text) ;
     ExecSQL;
   end;
 
@@ -175,7 +175,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text := 'INSERT INTO t_selling_customer (' +
+    sql.Text := 'INSERT INTO t_sales_order_customer (' +
                 'trans_no, customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
                 'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
                 'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
@@ -183,11 +183,11 @@ begin
                 'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
                 ') ' +
                 'SELECT '+QuotedStr(edKodeOrder.Text)+', ' +
-               'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
-               'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
-               'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
-               'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
-               'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
+                'customer_code, customer_name, email, payment_term, npwp, stat_pkp, ' +
+                'customer_name_pkp, no_npwp, no_nik, number_va, code_region, name_region, postal_code, ' +
+                'code_type, name_type, code_selling_type, name_selling_type, code_group, name_group, ' +
+                'idprospek, code_head_office, name_head_office, code_type_business, name_type_business, ' +
+                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
                 'FROM t_customer ' +
                 'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
     ExecSQL;

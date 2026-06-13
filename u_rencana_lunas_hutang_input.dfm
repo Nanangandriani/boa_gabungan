@@ -420,7 +420,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       Caption = 'Submit Correction'
       TabOrder = 3
       OnClick = BCorrectionClick
-      ExplicitLeft = 359
+      ExplicitLeft = 457
     end
   end
   object Panel2: TPanel
@@ -694,6 +694,7 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       ImeName = 'US'
       ParentCtl3D = False
       ParentFont = False
+      ReadOnly = True
       TabOrder = 4
     end
     object dptglcek: TDateTimePicker

@@ -868,7 +868,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
       
         'select * from t_nocek_master where deleted_at is null order by t' +
         'rans_no ASC')
-    Left = 440
+    Left = 424
     Top = 24
     object Qnocek_mastertrans_no: TIntegerField
       AutoGenerateValue = arAutoInc

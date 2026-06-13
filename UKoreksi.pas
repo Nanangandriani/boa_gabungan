@@ -26,6 +26,14 @@ type
     edNoTransaksi: TRzButtonEdit;
     RzLabel6: TRzLabel;
     MemKetApprove: TRzMemo;
+    edNoNota: TRzEdit;
+    edNamaKolektor: TRzEdit;
+    RzLabel7: TRzLabel;
+    RzLabel8: TRzLabel;
+    RzLabel9: TRzLabel;
+    dtTglDpp: TRzEdit;
+    edNamaPelanggan: TRzEdit;
+    RzLabel10: TRzLabel;
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edNoTransaksiButtonClick(Sender: TObject);
@@ -42,7 +50,7 @@ type
     procedure Approve;
   public
     { Public declarations }
-    kd_kares,tbl,field_no_trans,date_trans,strtgl, strbulan, strtahun,vcall,vnotransaksi,kode_koreksi :String;
+    kd_kares,tbl,field_no_trans,date_trans,strtgl, strbulan, strtahun,vcall,vcall2,vnotransaksi,kode_koreksi :String;
     Status: Integer;
     AksiTipe: String;
     procedure Clear;
@@ -161,6 +169,22 @@ begin
   memKet.Text:=dm.Qtemp.FieldValues['note'];
   tbl:=dm.Qtemp.FieldValues['table_trans'];
   field_no_trans:=dm.Qtemp.FieldValues['field_no_trans'];
+
+  if vcall=vcall2 then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM get_dpp_temp() WHERE id='+QuotedStr(vnotransaksi);
+      open;
+    end;
+    edNoNota.Text:=dm.Qtemp.FieldValues['no_invoice'];
+    edNamaKolektor.Text:=dm.Qtemp.FieldValues['name_collector'];
+    dtTglDpp.Text:=FormatDateTime('dd/mm/yyyy',dm.Qtemp.FieldValues['date_dpp']) ;
+    edNamaPelanggan.Text:=dm.Qtemp.FieldValues['customer_name'];
+  end;
+
 end;
 
 procedure TFKoreksi.Save;
@@ -182,8 +206,6 @@ begin
     if (kd_kares='') OR (kd_kares='0') then
       Stradditional_code:='NULL'
     else Stradditional_code:=QuotedStr(kd_kares);
-
-
 
     with dm.Qtemp do
     begin
@@ -304,22 +326,70 @@ end;
 
 procedure TFKoreksi.FormShow(Sender: TObject);
 begin
+
   if AksiTipe='DELETE' then FKoreksi.Caption:='Hapus Transaksi' else FKoreksi.Caption:='Koreksi Transaksi';
   Clear;
 
   cbMenu.Enabled:=False;
   edNoTransaksi.Enabled:=False;
+
+  vcall2 :=SelectRow('select Upper(submenu) menu from t_menu_sub  '+
+                    'where link=''FListApproveDaftarPenagihanPiutang'' ');
+
 //  Autonumber;
   if Status=0 then
   begin
-    FKoreksi.Height:=294;
-    BtnReject.Visible:=False;
-    BtnApprove.Visible:=False;
-    BSave.Visible:=True;
-    BBatal.Visible:=True;
-    memKet.Enabled:=True;
-    MemKetApprove.Visible:=False;
-    RzLabel6.Visible:=False;
+
+    if vcall<>vcall2 then
+    begin
+      FKoreksi.Height:=294;
+      BtnReject.Visible:=False;
+      BtnApprove.Visible:=False;
+      BSave.Visible:=True;
+      BBatal.Visible:=True;
+      memKet.Enabled:=True;
+      MemKetApprove.Visible:=False;
+      RzLabel6.Visible:=False;
+
+
+      memKet.Top:=129;
+      RzLabel4.Top:=132;
+      MemKetApprove.Top:=225;
+      RzLabel6.Top:=228;
+
+      edNoNota.Visible:=False;
+      edNamaKolektor.Visible:=False;
+      dtTglDpp.Visible:=False;
+      edNamaPelanggan.Visible:=False;
+      RzLabel7.Visible:=False;
+      RzLabel8.Visible:=False;
+      RzLabel9.Visible:=False;
+      RzLabel10.Visible:=False;
+
+    end else begin
+      FKoreksi.Height:=410;
+      BtnReject.Visible:=False;
+      BtnApprove.Visible:=False;
+      BSave.Visible:=True;
+      BBatal.Visible:=True;
+      memKet.Enabled:=True;
+      MemKetApprove.Visible:=False;
+      RzLabel6.Visible:=False;
+
+      memKet.Top:=243;
+      RzLabel4.Top:=246;
+      MemKetApprove.Top:=339;
+      RzLabel6.Top:=342;
+
+      edNoNota.Visible:=True;
+      edNamaKolektor.Visible:=True;
+      dtTglDpp.Visible:=True;
+      edNamaPelanggan.Visible:=True;
+      RzLabel7.Visible:=True;
+      RzLabel8.Visible:=True;
+      RzLabel9.Visible:=True;
+      RzLabel10.Visible:=True;
+    end;
 
     with dm.Qtemp do
     begin
@@ -332,32 +402,116 @@ begin
     field_no_trans:= dm.Qtemp.FieldValues['field_no_trans'];
 
   end else if Status=1 then begin
-    FKoreksi.Height:=394;
-    MemKetApprove.Visible:=True;
-    RzLabel6.Visible:=True;
-    BtnReject.Visible:=False;
-    BtnApprove.Visible:=True;
-    BSave.Visible:=False;
-    BBatal.Visible:=False;
-    memKet.Enabled:=False;
+
     Detail;
+    if vcall<>vcall2 then
+    begin
+      FKoreksi.Height:=394;
+      MemKetApprove.Visible:=True;
+      RzLabel6.Visible:=True;
+      BtnReject.Visible:=False;
+      BtnApprove.Visible:=True;
+      BSave.Visible:=False;
+      BBatal.Visible:=False;
+      memKet.Enabled:=False;
+
+      memKet.Top:=129;
+      RzLabel4.Top:=132;
+      MemKetApprove.Top:=225;
+      RzLabel6.Top:=228;
+
+      edNoNota.Visible:=False;
+      edNamaKolektor.Visible:=False;
+      dtTglDpp.Visible:=False;
+      edNamaPelanggan.Visible:=False;
+      RzLabel7.Visible:=False;
+      RzLabel8.Visible:=False;
+      RzLabel9.Visible:=False;
+      RzLabel10.Visible:=False;
+
+    end else begin
+      FKoreksi.Height:=510;
+      MemKetApprove.Visible:=True;
+      RzLabel6.Visible:=True;
+      BtnReject.Visible:=False;
+      BtnApprove.Visible:=True;
+      BSave.Visible:=False;
+      BBatal.Visible:=False;
+      memKet.Enabled:=False;
+
+      memKet.Top:=243;
+      RzLabel4.Top:=246;
+      MemKetApprove.Top:=339;
+      RzLabel6.Top:=342;
+
+      edNoNota.Visible:=True;
+      edNamaKolektor.Visible:=True;
+      dtTglDpp.Visible:=True;
+      edNamaPelanggan.Visible:=True;
+      RzLabel7.Visible:=True;
+      RzLabel8.Visible:=True;
+      RzLabel9.Visible:=True;
+      RzLabel10.Visible:=True;
+    end;
+
   end else if Status=2 then begin
-    FKoreksi.Height:=394;
-    MemKetApprove.Visible:=True;
-    RzLabel6.Visible:=True;
-    BtnReject.Visible:=True;
-    BtnApprove.Visible:=False;
-    BSave.Visible:=False;
-    BBatal.Visible:=False;
-    memKet.Enabled:=False;
+
     Detail;
+    if vcall<>vcall2 then
+    begin
+      FKoreksi.Height:=394;
+      MemKetApprove.Visible:=True;
+      RzLabel6.Visible:=True;
+      BtnReject.Visible:=True;
+      BtnApprove.Visible:=False;
+      BSave.Visible:=False;
+      BBatal.Visible:=False;
+      memKet.Enabled:=False;
+
+      memKet.Top:=129;
+      RzLabel4.Top:=132;
+      MemKetApprove.Top:=225;
+      RzLabel6.Top:=228;
+
+      edNoNota.Visible:=False;
+      edNamaKolektor.Visible:=False;
+      dtTglDpp.Visible:=False;
+      edNamaPelanggan.Visible:=False;
+      RzLabel7.Visible:=False;
+      RzLabel8.Visible:=False;
+      RzLabel9.Visible:=False;
+      RzLabel10.Visible:=False;
+
+    end else begin
+      FKoreksi.Height:=510;
+      MemKetApprove.Visible:=True;
+      RzLabel6.Visible:=True;
+      BtnReject.Visible:=True;
+      BtnApprove.Visible:=False;
+      BSave.Visible:=False;
+      BBatal.Visible:=False;
+      memKet.Enabled:=False;
+
+      memKet.Top:=243;
+      RzLabel4.Top:=246;
+      MemKetApprove.Top:=339;
+      RzLabel6.Top:=342;
+
+      edNoNota.Visible:=True;
+      edNamaKolektor.Visible:=True;
+      dtTglDpp.Visible:=True;
+      edNamaPelanggan.Visible:=True;
+      RzLabel7.Visible:=True;
+      RzLabel8.Visible:=True;
+      RzLabel9.Visible:=True;
+      RzLabel10.Visible:=True;
+    end;
+
   end;
   vcall:=UpperCase(vcall);
 
   edNoTransaksi.Text:=vnotransaksi;
   cbMenu.Text:=vcall;
-
-
 end;
 
 procedure TFKoreksi.BBatalClick(Sender: TObject);

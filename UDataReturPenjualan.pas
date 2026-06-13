@@ -544,7 +544,7 @@ begin
   if iserror=0 then
   begin
     FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
-                'where link='+QuotedStr(FListReturPenjualan.Name)); //Mendapatkan nama Menu
+                'where link=''FListReturPenjualan'' '); //Mendapatkan nama Menu
     FKoreksi.Status:=0;
     FKoreksi.vnotransaksi:=edNoTrans.Text; //Mendapatkan Nomor Transaksi
     FKoreksi.ShowModal;

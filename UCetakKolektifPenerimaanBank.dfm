@@ -261,8 +261,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 262
-      ExplicitTop = -4
+      ExplicitLeft = 264
     end
   end
   object cbBank: TRzComboBox
@@ -1297,8 +1296,8 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
   end
   object DSBuktiTerima: TDataSource
     DataSet = QBuktiTerima
-    Left = 344
-    Top = 168
+    Left = 296
+    Top = 144
   end
   object Report2: TfrxReport
     Version = '2022.1.3'
@@ -1309,7 +1308,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46042.629554456020000000
+    ReportOptions.LastChange = 46177.363999189820000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'var CountAkun:Int;'
@@ -1318,7 +1317,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       '  AccountName.Text:=UpperCase(AccountName.Text);'
       
         '  MemPaid.Text:=FormatFloat('#39'#,###,###,###0.00'#39',<frxDBDatasetBuk' +
-        'tiTerima."tot_paid_amount">);      '
+        'tiTerima."tot_paid_amount">);'
       'end;'
       ''
       'procedure GroupHeader2OnBeforePrint(Sender: TfrxComponent);'
@@ -1370,7 +1369,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       '    Line8.Top     := Line8.Top - 18;'
       '    terbilang.Top := terbilang.Top - 18;'
       '    Memo24.Top    := Memo24.Top - 18;'
-      '    MemPaid.Top  := MemPaid.Top - 18;'
+      '    MemPaid.Top   := MemPaid.Top - 18;'
       '    Line12.Top    := Line12.Top - 18;'
       '    Line6.Top     := Line6.Top - 18;'
       '    Memo14.Top    := Memo14.Top - 18;'
@@ -1381,6 +1380,25 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       '    Memo17.Top    := Memo17.Top - 18;'
       '    Line16.Top    := Line16.Top - 18;'
       '  end;'
+      ''
+      '  if CountAkun=3 then'
+      '  begin'
+      '    Line8.Top     := Line8.Top - 48;'
+      '    terbilang.Top := terbilang.Top - 48;'
+      '    Memo24.Top    := Memo24.Top - 48;'
+      '    MemPaid.Top   := MemPaid.Top - 48;'
+      '    Line12.Top    := Line12.Top - 48;'
+      '    Line6.Top     := Line6.Top - 48;'
+      '    Memo14.Top    := Memo14.Top - 48;'
+      '    Memo16.Top    := Memo16.Top - 48;'
+      '    Memo22.Top    := Memo22.Top - 48;'
+      '    Memo23.Top    := Memo23.Top - 48;'
+      '    Memo15.Top    := Memo15.Top - 48;'
+      '    Memo17.Top    := Memo17.Top - 48;'
+      '    Line16.Top    := Line16.Top - 48;'
+      '  end;      '
+      ''
+      '  Memo45.Text:=IntToStr(CountAkun);            '
       'end;'
       ''
       'procedure MasterData2OnAfterPrint(Sender: TfrxComponent);'
@@ -1398,7 +1416,7 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
       ''
       'end.')
     OnGetValue = Report2GetValue
-    Left = 240
+    Left = 224
     Top = 143
     Datasets = <
       item
@@ -2175,6 +2193,23 @@ object FCetakKolektifPenerimaanBank: TFCetakKolektifPenerimaanBank
           HAlign = haRight
           Memo.UTF8W = (
             'Jumlah')
+          ParentFont = False
+        end
+        object Memo45: TfrxMemoView
+          AllowVectorExport = True
+          Left = 73.000000000000000000
+          Top = 246.385590000000000000
+          Width = 222.992270000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'COnt test:')
           ParentFont = False
         end
       end

@@ -923,14 +923,14 @@ object FNew_Penjualan: TFNew_Penjualan
     Width = 870
     Height = 233
     Hint = ''
-    ActivePage = TabUangMuka
+    ActivePage = TabSDetailPel
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 2
     ExplicitWidth = 866
     ExplicitHeight = 232

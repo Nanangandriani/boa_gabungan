@@ -9,7 +9,7 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, MemTableDataEh,
   Data.DB, MemDS, DBAccess, Uni, MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh,
   DBGridEh, DataDriverEh, frxClass, frxDBSet, RzCmboBx, frxExportBaseDialog,
-  frxExportPDF;
+  frxExportPDF, frxExportXLSX, frxExportXLS;
 
 type
   TFStockOpnameNota = class(TForm)
@@ -38,6 +38,8 @@ type
     RzBitBtn1: TRzBitBtn;
     RzLabel5: TRzLabel;
     frxPDFExport1: TfrxPDFExport;
+    frxXLSExport1: TfrxXLSExport;
+    frxXLSXExport1: TfrxXLSXExport;
     procedure FormShow(Sender: TObject);
     procedure edKaresidenanButtonClick(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);

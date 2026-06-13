@@ -252,8 +252,7 @@ begin
   begin
     Close;
     sql.Clear;
-    // Gunakan parameter untuk keamanan dan kejelasan, meskipun QuotedStr sudah memadai untuk string sederhana
-    sql.Text := 'SELECT RIGHT(number_va, 5) AS no_urut FROM t_customer WHERE LEFT(number_va, 11) = '+QuotedStr(PrefixVA)+' ORDER BY no_urut DESC';
+    sql.Text := 'SELECT RIGHT(number_va, 4) AS no_urut FROM t_customer WHERE  LEFT(CONCAT(company_code_bank,number_va), 11) = '+QuotedStr(PrefixVA)+' ORDER BY no_urut DESC';
     Open;
   end;
 
@@ -285,7 +284,8 @@ begin
     kode := kode;
   end;
 
-  Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text+kode;
+//  Ednomorva.Text:=edCompanyCode.Text+Edkodewilayah.Text+kode;
+  Ednomorva.Text:=Edkodewilayah.Text+kode;
 end;
 
 procedure TFNew_Pelanggan.DeleteProspekTmp;

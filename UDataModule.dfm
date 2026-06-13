@@ -6,7 +6,7 @@ object dm: Tdm
     AutoCommit = False
     ProviderName = 'PostgreSQL'
     Port = 5432
-    Database = 'db_hlj'
+    Database = 'db_sb_hlj'
     Username = 'Devel'
     Server = '172.101.100.125'
     LoginPrompt = False
@@ -50,6 +50,7 @@ object dm: Tdm
     Top = 118
   end
   object UniSQLMonitor1: TUniSQLMonitor
+    Active = False
     Left = 157
     Top = 70
   end

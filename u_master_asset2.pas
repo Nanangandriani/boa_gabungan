@@ -65,7 +65,7 @@ begin
      sql.add(' select CONCAT(a.trans_no,''-'',a.item_stock_code) AS KODE_ASSET ,a.trans_date,a.supplier_code,'+
      '  c.supplier_name,a.trans_no,a.faktur_no,a.item_stock_code kode,b.item_name,a.qty, '+
      ' a.unit, a.price, subtotal, a.notes KETBARANG,  a.id_pengajuan_asset,'+
-     ' a.no_pengajuan_asset,a.id_detail_asset,a.spesifikasi_asset from (select a.*,b.supplier_code,b.trans_date,'+
+     ' a.no_pengajuan_asset,a.id_detail_asset,a.spesifikasi_asset,a.po_no from (select a.*,b.supplier_code,b.trans_date,'+
      ' b.faktur_no,B.purchase_type'+
      ' from t_purchase_invoice_det a INNER JOIN t_purchase_invoice b on a.trans_no=b.trans_no) a  '+
      ' LEFT JOIN t_item_stock b ON a.item_stock_code=b.item_stock_code  LEFT JOIN t_supplier C on '+
@@ -88,7 +88,7 @@ begin
              ' a."NOASSET" as KODE,"KETERANGAN" AS NAMA_BARANG,a."JUMLAH","SATUAN", a."HARGASATUAN", '+
              ' "TOTALHARGA", "KETERANGAN" AS KETBARANG,  ''0'' as id_pengajuan_asset, '+
              ' ''0'' as no_pengajuan_asset,''0'' as id_detail_asset, '+
-             ' "KETERANGAN" as spesifikasi_asset from t_non_pembelian_asset a  '+
+             ' "KETERANGAN" as spesifikasi_asset,'''' po_no from t_non_pembelian_asset a  '+
              ' LEFT JOIN t_supplier C on a."KODESUP"=c.supplier_code '+
              ' where a."TGLTRANS" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+'  '+
              ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker3.date))+' '+
@@ -133,6 +133,7 @@ begin
       MemMasterDaftarAsset['ID_DETAIL_ASSET']:=Dm.Qtemp.fieldbyname('id_detail_asset').value;
       MemMasterDaftarAsset['SPESIFIKASI_ASSET']:=Dm.Qtemp.fieldbyname('spesifikasi_asset').value;
       MemMasterDaftarAsset['APRV_ASSET']:=0;
+      MemMasterDaftarAsset['NOPO']:=DM.Qtemp['po_no'];
       MemMasterDaftarAsset.Post;
     // end;
      //showmessage(Dm.Qtemp.fieldbyname('STAT_ORDER').AsString);
@@ -185,6 +186,7 @@ begin
    vFaktur_Pembelian:=MemMasterDaftarAsset['NO_INV_SUPP'];
    vKode_Supp:=MemMasterDaftarAsset['KODESUP'];
    vKode_Brg:=MemMasterDaftarAsset['KODE'];
+   vpo:=MemMasterDaftarAsset['nopo'];
    ID_PENGAJUAN_ASSET:=MemMasterDaftarAsset['ID_PENGAJUAN_ASSET'];         
    NO_PENGAJUAN_ASSET:=MemMasterDaftarAsset['NO_PENGAJUAN_ASSET'];
    ID_DETAIL_ASSET:=MemMasterDaftarAsset['ID_DETAIL_ASSET'];

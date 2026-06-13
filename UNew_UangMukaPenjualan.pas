@@ -31,12 +31,14 @@ type
     procedure edNama_PelangganButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     strKodePelanggan, kd_kares,strtgl, strbulan, strtahun: String;
     Year, Month, Day: Word;
+    isCancel:Integer;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -130,6 +132,7 @@ end;
 
 procedure TFNew_UangMukaPenjualan.Clear;
 begin
+  isCancel:=0;
   edNoUangMuka.Text:='';
   strKodePelanggan:='';
   dtTanggal.Date:=NOW();
@@ -206,6 +209,16 @@ begin
   Fbrowse_data_pelanggan.Caption:='Master Data Pelanggan';
   Fbrowse_data_pelanggan.vcall:='uang_muka_penjualan';
   Fbrowse_data_pelanggan.ShowModal;
+end;
+
+procedure TFNew_UangMukaPenjualan.FormShow(Sender: TObject);
+begin
+  if isCancel=1 then
+  begin
+    BSave.Visible:=False;
+  end else begin
+    BSave.Visible:=True;
+  end;
 end;
 
 end.

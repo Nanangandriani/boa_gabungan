@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MemTableDataEh, Data.DB, MemTableEh,
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, Vcl.StdCtrls, Vcl.Mask, RzEdit,
-  RzBtnEdt, Vcl.ExtCtrls, Vcl.ComCtrls, RzDTP, RzButton, RzCmboBx;
+  RzBtnEdt, Vcl.ExtCtrls, Vcl.ComCtrls, RzDTP, RzButton, RzCmboBx,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, System.JSON, uJSON, IdSSLOpenSSL ;
 
 type
   TFSingkronisasi = class(TForm)
@@ -33,6 +34,8 @@ type
     MemTableEh1nama: TStringField;
     MemTableEh1last_sync: TDateField;
     MemTableEh1aksi: TBooleanField;
+    IdHTTP1: TIdHTTP;
+    Memo1: TMemo;
     procedure FormShow(Sender: TObject);
     procedure btTampilkanClick(Sender: TObject);
     procedure cbModulChange(Sender: TObject);
@@ -49,6 +52,9 @@ type
     procedure SyncMasterItemBatch(AKodeList: TStringList);
     procedure SyncMasterItemBatch_account(AKodeList: TStringList);
     procedure SyncAccountbatch(Akodelist: TStringList);
+    procedure GetEmployee;
+    procedure SyncEmployee(AKodeList: TStringList);
+    procedure RefreshEmployee;
   public
     table_task: string;
     { Public declarations }
@@ -56,12 +62,233 @@ type
 
 var
   FSingkronisasi: TFSingkronisasi;
+  json: TMyJSON;
 
 implementation
 
 {$R *.dfm}
 
-uses UDataModule, UMy_Function, UHomeLogin;
+uses ulkJSON, UDataModule, UMy_Function, UHomeLogin, UMainMenu;
+
+procedure TFSingkronisasi.RefreshEmployee;
+begin
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.Add(' SELECT table_task FROM "tsynchronization" '+
+            ' where modul='+QuotedStr(cbModul.Text)+';');
+    open;
+  end;
+  table_task:=Dm.Qtemp.FieldByName('table_task').AsString;
+  RefreshGrid;
+end;
+
+procedure TFSingkronisasi.GetEmployee;
+var
+  BaseUrl, key, vtoken, Vpath, url, res, strSendDate, vBody, strSBU, strStatusEmployee: string;
+  gNet: TIdHTTP;
+  jsonValue: TJSONValue;
+  jsonObj: TJSONObject;
+  jsonArray: TJSONArray;
+  dataItem: TJSONObject;
+  i: Integer;
+  sqlBatch: TStringList;
+begin
+  try
+    strSBU := FHomeLogin.vKodePRSH;
+
+    BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlemployee''');
+    key     := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyemployee''');
+    Vtoken  := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapiemployee''');
+
+    vBody := '?sbu=' + strSBU;
+    Vpath := '/employee-sbu-all';
+
+    url := BaseUrl + Vpath + vBody;
+
+    gNet := TIdHTTP.Create(nil);
+    sqlBatch := TStringList.Create;
+
+    try
+      gNet.HandleRedirects := True;
+      gNet.ReadTimeout := 15000;
+      gNet.ConnectTimeout := 10000;
+      gNet.Request.Accept := 'application/json';
+      gNet.Request.ContentType := 'application/x-www-form-urlencoded';
+      gNet.Request.CustomHeaders.Values[key] := vtoken;
+
+      try
+        res := gNet.Get(url);
+        Memo1.Text := res;
+      except
+        on E: Exception do
+        begin
+          Memo1.Text := url;
+          ShowMessage('HTTP Error: ' + E.Message);
+          Exit;
+        end;
+      end;
+
+      jsonValue := TJSONObject.ParseJSONValue(res);
+      try
+        if jsonValue = nil then
+        begin
+          ShowMessage('Format JSON tidak valid');
+          Exit;
+        end;
+
+        if jsonValue is TJSONObject then
+        begin
+          jsonObj := jsonValue as TJSONObject;
+          jsonArray := jsonObj.GetValue('data') as TJSONArray;
+        end
+
+        else if jsonValue is TJSONArray then
+        begin
+          jsonArray := jsonValue as TJSONArray;
+        end
+        else
+        begin
+          ShowMessage('Format JSON tidak dikenali');
+          Exit;
+        end;
+
+        if not Assigned(jsonArray) then
+        begin
+          ShowMessage('Data tidak ditemukan di JSON');
+          Exit;
+        end;
+
+        with dm.QtempPusat do
+        begin
+          Close;
+          SQL.Clear;
+          SQL.Text := 'DELETE FROM t_employee_temp';
+          ExecSQL;
+        end;
+
+        sqlBatch.Clear;
+        sqlBatch.Add('INSERT INTO "public"."t_employee_temp" ("nik","name","sbu","position_name",updated_at,"status") VALUES ');
+
+        for i := 0 to jsonArray.Count - 1 do
+        begin
+          if jsonArray.Items[i] is TJSONObject then
+          begin
+            dataItem := jsonArray.Items[i] as TJSONObject;
+
+            if Assigned(dataItem.GetValue('employee_status')) and
+               (dataItem.GetValue('employee_status').Value = 'Active') then
+              strStatusEmployee := 'True'
+            else
+              strStatusEmployee := 'False';
+
+            sqlBatch.Add('(' +
+              QuotedStr(dataItem.GetValue('employee_nik').Value) + ', ' +
+              QuotedStr(dataItem.GetValue('employee_name').Value) + ', ' +
+              QuotedStr(strSBU) + ', ' +
+              QuotedStr(dataItem.GetValue('position_name').Value) + ', ' +
+              QuotedStr(dataItem.GetValue('updated_at').Value) + ', ' +
+              QuotedStr(strStatusEmployee) + ')'
+            );
+
+            if i < (jsonArray.Count - 1) then
+              sqlBatch[sqlBatch.Count-1] := sqlBatch[sqlBatch.Count-1] + ','
+            else
+              sqlBatch[sqlBatch.Count-1] := sqlBatch[sqlBatch.Count-1] + ';';
+          end;
+        end;
+
+        if jsonArray.Count > 0 then
+        begin
+          dm.QtempPusat.Close;
+          dm.QtempPusat.SQL.Text := sqlBatch.Text;
+          dm.QtempPusat.ExecSQL;
+        end;
+
+        with dm.QtempPusat do
+        begin
+          close;
+          sql.Clear;
+          sql.Text:='INSERT INTO t_employee (nik, name, sbu, position_code, position_name, updated_at,updated_by, status) '+
+                    'SELECT a.nik,a.name,a.sbu,b.position_code,b.position,b.updated_at,'+QuotedStr(Nm)+',a.status '+
+                    'FROM t_employee_temp a '+
+                    'INNER JOIN t_position b ON b.position = a.position_name '+
+                    'ON CONFLICT (nik)'+
+                    'DO UPDATE SET '+
+                    'name = EXCLUDED.name, '+
+                    'sbu = EXCLUDED.sbu, '+
+                    'position_code = EXCLUDED.position_code, '+
+                    'updated_at = EXCLUDED.updated_at, '+
+                    'updated_by = EXCLUDED.updated_by, '+
+                    'status = EXCLUDED.status;';
+          ExecSQL;
+        end;
+
+      finally
+        jsonValue.Free;
+      end;
+
+    finally
+      gNet.Free;
+      sqlBatch.Free;
+    end;
+
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Terjadi kesalahan: ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TFSingkronisasi.SyncEmployee(AKodeList: TStringList);
+var
+  i: Integer;
+  S_Conn, S_RemoteQuery, S_FullSQL, S_InClause: string;
+begin
+  if (AKodeList = nil) or (AKodeList.Count = 0) then Exit;
+
+  S_InClause := '';
+  for i := 0 to AKodeList.Count - 1 do
+
+  begin
+    if S_InClause <> '' then S_InClause := S_InClause + ',';
+    S_InClause := S_InClause + QuotedStr(AKodeList[i]);
+  end;
+
+  S_Conn := Format('host=%s port=%s dbname=%s user=%s password=%s', [
+    dm.ABSTable1Ip_db_Pusat.AsString,
+    dm.abstable1Port_db_Pusat.AsString,
+    dm.ABSTable1Db_Name_Pusat.AsString,
+    dm.abstable1User_db_Pusat.AsString,
+    dm.abstable1Password_Pusat.AsString
+  ]);
+
+  S_RemoteQuery := 'SELECT nik, name, sbu, position_code, updated_at, updated_by, status ' +
+                   'FROM t_employee WHERE sbu=' + QuotedStr(FHomeLogin.vKodePRSH);
+
+  S_FullSQL := 'INSERT INTO t_employee (nik, name, sbu, position_code, updated_at, updated_by, status) ' +
+               'SELECT * FROM dblink(' + QuotedStr(S_Conn) + ', ' + QuotedStr(S_RemoteQuery) + ') ' +
+               'AS a (nik VARCHAR, name VARCHAR, sbu VARCHAR, position_code INTEGER, updated_at TIMESTAMP, updated_by VARCHAR, status bool) ' +
+               'WHERE a.nik IN (' + S_InClause + ') ' +
+               'ON CONFLICT (nik) ' +
+               'DO UPDATE SET ' +
+               'name = EXCLUDED.name, ' +
+               'sbu = EXCLUDED.sbu, ' +
+               'position_code = EXCLUDED.position_code, ' +
+               'updated_at = EXCLUDED.updated_at, ' +
+               'updated_by = EXCLUDED.updated_by, ' +
+               'status = EXCLUDED.status;';
+
+  with dm.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text := S_FullSQL;
+    ExecSQL;
+  end;
+end;
 
 procedure TFSingkronisasi.SyncAccountbatch(AKodeList: TStringList);   //cr ds 17-03-2026
 var
@@ -796,7 +1023,12 @@ begin
       FSingkronisasi.MemTableEh1.insert;
       FSingkronisasi.MemTableEh1['kode']:=Dm.Qtemp.fieldbyname('code').value;
       FSingkronisasi.MemTableEh1['nama']:=Dm.Qtemp.fieldbyname('name').value;
-      FSingkronisasi.MemTableEh1['last_sync']:=Dm.Qtemp.FieldByName('last_sync').AsDateTime;
+//      FSingkronisasi.MemTableEh1['last_sync']:=Dm.Qtemp.FieldByName('last_sync').AsDateTime;
+      if Dm.Qtemp.FieldByName('last_sync').IsNull then
+      FSingkronisasi.MemTableEh1['last_sync'] := Null
+      else
+      FSingkronisasi.MemTableEh1['last_sync'] := Dm.Qtemp.FieldByName('last_sync').AsDateTime;
+
       FSingkronisasi.MemTableEh1['aksi']:=ChTandai.Checked;
       FSingkronisasi.MemTableEh1.post;
       Dm.Qtemp.next;
@@ -850,11 +1082,19 @@ begin
         SyncAccountbatch(ListKode);
       end;
 
+      if cbModul.Text = 'MASTER KARYAWAN' then
+      begin
+        SyncEmployee(ListKode);
+      end;
+
       {if cbModul.Text = 'MASTER PELANGGAN' then
       begin
         MessageDlg('Modul Dalam Maintenance', mtInformation, [mbOK], 0);
       end;                 }
       dm.koneksi.Commit;
+      if cbModul.Text = 'MASTER KARYAWAN' then
+      RefreshEmployee
+      else
       btTampilkanClick(sender); // cr ds 17-03-2026
       MessageDlg('Data berhasil diproses', mtInformation, [mbOK], 0);
     except
@@ -873,6 +1113,11 @@ end;
 
 procedure TFSingkronisasi.btTampilkanClick(Sender: TObject);
 begin
+  if cbModul.Text='MASTER KARYAWAN' then
+  begin
+    GetEmployee;
+  end;
+
   with Dm.Qtemp do
   begin
     close;
@@ -883,6 +1128,7 @@ begin
   end;
   table_task:=Dm.Qtemp.FieldByName('table_task').AsString;
   RefreshGrid;
+
 end;
 
 procedure TFSingkronisasi.cbModulChange(Sender: TObject);

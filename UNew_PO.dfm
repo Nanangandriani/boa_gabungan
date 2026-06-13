@@ -247,6 +247,14 @@ object FNew_PO: TFNew_PO
       Height = 15
       Caption = 'Kategori :'
     end
+    object SpeedButton1: TSpeedButton
+      Left = 899
+      Top = 36
+      Width = 23
+      Height = 22
+      Caption = '...'
+      OnClick = SpeedButton1Click
+    end
     object EdKd_supp: TEdit
       Left = 190
       Top = 36
@@ -288,7 +296,7 @@ object FNew_PO: TFNew_PO
       Visible = False
     end
     object DtTh: TRzDateTimeEdit
-      Left = 903
+      Left = 1103
       Top = 36
       Width = 57
       Height = 23
@@ -2688,5 +2696,15 @@ object FNew_PO: TFNew_PO
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 192
+    Top = 114
   end
 end

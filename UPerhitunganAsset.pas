@@ -92,7 +92,7 @@ type
      vNilaiPerbulan, vJumlah, vHargaSatuan, Total,NoRec : real;
      vTotalBulan,vTotalTahun :Integer;
      vKodeAsset, vSatuan, vFaktur_Pembelian, vInv_Pembelian, vKode_Supp, vKode_Brg, vKodeKelPenyusutan, vKodeNamaHarta,
-     ID_PENGAJUAN_ASSET, NO_PENGAJUAN_ASSET, ID_DETAIL_ASSET, SPESIFIKASI_ASSET  : string;
+     ID_PENGAJUAN_ASSET, NO_PENGAJUAN_ASSET, ID_DETAIL_ASSET, SPESIFIKASI_ASSET,vpo  : string;
      next_proses:boolean;
   end;
 
@@ -127,13 +127,14 @@ var
       //slParams : TStringStream;
 begin     
       resp := TMemoryStream.Create;
-      BaseUrl:=SelectRow('SELECT value FROM parameter where id=''baseurlasset''');
-      key:=SelectRow('SELECT value FROM parameter where id=''keyapiasset''');
-      vtoken:=SelectRow('SELECT value FROM parameter where id=''tokenapiasset''');
-      Vpath:='api/submission/update';
+      BaseUrl:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''baseurlasset''');
+      key:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''keyapiasset''');
+      vtoken:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''tokenapiasset''');
+  //    Vpath:='api/submission/update';
+      Vpath:='api/submission/'+vid_detpengajuan+'';
 
       vBody:='{'+
-             '"id":"'+vid_detpengajuan+'",'+
+           //  '"id":"'+vid_detpengajuan+'",'+
              '"asset_code_ex":"'+vkode_asset+'",'+
              '"desc":"'+vdesc+'",'+
              '"status":"'+vstatus+'",'+
@@ -152,7 +153,7 @@ begin
 
       url:= BaseUrl+Vpath;
       slParam := TStringStream.Create('{'+
-                                      '"id":"'+vid_detpengajuan+'",'+
+                                     // '"id":"'+vid_detpengajuan+'",'+
                                       '"asset_code_ex":"'+vkode_asset+'",'+
                                       '"desc":"'+vdesc+'",'+
                                       '"status":"'+vstatus+'",'+
@@ -180,7 +181,7 @@ begin
       UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url+vBody);
       UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url+vBody);
       //Result := gNet.get(url);
-      Result := gNet.Post(url, slParam);
+      Result := gNet.Put(url, slParam);
       //res:=  gNet.Post(url, slParam);
       slParam.Position := 0;
       finally
@@ -373,7 +374,7 @@ end;
 
 procedure TFPerhitunganAsset.bt_TutupClick(Sender: TObject);
 begin
-  UpdateStatusAssetViaPost(ID_DETAIL_ASSET, edKodeAsset.text, MemKeterangan.Text, '3',nm, vFaktur_Pembelian, '0', '0', '0', vInv_Pembelian, dtTanggalAkuisisi.date, 0, vTotalTahun, vHargaSatuan );
+  UpdateStatusAssetViaPost(ID_DETAIL_ASSET, edKodeAsset.text, MemKeterangan.Text, '3',nm, vFaktur_Pembelian, vInv_Pembelian, vpo, SPESIFIKASI_ASSET, vInv_Pembelian, dtTanggalAkuisisi.date, 0, vTotalTahun, vHargaSatuan );
   Close;
 end;
 
@@ -562,8 +563,8 @@ begin
     end;
 
     //UpdateStatusAsset(ID_PENGAJUAN_ASSET, '3', vInv_Pembelian, vFaktur_Pembelian, true);
-    UpdateStatusAssetViaPost(ID_DETAIL_ASSET, edKodeAsset.text, MemKeterangan.Text, '3',nm, vFaktur_Pembelian, '0', '0', '0', vInv_Pembelian, dtTanggalAkuisisi.date, 0, vTotalTahun, vHargaSatuan );
-    //UpdateStatusAssetViaPost(vid_detpengajuan,vdesc,vstatus,vuser,vlpb,vpo,vspesification,vbrand,vinvoice:string; vpurchase_date:date vqty:integer vpurchase_value:real): string;
+
+  UpdateStatusAssetViaPost(ID_DETAIL_ASSET, edKodeAsset.text, MemKeterangan.Text, '3',nm, vFaktur_Pembelian, vInv_Pembelian, vpo, SPESIFIKASI_ASSET, vInv_Pembelian, dtTanggalAkuisisi.date, 0, vTotalTahun, vHargaSatuan );  //UpdateStatusAssetViaPost(vid_detpengajuan,vdesc,vstatus,vuser,vlpb,vpo,vspesification,vbrand,vinvoice:string; vpurchase_date:date vqty:integer vpurchase_value:real): string;
 
   // off 23-05-2025  UpdateKpiUser('MENEJEMEN ASSET' ,'insert' , '1' , True, 'Membuat Asset '+FPerhitunganAsset.vKodeAsset+'');
 

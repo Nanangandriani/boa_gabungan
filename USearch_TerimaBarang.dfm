@@ -2,7 +2,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   Left = 0
   Top = 0
   Caption = 'Search Material'
-  ClientHeight = 417
+  ClientHeight = 520
   ClientWidth = 1051
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 385
+    Top = 488
     Width = 1051
     Height = 32
     Align = alBottom
@@ -237,7 +237,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Left = 0
     Top = 0
     Width = 1051
-    Height = 385
+    Height = 488
     Align = alClient
     DataSource = DSMaterial2
     DynProps = <>
@@ -321,6 +321,38 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         EditButtons = <>
         FieldName = 'header_code'
         Footers = <>
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id_detail_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id_pengajuan_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_pengajuan_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'spesifikasi_asset'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -329,7 +361,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Left = 0
     Top = 0
     Width = 1051
-    Height = 385
+    Height = 488
     Align = alClient
     DataSource = DSMaterial
     DynProps = <>
@@ -438,6 +470,38 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         Footers = <>
         Title.Caption = 'Uang Muka'
         Width = 130
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id_detail_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'id_pengajuan_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_pengajuan_asset'
+        Footers = <>
+        Width = 0
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'spesifikasi_asset'
+        Footers = <>
+        Width = 0
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -459,6 +523,9 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'e.account_code,f.wh_code,c.due_date,e.header_code,b.pph_rp,b.acc' +
         'ount_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_acc' +
         'ount_code,c.um_value'
+      
+        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.s' +
+        'pesifikasi_asset'
       'from t_item_stock a '
       'inner join t_podetail b on a.item_stock_code=b.item_stock_code'
       'inner join t_po C on b.po_no=c.po_no'
@@ -473,7 +540,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       
         'e.account_code,f.wh_code,c.due_date,e.header_code,b.account_pph_' +
         'code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_account_code' +
-        ',c.um_value')
+        ',c.um_value'
+      
+        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.s' +
+        'pesifikasi_asset')
     Left = 259
     Top = 104
   end
@@ -491,6 +561,9 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
         'b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.va' +
         'las,c.valas_value,e.header_code,b.account_pph_code,b.ppn_rp,b.pp' +
         'h_rp,b.subtotal,b.grandtotal'
+      
+        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.s' +
+        'pesifikasi_asset'
       'from t_item_stock a  '
       
         'inner join t_item_receive_det b on a.item_stock_code=b.item_stoc' +
@@ -510,7 +583,10 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
       
         'b.subtotalrp,b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,f.' +
         'wh_code,b.pemb_dpp,e.header_code,b.account_pph_code,b.ppn_rp,b.p' +
-        'ph_rp,b.subtotal,b.grandtotal;')
+        'ph_rp,b.subtotal,b.grandtotal'
+      
+        ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.s' +
+        'pesifikasi_asset')
     Left = 355
     Top = 120
   end

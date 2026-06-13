@@ -161,11 +161,11 @@ begin
 //               ' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at is NULL ');
          if edKaresidenan.EditValue<>'' then
          begin
-          sql.add(' AND b.code_karesidenan='+QuotedStr(vkd_kares)+' ');
+          sql.add(' AND code_karesidenan='+QuotedStr(vkd_kares)+' ');
          end;
          if edKabupaten.EditValue<>'' then
          begin
-          sql.add(' AND b.code_kabupaten='+QuotedStr(vkd_kab)+' ');
+          sql.add(' AND code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY trans_date, trans_no');
        open;

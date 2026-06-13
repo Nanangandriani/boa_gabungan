@@ -617,6 +617,7 @@ var
   i, j, k: Integer;
   strJenisUsaha, strJenisUsaha2: String;
   LastCol: Integer;
+  TotalRows, CurrentRow: Integer;
 begin
 
   if edKaresidenan.Text = '' then
@@ -642,6 +643,10 @@ begin
     strJenisUsaha2 := '';
   end;
 
+  FMainMenu.Load.Visible := True;
+  FMainMenu.Load.Percent := 10;
+  Application.ProcessMessages;
+
   with dm.Qtemp do
   begin
     Close;
@@ -662,6 +667,9 @@ begin
     Exit;
   end;
 
+  FMainMenu.Load.Percent := 25;
+  Application.ProcessMessages;
+
 //  SaveDialog1.Filter := 'Excel Workbook (*.xlsx)|*.xlsx';
   SaveDialog1.Filter := 'Excel 2007+ (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls';
   SaveDialog1.DefaultExt := 'xlsx';
@@ -674,6 +682,9 @@ begin
 
     try
       scExcelExport1.Connect;
+
+      FMainMenu.Load.Percent := 35;
+      Application.ProcessMessages;
 
       scExcelExport1.ExcelWorkSheet.Range['A1','A1'].Value2:='Export Target Penjualan';
       scExcelExport1.ExcelWorkSheet.Range['A2','A2'].value2:='Tahun';
@@ -704,16 +715,29 @@ begin
                            'AND EXTRACT(MONTH FROM a.trans_date) <= ' + IntToStr(cbBulan.ItemIndex + 1) + ')) ' +
                            strJenisUsaha + ' ORDER BY b.customer_name ASC';
       dm.Qtemp.Open;
-
+      TotalRows := dm.Qtemp.RecordCount;
+      CurrentRow := 0;
       k := 9;
       while not dm.Qtemp.Eof do
       begin
+        Inc(CurrentRow);
         scExcelExport1.ExcelWorkSheet.Range['A' + IntToStr(k), 'A' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('customer_code').AsString;
         scExcelExport1.ExcelWorkSheet.Range['B' + IntToStr(k), 'B' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('customer_name').AsString;
         scExcelExport1.ExcelWorkSheet.Range['C' + IntToStr(k), 'C' + IntToStr(k)].Value2 := dm.Qtemp.FieldByName('address').AsString;
+
+        if (CurrentRow mod 50 = 0) or (CurrentRow = TotalRows) then
+        begin
+          if TotalRows > 0 then
+            FMainMenu.Load.Percent := 40 + Round((CurrentRow / TotalRows) * 30);
+          Application.ProcessMessages;
+        end;
+
         Inc(k);
         dm.Qtemp.Next;
       end;
+
+      FMainMenu.Load.Percent := 75;
+      Application.ProcessMessages;
 
       with dm.Qtemp do
       begin
@@ -746,17 +770,47 @@ begin
         dm.Qtemp.Next;
       end;
 
+      FMainMenu.Load.Percent := 85;
+      Application.ProcessMessages;
+
       scExcelExport1.ExcelWorkSheet.Range['A7', 'C8'].Font.Bold := True;
       scExcelExport1.ExcelWorkSheet.Range['A1', 'A1'].Font.Size := 14;
       scExcelExport1.ExcelWorkSheet.Columns.AutoFit;
 
+      FMainMenu.Load.Percent := 90;
+      Application.ProcessMessages;
 
       scExcelExport1.SaveAs(SaveDialog1.FileName, ffXLSX);
 
+      FMainMenu.Load.Percent := 95;
+      Application.ProcessMessages;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text:=' CALL "InsertSPLogActivity" ( '+QuotedStr(Nm)+', '+
+                ' ''Export Target Penjualan'', '+
+                 '''M07008'', '+
+                ' '+QuotedStr(FMainMenu.RzVersionInfoStatus1.VersionInfo.ProductVersion)+', '+
+                'NULL, '+
+                'True, '+
+                'False, '+
+                'False, '+
+                'False, '+
+                ' ''Export Target Penjualan'', '+
+                'False, '+
+                'NULL);';
+        ExecSQL;
+      end;
+      FMainMenu.Load.Percent := 100;
+      Application.ProcessMessages;
       ShowMessage('Export data ke Excel berhasil!');
     finally
       scExcelExport1.Disconnect;
+      FMainMenu.Load.Visible := False;
     end;
+  end else begin
+    FMainMenu.Load.Visible := False;
   end;
 end;
 

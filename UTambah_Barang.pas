@@ -314,20 +314,20 @@ begin
     vKodeSama:=false;
     FDataReturPenjualan.MemDetail.active:=false;
     FDataReturPenjualan.MemDetail.active:=true;
-    if FDataReturPenjualan.MemDetail.RecordCount<>0 then
-    begin
-      FDataReturPenjualan.MemDetail.First;
-      while not FDataReturPenjualan.MemDetail.Eof do
-      begin
-        if (edKodeBarang.Text=FDataReturPenjualan.MemDetail['KD_ITEM']) AND (edKodeSatuan.Text=FDataReturPenjualan.MemDetail['KD_SATUAN']) then
-        begin
-          vKodeSama:=true;
-          MessageDlg('Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
-          exit;
-        end;
-        FDataReturPenjualan.MemDetail.Next;
-      end;
-    end;
+//    if FDataReturPenjualan.MemDetail.RecordCount<>0 then
+//    begin
+//      FDataReturPenjualan.MemDetail.First;
+//      while not FDataReturPenjualan.MemDetail.Eof do
+//      begin
+//        if (edKodeBarang.Text=FDataReturPenjualan.MemDetail['KD_ITEM']) AND (edKodeSatuan.Text=FDataReturPenjualan.MemDetail['KD_SATUAN']) then
+//        begin
+//          vKodeSama:=true;
+//          MessageDlg('Barang Sudah Di Buatkan Order..!!',mtInformation,[mbRetry],0);
+//          exit;
+//        end;
+//        FDataReturPenjualan.MemDetail.Next;
+//      end;
+//    end;
     if vKodeSama=False then
     begin
       with dm.Qtemp do

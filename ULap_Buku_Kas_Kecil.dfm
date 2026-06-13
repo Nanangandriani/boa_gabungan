@@ -635,8 +635,8 @@ object FLap_Buku_Kas_Kecil: TFLap_Buku_Kas_Kecil
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 680
-    Top = 88
+    Left = 712
+    Top = 40
     object QPerusahaancompany_code: TStringField
       FieldName = 'company_code'
       Required = True

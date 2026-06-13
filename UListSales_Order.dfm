@@ -120,6 +120,15 @@ object FSalesOrder: TFSalesOrder
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'customer_name_pkp'
+        Footers = <>
+        Title.Caption = 'Nama PKP'
+        Width = 207
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'name_sales'
         Footers = <>
         ReadOnly = True

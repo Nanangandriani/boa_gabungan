@@ -67,6 +67,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     SearchPanel.FilterOnTyping = True
     TabOrder = 1
     TitleParams.MultiTitle = True
+    OnAdvDrawDataCell = DBGridAdvDrawDataCell
     Columns = <
       item
         CellButtons = <>
@@ -90,6 +91,15 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'customer_code'
+        Footers = <>
+        Title.Caption = 'Kode Pelanggan'
+        Width = 133
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'customer_name'
         Footers = <>
         Title.Caption = 'Nama Pelanggan'
@@ -99,9 +109,10 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
-        FieldName = 'customer_code'
+        FieldName = 'customer_name_pkp'
         Footers = <>
-        Visible = False
+        Title.Caption = 'Nama PKP'
+        Width = 100
       end
       item
         CellButtons = <>
@@ -1064,13 +1075,13 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         '.no_trans WHERE a.sbu_code='#39'MAB'#39' AND EXTRACT(YEAR FROM a.trans_d' +
         'ate)=2026 AND EXTRACT(MONTH FROM a.trans_date)=2 and a.deleted_a' +
         't is NULL ORDER BY a.trans_date DESC, a.no_trans DESC;')
-    Left = 572
-    Top = 120
+    Left = 596
+    Top = 72
   end
   object DsUangMukaPenjualan: TDataSource
     DataSet = QUangMukaPenjualan
-    Left = 505
-    Top = 160
+    Left = 537
+    Top = 264
   end
   object frxXLSExport1: TfrxXLSExport
     UseFileCache = True

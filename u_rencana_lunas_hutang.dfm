@@ -716,8 +716,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 674
-    Top = 40
+    Left = 658
+    Top = 48
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -1242,8 +1242,8 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
       'and periode1='#39'2024-01-01'#39' and periode2='#39'2024-01-31'#39
       'ORDER BY supplier_code, periode1, periode2, plan_to'
       '')
-    Left = 640
-    Top = 175
+    Left = 616
+    Top = 167
     object QRencanajumlah: TFloatField
       FieldName = 'jumlah'
     end

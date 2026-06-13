@@ -118,7 +118,7 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, u_rencana_lunas_hutang_input, USearch_Supplier,
-  U_daf_pilih_detail_bayar;
+  U_daf_pilih_detail_bayar, UMy_Function;
 
 procedure TFDaftar_Hutang.ProsesRencanaLunasHutang;
 var
@@ -165,6 +165,7 @@ begin
              begin
                if Memdaftarhutang['pilih']=true then
                begin
+                  //showmessage(Memdaftarhutang['akun_pph']);
                     FRencana_Lunas_Hutang.MemRencana.insert;
                     FRencana_Lunas_Hutang.MemRencana['kd_sup']:=Memdaftarhutang['kodesup'];
                     FRencana_Lunas_Hutang.MemRencana['noinv']:=Memdaftarhutang['no_inv'];
@@ -173,6 +174,7 @@ begin
                     FRencana_Lunas_Hutang.MemRencana['nofaktur']:=Memdaftarhutang['nofakturpajak'];
                     FRencana_Lunas_Hutang.MemRencana['tglfaktur']:=Memdaftarhutang['tglfaktur'];
                     FRencana_Lunas_Hutang.MemRencana['akun_pph']:=Memdaftarhutang['akun_pph'];
+                    FRencana_Lunas_Hutang.MemRencana['nm_akun_pph']:=SelectRow('SELECT DISTINCT account_name FROM v_search_account where code='+QuotedSTR(Memdaftarhutang['akun_pph'])+'');
                     FRencana_Lunas_Hutang.MemRencana['npph']:=Memdaftarhutang['npph'];
                     FRencana_Lunas_Hutang.MemRencana['jumlah']:=Memdaftarhutang['jumlah'];
                     FRencana_Lunas_Hutang.MemRencana['source_id']:=Memdaftarhutang['source_id'];
@@ -204,20 +206,24 @@ begin
            '(SELECT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah,npph,akun_pph, '+
            'plan_stat,status,approval_status,urutan,(case when pay ISNULL then 0 else pay end)bayar,(case when plan_to ISNULL then 0 else plan_to  end)rencanake '+
 			     'FROM '+
-           '(select tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah-nilai_um as jumlah,npph,''''::text as akun_pph,plan_stat,status,approval_status,urutan '+
+           '(select tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value,jum_dolar,ppn_rp,jumlah-nilai_um as jumlah,npph, '+
+           //' ''''::text as akun_pph, '+
+           ' akun_pph, '+
+           ' plan_stat,status,approval_status,urutan '+
            'from '+
            '(SELECT DISTINCT tanggal,kodesup,nasup,no_inv,nofakturpajak,sj_no,tglfaktur,tgltempo,valas,valas_value, '+
            '(case when valas=''USD'' then jumlah1-(pot_beli_dolar) else 0 end)jum_dolar, '+
            '(case when valas=''USD'' then jumlah-nil_retur-pot_beli_rp else jumlah+harga_do1-nil_retur-pot_beli_rp end)jumlah, '+
            '(case when um_beli.nilai_um is null then 0 else um_beli.nilai_um end)nilai_um, '+
            '(case when ppn_rp is null then 0 else ppn_rp end)ppn_rp, '+
-           '(case when npph is null then 0 else npph end)npph,''''::text as akun_pph,plan_stat,status,approval_status,urutan '+
+           '(case when npph is null then 0 else npph end)npph,account_pph_code as akun_pph,plan_stat,status,approval_status,urutan '+
            'FROM '+
 
            '(SELECT tanggal,kodesup,c.supplier_name as nasup,a.no_inv,a.nofakturpajak,a.sj_no,a.faktur_date as tglfaktur,(a.faktur_date + a.due_date) as tgltempo,  a.plan_stat,lunas.faktur_no, '+
            '(case when b.jumlah is null then 0 else b.jumlah end)jumlah1, '+
            '(case when b.hutang is null then 0 else b.hutang end)jumlah,a.valas,a.valas_value, '+
            '(case when retur.nil_retur is null then 0 else retur.nil_retur end)nil_retur,b.ppn_rp,b.npph, '+
+           '(case when b.account_pph_code is null  then ''0'' else b.account_pph_code end) account_pph_code, '+
            '(case when pot.nilai_pot_rp is null then 0 else pot.nilai_pot_rp end)pot_beli_rp, '+
            '(case when pot.nilai_pot_dolar is null then 0 else pot.nilai_pot_dolar end)pot_beli_dolar, '+
            '(case when do1.harga is null then 0 else do1.harga end)harga_do1,status,approval_status,urutan '+
@@ -237,8 +243,10 @@ begin
 //           'where a.date_trans between '+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' '+
            ')a '+
            'left join '+
-           '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph '+
-           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no and b.deleted_at is null group by a.trans_no,b.supplier_code,b.valas '+
+           '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,'+
+           '(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,'+
+           'sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph, a.account_pph_code '+
+           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no and b.deleted_at is null group by a.trans_no,b.supplier_code,b.valas, a.account_pph_code '+
            'order by trans_no,supplier_code)b on a.trans_no=b.trans_no and a.kodesup=b.supplier_code '+
            'left join '+
            't_supplier c on a.kodesup=c.supplier_code '+
@@ -416,7 +424,8 @@ begin
          Memdaftarhutang['bayar']:=qdaftarhutang.FieldByName('bayar').Asfloat;
          Memdaftarhutang['rencanake']:=qdaftarhutang.FieldByName('rencanake').AsString;
          Memdaftarhutang['sisa']:=qdaftarhutang.FieldByName('sisa').Asfloat;
-         Memdaftarhutang['status_bayar']:=qdaftarhutang.FieldByName('status_bayar').AsInteger;;
+         Memdaftarhutang['status_bayar']:=qdaftarhutang.FieldByName('status_bayar').AsInteger;
+         Memdaftarhutang['akun_pph']:=qdaftarhutang.FieldByName('akun_pph').AsString;
          Memdaftarhutang.post;
          qdaftarhutang.next;
         end;

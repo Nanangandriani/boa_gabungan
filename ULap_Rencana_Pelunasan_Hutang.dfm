@@ -2334,7 +2334,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 880
-    Top = 96
+    Left = 864
+    Top = 112
   end
 end

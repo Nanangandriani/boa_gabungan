@@ -32,7 +32,7 @@ object frm_master_asset: Tfrm_master_asset
     TabOrder = 0
     Visible = False
     VisualStyle = vsGradient
-    ExplicitWidth = 1346
+    ExplicitWidth = 1348
   end
   object Panel1: TPanel
     Left = 0
@@ -42,8 +42,8 @@ object frm_master_asset: Tfrm_master_asset
     Align = alBottom
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 647
-    ExplicitWidth = 1346
+    ExplicitTop = 655
+    ExplicitWidth = 1348
     object bt_Proses: TRzBitBtn
       Left = 1033
       Top = 1
@@ -112,7 +112,7 @@ object frm_master_asset: Tfrm_master_asset
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       Layout = blGlyphTop
       NumGlyphs = 2
-      ExplicitLeft = 1027
+      ExplicitLeft = 1029
     end
     object bt_Tutup: TRzBitBtn
       Left = 1192
@@ -182,7 +182,7 @@ object frm_master_asset: Tfrm_master_asset
         D8D8D8D8A5E8E8E8E8E8E8E8E8E8AC8181818181ACE8E8E8E8E8}
       Layout = blGlyphTop
       NumGlyphs = 2
-      ExplicitLeft = 1186
+      ExplicitLeft = 1188
     end
     object btDaftarAsser: TRzBitBtn
       Left = 1
@@ -262,7 +262,7 @@ object frm_master_asset: Tfrm_master_asset
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitWidth = 1346
+    ExplicitWidth = 1348
     object Label1: TLabel
       Left = 14
       Top = 24
@@ -526,7 +526,13 @@ object frm_master_asset: Tfrm_master_asset
         EditButtons = <>
         FieldName = 'NOINV'
         Footers = <>
-        Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'NOPO'
+        Footers = <>
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -648,6 +654,12 @@ object frm_master_asset: Tfrm_master_asset
         end
         object SPESIFIKASI_ASSET: TMTStringDataFieldEh
           FieldName = 'SPESIFIKASI_ASSET'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object NOPO: TMTStringDataFieldEh
+          FieldName = 'NOPO'
           StringDataType = fdtStringEh
           DisplayWidth = 50
           Size = 50

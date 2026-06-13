@@ -551,7 +551,7 @@ begin
   '                item_code, ' +
   '                '+vleveljumlah_in+' jum_trans_in, ' +
   '                '+vleveljumlah_out+' jum_trans_out ' +
-  '            FROM tbl_transaksi_stock ' +
+  '            FROM (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock WHERE type IN (''IN'', ''OUT'')  ORDER BY notrans, item_code, created_at DESC) a ' +
   '            WHERE type IN (''IN'', ''OUT'') ' +
   '                AND tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_stock_wh)) + '::date ' +
   '                    AND (' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_awal.EditValue)) + '::date - INTERVAL ''1 day'') ' +
@@ -572,21 +572,21 @@ begin
   '        t.type  AS type, ' +
   '        to_char(tgltrans, ''DD/MM/YYYY'') AS tgltrans, ' +
   '        CASE ' +
-  '            WHEN t.sumber_table = ''t_item_receive_det'' THEN concat(''Pembelian '', notrans) ' +
-  '            WHEN t.sumber_table = ''t_selling_det'' THEN concat(''Penjualan '', notrans) ' +
-  '            WHEN t.sumber_table = ''t_purchase_return_det'' THEN concat(''Retur Pembelian '', notrans) ' +
-  '            WHEN t.sumber_table = ''t_sales_returns_det'' THEN concat(''Retur Penjualan '', notrans) ' +
+  '            WHEN t.sumber_table = ''t_item_receive_det'' THEN beli.supplier_name ' +
+  '            WHEN t.sumber_table = ''t_selling_det'' THEN jual.customer_name_pkp ' +
+  '            WHEN t.sumber_table = ''t_purchase_return_det'' THEN retbeli.supplier_name  ' +
+  '            WHEN t.sumber_table = ''t_sales_returns_det'' THEN retjual.customer_name_pkp ' +
   '         END AS keterangan, ' +
   '        '+vtransjumlah_in+' level1_qty_in, ' +
   '        '+vtransjumlah_out+' level1_qty_out, ' +
   '        0 AS saldo_awal, ' +
   '        1 AS urut, ' +
   '        '+vsatuan_trans+' satuan ' +
-  '    FROM tbl_transaksi_stock t ' +
-  '        LEFT JOIN t_purchase_invoice beli ON t.notrans = beli.trans_no ' +
-  '        LEFT JOIN t_selling jual ON t.notrans = jual.trans_no ' +
-  '        LEFT JOIN t_purchase_return retbeli ON t.notrans = retbeli.return_no ' +
-  '        LEFT JOIN t_sales_returns retjual ON t.notrans = retjual.trans_no ' +
+  '    FROM (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock ORDER BY notrans, item_code, created_at DESC) t ' +
+  '        LEFT JOIN (SELECT receive_no, supplier_name from t_item_receive a left join t_supplier b on a.supplier_code=b.supplier_code) beli ON t.notrans = beli.receive_no ' +
+  '        LEFT JOIN (SELECT trans_no, customer_name_pkp FROM get_selling(false)) jual ON t.notrans = jual.trans_no  ' +
+  '        LEFT JOIN (SELECT return_no, supplier_name from t_purchase_return a left join t_supplier b on a.supplier_code=b.supplier_code) retbeli ON t.notrans = retbeli.return_no ' +
+  '        LEFT JOIN (SELECT trans_no, customer_name_pkp FROM get_sales_returns())  retjual ON t.notrans = retjual.trans_no  ' +
   '        LEFT JOIN t_item i ON t.item_code = i.item_code '+
   '    WHERE i.category_id = ' + vgroup_id +' and t.kd_gudang = ' + QuotedStr(kd_gudang) +
   '        AND t.tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_awal.EditValue)) +
@@ -694,7 +694,7 @@ begin
             ' satuan  FROM  (SELECT kd_barang,  '+vleveljumlah_sa+' saldo_awal,  '+
             ' '+vsatuan+' satuan from tbl_transaksi_stock_sa where kd_gudang = '+QuotedStr(kd_gudang)+')  m '+
             ' LEFT JOIN ( SELECT item_code, '+vleveljumlah_in+' jum_trans_in,  '+
-            ' '+vleveljumlah_out+' jum_trans_out  from tbl_transaksi_stock  WHERE type '+
+            ' '+vleveljumlah_out+' jum_trans_out  from (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock WHERE type IN (''IN'', ''OUT'') ORDER BY notrans, item_code, created_at DESC)a  WHERE type '+
             ' IN (''IN'',''OUT'') and tgltrans '+
             ' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date AND ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_awal.EditValue))+'::date - INTERVAL ''1 day'') '+
             ' AND kd_gudang = '+QuotedStr(kd_gudang)+' GROUP BY item_code ORDER BY item_code) t  '+

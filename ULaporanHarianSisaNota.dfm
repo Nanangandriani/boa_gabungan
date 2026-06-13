@@ -1602,7 +1602,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46058.990357928200000000
+    ReportOptions.LastChange = 46171.595775613400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -1772,34 +1772,46 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       '  // --- 2. Pembayaran ---'
       
-        '  if ((vReturn = 0) and (vBayar > 0) and (vNotaAwal = vBayar)) o' +
-        'r'
+        '  if ((vReturn = 0) and (vBayar > 0) AND (vNotaAwal>0) and (vBay' +
+        'ar >= vNotaAwal )) or'
       
-        '     ((vPenjualan > 0) and (vBayar > 0) and (vPenjualan = vBayar' +
-        ')) then'
+        '     ((vPenjualan > 0) and (vBayar > 0) AND (vPenjualan>0) and (' +
+        'vBayar >= vPenjualan)) then'
       '  begin'
       '    tglTxt := FormatDateTime('#39'dd/mm/yyyy'#39', tBayar);'
       '  end;'
       ''
       '  // --- 3. Returns ---'
-      '  if (vReturn > 0) then'
+      
+        '  if ((vReturn > 0) AND (vNotaAwal>0) AND (vReturn >= vNotaAwal ' +
+        ')) or'
+      
+        '      ((vReturn > 0) AND (vPenjualan>0) AND(vReturn >= vPenjuala' +
+        'n ))  then'
       '  begin'
       '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
       '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tReturn);'
       '  end;'
       ''
       '  // --- 4. Uang Muka ---'
-      '  if ((vReturn = 0) and (vUM > 0) and (vNotaAwal = vUM)) or'
       
-        '     ((vPenjualan > 0) and (vUM > 0) and (vPenjualan = vUM)) the' +
-        'n'
+        '  if ((vReturn = 0) and (vUM > 0) AND (vNotaAwal>0) and (vNotaAw' +
+        'al = vUM)) or'
+      
+        '     ((vPenjualan > 0) and (vUM > 0) AND (vPenjualan>0) and (vPe' +
+        'njualan = vUM)) then'
       '  begin'
       '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
       '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tUM);'
       '  end;'
       ''
       '  // --- 5.Jurnal Memorial'
-      '  if (vJurnal <> 0) then'
+      
+        '  if ((vJurnal <> 0) AND (vNotaAwal>0) AND(vJurnal >= vNotaAwal ' +
+        ')) or'
+      
+        '      ((vJurnal > 0) AND (vPenjualan>0) AND(vJurnal >= vPenjuala' +
+        'n )) then'
       '  begin'
       '    if tglTxt <> '#39#39' then tglTxt := tglTxt + #13#10;'
       '    tglTxt := tglTxt + FormatDateTime('#39'dd/mm/yyyy'#39', tJurnal);'
@@ -1949,8 +1961,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         ' Memo55.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasan' +
         ');'
       
-        '// Memo55.Text := FormatFloat('#39'#,#0;(#,#0);0'#39', Round(TotPelunasa' +
-        'n));'
+        '// Memo55.Text := FormatFloat('#39'#,#0;(CountPelunasan#,#0);0'#39', Rou' +
+        'nd(TotPelunasan));'
       'end;'
       ''
       'procedure Memo56OnBeforePrint(Sender: TfrxComponent);'
@@ -1962,26 +1974,51 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'var'
       
         '  isLunasAwal, isLunasJual, adaRetur, adaMemorial, isLunasJualUM' +
-        ', isLunasAwalUM: Boolean;'
+        ', isLunasAwalU, isLunasJualRetur: Boolean;'
       'begin'
       '  // Ambil nilai ke variabel lokal agar lebih bersih'
       
-        '  isLunasAwal := (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
-        ' > 0) and'
+        '  isLunasAwal := (<frxDBDatasetLapHarianSisaNota."amount_nota_aw' +
+        'al"> > 0) and'
       
         '                 (<frxDBDatasetLapHarianSisaNota."amount_nota_aw' +
-        'al"> = <frxDBDatasetLapHarianSisaNota."amount_bayar">);'
+        'al"> <='
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
+        ' +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_uang_mu' +
+        'ka"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_returns' +
+        '"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_jurnal_' +
+        'memorial">));'
+      ''
       ''
       
-        '  isLunasJual := (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
-        ' > 0) and'
+        '  isLunasJual := (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
+        'an"> > 0) and'
       
         '                 (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
-        'an"> = <frxDBDatasetLapHarianSisaNota."amount_bayar">);'
+        'an"> <='
+      
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_bayar">' +
+        ' +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_uang_mu' +
+        'ka"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_returns' +
+        '"> +'
+      
+        '                  <frxDBDatasetLapHarianSisaNota."amount_jurnal_' +
+        'memorial">));'
       ''
       
-        '  isLunasAwalUM := (<frxDBDatasetLapHarianSisaNota."amount_uang_' +
-        'muka"> > 0) and'
+        ' { isLunasAwalUM := (<frxDBDatasetLapHarianSisaNota."amount_uang' +
+        '_muka"> > 0) and'
       
         '                 (<frxDBDatasetLapHarianSisaNota."amount_nota_aw' +
         'al"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);'
@@ -1994,33 +2031,25 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         'an"> = <frxDBDatasetLapHarianSisaNota."amount_uang_muka">);'
       ''
       
-        '  adaRetur    := <frxDBDatasetLapHarianSisaNota."amount_returns"' +
-        '> > 0;'
+        '  isLunasJualRetur:= (<frxDBDatasetLapHarianSisaNota."amount_ret' +
+        'urns"> > 0) and'
       
-        '  adaMemorial := <frxDBDatasetLapHarianSisaNota."amount_jurnal_m' +
-        'emorial"> > 0;'
+        '                 (<frxDBDatasetLapHarianSisaNota."amount_penjual' +
+        'an"> = <frxDBDatasetLapHarianSisaNota."amount_returns">);'
       ''
       
-        '  if isLunasAwal or isLunasJual or adaRetur or adaMemorial or is' +
-        'LunasAwalUM or isLunasJualUM then'
+        '  adaRetur    := <frxDBDatasetLapHarianSisaNota."amount_returns"' +
+        '> > 0;'
+      ''
+      
+        '  adaMemorial := <frxDBDatasetLapHarianSisaNota."amount_jurnal_m' +
+        'emorial"> > 0; }'
+      ''
+      '  if isLunasAwal or isLunasJual  then'
       '  begin'
       '    CountPelunasan := CountPelunasan + 1;'
       '  end;'
-      '{  if ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
-      
-        '      (<frxDBDatasetLapHarianSisaNota."amount_nota_awal"> = <frx' +
-        'DBDatasetLapHarianSisaNota."amount_bayar">)) or'
-      '      ((<frxDBDatasetLapHarianSisaNota."amount_bayar"> > 0) and'
-      
-        '      (<frxDBDatasetLapHarianSisaNota."amount_penjualan"> = <frx' +
-        'DBDatasetLapHarianSisaNota."amount_bayar">)) or'
-      '     (<frxDBDatasetLapHarianSisaNota."amount_returns"> > 0) or'
-      
-        '     (<frxDBDatasetLapHarianSisaNota."amount_jurnal_memorial"> >' +
-        ' 0) then'
-      '  begin'
-      '    CountPelunasan := CountPelunasan + 1;'
-      '  end;}'
+      ''
       'end;'
       ''
       'procedure Memo41OnAfterPrint(Sender: TfrxComponent);'

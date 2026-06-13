@@ -169,6 +169,7 @@ end;
 procedure TFHomeLogin.FormShow(Sender: TObject);
 begin
   DM.Koneksi.Connected:=False;
+  dm.UniSQLMonitor1.Active:=False;
   Clear;
 end;
 
@@ -257,6 +258,9 @@ begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');
       Exit;
     end;
+
+    if dm.Qtemp.FieldValues['position_code']=12 then dm.UniSQLMonitor1.Active:=True else dm.UniSQLMonitor1.Active:=False;
+
     //status_akses:=dm.Qtemp['access_status'];
     NmFull:=dm.Qtemp.FieldByName('full_name').AsString;
     FMainMenu.StatusUser.Caption:=dm.Qtemp.FieldByName('full_name').AsString;

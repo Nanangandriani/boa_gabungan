@@ -213,7 +213,8 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData, UMy_Function, UHomeLogin, UDataModule;
+uses UMasterWilayah, UMasterData, UMy_Function, UHomeLogin, UDataModule,
+  UMainMenu;
 var
   realfbhp : TFBHPenjualan;
 // implementasi function
@@ -717,6 +718,10 @@ procedure TFBHPenjualan.dxBarLargeButton3Click(Sender: TObject);
 var strKab,strTP,strKaresidenan,
   tgl1,bulan1,tahun1,tgl2,bulan2,tahun2: STRING;
 begin
+  FMainMenu.Load.Visible:=True;
+  FMainMenu.Load.Percent:=0;
+
+
   tgl1:=FormatDateTime('DD', dtAwal.EditValue);
   bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
   tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
@@ -738,6 +743,8 @@ begin
 
     if edTp.EditValue<>'' then strTP:='AND a.code_tp='+QuotedStr(vkd_tp);
 
+    FMainMenu.Load.Percent:=10;
+
     with QBHPenjualanExport do
     begin
       close;
@@ -755,6 +762,8 @@ begin
       Open;
     end;
 
+    FMainMenu.Load.Percent := 30;
+
 //    with QBHPenjualanExport do
 //    begin
 //      close;
@@ -770,6 +779,7 @@ begin
 
     if QBHPenjualanExport.RecordCount=0 then
     begin
+      FMainMenu.Load.Percent := 0;
       showmessage('Tidak ada data yang bisa dicetak !');
       exit;
     end;
@@ -804,8 +814,12 @@ begin
         open;
       end;
 
+      FMainMenu.Load.Percent := 50;
+
       QBHPenjualanExportBarang.Close;
       QBHPenjualanExportBarang.Open;
+
+      FMainMenu.Load.Percent := 55;
 
 //      QBHPenjualanExportDebitPiutang.Close;
 //      QBHPenjualanExportDebitPiutang.Open;
@@ -813,8 +827,12 @@ begin
       QBHPenjualanExportDebit.Close;
       QBHPenjualanExportDebit.Open;
 
+      FMainMenu.Load.Percent := 60;
+
       QBHPenjualanExportKredit.Close;
       QBHPenjualanExportKredit.Open;
+
+      FMainMenu.Load.Percent := 70;
 
 //      QBHPenjualanExportKreditPenjualan.Close;
 //      QBHPenjualanExportKreditPenjualan.Open;
@@ -844,14 +862,11 @@ begin
 
       cLocation := ExtractFilePath(Application.ExeName);
 
-
       Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanExport'+ '.fr3');
       SetMemo(Report,'kodeprsh',FHomeLogin.vKodePRSH);
       SetMemo(Report,'periode',FHomeLogin.vKodePRSH);
 
       SetMemo(Report,'kabupaten',FHomeLogin.vKodePRSH);
-
-
 
       if (edKaresidenan.EditValue<>'') AND (edTP.editValue='') then
       begin
@@ -893,9 +908,14 @@ begin
       end;
 
       Report.PrepareReport(True);
+      FMainMenu.Load.Percent := 90;
       // Baru export
       ExportToExcel;
 
+      FMainMenu.Load.Percent := 100;
+      FMainMenu.Load.Visible := False;
+    end else begin
+      FMainMenu.Load.Visible := False;
     end;
 //  end;
 end;

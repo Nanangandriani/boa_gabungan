@@ -239,7 +239,12 @@ begin
     Edsj.Text    := VarToStrDef(Q['sj_no'], '');
 
     MemTerimaDet['header_code'] := Q['header_code'];
-
+    //cr ds 23-05-2026
+    MemTerimaDet['id_pengajuan_asset'] := Q['id_pengajuan_asset'];
+    MemTerimaDet['id_detail_asset'] := Q['id_detail_asset'];
+    MemTerimaDet['no_pengajuan_asset'] := Q['no_pengajuan_asset'];
+    MemTerimaDet['spesifikasi_asset'] := Q['spesifikasi_asset'];
+    //
     MemTerimaDet.Post;
   end;
 end;
@@ -256,7 +261,7 @@ begin
       for i := 0 to DBGridEh1.SelectedRows.Count - 1 do
       begin
         GotoBookmark(DBGridEh1.SelectedRows[i]);
-        AddItemToPembelian(QMaterial, False);
+        AddItemToPembelian(QMaterial, false);
       end;
   end;
 

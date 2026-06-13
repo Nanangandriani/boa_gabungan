@@ -317,6 +317,7 @@ begin
     MemRencana['nofaktur']:=dm.Qtemp.FieldByName('faktur_no').asstring;
     MemRencana['tglfaktur']:=dm.Qtemp.FieldByName('faktur_date').AsDateTime;
     MemRencana['akun_pph']:=dm.Qtemp.FieldByName('pph_account').asstring;
+    MemRencana['nm_akun_pph']:=dm.Qtemp.FieldByName('pph_name').asstring;
     MemRencana['npph']:=dm.Qtemp.FieldByName('npph').asstring;
     MemRencana['jumlah']:=dm.Qtemp.FieldByName('amount').value;
     MemRencana['source_id']:=dm.Qtemp.FieldByName('source_plan_id').asstring;

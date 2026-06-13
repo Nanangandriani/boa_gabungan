@@ -110,24 +110,27 @@ type
     QCetakcode: TStringField;
     QCetakheader_code: TStringField;
     QCetakaccount_code: TStringField;
+    QCetakket_header: TMemoField;
     QKartuHutangnomor: TLargeintField;
     QKartuHutangket: TMemoField;
+    QKartuHutangket_header: TMemoField;
     QKartuHutangkodesup: TMemoField;
     QKartuHutangnasup: TMemoField;
-    QKartuHutangaddress: TStringField;
-    QKartuHutangtelp: TStringField;
+    QKartuHutangaddress: TMemoField;
+    QKartuHutangtelp: TMemoField;
     QKartuHutangnoinv: TMemoField;
     QKartuHutangtanggal: TDateField;
     QKartuHutangurutan: TIntegerField;
     QKartuHutangnilai_kredit: TFloatField;
     QKartuHutangnilai_debit: TFloatField;
-    QKartuHutangtrans_no: TStringField;
-    QKartuHutangfaktur_no: TStringField;
-    QKartuHutangitem_stock_code: TStringField;
-    QKartuHutangitem_name: TStringField;
-    QKartuHutangunit: TStringField;
+    QKartuHutangket_lunas: TMemoField;
+    QKartuHutangtrans_no: TMemoField;
+    QKartuHutangfaktur_no: TMemoField;
+    QKartuHutangitem_stock_code: TMemoField;
+    QKartuHutangitem_name: TMemoField;
+    QKartuHutangunit: TMemoField;
     QKartuHutangtot_qty: TFloatField;
-    QKartuHutangsa: TIntegerField;
+    QKartuHutangsa: TFloatField;
     QKartuHutangdebit: TFloatField;
     QKartuHutangkredit: TFloatField;
     QKartuHutangsaldo: TFloatField;
@@ -135,9 +138,7 @@ type
     QKartuHutangcode: TStringField;
     QKartuHutangheader_code: TStringField;
     QKartuHutangaccount_code: TStringField;
-    QKartuHutangaccount_name: TStringField;
-    QKartuHutangaccount_code2: TStringField;
-    QKartuHutangstatus_dk: TStringField;
+    QKartuHutangfaktur_no2: TMemoField;
     procedure Ed_supplierPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure FormCreate(Sender: TObject);
@@ -262,77 +263,88 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT  nomor,(case WHEN code=''2101.01'' and urutan=0 then ket1 '+
+      sql.Text:='SELECT  nomor,'+
+                '(case WHEN code=''2101.01'' and urutan=0 then ket1 '+
                 'WHEN urutan=1 then ''POTONGAN PEMBELIAN'' '+
+                'WHEN urutan=4 then ket_lunas '+
+                'WHEN urutan=5 then ket1 else ket end)	ket, '+
+                '(case WHEN code=''2101.01'' and urutan=0 then ''PENGIRIMAN'' '+
+                'WHEN urutan=1 then ''POTONGAN PENGIRIMAN'' '+
                 'WHEN urutan=4 then ''PELUNASAN'' '+
-                'WHEN urutan=5 then ''RETUR PEMBELIAN'' else ket end)	ket, '+
-                'kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit, trans_no,'+
+                'WHEN urutan=5 then ''RETUR PENGIRIMAN'' else ket end)	ket_header, '+
+                'kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit, ket_lunas, trans_no,'+
                 '(case WHEN urutan=1 then faktur_no2 else faktur_no end)faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,faktur_no2 FROM '+
-                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,zz.trans_no,faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,faktur_no2 FROM '+
+                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,ket_lunas, zz.trans_no,faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,faktur_no2 FROM '+
                 //'(SELECT aaa.*,concat(item_name,'' '',to_char(tot_qty,''M999G999G990''),'' '',unit) as ket1,x.account_code FROM '+
                 '(SELECT aaa.*,concat(item_name,'' '',tot_qty,'' '','' '',unit) as ket1,x.account_code FROM '+
                 '(SELECT *, round(cast(sum(sa+kredit-debit) over (ORDER BY nomor asc ) as numeric),2) saldo from '+
-                '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,''''ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from '+
+                '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,ket_lunas as ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from '+
                 '(SELECT gg.*,hh.trans_no,hh.faktur_no,hh.item_stock_code,hh.item_name,hh.unit,hh.tot_qty FROM '+
                 '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,urutan,faktur_no2, '+
                 'round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai_kredit, '+
-                'round(cast((nilai_debit)as numeric),2) nilai_debit  from '+
+                'round(cast((nilai_debit)as numeric),2) nilai_debit, ket_lunas, kode   from '+
                 '(select zz.*,(case when um_beli.nilai_um is null then 0 else um_beli.nilai_um end)nilai_um from '+
                 '(select kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2, '+
                 'sum(nilai_kredit) as nilai_kredit '+
-                ',sum(nilai_debit)as nilai_debit  from '+
+                ',sum(nilai_debit)as nilai_debit, string_agg(keterangan,'' '') as ket_lunas, kode   from '+
                 '(select a.supplier_code as kodesup,a.supplier_name as nasup,a.address,a.telp,inv.noinv,inv.tanggal,inv.keterangan,inv.urutan, '+
                 '(case when kredit.nilai_kredit is null then 0 else kredit.nilai_kredit end)nilai_kredit, '+
                 '(case when inv.nilai is null then 0 else inv.nilai end)nilai_debit, '+
-                '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot end)nilai_pot,faktur_no2 from '+
+                '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot end)nilai_pot,faktur_no2,inv.kode from '+
                 '(select * from t_supplier where supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
                 'left join '+
                 '(select x.* from '+
                 '(select distinct a.trans_no as noinv,b.po_no,a.supplier_code as kodesup,a.trans_date as tanggal,b.kode,b.kode as keterangan,nilai,urutan,account_code,'''' faktur_no2 from '+
-                '(select * from t_purchase_invoice where account_code='+Quotedstr(vkd_sup_account)+' and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and debt_remaining <>0 )a '+
-                'left join (select trans_no,po_no,stock_code as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no '+
+                '(select * from t_purchase_invoice where deleted_at is null and account_code='+Quotedstr(vkd_sup_account)+' and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and debt_remaining <>0 )a '+
+                'left join (select trans_no,po_no,item_stock_code as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no '+
                 'union all '+
                 'select bb.receive_no as noinv,'''' as nopo,bb.supplier_code as kodesup,bb.discount_date as tanggal, bb.stock_code as kode, ''POTONGAN PEMBELIAN''  as ket, '+
                 '(case when bb.ppnrp is null then bb.price_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.account_code,bb.faktur_no as faktur_no2  from t_purchase_discount bb '+
-                'left join t_purchase_invoice dd on bb.receive_no=dd.ref_no  where bb.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' '+
+                'left join t_purchase_invoice dd on bb.receive_no=dd.ref_no  where dd.deleted_at is null and bb.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' '+
                 'union all '+
-                'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,'''' faktur_no2 from '+
-                '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,'''' as keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance from '+
-                '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from '+
-                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from vexpenditure_payable a '+
-                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  group by noinv,kodesup,tanggal,acc_balance)y '+
+                'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,faktur_no as faktur_no2 from '+
+                '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance,faktur_no from '+
+                '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance,keterangan,faktur_no from '+
+                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance,faktur_no from vexpenditure_payable a '+
+                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance,faktur_no)x  group by noinv,kodesup,tanggal,acc_balance,keterangan,faktur_no)y '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real group by voucher )z on y.noinv=z.voucher)xx '+
                 'left join (select no_voucher,sum(paid_amount) jumlah from t_cash_bank_expenditure_det where position=''K'' and code_account<>''1101.01'' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv '+
+                'GROUP BY noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,faktur_no '+
                 'union all '+
-                'select a.return_no as noinv,'''' as nopo,b.supplier_code as kodesup,b.return_date as tanggal,a.stock_code as kode,concat(a.stock_code,'' '' ,qty,'' '' ,unit)as keterangan, '+
-                '(case when b.valas=''USD''then a.total_price*b.valas_value else b.price+b.ppn_rp end)nilai,5 as urutan,c.account_code,'''' faktur_no2  from t_purchase_return_det a,t_purchase_return b, '+
-                ' t_purchase_invoice c where a.return_no=b.return_no and b.receive_no=c.trans_no and c.account_code='+Quotedstr(vkd_sup_account)+' '+
+                'select a.return_no as noinv,'''' as nopo,b.supplier_code as kodesup,b.return_date as tanggal,a.item_stock_code as kode,concat(a.stock_code,'' '' ,qty,'' '' ,unit)as keterangan, '+
+                '(case when b.valas=''USD''then (a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) '+
+                ' else (a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) end)nilai,5 as urutan,c.account_code,'''' faktur_no2  from t_purchase_return_det a,t_purchase_return b, '+
+                ' t_purchase_invoice c where a.return_no=b.return_no and b.receive_no=c.trans_no and c.deleted_at is null and c.account_code='+Quotedstr(vkd_sup_account)+' and b.return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                 'union all '+
                 'select a.bk_no as noinv,'''' as nopo,'''' as kodesup,b.trans_date as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan,a.account_code,'''' faktur_no2 from '+
                 '(select voucher_no ,bk_no ,account_code,remark,pay,6 as urutan from t_payment_detail_real where source_id=3 and account_code='+Quotedstr(vkd_sup_account)+' )a '+
                 'left join (select distinct no_voucher,trans_date from t_cash_bank_expenditure_det '+
                 'where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )b on a.bk_no=b.no_voucher )x  )inv on a.supplier_code=inv.kodesup '+
                 'left join(select a.trans_no as noinv,a.supplier_code as kodesup,b.kode,(case when a.valas=''USD'' then b.nilai1 else b.nilai2 end)nilai_kredit,c.nilai as nilai_pot from '+
-                '(select * from t_purchase_invoice where trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )a '+
-                'left join (select trans_no,stock_code as kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_purchase_invoice_det group by trans_no,stock_code,qty,unit)b on a.trans_no=b.trans_no '+
+                '(select * from t_purchase_invoice where deleted_at is null and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )a '+
+                'left join (select trans_no,item_stock_code as kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_purchase_invoice_det group by trans_no,item_stock_code,qty,unit)b on a.trans_no=b.trans_no '+
                 'left join (select DISTINCT receive_no,sum(price_rp) as nilai from t_purchase_discount where supplier_code='+Quotedstr(ed_code_supp.EditValue)+' GROUP BY receive_no )c on a.trans_no=c.receive_no )kredit  on inv.noinv=kredit.noinv '+
-                //'and inv.kode=kredit.kode '+
+                'and inv.kode=kredit.kode '+
                 'and inv.urutan<>5 '+
-                ')xxx  group by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2 order by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2)zz '+
+                ')xxx  group by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2,kode order by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2)zz '+
 
                 'left join(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
-                '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no and b.trans_no between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and b.supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
+                '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no and b.deleted_at is null and b.trans_no between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and b.supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
                 'left join (select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and  supplier_code='+Quotedstr(ed_code_supp.EditValue)+' group  by po_no,supplier_code order by po_no,supplier_code)b '+
                 'on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_beli on zz.noinv=um_beli.trans_no)ttt '+
                 'where (nilai_kredit-nilai_um>0) or (nilai_debit>0) and tanggal between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' order by tanggal,urutan,nasup,noinv )gg '+
                 'left JOIN (select c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit,sum(a.qty)as tot_qty from '+
-                '(select * from t_purchase_invoice_det)a '+
+                '(select trans_no,item_stock_code,unit, qty from t_purchase_invoice_det '+
+                ' union all select return_no as trans_no,item_stock_code,unit, qty from t_purchase_return_det)a '+
                 'left join t_item_stock b on a.item_stock_code=b.item_stock_code '+
-                'left join t_purchase_invoice c on a.trans_no=c.trans_no group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit order by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.trans_no)jj '+
+                'left join (select trans_no,faktur_no from t_purchase_invoice where  deleted_at is null  '+
+                ' union all select return_no as trans_no,faktur_no from t_purchase_return where  deleted_at is null '+
+                ') c on a.trans_no=c.trans_no group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit order by b.item_stock_code,b.item_name,a.unit)hh '+
+                ' on gg.noinv=hh.trans_no AND gg.kode = hh.item_stock_code ORDER BY tanggal, trans_no, faktur_no asc)jj '+
 
                 'UNION ALL '+
                 'select 1 as nomor,''Saldo Awal'' ket,kodesup,''Saldo Awal'' nasup,'''' address,'''' telp,'''' noinv, '+
-                'null tanggal, 0 urutan,''''faktur_no2, 0 nilai_kredit,0 nilai_debit,'''' no_terima,'''' nofaktur,'''' kd_material_stok,'''' nm_material,'''' satuan,0 tot_qty,saldo_awal as sa,0 debit,0 kredit FROM '+
+                'null tanggal, 0 urutan,''''faktur_no2, 0 nilai_kredit,0 nilai_debit,'''' as ket_lunas,'''' AS kode,'''' no_terima,'''' nofaktur,'''' kd_material_stok,'''' nm_material,'''' satuan,0 tot_qty,saldo_awal as sa,0 debit,0 kredit FROM '+
                 '(SELECT kodesup,''Saldo Awal'' as nasup,sum(yyy.saldo_awal_tahun+yyy.kredit-yyy.debit-yyy.debit_retur-yyy.nilai_pot) saldo_awal,0 debit,0 kredit from '+
 
                 '(/*yyy*/select a.supplier_code as kodesup,case when saldo_awal.initial_balance is null then 0 else saldo_awal.initial_balance end saldo_awal_tahun,round(cast(case when x.nilai is null then 0 else x.nilai end as numeric),2)kredit, '+
@@ -343,18 +355,21 @@ begin
                 'left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai from '+
                 '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
                 '(select a.supplier_code as kodesup,b.po_no,(case when a.valas=''USD'' then sum(nilai1) else sum(nilai2) end)nilai from '+
-                '(select * from t_purchase_invoice where account_code='+Quotedstr(vkd_sup_account)+' and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and debt_remaining<>0)a '+
+                '(select * from t_purchase_invoice where deleted_at is null and account_code='+Quotedstr(vkd_sup_account)+' and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and debt_remaining<>0)a '+
                 'left join (select trans_no,po_no,stock_code as kode,qty,unit as jumlah,subtotalrp as nilai1,grandtotal as nilai2, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no group by kodesup,b.po_no,a.valas)a '+
                 'left join(select po_no,supplier_code,sum(um_value)as nilai_um from t_po where um_status=true and po_date<'+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' group by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x  group by kodesup)x on a.supplier_code=x.kodesup '+
                 'left join(select supplier_code as kodesup,sum(bayar)as nilai from '+
                 '(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from (select voucher_no,supplier_code,sum(paid_amount)as bayar from vexpenditure_payable '+
                 'where supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and account_acc='+Quotedstr(vkd_sup_account)+' and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' group by voucher_no,supplier_code order by voucher_no,supplier_code)a '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real where account_code<>''2142'' group by voucher order by voucher)b 	on a.voucher_no=b.voucher)x  group by supplier_code order by supplier_code)y on a.supplier_code=y.kodesup '+
-                'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then sum(a.total_price*b.valas_value) else sum(b.price+b.ppn_rp) end)nilai from t_purchase_return_det a,t_purchase_return b '+
-                'left join t_purchase_invoice dd on b.receive_no=dd.ref_no where a.return_no=b.return_no and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' group by b.supplier_code,b.valas order by b.supplier_code)z  on a.supplier_code=z.kodesup /*Pot pembelian*/ '+
+                'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then '+
+                ' sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) '+
+                ' else sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) end)nilai from t_purchase_return_det a,t_purchase_return b '+
+                'left join t_purchase_invoice dd on b.receive_no=dd.trans_no where a.return_no=b.return_no and dd.deleted_at is null and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' group by b.supplier_code,b.valas order by b.supplier_code)z  on a.supplier_code=z.kodesup /*Pot pembelian*/ '+
+
                 'left join(select dd.supplier_code,sum(bb.hargapot)as nilai_pot from '+
                 '(select receive_no,discount_date ,(price_rp+(case when ppnrp isnull then 0 else ppnrp end)) hargapot from  t_purchase_discount) bb '+
-                'left join t_purchase_invoice dd on bb.receive_no=dd.ref_no where discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_jenis_hutang)+' group by dd.supplier_code order by supplier_code)xx on a.supplier_code=xx.supplier_code '+
+                'left join t_purchase_invoice dd on bb.receive_no=dd.trans_no where dd.deleted_at is null and discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_jenis_hutang)+' group by dd.supplier_code order by supplier_code)xx on a.supplier_code=xx.supplier_code '+
                 'left join (select kodesup,sum(nilai)as nilai from '+
                 '(select a.bk_no as noinv,'''' as kodesup, b.trans_date as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan from '+
                 '(select voucher_no,bk_no ,account_code,remark,pay,4 as urutan from t_payment_detail_real where source_id=3 and account_code='+Quotedstr(vkd_jenis_hutang)+' )a '+
@@ -363,8 +378,9 @@ begin
                 'left join (select * from t_initial_balance_debt where debt_type='+Quotedstr(vkd_sup_account)+' and "year" = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code where a.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' '+
                 '/*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit, '+
                 'debit_retur,nilai_pot)kk group by kk.kodesup,kk.saldo_awal)zzz  group by zzz.nomor,zzz.kodesup,zzz.nasup,zzz.address,zzz.telp,zzz.noinv,zzz.tanggal, '+
-                'zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zzz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket,zzz.faktur_no2  ORDER BY nomor ASC)aaa '+
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x '+
+                'zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,zzz.ket_lunas,zzz.kode,zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zzz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket,zzz.faktur_no2  ORDER BY nomor ASC)aaa '+
+              // of ds 20-05-2026  'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no group by a.trans_no)x '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a where deleted_at is null )x '+
                 'ON aaa.noinv=x.trans_no) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg '+
                 'ORDER BY nomor ASC ';
@@ -431,6 +447,14 @@ begin
       Exit;
     end;
 
+    with Qsupp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from t_supplier where supplier_code='+Quotedstr(ed_code_supp.EditValue)+'';
+      Open;
+    end;
+
     with QTgl_hutang do
     begin
         close;
@@ -440,89 +464,133 @@ begin
     end;
     tgl_htg:=QTgl_hutang.FieldByName('debt_date').asdatetime;
 
+
     DBGridKartuHutang.StartLoadingStatus();
     with QKartuHutang do
     begin
       close;
       sql.Clear;
-      sql.Text:='SELECT  nomor,(case WHEN code=''2101.01'' and urutan=0 then ket1 '+
+      sql.Text:='SELECT  nomor,'+
+                '(case WHEN code=''2101.01'' and urutan=0 then ket1 '+
                 'WHEN urutan=1 then ''POTONGAN PEMBELIAN'' '+
+                'WHEN urutan=4 then ket_lunas '+
+                'WHEN urutan=5 then ket1 else ket end)	ket, '+
+                '(case WHEN code=''2101.01'' and urutan=0 then ''PENGIRIMAN'' '+
+                'WHEN urutan=1 then ''POTONGAN PENGIRIMAN'' '+
                 'WHEN urutan=4 then ''PELUNASAN'' '+
-                'WHEN urutan=5 then ''RETUR PEMBELIAN'' else ket end)	ket, '+
-                'kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit, trans_no, '+
-                'faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,account_name,account_code2,status_dk FROM '+
-                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,trans_no,faktur_no,item_stock_code,item_name,unit, '+
-                'tot_qty,sa,debit,kredit,saldo,ket1,account_code,code,header_code,account_name,account_code2,status_dk FROM '+
-                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,trans_no,faktur_no,item_stock_code,item_name,unit,tot_qty, '+
-                'account_code,sa,debit,kredit,code,header_code,account_name,account_code2,status_dk,saldo,concat(item_name,'' '',tot_qty,'' '','' '',unit) as ket1 FROM '+
-                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,zz.trans_no,faktur_no,item_stock_code,item_name,unit,tot_qty, '+
-                'sa,debit,kredit,account_code,round(cast(sum(sa+kredit-debit) over (ORDER BY nomor asc ) as numeric),2) saldo,v.code,v.header_code,v.account_name,v.account_code2,v.status_dk FROM '+
-
-                '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,''''ket,jj.*,x.account_code ,0 sa,nilai_debit debit,nilai_kredit kredit from '+
-                //'select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,''''ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from '+
+                'WHEN urutan=5 then ''RETUR PENGIRIMAN'' else ket end)	ket_header, '+
+                'kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit, ket_lunas, trans_no,'+
+                '(case WHEN urutan=1 then faktur_no2 else faktur_no end)faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,faktur_no2 FROM '+
+                '(SELECT nomor,ket,kodesup,nasup,address,telp,noinv,tanggal,urutan,nilai_kredit,nilai_debit,ket_lunas, zz.trans_no,faktur_no,item_stock_code,item_name,unit,tot_qty,sa,debit,kredit,saldo,ket1,code,header_code,account_code,faktur_no2 FROM '+
+                //'(SELECT aaa.*,concat(item_name,'' '',to_char(tot_qty,''M999G999G990''),'' '',unit) as ket1,x.account_code FROM '+
+                '(SELECT aaa.*,concat(item_name,'' '',tot_qty,'' '','' '',unit) as ket1,x.account_code FROM '+
+                '(SELECT *, round(cast(sum(sa+kredit-debit) over (ORDER BY nomor asc ) as numeric),2) saldo from '+
+                '(select  "row_number"() over (ORDER BY tanggal,urutan)+1 nomor,ket_lunas as ket,* ,0 sa,nilai_debit debit,nilai_kredit kredit from '+
                 '(SELECT gg.*,hh.trans_no,hh.faktur_no,hh.item_stock_code,hh.item_name,hh.unit,hh.tot_qty FROM '+
-                '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,urutan, '+
+                '(select kodesup ::text,nasup ::text,address,telp,noinv,tanggal,urutan,faktur_no2, '+
                 'round(cast((nilai_kredit-nilai_um)as numeric),2) as nilai_kredit, '+
-                'round(cast((nilai_debit)as numeric),2) nilai_debit  from '+
+                'round(cast((nilai_debit)as numeric),2) nilai_debit, ket_lunas, kode   from '+
                 '(select zz.*,(case when um_beli.nilai_um is null then 0 else um_beli.nilai_um end)nilai_um from '+
-                '(select kodesup,nasup,address,telp,noinv,tanggal,urutan, '+
+                '(select kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2, '+
                 'sum(nilai_kredit) as nilai_kredit '+
-                ',sum(nilai_debit)as nilai_debit  from '+
+                ',sum(nilai_debit)as nilai_debit, string_agg(keterangan,'' '') as ket_lunas, kode   from '+
                 '(select a.supplier_code as kodesup,a.supplier_name as nasup,a.address,a.telp,inv.noinv,inv.tanggal,inv.keterangan,inv.urutan, '+
                 '(case when kredit.nilai_kredit is null then 0 else kredit.nilai_kredit end)nilai_kredit, '+
                 '(case when inv.nilai is null then 0 else inv.nilai end)nilai_debit, '+
-                '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot end)nilai_pot from '+
+                '(case when kredit.nilai_pot is null then 0 else kredit.nilai_pot end)nilai_pot,faktur_no2,inv.kode from '+
                 '(select * from t_supplier where supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
                 'left join '+
                 '(select x.* from '+
-                '(select distinct a.trans_no as noinv,b.po_no,a.supplier_code as kodesup,a.trans_date as tanggal,b.kode,b.kode as keterangan,nilai,urutan,account_code from '+
-                '(select * from t_purchase_invoice where account_code='+Quotedstr(vkd_sup_account)+' and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and debt_remaining <>0 )a '+
-                'left join (select trans_no,po_no,stock_code as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no '+
+                '(select distinct a.trans_no as noinv,b.po_no,a.supplier_code as kodesup,a.trans_date as tanggal,b.kode,b.kode as keterangan,nilai,urutan,account_code,'''' faktur_no2 from '+
+                '(select * from t_purchase_invoice where deleted_at is null and account_code='+Quotedstr(vkd_sup_account)+' and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and debt_remaining <>0 )a '+
+                'left join (select trans_no,po_no,item_stock_code as kode,unit as jumlah,grandtotal * 0 as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no '+
                 'union all '+
                 'select bb.receive_no as noinv,'''' as nopo,bb.supplier_code as kodesup,bb.discount_date as tanggal, bb.stock_code as kode, ''POTONGAN PEMBELIAN''  as ket, '+
-                '(case when bb.ppnrp is null then bb.price_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.account_code from t_purchase_discount bb '+
-                'left join t_purchase_invoice dd on bb.receive_no=dd.ref_no  where bb.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' '+
+                '(case when bb.ppnrp is null then bb.price_rp else bb.price_rp+bb.ppnrp end) as nilai,1 as urutan,dd.account_code,bb.faktur_no as faktur_no2  from t_purchase_discount bb '+
+                'left join t_purchase_invoice dd on bb.receive_no=dd.ref_no  where dd.deleted_at is null and bb.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' '+
                 'union all '+
-                'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance from '+
-                '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,'''' as keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance from '+
-                '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance from '+
-                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance from vexpenditure_payable a '+
-                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance)x  group by noinv,kodesup,tanggal,acc_balance)y '+
+                'select noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,faktur_no as faktur_no2 from '+
+                '(select noinv,'''' as nopo,kodesup,tanggal,'''' as kode,keterangan,nilai,4 as urutan,(case when z.saldo is null then 0 else z.saldo end)nilai_kredit,acc_balance,faktur_no from '+
+                '(select noinv,kodesup,tanggal,sum(nilai)as nilai,acc_balance,keterangan,faktur_no from '+
+                '(select distinct voucher_no as noinv,'''' as nopo,supplier_code as kodesup,trans_date as tanggal,bank_number_account as kode,description as keterangan,sum(paid_amount) as nilai,4 as urutan,account_acc as acc_balance,faktur_no from vexpenditure_payable a '+
+                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and account_acc='+Quotedstr(vkd_sup_account)+' GROUP BY noinv,kodesup,tanggal,kode,keterangan,acc_balance,faktur_no)x  group by noinv,kodesup,tanggal,acc_balance,keterangan,faktur_no)y '+
                 'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real group by voucher )z on y.noinv=z.voucher)xx '+
                 'left join (select no_voucher,sum(paid_amount) jumlah from t_cash_bank_expenditure_det where position=''K'' and code_account<>''1101.01'' GROUP BY no_voucher) kas on kas.no_voucher=xx.noinv '+
+                'GROUP BY noinv,nopo,kodesup,tanggal,kode,keterangan,nilai,urutan,acc_balance,faktur_no '+
                 'union all '+
-                'select a.return_no as noinv,'''' as nopo,b.supplier_code as kodesup,b.return_date as tanggal,a.stock_code as kode,concat(a.stock_code,'' '' ,qty,'' '' ,unit)as keterangan, '+
-                '(case when b.valas=''USD''then a.total_price*b.valas_value else b.price+b.ppn_rp end)nilai,5 as urutan,c.account_code  from t_purchase_return_det a,t_purchase_return b, '+
-                ' t_purchase_invoice c where a.return_no=b.return_no and b.receive_no=c.trans_no and c.account_code='+Quotedstr(vkd_sup_account)+' '+
+                'select a.return_no as noinv,'''' as nopo,b.supplier_code as kodesup,b.return_date as tanggal,a.item_stock_code as kode,concat(a.stock_code,'' '' ,qty,'' '' ,unit)as keterangan, '+
+                '(case when b.valas=''USD''then (a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) '+
+                ' else (a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) end)nilai,5 as urutan,c.account_code,'''' faktur_no2  from t_purchase_return_det a,t_purchase_return b, '+
+                ' t_purchase_invoice c where a.return_no=b.return_no and b.receive_no=c.trans_no and c.deleted_at is null and c.account_code='+Quotedstr(vkd_sup_account)+' and b.return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                 'union all '+
-                'select a.bk_no as noinv,'''' as nopo,'''' as kodesup,b.trans_date as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan,a.account_code from '+
+                'select a.bk_no as noinv,'''' as nopo,'''' as kodesup,b.trans_date as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan,a.account_code,'''' faktur_no2 from '+
                 '(select voucher_no ,bk_no ,account_code,remark,pay,6 as urutan from t_payment_detail_real where source_id=3 and account_code='+Quotedstr(vkd_sup_account)+' )a '+
                 'left join (select distinct no_voucher,trans_date from t_cash_bank_expenditure_det '+
                 'where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )b on a.bk_no=b.no_voucher )x  )inv on a.supplier_code=inv.kodesup '+
                 'left join(select a.trans_no as noinv,a.supplier_code as kodesup,b.kode,(case when a.valas=''USD'' then b.nilai1 else b.nilai2 end)nilai_kredit,c.nilai as nilai_pot from '+
-                '(select * from t_purchase_invoice where trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )a '+
-                'left join (select trans_no,stock_code as kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_purchase_invoice_det group by trans_no,stock_code,qty,unit)b on a.trans_no=b.trans_no '+
+                '(select * from t_purchase_invoice where deleted_at is null and trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' )a '+
+                'left join (select trans_no,item_stock_code as kode,qty,unit as jumlah,sum(subtotalrp)as nilai1,SUM ( grandtotal ) AS nilai2 from t_purchase_invoice_det group by trans_no,item_stock_code,qty,unit)b on a.trans_no=b.trans_no '+
                 'left join (select DISTINCT receive_no,sum(price_rp) as nilai from t_purchase_discount where supplier_code='+Quotedstr(ed_code_supp.EditValue)+' GROUP BY receive_no )c on a.trans_no=c.receive_no )kredit  on inv.noinv=kredit.noinv '+
-                //'and inv.kode=kredit.kode '+  code stock tidak masuk data
-                //'and inv.kode=kredit.kode '+
+                'and inv.kode=kredit.kode '+
                 'and inv.urutan<>5 '+
-                ')xxx  group by kodesup,nasup,address,telp,noinv,tanggal,urutan order by kodesup,nasup,address,telp,noinv,tanggal,urutan)zz '+
+                ')xxx  group by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2,kode order by kodesup,nasup,address,telp,noinv,tanggal,urutan,faktur_no2)zz '+
 
                 'left join(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
-                '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no and b.trans_no between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and b.supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
+                '(select distinct a.trans_no,a.po_no,b.supplier_code from t_purchase_invoice_det a,t_purchase_invoice b where a.trans_no=b.trans_no and b.deleted_at is null and b.trans_no between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and b.supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
                 'left join (select supplier_code,po_no,sum(um_value)as nilai_um from t_po where um_status=true and po_date<='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and  supplier_code='+Quotedstr(ed_code_supp.EditValue)+' group  by po_no,supplier_code order by po_no,supplier_code)b '+
                 'on a.po_no=b.po_no and a.supplier_code=b.supplier_code)um_beli on zz.noinv=um_beli.trans_no)ttt '+
                 'where (nilai_kredit-nilai_um>0) or (nilai_debit>0) and tanggal between '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' order by tanggal,urutan,nasup,noinv )gg '+
                 'left JOIN (select c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit,sum(a.qty)as tot_qty from '+
-                '(select * from t_purchase_invoice_det)a '+
+                '(select trans_no,item_stock_code,unit, qty from t_purchase_invoice_det '+
+                ' union all select return_no as trans_no,item_stock_code,unit, qty from t_purchase_return_det)a '+
                 'left join t_item_stock b on a.item_stock_code=b.item_stock_code '+
-                'left join t_purchase_invoice c on a.trans_no=c.trans_no '+
-                'group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit '+
-                'order by b.item_stock_code,b.item_name,a.unit)hh on gg.noinv=hh.trans_no)jj '+
+                'left join (select trans_no,faktur_no from t_purchase_invoice where  deleted_at is null  '+
+                ' union all select return_no as trans_no,faktur_no from t_purchase_return where  deleted_at is null '+
+                ') c on a.trans_no=c.trans_no group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit order by b.item_stock_code,b.item_name,a.unit)hh '+
+                ' on gg.noinv=hh.trans_no AND gg.kode = hh.item_stock_code ORDER BY tanggal, trans_no, faktur_no asc)jj '+
 
-                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no)x ON jj.noinv=x.trans_no) zz '+
-                'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)kk)kkk)LLL ';
+                'UNION ALL '+
+                'select 1 as nomor,''Saldo Awal'' ket,kodesup,''Saldo Awal'' nasup,'''' address,'''' telp,'''' noinv, '+
+                'null tanggal, 0 urutan,''''faktur_no2, 0 nilai_kredit,0 nilai_debit,'''' as ket_lunas,'''' AS kode,'''' no_terima,'''' nofaktur,'''' kd_material_stok,'''' nm_material,'''' satuan,0 tot_qty,saldo_awal as sa,0 debit,0 kredit FROM '+
+                '(SELECT kodesup,''Saldo Awal'' as nasup,sum(yyy.saldo_awal_tahun+yyy.kredit-yyy.debit-yyy.debit_retur-yyy.nilai_pot) saldo_awal,0 debit,0 kredit from '+
 
+                '(/*yyy*/select a.supplier_code as kodesup,case when saldo_awal.initial_balance is null then 0 else saldo_awal.initial_balance end saldo_awal_tahun,round(cast(case when x.nilai is null then 0 else x.nilai end as numeric),2)kredit, '+
+                'round(cast(case when y.nilai is null then 0 else y.nilai end as numeric),2)debit, '+
+                'round(cast(case when z.nilai is null then 0 else z.nilai end as numeric),2)debit_retur, '+
+                'round(cast(case when xx.nilai_pot is null then 0 else xx.nilai_pot end as numeric),2)nilai_pot from '+
+                '( select * from t_supplier where supplier_code='+Quotedstr(ed_code_supp.EditValue)+')a '+
+                'left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai from '+
+                '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from '+
+                '(select a.supplier_code as kodesup,b.po_no,(case when a.valas=''USD'' then sum(nilai1) else sum(nilai2) end)nilai from '+
+                '(select * from t_purchase_invoice where deleted_at is null and account_code='+Quotedstr(vkd_sup_account)+' and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and debt_remaining<>0)a '+
+                'left join (select trans_no,po_no,stock_code as kode,qty,unit as jumlah,subtotalrp as nilai1,grandtotal as nilai2, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no group by kodesup,b.po_no,a.valas)a '+
+                'left join(select po_no,supplier_code,sum(um_value)as nilai_um from t_po where um_status=true and po_date<'+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and supplier_code='+Quotedstr(ed_code_supp.EditValue)+' group by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x  group by kodesup)x on a.supplier_code=x.kodesup '+
+                'left join(select supplier_code as kodesup,sum(bayar)as nilai from '+
+                '(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from (select voucher_no,supplier_code,sum(paid_amount)as bayar from vexpenditure_payable '+
+                'where supplier_code='+Quotedstr(ed_code_supp.EditValue)+' and account_acc='+Quotedstr(vkd_sup_account)+' and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' group by voucher_no,supplier_code order by voucher_no,supplier_code)a '+
+                'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real where account_code<>''2142'' group by voucher order by voucher)b 	on a.voucher_no=b.voucher)x  group by supplier_code order by supplier_code)y on a.supplier_code=y.kodesup '+
+                'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then '+
+                ' sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) '+
+                ' else sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) end)nilai from t_purchase_return_det a,t_purchase_return b '+
+                'left join t_purchase_invoice dd on b.receive_no=dd.trans_no where a.return_no=b.return_no and dd.deleted_at is null and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_sup_account)+' group by b.supplier_code,b.valas order by b.supplier_code)z  on a.supplier_code=z.kodesup /*Pot pembelian*/ '+
+
+                'left join(select dd.supplier_code,sum(bb.hargapot)as nilai_pot from '+
+                '(select receive_no,discount_date ,(price_rp+(case when ppnrp isnull then 0 else ppnrp end)) hargapot from  t_purchase_discount) bb '+
+                'left join t_purchase_invoice dd on bb.receive_no=dd.trans_no where dd.deleted_at is null and discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+' and dd.account_code='+Quotedstr(vkd_jenis_hutang)+' group by dd.supplier_code order by supplier_code)xx on a.supplier_code=xx.supplier_code '+
+                'left join (select kodesup,sum(nilai)as nilai from '+
+                '(select a.bk_no as noinv,'''' as kodesup, b.trans_date as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan from '+
+                '(select voucher_no,bk_no ,account_code,remark,pay,4 as urutan from t_payment_detail_real where source_id=3 and account_code='+Quotedstr(vkd_jenis_hutang)+' )a '+
+                'left join (select distinct no_voucher,trans_date from t_cash_bank_expenditure_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue-1))+') b on a.bk_no=b.no_voucher '+
+                ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup '+
+                'left join (select * from t_initial_balance_debt where debt_type='+Quotedstr(vkd_sup_account)+' and "year" = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER ) saldo_awal on saldo_awal.supplier_code= a.supplier_code where a.supplier_code='+Quotedstr(ed_code_supp.EditValue)+' '+
+                '/*yyy*/)yyy GROUP BY kodesup,saldo_awal_tahun,kredit,debit, '+
+                'debit_retur,nilai_pot)kk group by kk.kodesup,kk.saldo_awal)zzz  group by zzz.nomor,zzz.kodesup,zzz.nasup,zzz.address,zzz.telp,zzz.noinv,zzz.tanggal, '+
+                'zzz.urutan,zzz.nilai_kredit,zzz.nilai_debit,zzz.ket_lunas,zzz.kode,zzz.trans_no,zzz.faktur_no,zzz.item_stock_code,zzz.item_name,zzz.unit,zzz.tot_qty,zzz.sa,zzz.debit,zzz.kredit,zzz.ket,zzz.faktur_no2  ORDER BY nomor ASC)aaa '+
+              // of ds 20-05-2026  'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a INNER JOIN t_purchase_invoice_det b on a.trans_no=b.trans_no group by a.trans_no)x '+
+                'LEFT JOIN (SELECT a.trans_no,a.account_code FROM t_purchase_invoice a where deleted_at is null )x '+
+                'ON aaa.noinv=x.trans_no) zz '+
+                'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg '+
+                'ORDER BY nomor ASC ';
       open;
     end;
     MemKartuHutang.Close;

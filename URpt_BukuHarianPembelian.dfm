@@ -397,6 +397,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     DrawMemoText = True
     DynProps = <>
     FooterRowCount = 1
+    SumList.Active = True
     TabOrder = 7
     TitleParams.MultiTitle = True
     Columns = <
@@ -598,7 +599,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44169.465120821800000000
-    ReportOptions.LastChange = 46120.372206516200000000
+    ReportOptions.LastChange = 46164.404402395830000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -958,6 +959,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
           Left = 125.062992130000000000
           Width = 45.354330710000000000
           Height = 26.456692910000000000
+          StretchMode = smMaxHeight
           DataSet = Rpt_BHP
           DataSetName = 'Rpt_BHP'
           Font.Charset = DEFAULT_CHARSET

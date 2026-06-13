@@ -154,20 +154,12 @@ var
   i: Integer;
   Page: TfrxReportPage;
 begin
-  // Loop through all pages in the report template
   for i := 0 to frxReport.PagesCount - 1 do
   begin
-    // Check if the current page is a report design page
     if frxReport.Pages[i] is TfrxReportPage then
     begin
       Page := TfrxReportPage(frxReport.Pages[i]);
-
-      // Set orientation to Portrait (requires Vcl.Printers in uses)
       Page.Orientation := poPortrait;
-
-      // Important: FastReport uses millimeters for PaperWidth/Height.
-      // Changing orientation manually may require resetting dimensions
-      // if you are using custom paper sizes.
     end;
   end;
 end;
@@ -192,8 +184,6 @@ begin
                   'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
                   'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+
-//                  'where EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
-//                  'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' AND '+
                   ''+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
        open;
    end;
@@ -299,10 +289,8 @@ begin
       if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
       begin
         isCancel := 1;
-//        memAlasanPembatalan.Text:= Dm.Qtemp.FieldByName('cancel_reason').AsString;;
       end else begin
         isCancel:=0;
-//        memAlasanPembatalan.Text:='';
       end;
 
       //Master
@@ -389,9 +377,7 @@ begin
       begin
         with FDataPenerimaanBank do
         begin
-          //ShowMessage('0');
-          //edKodeSumberTagihan.Visible:=true;
-          //edKodeJenisBayar.Visible:=true;
+
           lbSumberTagihan.Visible:=true;
           lbSumberTagihann.Visible:=true;
           lbJenisBayar.Visible:=true;
@@ -404,9 +390,6 @@ begin
       begin
         with FDataPenerimaanBank do
         begin
-          //ShowMessage('1');
-          //edKodeSumberTagihan.Visible:=false;
-          //edKodeJenisBayar.Visible:=false;
           lbSumberTagihan.Visible:=false;
           lbSumberTagihann.Visible:=false;
           lbJenisBayar.Visible:=false;
@@ -448,9 +431,6 @@ begin
         lbJenisBayarr.Visible:=False;
         edNMSumberTagihan.Visible:=False;
         edNMJenisBayar.Visible:=False;
-//        edJumlah.Visible:=True;
-//        Label19.Visible:=True;
-//        Label20.Visible:=True;
       end;
 
       //detailakun
@@ -514,7 +494,6 @@ begin
           begin
             FDataPenerimaanBank.MemDetailPiutang['id_dpp']:=Dm.Qtemp1.fieldbyname('id_dpp').AsString;
           end;
-
           FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
           FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp1.fieldbyname('date_invoice_tax').AsDateTime;
           FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
@@ -529,10 +508,6 @@ begin
       gbDataSumberPenerimaan.Visible:=False;
       if cbJenisTransaksi.Text='NON PIUTANG' then
       begin
-//        ShowMessage(strDiterimaDari);
-//        edJumlah.Visible:=True;
-//        Label19.Visible:=True;
-//        Label20.Visible:=True;
         edJumlah.Enabled:=False;
         gbDataSumberPenerimaan.Visible:=True;
         label33.Visible:=False;
@@ -544,11 +519,9 @@ begin
         edNoRefSumberPenerimaan.Text:='';
         edNamaPKPSumber.Text:='';
         cbSumberPenerimaan.Text:='TIDAK ADA SUMBER';
-
       end;
 
       //UANG MUKA
-
       with Dm.Qtemp1 do
       begin
         close;
@@ -570,30 +543,19 @@ begin
         begin
           edJumlah.Enabled:=False;
           gbDataSumberPenerimaan.Visible:=True;
-//          edJumlah.Visible:=True;
-//          Label19.Visible:=True;
-//          Label20.Visible:=True;
         end else begin
           gbDataSumberPenerimaan.Visible:=False;
           edJumlah.Enabled:=True;
         end;
-          
         edKodePelangganSumber.Text:=Dm.Qtemp1.FieldValues['code_cust'];
         edNamaPelangganSumber.Text:=Dm.Qtemp1.FieldValues['customer_name'];
         edNoRefSumberPenerimaan.Text:=Dm.Qtemp1.FieldValues['no_trans_down_payment'];
         edNamaPKPSumber.Text:=Dm.Qtemp1.FieldValues['customer_name_pkp'];
         cbSumberPenerimaan.Text:=SelectRow('select name from t_cash_bank_acceptance_source where code=''CB001'' ');
-          
       end;
-//       else begin
-//        gbDataSumberPenerimaan.Visible:=False;
-//        edJumlah.Enabled:=True;
-//      end;
-
     end;
   end;
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
-
   FDataPenerimaanBank.Disable;
   FDataPenerimaanBank.Show;
 end;
@@ -661,7 +623,7 @@ begin
             'OR '+
             '("position" = ''D'' AND b.paid_amount < 0 AND e.header_code NOT IN (''1102'', ''1101'')) '+
             ') '+
-            'ORDER BY b.account_name = ''PIUTANG'' ASC, position ASC;');
+            'ORDER BY b.account_name = ''PIUTANG'' ASC, position DESC;');
 //    sql.add(' SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust, a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from ('+
 //           ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
 //           ' "account_name_bank", "for_acceptance", "description", "module_id", paid_amount tot_paid_amount '+
@@ -689,96 +651,80 @@ begin
     exit;
   end;
 
- if QBukti_Terima.RecordCount<>0 then
- begin
-   // Dapetin Grand Total
-  with dm.Qtemp do
+  if QBukti_Terima.RecordCount<>0 then
   begin
-    close;
-    sql.clear;
-    sql.add(' select * '+
-           ' from "public"."t_cash_bank_acceptance" a '+
-           ' where a.deleted_at is null and '+
-           ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-    open;
-  end;
-  //
-  //Bikin Detail vbuktipenerimaan
-  with QBukti_Terima_det do
-  begin
-    close;
-    sql.clear;
-    sql.add(' SELECT aa.*,ket from "public"."vbuktipenerimaan" aa '+
-           ' LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'+QuotedStr(', \n')+') as ket '+
-           ' from "public"."vbuktipenerimaan" where "voucher_no"= '+
-           ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
-           ' ON aa."voucher_no"=bb."voucher_no" '+
-           ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-    open;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.add(' select * '+
+             ' from "public"."t_cash_bank_acceptance" a '+
+             ' where a.deleted_at is null and '+
+             ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+      open;
+    end;
 
-   cLocation := ExtractFilePath(Application.ExeName);
+    with QBukti_Terima_det do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT aa.*,ket from "public"."vbuktipenerimaan" aa '+
+             ' LEFT JOIN (SELECT voucher_no , STRING_AGG("description", E'+QuotedStr(', \n')+') as ket '+
+             ' from "public"."vbuktipenerimaan" where "voucher_no"= '+
+             ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
+             ' ON aa."voucher_no"=bb."voucher_no" '+
+             ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+      open;
+    end;
 
-   //ShowMessage(cLocation);
+    cLocation := ExtractFilePath(Application.ExeName);
 
-   Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
-   SetReportToPortrait(Report);
-   SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
-   SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBukti_Terima.FieldValues['trans_date']));
-   SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(QBukti_Terima.FieldByName('tot_paid_amount').AsFloat))+' Rupiah');
+    Report.LoadFromFile(cLocation +'report/rpt_buktipenerimaan'+ '.fr3');
+    SetReportToPortrait(Report);
+    SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
+    SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',QBukti_Terima.FieldValues['trans_date']));
+    SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(QBukti_Terima.FieldByName('tot_paid_amount').AsFloat))+' Rupiah');
 
-   if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
-   begin
-//    SetMemo(Report,'vkas','X');
-    SetMemo(Report, 'vkas', '✔');
-    SetMemo(Report,'vbank','');
-   end;
-   if QBukti_Terima.FieldByName('module_id').AsString='3' then//bank
-   begin
-    SetMemo(Report,'vkas','');
-    SetMemo(Report,'vbank','✔');
-
-   end;
-
-
-//   Page := Report.FindObject('Page1') as TfrxReportPage;
-//   Page.Orientation := poPortrait;
-   //Report.DesignReport();
-   Report.ShowReport();
+    if QBukti_Terima.FieldByName('module_id').AsString='4' then//kas
+    begin
+      SetMemo(Report, 'vkas', '✔');
+      SetMemo(Report,'vbank','');
+    end;
+    if QBukti_Terima.FieldByName('module_id').AsString='3' then//bank
+    begin
+      SetMemo(Report,'vkas','');
+      SetMemo(Report,'vbank','✔');
+    end;
+    Report.ShowReport();
  end;
 
 end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton2Click(Sender: TObject);
 begin
-   with QJurnal do
-    begin
-     close;
-     sql.clear;
-     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
-             ' where "trans_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'');
-     open;
-    end;
+  with QJurnal do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
+           ' where "trans_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'');
+    open;
+  end;
 
+  if QJurnal.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QJurnal.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
-
- if QJurnal.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
-
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
-   SetMemo(Report,'nm_judul','DAFTAR JURNAL PENERIMAAN');
-   SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-   //Report.DesignReport();
-   Report.ShowReport();
- end;
-
+  if QJurnal.RecordCount<>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/rpt_trans_jurnal'+ '.fr3');
+    SetMemo(Report,'nm_judul','DAFTAR JURNAL PENERIMAAN');
+    SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
+    Report.ShowReport();
+  end;
 end;
 
 procedure TFListPenerimaanBank.dxBarLargeButton3Click(Sender: TObject);

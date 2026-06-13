@@ -199,7 +199,7 @@ begin
            open;
          end;
     end;
-      if dm.Qtemp.RecordCount<>0 then
+      if dm.Qtemp.RecordCount<>0 then     // tahun yg sma
       begin
         with dm.Qtemp1 do
           begin
@@ -233,13 +233,13 @@ begin
               sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
-          ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp2['trans_year'])+''+
-          ' else taab.trans_year end trans_year,case when taab.trans_month isnull then '+QuotedStr(dm.Qtemp2['trans_month'])+' else '+
+          ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp['trans_year'])+''+
+          ' else taab.trans_year end trans_year,case when taab.trans_month isnull then '+QuotedStr(dm.Qtemp['trans_month'])+' else '+
           ' taab.trans_month end trans_month,case when taa.posisi_dk=''D'' then  coalesce(sum(taab.balance)::NUMERIC, 0) else 0 end saldo_d,'+
           ' case when taa.posisi_dk=''K'' then coalesce(sum(taab.balance)::NUMERIC, 0) else 0 end saldo_k,taa.posisi_dk  '+
           ' FROM  (select a.account_code,a.account_code2,b.account_name,b.posisi_dk from t_ak_account_sub a INNER JOIN t_ak_account b on a.account_code=b.code) taa'+
-          ' LEFT JOIN (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
-          ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+''+
+          ' LEFT JOIN (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+''+
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+
@@ -290,13 +290,13 @@ begin
              sql.Text:='select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
-          ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp2['trans_year'])+''+
-          ' else taab.trans_year end trans_year,case when taab.trans_month isnull then '+QuotedStr(dm.Qtemp2['trans_month'])+' else '+
+          ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp['trans_year'])+''+
+          ' else taab.trans_year end trans_year,case when taab.trans_month isnull then '+QuotedStr(dm.Qtemp['trans_month'])+' else '+
           ' taab.trans_month end trans_month,case when taa.posisi_dk=''D'' then  coalesce(sum(taab.balance)::NUMERIC, 0) else 0 end saldo_d,'+
           ' case when taa.posisi_dk=''K'' then coalesce(sum(taab.balance)::NUMERIC, 0) else 0 end saldo_k,taa.posisi_dk  '+
           ' FROM  (select a.account_code,a.account_code2,b.account_name,b.posisi_dk from t_ak_account_sub a INNER JOIN t_ak_account b on a.account_code=b.code) taa'+
-          ' LEFT JOIN (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp2['trans_year'])+' and '+
-          ' trans_month='+QuotedStr(dm.Qtemp2['trans_month'])+''+
+          ' LEFT JOIN (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
+          ' trans_month='+QuotedStr(dm.Qtemp['trans_month'])+''+
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+

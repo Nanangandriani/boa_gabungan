@@ -3,8 +3,8 @@ object FKoreksi: TFKoreksi
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Koreksi Transaksi'
-  ClientHeight = 357
-  ClientWidth = 393
+  ClientHeight = 479
+  ClientWidth = 383
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,58 +15,86 @@ object FKoreksi: TFKoreksi
   OnShow = FormShow
   TextHeight = 15
   object RzLabel1: TRzLabel
-    Left = 8
+    Left = 2
     Top = 72
     Width = 81
     Height = 15
     Caption = 'Menu Transaksi'
   end
   object RzLabel4: TRzLabel
-    Left = 8
-    Top = 132
+    Left = 2
+    Top = 246
     Width = 35
     Height = 15
     Caption = 'Alasan'
   end
   object RzLabel5: TRzLabel
-    Left = 8
+    Left = 2
     Top = 12
     Width = 27
     Height = 15
     Caption = 'Kode'
   end
   object RzLabel2: TRzLabel
-    Left = 8
+    Left = 2
     Top = 101
     Width = 66
     Height = 15
     Caption = 'No Transaksi'
   end
   object RzLabel3: TRzLabel
-    Left = 8
+    Left = 2
     Top = 43
     Width = 41
     Height = 15
     Caption = 'Tanggal'
   end
   object RzLabel6: TRzLabel
-    Left = 8
-    Top = 228
+    Left = 2
+    Top = 342
     Width = 60
     Height = 15
     Caption = 'Keterangan'
   end
+  object RzLabel7: TRzLabel
+    Left = 2
+    Top = 130
+    Width = 45
+    Height = 15
+    Caption = 'No Nota'
+  end
+  object RzLabel8: TRzLabel
+    Left = 2
+    Top = 159
+    Width = 79
+    Height = 15
+    Caption = 'Nama Kolektor'
+  end
+  object RzLabel9: TRzLabel
+    Left = 2
+    Top = 190
+    Width = 66
+    Height = 15
+    Caption = 'Tanggal DPP'
+  end
+  object RzLabel10: TRzLabel
+    Left = 2
+    Top = 219
+    Width = 91
+    Height = 15
+    Caption = 'Nama Pelanggan'
+  end
   object Panel2: TPanel
     Left = 0
-    Top = 322
-    Width = 393
+    Top = 444
+    Width = 383
     Height = 35
     Align = alBottom
     TabOrder = 0
     ExplicitTop = 321
     ExplicitWidth = 389
     object BBatal: TRzBitBtn
-      Left = 317
+      Left = 307
       Top = 1
       Height = 33
       Align = alRight
@@ -128,7 +156,7 @@ object FKoreksi: TFKoreksi
       ExplicitLeft = 313
     end
     object BSave: TRzBitBtn
-      Left = 242
+      Left = 232
       Top = 1
       Height = 33
       Align = alRight
@@ -191,7 +219,7 @@ object FKoreksi: TFKoreksi
       ExplicitTop = -1
     end
     object BtnReject: TRzBitBtn
-      Left = 151
+      Left = 141
       Top = 1
       Width = 91
       Height = 33
@@ -333,7 +361,7 @@ object FKoreksi: TFKoreksi
       ExplicitLeft = 147
     end
     object BtnApprove: TRzBitBtn
-      Left = 49
+      Left = 39
       Top = 1
       Width = 102
       Height = 33
@@ -485,7 +513,7 @@ object FKoreksi: TFKoreksi
   end
   object memKet: TRzMemo
     Left = 95
-    Top = 129
+    Top = 243
     Width = 286
     Height = 90
     TabOrder = 2
@@ -523,9 +551,49 @@ object FKoreksi: TFKoreksi
   end
   object MemKetApprove: TRzMemo
     Left = 95
-    Top = 225
+    Top = 339
     Width = 286
     Height = 90
     TabOrder = 6
+  end
+  object edNoNota: TRzEdit
+    Left = 95
+    Top = 127
+    Width = 218
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 7
+  end
+  object edNamaKolektor: TRzEdit
+    Left = 95
+    Top = 156
+    Width = 218
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 8
+  end
+  object dtTglDpp: TRzEdit
+    Left = 95
+    Top = 185
+    Width = 98
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 9
+  end
+  object edNamaPelanggan: TRzEdit
+    Left = 95
+    Top = 214
+    Width = 287
+    Height = 23
+    Text = ''
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 10
   end
 end

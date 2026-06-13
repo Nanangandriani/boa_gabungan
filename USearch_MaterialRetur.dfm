@@ -109,14 +109,15 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
   object Qmaterial: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
+      ''
       
-        'SELECT a.stock_code,a.item_stock_code,b.price,c.faktur_date,c.fa' +
+        'SELECT A.STOCK_CODE,a.item_stock_code,b.price,c.faktur_date,c.fa' +
         'ktur_no,b.po_no,d.item_name,b.unit,d.supplier_code,c.trans_no,b.' +
         'item_code,b.wh_code'
       ' FROM t_item_stock_det A '
       
         'INNER JOIN t_purchase_invoice_det b ON a.item_stock_code=b.item_' +
-        'stock_code --AND a.stock_code=b.stock_code'
+        'stock_code /*AND a.stock_code=b.stock_code */'
       'INNER JOIN t_purchase_invoice C on b.trans_no=c.trans_no'
       
         'inner join t_item_stock d on a.item_stock_code=d.item_stock_code' +
@@ -124,7 +125,12 @@ object FSearch_MaterialRetur: TFSearch_MaterialRetur
       
         'LEFT JOIN  t_item_receive_det e on  b.receive_no=e.po_no AND a.s' +
         'tock_code=e.stock_code'
-      '')
+      'WHERE C.supplier_code='#39'SP20004'#39
+      
+        'GROUP BY A.STOCK_CODE,a.item_stock_code,b.price,c.faktur_date,c.' +
+        'faktur_no,b.po_no,d.item_name,b.unit,d.supplier_code,c.trans_no,' +
+        'b.item_code,b.wh_code'
+      'ORDER BY c.trans_date')
     Left = 232
     Top = 80
   end

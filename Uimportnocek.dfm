@@ -278,8 +278,8 @@ object FImportnocek: TFImportnocek
       
         'select * from t_nocek_master where deleted_at isnull order by tr' +
         'ans_no ASC')
-    Left = 232
-    Top = 48
+    Left = 216
+    Top = 56
   end
   object DSMaster_nocek: TDataSource
     DataSet = QMaster_Nocek

@@ -146,8 +146,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 792
-    Top = 152
+    Left = 704
+    Top = 176
   end
   object frxReport2: TfrxReport
     Version = '2022.1.3'
@@ -830,7 +830,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44945.462862835700000000
-    ReportOptions.LastChange = 46134.564062314810000000
+    ReportOptions.LastChange = 46182.639016203710000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -918,7 +918,6 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           Height = 22.677165350000000000
           OnBeforePrint = 'Memo42OnBeforePrint'
           StretchMode = smMaxHeight
-          DataField = 'htg_blm_jatuh_tempo'
           DataSet = frxDBDataset_Sisa_Hutang
           DataSetName = 'frxDBDataset_Sisa_hutang'
           DisplayFormat.FormatStr = '%2.2n'
@@ -1463,9 +1462,9 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
         end
         object SysMemo16: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 278.173228350000000000
+          Left = 297.070878350000000000
           Top = 3.779527560000000000
-          Width = 100.157480310000000000
+          Width = 81.259830310000000000
           Height = 30.236220470000000000
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -1476,6 +1475,10 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
           Font.Style = [fsBold]
           Frame.Typ = [ftRight]
           HAlign = haRight
+          Memo.UTF8W = (
+            
+              '[SUM(<frxDBDataset_Sisa_hutang."htg_blm_jatuh_tempo">,MasterData' +
+              '1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2506,7 +2509,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Params = <>
     DataDriver = DataSetDriverEh1
     Left = 384
-    Top = 160
+    Top = 136
   end
   object DSisaHutang: TDataSource
     DataSet = MemSisaHutang
@@ -3552,39 +3555,19 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object QCetakRincianFaktur: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      ''
-      'SELECT *,(debt_amount-paid_amount) as sisa_hutang from ('
       
-        'SELECT a.supplier_code, supplier_name, trans_no, faktur_no, tran' +
-        's_date, due_date,debt_amount, COALESCE(paid_amount, 0) as paid_a' +
-        'mount from t_supplier a'
-      'LEFT JOIN'
-      
-        '( SELECT faktur_no as trans_no, date as trans_date, faktur_no, f' +
-        'aktur_no as sj_no, date as faktur_date, date+30 as due_date, deb' +
-        't_type as account_code, debt_amount,'#39'saldo_awal'#39' as "source"   f' +
-        'rom t_initial_balance_debt_det where faktur_no is not null union' +
-        ' all SELECT trans_no, trans_date, faktur_no, sj_no, faktur_date,' +
-        ' faktur_date+due_date as due_date, account_code, debt_amount, '#39't' +
-        'ransaksi'#39' as "source"  from t_purchase_invoice where trans_date ' +
-        'between '#39'2026-01-01'#39' and '#39'2026-01-18'#39' ) inv on a.account_code=in' +
-        'v.account_code'
-      
-        'LEFT JOIN (SELECT supplier_code, invoice_no, paid_amount from t_' +
-        'cash_bank_expenditure_payable union all'
-      
-        'SELECT supplier_code, faktur_no as invoice_no, total_price as pa' +
-        'id_amount from t_purchase_return'
-      ')lns on inv.trans_no=lns.invoice_no'
-      
-        'where a.supplier_code='#39'SP20004'#39' )aa where (debt_amount-paid_amou' +
-        'nt)<>0')
+        'SELECT "kodesup" as supplier_code, supplier_name, a."trans_no", ' +
+        'a."faktur_no",  b.trans_date, b.faktur_date+due_date as due_date' +
+        ',  "kredit" as debt_amount,  ("debit"+"debit_retur") as paid_amo' +
+        'unt, "sisa_hutang"  from get_details_debt  ('#39'SP20010'#39','#39'2026-02-1' +
+        '5'#39')a  left join t_purchase_invoice b on a.trans_no=b.trans_no  l' +
+        'eft join t_supplier c on a.kodesup=c.supplier_code;')
     Left = 704
     Top = 376
-    object QCetakRincianFaktursupplier_code: TStringField
+    object QCetakRincianFaktursupplier_code: TMemoField
       FieldName = 'supplier_code'
       ReadOnly = True
-      Size = 10
+      BlobType = ftMemo
     end
     object QCetakRincianFaktursupplier_name: TStringField
       FieldName = 'supplier_name'
@@ -3603,7 +3586,6 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     end
     object QCetakRincianFakturtrans_date: TDateField
       FieldName = 'trans_date'
-      ReadOnly = True
     end
     object QCetakRincianFakturdue_date: TDateField
       FieldName = 'due_date'

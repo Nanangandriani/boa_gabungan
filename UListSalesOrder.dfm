@@ -283,6 +283,16 @@ object FListSalesOrder: TFListSalesOrder
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'NM_PKP'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama PKP'
+        Width = 198
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'KD_WILAYAH'
         Footers = <>
         Title.Alignment = taCenter
@@ -338,6 +348,10 @@ object FListSalesOrder: TFListSalesOrder
       FieldName = 'PO_ORDER'
       Size = 100
     end
+    object MemMasterDataNM_PKP: TStringField
+      FieldName = 'NM_PKP'
+      Size = 255
+    end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object KD_PELANGGAN: TMTStringDataFieldEh
@@ -388,6 +402,12 @@ object FListSalesOrder: TFListSalesOrder
           StringDataType = fdtStringEh
           DisplayWidth = 100
           Size = 100
+        end
+        object NM_PKP: TMTStringDataFieldEh
+          FieldName = 'NM_PKP'
+          StringDataType = fdtStringEh
+          DisplayWidth = 255
+          Size = 255
         end
       end
       object RecordsList: TRecordsListEh

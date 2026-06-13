@@ -261,7 +261,7 @@ begin
             'group by code_account '+
             ' UNION ALL '+
             'SELECT code_account,(case when sum(paid_amount)is null then 0 else sum(paid_amount) end)jum_debit '+
-            'from t_cash_bank_expenditure_det where "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
+            'from vexpenditure_det where "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
             'and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
             'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +' group by code_account '+
             'order by code_account)a on a.code_account=x.kodesp '+

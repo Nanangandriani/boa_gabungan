@@ -397,16 +397,23 @@ begin
         if (QLaporanHarianSisaNota.FieldValues['amount_returns']=0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']>0) then
         begin //pelunasan
           MemTableEh1['amount_bayar2']:= FormatFloat('#,#0.00;(#,#0.00);#,#0',QLaporanHarianSisaNota.FieldValues['amount_bayar']);
-          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_bayar']);
+          if not QLaporanHarianSisaNota.FieldByName('trans_date_bayar').IsNull then
+          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_bayar']) else
+          MemTableEh1['trans_date_bayar2']:='';
         end else if (QLaporanHarianSisaNota.FieldValues['amount_returns']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']=0) then
         begin  //retur
           MemTableEh1['amount_bayar2']:=FormatFloat('#,#0.00;(#,#0.00);#,#0',QLaporanHarianSisaNota.FieldValues['amount_returns']);
-          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_returns']);
+          if not QLaporanHarianSisaNota.FieldByName('trans_date_returns').IsNull then
+          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_returns']) else
+          MemTableEh1['trans_date_bayar2']:='';
         end else if (QLaporanHarianSisaNota.FieldValues['amount_jurnal_memorial']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']=0) AND (QLaporanHarianSisaNota.FieldValues['amount_returns']=0) then
         begin   //jurnal memorial
           MemTableEh1['amount_bayar2']:=FormatFloat('#,#0.00;(#,#0.00);#,#0',QLaporanHarianSisaNota.FieldValues['amount_jurnal_memorial']) ;
-          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_jurnal_memorial']);
-        end else if (QLaporanHarianSisaNota.FieldValues['amount_returns']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_jurnal_memorial']=0) then
+          if not QLaporanHarianSisaNota.FieldByName('trans_date_jurnal_memorial').IsNull then
+          MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_jurnal_memorial']) else
+          MemTableEh1['trans_date_bayar2']:='';
+        end
+        else if (QLaporanHarianSisaNota.FieldValues['amount_returns']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_bayar']>0) AND (QLaporanHarianSisaNota.FieldValues['amount_jurnal_memorial']=0) then
         begin  //pelunasan+retur
           MemTableEh1['amount_bayar2']:=FormatFloat('#,#0.00;(#,#0.00);#,#0',QLaporanHarianSisaNota.FieldValues['amount_bayar']) +sLineBreak+ FormatFloat('#,#0.00;(#,#0.00);#,#0',QLaporanHarianSisaNota.FieldValues['amount_returns']);
           MemTableEh1['trans_date_bayar2']:=FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_returns']) +sLineBreak+ FormatDateTime('dd/mm/yyyy', QLaporanHarianSisaNota.FieldValues['trans_date_returns']);

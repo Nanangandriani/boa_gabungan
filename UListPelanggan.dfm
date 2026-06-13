@@ -212,6 +212,16 @@ object FListPelanggan: TFListPelanggan
         Title.Alignment = taCenter
         Title.Caption = 'Golongan'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'va'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'VA'
+        Width = 165
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -230,8 +240,8 @@ object FListPelanggan: TFListPelanggan
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 584
-    Top = 128
+    Left = 416
+    Top = 184
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -1098,8 +1108,9 @@ object FListPelanggan: TFListPelanggan
         'nan,tp,'
       
         'kecamatan,name_type,name_selling_type,name_group,name_type_busin' +
-        'ess,no_npwp,no_nik,code_cust_old from get_customer() WHERE delet' +
-        'ed_at is null order by created_at Desc')
+        'ess,no_npwp,no_nik,code_cust_old,concat(company_code_bank, '#39'-'#39', ' +
+        'number_va) AS va from get_customer() WHERE deleted_at is null or' +
+        'der by created_at Desc')
     Left = 588
     Top = 192
     object QPelanggancustomer_code: TMemoField
@@ -1191,11 +1202,16 @@ object FListPelanggan: TFListPelanggan
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QPelangganva: TMemoField
+      FieldName = 'va'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object DsPelanggan: TDataSource
     DataSet = QPelanggan
-    Left = 641
-    Top = 128
+    Left = 665
+    Top = 200
   end
   object ActMenu: TActionManager
     Left = 512

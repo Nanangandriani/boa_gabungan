@@ -7,7 +7,9 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, Vcl.StdCtrls, EhLibVCL, GridsEh, DBAxisGridsEh,
   DBGridEh, RzButton, RzBtnEdt, RzEdit, RzCmboBx, Vcl.Mask, Vcl.ExtCtrls,
-  MemTableDataEh, Data.DB, MemTableEh, MemDS, DBAccess, Uni, Vcl.ComCtrls;
+  MemTableDataEh, Data.DB, MemTableEh, MemDS, DBAccess, Uni, Vcl.ComCtrls,
+  Vcl.Buttons, uJSON, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,IdIOHandlerStack, IdSSL, IdBaseComponent,
+  IdIOHandler, IdIOHandlerSocket, IdSSLOpenSSL;
 
 type
   TFNew_PO = class(TForm)
@@ -124,6 +126,8 @@ type
     ed_vehicle_group_id: TEdit;
     ed_vehicle_group_sort_number: TEdit;
     Ed_kode: TEdit;
+    SpeedButton1: TSpeedButton;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -171,6 +175,7 @@ type
     procedure DBGridDetailColumns17EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridDetailColExit(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -213,6 +218,7 @@ var
   subtotal,ppn,pph,grandtotal:Real;
   StatusTr,Statustr2:integer;
   kode_br,kd_sp,vehicles_group,vehicles_id,vehicles_no:string;
+  json: TMyJSON;
 implementation
 
 {$R *.dfm}
@@ -220,7 +226,7 @@ implementation
 uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
   UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset, USettingPO,
   UListSupplier,UAkun_Perkiraan_TerimaMat,UCari_DaftarPerk, U_List_SO_PO,
-  UListItemSo, UlistItemDo, maenangka;
+  UListItemSo, UlistItemDo, maenangka, UListNoTransaksi;
 
 var
   realFNew_PO: TFNew_PO;
@@ -231,6 +237,86 @@ begin
     FNew_PO:= RealFNew_PO
   else
     Application.CreateForm(TFNew_PO, Result);
+end;
+
+function UpdateStatusAssetViaPost(vid_detpengajuan,vdesc,vstatus,vuser,vlpb,vpo,vspesification,vbrand,no_inv,vdate:string; vqty,vprice:integer): string;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2,KetAlasan  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt: Integer;
+  iii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date : TDate;
+      //component
+      gNet          :TIdHTTP;
+      //respon component
+      httpresult    : TIdHTTP ;
+      resp: TMemoryStream;
+      slParam   : TStringStream;
+      //slParams : TStringStream;
+begin
+      resp := TMemoryStream.Create;
+      BaseUrl:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''baseurlasset''');
+      key:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''keyapiasset''');
+      vtoken:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''tokenapiasset''');
+      Vpath:='api/submission/'+vid_detpengajuan+'';
+
+      vBody:='{'+
+             '"desc":"'+vdesc+'",'+
+             '"status":"'+vstatus+'",'+
+             '"user":"'+vuser+'",'+
+             '"lpb":"'+vlpb+'",'+
+             '"po":"'+vpo+'",'+
+             '"qty":"'+IntToStr(vqty)+'",'+
+             '"brand":"'+vbrand+'",'+
+             '"spesification":"'+vspesification+'",'+
+             '"purchase_date": "'+Vdate+'",'+
+             '"invoice": "'+no_inv+'",'+
+             '"purchase_value": "'+IntToStr(vprice)+'", '+
+             '"asset_usage_period": 0,'+
+             '"asset_usage_period_unit": "",'+
+             '"asset_code_ex": ""'+
+             '}';
+
+      url:= BaseUrl+Vpath;
+      slParam := TStringStream.Create('{'+
+                                      '"desc":"'+vdesc+'",'+
+                                      '"status":"'+vstatus+'",'+
+                                      '"user":"'+vuser+'",'+
+                                      '"lpb":"'+vlpb+'",'+
+                                      '"po":"'+vpo+'",'+
+                                      '"qty":"'+IntToStr(vqty)+'",'+
+                                      '"brand":"'+vbrand+'",'+
+                                      '"spesification":"'+vspesification+'",'+
+                                      '"purchase_date": "'+Vdate+'",'+
+                                      '"invoice": "'+no_inv+'",'+
+                                      '"purchase_value": "'+IntToStr(vprice)+'", '+
+                                      '"asset_usage_period": 0,'+
+                                      '"asset_usage_period_unit": "",'+
+                                      '"asset_code_ex": ""'+
+                                      '}');
+
+      TRY
+      gNet :=  TIdHTTP.Create(nil);
+      gNet.HandleRedirects := true;
+      gNet.ReadTimeout := 5000;
+      gNet.Request.Accept := 'application/form-data';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      gNet.Request.ContentType := 'application/json';
+      //res:=  gNet.get(url);
+      UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url+vBody);
+      UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url+vBody);
+      //Result := gNet.get(url);
+      Result := gNet.Put(url, slParam);
+      //res:=  gNet.Post(url, slParam);
+      slParam.Position := 0;
+      finally
+       resp.Free;
+       slParam.free;
+      end;
 end;
 
 procedure TFNew_Po.load;
@@ -2477,6 +2563,10 @@ begin
           MemItempo.Next;
       end;
   end;
+  if ref_code='AS' then
+  begin
+      UpdateStatusAssetViaPost(MemItempo['id_detail_asset'], '0','2',nm, '0',EdNopo.Text, MemItempo['spesifikasi_asset'],'','',''+FormatDateTime('yyyy-mm-dd',dtpo.date)+'', MemItempo['QTY'],MemItempo['grandtotal']);
+  end;
 
   with dm.Qtemp do
   begin
@@ -3144,6 +3234,14 @@ begin
       Exit;
     end;
 
+
+    if CbKategori.Text='' then
+    begin
+      MessageDlg('Kategory PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      CbKategori.SetFocus;
+      Exit;
+    end;
+
     if EdStatus.Text='' then
     begin
       MessageDlg('Status PO Tidak Boleh Kosong ',MtWarning,[MbOk],0);
@@ -3471,6 +3569,14 @@ begin
       end;
 end;
 
+
+procedure TFNew_PO.SpeedButton1Click(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='pembelian';
+  FListNoTransaksi.update_grid('po_no','order_no','t_po','WHERE po_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtpo.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY po_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
 
 procedure TFNew_PO.HitungdetFleksible;
 var

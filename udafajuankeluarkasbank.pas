@@ -898,7 +898,7 @@ begin
              'FROM "public"."t_cash_bank_expenditure_submission" A WHERE "voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
              'AND deleted_at IS NULL) A '+
              'LEFT JOIN '+
-             '(SELECT no_voucher,code_account,name_account,position,paid_amount,description as ket,code_account_header, '+
+             '(SELECT no_voucher,code_account,name_account,position,paid_amount*-1 as paid_amount,description as ket,code_account_header, '+
              'amount_rate_results,module_id,trans_date FROM "public"."t_cash_bank_expenditure_submission_det" aa '+
              'LEFT JOIN t_ak_account bb ON aa."code_account_header" = bb.code) b ON A."voucher_no" = b."no_voucher" '+
              'WHERE A."voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+

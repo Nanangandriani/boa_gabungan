@@ -1,9 +1,10 @@
 object FSingkronisasi: TFSingkronisasi
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Singkronisasi'
-  ClientHeight = 442
-  ClientWidth = 794
+  ClientHeight = 441
+  ClientWidth = 790
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +17,13 @@ object FSingkronisasi: TFSingkronisasi
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 794
+    Width = 790
     Height = 129
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 790
+    ExplicitWidth = 786
     object LabelPelanggan: TLabel
       Left = 20
       Top = 19
@@ -67,7 +68,7 @@ object FSingkronisasi: TFSingkronisasi
     end
     object btTampilkan: TRzBitBtn
       Left = 462
-      Top = 72
+      Top = 71
       Width = 132
       Caption = 'Tampilkan'
       TabOrder = 0
@@ -213,30 +214,40 @@ object FSingkronisasi: TFSingkronisasi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
     end
+    object Memo1: TMemo
+      Left = 462
+      Top = 2
+      Width = 259
+      Height = 64
+      Lines.Strings = (
+        'Memo1')
+      TabOrder = 5
+      Visible = False
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 129
-    Width = 794
-    Height = 313
+    Width = 790
+    Height = 312
     Hint = ''
     ActivePage = TabSData
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 790
-    ExplicitHeight = 312
+    ExplicitWidth = 786
+    ExplicitHeight = 311
     FixedDimension = 21
     object TabSData: TRzTabSheet
       Caption = 'Data'
-      ExplicitWidth = 786
-      ExplicitHeight = 287
+      ExplicitWidth = 782
+      ExplicitHeight = 286
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 790
-        Height = 288
+        Width = 786
+        Height = 287
         Align = alClient
         AutoFitColWidths = True
         DataSource = DataSource1
@@ -346,5 +357,21 @@ object FSingkronisasi: TFSingkronisasi
       object RecordsList: TRecordsListEh
       end
     end
+  end
+  object IdHTTP1: TIdHTTP
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    Left = 16
+    Top = 96
   end
 end

@@ -81,6 +81,7 @@ type
   public
     { Public declarations }
     //vKODEPRSH :string;
+    procedure queryreport;
   end;
 
 //var
@@ -104,6 +105,201 @@ begin
   Application.CreateForm(TFLap_Buku_Harian_Kas,Result);
 end;
 
+Procedure TFLap_Buku_Harian_Kas.queryreport;    //cr ds 29-05-2026
+begin
+    if DateTimePicker1.EditValue= null then
+      begin
+      MessageDlg('Tanggal Mulai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DateTimePicker1.SetFocus;
+      Exit;
+    end;
+    if DateTimePicker2.EditValue= null then
+    begin
+      MessageDlg('Tanggal Selesai Perkiraan Tidak boleh Kosong ',MtWarning,[MbOk],0);
+      DateTimePicker2.SetFocus;
+      Exit;
+    end;
+    dm.QPerusahaan.Close;
+    dm.QPerusahaan.Open;
+    if FormatDateTime('mm',datetimepicker1.EditValue)='01' then
+    begin
+  //  ShowMessage('test') ;
+       with QKet do
+        begin
+           close;
+           sql.Clear;
+           sql.Text:=' select *, round(cast(sum(sa+db-kredit) over (ORDER BY nomor asc ) as numeric),2) saldo from '+
+                     '( /*transaksi*/ '+
+                     'select "row_number"() over (order by tgltrans,no_voucher)+1 nomor ,no_voucher,code_account,"position",tgltrans,to_,nm,nosj,remark,ket2,0 sa,db,kredit  from '+
+                     '(select no_voucher,code_account,"position",trans_date as tgltrans,"to_", '+
+                     '(case when y.acc_balance is null then x."to_"  '+
+                     //'when y.acc_balance=''2110'' then  nm  '+
+                     'when y.acc_balance=''2101.01'' then  nm  '+
+                     //'when y.acc_balance=''2130'' then '''' '+
+                     'when y.acc_balance in(SELECT account_code FROM t_expenses_payable_account) then '''' '+
+                     //'when y.acc_balance=''2120'' then nm end) as nm,nosj,remark, '+
+                     'when y.acc_balance in(SELECT account_code FROM t_asset_payable_account) then nm end) as nm,nosj,remark, '+
+                     '(case when acc_balance is null then  concat(x.remark,'' '')  '+
+                     //'when acc_balance=''2110'' then x."to_"  '+
+                     'when acc_balance=''2101.01'' then x."to_"  '+
+                     //'when acc_balance=''2130'' then x."to_"  '+
+                     'when acc_balance in (SELECT account_code FROM t_expenses_payable_account) then x."to_"  '+
+                     //'when acc_balance=''2120'' then x."to_" end) as ket2,0 db ,jumlah kredit from '+
+                     'when acc_balance in (SELECT account_code FROM t_asset_payable_account) then x."to_" end) as ket2,0 db ,jumlah kredit from '+
+                     '(select d.no_voucher,d.code_account,d."position",d.trans_date,k.remark,k.to_, '+
+                     '(case when k."currency"=''USD'' then k.amount*k.kurs else k.amount end) jumlah from t_cash_bank_expenditure_det d '+
+                     'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
+                     'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
+                     'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
+                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
+                     //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     ') e on d.no_voucher=e.no_voucher '+
+                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
+                     'and d."position"=''K''  and k.deleted_at is null'+
+                     //'and k.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     ')x '+
+                     'left join '+
+                     '(SELECT distinct voucher_no,string_agg (concat(item_name,'' '',to_char(qty,''FM999G999G990''),'' '',unit),'', '')nm,acc_balance  FROM '+
+                     '(SELECT  a.voucher_no,max(a.id)id,a.item_name,sum(a.qty) qty,a.unit,acc_balance  FROM '+
+                     '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payable a '+
+                     //'INNER JOIN t_ak_account b  on a.account_acc= b.code '+
+                     'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 '+
+                     //'LEFT JOIN t_item_receive d ON a.invoice_no= d.receive_no '+
+                     //'INNER JOIN t_item_receive_det e ON d.receive_no=e.receive_no '+
+                     'LEFT JOIN t_purchase_invoice d ON a.invoice_no= d.trans_no '+
+                     'INNER JOIN t_purchase_invoice_det e ON d.trans_no=e.trans_no '+
+                     'INNER JOIN t_item_stock f ON e.item_stock_code=f.item_stock_code '+
+                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
+                     'GROUP BY voucher_no,acc_balance ) y ON x.no_voucher=y.voucher_no '+
+                     'left join '+
+                     '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
+                     '(SELECT * FROM '+
+                     '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
+                     'FROM t_cash_bank_expenditure_payable a '+
+                     'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
+                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
+                     'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_date '+
+                     'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,trans_date) a GROUP BY voucher_no,trans_date ) z  ON y.voucher_no=z.voucher_no '+
+                     'UNION ALL '+
+                     'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,'''' as ket2,paid_amount debit,0 kredit from '+
+                     '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher where a.deleted_at is null)j '+
+                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
+                     'and "position"=''D'' '+
+                     //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     'UNION ALL '+
+                     'select voucher_no as voucher,code_account as kodesp,''D''::character varying as dk,trans_date as tgltrans,'''' kepada,'''' nm,'''' sj,description::character varying as ket, description::character varying as ket2,paid_amount debit,0 kredit from '+
+                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'and "position"=''D''  and code_account=''1101.01'' '+
+                     'UNION ALL '+
+                     'SELECT  voucher,kredit_account as kodesp,''K''::character varying as dk,tgltrans,''''kepada,'''' nm, '''' sj,information::character varying as ket,information::character varying as ket2,debit,kredit from '+
+                     '(select a.adjustment_proof_no as voucher,b.kredit_account,''K''::character varying as dk,a."date" as tgltrans,a.information,a.information as ket2,b.debit,b.kredit from t_adjustment_journal a '+
+                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'and b.kredit_account=''1101.01'' order by tgltrans,voucher Asc)n ) x '+
+
+                     'UNION '+
+                     '/*Saldo awal*/ '+
+                     'select 1 nomor,'''' voucher,'''' kodesp,'''' dk,null tgltrans,'''' kepada,'''' nm,'''' nosj,'' Saldo Awal ''  ket,'' Saldo Awal ''  ket2 ,  round(cast(total as numeric),2) saldosa,0 db,0 kredit '+
+                     ' from (select ab.account_code,(ab.balance+ case when gl2.amount<>0 then gl2.amount else 0 end) total   from t_ak_account_balance ab LEFT JOIN  '+
+                     ' (select sum(d-k) amount,account_code from (select case when status_dk=''D'' then amount else 0 end d ,case when status_dk=''K'' then amount else 0 end k,'+
+                     ' account_code from t_general_ledger where  module_id in (4,5,6) and account_code=''1101.01'' and '+
+                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',datetimepicker1.EditValue),'-01'))+' and '+
+                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',datetimepicker1.EditValue))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
+                    ' where trans_year='+QuotedStr(IntToStr(StrToInt(FormatDateTime('yyyy',datetimepicker1.EditValue))-1))+' and trans_month=''12'' and ab.account_code=''1101.01'')sa) xxx ORDER BY nomor ASC ';
+           Open;
+        end;
+    end;
+       if FormatDateTime('mm',datetimepicker1.EditValue)>'01' then
+    begin
+
+    //ShowMessage('test2') ;
+       with QKet do
+        begin
+           close;
+           sql.Clear;
+           sql.Text:=' select *, round(cast(sum(sa+db-kredit) over (ORDER BY nomor asc ) as numeric),2) saldo from '+
+                     '( /*transaksi*/ '+
+                     'select "row_number"() over (order by tgltrans,no_voucher)+1 nomor ,no_voucher,code_account,"position",tgltrans,to_,nm,nosj,remark,ket2,0 sa,db,kredit  from '+
+                     '(select no_voucher,code_account,"position",trans_date as tgltrans,"to_", '+
+                     '(case when y.acc_balance is null then x."to_"  '+
+                     //'when y.acc_balance=''2110'' then  nm  '+
+                     'when y.acc_balance=''2101.01'' then  nm  '+
+                     //'when y.acc_balance=''2130'' then '''' '+
+                     'when y.acc_balance in(SELECT account_code FROM t_expenses_payable_account) then '''' '+
+                     //'when y.acc_balance=''2120'' then nm end) as nm,nosj,remark, '+
+                     'when y.acc_balance in(SELECT account_code FROM t_asset_payable_account) then nm end) as nm,nosj,remark, '+
+                     '(case when acc_balance is null then  concat(x.remark,'' '')  '+
+                     //'when acc_balance=''2110'' then x."to_"  '+
+                     'when acc_balance=''2101.01'' then x."to_"  '+
+                     //'when acc_balance=''2130'' then x."to_"  '+
+                     'when acc_balance in (SELECT account_code FROM t_expenses_payable_account) then x."to_"  '+
+                     //'when acc_balance=''2120'' then x."to_" end) as ket2,0 db ,jumlah kredit from '+
+                     'when acc_balance in (SELECT account_code FROM t_asset_payable_account) then x."to_" end) as ket2,0 db ,jumlah kredit from '+
+                     '(select d.no_voucher,d.code_account,d."position",d.trans_date,k.remark,k.to_, '+
+                     '(case when k."currency"=''USD'' then k.amount*k.kurs else k.amount end) jumlah from t_cash_bank_expenditure_det d '+
+                     'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
+                     'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
+                     'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
+                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
+                     //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     ') e on d.no_voucher=e.no_voucher '+
+                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
+                     'and d."position"=''K''  and k.deleted_at is null'+
+                     //'and k.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     ')x '+
+                     'left join '+
+                     '(SELECT distinct voucher_no,string_agg (concat(item_name,'' '',to_char(qty,''FM999G999G990''),'' '',unit),'', '')nm,acc_balance  FROM '+
+                     '(SELECT  a.voucher_no,max(a.id)id,a.item_name,sum(a.qty) qty,a.unit,acc_balance  FROM '+
+                     '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payable a '+
+                     //'INNER JOIN t_ak_account b  on a.account_acc= b.code '+
+                     'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 '+
+                     //'LEFT JOIN t_item_receive d ON a.invoice_no= d.receive_no '+
+                     //'INNER JOIN t_item_receive_det e ON d.receive_no=e.receive_no '+
+                     'LEFT JOIN t_purchase_invoice d ON a.invoice_no= d.trans_no '+
+                     'INNER JOIN t_purchase_invoice_det e ON d.trans_no=e.trans_no '+
+                     'INNER JOIN t_item_stock f ON e.item_stock_code=f.item_stock_code '+
+                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
+                     'GROUP BY voucher_no,acc_balance ) y ON x.no_voucher=y.voucher_no '+
+                     'left join '+
+                     '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
+                     '(SELECT * FROM '+
+                     '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
+                     'FROM t_cash_bank_expenditure_payable a '+
+                     'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
+                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
+                     'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_date '+
+                     'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,trans_date) a GROUP BY voucher_no,trans_date ) z  ON y.voucher_no=z.voucher_no '+
+                     'UNION ALL '+
+                     'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,'''' as ket2,paid_amount debit,0 kredit from '+
+                     '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher where a.deleted_at is null)j '+
+                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
+                     'and "position"=''D'' '+
+                     //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
+                     'UNION ALL '+
+                     'select voucher_no as voucher,code_account as kodesp,''D''::character varying as dk,trans_date as tgltrans,'''' kepada,'''' nm,'''' sj,description::character varying as ket, description::character varying as ket2,paid_amount debit,0 kredit from '+
+                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'and "position"=''D''  and code_account=''1101.01'' '+
+                     'UNION ALL '+
+                     'SELECT  voucher,kredit_account as kodesp,''K''::character varying as dk,tgltrans,''''kepada,'''' nm, '''' sj,information::character varying as ket,information::character varying as ket2,debit,kredit from '+
+                     '(select a.adjustment_proof_no as voucher,b.kredit_account,''K''::character varying as dk,a."date" as tgltrans,a.information,a.information as ket2,b.debit,b.kredit from t_adjustment_journal a '+
+                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'and b.kredit_account=''1101.01'' order by tgltrans,voucher Asc)n ) x '+
+
+                     'UNION '+
+                     '/*Saldo awal*/ '+
+                     'select 1 nomor,'''' voucher,'''' kodesp,'''' dk,null tgltrans,'''' kepada,'''' nm,'''' nosj,'' Saldo Awal ''  ket,'' Saldo Awal ''  ket2 ,  round(cast(total as numeric),2) saldosa,0 db,0 kredit '+
+                     ' from (select ab.account_code,(ab.balance+ case when gl2.amount<>0 then gl2.amount else 0 end) total   from t_ak_account_balance ab LEFT JOIN  '+
+                     ' (select sum(d-k) amount,account_code from (select case when status_dk=''D'' then amount else 0 end d ,case when status_dk=''K'' then amount else 0 end k,'+
+                     ' account_code from t_general_ledger where  module_id in (4,5,6) and account_code=''1101.01'' and '+
+                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',datetimepicker1.EditValue),'-01'))+' and '+
+                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',datetimepicker1.EditValue))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
+                     ' where trans_year='+QuotedStr(FormatDateTime('yyyy',datetimepicker1.EditValue))+' and '+
+                     ' trans_month='+QuotedStr(IntToStr(StrToInt(FormatDateTime('mm',datetimepicker1.EditValue))-1))+''+
+                     ' and ab.account_code=''1101.01'') sa ) xxx ORDER BY nomor ASC ' ;
+             Open;
+        end;
+    end;
+end;
+
 procedure TFLap_Buku_Harian_Kas.datetimepicker1Change(Sender: TObject);
 begin
    //datetimepicker2.EditValue:=datetimepicker1.EditValue;
@@ -111,7 +307,7 @@ end;
 
 procedure TFLap_Buku_Harian_Kas.dxBarLargeButton3Click(Sender: TObject);
 begin
-    with QKet do
+{    with QKet do
     begin
        close;
        sql.Clear;
@@ -135,9 +331,9 @@ begin
                  'when acc_balance in (SELECT account_code FROM t_asset_payable_account) then x."to_" end) as ket2,0 db ,jumlah kredit from '+
                  '(select d.no_voucher,d.code_account,d."position",d.trans_date,k.remark,k.to_, '+
                  '(case when k."currency"=''USD'' then k.amount*k.kurs else k.amount end) jumlah from t_cash_bank_expenditure_det d '+
-                 'INNER JOIN vexpenditure k ON d.no_voucher=k.voucher_no '+
+                 'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
                  'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
-                 'INNER JOIN vexpenditure f ON e.no_voucher=f.voucher_no '+
+                 'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
                  'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
                  //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  ') e on d.no_voucher=e.no_voucher '+
@@ -148,7 +344,7 @@ begin
                  'left join '+
                  '(SELECT distinct voucher_no,string_agg (concat(item_name,'' '',to_char(qty,''FM999G999G990''),'' '',unit),'', '')nm,acc_balance  FROM '+
                  '(SELECT  a.voucher_no,max(a.id)id,a.item_name,sum(a.qty) qty,a.unit,acc_balance  FROM '+
-                 '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM vexpenditure_payable a '+
+                 '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payable a '+
                  //'INNER JOIN t_ak_account b  on a.account_acc= b.code '+
                  'INNER JOIN v_ak_account b on a.account_acc= b.account_code2 '+
                  //'LEFT JOIN t_item_receive d ON a.invoice_no= d.receive_no '+
@@ -162,16 +358,14 @@ begin
                  '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
                  '(SELECT * FROM '+
                  '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
-                 'FROM vexpenditure_payable a '+
+                 'FROM t_cash_bank_expenditure_payable a '+
                  'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
                  'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
                  'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_date '+
-                 'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,sj_no,trans_date) a GROUP BY voucher_no '+
-                 //' ,sj_no,trans_date '+
-                 ' ) z  ON y.voucher_no=z.voucher_no '+
+                 'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,sj_no,trans_date) a GROUP BY voucher_no,sj_no,trans_date ) z  ON y.voucher_no=z.voucher_no '+
                  'UNION ALL '+
-                 'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,remark as ket2,paid_amount debit,0 kredit from '+
-                 '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from vexpenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher)j '+
+                 'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,'''' as ket2,paid_amount debit,0 kredit from '+
+                 '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher)j '+
                  'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
                  'and "position"=''D'' '+
                  //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
@@ -196,17 +390,17 @@ begin
                  '(case when c.jumlah is null then 0 else c.jumlah end)jum_debit2, '+
                  '(case when b.jum_kredit is null then 0 else b.jum_kredit end)jum_kredit  from  (select code as kodesp from t_ak_account where code=''1101.01'')x '+
                  'left join(select code_account,(case when currency=''USD'' then sum(amount*kurs) else sum(amount) end)jum_debit from t_cash_bank_expenditure_det a '+
-                 'INNER JOIN vexpenditure b ON a.no_voucher=b.voucher_no '+
-                 'where (a.trans_date between ''2024-01-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' )  and code_account=''1101.01'' and position=''D'' '+
+                 'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_no '+
+                 'where (a.trans_date between ''2024-01-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' )  and code_account=''1101.01'' and dk=''D'' '+
                  //' and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  ' group by code_account,currency order by code_account)a on a.code_account=x.kodesp '+
                  'left join (select code_account,sum(jum_kredit)as jum_kredit from(select code_account,(case when currency=''USD'' then sum(amount*kurs) else sum(amount) end)jum_kredit from t_cash_bank_expenditure_det A '+
-                 'INNER JOIN vexpenditure b ON a.no_voucher=b.voucher_no '+
-                 'where (a.trans_date between ''2024-10-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' ) and code_account=''1101.01''  and position=''K'' '+
+                 'INNER JOIN t_cash_bank_expenditure b ON a.no_voucher=b.voucher_no '+
+                 'where (a.trans_date between ''2024-10-01'' and  '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' ) and code_account=''1101.01''  and dk=''K'' '+
                  //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  'group by code_account,currency order by code_account)x  group by code_account)b on b.code_account=x.kodesp '+
                  'left join(select akun_kredit,sum(paid_amount)as jumlah from '+
-                 '(SELECT * from "v_cash_receipts_cutoff" Where trans_date <= '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' )x group by akun_kredit)c on c.akun_kredit=x.kodesp) b on a.kodesp=b.kodesp '+
+                 '(SELECT * from "v_cash_receipts_cutoff" Where trans_date <= '+ QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue-1))+' )x group by akun_kredit)c on c.akun_kredit=x.kodesp) b on a.kodesp=b.kodesp '+
                  'left join (SELECT ''1101.01''::character varying as kodesp,(case when sum(kredit) ISNULL then 0 else sum(kredit) end) as jum_kredit2 '+
                  'from t_adjustment_journal a '+
                  'INNER JOIN t_adjustment_journal_det b on a.adjustment_proof_no=b.adjustment_proof_no '+
@@ -215,12 +409,13 @@ begin
                  '(SELECT ''1101.01''::character varying as kodesp,(case when sum(debit) ISNULL then 0 else sum(debit) end) as jum_debit4 from t_adjustment_journal a '+
                  'INNER JOIN t_adjustment_journal_det b on a.adjustment_proof_no=b.adjustment_proof_no '+
                  'WHERE (a."date" between ''2024-01-01'' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' ) and b.kredit_account=''1101.01'')n on m.kodesp=n.kodesp )x '+
-                 'LEFT JOIN  (select a.code_account,sum(a.paid_amount)as jum_debit from t_cash_bank_expenditure_det a,vexpenditure b '+
+                 'LEFT JOIN  (select a.code_account,sum(a.paid_amount)as jum_debit from t_cash_bank_expenditure_det a,t_cash_bank_expenditure b '+
                  'where a.no_voucher=b.voucher_no and a.code_account=''1101.01'' and a."position"=''D'' and b.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  'and (a."trans_date" between ''2024-01-01'' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue-1))+' ) group by a.code_account order by a.code_account) c  on c.code_account=x.kodesp) xx) xxx ORDER BY nomor ASC ';
 
-         Open;
-    end;
+         Open;        }
+    queryreport;                //cr ds 30-05-2026
+   // end;
     frxReport2.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Buku_Harian_Kas.fr3');
     Tfrxmemoview(frxReport2.FindObject('Memperiode')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',DateTimePicker1.EditValue)+' s/d '+FormatDateTime('dd mmmm yyyy',DateTimePicker2.EditValue);
     frxReport2.ReportOptions.Name:='Buku_Harian_Kas';
@@ -243,6 +438,7 @@ begin
     end;
 
     DBGridBukuHarianKas.StartLoadingStatus();
+    { off ds 30-05-2026
     with QBHKas do
     begin
       close;
@@ -262,9 +458,9 @@ begin
                  'when acc_balance in(SELECT account_code FROM t_asset_payable_account) then x."to_" end) as ket2,0 db ,jumlah kredit from '+
                  '(select d.no_voucher,d.code_account,d."position",d.trans_date,k.remark,k.to_, '+
                  '(case when k."currency"=''USD'' then k.amount*k.kurs else k.amount end) jumlah from t_cash_bank_expenditure_det d '+
-                 'INNER JOIN vexpenditure k ON d.no_voucher=k.voucher_no '+
+                 'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
                  'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
-                 'INNER JOIN vexpenditure f ON e.no_voucher=f.voucher_no '+
+                 'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
                  'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
                  //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  ') e on d.no_voucher=e.no_voucher '+
@@ -274,7 +470,7 @@ begin
                  'left join '+
                  '(SELECT distinct voucher_no,string_agg (concat(item_name,'' '',to_char(qty,''FM999G999G990''),'' '',unit),'', '')nm,acc_balance  FROM '+
                  '(SELECT  a.voucher_no,max(a.id)id,a.item_name,sum(a.qty) qty,a.unit,acc_balance  FROM '+
-                 '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM vexpenditure_payable a '+
+                 '(SELECT distinct a.voucher_no,e.id,f.item_name,sum(e.qty) qty,e.unit,b.code as acc_balance  FROM t_cash_bank_expenditure_payable a '+
                  'INNER JOIN v_ak_account b  on a.account_acc= b.account_code2 '+
                  'LEFT JOIN t_purchase_invoice d ON a.invoice_no= d.trans_no '+
                  'INNER JOIN t_purchase_invoice_det e ON d.trans_no=e.trans_no '+
@@ -285,13 +481,13 @@ begin
                  '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
                  '(SELECT * FROM '+
                  '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
-                 'FROM vexpenditure_payable a '+
+                 'FROM t_cash_bank_expenditure_payable a '+
                  'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
                  'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_no '+
                  'ORDER BY b.trans_no,a.invoice_no)A ORDER BY voucher_no,sj_no,invoice_no) a GROUP BY voucher_no,sj_no,invoice_no ) z  ON y.voucher_no=z.voucher_no '+
                  //'UNION ALL '+
                  //'select a.no_voucher,a.code_account as kodesp,a."position",a.trans_date as tgltrans,'''' kepada,'''' nm,'''' nosj,description as ket,description as ket2,paid_amount debit,0 kredit from t_cash_bank_expenditure_det a '+
-                 //'INNER JOIN vexpenditure b on a.no_voucher=b.voucher_no '+
+                 //'INNER JOIN t_cash_bank_expenditure b on a.no_voucher=b.voucher_no '+
                  //'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                  'UNION ALL '+
                  'select voucher_no as voucher,code_account as kodesp,''D''::character varying as dk,trans_date as tgltrans,'''' kepada,'''' nm,'''' sj,description::character varying as ket, description::character varying as ket2,paid_amount debit,0 kredit from '+
@@ -303,7 +499,8 @@ begin
                  'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
                  'and b.kredit_account=''1101.01'' order by tgltrans,voucher Asc)n ) x ';
       open;
-    end;
+    end;           }
+    queryreport;      //cr ds 30-05-2026
       MemBHKas.Close;
       MemBHKas.Open;
       QBHKas.Close;

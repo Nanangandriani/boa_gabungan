@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh,
-  Vcl.ComCtrls, MemTableDataEh, Data.DB, MemTableEh;
+  Vcl.ComCtrls, MemTableDataEh, Data.DB, MemTableEh, dxBar;
 
 type
   TFMasterData = class(TForm)
@@ -53,7 +53,8 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   UListPenjualan, UListSales_Order, UListReturPenjualan, Udaftar_TP, UNewBank,
   URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan,
   USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan, URegisterCekMundur,
-  UDaftarTagihan, UKelompokBiayaWilayah, UPengajuanApproval_JurnalTrans;
+  UDaftarTagihan, UKelompokBiayaWilayah, UPengajuanApproval_JurnalTrans,
+  UExportReport;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -75,6 +76,26 @@ begin
       ednm_tp.text:='';
       edkd_kab.text:='';
       ednm_kab.text:='';
+    end;
+    //Nanang
+    if vcall='exportreport' then
+    begin
+      FExportReport.cbLaporoan.EditValue:= MemMasterData['NM_MASTER'];
+      FExportReport.vSP:=MemMasterData['KETERANGAN'];
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select is_date_range from t_export_report_config where id='+QuotedStr(MemMasterData['KD_MASTER']);
+        open;
+      end;
+      if dm.Qtemp.FieldValues['is_date_range']=False then
+      begin
+        FExportReport.dtTanggalAwal.Visible:=ivNever;
+      end else begin
+        FExportReport.dtTanggalAwal.Visible := ivAlways;
+      end;
+
     end;
 
     if vcall='apppenjualan_tp' then
@@ -1644,7 +1665,8 @@ procedure TFMasterData.FormShow(Sender: TObject);
 begin
   DBGridCustomer.SearchPanel.SearchingText:='';
   //Nanang
-  if (FMasterData.vcall='do_lokasi_muat') OR (FMasterData.vcall='do_lokasi_bongkar') OR (FMasterData.vcall='logmenu') then
+  if (FMasterData.vcall='do_lokasi_muat') OR (FMasterData.vcall='do_lokasi_bongkar')
+  OR (FMasterData.vcall='logmenu') or (FMasterData.vcall='exportreport') then
   begin
     DBGridCustomer.Columns[0].Visible:=False;
     DBGridCustomer.Columns[2].Visible:=False;

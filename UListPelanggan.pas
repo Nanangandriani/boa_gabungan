@@ -95,6 +95,7 @@ type
     QPelanggancode_cust_old: TMemoField;
     QPelanggankecamatan: TMemoField;
     cbKecamatan: TcxBarEditItem;
+    QPelangganva: TMemoField;
     procedure dxBarLargeNewClick(Sender: TObject);
     procedure dxBarUpdateClick(Sender: TObject);
     procedure dxBarRefreshClick(Sender: TObject);
@@ -292,7 +293,7 @@ begin
       SQL.Clear;
       SQL.Text:='select customer_code, customer_name, email, address, contact_person1 as telp, '+
                 'payment_term, customer_name_pkp,kabupaten,karesidenan,Upper(kecamatan) kecamatan, '+
-                'tp,name_type,name_selling_type,name_group,name_type_business,no_npwp,no_nik,code_cust_old from get_customer() '+
+                'tp,name_type,name_selling_type,name_group,name_type_business,no_npwp,no_nik,code_cust_old,concat(company_code_bank, ''-'', number_va) AS va from get_customer() '+
                 'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+strWhereJenisUsaha+' order by created_at Desc';
       Open;
     end;

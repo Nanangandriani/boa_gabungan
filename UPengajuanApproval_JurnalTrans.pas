@@ -262,7 +262,7 @@ begin
                   ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.date))+' '+vkategori+' and approval_status=false';
         open;
     end;
-  QPembelian.first;
+{  QPembelian.first;
   while not QPembelian.Eof do
   begin
     MemPembelian.Insert;
@@ -278,8 +278,14 @@ begin
     MemPembelian['stat_balance']:=QPembelian['stat_balance'];
     MemPembelian.Post;
     QPembelian.Next;
-  end;
+  end;                      }
+  MemPembelian.DisableControls;
+   try
+MemPembelian.LoadFromDataSet(QPembelian,-1,lmCopy, False);
+   finally MemPembelian.EnableControls;
+   end;
   Qdetail_Pembelian.Open;
+
   DBGridEh1.FinishLoadingStatus();
 end;
 
@@ -372,7 +378,7 @@ begin
     end;
   end;
 // qpenjualan.First;
-  qpenjualan.open;
+ { qpenjualan.open;
   while not Qpenjualan.Eof do
   begin
     MemPenjualan.Insert;
@@ -388,7 +394,13 @@ begin
     MemPenjualan.Post;
     qpenjualan.Next;
   end;
-  Qdetail_Penjualan.Open;
+  Qdetail_Penjualan.Open;   }
+    MemPenjualan.DisableControls;
+   try
+      MemPenjualan.LoadFromDataSet(Qpenjualan,-1,lmCopy, False);
+   finally MemPenjualan.EnableControls;
+   end;
+   QDetail_Penjualan.Open;
   DBGridEh2.FinishLoadingStatus();
 end;
 
@@ -477,6 +489,7 @@ begin
   MemMemorial.EmptyTable;
   MemMemorial.Close;
   MemMemorial.Open;
+  QDetailMemorial.Close;
   with dm.Qtemp do
   begin
     close;
@@ -484,50 +497,22 @@ begin
     // cr ds 13-05-2026
     if CkApp_Memo.Checked=true then
     begin
-      sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
-                ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
-                ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
-                ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
-                ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
-                ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
-                ' GROUP BY trans_no) a '+
-                ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
-                ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
-                ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
-                ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
-                ' on a.memo_no=cek_balance.jurnal_no'+
-                ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
-                ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
-                ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
-                ' and status_dk=''D'' and approved_status=true GROUP BY a.memo_no, a.trans_date, a.notes, '+
-                ' b.approved_status,b.module_id,cek_balance.stat_balance '+
-                ' ORDER BY "a".trans_date DESC ';
+      sql.Text:=' SELECT * from "v_app_memorial" where '+
+                ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
+                ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
+                ' and status_app=true ';
       execute;
     end;
     if CkApp_Memo.Checked=false then
     begin
-      sql.Text:=' SELECT	a.memo_no,a.trans_date,a.trans_date,sum(b.amount) as amount,'+
-                ' a.notes,b.approved_status,b.module_id,cek_balance.stat_balance  FROM	(SELECT memo_no,trans_date,'+
-                ' notes,bk_no,faktur_no,deleted_at from t_memorial_journal)  AS "a" '+
-                ' left join t_general_ledger b on a.memo_no=b.trans_no  '+
-                ' left join (SELECT a.trans_no as jurnal_no, amount_d, amount_k, '+
-                ' amount_d-amount_k as stat_balance from (SELECT trans_no from t_general_ledger '+
-                ' GROUP BY trans_no) a '+
-                ' left join (SELECT trans_no, sum(amount) as amount_d from t_general_ledger '+
-                ' where status_dk=''D'' GROUP BY trans_no) d on a.trans_no=d.trans_no '+
-                ' left join (SELECT trans_no, sum(amount) as amount_k from t_general_ledger '+
-                ' where status_dk=''K'' GROUP BY trans_no) k on a.trans_no=k.trans_no) cek_balance '+
-                ' on a.memo_no=cek_balance.jurnal_no'+
-                ' where "a".deleted_at IS NULL and b.module_id= ''5'' and  '+
-                ' a.trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
-                ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
-                ' and status_dk=''D'' and approved_status=False GROUP BY a.memo_no, a.trans_date, a.notes, '+
-                ' b.approved_status,b.module_id,cek_balance.stat_balance '+
-                ' ORDER BY "a".trans_date DESC ';
-      execute;
+        sql.Text:=' SELECT * from "v_app_memorial" where '+
+                ' trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwalMemorial.date))+' '+
+                ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhirMemorial.date))+' '+
+                ' and status_app=false ';
+        execute;
     end;
   end;
-  dm.Qtemp.First;
+ { dm.Qtemp.First;
   while not dm.Qtemp.Eof do
   begin
     MemMemorial.Insert;
@@ -541,7 +526,13 @@ begin
     dm.Qtemp.Next;
   end;
   QDetailMemorial.Close;
-  QDetailMemorial.Open;
+  QDetailMemorial.Open;      }
+      MemMemorial.DisableControls;
+   try
+      MemMemorial.LoadFromDataSet(dm.Qtemp,-1,lmCopy, False);
+   finally MemMemorial.EnableControls;
+   end;
+   QDetailMemorial.Open;
 end;
 
 procedure TFPengajuan_AppJurnal_Trans.CbmoduleSelect(Sender: TObject);
@@ -1155,6 +1146,7 @@ begin
   MemKas.Close;
   MemKas.Open;
   MemKas.EmptyTable;
+  QDetail_kas.Close;
   with Qkas do
   begin
     close;
@@ -1182,7 +1174,7 @@ begin
     if ckapp_kas.Checked=true then
     begin
       sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
-      ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
+      ' approved_status status_app,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
       ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
       ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
       ' '+vKaresidenan+vtp+vKabupaten+' and approved_status=true ';                             // cr ds 19-02-2026
@@ -1191,29 +1183,36 @@ begin
     if ckapp_kas.Checked=false then
     begin
       sql.Text:='select  cast(trans_no as varchar(100)) trans_no,trans_date,created_at,jumlah,ket,'+
-      ' approved_status,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
+      ' approved_status status_app,module_id,stat_balance,code_tp,tp,code_karesidenan,karesidenan,code_kabupaten,kabupaten '+
       ' from "v_app_kas_bank" where module_id= '+quotedstr(module_id)+' and trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai_kas.date))+''+
       ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai_kas.date))+''+
       ' '+vKaresidenan+vtp+vKabupaten+' and approved_status=False ';                             // cr ds 19-02-2026
       execute;
     end;
   end;
-  Qkas.First;
+{  Qkas.First;
   while not Qkas.Eof do
   begin
-    Memkas.Insert;
+   // Memkas.Insert;
+    memkas.Append;
     Memkas['trans_no']:=Qkas['trans_no'];
   //  Memkas['faktur_no']:=Qkas['faktur_no'];
     Memkas['ket']:=Qkas['ket'];
     Memkas['jumlah']:=Qkas['jumlah'];
     Memkas['trans_date']:=Qkas['trans_date'];
-    Memkas['status_app']:=Qkas['approved_status'];
+    Memkas['status_app']:=Qkas['status_app'];
     Memkas['stat_balance']:=Qkas['stat_balance'];
     Memkas.Post;
     Qkas.Next;
   end;
-  QDetail_kas.Close;
-  QDetail_kas.Open;
+ { QDetail_kas.Close;
+  QDetail_kas.Open;       }
+  Memkas.DisableControls;
+   try
+      MemKas.LoadFromDataSet(Qkas,-1,lmCopy, False);
+   finally MemKas.EnableControls;
+   end;
+   QDetail_kas.Open;
   DBGridEh5.FinishLoadingStatus();
 end;
 

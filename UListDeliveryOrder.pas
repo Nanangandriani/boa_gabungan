@@ -527,7 +527,6 @@ begin
 
       strLastKodeJenisKendMuatan:=Dm.Qtemp1.fieldbyname('type_vehicles_code').value;
 
-
       edKodeVendorTransMuatan.Text:=Dm.Qtemp1.fieldbyname('vendor_code').value;
       edNamaVendorTransMuatan.Text:=Dm.Qtemp1.fieldbyname('vendor_name').value;
       edPICMuatan.Text:=Dm.Qtemp1.fieldbyname('pic').value;
@@ -549,7 +548,7 @@ begin
       if Dm.Qtemp1.fieldbyname('vehicle_group_id').value<>NULL then
       strVehicleGroupId:=Dm.Qtemp1.FieldValues['vehicle_group_id'];
 
-      if (Dm.Qtemp1.FieldValues['date_invoice']=NULL) AND (Dm.Qtemp1.FieldValues['date_invoice']='') then
+      if Dm.Qtemp1.FieldByName('date_invoice').IsNull OR (Dm.Qtemp1.FieldByName('date_invoice').AsString = '') then
       begin
         dtTerimaTagihan.Date:=NOW();
       end else
