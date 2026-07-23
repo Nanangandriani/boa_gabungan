@@ -137,7 +137,6 @@ end;
 
 procedure TFListPenagihanPiutang.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
   if MessageDlg('Apakah anda yakin ingin Membatalkan Rencana ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
   begin
     if not dm.Koneksi.InTransaction then
@@ -151,7 +150,7 @@ begin
                   ' "deleted_at"=now(), '+
                   ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
                   ' WHERE "code_collector"='+QuotedStr(QListPenagihanPiutang.FieldByName('code_collector').AsString)+' AND '+
-                  ' "date_trans"='+QuotedStr(formatdatetime('yyyy-mm-dd',QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime));
+                  ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime));
         ExecSQL;
       end;
       MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);

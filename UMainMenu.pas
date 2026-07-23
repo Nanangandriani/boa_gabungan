@@ -146,7 +146,8 @@ var
 implementation
 
 {$R *.dfm} {$R resource.RES}
-uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi, UUbahPassword;
+uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi, UUbahPassword,
+  USingkronisasiPusat;
 
 function TFMainMenu.CekAdaUpdate: Boolean;
 var
@@ -487,6 +488,10 @@ begin
     if vCaptionButton='Singkronisasi' then
     begin
       FSingkronisasi.Show;
+      Exit;
+    end else if vCaptionButton='Singkronisasi Pusat' then
+    begin
+      FSingkronisasiPusat.Show;
       Exit;
     end else
     if vCaptionButton='Logout' then
@@ -1142,7 +1147,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,''2.0'');';
+    sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,'+QuotedStr(FMainMenu.RzVersionInfo1.ProductVersion)+');';
     ExecSQL;
   end;
   Application.Terminate;

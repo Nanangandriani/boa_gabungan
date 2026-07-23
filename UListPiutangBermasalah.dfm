@@ -2,8 +2,8 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   Left = 0
   Top = 0
   Caption = 'Piutang Bermasalah'
-  ClientHeight = 442
-  ClientWidth = 1010
+  ClientHeight = 441
+  ClientWidth = 1006
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1010
+    Width = 1006
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,7 +25,7 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 771
+    ExplicitWidth = 1010
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -44,8 +44,8 @@ object FListPiutangBermasalah: TFListPiutangBermasalah
   object DBGridPiutangBermasalah: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1010
-    Height = 315
+    Width = 1006
+    Height = 314
     Align = alClient
     DataSource = DsPenjualan
     DrawMemoText = True

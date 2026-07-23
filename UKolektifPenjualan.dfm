@@ -4,8 +4,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Cetak Kolektif Nota Penjualan'
-  ClientHeight = 106
-  ClientWidth = 444
+  ClientHeight = 105
+  ClientWidth = 440
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -38,14 +38,12 @@ object FKolektifPenjualan: TFKolektifPenjualan
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 64
-    Width = 444
+    Top = 63
+    Width = 440
     Height = 42
     Align = alBottom
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 63
-    ExplicitWidth = 440
     object BBatal: TRzBitBtn
       Left = 367
       Top = 2

@@ -868,7 +868,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 46036.556909328700000000
+    ReportOptions.LastChange = 46216.418492407410000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -1217,7 +1217,7 @@ object FLaporanPenjualan: TFLaporanPenjualan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBLapPenjualan."customer_name_pkp"]')
+            '[frxDBLapPenjualan."name_cust"]')
           ParentFont = False
         end
         object Line7: TfrxLineView

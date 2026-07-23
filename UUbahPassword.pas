@@ -41,7 +41,7 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM t_user where user_name='+QuotedStr(Nm)+' AND '+
-              'password='+QuotedStr(edPassLama.Text)+' AND status=True';
+              'password = crypt(' + QuotedStr(edPassLama.Text) + ', password) AND status=True';
     open;
   end;
 
@@ -57,10 +57,10 @@ begin
       close;
       sql.clear;
       sql.Text:='Update t_user set '+
-              ' password='+QuotedStr(edPassBaru.Text)+', '+
+              ' password=crypt(' + QuotedStr(edPassBaru.Text) + ', gen_salt(''bf'', 10)), ' +
               ' updated_at=now(), '+
               ' updated_by='+QuotedStr(Nm)+' '+
-              'WHERE user_name='+QuotedStr(Nm)+' AND password='+QuotedStr(edPassLama.Text)+' AND status=True';
+              'WHERE user_name='+QuotedStr(Nm)+' AND password=crypt(' + QuotedStr(edPassLama.Text) + ', password) AND status=True';
       ExecSQL;
     end;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

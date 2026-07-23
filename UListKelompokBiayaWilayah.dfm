@@ -79,7 +79,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
         FieldName = 'jumlah'
         Footers = <>
         Title.Alignment = taCenter
-        Title.Caption = 'Jumlah'
+        Title.Caption = 'Jumlah Transaksi'
         Width = 150
       end
       item
@@ -129,7 +129,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 592
-    Top = 248
+    Top = 264
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -459,7 +459,9 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       OnChange = cbSumberChange
       Items.Strings = (
         'PEMBELIAN'
-        'PENGELUARAN KAS DAN BANK')
+        'PENGELUARAN KAS DAN BANK'
+        'KAS KECIL'
+        'MEMORIAL')
       ItemIndex = -1
     end
     object dxBarLargeButton5: TdxBarLargeButton

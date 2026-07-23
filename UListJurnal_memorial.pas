@@ -85,6 +85,7 @@ type
     DTP1: TDateTimePicker;
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
+    Print_kolektif: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -100,6 +101,7 @@ type
     procedure ActDelExecute(Sender: TObject);
     procedure ActPrintExecute(Sender: TObject);
     procedure CariClick(Sender: TObject);
+    procedure Print_kolektifClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -417,6 +419,8 @@ end;
 procedure TFList_jurnal_memorial.FormCreate(Sender: TObject);
 begin
   RealFMemorial:=self;
+  DTP1.Date:=Now();
+  DTP2.Date:=Now();
 end;
 
 procedure TFList_jurnal_memorial.FormDestroy(Sender: TObject);
@@ -434,6 +438,38 @@ begin
   Qjurnal_detail.Open;          }
 end;
 
+
+procedure TFList_jurnal_memorial.Print_kolektifClick(Sender: TObject);
+begin
+{with QBukti_memo do
+begin
+  close;
+  sql.Clear;
+{  sql.Text:='select a.tgl,keterangan,b.*,c.nama_perkiraan,to_char((SELECT (date_trunc(''MONTH'', tgl ) + INTERVAL ''1 MONTH - 1 day'')::date as hari),''dd'') tgl2'+
+  ' from t_jurnal_memorial a INNER JOIN t_jurnal_memorial_detail b on a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c '+
+  ' on b.akun_kredit=c.kode WHERE a.no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+' and kredit >0 '; }
+ {sql.Text:='select * from "V_BukuMemorial" WHERE trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',(MemTableEh1['trans_date'])))+' and kredit >0 ';
+  open;
+end;      }
+with QBukti_memo2 do
+begin
+  close;
+  sql.Clear;
+ { sql.Text:='select a.tgl,keterangan,b.*,c.nama_perkiraan from t_jurnal_memorial a INNER JOIN '+
+  ' t_jurnal_memorial_detail b on a.no_bukti_memo=b.no_bukti_memo INNER JOIN t_daftar_perkiraan c '+
+  ' on b.akun_kredit=c.kode WHERE a.no_bukti_memo='+QuotedStr(MemTableEh1['no_bukti_memo'])+'order by debit desc';   }
+ sql.Text:='select * from "V_BukuMemorial" WHERE trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',(dtp1.Date)))+''+
+ ' and trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',(dtp2.Date)))+' order by memo_no,debit desc';
+
+  open;
+end;
+  Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_BuktiMemorial.Fr3');
+
+  if Rpt.FindObject('nama_pt') <> nil then
+  TfrxMemoView(Rpt.FindObject('nama_pt')).Memo.Text := SBU;
+  //  Tfrxmemoview(Rpt.FindObject('Mtgl')).Memo.Text:='Tanggal  : '+FormatDateTime('dd mmmm yyyy',(MemTableEh1['tgl']));
+  Rpt.ShowReport();
+end;
 
 initialization
 registerclass(TFList_jurnal_memorial);

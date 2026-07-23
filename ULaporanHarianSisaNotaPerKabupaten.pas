@@ -177,7 +177,7 @@ procedure TFLaporanHarianSisaNotaPerKabupaten.cbKaresidenanPropertiesButtonClick
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='laporanhariansisanotaperkabkares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 
@@ -210,15 +210,20 @@ begin
                 QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+QuotedStr(strTPID)+')';
       Open;
     end;
-    if Qreport.RecordCount>0 then
+    if Qreport.RecordCount=0 then
     begin
-      strReportName:='rpt_laporanhariansisanotaperkabupaten';
-      cLocation := ExtractFilePath(Application.ExeName);
-      Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
-      Report.ShowReport();
-    end else begin
       MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
     end;
+
+//    if Qreport.RecordCount>0 then
+//    begin
+    strReportName:='rpt_laporanhariansisanotaperkabupaten';
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+    Report.ShowReport();
+//    end else begin
+//      MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
+//    end;
   end;
 end;
 

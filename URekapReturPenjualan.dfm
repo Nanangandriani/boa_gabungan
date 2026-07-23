@@ -2,8 +2,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Rekap Retur Penjualan'
-  ClientHeight = 671
-  ClientWidth = 1134
+  ClientHeight = 670
+  ClientWidth = 1130
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1134
+    Width = 1130
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,6 +25,7 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1134
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -41,8 +42,8 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1134
-    Height = 544
+    Width = 1130
+    Height = 543
     Align = alClient
     DataSource = DsRekapReturPenjualan
     DynProps = <>

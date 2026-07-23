@@ -283,7 +283,7 @@ begin
   end else
   if cbKelompokBarang.Text='' then
   begin
-    MessageDlg('Kelompok Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
     cbKelompokBarang.SetFocus;
   end else
   begin

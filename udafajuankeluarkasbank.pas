@@ -181,6 +181,7 @@ type
     procedure DBGridPengajuanKeluarKasBankAdvDrawDataCell(
       Sender: TCustomDBGridEh; Cell, AreaCell: TGridCoord; Column: TColumnEh;
       const ARect: TRect; var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure ReportBeforePrint(Sender: TfrxReportComponent);
   private
     { Private declarations }
   public
@@ -984,7 +985,10 @@ begin
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
-         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.Tag := 99;
+         Report.Variables['vTerbilang'] := ConvKeHuruf(FloatToStr(dm.Qtemp.FieldByName('amount').AsFloat)) + ' Rupiah';
+
+         //SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
        if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='6.002' then //Non Hutang
@@ -993,6 +997,7 @@ begin
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+         Report.Tag := 0;
          SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
@@ -1002,6 +1007,8 @@ begin
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',dm.Qtemp.FieldByName('trans_date').Value));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+
+         Report.Tag := 0;
          SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
@@ -1058,7 +1065,10 @@ begin
          SetMemo(Report,'tot_rec',IntToStr(QBukti_Ajuan_Keluar.RecordCount));
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
-         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         //SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         //SetMemo(Report, 'terbilang', ' ');
+         Report.Tag := 99;
+         Report.Variables['vTerbilang'] := ConvKeHuruf(FloatToStr(dm.Qtemp.FieldByName('amount').AsFloat)) + ' Rupiah';
          Report.ShowReport();
        end;
        if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='5.002' then //nonhutang
@@ -1067,6 +1077,8 @@ begin
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
+
+         Report.Tag := 0;
          SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
@@ -1118,7 +1130,9 @@ begin
          SetMemo(Report,'nama_pt',FHomeLogin.vKodePRSH);
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
-         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         Report.Tag := 99;
+         Report.Variables['vTerbilang'] := ConvKeHuruf(FloatToStr(dm.Qtemp.FieldByName('amount').AsFloat)) + ' Rupiah';
+         //SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
      end;
@@ -1167,6 +1181,27 @@ begin
    QDetail_akun_ajuan.Open;
    QDetail_Hutang_Ajuan.Close;
    QDetail_Hutang_Ajuan.Open;
+end;
+
+procedure TFdafajuankeluarkasbank.ReportBeforePrint(Sender: TfrxReportComponent);
+var
+  MemoTerbilang: TfrxMemoView;
+begin
+  if Report.Tag = 99 then
+  begin
+    if SameText(Sender.Name, 'terbilang') then
+    begin
+      MemoTerbilang := Sender as TfrxMemoView;
+      if QBukti_Ajuan_Keluar_Faktur.Eof then
+      begin
+        MemoTerbilang.Text := Report.Variables['vTerbilang'];
+      end
+      else
+      begin
+        MemoTerbilang.Text := '';
+      end;
+    end;
+  end;
 end;
 
 initialization

@@ -2,8 +2,8 @@ object FSalesOrder: TFSalesOrder
   Left = 0
   Top = 0
   Caption = 'Sales Order'
-  ClientHeight = 471
-  ClientWidth = 1202
+  ClientHeight = 470
+  ClientWidth = 1198
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FSalesOrder: TFSalesOrder
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1202
+    Width = 1198
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,6 +25,7 @@ object FSalesOrder: TFSalesOrder
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1202
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -40,8 +41,8 @@ object FSalesOrder: TFSalesOrder
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1202
-    Height = 344
+    Width = 1198
+    Height = 343
     Align = alClient
     AllowedOperations = []
     DataSource = DsSalesOrder

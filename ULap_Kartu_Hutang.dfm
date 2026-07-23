@@ -116,8 +116,8 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 888
-    Top = 72
+    Left = 832
+    Top = 80
   end
   object frxDBDataset4: TfrxDBDataset
     UserName = 'frxDBDataset4'
@@ -1362,7 +1362,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 760
+    Left = 728
     Top = 152
   end
   object DSQTgl_Hutang: TDataSource
@@ -1784,7 +1784,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44125.442920347200000000
-    ReportOptions.LastChange = 46175.577417465280000000
+    ReportOptions.LastChange = 46220.597255138890000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -2586,7 +2586,7 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
         Top = 328.819110000000000000
         Width = 755.906000000000000000
         OnBeforePrint = 'GroupHeader1OnBeforePrint'
-        Condition = 'frxDBDataset_trans."trans_no"'
+        Condition = 'frxDBDataset_trans."noinv"'
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 181.417440000000000000
@@ -2608,6 +2608,8 @@ object FLap_Kartu_Hutang: TFLap_Kartu_Hutang
           Left = 441.960629920000000000
           Width = 110.362204720000000000
           Height = 23.811023620000000000
+          DataSet = frxDBDataset1
+          DataSetName = 'frxDBDataset_trans'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13

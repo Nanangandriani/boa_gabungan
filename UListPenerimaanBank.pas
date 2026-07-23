@@ -114,6 +114,7 @@ type
     QPenerimaanBankdeleted_at: TDateTimeField;
     QBukti_Terimatot_paid_amount: TFloatField;
     QBukti_Terimaname_cust: TMemoField;
+    QPenerimaanBankpayment_name: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);

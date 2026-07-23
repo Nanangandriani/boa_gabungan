@@ -133,21 +133,22 @@ begin
 //              'WHERE aa.vehicle_group_id IS NOT NULL and bb.deleted_at is null) '+
 //              'Order By vehicle_group_sort_number ASC;';
     SQL.Text := 'SELECT DISTINCT a.vehicle_group_id, a.vehicle_group_sort_number, a.type_vehicles_code, a.type_vehicles_name, a.capacity ' +
-            'FROM t_sales_order a ' +
-            'INNER JOIN t_selling b ON b.no_reference = a.notrans AND b.deleted_at IS NULL ' +
-            'WHERE a.sent_date = ' + QuotedStr(FormatDateTime('yyyy-mm-dd', FNewDeliveryOrder.dtTanggalMuatan.Date)) + ' ' +
-            'AND a.vehicle_group_id IS NOT NULL ' +
-            'AND EXISTS ( ' +
-            '    SELECT 1 FROM t_sales_order a2 ' +
-            '    INNER JOIN t_selling b2 ON b2.no_reference = a2.notrans ' +
-            '    WHERE a2.vehicle_group_id = a.vehicle_group_id ' +
-            '    AND b2.deleted_at IS NULL ' +
-            '    AND NOT EXISTS ( ' +
-            '        SELECT 1 FROM t_delivery_order_load d ' +
-            '        WHERE d.notrans_load = b2.trans_no ' +
-            '    ) ' +
-            ') ' +
-            'ORDER BY a.vehicle_group_sort_number ASC;';
+                'FROM t_sales_order a ' +
+                'INNER JOIN t_selling b ON b.no_reference = a.notrans AND b.deleted_at IS NULL ' +
+                'WHERE a.sent_date = ' + QuotedStr(FormatDateTime('yyyy-mm-dd', FNewDeliveryOrder.dtTanggalMuatan.Date)) + ' ' +
+                'AND a.vehicle_group_id IS NOT NULL ' +
+                'AND EXISTS ( ' +
+                'SELECT 1 FROM t_sales_order a2 ' +
+                'INNER JOIN t_selling b2 ON b2.no_reference = a2.notrans ' +
+                'WHERE a2.vehicle_group_id = a.vehicle_group_id ' +
+                'AND b2.deleted_at IS NULL ' +
+                'AND NOT EXISTS ( ' +
+                'SELECT 1 FROM t_delivery_order_load d ' +
+                'LEFT JOIN t_delivery_order dlo on dlo.notrans=d.notrans '+
+                'WHERE d.notrans_load = b2.trans_no AND dlo.deleted_at is null ' +
+                ') ' +
+                ') ' +
+                'ORDER BY a.vehicle_group_sort_number ASC;';
     Open;
   end;
   QDetail.Close;

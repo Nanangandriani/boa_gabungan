@@ -3,8 +3,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Data Penagihan Piutang'
-  ClientHeight = 550
-  ClientWidth = 1370
+  ClientHeight = 549
+  ClientWidth = 1366
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1370
+    Width = 1366
     Height = 193
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1366
+    ExplicitWidth = 1362
     object Label39: TLabel
       Left = 31
       Top = 133
@@ -316,15 +316,15 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 518
-    Width = 1370
+    Top = 517
+    Width = 1366
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 517
-    ExplicitWidth = 1366
+    ExplicitTop = 516
+    ExplicitWidth = 1362
     object BBatal: TRzBitBtn
-      Left = 1294
+      Left = 1290
       Top = 1
       Height = 30
       Align = alRight
@@ -383,10 +383,10 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1290
+      ExplicitLeft = 1286
     end
     object BSave: TRzBitBtn
-      Left = 1219
+      Left = 1215
       Top = 1
       Height = 30
       Align = alRight
@@ -445,7 +445,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1215
+      ExplicitLeft = 1211
     end
     object RzBitBtn1: TRzBitBtn
       Left = 1
@@ -514,26 +514,26 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 193
-    Width = 1370
-    Height = 325
+    Width = 1366
+    Height = 324
     Hint = ''
     ActivePage = TabSDetail
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 2
-    ExplicitWidth = 1366
-    ExplicitHeight = 324
+    ExplicitWidth = 1362
+    ExplicitHeight = 323
     FixedDimension = 21
     object TabSDetail: TRzTabSheet
       Caption = 'Data'
-      ExplicitWidth = 1362
-      ExplicitHeight = 299
+      ExplicitWidth = 1358
+      ExplicitHeight = 298
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1366
-        Height = 300
+        Width = 1362
+        Height = 299
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -898,7 +898,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45890.551913078700000000
-    ReportOptions.LastChange = 46076.668780011580000000
+    ReportOptions.LastChange = 46226.451669189820000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -972,7 +972,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = []
-        Height = 22.677180000000000000
+        Height = 41.574803149606300000
         ParentFont = False
         Top = 222.992270000000000000
         Width = 1018.205382000000000000
@@ -984,7 +984,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object SysMemo7: TfrxSysMemoView
           AllowVectorExport = True
           Width = 26.710472220000000000
-          Height = 22.230983330000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1002,7 +1002,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 27.431821020000000000
           Width = 142.020247470000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'customer_name'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1020,14 +1020,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo169: TfrxMemoView
           AllowVectorExport = True
-          Left = 169.347831530000000000
-          Width = 67.698537680000000000
-          Height = 22.299212600000000000
+          Left = 170.347831530000000000
+          Width = 58.204724410000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_trans'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.FormatStr = 'dd/mm/yy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1035,6 +1035,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetDPPBlmDitagih."date_trans"]')
           ParentFont = False
@@ -1042,14 +1043,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo170: TfrxMemoView
           AllowVectorExport = True
-          Left = 234.734908140000000000
-          Width = 67.517060360000000000
-          Height = 22.299212600000000000
+          Left = 228.957130360000000000
+          Width = 58.204724409448820000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.FormatStr = 'dd/mm/yy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1057,6 +1058,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetDPPBlmDitagih."date_tempo"]')
           ParentFont = False
@@ -1064,9 +1066,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo171: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.111111110000000000
-          Width = 86.173228346456700000
-          Height = 22.299212600000000000
+          Left = 287.606299210000000000
+          Width = 99.023622050000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1087,9 +1089,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo172: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.333333330000000000
-          Width = 64.251968500000000000
-          Height = 22.299212600000000000
+          Left = 387.629921260000000000
+          Width = 42.330708660000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'cash'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1110,9 +1112,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo173: TfrxMemoView
           AllowVectorExport = True
-          Left = 449.238095240000000000
+          Left = 429.238095240000000000
           Width = 92.856392950000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1133,9 +1135,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo174: TfrxMemoView
           AllowVectorExport = True
-          Left = 542.666666670000000000
+          Left = 522.666666670000000000
           Width = 62.362204720000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1153,9 +1155,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo175: TfrxMemoView
           AllowVectorExport = True
-          Left = 604.041666670000000000
+          Left = 584.041666670000000000
           Width = 65.008202100000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1173,9 +1175,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo176: TfrxMemoView
           AllowVectorExport = True
-          Left = 669.333333330000000000
+          Left = 649.333333330000000000
           Width = 54.960629920000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1193,9 +1195,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo177: TfrxMemoView
           AllowVectorExport = True
-          Left = 723.333333330000000000
+          Left = 703.333333330000000000
           Width = 71.433070870000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'no_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1213,9 +1215,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo178: TfrxMemoView
           AllowVectorExport = True
-          Left = 794.750000000000000000
+          Left = 774.750000000000000000
           Width = 62.478346460000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_tempo_cheque'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1233,9 +1235,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo179: TfrxMemoView
           AllowVectorExport = True
-          Left = 857.333333330000000000
+          Left = 837.333333330000000000
           Width = 72.944881890000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'cheque_amount1'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1256,9 +1258,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo180: TfrxMemoView
           AllowVectorExport = True
-          Left = 930.562500000000000000
-          Width = 87.724714100000000000
-          Height = 22.299212600000000000
+          Left = 910.562500000000000000
+          Width = 107.724714100000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDPPBlmDitagih
@@ -1395,7 +1397,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 169.380908260000000000
           Top = 60.102350000000000000
-          Width = 215.584551930000000000
+          Width = 217.399325080000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1413,7 +1415,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 170.285714290000000000
           Top = 80.102350010000000000
-          Width = 66.564679410000000000
+          Width = 58.204724409448800000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1429,9 +1431,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo189: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.634920630000000000
+          Left = 228.634920630000000000
           Top = 80.125984250000000000
-          Width = 64.629921259842500000
+          Width = 58.204724410000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1447,9 +1449,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo190: TfrxMemoView
           AllowVectorExport = True
-          Left = 301.523809530000000000
+          Left = 287.523809530000000000
           Top = 79.748031500000000000
-          Width = 83.377577800000000000
+          Width = 99.401574800000000000
           Height = 63.496062990000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1501,9 +1503,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo193: TfrxMemoView
           AllowVectorExport = True
-          Left = 384.888888890000000000
+          Left = 379.703703710000000000
           Top = 60.102350000000000000
-          Width = 545.664346640000000000
+          Width = 530.849531820000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1519,9 +1521,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo194: TfrxMemoView
           AllowVectorExport = True
-          Left = 930.384359910000000000
+          Left = 910.384359910000000000
           Top = 60.213461110000000000
-          Width = 86.921276310000000000
+          Width = 106.921276310000000000
           Height = 83.149606300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1537,9 +1539,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo195: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.111111110000000000
+          Left = 387.666666670000000000
           Top = 80.102350000000000000
-          Width = 64.251968500000000000
+          Width = 42.330708660000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1555,7 +1557,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo196: TfrxMemoView
           AllowVectorExport = True
-          Left = 449.746031750000000000
+          Left = 429.746031750000000000
           Top = 79.149969050000000000
           Width = 220.055010790000000000
           Height = 31.363079610000000000
@@ -1573,7 +1575,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo197: TfrxMemoView
           AllowVectorExport = True
-          Left = 670.111111110000000000
+          Left = 650.111111110000000000
           Top = 78.992125980000000000
           Width = 260.115540240000000000
           Height = 31.363079610000000000
@@ -1591,7 +1593,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo198: TfrxMemoView
           AllowVectorExport = True
-          Left = 448.793650800000000000
+          Left = 428.793650800000000000
           Top = 111.102350000000000000
           Width = 92.921845700000000000
           Height = 32.125984250000000000
@@ -1609,7 +1611,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo199: TfrxMemoView
           AllowVectorExport = True
-          Left = 542.444444440000000000
+          Left = 522.444444440000000000
           Top = 111.102350000000000000
           Width = 62.547681540000000000
           Height = 32.125984250000000000
@@ -1627,7 +1629,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo200: TfrxMemoView
           AllowVectorExport = True
-          Left = 604.777777780000000000
+          Left = 584.777777780000000000
           Top = 111.213461110000000000
           Width = 64.992125980000000000
           Height = 32.125984250000000000
@@ -1645,7 +1647,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo201: TfrxMemoView
           AllowVectorExport = True
-          Left = 668.888888890000000000
+          Left = 648.888888890000000000
           Top = 111.102350000000000000
           Width = 55.538057740000000000
           Height = 32.125984250000000000
@@ -1663,7 +1665,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo202: TfrxMemoView
           AllowVectorExport = True
-          Left = 724.555555550000000000
+          Left = 704.555555550000000000
           Top = 111.102350000000000000
           Width = 70.325459310000000000
           Height = 32.125984250000000000
@@ -1681,7 +1683,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo203: TfrxMemoView
           AllowVectorExport = True
-          Left = 795.444444440000000000
+          Left = 775.444444440000000000
           Top = 111.213461110000000000
           Width = 61.606299210000000000
           Height = 32.125984250000000000
@@ -1700,7 +1702,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo204: TfrxMemoView
           AllowVectorExport = True
-          Left = 857.333333330000000000
+          Left = 837.333333330000000000
           Top = 111.102350000000000000
           Width = 73.207403760000000000
           Height = 32.125984250000000000
@@ -1725,7 +1727,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         FillGap.Right = 0
         Frame.Typ = []
         Height = 108.495361820000000000
-        Top = 268.346630000000000000
+        Top = 287.244280000000000000
         Width = 1018.205382000000000000
         object SysMemo8: TfrxSysMemoView
           AllowVectorExport = True
@@ -1743,7 +1745,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo205: TfrxMemoView
           AllowVectorExport = True
-          Left = 27.590551181102400000
+          Left = 26.590551180000000000
           Width = 142.110236220000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1759,8 +1761,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo206: TfrxMemoView
           AllowVectorExport = True
-          Left = 167.721034870000000000
-          Width = 69.603299590000000000
+          Left = 169.683997830000000000
+          Width = 58.204724410000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1775,8 +1777,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo207: TfrxMemoView
           AllowVectorExport = True
-          Left = 236.749906260000000000
-          Width = 65.385826771653500000
+          Left = 228.749906260000000000
+          Width = 58.204724410000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1793,8 +1795,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo208: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.563690900000000000
-          Width = 85.598800150000000000
+          Left = 287.785913120000000000
+          Width = 99.023622050000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1814,8 +1816,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo209: TfrxMemoView
           AllowVectorExport = True
-          Left = 384.768890730000000000
-          Width = 64.251968500000000000
+          Left = 387.629921260000000000
+          Width = 42.330708660000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1835,7 +1837,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo210: TfrxMemoView
           AllowVectorExport = True
-          Left = 448.678665170000000000
+          Left = 428.678665170000000000
           Width = 93.415823020000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1856,8 +1858,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo211: TfrxMemoView
           AllowVectorExport = True
-          Left = 542.154855650000000000
-          Width = 63.118110236220500000
+          Left = 522.154855650000000000
+          Width = 63.118110240000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1872,7 +1874,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo212: TfrxMemoView
           AllowVectorExport = True
-          Left = 605.488188980000000000
+          Left = 585.488188980000000000
           Width = 63.139107610000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1888,7 +1890,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo213: TfrxMemoView
           AllowVectorExport = True
-          Left = 667.488188980000000000
+          Left = 647.488188980000000000
           Width = 56.960629920000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1904,8 +1906,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo214: TfrxMemoView
           AllowVectorExport = True
-          Left = 722.821522310000000000
-          Width = 71.811023622047200000
+          Left = 702.821522310000000000
+          Width = 71.811023620000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1920,8 +1922,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo215: TfrxMemoView
           AllowVectorExport = True
-          Left = 795.124552620000000000
-          Width = 61.984251968503900000
+          Left = 775.124552620000000000
+          Width = 61.984251970000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -1936,7 +1938,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo216: TfrxMemoView
           AllowVectorExport = True
-          Left = 857.821522310000000000
+          Left = 837.821522310000000000
           Width = 72.720114530000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -1957,8 +1959,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo217: TfrxMemoView
           AllowVectorExport = True
-          Left = 931.124552620000000000
-          Width = 87.785049590000000000
+          Left = 910.172171670000000000
+          Width = 108.737430540000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -1980,7 +1982,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo218: TfrxMemoView
           AllowVectorExport = True
-          Left = 60.363636370000000000
+          Left = 59.064171120000000000
           Top = 32.744279090000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
@@ -1997,9 +1999,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo219: TfrxMemoView
           AllowVectorExport = True
-          Left = 60.000000000000000000
+          Left = 44.764705880000000000
           Top = 84.835188180000000000
-          Width = 149.760977270000000000
+          Width = 177.996271390000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2014,7 +2016,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo220: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.363636370000000000
+          Left = 445.417112300000000000
           Top = 31.653370000000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
@@ -2031,9 +2033,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo221: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.000000000000000000
+          Left = 427.000000000000000000
           Top = 83.744279090000000000
-          Width = 149.760977270000000000
+          Width = 186.231565510000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2048,7 +2050,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo222: TfrxMemoView
           AllowVectorExport = True
-          Left = 801.363636370000000000
+          Left = 799.711229940000000000
           Top = 29.653370000000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
@@ -2065,9 +2067,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo223: TfrxMemoView
           AllowVectorExport = True
-          Left = 801.000000000000000000
+          Left = 783.058823530000000000
           Top = 81.744279090000000000
-          Width = 149.760977270000000000
+          Width = 182.702153740000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2101,7 +2103,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 41.574803149606300000
         Top = 222.992270000000000000
         Width = 1018.205382000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
@@ -2112,7 +2114,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
           Width = 26.710472220000000000
-          Height = 22.230983330000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -2130,7 +2132,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 27.431821020000000000
           Width = 142.020247470000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -2147,14 +2149,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 169.347831530000000000
-          Width = 67.698537680000000000
-          Height = 22.299212600000000000
+          Left = 170.078740157480000000
+          Width = 58.204724410000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_trans'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.FormatStr = 'dd/mm/yy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2162,6 +2164,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetDpp."date_trans"]')
           ParentFont = False
@@ -2169,14 +2172,14 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 234.734908140000000000
-          Width = 67.517060360000000000
-          Height = 22.299212600000000000
+          Left = 227.957130360000000000
+          Width = 58.204724410000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_tempo'
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
-          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.FormatStr = 'dd/mm/yy'
           DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2184,6 +2187,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           Font.Name = 'Verdana'
           Font.Style = []
           Frame.Typ = [ftRight, ftBottom]
+          HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetDpp."date_tempo"]')
           ParentFont = False
@@ -2191,9 +2195,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.111111110000000000
-          Width = 86.173228350000000000
-          Height = 22.299212600000000000
+          Left = 286.606299210000000000
+          Width = 99.401574800000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'paid_amount'
           DataSet = frxDBDatasetDpp
@@ -2214,9 +2218,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.333333330000000000
-          Width = 64.251968500000000000
-          Height = 22.299212600000000000
+          Left = 385.279673370000000000
+          Width = 44.598425200000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'cash'
           DataSet = frxDBDatasetDpp
@@ -2237,9 +2241,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 449.238095240000000000
+          Left = 431.238095240000000000
           Width = 92.856392950000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'receipt'
           DataSet = frxDBDatasetDpp
@@ -2260,9 +2264,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 542.666666670000000000
-          Width = 59.716535433070900000
-          Height = 22.299212600000000000
+          Left = 524.666666670000000000
+          Width = 59.716535430000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'bank_receipt'
           DataSet = frxDBDatasetDpp
@@ -2280,9 +2284,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo32: TfrxMemoView
           AllowVectorExport = True
-          Left = 600.170698930000000000
-          Width = 68.833121670000000000
-          Height = 22.299212600000000000
+          Left = 584.392921150000000000
+          Width = 66.610899450000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_receipt'
           DataSet = frxDBDatasetDpp
@@ -2300,9 +2304,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
-          Left = 668.000000000000000000
+          Left = 650.000000000000000000
           Width = 56.293963250000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'name_bank_cheque'
           DataSet = frxDBDatasetDpp
@@ -2320,9 +2324,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 723.333333330000000000
+          Left = 705.333333330000000000
           Width = 71.433070870000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'no_cheque'
           DataSet = frxDBDatasetDpp
@@ -2340,9 +2344,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 794.750000000000000000
+          Left = 776.750000000000000000
           Width = 62.478346460000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'date_tempo_cheque'
           DataSet = frxDBDatasetDpp
@@ -2360,9 +2364,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Left = 857.333333330000000000
+          Left = 839.333333330000000000
           Width = 72.944881890000000000
-          Height = 22.299212600000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'cheque_amount1'
           DataSet = frxDBDatasetDpp
@@ -2383,9 +2387,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 930.562500000000000000
-          Width = 87.724714100000000000
-          Height = 22.299212600000000000
+          Left = 912.467261900000000000
+          Width = 105.819952200000000000
+          Height = 41.574803149606300000
           StretchMode = smMaxHeight
           DataField = 'total_receivables'
           DataSet = frxDBDatasetDpp
@@ -2523,7 +2527,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 169.333073750000000000
           Top = 59.776128570000000000
-          Width = 215.584551930000000000
+          Width = 216.854393200000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2541,7 +2545,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 170.237879780000000000
           Top = 79.776128580000000000
-          Width = 66.564679410000000000
+          Width = 58.204724410000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2557,9 +2561,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.587086120000000000
+          Left = 228.283464566929000000
           Top = 79.799762820000000000
-          Width = 64.629921260000000000
+          Width = 58.204724410000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2575,9 +2579,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 301.475975020000000000
+          Left = 286.475975020000000000
           Top = 79.421810070000000000
-          Width = 83.377577800000000000
+          Width = 99.401574800000000000
           Height = 63.496062990000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2629,9 +2633,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 384.841054380000000000
+          Left = 382.396609940000000000
           Top = 59.776128570000000000
-          Width = 545.664346640000000000
+          Width = 530.108791080000000000
           Height = 20.251968500000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2647,9 +2651,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 930.336525400000000000
+          Left = 912.241287310000000000
           Top = 59.887239680000000000
-          Width = 86.921276310000000000
+          Width = 105.016514400000000000
           Height = 83.149606300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2665,9 +2669,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.063276600000000000
+          Left = 385.878091410000000000
           Top = 79.776128570000000000
-          Width = 64.251968500000000000
+          Width = 44.598425200000000000
           Height = 63.118110240000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2683,9 +2687,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 449.698197240000000000
+          Left = 430.745816290000000000
           Top = 78.823747620000000000
-          Width = 219.212598425197000000
+          Width = 220.164979380000000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2701,9 +2705,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 666.063276600000000000
-          Top = 78.992125984252000000
-          Width = 264.115540240000000000
+          Left = 650.063276600000000000
+          Top = 78.992125980000000000
+          Width = 263.055118110236000000
           Height = 31.363079610000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2719,7 +2723,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 448.745816290000000000
+          Left = 430.745816290000000000
           Top = 110.776128570000000000
           Width = 92.921845700000000000
           Height = 32.125984250000000000
@@ -2737,9 +2741,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 542.396609930000000000
+          Left = 524.396609930000000000
           Top = 110.776128570000000000
-          Width = 59.716535433070900000
+          Width = 59.716535430000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2755,9 +2759,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 602.794459400000000000
+          Left = 584.794459400000000000
           Top = 110.887239680000000000
-          Width = 66.141732283464600000
+          Width = 66.141732280000000000
           Height = 32.125984250000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2773,7 +2777,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 666.174387710000000000
+          Left = 648.174387710000000000
           Top = 110.776128570000000000
           Width = 58.204724410000000000
           Height = 32.125984250000000000
@@ -2791,7 +2795,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 724.507721040000000000
+          Left = 706.507721040000000000
           Top = 110.776128570000000000
           Width = 70.325459310000000000
           Height = 32.125984250000000000
@@ -2809,7 +2813,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 795.396609930000000000
+          Left = 777.396609930000000000
           Top = 110.887239680000000000
           Width = 61.606299210000000000
           Height = 32.125984250000000000
@@ -2828,7 +2832,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 857.285498820000000000
+          Left = 839.285498820000000000
           Top = 110.776128570000000000
           Width = 73.207403760000000000
           Height = 32.125984250000000000
@@ -2853,7 +2857,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         FillGap.Right = 0
         Frame.Typ = []
         Height = 108.495361820000000000
-        Top = 268.346630000000000000
+        Top = 287.244280000000000000
         Width = 1018.205382000000000000
         object SysMemo2: TfrxSysMemoView
           AllowVectorExport = True
@@ -2887,8 +2891,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo39: TfrxMemoView
           AllowVectorExport = True
-          Left = 168.098987630000000000
-          Width = 69.603299590000000000
+          Left = 170.098987630000000000
+          Width = 58.204724410000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2903,8 +2907,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.127859020000000000
-          Width = 65.385826770000000000
+          Left = 228.127859020000000000
+          Width = 58.204724410000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2921,8 +2925,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 299.941643660000000000
-          Width = 85.598800150000000000
+          Left = 286.606299210000000000
+          Width = 99.401574800000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2942,8 +2946,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 385.146843490000000000
-          Width = 64.251968500000000000
+          Left = 385.702399050000000000
+          Width = 44.598425200000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -2963,7 +2967,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 449.056617930000000000
+          Left = 431.056617930000000000
           Width = 93.415823020000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -2984,7 +2988,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 541.887647120000000000
+          Left = 523.887647120000000000
           Width = 59.716535430000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -3000,8 +3004,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 603.285496580000000000
-          Width = 65.719752760000000000
+          Left = 584.544755840000000000
+          Width = 66.460493500000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -3016,8 +3020,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 665.866141740000000000
-          Width = 58.960629920000000000
+          Left = 651.628046500000000000
+          Width = 54.198725160000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -3032,7 +3036,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo47: TfrxMemoView
           AllowVectorExport = True
-          Left = 723.199475070000000000
+          Left = 705.199475070000000000
           Width = 71.811023620000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -3048,7 +3052,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 795.502505380000000000
+          Left = 777.502505380000000000
           Width = 61.984251970000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
@@ -3064,8 +3068,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 858.199475070000000000
-          Width = 71.811023622047200000
+          Left = 840.199475070000000000
+          Width = 71.811023620000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDpp
           DataSetName = 'frxDBDatasetDpp'
@@ -3085,8 +3089,8 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Left = 930.212182800000000000
-          Width = 89.075372170000000000
+          Left = 912.116944700000000000
+          Width = 107.170610270000000000
           Height = 22.299212600000000000
           DataSet = frxDBDatasetDPPBlmDitagih
           DataSetName = 'frxDBDatasetDPPBlmDitagih'
@@ -3106,7 +3110,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 60.741589130000000000
+          Left = 74.633845015000000000
           Top = 32.969077660000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
@@ -3125,7 +3129,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 60.377952760000000000
           Top = 85.059986750000000000
-          Width = 149.760977270000000000
+          Width = 177.909125420000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -3140,7 +3144,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 423.741589130000000000
+          Left = 437.633845015000000000
           Top = 31.878168570000000000
           Width = 149.397340910000000000
           Height = 18.897650000000000000
@@ -3159,7 +3163,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           AllowVectorExport = True
           Left = 423.377952760000000000
           Top = 83.969077660000000000
-          Width = 149.760977270000000000
+          Width = 177.909125420000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -3191,9 +3195,9 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         end
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 801.377952760000000000
+          Left = 787.115326505000000000
           Top = 81.969077660000000000
-          Width = 149.760977270000000000
+          Width = 178.649866160000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText

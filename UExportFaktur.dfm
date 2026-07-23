@@ -3,8 +3,8 @@ object FExportFaktur: TFExportFaktur
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Export Faktur'
-  ClientHeight = 530
-  ClientWidth = 971
+  ClientHeight = 529
+  ClientWidth = 967
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,12 @@ object FExportFaktur: TFExportFaktur
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 971
+    Width = 967
     Height = 137
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 967
+    ExplicitWidth = 963
     object RzLabel1: TRzLabel
       Left = 16
       Top = 16
@@ -179,16 +179,16 @@ object FExportFaktur: TFExportFaktur
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 489
-    Width = 971
+    Top = 488
+    Width = 967
     Height = 41
     Align = alBottom
     Color = 15987699
     TabOrder = 1
-    ExplicitTop = 488
-    ExplicitWidth = 967
+    ExplicitTop = 487
+    ExplicitWidth = 963
     object BBatal: TRzBitBtn
-      Left = 894
+      Left = 890
       Top = 2
       Height = 37
       Align = alRight
@@ -247,10 +247,10 @@ object FExportFaktur: TFExportFaktur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 890
+      ExplicitLeft = 886
     end
     object BSave: TRzBitBtn
-      Left = 819
+      Left = 815
       Top = 2
       Height = 37
       Align = alRight
@@ -309,7 +309,7 @@ object FExportFaktur: TFExportFaktur
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 815
+      ExplicitLeft = 811
     end
     object pnfp: TPanel
       Left = 2
@@ -333,8 +333,8 @@ object FExportFaktur: TFExportFaktur
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 172
-    Width = 971
-    Height = 317
+    Width = 967
+    Height = 316
     Align = alClient
     DataSource = DSDetail
     DrawMemoText = True
@@ -476,12 +476,12 @@ object FExportFaktur: TFExportFaktur
   object RzPanel3: TRzPanel
     Left = 0
     Top = 137
-    Width = 971
+    Width = 967
     Height = 35
     Align = alTop
     Color = 15987699
     TabOrder = 3
-    ExplicitWidth = 967
+    ExplicitWidth = 963
     object cbTandai: TRzCheckBox
       Left = 16
       Top = 6

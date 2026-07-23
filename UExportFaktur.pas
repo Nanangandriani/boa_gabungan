@@ -354,14 +354,17 @@ begin
       SQL.Text:='select DISTINCT a.trans_date tgl_faktur_xml,''Normal'' jenis_faktur'+
                   ',a.code_trans kode_trans_pajak,a.trans_no referensi,COALESCE((select nitku from t_company),'''') id_tku_penjual '+
                  //', case when b.npwp is NULL then 0 else b.npwp end npwp_nik_pembeli '+
-                 ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
+//                 ', case when b.npwp=''0'' then '''' else b.npwp end npwp_nik_pembeli '+
+
+                  ', CASE WHEN COALESCE(b.npwp, b.no_npwp) = ''0'' OR COALESCE(b.npwp, b.no_npwp) = '''' THEN '''' ELSE COALESCE(b.npwp, b.no_npwp) END AS npwp_nik_pembeli '+
+
                  ', ''TIN'' jnis_id_pembeli,''IDN'' negara_pembeli'+
                  ', ''0'' nomor_dok_pembeli, b.customer_name_pkp nama_pembeli,c.address alamat_pembeli '+
   //               ',case when b.email=''-'' then ''0'' when b.email'''' then ''0'' when b.email is NULL then ''0'' else b.email end email,'+
                  ',case when b.email=''-'' then '''' else b.email end email,'+
                  'case when b.no_nitku=''0'' then '''' else b.no_nitku end id_tku_pembeli,COALESCE(a.no_ppbj,'''') no_ppbj, '+
                  'a.code_trans,d.is_ppn_pajak from t_selling a '+
-                 'left join t_selling_customer b on b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
+                 'left join t_selling_customer b on b.trans_no=a.trans_no and b.customer_code=a.code_cust AND b.deleted_at IS NULL '+
                  'LEFT JOIN t_customer_address c on c.customer_code=a.code_cust and c.code_details=''002'' '+
                  'LEFT JOIN t_sales_transaction_source d on d.code=a.code_trans '+
                  'where a.trans_no in ('+SQLText+') AND a.deleted_at IS NULL ORDER BY a.trans_date ASC, a.trans_no ASC ';
@@ -826,7 +829,7 @@ procedure TFExportFaktur.edKaresidenanButtonClick(Sender: TObject);
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='exportfaktur';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

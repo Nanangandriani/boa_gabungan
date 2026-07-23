@@ -21,10 +21,10 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     Width = 1350
     Height = 640
     Hint = ''
-    ActivePage = TabDokumenPendukung
+    ActivePage = TabDataBiaya
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     OnClick = RzPageControl1Click
     ExplicitWidth = 1346
@@ -1523,6 +1523,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         TabOrder = 2
         TitleParams.MultiTitle = True
         OnColEnter = DBGridSumberPenjualanColEnter
+        OnColExit = DBGridSumberPenjualanColExit
         OnEnter = DBGridSumberPenjualanEnter
         OnExit = DBGridSumberPenjualanExit
         OnKeyDown = DBGridSumberPenjualanKeyDown
@@ -1594,7 +1595,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             FieldName = 'nama_ppn'
             Footers = <>
             Title.Caption = 'BIAYA | PPN | Nama Akun PPN'
-            Width = 150
+            Width = 228
           end
           item
             CellButtons = <>
@@ -1644,7 +1645,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             FieldName = 'nama_pph'
             Footers = <>
             Title.Caption = 'BIAYA | PPH | Nama Akun PPH'
-            Width = 150
+            Width = 208
           end
           item
             CellButtons = <>
@@ -2008,8 +2009,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
   end
   object MemDataBiaya: TMemTableEh
     Params = <>
-    Left = 752
-    Top = 56
+    Left = 760
+    Top = 88
     object MemDataBiayakd_biaya: TStringField
       FieldName = 'kd_biaya'
     end
@@ -2025,6 +2026,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object MemDataBiayanama_ppn: TStringField
       FieldName = 'nama_ppn'
+      Size = 200
     end
     object MemDataBiayapersen_ppn: TFloatField
       FieldName = 'persen_ppn'
@@ -2038,6 +2040,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object MemDataBiayanama_pph: TStringField
       FieldName = 'nama_pph'
+      Size = 200
     end
     object MemDataBiayapersen_pph: TFloatField
       FieldName = 'persen_pph'
@@ -2089,7 +2092,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         object nama_ppn: TMTStringDataFieldEh
           FieldName = 'nama_ppn'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 200
         end
         object persen_ppn: TMTNumericDataFieldEh
           FieldName = 'persen_ppn'
@@ -2115,7 +2119,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         object nama_pph: TMTStringDataFieldEh
           FieldName = 'nama_pph'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 200
+          Size = 200
         end
         object persen_pph: TMTNumericDataFieldEh
           FieldName = 'persen_pph'

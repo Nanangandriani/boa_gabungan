@@ -68,7 +68,7 @@ object FListDeliveryOrder: TFListDeliveryOrder
         FieldName = 'notrans'
         Footers = <>
         Title.Caption = 'No Transaksi'
-        Width = 136
+        Width = 174
       end
       item
         CellButtons = <>

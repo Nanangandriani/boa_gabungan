@@ -3,8 +3,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Amplop Pelanggan'
-  ClientHeight = 139
-  ClientWidth = 322
+  ClientHeight = 138
+  ClientWidth = 318
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,16 +60,16 @@ object FAmplopPelanggan: TFAmplopPelanggan
   end
   object RzPanel2: TRzPanel
     Left = 0
-    Top = 98
-    Width = 322
+    Top = 97
+    Width = 318
     Height = 41
     Align = alBottom
     Color = 15987699
     TabOrder = 2
-    ExplicitTop = 97
-    ExplicitWidth = 318
+    ExplicitTop = 96
+    ExplicitWidth = 314
     object RzBitBtn1: TRzBitBtn
-      Left = 237
+      Left = 233
       Top = 2
       Width = 83
       Height = 37
@@ -208,7 +208,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 233
+      ExplicitLeft = 235
+      ExplicitTop = -2
     end
   end
   object edPelanggan: TRzButtonEdit
@@ -242,7 +243,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 46010.479884456020000000
+    ReportOptions.LastChange = 46209.441220127320000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -286,8 +287,8 @@ object FAmplopPelanggan: TFAmplopPelanggan
         Condition = '<frxDBDBAmplopPelanggan."code_cust">'
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 430.771356960000000000
-          Top = 161.805665650000000000
+          Left = 352.771356960000000000
+          Top = 155.805665650000000000
           Width = 181.417440000000000000
           Height = 26.354360000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -303,41 +304,27 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 430.597738060000000000
-          Top = 196.837205650000000000
-          Width = 396.850650000000000000
-          Height = 22.677180000000000000
+          Left = 352.597738060000000000
+          Top = 190.096464910000000000
+          Width = 439.813612970000000000
+          Height = 108.603105930000000000
           DataSetName = 'frxdbamplop'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -15
           Font.Name = 'arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Frame.Typ = []
+          LineSpacing = 6.000000000000000000
           Memo.UTF8W = (
-            '[frxDBDBAmplopPelanggan."name_cust"]')
-          ParentFont = False
-        end
-        object Memo1: TfrxMemoView
-          AllowVectorExport = True
-          Left = 430.597738060000000000
-          Top = 223.616735650000000000
-          Width = 396.850650000000000000
-          Height = 34.015770000000000000
-          DataSetName = 'frxdbamplop'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBAmplopPelanggan."address"]')
+            '[frxDBDBAmplopPelanggan."name_cust"]'
+            '[frxDBDBAmplopPelanggan."address"]'
+            '[frxDBDBAmplopPelanggan."contact_person1"]')
           ParentFont = False
         end
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 11.826086960000000000
+          Left = 36.826086960000000000
           Top = 10.711045650000000000
           Width = 332.598640000000000000
           Height = 26.354360000000000000
@@ -354,7 +341,7 @@ object FAmplopPelanggan: TFAmplopPelanggan
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 11.826086960000000000
+          Left = 36.826086960000000000
           Top = 37.726815650000000000
           Width = 332.598640000000000000
           Height = 49.031540000000000000
@@ -366,23 +353,6 @@ object FAmplopPelanggan: TFAmplopPelanggan
           Frame.Typ = []
           Memo.UTF8W = (
             '[KotaPerusahaan]')
-          ParentFont = False
-        end
-        object Memo6: TfrxMemoView
-          AllowVectorExport = True
-          Left = 431.353916960000000000
-          Top = 260.852975650000000000
-          Width = 396.850650000000000000
-          Height = 22.677180000000000000
-          DataSetName = 'frxdbamplop'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBDBAmplopPelanggan."contact_person1"]')
           ParentFont = False
         end
       end

@@ -211,7 +211,7 @@ procedure TFLaporanHarianSisaNota.cbKaresidenanPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='laporanhariansisanotakares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 
@@ -258,49 +258,50 @@ begin
     if Qreport.RecordCount=0 then
     begin
       MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
-    end else begin
-      with QReportPrev do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='SELECT * FROM get_lhsn_weekly_prev('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(strKecamatanID)+')';
-        open;
-      end;
-
-      strReportName:='rpt_laporanhariansisanota';
-
-      cLocation := ExtractFilePath(Application.ExeName);
-      Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
-      if Qreport.RecordCount<5 then
-      begin
-          Report.FindObject('Line6').Visible  := False;
-          Report.FindObject('Line8').Visible  := False;
-          Report.FindObject('Line9').Visible  := False;
-          Report.FindObject('Line10').Visible := False;
-          Report.FindObject('Line11').Visible := False;
-          Report.FindObject('Line12').Visible := False;
-          Report.FindObject('Line13').Visible := False;
-          Report.FindObject('Line14').Visible := False;
-          Report.FindObject('Line15').Visible := False;
-          Report.FindObject('Line16').Visible := False;
-          Report.FindObject('Line17').Visible := False;
-          Report.FindObject('Line18').Visible := False;
-      end else begin
-          Report.FindObject('Line6').Visible  := True;
-          Report.FindObject('Line8').Visible  := True;
-          Report.FindObject('Line9').Visible  := True;
-          Report.FindObject('Line10').Visible := True;
-          Report.FindObject('Line11').Visible := True;
-          Report.FindObject('Line12').Visible := True;
-          Report.FindObject('Line13').Visible := True;
-          Report.FindObject('Line14').Visible := True;
-          Report.FindObject('Line15').Visible := True;
-          Report.FindObject('Line16').Visible := True;
-          Report.FindObject('Line17').Visible := True;
-          Report.FindObject('Line18').Visible := True;
-      end;
-      Report.ShowReport();
     end;
+//    else begin
+    with QReportPrev do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * FROM get_lhsn_weekly_prev('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(strKecamatanID)+')';
+      open;
+    end;
+
+    strReportName:='rpt_laporanhariansisanota';
+
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+    if Qreport.RecordCount<5 then
+    begin
+        Report.FindObject('Line6').Visible  := False;
+        Report.FindObject('Line8').Visible  := False;
+        Report.FindObject('Line9').Visible  := False;
+        Report.FindObject('Line10').Visible := False;
+        Report.FindObject('Line11').Visible := False;
+        Report.FindObject('Line12').Visible := False;
+        Report.FindObject('Line13').Visible := False;
+        Report.FindObject('Line14').Visible := False;
+        Report.FindObject('Line15').Visible := False;
+        Report.FindObject('Line16').Visible := False;
+        Report.FindObject('Line17').Visible := False;
+        Report.FindObject('Line18').Visible := False;
+    end else begin
+        Report.FindObject('Line6').Visible  := True;
+        Report.FindObject('Line8').Visible  := True;
+        Report.FindObject('Line9').Visible  := True;
+        Report.FindObject('Line10').Visible := True;
+        Report.FindObject('Line11').Visible := True;
+        Report.FindObject('Line12').Visible := True;
+        Report.FindObject('Line13').Visible := True;
+        Report.FindObject('Line14').Visible := True;
+        Report.FindObject('Line15').Visible := True;
+        Report.FindObject('Line16').Visible := True;
+        Report.FindObject('Line17').Visible := True;
+        Report.FindObject('Line18').Visible := True;
+    end;
+    Report.ShowReport();
+//    end;
   end;
 end;
 

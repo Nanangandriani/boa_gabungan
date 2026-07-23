@@ -105,7 +105,7 @@ type
     { Private declarations }
   public
     Status, stat_bon : Integer;
-    additional_code1, additional_code2, additional_code3, additional_code4, additional_code5 : String;
+    additional_code1, additional_code2, additional_code3, additional_code4, additional_code5, code_tp : String;
     strtgl, strbulan, strtahun: string;
     Year, Month, Day: Word;
     next_proses:boolean;
@@ -244,7 +244,7 @@ begin
       close;
       sql.clear;
       sql.add(' Insert into "public"."t_petty_cash" ("created_at", "created_by", '+
-              ' "voucher_no", "trans_date", "actors_code", "actors_name", "amount", "description", '+
+              ' "voucher_no", "trans_date", "actors_code", "actors_name", "code_tp", "amount", "description", '+
               ' "source_code", "source_name", '+
               ' "voucher_no_receipt", "amount_receipt", "stat_receipt",'+
               //' "additional_code", '+
@@ -257,6 +257,7 @@ begin
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
               ' '+QuotedStr(edKodeKepada.Text)+', '+
               ' '+QuotedStr(edNamaKepada.Text)+', '+
+              ' '+QuotedStr(code_tp)+', '+
               ' '+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
               ' '+QuotedStr(MemKeterangan.Text)+', '+
               ' '+QuotedStr(edKodeSumberKas.Text)+', '+
@@ -298,7 +299,7 @@ begin
       close;
       sql.clear;
       sql.add(' Insert into "public"."t_petty_cash" ("created_at", "created_by", '+
-              ' "voucher_no", "trans_date", "actors_code", "actors_name", "amount", "description", '+
+              ' "voucher_no", "trans_date", "actors_code", "actors_name", "code_tp", "amount", "description", '+
               ' "source_code", "source_name", '+
               ' "voucher_no_receipt", "amount_receipt", "stat_receipt",'+
               //' "additional_code", '+
@@ -310,6 +311,7 @@ begin
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
               ' '+QuotedStr(edKodeKepada.Text)+', '+
               ' '+QuotedStr(edNamaKepada.Text)+', '+
+              ' '+QuotedStr(code_tp)+', '+
               ' '+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
               ' '+QuotedStr(MemKeterangan.Text)+', '+
               ' '+QuotedStr(edKodeSumberKas.Text)+', '+
@@ -358,6 +360,7 @@ begin
               ' trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
               ' actors_code='+QuotedStr(edKodeKepada.Text)+','+
               ' actors_name='+QuotedStr(edNamaKepada.Text)+','+
+              ' code_tp='+QuotedStr(code_tp)+','+
               ' source_code='+QuotedStr(edKodeSumberKas.Text)+','+
               ' source_name='+QuotedStr(edNamaSumberKas.Text)+','+
               ' amount='+QuotedStr(stringreplace(FloatToStr(vtotal_kredit), ',', '.',[rfReplaceAll, rfIgnoreCase]))+','+
@@ -527,6 +530,7 @@ begin
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       if MessageDlg ('Anda Yakin Disimpan Dengan No . '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
+        code_tp:=SelectRow('select karesidenan_code from "t_cost_actors" where code='+QuotedStr(edKodeKepada.Text)+' ');
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -535,6 +539,7 @@ begin
       begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
+        code_tp:=SelectRow('select karesidenan_code from "t_cost_actors" where code='+QuotedStr(edKodeKepada.Text)+' ');
         Update;
         Dm.Koneksi.Commit;
       end;

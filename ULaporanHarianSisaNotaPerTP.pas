@@ -160,7 +160,7 @@ procedure TFLaporanHarianSisaNotaPerTP.cbKaresidenanPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='laporanhariansisanotapertpkares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 
@@ -188,16 +188,20 @@ begin
       sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,FALSE,FALSE,'+QuotedStr(strTpID)+') ORDER BY kabupaten ASC';
       Open;
     end;
-
-    if Qreport.RecordCount>0 then
+    if Qreport.RecordCount=0 then
     begin
-      strReportName:='rpt_laporanhariansisanotapertp';
-      cLocation := ExtractFilePath(Application.ExeName);
-      Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
-      Report.ShowReport();
-    end else begin
       MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
     end;
+
+//    if Qreport.RecordCount>0 then
+//    begin
+    strReportName:='rpt_laporanhariansisanotapertp';
+    cLocation := ExtractFilePath(Application.ExeName);
+    Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+    Report.ShowReport();
+//    end else begin
+//      MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
+//    end;
   end;
 end;
 

@@ -12,7 +12,7 @@ uses
   FireDAC.Moni.RemoteClient, FireDAC.Moni.Custom, FireDAC.Moni.FlatFile,
   UniProvider, PostgreSQLUniProvider, DBAccess, Uni, MemDS, DASQLMonitor,
   UniSQLMonitor,Generics.Collections,TypInfo, frxClass, frxDBSet, ABSMain,
-  frxDesgn, Vcl.Dialogs, Vcl.Forms;
+  frxDesgn, Vcl.Dialogs, Vcl.Forms, MySQLUniProvider;
 
 type
   Tdm = class(TDataModule)
@@ -50,6 +50,9 @@ type
     ABSTable1User_db_Pusat: TStringField;
     QtempPusat: TUniQuery;
     QtempPusat1: TUniQuery;
+    KoneksiPusatMysql: TUniConnection;
+    MySQLUniProvider2: TMySQLUniProvider;
+    QtempPusatMysql: TUniQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure KoneksiError(Sender: TObject; E: EDAError; var Fail: Boolean);
   private

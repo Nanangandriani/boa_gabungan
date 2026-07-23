@@ -248,6 +248,66 @@ uses Ubrowse_pelanggan, UMasterData, URincianPot_Penjualan,
   UCari_DaftarPerk, UHomeLogin, UMy_Function, UListStockBarang, UDaftarKontrak,
   UKoreksi, UMainMenu, UbrowseUangMukaDibayarkan, UListNoTransaksi;
 
+
+function UpdateStockDSO(vnotrans:string): string;
+var
+  key,url,s,BaseUrl,Vpath,Vtoken,str : string;
+  vBody,vBody2,KetAlasan  : string;
+  jumdata : Real;
+  xxx: Integer;
+  cnt: Integer;
+  iii: Integer;
+  sss, row, row1, row2: String;
+  res: String;
+  date : TDate;
+  //component
+  gNet          :TIdHTTP;
+  //respon component
+  httpresult    : TIdHTTP ;
+  resp: TMemoryStream;
+  slParam   : TStringStream;
+  //slParams : TStringStream;
+begin
+  resp := TMemoryStream.Create;
+  BaseUrl:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''baseurlstockdso''');
+  key:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''keyapistockdso''');
+  vtoken:=SelectRow('SELECT value_parameter FROM t_parameter where key_parameter=''tokenapistockdso''');
+     with dm.Qtemp do //Baca Data nota
+		 begin
+				close;
+				sql.clear;
+				sql.add('SELECT * FROM get_selling_json_text_dso('+QuotedStr(vnotrans)+')');
+				open;
+			  first;
+      end;
+
+      Vpath:='v1/api/trans-boa/smart-boa';
+      vBody:=dm.Qtemp.fieldbyname('hasil_json').asstring;
+
+      url:= BaseUrl+Vpath;
+      slParam := TStringStream.Create(dm.Qtemp.FieldByName('hasil_json').AsString);
+
+      TRY
+      gNet :=  TIdHTTP.Create(nil);
+      gNet.HandleRedirects := true;
+      gNet.ReadTimeout := 5000;
+      gNet.Request.Accept := 'application/form-data';
+      gNet.Request.CustomHeaders.Values[key] := Vtoken;
+      gNet.Request.ContentType := 'application/json';
+      //res:=  gNet.get(url);
+      UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , false, url+vBody);
+      UpdateLogErrorAPI(BaseUrl , Vpath , vtoken , True, url+vBody);
+      //Result := gNet.get(url);
+      //Result := gNet.Post(url, slParam);
+      Result := gNet.POST(url, slParam);
+      //res:=  gNet.Post(url, slParam);
+      slParam.Position := 0;
+      finally
+       resp.Free;
+       slParam.free;
+      end;
+end;
+
 function GetFakturPajak(vtahun:string): string;
 begin
   with Dm.Qtemp do
@@ -442,10 +502,6 @@ try
     end;
     Except;
   end;
-
-
-
-
 
 end;
 
@@ -1075,7 +1131,7 @@ end;
 procedure TFNew_Penjualan.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
-  StockAda,UangMukaAda,strLanjutUangMuka: Integer;
+  StockAda,UangMukaAda,strLanjutUangMuka,strStatusPengajuanSalesOrder: Integer;
   ItemNameNoStok,strCodeHeadOffice, strWhereUangMuka, strUangMuka, strKodeAwalInvoice: String;
   LOriginalName: string;
   LBaseName: string;
@@ -1088,6 +1144,26 @@ begin
   UangMukaAda:=0;
   strUangMuka:='';
   strLanjutUangMuka:=1;
+  strStatusPengajuanSalesOrder:=0;
+  if edNamaSumber.Text='SALES ORDER' then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+                'no_transaksi='+QuotedStr(edNoReff.Text)+' and status=0 and deleted_at is null';
+      open;
+    end;
+
+    if dm.Qtemp.RecordCount>0 then
+    begin
+      strStatusPengajuanSalesOrder:=1;
+    end;
+
+  end;
+
+
 
   with dm.Qtemp do
   begin
@@ -1096,6 +1172,7 @@ begin
     sql.Text:='select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual''';
     Open;
   end;
+
 
   if cbUangMuka.Checked=False then
   begin
@@ -1176,7 +1253,6 @@ begin
       MemDetail.First;
       while not MemDetail.Eof do
       begin
-
         with dm.Qtemp3 do
         begin
           close;
@@ -1224,6 +1300,12 @@ begin
         if edKode_Pelanggan.Text='' then
         begin
           MessageDlg('Data Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+          Exit;
+        end;
+
+        if strStatusPengajuanSalesOrder=1 then
+        begin
+          MessageDlg('Sales Order ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
           Exit;
         end;
 
@@ -1944,6 +2026,17 @@ begin
   SavePotongan;
   SimpanPelanggan;
   SaveUangMuka;
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT value_parameter FROM t_parameter WHERE key_parameter=''statusdso'' ';
+    Open;
+  end;
+  if (dm.Qtemp2.RecordCount>0) AND (dm.Qtemp2.FieldValues['value_parameter']='1') then
+  begin
+    UpdateStockDSO(edNomorTrans.Text);
+  end;
 //  proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
   Clear;
@@ -1995,8 +2088,8 @@ begin
             ' tot_before_piece='+QuotedStr(FloatToStr(edTotSebelumPot.Value))+', '+
             ' amount_down_payment='+QuotedStr(FloatToStr(tot_uang_muka))+', '+
             ' po_order='+QuotedStr(edPOOrder.Text)+','+
-            ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+', '+
-            ' load_conversion='+QuotedStr(SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' '))+' '+
+            ' grand_tot_amount_down_payment='+QuotedStr(FloatToStr(tot_dipotong_uang_muka))+' '+
+//            ' load_conversion='+QuotedStr(SelectRow('select load_conversion from t_sales_order where notrans='+QuotedStr(edNoReff.Text)+' '))+' '+
             ',word_amount='+QuotedStr(terbilang)+' '+
             ',no_ppbj='+QuotedStr(edNoPPBJ.Text)+' '+
             ' Where trans_no='+QuotedStr(edNomorTrans.Text)+'');

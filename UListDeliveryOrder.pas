@@ -265,10 +265,12 @@ begin
   if QDeliveryOrder.FieldByName('no_spm').AsString<>'' then
   begin
     MessageDlg('DO Sudah jadi SPM tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
-  end else if QDeliveryOrder.FieldByName('status').AsInteger>4 then
-  begin
-    MessageDlg('Status DO Sudah '+QDeliveryOrder.FieldByName('status_name').AsString+', tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
-  end else begin
+  end
+//  else if QDeliveryOrder.FieldByName('status').AsInteger>5 then     //tadinya diatas >4
+//  begin
+//    MessageDlg('Status DO Sudah '+QDeliveryOrder.FieldByName('status_name').AsString+', tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
+//  end
+  else begin
 
     if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
     begin
@@ -402,18 +404,21 @@ begin
     begin
       FNewDeliveryOrder.BtnCekBiaya.Visible:=true;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya';
+      FNewDeliveryOrder.RzPageControl1.ActivePageIndex:= 0;
 //      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
 //      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end else if (FNewDeliveryOrder.IntStatusDO>3) then
     begin
       FNewDeliveryOrder.BtnCekBiaya.Visible:=False;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya';
+      FNewDeliveryOrder.RzPageControl1.ActivePageIndex := 0;
 //      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
 //      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end else if (FNewDeliveryOrder.IntStatusDO=3) then
     begin
       FNewDeliveryOrder.BtnCekBiaya.Visible:=true;
       FNewDeliveryOrder.BtnCekBiaya.Caption:='Cek Biaya Perubahan';
+      FNewDeliveryOrder.RzPageControl1.ActivePageIndex := 1;
 //      FNewDeliveryOrder.btSimpanSumberJual.Enabled:=True;
 //      FNewDeliveryOrder.btSaveParameter.Enabled:=False;
     end;
@@ -584,20 +589,21 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
-                'coalesce(a.pickup_location,'''') pickup_location,coalesce(a.delivery_location) delivery_location, d.company_name,d.address address_sbu,d.telp,'+
-                'COALESCE(vehicles,'''') keterangan,'+
-                'vehicles,dol.item_name,sum(dol.amount) amount,dol.unit from '+
-                't_delivery_order_load dol LEFT JOIN '+
-                't_delivery_order_services  a on a.notrans=dol.notrans '+
-                'left join t_supplier b on b.supplier_code=a.vendor_code '+
-                'left join t_delivery_order c on c.notrans=a.notrans '+
-                'left join t_company d on d.company_code=c.sbu_code '+
-                'WHERE a.notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans'])+' '+
-                'GROUP BY a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
-                'coalesce(a.pickup_location,'''') ,coalesce(a.delivery_location) ,'+
-                'd.company_name,d.address,d.telp,COALESCE(vehicles,'''') ,'+
-                'vehicles,dol.item_name,dol.unit ORDER BY item_name ASC';
+      sql.Text:='SELECT * from get_do_det('+QuotedStr(QDeliveryOrder.FieldValues['notrans'])+')';
+//      sql.Text:='select a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
+//                'coalesce(a.pickup_location,'''') pickup_location,coalesce(a.delivery_location) delivery_location, d.company_name,d.address address_sbu,d.telp,'+
+//                'COALESCE(vehicles,'''') keterangan,'+
+//                'vehicles,dol.item_name,sum(dol.amount) amount,dol.unit from '+
+//                't_delivery_order_load dol LEFT JOIN '+
+//                't_delivery_order_services  a on a.notrans=dol.notrans '+
+//                'left join t_supplier b on b.supplier_code=a.vendor_code '+
+//                'left join t_delivery_order c on c.notrans=a.notrans '+
+//                'left join t_company d on d.company_code=c.sbu_code '+
+//                'WHERE a.notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans'])+' '+
+//                'GROUP BY a.notrans,c.date_trans,a.vendor_code,a.vendor_name,b.address,'+
+//                'coalesce(a.pickup_location,'''') ,coalesce(a.delivery_location) ,'+
+//                'd.company_name,d.address,d.telp,COALESCE(vehicles,'''') ,'+
+//                'vehicles,dol.item_name,dol.unit ORDER BY item_name ASC';
       open;
     end;
 

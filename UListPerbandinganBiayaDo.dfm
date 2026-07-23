@@ -172,7 +172,8 @@ object FListPerbandinganBiayaDo: TFListPerbandinganBiayaDo
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 707
+      ExplicitLeft = 713
+      ExplicitTop = 6
     end
   end
   object MemDataBiayaLast: TMemTableEh

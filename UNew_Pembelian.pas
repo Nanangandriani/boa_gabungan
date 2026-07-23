@@ -408,7 +408,7 @@ var
   HeaderCode   : string;
 begin
 
-    if Edno_Faktur.Text=''  then
+ {   if Edno_Faktur.Text=''  then
     begin
       MessageDlg('No Faktur Tidak Boleh Kosong ',MtWarning,[MbOk],0);
       Edno_Faktur.SetFocus;
@@ -426,7 +426,7 @@ begin
       begin
         MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
         Exit;
-      end;
+      end;        }
      // DtterimaChange(sender);
     //  Autonumber;
    {   Edth.Text:=vthn;
@@ -1100,6 +1100,25 @@ begin
                   ExecSQL;
                 end;
               end;
+              // cr ds 22-07-2026
+                MemUangMuka.First;
+                  while not MemUangMuka.Eof do
+                  begin
+                    with dm.qtemp do
+                    begin
+                        close;
+                        sql.Clear;
+                        sql.Text:='Insert into t_purchase_down_payment(trans_no,trans_no_down_payment,voucher_no,paid_amount,remaining_down_payment)'+
+                        'values(:trans_no,:um_no,:vc_no,:amount,:remaining)';
+                        ParamByName('trans_no').Value:=EdNo.Text;
+                        ParamByName('um_no').Value:=MemUangMuka['trans_no'];
+                        ParamByName('vc_no').Value:=MemUangMuka['voucher_no'];
+                        ParamByName('amount').Value:=MemUangMuka['amount'];
+                        ParamByName('remaining').Value:=MemUangMuka['um_value'];
+                        ExecSQL;
+                    end;
+                    MemUangMuka.Next;
+                  end;
        //   dm.koneksi.Commit;
           Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
         //  BBatalClick(sender);
@@ -1347,6 +1366,31 @@ end;
 
 procedure TFNew_Pembelian.BSimpanClick(Sender: TObject);
 begin
+    if Edno_Faktur.Text=''  then
+    begin
+      MessageDlg('No Faktur Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      Edno_Faktur.SetFocus;
+      Exit;
+    end;
+          // cr ds 13-02-2026 deteksi klau akun kosong
+        if Edkd_akun.Text='' then
+        begin
+          MessageDlg('Lengkapi Akun Hutangnya',MtWarning,[MbOk],0);
+          //Edkd_akun.SetFocus;
+          Exit;
+        end;
+        //
+                                                                                                                                                                               if EdNilai_um.Value<>edum.Value then
+      begin
+        MessageDlg('Maaf Uang Muka Belum Lunas',MtWarning,[MbOk],0);
+        Exit;
+      end;
+    if EdSJ.Text=''  then
+    begin
+      MessageDlg('Surat Jalan Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+      EdSJ.SetFocus;
+      Exit;
+    end;
  if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
       try
@@ -1372,8 +1416,7 @@ begin
             Dm.Koneksi.Commit;
           end;
         end;
-        BBatalClick(sender);
-      Except on E :Exception do
+        Except on E :Exception do
         begin
           begin
             MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
@@ -1381,6 +1424,7 @@ begin
           end;
         end;
       end;
+      BBatalClick(sender);
 end;
 
 procedure TFNew_Pembelian.Button1Click(Sender: TObject);
@@ -1859,6 +1903,8 @@ procedure TFNew_Pembelian.DBGridDetailpoColumns0EditButtons0Click(
 begin
       if Cb_Sumber.Text='PO' then
       begin
+         MemUangMuka.EmptyTable;
+         MemUangMuka.Close;
          with  FSearch_TerimaBarang do
          begin
            with QMaterial do
@@ -1871,10 +1917,12 @@ begin
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp'+
                         ' ,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,e.header_code '+
                         ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal '+
-                        ' ,c.um_account_code,c.um_value '+                    //cr ds 4-2-2026
+                        ' ,c.um_account_code,c.um_value,c.voucher_no,c.amount,c.um_no '+                    //cr ds 4-2-2026
                         ' from t_item_stock a '+
                         ' inner join t_podetail b on a.item_stock_code=b.item_stock_code '+
-                        ' inner join t_po c on b.po_no=c.po_no '+
+                        ' inner join (select po.*,pay.voucher_no,cb.amount from t_po po left join t_advance_payment um on po.um_no=um.no_trans '+
+                        ' left join t_cash_bank_expenditure_payable pay on um.no_trans=pay.invoice_no left JOIN t_cash_bank_expenditure cb on '+
+                        ' pay.voucher_no=cb.voucher_no) c on b.po_no=c.po_no '+
                         ' inner join t_item e on a.item_code=e.item_code '+
                         ' left join t_item_account g on e.account_code=g.acc_pemb  '+
                         ' inner join t_wh f on c.wh_code=f.wh_code '+
@@ -1886,7 +1934,7 @@ begin
                         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,b.id_pengajuan_asset,b.no_pengajuan_asset,'+
                         ' b.id_detail_asset,b.spesifikasi_asset,e.header_code, '+
-                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_account_code,c.um_value  ';
+                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,c.um_account_code,c.um_value,c.voucher_no,c.amount,c.um_no  ';
               ExecSQL;
            end;
            QMaterial.open;
@@ -1910,11 +1958,15 @@ begin
                         ' c.supplier_code,case when d.spb_no ISNULL then '''' else d.spb_no end spb_no,e.acc_pemb account_code,b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp, '+
                         ' b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,c.due_date,c.valas,c.valas_value,h."type"  '+
                         ' ,b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,c.receive_date,g.account_code header_code '+
-                        ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,'''' um_account_code,0 um_value'+
+                        ' ,b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,h.um_account_code,h.um_value'+
+                        ' ,h.voucher_no,h.amount,h.um_no'+
                         ' from t_item_stock a inner join t_item_receive_det b on a.item_stock_code=b.item_stock_code '+
                         ' inner join t_item_receive C on b.receive_no=c.receive_no '+
                         ' left join t_spb_det d on d.spb_no=c.spb_no and b.item_stock_code=d.item_stock_code '+
-                        ' left join t_po h on b.po_no=h.po_no '+
+                      //  ' left join t_po h on b.po_no=h.po_no '+
+                       ' inner join (select po.*,pay.voucher_no,cb.amount from t_po po left join t_advance_payment um on po.um_no=um.no_trans '+
+                        ' left join t_cash_bank_expenditure_payable pay on um.no_trans=pay.invoice_no left JOIN t_cash_bank_expenditure cb on '+
+                        ' pay.voucher_no=cb.voucher_no) h on b.po_no=h.po_no '+
                         //' inner join t_item e on a.item_code=e.item_code '+
                         ' inner join t_item_account e on a.item_code=e.item_code '+
                         ' inner join t_wh f on b.wh_code=f.wh_code '+
@@ -1928,8 +1980,9 @@ begin
                         'b.subtotal,b.grandtotal,b.pemb_dpp,b.subtotalrp,  b.ppn_rp,b.ppn_pembulatan,b.pph_rp,b.import_duty,'+
                         'c.due_date,c.valas,c.valas_value,h."type"'+
                         ',b.id_pengajuan_asset,b.no_pengajuan_asset,b.id_detail_asset,b.spesifikasi_asset,c.receive_date,g.account_code, '+
-                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal '+
-                        'Order By c.receive_date';
+                        ' b.pph_rp,b.account_pph_code,b.ppn_rp,b.pph_rp,b.subtotal,b.grandtotal,h.um_account_code,h.um_value'+
+                        ' ,h.voucher_no,h.amount,h.um_no'+
+                        ' Order By c.receive_date';
                         ExecSQL;
            end;
            QMaterial2.open;
@@ -2100,7 +2153,7 @@ end;
 
 procedure TFNew_Pembelian.DBGrid_UMColExit(Sender: TObject);
 begin
-  EdJum_Um.Value:=DBGrid_UM.Columns[3].Footer.sumvalue;
+  EdJum_Um.Value:=DBGrid_UM.Columns[1].Footer.sumvalue;
 end;
 
 procedure TFNew_Pembelian.dtfaktur2Change(Sender: TObject);
@@ -2802,6 +2855,32 @@ begin
                     MemDetail.Next;
                   end;
                  end;
+                              // cr ds 22-07-2026
+                 with dm.Qtemp do
+                 begin
+                   close;
+                   sql.Clear;
+                   sql.Text:='delete from t_purchase_down_payment where trans_no='+QuotedStr(EdNo.Text);
+                   Execute;
+                 end;
+                MemUangMuka.First;
+                  while not MemUangMuka.Eof do
+                  begin
+                    with dm.qtemp do
+                    begin
+                        close;
+                        sql.Clear;
+                        sql.Text:='Insert into t_purchase_down_payment(trans_no,trans_no_down_payment,voucher_no,paid_amount,remaining_down_payment)'+
+                        'values(:trans_no,:um_no,:vc_no,:amount,:remaining)';
+                        ParamByName('trans_no').Value:=EdNo.Text;
+                        ParamByName('um_no').Value:=MemUangMuka['trans_no'];
+                        ParamByName('vc_no').Value:=MemUangMuka['voucher_no'];
+                        ParamByName('amount').Value:=MemUangMuka['amount'];
+                        ParamByName('remaining').Value:=MemUangMuka['um_value'];
+                        ExecSQL;
+                    end;
+                    MemUangMuka.Next;
+                 end;
 end;
 
 procedure TFNew_Pembelian.EdjatuhtempoChange(Sender: TObject);
@@ -2933,7 +3012,8 @@ begin
     begin
     jenis_tr:='pemb';
       Show;
-      if Qsupplier.Active=False then Qsupplier.Active:=True;
+    //  Qsupplier.close;
+    //  Qsupplier.open;
       MemterimaDet.EmptyTable;
     end;
   {  with FSearch_Supplier do

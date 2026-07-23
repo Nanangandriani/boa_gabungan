@@ -23,7 +23,7 @@ object FSearch_TerimaBarang: TFSearch_TerimaBarang
     Height = 32
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 384
+    ExplicitTop = 487
     ExplicitWidth = 1047
     object BBatal: TRzBitBtn
       Left = 975

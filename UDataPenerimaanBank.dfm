@@ -4,7 +4,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   BorderStyle = bsDialog
   Caption = 'Data Penerimaan Bank'
   ClientHeight = 600
-  ClientWidth = 1205
+  ClientWidth = 1235
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,14 +17,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1205
+    Width = 1235
     Height = 185
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1201
+    ExplicitWidth = 1231
     object LabelPelanggan: TLabel
       Left = 10
       Top = 82
@@ -361,14 +361,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel2: TPanel
     Left = 0
     Top = 568
-    Width = 1205
+    Width = 1235
     Height = 32
     Align = alBottom
     TabOrder = 1
     ExplicitTop = 567
-    ExplicitWidth = 1201
+    ExplicitWidth = 1231
     object BBatal: TRzBitBtn
-      Left = 1129
+      Left = 1159
       Top = 1
       Height = 30
       Align = alRight
@@ -427,10 +427,10 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1125
+      ExplicitLeft = 1155
     end
     object BSave: TRzBitBtn
-      Left = 1054
+      Left = 1084
       Top = 1
       Height = 30
       Align = alRight
@@ -489,7 +489,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1050
+      ExplicitLeft = 1080
     end
     object Edautocode: TEdit
       Left = 503
@@ -502,7 +502,7 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Visible = False
     end
     object BCorrection: TRzBitBtn
-      Left = 956
+      Left = 986
       Top = 1
       Width = 98
       Height = 30
@@ -510,31 +510,29 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       Caption = 'Submit Correction'
       TabOrder = 3
       OnClick = BCorrectionClick
-      ExplicitLeft = 952
+      ExplicitLeft = 982
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 281
-    Width = 1205
+    Width = 1235
     Height = 287
     Hint = ''
-    ActivePage = TabDetailAkun
+    ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 1201
+    ExplicitWidth = 1231
     ExplicitHeight = 286
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1197
-      ExplicitHeight = 261
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1201
+        Width = 1231
         Height = 262
         Align = alClient
         DataSource = DSDetailAkun
@@ -627,10 +625,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
+      ExplicitWidth = 1227
+      ExplicitHeight = 261
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 43
-        Width = 1201
+        Width = 1231
         Height = 219
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh]
@@ -720,11 +720,12 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
       object RzPanel1: TRzPanel
         Left = 0
         Top = 0
-        Width = 1201
+        Width = 1231
         Height = 43
         Align = alTop
         Color = 15987699
         TabOrder = 1
+        ExplicitWidth = 1227
         object RzButton1: TRzButton
           Left = 9
           Top = 8
@@ -739,14 +740,14 @@ object FDataPenerimaanBank: TFDataPenerimaanBank
   object Panel5: TPanel
     Left = 0
     Top = 185
-    Width = 1205
+    Width = 1235
     Height = 96
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 3
-    ExplicitWidth = 1201
+    ExplicitWidth = 1231
     object gbDataPiutang: TGroupBox
       Left = 501
       Top = 0

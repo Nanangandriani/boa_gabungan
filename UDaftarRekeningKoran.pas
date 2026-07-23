@@ -185,30 +185,25 @@ begin
     end;
   end;
 
- if QCetak.RecordCount=0 then
- begin
-  showmessage('Tidak ada data yang bisa dicetak !');
-  exit;
- end;
+  if QCetak.RecordCount=0 then
+  begin
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
 
- if QCetak.RecordCount<>0 then
- begin
-   cLocation := ExtractFilePath(Application.ExeName);
-
-
-
-
-
-   //ShowMessage(cLocation);
-   Report.LoadFromFile(cLocation +'report/rpt_cek_bulan'+ '.fr3');
-   SetMemo(Report,'njudul','DAFTAR CEK BULAN : '+formatdatetime('mmmm',dtAwal.EditValue)+' '+formatdatetime('yyyy',dtAwal.EditValue)+'');
-   SetMemo(Report,'no_rek',vRekeningBank);
-   SetMemo(Report,'nama_bank',vNamaBank);
-   SetMemo(Report,'nprsh',FHomeLogin.vNamaPRSH);
-   SetMemo(Report,'tanggal',''+formatdatetime('dd-mm-yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd-mm-yyyy',dtAkhir.EditValue));
-   //Report.DesignReport();
-   Report.ShowReport();
- end;
+  if QCetak.RecordCount<>0 then
+  begin
+    cLocation := ExtractFilePath(Application.ExeName);
+    //ShowMessage(cLocation);
+    Report.LoadFromFile(cLocation +'report/rpt_cek_bulan'+ '.fr3');
+    SetMemo(Report,'njudul','DAFTAR CEK BULAN : '+formatdatetime('mmmm',dtAwal.EditValue)+' '+formatdatetime('yyyy',dtAwal.EditValue)+'');
+    SetMemo(Report,'no_rek',vRekeningBank);
+    SetMemo(Report,'nama_bank',vNamaBank);
+    SetMemo(Report,'nprsh',FHomeLogin.vNamaPRSH);
+    SetMemo(Report,'tanggal',''+formatdatetime('dd-mm-yyyy',dtAwal.EditValue)+' s/d '+formatdatetime('dd-mm-yyyy',dtAkhir.EditValue));
+    //Report.DesignReport();
+    Report.ShowReport();
+  end;
 end;
 
 

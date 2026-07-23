@@ -551,7 +551,20 @@ begin
   '                item_code, ' +
   '                '+vleveljumlah_in+' jum_trans_in, ' +
   '                '+vleveljumlah_out+' jum_trans_out ' +
-  '            FROM (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock WHERE type IN (''IN'', ''OUT'')  ORDER BY notrans, item_code, created_at DESC) a ' +
+  '            FROM ('+
+  {'            SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock '+
+  '            WHERE type IN (''IN'', ''OUT'')  ORDER BY notrans, item_code, created_at DESC '+ }
+  ' SELECT notrans, kd_gudang, item_code, tgltrans, type, satuan_transaksi, level1_satuan, '+
+  ' level2_satuan, level3_satuan, SUM(qty_transaksi) AS total_qty_transaksi, SUM(level1_qty_in) '+
+  ' AS level1_qty_in, SUM(level1_qty_out) AS level1_qty_out, SUM(level2_qty_in) AS level2_qty_in, '+
+  ' SUM(level2_qty_out) AS level2_qty_out, SUM(level3_qty_in) AS level3_qty_in, SUM(level3_qty_out) '+
+  ' AS level3_qty_out, MAX(level1_saldo_akhir) AS level1_saldo_akhir, MAX(level2_saldo_akhir) '+
+  ' AS level2_saldo_akhir, MAX(level3_saldo_akhir) AS level3_saldo_akhir,MAX(created_at) '+
+  ' AS created_at, MAX(updated_at) AS updated_at,sumber_table '+
+  ' FROM tbl_transaksi_stock  GROUP BY notrans, kd_gudang, item_code, tgltrans, type, '+
+  ' satuan_transaksi, level1_satuan, level2_satuan, level3_satuan,sumber_table '+
+  ' ORDER BY notrans, item_code '+
+  '            ) a ' +
   '            WHERE type IN (''IN'', ''OUT'') ' +
   '                AND tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_stock_wh)) + '::date ' +
   '                    AND (' + QuotedStr(FormatDateTime('yyyy-mm-dd', tgl_awal.EditValue)) + '::date - INTERVAL ''1 day'') ' +
@@ -582,7 +595,19 @@ begin
   '        0 AS saldo_awal, ' +
   '        1 AS urut, ' +
   '        '+vsatuan_trans+' satuan ' +
-  '    FROM (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock ORDER BY notrans, item_code, created_at DESC) t ' +
+  '    FROM ( '+
+  //' SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock ORDER BY notrans, item_code, created_at DESC '+
+  ' SELECT notrans, kd_gudang, item_code, tgltrans, type, satuan_transaksi, level1_satuan, '+
+  ' level2_satuan, level3_satuan, SUM(qty_transaksi) AS total_qty_transaksi, SUM(level1_qty_in) '+
+  ' AS level1_qty_in, SUM(level1_qty_out) AS level1_qty_out, SUM(level2_qty_in) AS level2_qty_in, '+
+  ' SUM(level2_qty_out) AS level2_qty_out, SUM(level3_qty_in) AS level3_qty_in, SUM(level3_qty_out) '+
+  ' AS level3_qty_out, MAX(level1_saldo_akhir) AS level1_saldo_akhir, MAX(level2_saldo_akhir) '+
+  ' AS level2_saldo_akhir, MAX(level3_saldo_akhir) AS level3_saldo_akhir,MAX(created_at) '+
+  ' AS created_at, MAX(updated_at) AS updated_at,sumber_table '+
+  ' FROM tbl_transaksi_stock  GROUP BY notrans, kd_gudang, item_code, tgltrans, type, '+
+  ' satuan_transaksi, level1_satuan, level2_satuan, level3_satuan,sumber_table '+
+  ' ORDER BY notrans, item_code '+
+  ' ) t ' +
   '        LEFT JOIN (SELECT receive_no, supplier_name from t_item_receive a left join t_supplier b on a.supplier_code=b.supplier_code) beli ON t.notrans = beli.receive_no ' +
   '        LEFT JOIN (SELECT trans_no, customer_name_pkp FROM get_selling(false)) jual ON t.notrans = jual.trans_no  ' +
   '        LEFT JOIN (SELECT return_no, supplier_name from t_purchase_return a left join t_supplier b on a.supplier_code=b.supplier_code) retbeli ON t.notrans = retbeli.return_no ' +
@@ -694,7 +719,23 @@ begin
             ' satuan  FROM  (SELECT kd_barang,  '+vleveljumlah_sa+' saldo_awal,  '+
             ' '+vsatuan+' satuan from tbl_transaksi_stock_sa where kd_gudang = '+QuotedStr(kd_gudang)+')  m '+
             ' LEFT JOIN ( SELECT item_code, '+vleveljumlah_in+' jum_trans_in,  '+
-            ' '+vleveljumlah_out+' jum_trans_out  from (SELECT DISTINCT ON (notrans, item_code) *FROM tbl_transaksi_stock WHERE type IN (''IN'', ''OUT'') ORDER BY notrans, item_code, created_at DESC)a  WHERE type '+
+            ' '+vleveljumlah_out+' jum_trans_out  from ('+
+            //' SELECT DISTINCT ON (notrans, item_code)'+
+            //'  *FROM tbl_transaksi_stock WHERE type IN (''IN'', ''OUT'') '+
+            //' ORDER BY notrans, item_code, created_at DESC '+
+
+            ' SELECT notrans, kd_gudang, item_code, tgltrans, type, satuan_transaksi, level1_satuan, '+
+            ' level2_satuan, level3_satuan, SUM(qty_transaksi) AS total_qty_transaksi, SUM(level1_qty_in) '+
+            ' AS level1_qty_in, SUM(level1_qty_out) AS level1_qty_out, SUM(level2_qty_in) AS level2_qty_in, '+
+            ' SUM(level2_qty_out) AS level2_qty_out, SUM(level3_qty_in) AS level3_qty_in, SUM(level3_qty_out) '+
+            ' AS level3_qty_out, MAX(level1_saldo_akhir) AS level1_saldo_akhir, MAX(level2_saldo_akhir) '+
+            ' AS level2_saldo_akhir, MAX(level3_saldo_akhir) AS level3_saldo_akhir,MAX(created_at) '+
+            ' AS created_at, MAX(updated_at) AS updated_at,sumber_table '+
+            ' FROM tbl_transaksi_stock  GROUP BY notrans, kd_gudang, item_code, tgltrans, type, '+
+            ' satuan_transaksi, level1_satuan, level2_satuan, level3_satuan,sumber_table '+
+            ' ORDER BY notrans, item_code '+
+
+            ' )a  WHERE type '+
             ' IN (''IN'',''OUT'') and tgltrans '+
             ' BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_stock_wh))+'::date AND ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_awal.EditValue))+'::date - INTERVAL ''1 day'') '+
             ' AND kd_gudang = '+QuotedStr(kd_gudang)+' GROUP BY item_code ORDER BY item_code) t  '+

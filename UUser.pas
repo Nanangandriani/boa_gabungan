@@ -89,21 +89,21 @@ uses UNew_User, UDataModule, UHomeLogin, UMy_Function, UMainMenu;
 
 procedure TFUser.refresh;
 begin
-   with QUser do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:=' select a.code,a.user_name,a.full_name,a.password,b.dept_code,b.dept,c.position_code,c.position from t_user a inner join t_dept b on a.dept_code=b.dept_code  '+
-                 ' inner join t_position c on a.position_code=c.position_code '+
-                 ' where a.deleted_at is null order by a.created_at Desc ';
-       open;
-   end;
-   QUser.Active:=False;
-   QUser.Active:=True;
-   QUser.Close;
-   QUser.Open;
-   MemUser.Close;
-   MemUser.Open;
+  with QUser do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' select a.code,a.user_name,a.full_name,a.password,b.dept_code,b.dept,c.position_code,c.position from t_user a inner join t_dept b on a.dept_code=b.dept_code  '+
+             ' inner join t_position c on a.position_code=c.position_code '+
+             ' where a.deleted_at is null order by a.created_at Desc ';
+    open;
+  end;
+  QUser.Active:=False;
+  QUser.Active:=True;
+  QUser.Close;
+  QUser.Open;
+  MemUser.Close;
+  MemUser.Open;
 end;
 
 procedure TFUser.ActBaruExecute(Sender: TObject);
@@ -124,10 +124,10 @@ begin
       //sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
       ExecSQL;
     END;
-      nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
-      FNew_User.EdNik.Text:='0'+(IntToStr(nik+1));
-      EdNik.ReadOnly:=false;
-      EdNama.ReadOnly:=False;
+    nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
+    FNew_User.EdNik.Text:='0'+(IntToStr(nik+1));
+    EdNik.ReadOnly:=false;
+    EdNama.ReadOnly:=False;
   end;
 end;
 
@@ -152,12 +152,12 @@ end;
 
 procedure TFUser.ActROExecute(Sender: TObject);
 begin
-    DBGridUser.StartLoadingStatus();
-    DBGridUser.FinishLoadingStatus();
-    QUser.Close;
-    QUser.Open;
-    MemUser.Close;
-    MemUser.Open;
+  DBGridUser.StartLoadingStatus();
+  DBGridUser.FinishLoadingStatus();
+  QUser.Close;
+  QUser.Open;
+  MemUser.Close;
+  MemUser.Open;
 end;
 
 procedure TFUser.ActUpdateExecute(Sender: TObject);

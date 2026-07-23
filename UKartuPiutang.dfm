@@ -2,8 +2,8 @@ object FKartuPiutang: TFKartuPiutang
   Left = 0
   Top = 0
   Caption = 'Kartu Piutang'
-  ClientHeight = 624
-  ClientWidth = 1257
+  ClientHeight = 623
+  ClientWidth = 1253
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FKartuPiutang: TFKartuPiutang
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1257
+    Width = 1253
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -25,6 +25,7 @@ object FKartuPiutang: TFKartuPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1257
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -61,8 +62,8 @@ object FKartuPiutang: TFKartuPiutang
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1257
-    Height = 497
+    Width = 1253
+    Height = 496
     Align = alClient
     DataSource = dsMaster
     DynProps = <>

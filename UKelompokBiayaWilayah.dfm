@@ -217,7 +217,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
             EditButtons = <>
             FieldName = 'debit'
             Footers = <>
-            Title.Caption = 'Jumlah'
+            Title.Caption = 'Jumlah Transaksi'
             Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -312,7 +312,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
             EditButtons = <>
             FieldName = 'jumlah'
             Footers = <>
-            Title.Caption = 'Jumlah'
+            Title.Caption = 'Jumlah Biaya'
             Width = 150
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -597,8 +597,8 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
   end
   object DSMemTP: TDataSource
     DataSet = MemTP
-    Left = 760
-    Top = 331
+    Left = 784
+    Top = 275
   end
   object MemTP: TMemTableEh
     FieldDefs = <

@@ -125,6 +125,34 @@ begin
     open;
   end;
   end else
+  if cbsumberdata.text='KAS KECIL' then
+  begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT code_account as kd_akun, name_account as nm_akun, '+
+            ' paid_amount as jumlah  from t_petty_cash_det  where '+
+            ' voucher_no='+QuotedStr(edNoTrans.Text)+' and position=''D'' '+
+            ' ORDER BY code_account desc');
+    open;
+  end;
+  end else
+  if cbsumberdata.text='MEMORIAL' then
+  begin
+  with Dm.Qtemp1 do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT account_code as kd_akun, account_name as nm_akun, '+
+            ' case when debit=0 then kredit else debit end jumlah '+
+            ' from t_memorial_journal_detail a '+
+            ' left join t_ak_account b on a.account_code=b.code '+
+            ' where  memo_no='+QuotedStr(edNoTrans.Text)+' '+
+            ' ORDER BY account_code desc');
+    open;
+  end;
+  end else
   if cbsumberdata.text='PENGELUARAN KAS DAN BANK' then
   begin
   with Dm.Qtemp1 do
@@ -366,7 +394,7 @@ begin
     MemTP['nm_akun']:=MemDetailAkun['nm_akun'];
     MemTP['kd_tp']:='';
     MemTP['nm_tp']:='';
-    MemTP['keterangan']:=edNoTrans.Text;
+    MemTP['keterangan']:=MemKeterangan.Text;
     MemTP['jumlah']:=MemDetailAkun['debit'];
     MemTP.post;
   end;

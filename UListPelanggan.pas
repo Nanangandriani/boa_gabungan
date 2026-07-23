@@ -137,7 +137,7 @@ implementation
 {$R *.dfm}
 
 uses UNew_Pelanggan, UDataModule, UMy_Function, UDataProspekPelanggan,
-  UDataBankGaransi, UMasterData, UHomeLogin;
+  UDataBankGaransi, UMasterData, UHomeLogin, UMainMenu;
 
   var
   listpelanggan : TFListPelanggan;
@@ -352,25 +352,35 @@ end;
 
 procedure TFListPelanggan.dxBarDeleteClick(Sender: TObject);
 begin
-  with dm.Qtemp do
-  begin
-    Close;
-    Sql.Clear;
-    SQl.Text:='SELECT code_cust FROM t_sales_order WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
-    Open;
-  end;
+//  with dm.Qtemp do
+//  begin
+//    Close;
+//    Sql.Clear;
+//    SQl.Text:='SELECT code_cust FROM t_sales_order WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+//    Open;
+//  end;
+//
+//  with dm.Qtemp2 do
+//  begin
+//    Close;
+//    Sql.Clear;
+//    SQl.Text:='SELECT code_cust FROM t_selling WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
+//    Open;
+//  end;
 
   with dm.Qtemp2 do
   begin
-    Close;
-    Sql.Clear;
-    SQl.Text:='SELECT code_cust FROM t_selling WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString);
-    Open;
+    close;
+    sql.Clear;
+    sql.Text:='SELECT SUM(sisa_piutang) sisa_piutang FROM get_piutang_invoice2(CURRENT_DATE) '+
+              'WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString)+' GROUP BY code_cust';
+    open;
   end;
 
-  if (dm.Qtemp.RecordCount>0) OR (dm.Qtemp2.RecordCount>0) then
+//  if (dm.Qtemp.RecordCount>0) AND (dm.Qtemp2.FieldValues['sisa_piutang']>0) then
+  if (dm.Qtemp2.RecordCount>0) AND (dm.Qtemp2.FieldValues['sisa_piutang']>0) then
   begin
-     MessageDlg('Tidak dapat dihapus, Pelanggan sudah dibuat Order..!!',mtInformation,[mbRetry],0);
+     MessageDlg('Tidak dapat dihapus, Pelanggan masih ada sisa piutang..!!',mtInformation,[mbRetry],0);
   end else
   begin
     if MessageDlg('Apakah anda yakin ingin menghapus data ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
@@ -380,10 +390,9 @@ begin
         close;
         sql.Clear;
         //sql.Text:='Delete From t_pelanggan where kode_pelanggan = '+QuotedStr(DBGridEh1.Fields[0].AsString);
-        sql.Text:=' Update t_customer set deleted_at=:deleted_at,deleted_by=:deleted_by '+
+        sql.Text:=' Update t_customer set deleted_at=NOW(),deleted_by=:deleted_by '+
                   ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
-        parambyname('deleted_at').AsDateTime:=Now;
-        parambyname('deleted_by').AsString:='Admin';
+        parambyname('deleted_by').AsString:=Nm;
         execsql;
       end;
       MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);

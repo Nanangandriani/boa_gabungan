@@ -3,8 +3,8 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Data Kelompok Kendaraan'
-  ClientHeight = 442
-  ClientWidth = 888
+  ClientHeight = 441
+  ClientWidth = 884
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 0
-    Width = 888
-    Height = 442
+    Width = 884
+    Height = 441
     Align = alClient
     DataSource = DsKendaraan
     DynProps = <>

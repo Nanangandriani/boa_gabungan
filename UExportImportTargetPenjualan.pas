@@ -138,16 +138,12 @@ begin
     if OpenDialog.Execute then
     begin
       FileName := OpenDialog.FileName;
-
       Bimport.Enabled:=False;
       ExcelApp := CreateOleObject('Excel.Application');
       try
 
-
         WorkBook := ExcelApp.Workbooks.Open(FileName);
         WorkSheet := WorkBook.Worksheets[1];
-
-
 
         LastRowWithData := 8;
         LastRow := WorkSheet.Cells[WorkSheet.Rows.Count, 1].End[xlUp].Row;
@@ -163,14 +159,66 @@ begin
           with dm.Qtemp1 do
           begin
             close;
-            sql.clear;
-            sql.Text:='UPDATE t_customer_sales_target SET status=False,deleted_at=NOW(), deleted_by='+QuotedStr(Nm)+' '+
-                      'WHERE '+
-                    ' customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND'+
+            sql.Clear;
+            sql.Text:='SELECT * FROM t_customer_sales_target WHERE customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND '+
                     ' year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND'+
                     ' month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND'+
                     ' status=True';
-            ExecSQL;
+            open;
+          end;
+
+//          with dm.Qtemp1 do
+//          begin
+//            close;
+//            sql.Clear;
+//            sql.Text:='DELETE FROM t_customer_sales_target WHERE customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND'+
+//                    ' year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND'+
+//                    ' month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND'+
+//                    ' status=True';
+//            open;
+//          end;
+
+          if dm.Qtemp1.RecordCount=0 then
+          begin
+//            with dm.Qtemp1 do
+//            begin
+//              close;
+//              sql.clear;
+//              sql.Text:='UPDATE t_customer_sales_target SET status=False,deleted_at=NOW(), deleted_by='+QuotedStr(Nm)+' '+
+//                        'WHERE '+
+//                        ' customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND'+
+//                        ' year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND'+
+//                        ' month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND'+
+//                        ' status=True';
+//              ExecSQL;
+//            end;
+            with dm.Qtemp1 do
+            begin
+              close;
+              sql.clear;
+              sql.Text:='INSERT INTO t_customer_sales_target (customer_code,year,month,'+
+                        'created_at,created_by,status,sbu_code) '+
+                        'VALUES('+
+                      ' '+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' ,'+
+                      ' '+QuotedStr(WorkSheet.Cells[2, 2].Value)+' ,'+
+                      ' '+QuotedStr(WorkSheet.Cells[3, 2].Value)+' ,'+
+                      'NOW(),'+QuotedStr(Nm)+',True,'+QuotedStr(strSBU)+')';
+              ExecSQL;
+            end;
+          end else begin
+            with dm.Qtemp1 do
+            begin
+              close;
+              sql.clear;
+              sql.Text:='UPDATE t_customer_sales_target SET updated_at=NOW(), updated_by='+QuotedStr(Nm)+' '+
+                        'WHERE '+
+                        'customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND '+
+                        'year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND '+
+                        'month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND '+
+                        'status=True';
+              ExecSQL;
+            end;
+
           end;
 
           if FHomeLogin.vStatOffice=0 then
@@ -180,27 +228,46 @@ begin
             strSBU:=FHomeLogin.vKodePRSH;
           end;
 
-          with dm.Qtemp1 do
-          begin
-            close;
-            sql.clear;
-            sql.Text:='INSERT INTO t_customer_sales_target (customer_code,year,month,'+
-                      'created_at,created_by,status,sbu_code) '+
-                      'VALUES('+
-                    ' '+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' ,'+
-                    ' '+QuotedStr(WorkSheet.Cells[2, 2].Value)+' ,'+
-                    ' '+QuotedStr(WorkSheet.Cells[3, 2].Value)+' ,'+
-                    'NOW(),'+QuotedStr(Nm)+',True,'+QuotedStr(strSBU)+')';
-            ExecSQL;
-          end;
-
           with dm.Qtemp do
           begin
             close;
             sql.Clear;
-            sql.Text:='SELECT id_customer_sales_target FROM t_customer_sales_target ORDER BY created_at desc limit 1  ';
+//            sql.Text:='SELECT id_customer_sales_target FROM t_customer_sales_target ORDER BY created_at desc limit 1  ';
+            sql.Text:='SELECT id_customer_sales_target FROM t_customer_sales_target WHERE customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND'+
+                      ' year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND'+
+                      ' month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND'+
+                      ' status=True';
             open;
           end;
+
+//          with dm.Qtemp2 do
+//          begin
+//            sql.Text:='INSERT INTO t_log (username,date,submenu,submenu_code,versi,ipuser,'+
+//                      'insert,keterangan,cetak,notrans,login,logout,user_db)
+//                      'VALUES('+QuotedStr(Nm)+',NOW(),''Export dan Import Target Penjualan'',''M07008''
+//                      ' '+QuotedStr(dm.Qtemp.FieldValues['id_customer_sales_target'])+', '+
+//                      ' '+QuotedStr(Item_Code)+' ,'+
+//                      ' '+Qty_Str+' ,'+
+//                      ' '+Value_Str+' ,'+
+//                      'True)';
+//            ExecSQL;
+//          end;
+
+
+          with dm.Qtemp2 do
+          begin
+            Close;
+            Sql.Clear;
+            SQL.Text:='DELETE FROM t_customer_sales_target_det WHERE id in ( '+
+                      'SELECT a.id FROM t_customer_sales_target_det a '+
+                      'left join t_customer_sales_target b on b.id_customer_sales_target=a.id_customer_sales_target '+
+                      'LEFT JOIN t_item c on c.item_code=a.item_code '+
+                      'LEFT JOIN t_item_group d on d.group_id=c.group_id  AND c.deleted_at IS NULL '+
+                      'WHERE a.id_customer_sales_target='+QuotedStr(dm.Qtemp.FieldValues['id_customer_sales_target'])+' '+
+                      'and UPPER(d.group_name)='+QuotedStr(UpperCase(WorkSheet.Cells[5, 2].Value))+')';
+            ExecSQL;
+          end;
+
 
           for Col := 4 to LastCol do
           begin
@@ -275,17 +342,7 @@ begin
 
 
         end;
-        with dm.Qtemp2 do
-        begin
-          Close;
-          Sql.Clear;
-          Sql.Text:='DELETE FROM t_customer_sales_target WHERE id_customer_sales_target IN '+
-                    '(SELECT a.id_customer_sales_target FROM t_customer_sales_target a '+
-                    'left join t_customer_sales_target_det b on b.id_customer_sales_target=a.id_customer_sales_target '+
-                    'WHERE a.year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND a.month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' and'+
-                    ' b.id_customer_sales_target IS null) ';
-          ExecSQL;
-        end;
+
 
 
         FMainMenu.Load.Percent:=100;
@@ -839,7 +896,7 @@ procedure TFExportImportTargetPenjualan.edKaresidenanButtonClick(
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='exportimporttargetpenjualankares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 

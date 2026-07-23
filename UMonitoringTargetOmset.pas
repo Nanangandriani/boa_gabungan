@@ -117,6 +117,7 @@ type
     dxBarLargeButton8: TdxBarLargeButton;
     frxXLSExport1: TfrxXLSExport;
     frxXLSXExport1: TfrxXLSXExport;
+    edJenisUsaha: TcxBarEditItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbKaresidenanChange(Sender: TObject);
@@ -135,11 +136,13 @@ type
     procedure ReportGetValue(const VarName: string; var Value: Variant);
     procedure dxBarLargeButton7Click(Sender: TObject);
     procedure dxBarLargeButton8Click(Sender: TObject);
+    procedure edJenisUsahaPropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
-    strKaresidenanID,strKabupatenID,strKecamatanID,strKelompokID: String;
+    strKaresidenanID,strKabupatenID,strKecamatanID,strKelompokID,strKodeJenisUsaha: String;
     procedure ExportToExcel;
   end;
 
@@ -231,7 +234,7 @@ begin
 end;
 
 procedure TFMonitoringTargetOmset.dxBarLargeButton5Click(Sender: TObject);
-var strVolume,strKaresidenan,strKabupaten,strKecamatan: String;
+var strVolume,strKaresidenan,strKabupaten,strKecamatan,strJenisUsaha: String;
 begin
   if cbKelompok.EditValue='' then
   begin
@@ -250,6 +253,10 @@ begin
     strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
 
+    if edJenisUsaha.EditValue<>'' then
+    strJenisUsaha:='WHERE code_type_business='+QuotedStr(strKodeJenisUsaha)+' '
+    else strJenisUsaha:='';
+
     if Uppercase(cbVolume.Text)='QTY' then
     begin
       strVolume:=''
@@ -267,22 +274,23 @@ begin
       sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
-                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
+                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
       open;
     end;
     if Qreport.RecordCount=0 then
     begin
       MessageDlg('Tidak ada data ..!!',mtInformation,[mbRetry],0);
-    end else begin
+    end;
+//    else begin
       cLocation := ExtractFilePath(Application.ExeName);
       Report.LoadFromFile(cLocation +'report/rpt_monitoring_target_omset'+ '.fr3');
       Report.ShowReport();
-    end;
+//    end;
   end;
 end;
 
 procedure TFMonitoringTargetOmset.dxBarLargeButton6Click(Sender: TObject);
-var strVolume,strKaresidenan,strKabupaten,strKecamatan: String;
+var strVolume,strKaresidenan,strKabupaten,strKecamatan,strJenisUsaha: String;
 begin
   if cbKelompok.EditValue='' then
   begin
@@ -300,6 +308,12 @@ begin
     if cbKecamatan.EditValue<>'' then
     strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
+
+    if edJenisUsaha.EditValue<>'' then
+    strJenisUsaha:='WHERE code_type_business='+QuotedStr(strKodeJenisUsaha)+' '
+    else strJenisUsaha:='';
+
+
 
     if Uppercase(cbVolume.Text)='QTY' then
     begin
@@ -320,7 +334,7 @@ begin
       sql.Text:='SELECT * FROM get_monitoring_target_omset'+
               '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
               ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
-              +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
+              +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
       open;
     end;
   end;
@@ -339,11 +353,13 @@ begin
   cbKecamatan.EditValue:='';
   cbKelompok.EditValue:='';
   cbVolume.ItemIndex:=0;
+  strKodeJenisUsaha:='';
+  edJenisUsaha.EditValue:='';
 //  QMonitoringTargetOmset.Close;
 end;
 
 procedure TFMonitoringTargetOmset.dxBarLargeButton8Click(Sender: TObject);
-var strVolume,strKaresidenan,strKabupaten,strKecamatan: String;
+var strVolume,strKaresidenan,strKabupaten,strKecamatan,strJenisUsaha: String;
 begin
   if cbKelompok.EditValue='' then
   begin
@@ -362,6 +378,10 @@ begin
     strKecamatan:=' AND code_kecamatan='+QuotedStr(strKecamatanID)
     else strKecamatan:='';
 
+    if edJenisUsaha.EditValue<>'' then
+    strJenisUsaha:='WHERE code_type_business='+QuotedStr(strKodeJenisUsaha)+' '
+    else strJenisUsaha:='';
+
     if Uppercase(cbVolume.Text)='QTY' then
     begin
       strVolume:=''
@@ -379,7 +399,7 @@ begin
       sql.Text:='SELECT '+strVolume+'* FROM get_monitoring_target_omset'+
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
-                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+')';
+                +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
       open;
     end;
     if Qreport.RecordCount=0 then
@@ -393,6 +413,15 @@ begin
       ExportToExcel;
     end;
   end;
+end;
+
+procedure TFMonitoringTargetOmset.edJenisUsahaPropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  FMasterData.Caption:='Master Data Kecamatan';
+  FMasterData.vcall:='rekapmonitoringtargetjenisusaha';
+  FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL ORDER BY code ASC ');
+  FMasterData.ShowModal;
 end;
 
 procedure TFMonitoringTargetOmset.ExportToExcel;
@@ -509,6 +538,8 @@ begin
   cbKecamatan.EditValue:='';
   cbKelompok.EditValue:='';
   cbVolume.ItemIndex:=0;
+  edJenisUsaha.EditValue:='';
+  strKodeJenisUsaha:='';
   QMonitoringTargetOmset.Close;
 
   FillSBUBarCombo(cbSBU);

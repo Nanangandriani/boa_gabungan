@@ -246,7 +246,7 @@ begin
     MemMasterDetail.active:=true;
     MemMasterDetail.EmptyTable;
 
-    if  QKartuUangMukaTRX.RecordCount=0 then
+    if QKartuUangMukaTRX.RecordCount=0 then
     begin
       Showmessage('Maaf, Data Tidak Ditemukan..');
     end;

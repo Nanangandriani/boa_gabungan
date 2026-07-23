@@ -2,8 +2,8 @@ object FHak_Akses: TFHak_Akses
   Left = 0
   Top = 0
   Caption = 'Form Hak Akses'
-  ClientHeight = 442
-  ClientWidth = 832
+  ClientHeight = 474
+  ClientWidth = 965
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,16 @@ object FHak_Akses: TFHak_Akses
   object DBGridAkses: TDBGridEh
     Left = 0
     Top = 127
-    Width = 832
-    Height = 315
+    Width = 965
+    Height = 347
     Align = alClient
     DataGrouping.Active = True
     DataGrouping.GroupLevels = <
       item
         ColumnName = 'Column_1_dept'
+      end
+      item
+        ColumnName = 'Column_2_position'
       end>
     DataSource = DsAkses
     DynProps = <>
@@ -110,6 +113,15 @@ object FHak_Akses: TFHak_Akses
         Checkboxes = True
         DynProps = <>
         EditButtons = <>
+        FieldName = 'RPrint'
+        Footers = <>
+        Title.Caption = 'Print'
+      end
+      item
+        CellButtons = <>
+        Checkboxes = True
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'rhandover'
         Footers = <>
         Title.Caption = 'Serah'
@@ -131,7 +143,7 @@ object FHak_Akses: TFHak_Akses
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 832
+    Width = 965
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -139,6 +151,7 @@ object FHak_Akses: TFHak_Akses
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 969
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

@@ -224,33 +224,33 @@ begin
 
     if cbUmurPiutang.Text='BARU' then
     begin
-      strSaldoPiutang:='saldo_baru saldo_piutang ';
-      strWhere:='WHERE saldo_baru<>0 ';
+      strSaldoPiutang:='saldo_baru::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_baru>0 ';
     end;
     if cbUmurPiutang.Text='1 MINGGU' then
     begin
-      strSaldoPiutang:='saldo_satu_minggu saldo_piutang ';
-      strWhere:='WHERE saldo_satu_minggu<>0 ';
+      strSaldoPiutang:='saldo_satu_minggu::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_satu_minggu>0 ';
     end;
     if cbUmurPiutang.Text='2 MINGGU' then
     begin
-      strSaldoPiutang:='saldo_dua_minggu saldo_piutang ';
-      strWhere:='WHERE saldo_dua_minggu<>0 ';
+      strSaldoPiutang:='saldo_dua_minggu::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_dua_minggu>0 ';
     end;
     if cbUmurPiutang.Text='3 MINGGU' then
     begin
-      strSaldoPiutang:='saldo_tiga_minggu saldo_piutang ';
-      strWhere:='WHERE saldo_tiga_minggu<>0 ';
+      strSaldoPiutang:='saldo_tiga_minggu::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_minggu>0 ';
     end;
     if cbUmurPiutang.Text='4 MINGGU' then
     begin
-      strSaldoPiutang:='saldo_empat_minggu saldo_piutang ';
-      strWhere:='WHERE saldo_empat_minggu<>0 ';
+      strSaldoPiutang:='saldo_empat_minggu::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_empat_minggu>0 ';
     end;
     if cbUmurPiutang.Text='>3 BULAN' then
     begin
-      strSaldoPiutang:='saldo_tiga_bulan saldo_piutang ';
-      strWhere:='WHERE saldo_tiga_bulan<>0 ';
+      strSaldoPiutang:='saldo_tiga_bulan::numeric saldo_piutang ';
+      strWhere:='WHERE saldo_tiga_bulan>0 ';
     end;
 
 
@@ -472,7 +472,7 @@ procedure TFRincianUmurPiutang.edKaresidenanPropertiesButtonClick(
 begin
   FMasterData.Caption:='Master Data TP';
   FMasterData.vcall:='rincianumurpiutangkares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal
 end;
 

@@ -511,8 +511,35 @@ begin
         dm.Qtemp.Next;
       end;
     end;
-    //FNew_Pembelian.EdNilai_ValasChange(sender);
+
     FNew_Pembelian.DBGridDetailpoColEnter(Sender);
+    // cr ds 22-07-2026
+
+      FNew_Pembelian.MemUangMuka.emptytable;
+    with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_purchase_down_payment where trans_no='+QuotedStr(Memterima_material['trans_no']);
+        Open;
+      end;
+      FNew_Pembelian.MemUangMuka.active:=true;
+      dm.Qtemp.First;
+      while not dm.Qtemp.Eof do
+      begin
+        With FNew_Pembelian do
+        begin
+          memuangmuka.insert;
+          memuangmuka['trans_no']:=dm.Qtemp['trans_no_down_payment'];
+          memuangmuka['um_value']:=dm.Qtemp['remaining_down_payment'];
+          memuangmuka['amount']:=dm.Qtemp['paid_amount'];
+          memuangmuka['voucher_no']:=dm.Qtemp['voucher_no'];
+          memuangmuka.post;
+        end;
+        dm.Qtemp.Next;
+      end;
+      FNew_Pembelian.DBGrid_UMColExit(sender);
+    //FNew_Pembelian.EdNilai_ValasChange(sender);
     FNew_Pembelian.Cb_RefSelect(sender);
 end;
 

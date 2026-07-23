@@ -171,64 +171,18 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select jj.kodesup,jj.namasup,jj.saldo_awal_tahun+jj.kredit '+
-                '-jj.debit-jj.debit_do-jj.debit_retur-jj.nilai_pot sisa_hutang from '+
-                '(select a.supplier_code as kodesup,a.supplier_name as namasup,case when saldo_awal.initial_balance is null then 0 else saldo_awal.initial_balance end saldo_awal_tahun,(case when x.nilai is null then 0 else x.nilai end)kredit, '+
-                //--(case when kredit_do.nilai is null then 0 else kredit_do.nilai end)kredit_do,
-                '(case when y.nilai is null then 0 else y.nilai end)debit,(case when debit_do.nilai is null then 0 else debit_do.nilai end)debit_do, '+
-                '(case when z.nilai is null then 0 else z.nilai end)debit_retur, (case when xx.nilai_pot is null then 0 else xx.nilai_pot end)nilai_pot from '+
-                '(select * from t_supplier a LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb where type='+QuotedStr(Jenis_Hutang.Text)+' )a '+
-                'left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai from '+
-                '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from  (select a.supplier_code as kodesup,b.po_no,(case when a.valas=''USD'' then sum(nilai*valas_value) else sum(nilai) end)nilai from '+
-                //'(select * from t_purchase_invoice a INNER JOIN v_ak_account b on a.account_code=b.account_code2 where b.code='+Quotedstr(vkd_jenis_hutang)+' '+
-                '(select * from t_purchase_invoice a INNER JOIN v_ak_account b on a.account_code=b.account_code2 '+
-                ' where b.code IN (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' in(SELECT account_code FROM t_asset_payable_account)'+
-                //'and account_um_code <> ''1151.03''
-                'and  trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue-1))+' )a '+
-                'left join (select trans_no,po_no,stock_code as kode,qty,unit as jumlah,grandtotal as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no  group by kodesup,b.po_no,a.valas)a '+
-                'left join(select po_no,supplier_code,sum(um_value)as nilai_um from t_po where um_status=true and po_date<='+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
-                'group by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x '+
-                'group by kodesup )x on a.supplier_code=x.kodesup '+
-
-                'left join(select supplier_code as kodesup,sum(bayar) as nilai from(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from '+
-                '(select voucher_no,supplier_code,sum(paid_amount)as bayar,b.code from t_cash_bank_expenditure_payable a '+
-                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2  '+
-                ' where b.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' (SELECT account_code FROM t_asset_payable_account) '+
-                ' and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' group by voucher_no,supplier_code,b.code order by voucher_no,supplier_code,b.code)a '+
-                'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real where account_code<>''2130.02'' group by voucher order by voucher)b 	on a.voucher_no=b.voucher)x '+
-                'group by supplier_code order by supplier_code)y on a.supplier_code=y.kodesup '+
-                'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then sum(a.total_price*b.valas_value) else sum(a.total_price) end)nilai from t_purchase_return_det a '+
-                'INNER JOIN t_purchase_return b on a.return_no=b.return_no left join t_purchase_invoice dd on b.receive_no=dd.trans_no '+
-                'INNER JOIN v_ak_account ee on dd.account_code= ee.account_code2 where a.return_no=b.return_no and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                ' ee.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                'group by b.supplier_code,b.valas order by b.supplier_code)z on a.supplier_code=z.kodesup '+
-                'left join(select bb.supplier_code,sum(bb.price_rp)+sum(bb.ppnrp)as nilai_pot from t_purchase_discount bb left join t_purchase_invoice dd on bb.receive_no=dd.ref_no '+
-                'INNER JOIN v_ak_account ee ON dd.account_code= ee.account_code2 where bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                'ee.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+')) '+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                ' group by bb.supplier_code order by bb.supplier_code)xx on a.supplier_code=xx.supplier_code '+
-                'left join(select kodesup,sum(nilai)as nilai from '+
-                '(select a.bk_no as noinv, '+
-                //--(case when c.kd_supplier_angkutan is null then d.tujuan else c.kd_supplier_angkutan end)kodesup '+
-                ' '''' kodesup, b.tgltrans as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan from '+
-                '(select voucher_no ,bk_no ,account_code,remark,pay,4 as urutan from t_payment_detail_real where source_id=3 and '+
-                'account_code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' (SELECT account_code FROM t_asset_payable_account) '+
-                ')a left join '+
-                '(select distinct voucher_no,trans_date as tgltrans from (SELECT a.voucher_no,a.trans_date,b.code_account,b."position",c.code from t_cash_bank_expenditure a '+
-                'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher '+
-                'INNER JOIN v_ak_account c on b.code_account= c.account_code2 )h where h.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                'h.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                'and h.position=''D'')b on a.bk_no=b.voucher_no '+
-                ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup '+
-
-                'left join (select * from t_initial_balance_debt  a INNER JOIN v_ak_account b on a.debt_type=account_code2 '+
-                'where b.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+')) '+
-                ' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj';
+      sql.Text:=' SELECT supplier_code as "kodesup", supplier_name as namasup, '+
+                ' COALESCE(SUM(sisa_hutang), 0) as sisa_hutang from '+
+                ' (select * from t_supplier a LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                ' where type='+QuotedStr(Jenis_Hutang.Text)+' )a '+
+                ' LEFT JOIN (SELECT * from get_details_debt ('+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+')) b on a.supplier_code=b.kodesup '+
+                ' LEFT JOIN (SELECT trans_no, faktur_no, faktur_date  from t_purchase_invoice  '+
+                ' union all  SELECT faktur_no as trans_no, faktur_no, date as faktur_date '+
+                ' from t_initial_balance_debt_det)  c on b.trans_no=c.trans_no '+
+                //' or b.faktur_no=c.faktur_no '+
+                ' GROUP BY supplier_code,supplier_name '+
+                ' HAVING COALESCE(SUM(sisa_hutang), 0) > 0 '+
+                ' ORDER BY supplier_code,supplier_name asc; ';
       open;
     end;
 
@@ -281,64 +235,17 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select jj.kodesup,jj.namasup,jj.saldo_awal_tahun+jj.kredit '+
-                '-jj.debit-jj.debit_do-jj.debit_retur-jj.nilai_pot sisa_hutang from '+
-                '(select a.supplier_code as kodesup,a.supplier_name as namasup,case when saldo_awal.initial_balance is null then 0 else saldo_awal.initial_balance end saldo_awal_tahun,(case when x.nilai is null then 0 else x.nilai end)kredit, '+
-                //--(case when kredit_do.nilai is null then 0 else kredit_do.nilai end)kredit_do,
-                '(case when y.nilai is null then 0 else y.nilai end)debit,(case when debit_do.nilai is null then 0 else debit_do.nilai end)debit_do, '+
-                '(case when z.nilai is null then 0 else z.nilai end)debit_retur, (case when xx.nilai_pot is null then 0 else xx.nilai_pot end)nilai_pot from '+
-                '(select * from t_supplier a LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb where type='+QuotedStr(Jenis_Hutang.Text)+' )a '+
-                'left join (select kodesup,sum(nilai)-sum(nilai_um) as nilai from '+
-                '(select a.*,(case when b.nilai_um is null then 0 else b.nilai_um end)nilai_um from  (select a.supplier_code as kodesup,b.po_no,(case when a.valas=''USD'' then sum(nilai*valas_value) else sum(nilai) end)nilai from '+
-                //'(select * from t_purchase_invoice a INNER JOIN v_ak_account b on a.account_code=b.account_code2 where b.code='+Quotedstr(vkd_jenis_hutang)+' '+
-                '(select * from t_purchase_invoice a INNER JOIN v_ak_account b on a.account_code=b.account_code2 '+
-                ' where b.code IN (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' in(SELECT account_code FROM t_asset_payable_account)'+
-                //'and account_um_code <> ''1151.03''
-                'and  trans_date  between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue-1))+' )a '+
-                'left join (select trans_no,po_no,stock_code as kode,qty,unit as jumlah,grandtotal as nilai, 0 as urutan from t_purchase_invoice_det )b on a.trans_no=b.trans_no  group by kodesup,b.po_no,a.valas)a '+
-                'left join(select po_no,supplier_code,sum(um_value)as nilai_um from t_po where um_status=true and po_date<='+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
-                'group by po_no,supplier_code order by po_no,supplier_code)b on a.po_no=b.po_no and a.kodesup=b.supplier_code)x '+
-                'group by kodesup )x on a.supplier_code=x.kodesup '+
-
-                'left join(select supplier_code as kodesup,sum(bayar) as nilai from(select a.voucher_no,a.supplier_code,a.bayar,(case when b.saldo is null then 0 else b.saldo end)nilai_kredit from '+
-                '(select voucher_no,supplier_code,sum(paid_amount)as bayar,b.code from t_cash_bank_expenditure_payable a '+
-                'INNER JOIN v_ak_account b on a.account_acc= b.account_code2  '+
-                ' where b.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' (SELECT account_code FROM t_asset_payable_account) '+
-                ' and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' group by voucher_no,supplier_code,b.code order by voucher_no,supplier_code,b.code)a '+
-                'left join (select voucher,sum(saldo)as saldo from t_credit_trx_real where account_code<>''2130.02'' group by voucher order by voucher)b 	on a.voucher_no=b.voucher)x '+
-                'group by supplier_code order by supplier_code)y on a.supplier_code=y.kodesup '+
-                'left join(select b.supplier_code as kodesup,(case when b.valas=''USD'' then sum(a.total_price*b.valas_value) else sum(a.total_price) end)nilai from t_purchase_return_det a '+
-                'INNER JOIN t_purchase_return b on a.return_no=b.return_no left join t_purchase_invoice dd on b.receive_no=dd.trans_no '+
-                'INNER JOIN v_ak_account ee on dd.account_code= ee.account_code2 where a.return_no=b.return_no and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                ' ee.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                'group by b.supplier_code,b.valas order by b.supplier_code)z on a.supplier_code=z.kodesup '+
-                'left join(select bb.supplier_code,sum(bb.price_rp)+sum(bb.ppnrp)as nilai_pot from t_purchase_discount bb left join t_purchase_invoice dd on bb.receive_no=dd.ref_no '+
-                'INNER JOIN v_ak_account ee ON dd.account_code= ee.account_code2 where bb.discount_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                'ee.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+')) '+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                ' group by bb.supplier_code order by bb.supplier_code)xx on a.supplier_code=xx.supplier_code '+
-                'left join(select kodesup,sum(nilai)as nilai from '+
-                '(select a.bk_no as noinv, '+
-                //--(case when c.kd_supplier_angkutan is null then d.tujuan else c.kd_supplier_angkutan end)kodesup '+
-                ' '''' kodesup, b.tgltrans as tanggal,a.account_code as kode,a.remark,a.pay as nilai,a.urutan from '+
-                '(select voucher_no ,bk_no ,account_code,remark,pay,4 as urutan from t_payment_detail_real where source_id=3 and '+
-                'account_code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //' (SELECT account_code FROM t_asset_payable_account) '+
-                ')a left join '+
-                '(select distinct voucher_no,trans_date as tgltrans from (SELECT a.voucher_no,a.trans_date,b.code_account,b."position",c.code from t_cash_bank_expenditure a '+
-                'INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher '+
-                'INNER JOIN v_ak_account c on b.code_account= c.account_code2 )h where h.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' and '+
-                'h.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+'))'+
-                //'(SELECT account_code FROM t_asset_payable_account) '+
-                'and h.position=''D'')b on a.bk_no=b.voucher_no '+
-                ')x group by kodesup)debit_do on a.supplier_code=debit_do.kodesup '+
-
-                'left join (select * from t_initial_balance_debt  a INNER JOIN v_ak_account b on a.debt_type=account_code2 '+
-                'where b.code in (SELECT acc_code_pemb from t_item_type where type IN('+QuotedStr(Jenis_Hutang.Text)+')) '+
-                ' and year = (select to_char(debt_date, ''YYYY'') from t_tmpsyst)::INTEGER) saldo_awal on saldo_awal.supplier_code= a.supplier_code) jj';
+      sql.Text:=' SELECT supplier_code as "kodesup", supplier_name as namasup, '+
+                ' COALESCE(SUM(sisa_hutang), 0) as sisa_hutang from '+
+                ' (select * from t_supplier a LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb '+
+                ' where type='+QuotedStr(Jenis_Hutang.Text)+' )a '+
+                ' LEFT JOIN (SELECT * from get_details_debt ('+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+')) b on a.supplier_code=b.kodesup '+
+                ' LEFT JOIN (SELECT trans_no, faktur_no, faktur_date  from t_purchase_invoice  '+
+                ' union all  SELECT faktur_no as trans_no, faktur_no, date as faktur_date '+
+                ' from t_initial_balance_debt_det)  c on b.trans_no=c.trans_no or b.faktur_no=c.faktur_no '+
+                ' GROUP BY supplier_code,supplier_name '+
+                ' HAVING COALESCE(SUM(sisa_hutang), 0) > 0 '+
+                ' ORDER BY supplier_code,supplier_name asc; ';
       open;
     end;
 

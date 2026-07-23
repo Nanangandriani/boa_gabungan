@@ -137,7 +137,6 @@ begin
     FImportnocek.show;
     FImportnocek.Caption:='Input Nomor Cek';
     FImportnocek.clear;
-
 end;
 
 procedure TFDaf_EntryCek.ActDelExecute(Sender: TObject);

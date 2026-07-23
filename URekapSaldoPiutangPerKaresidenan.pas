@@ -148,18 +148,22 @@ begin
     sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE,NULL) ORDER BY karesidenan ASC';
     Open;
   end;
-  if Qreport.RecordCount>0 then
+  if Qreport.RecordCount=0 then
   begin
-
-    strReportName:='rpt_rekapsaldopiutangperkaresidenan';
-    cLocation := ExtractFilePath(Application.ExeName);
-    Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
-    SetMemo(Report,'MemPerusahaan',Uppercase(FHomeLogin.vNamaPRSH));
-    SetMemo(Report,'MemPeriode','Rekap Saldo Piutang Periode : '+formatdatetime('dd mmmm yyyy',dtTanggal1.Date)+' s/d '+formatdatetime('dd mmmm yyyy',dtTanggal2.Date));
-    Report.ShowReport();
-  end else begin
     MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
   end;
+//  if Qreport.RecordCount>0 then
+//  begin
+
+  strReportName:='rpt_rekapsaldopiutangperkaresidenan';
+  cLocation := ExtractFilePath(Application.ExeName);
+  Report.LoadFromFile(cLocation +'report/'+strReportName+''+ '.fr3');
+  SetMemo(Report,'MemPerusahaan',Uppercase(FHomeLogin.vNamaPRSH));
+  SetMemo(Report,'MemPeriode','Rekap Saldo Piutang Periode : '+formatdatetime('dd mmmm yyyy',dtTanggal1.Date)+' s/d '+formatdatetime('dd mmmm yyyy',dtTanggal2.Date));
+  Report.ShowReport();
+//  end else begin
+//    MessageDlg('Tidak ada data..!!',mtInformation,[mbRetry],0);
+//  end;
 
 end;
 

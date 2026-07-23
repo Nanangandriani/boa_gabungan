@@ -52,6 +52,7 @@ type
     MemDetailjumlah: TFloatField;
     MemDetailsatuan: TStringField;
     BCorrection: TRzBitBtn;
+    BDelete: TRzBitBtn;
     procedure edNoKendMuatanButtonClick(Sender: TObject);
     procedure edNama_Vendor_KendButtonClick(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
@@ -63,6 +64,7 @@ type
     procedure BBatalClick(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure BDeleteClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -336,6 +338,30 @@ begin
   FKoreksi.Status:=0;
   FKoreksi.vnotransaksi:=edKodeMuat.Text; //Mendapatkan Nomor Transaksi
   FKoreksi.ShowModal;
+end;
+
+procedure TFDataPerintahMuat.BDeleteClick(Sender: TObject);
+var
+  TargetNoDO: string;
+begin
+  TargetNoDO := MemDetail['nodo'];
+  if MessageDlg('Anda Yakin Menghapus No DO. ' + TargetNoDO + '?', mtInformation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    MemDetail.DisableControls;
+    try
+      MemDetail.Filter := 'nodo = ' + QuotedStr(TargetNoDO);
+      MemDetail.Filtered := True;
+      MemDetail.First;
+      while not MemDetail.Eof do
+      begin
+        MemDetail.Delete;
+      end;
+    finally
+      MemDetail.Filtered := False;
+      MemDetail.Filter := '';
+      MemDetail.EnableControls;
+    end;
+  end;
 end;
 
 procedure TFDataPerintahMuat.BSaveClick(Sender: TObject);

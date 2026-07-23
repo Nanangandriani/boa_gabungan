@@ -96,7 +96,6 @@ begin
                 ' LIMIT 1';
     ParamByName('voucher_no').AsString := AVoucherNo;
     Open;
-
     if IsEmpty then
       Result := 0  // belum ada
     else
@@ -110,50 +109,97 @@ URUTAN_KE : Integer;
 begin
   if cbSumber.text='PEMBELIAN' then
   begin
-  with Dm.Qtemp1 do
-  begin
-    close;
-    sql.clear;
-    sql.add(' Select trans_no as notrans, trans_date as tanggal, '+
-            ' debt_remaining as jumlah, supplier_name as keterangan, '+
-            ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
-            ' WHERE b.voucher_no = a.trans_no) THEN ''Lengkap'' '+
-            ' ELSE ''Belum Lengkap'' END AS status '+
-            ' from t_purchase_invoice a'+
-            ' Left join t_supplier b on a.supplier_code=b.supplier_code '+
-            ' left join t_ak_account c on a.account_code=c.code '+
-            ' left join t_ak_account d on a.account_um_code=d.code '+
-            ' left join t_ref_item_receive e on a.ref_code=e.ref_code '+
-            ' where a.deleted_at is null and '+
-            ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
-            ' order by a.trans_no, trans_date desc   --PEMBELIAN ');
-    open;
-  end;
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' Select trans_no as notrans, trans_date as tanggal, '+
+              ' debt_remaining as jumlah, concat(supplier_name,'' '' ,regency_name) as keterangan, '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
+              ' WHERE b.voucher_no = a.trans_no) THEN ''Lengkap'' '+
+              ' ELSE ''Belum Lengkap'' END AS status '+
+              ' from t_purchase_invoice a'+
+              ' Left join t_supplier b on a.supplier_code=b.supplier_code '+
+              ' left join t_ak_account c on a.account_code=c.code '+
+              ' left join t_ak_account d on a.account_um_code=d.code '+
+              ' left join t_ref_item_receive e on a.ref_code=e.ref_code '+
+              ' left join (SELECT a.notrans,no_invoice,concat('' ('',regency_name,'') '') regency_name '+
+              ' from t_delivery_order_services a '+
+               ' left join t_delivery_order b on a.notrans=b.notrans) f on a.faktur_no=f.no_invoice '+
+              ' where purchase_type<>''DAGANG'' and  a.deleted_at is null and '+
+              ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
+              ' order by a.trans_no, trans_date desc   --PEMBELIAN ');
+      open;
+    end;
   end;
   if cbSumber.text='PENGELUARAN KAS DAN BANK' then
   begin
-  with Dm.Qtemp1 do
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, amount as jumlah, '+
+              ' remark as keterangan, '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
+              ' WHERE b.voucher_no = a.voucher_no) THEN ''Lengkap'' '+
+              ' ELSE ''Belum Lengkap'' END AS status '+
+              ' FROM t_cash_bank_expenditure a '+
+              ' LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
+              ' LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
+              ' LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
+              ' LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
+              ' WHERE a.deleted_at is null and trans_type_code not in (''5.001'',''6.001'') and '+
+              ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
+              ' ORDER BY voucher_no,trans_date desc -- PENGELUARAN KAS DAN BANK');
+      open;
+    end;
+  end;
+
+
+  if cbSumber.text='KAS KECIL' then
   begin
-    close;
-    sql.clear;
-    sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, amount as jumlah, '+
-            ' to_getout as keterangan, '+
-            ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
-            ' WHERE b.voucher_no = a.voucher_no) THEN ''Lengkap'' '+
-            ' ELSE ''Belum Lengkap'' END AS status '+
-            ' FROM t_cash_bank_expenditure a '+
-            ' LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
-            ' LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
-            ' LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
-            ' LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
-            ' WHERE a.deleted_at is null and trans_type_code not in (''5.001'',''6.001'') and '+
-            ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
-            ' ORDER BY voucher_no,trans_date desc -- PENGELUARAN KAS DAN BANK');
-    open;
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, '+
+              ' amount as jumlah,  concat(description,'' ('',actors_name,'')'') as keterangan, '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.voucher_no) '+
+              ' THEN ''Lengkap''  ELSE ''Belum Lengkap'' END AS status  FROM t_petty_cash a '+
+              ' WHERE a.deleted_at is null '+
+              ' and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
+              ' ORDER BY voucher_no,trans_date desc '+
+              ' /* KAS KECIL */ ');
+      open;
+    end;
   end;
+
+  if cbSumber.text='MEMORIAL' then
+  begin
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT a.memo_no as notrans, trans_date as tanggal,  debit as jumlah, '+
+              ' case when a.notes_id isnull then a.notes else '+
+              ' concat(b.notes,'' '',f_bulan(a.trans_month::integer),'' '',a.trans_year ) end keterangan, '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.memo_no) '+
+              ' THEN ''Lengkap''  ELSE ''Belum Lengkap'' END AS status '+
+              ' FROM t_memorial_journal a '+
+              ' left join t_memorial_notes  b ON "a".notes_id = b."id" '+
+              ' left join (SELECT memo_no, sum(debit) as debit from t_memorial_journal_detail '+
+              ' group by memo_no) c on a.memo_no=c.memo_no '+
+              ' WHERE a.deleted_at is null  and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
+              ' ORDER BY a.memo_no,trans_date desc  '+
+              ' /* MEMORIAL */ ');
+      open;
+    end;
   end;
+
 
   MemMasterData.EmptyTable;
   MemMasterData.active:=false;

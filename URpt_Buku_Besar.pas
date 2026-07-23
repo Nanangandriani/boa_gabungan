@@ -537,8 +537,8 @@ begin
          ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
          ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,'+
          ' trans_no,modul,code account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
-         ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
-         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
+         ' FROM (SELECT DISTINCT ON (account_code) * from	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
+         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+' ORDER BY account_code, trans_year DESC, trans_month DESC) a '+
          ' group by module_id, ket, trans_no,modul,code,account_name '+
          ' UNION  /*Transaksi*/'+
          '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+
@@ -716,8 +716,8 @@ begin
          ' ELSE sum(xx.sa::numeric - xx.db + xx.kd) OVER (ORDER BY xx.trans_date, xx.trans_no, xx.modul) '+
          ' END AS saldo FROM (/*saldo awal*/SELECT	module_id, ket, date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+' trans_date,'+
          ' trans_no,modul,code account_code,account_name,sum(sa) sa,sum(db) db,sum(kd)kd,date '+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+'created_at'+
-         ' FROM	"VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
-         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+''+
+         ' FROM	( SELECT DISTINCT ON (account_code) * from "VBuku_BesarSA" where trans_year<='+QuotedStr(FormatDateTime('yyyy',DtMulai.EditValue))+''+
+         ' and trans_month <'+QuotedStr(FormatDateTime('mm',DtMulai.EditValue))+'  ORDER BY account_code, trans_year DESC, trans_month DESC ) a '+
          ' group by module_id, ket, trans_no,modul,code,account_name '+
          ' UNION  /*Transaksi*/'+
          '  SELECT	module_id,ket,trans_date,trans_no,modul,account_code,account_name,sa,db,kd,created_at FROM	"VBuku_Besar"'+

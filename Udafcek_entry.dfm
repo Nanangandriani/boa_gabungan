@@ -156,7 +156,7 @@ object FDaf_EntryCek: TFDaf_EntryCek
     Height = 42
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 852
+    ExplicitWidth = 854
     object Label1: TLabel
       Left = 15
       Top = 14

@@ -426,7 +426,7 @@ procedure TFSalesOrder.edKaresidenanPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='listsalesorder_kares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

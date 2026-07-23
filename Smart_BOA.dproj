@@ -102,9 +102,9 @@
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.116.0.2;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.116.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>116</VerInfo_MinorVer>
-        <VerInfo_Build>2</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.145.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.145.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>145</VerInfo_MinorVer>
+        <VerInfo_Build>1</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1462,6 +1462,30 @@
         </DCCReference>
         <DCCReference Include="UDataApproveDaftarPenagihanPiutang.pas">
             <Form>FDataApproveDaftarPenagihanPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapTagihanKolektor2.pas">
+            <Form>FRekapTagihanKolektor2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UGroup_Biaya.pas">
+            <Form>FGroup_biaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UNew_Group_Biaya.pas">
+            <Form>FNew_Group_biaya</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapPiutang.pas">
+            <Form>FRekapPiutang</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USingkronisasiPusat.pas">
+            <Form>FSingkronisasiPusat</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_daftar_realisasi_biaya.pas">
+            <Form>Fdaftar_realisasi_biaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

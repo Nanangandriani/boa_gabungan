@@ -202,6 +202,7 @@ object F_cetak_rekap_hutang: TF_cetak_rekap_hutang
           ItemName = 'cbtahun'
         end
         item
+          BeginGroup = True
           Visible = True
           ItemName = 'dxRefresh'
         end

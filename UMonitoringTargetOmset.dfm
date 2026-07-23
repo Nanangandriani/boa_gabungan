@@ -3,7 +3,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
   Top = 0
   Caption = 'Monitoring Target Omset'
   ClientHeight = 452
-  ClientWidth = 920
+  ClientWidth = 1069
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 920
+    Width = 1069
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -53,7 +53,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 920
+    Width = 1069
     Height = 325
     Align = alClient
     Ctl3D = True
@@ -275,6 +275,12 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           ItemName = 'cbVolume'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 113
+          Visible = True
+          ItemName = 'edJenisUsaha'
+        end
+        item
           Visible = True
           ItemName = 'cbSBU'
         end
@@ -312,7 +318,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 733
+      DockedLeft = 767
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10
@@ -1469,9 +1475,9 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
       OnClick = dxBarLargeButton6Click
     end
     object cbVolume: TdxBarCombo
-      Caption = 'Volume'
+      Caption = 'Volume      '
       Category = 0
-      Hint = 'Volume'
+      Hint = 'Volume      '
       Visible = ivAlways
       Text = 'Qty'
       Items.Strings = (
@@ -1588,6 +1594,19 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
         000049454E44AE426082}
       OnClick = dxBarLargeButton8Click
     end
+    object edJenisUsaha: TcxBarEditItem
+      Caption = 'Jenis Usaha'
+      Category = 0
+      Hint = 'Jenis Usaha'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxButtonEditProperties'
+      Properties.Buttons = <
+        item
+          Default = True
+          Kind = bkEllipsis
+        end>
+      Properties.OnButtonClick = edJenisUsahaPropertiesButtonClick
+    end
   end
   object DsMonitoringTargetOmset: TDataSource
     DataSet = QMonitoringTargetOmset
@@ -1603,7 +1622,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 46129.453192557870000000
+    ReportOptions.LastChange = 46213.608220300930000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2105,7 +2124,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."target_qty">,Maste' +
-              'rData1)]')
+              'rData1,2)]')
           ParentFont = False
         end
         object Memo26: TfrxMemoView
@@ -2129,7 +2148,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."realisasi_qty">,Ma' +
-              'sterData1)]')
+              'sterData1,2)]')
           ParentFont = False
         end
         object Memo27: TfrxMemoView
@@ -2153,14 +2172,14 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetRekapMonitoringTargetOmset."selisih_qty">,Mast' +
-              'erData1)]')
+              'erData1,2)]')
           ParentFont = False
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 784.251968503937000000
+          Left = 784.251968500000000000
           Top = 0.755905510000000000
-          Width = 153.448818897638000000
+          Width = 153.448818900000000000
           Height = 24.566929130000000000
           StretchMode = smMaxHeight
           DataSet = frxDBDatasetRekapMonitoringTargetOmset

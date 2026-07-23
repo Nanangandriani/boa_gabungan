@@ -1542,7 +1542,7 @@ object FPO: TFPO
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46060.411181770830000000
+    ReportOptions.LastChange = 46204.885426064800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1585,7 +1585,7 @@ object FPO: TFPO
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 290.000000000000000000
+      PaperHeight = 280.000000000000000000
       PaperSize = 256
       LeftMargin = 5.000000000000000000
       RightMargin = 5.000000000000000000
@@ -1619,11 +1619,9 @@ object FPO: TFPO
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
-          HAlign = haCenter
           Memo.UTF8W = (
             '[Line]')
           ParentFont = False
-          VAlign = vaCenter
         end
         object frxDBDPOKolektifftotal: TfrxMemoView
           AllowVectorExport = True
@@ -1717,11 +1715,11 @@ object FPO: TFPO
         end
         object frxDBDPOKolektiffketbarang: TfrxMemoView
           AllowVectorExport = True
-          Left = 678.315400000000000000
-          Top = 0.039169920000000000
+          Left = 677.315400000000000000
+          Top = -2.299420080000000000
           Width = 79.370130000000000000
-          Height = 18.897650000000000000
-          StretchMode = smActualHeight
+          Height = 30.236240000000000000
+          StretchMode = smMaxHeight
           DataSetName = 'frxDBDPOKolektiff'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1730,7 +1728,7 @@ object FPO: TFPO
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[Dbrpt."wh_name"]')
+            '[Dbrpt."wh_name"] [Dbrpt."remarks"]')
           ParentFont = False
           SuppressRepeated = True
         end
@@ -2185,7 +2183,7 @@ object FPO: TFPO
         object Memo14: TfrxMemoView
           AllowVectorExport = True
           Left = 514.015748030000000000
-          Top = 37.795275590551200000
+          Top = 37.795275590000000000
           Width = 233.299196270000000000
           Height = 21.221429200000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2605,7 +2603,7 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 33.000000000000000000
           Top = 146.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2614,7 +2612,7 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 227.000000000000000000
           Top = 147.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2623,7 +2621,7 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 306.000000000000000000
           Top = 146.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2632,7 +2630,7 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 385.000000000000000000
           Top = 147.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2641,7 +2639,7 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 498.000000000000000000
           Top = 146.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -2650,28 +2648,11 @@ object FPO: TFPO
           AllowVectorExport = True
           Left = 613.000000000000000000
           Top = 147.102350000000000000
-          Height = 737.007874015748000000
+          Height = 702.992125984252000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
-      end
-      object Memo37: TfrxMemoView
-        AllowVectorExport = True
-        Left = 674.666666670000000000
-        Top = 259.666666670000000000
-        Width = 78.488250000000000000
-        Height = 18.897650000000000000
-        StretchMode = smMaxHeight
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        Frame.Typ = []
-        Memo.UTF8W = (
-          '[Dbrpt."remarks"]')
-        ParentFont = False
       end
     end
   end

@@ -2,8 +2,8 @@ object FDaftarPiutangBermasalah: TFDaftarPiutangBermasalah
   Left = 0
   Top = 0
   Caption = 'Daftar Piutang Bermasalah'
-  ClientHeight = 442
-  ClientWidth = 810
+  ClientHeight = 441
+  ClientWidth = 806
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -25,7 +25,7 @@ object FDaftarPiutangBermasalah: TFDaftarPiutangBermasalah
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 810
+    Width = 806
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -33,6 +33,7 @@ object FDaftarPiutangBermasalah: TFDaftarPiutangBermasalah
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 810
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -50,8 +51,8 @@ object FDaftarPiutangBermasalah: TFDaftarPiutangBermasalah
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 810
-    Height = 315
+    Width = 806
+    Height = 314
     Align = alClient
     DataSource = DsTargetPenjualan
     DynProps = <>

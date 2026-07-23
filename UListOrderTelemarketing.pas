@@ -627,7 +627,7 @@ begin
 //  FMasterWilayah.Showmodal;
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='m_kares_telemarketing';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','');
   FMasterData.ShowModal;
 end;
 

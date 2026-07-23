@@ -344,12 +344,17 @@ begin
       Show;
       with Qmaterial do
       begin
-        Filtered:=false;
+    {    Filtered:=false;
         Filter:='supplier_code='+QuotedStr(Edkd_supp.Text);//+'// and trans_no='+QuotedStr(Edno_terima.Text)+' ';
         FilterOptions:=[];
-        Filtered:=True;
+        Filtered:=True;       }
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * from vlist_item_purchase_retur WHERE supplier_code='+QuotedStr(Edkd_supp.Text)+'' +
+        ' ORDER BY trans_date';
+        open;
       end;
-      Qmaterial.Open;
+     // Qmaterial.Open;
     end;
 end;
 

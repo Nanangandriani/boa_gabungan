@@ -57,6 +57,7 @@ uses UNewDeliveryOrder;
 procedure TFListPerbandinganBiayaDo.btSetujuiClick(Sender: TObject);
 begin
   SavePerubahan;
+
   FNewDeliveryOrder.StatusCekBiaya:=1;
   FNewDeliveryOrder.IntAdaPerubahan:=0;
   FListPerbandinganBiayaDo.Close;

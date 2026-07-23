@@ -35,9 +35,8 @@ object FUbahPassword: TFUbahPassword
     Height = 34
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -768
-    ExplicitTop = 163
-    ExplicitWidth = 1272
+    ExplicitTop = 72
+    ExplicitWidth = 328
     object BBatal: TRzBitBtn
       Left = 256
       Top = 1
@@ -97,7 +96,7 @@ object FUbahPassword: TFUbahPassword
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1196
+      ExplicitLeft = 252
     end
     object BSave: TRzBitBtn
       Left = 181
@@ -159,7 +158,7 @@ object FUbahPassword: TFUbahPassword
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1121
+      ExplicitLeft = 177
     end
     object Edautocode: TEdit
       Left = 712

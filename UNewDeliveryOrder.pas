@@ -234,6 +234,7 @@ type
       Sender: TCustomDBGridEh; AButton: TNavigateBtnEh; var Processed: Boolean);
     procedure chktambahpoolClick(Sender: TObject);
     procedure chkDOpoolClick(Sender: TObject);
+    procedure DBGridSumberPenjualanColExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -446,7 +447,7 @@ begin
     begin
       Close;
       SQl.Clear;
-      SQl.Text:='select SUM(pph_value) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
+      SQl.Text:='select CAST(FLOOR(SUM(pph_value)) AS BIGINT) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
       Open;
@@ -510,7 +511,7 @@ begin
     begin
       Close;
       SQl.Clear;
-      SQl.Text:='select SUM(pph_value) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
+      SQl.Text:='select CAST(FLOOR(SUM(pph_value)) AS BIGINT) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
       Open;
@@ -759,6 +760,7 @@ begin
       begin
         MemDataBiaya['dpp'] := json.StringTree['data/transport_cost'];
         MemDataBiaya['total'] := json.StringTree['data/transport_cost'];
+
       end;
       if MemDataBiaya['kd_biaya'] = 'BONGKAR' then
       begin
@@ -766,6 +768,7 @@ begin
         MemDataBiaya['total'] := json.StringTree['data/unloading_fee'];
       end;
       MemDataBiaya.Post;
+      HitungGrid;
       MemDataBiaya.Next;
     end;
     StatusCekBiaya := 1;
@@ -1670,7 +1673,7 @@ begin
   strVehicleGroupId:='';
   //Muatan
 
-  edKodeDOMuatan.Clear;
+//  edKodeDOMuatan.Clear;
   dtTanggalMuatan.Date:=NOW();
   edKodeVendorMuatan.Clear;
   edNamaVendorMuatan.Clear;
@@ -1692,7 +1695,7 @@ begin
   strVehicleGroupId:='';
 
   //Biaya
-  edKodeDOBiaya.Clear;
+//  edKodeDOBiaya.Clear;
   dtTanggalBiaya.Date:=NOW();
   edNamaJenisBiaya.Clear;
   edKodeLokasi.Clear;
@@ -1705,7 +1708,7 @@ begin
   MemKeteranganBiaya.Clear;
 
   //Dokumen
-  edKodeDODok.Clear;
+//  edKodeDODok.Clear;
   dtTanggalDoc.Date:=NOW();
   edNamaJenisDoc.Clear;
   edNomorTagihanVendor.Clear;
@@ -1783,10 +1786,12 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT * from ('+
-            ' SELECT "code", "name", "description", "code_master" FROM '+
-            ' "t_type_delivery_order_det" where deleted_at IS NULL ) a '+
-            ' WHERE "code_master"='+QuotedStr(edKodeJenisMuatan.Text)+' '+
+    sql.add(' SELECT a.*,b.account_name pph_akun_name,c.account_name ppn_akun_name FROM '+
+            '"t_type_delivery_order_det" a '+
+            'LEFT JOIN t_ak_account b on b.code=a.pph_akun AND b.deleted_at is NULL '+
+            'LEFT JOIN t_ak_account c on c.code=a.ppn_akun AND c.deleted_at is NULL '+
+            'WHERE a.deleted_at IS NULL '+
+            ' AND a.code_master='+QuotedStr(edKodeJenisMuatan.Text)+' '+
             ' Order By code, name desc');
     open;
   end;
@@ -1819,14 +1824,32 @@ begin
       FNewDeliveryOrder.MemDataBiaya['kd_biaya']:=Dm.Qtemp.fieldbyname('code').value;
       FNewDeliveryOrder.MemDataBiaya['nm_biaya']:=Dm.Qtemp.fieldbyname('name').value;
       FNewDeliveryOrder.MemDataBiaya['dpp']:='0';
-      FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
-      FNewDeliveryOrder.MemDataBiaya['akun_ppn']:='0';
-      FNewDeliveryOrder.MemDataBiaya['nama_ppn']:='-';
-      FNewDeliveryOrder.MemDataBiaya['persen_ppn']:='0';
-      FNewDeliveryOrder.MemDataBiaya['pph']:='0';
-      FNewDeliveryOrder.MemDataBiaya['akun_pph']:='0';
-      FNewDeliveryOrder.MemDataBiaya['nama_pph']:='-';
-      FNewDeliveryOrder.MemDataBiaya['persen_pph']:='0';
+      if Dm.Qtemp.fieldbyname('ppn_percent').value>0 then
+      begin
+        FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
+        FNewDeliveryOrder.MemDataBiaya['akun_ppn']:=Dm.Qtemp.fieldbyname('ppn_akun').value;
+        FNewDeliveryOrder.MemDataBiaya['nama_ppn']:=Dm.Qtemp.fieldbyname('ppn_akun_name').value;
+        FNewDeliveryOrder.MemDataBiaya['persen_ppn']:=Dm.Qtemp.fieldbyname('ppn_percent').value;
+      end else begin
+        FNewDeliveryOrder.MemDataBiaya['ppn']:='0';
+        FNewDeliveryOrder.MemDataBiaya['akun_ppn']:='0';
+        FNewDeliveryOrder.MemDataBiaya['nama_ppn']:='-';
+        FNewDeliveryOrder.MemDataBiaya['persen_ppn']:='0';
+      end;
+
+      if Dm.Qtemp.fieldbyname('pph_percent').value>0 then
+      begin
+        FNewDeliveryOrder.MemDataBiaya['pph']:='0';
+        FNewDeliveryOrder.MemDataBiaya['akun_pph']:=Dm.Qtemp.fieldbyname('pph_akun').value;
+        FNewDeliveryOrder.MemDataBiaya['nama_pph']:=Dm.Qtemp.fieldbyname('pph_akun_name').value;
+        FNewDeliveryOrder.MemDataBiaya['persen_pph']:=Dm.Qtemp.fieldbyname('pph_percent').value;
+      end else begin
+        FNewDeliveryOrder.MemDataBiaya['pph']:='0';
+        FNewDeliveryOrder.MemDataBiaya['akun_pph']:='0';
+        FNewDeliveryOrder.MemDataBiaya['nama_pph']:='-';
+        FNewDeliveryOrder.MemDataBiaya['persen_pph']:='0';
+      end;
+
       FNewDeliveryOrder.MemDataBiaya['total']:='0';
       FNewDeliveryOrder.MemDataBiaya['keterangan']:='0';
       FNewDeliveryOrder.MemDataBiaya['no_invoice']:='0';
@@ -2074,6 +2097,7 @@ begin
   end else
   begin
     GetApiBiayaChakra;
+//    HitungGrid;
   end;
 end;
 
@@ -2214,20 +2238,25 @@ var IntTitik:Integer;
   LastVendor: String;
 begin
   HitungGrid;
-  IntTitik:=0;
-  LastVendor := '';
+//  IntTitik:=0;
+//  LastVendor := '';
 
-  MemDataBiaya.First;
-  while not MemDataBiaya.Eof do
-  begin
-    if MemDataBiaya['kode_vendor'] <> LastVendor then
-    begin
-      Inc(IntTitik);
-      LastVendor := MemDataBiaya['kode_vendor'];
-    end;
-    MemDataBiaya.Next;
-  end;
-  spTotalTitik.Text:=IntToStr(IntTitik-1);
+//  MemDataBiaya.First;
+//  while not MemDataBiaya.Eof do
+//  begin
+//    if MemDataBiaya['kode_vendor'] <> LastVendor then
+//    begin
+//      Inc(IntTitik);
+//      LastVendor := MemDataBiaya['kode_vendor'];
+//    end;
+//    MemDataBiaya.Next;
+//  end;
+//  spTotalTitik.Text:=IntToStr(IntTitik-1);
+end;
+
+procedure TFNewDeliveryOrder.DBGridSumberPenjualanColExit(Sender: TObject);
+begin
+  HitungGrid;
 end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColumns0CellButtons0Click(
@@ -2821,6 +2850,13 @@ begin
     BCorrection.Visible:=False;
     BCorrection.Enabled:=False;
     btSaveParameter.Enabled:=False;
+  end;
+
+  if (IntStatusDO=3) then
+  begin
+    RzPageControl1.ActivePage := TabDataBiaya;
+  end else begin
+    RzPageControl1.ActivePage := TabDataMuatan;
   end;
 
   if Status=0 then

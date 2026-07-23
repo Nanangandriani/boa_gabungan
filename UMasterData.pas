@@ -25,6 +25,7 @@ type
     { Public declarations }
     vcall:string;
     procedure update_grid(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);
+    procedure update_grid_all(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);
   end;
 
 var
@@ -54,7 +55,50 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   URincianUmurPiutang, UKolektifPenjualan, UKolektifSuratJalan,
   USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan, URegisterCekMundur,
   UDaftarTagihan, UKelompokBiayaWilayah, UPengajuanApproval_JurnalTrans,
-  UExportReport;
+  UExportReport, URekapTagihanKolektor2, UNew_Group_Biaya, URekapPiutang,
+  U_daftar_realisasi_biaya;
+
+procedure TFMasterData.update_grid_all(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);
+begin
+  with Dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+    sql.add(' SELECT ''*'' AS kd_master, ''SEMUA DATA'' AS nm_master, '+
+            ' ''SEMUA DATA'' AS keterangan union all  ');
+    sql.add(' SELECT '+fld_kd+' AS kd_master, '+fld_name+' AS nm_master, '+
+            ' '+fld_ket+' AS keterangan '+
+            ' from '+tbl_name+' '+
+            ' '+vwhere+' ');
+    open;
+  end;
+
+  FMasterData.MemMasterData.active:=false;
+  FMasterData.MemMasterData.active:=true;
+  FMasterData.MemMasterData.EmptyTable;
+
+  if  Dm.Qtemp.RecordCount=0 then
+  begin
+    Showmessage('Maaf, Data Tidak Ditemukan..');
+  end;
+
+  if  Dm.Qtemp.RecordCount<>0 then
+  begin
+    Dm.Qtemp.first;
+    while not Dm.Qtemp.Eof do
+    begin
+     FMasterData.MemMasterData.insert;
+     FMasterData.MemMasterData['KD_MASTER']:=Dm.Qtemp.fieldbyname('kd_master').value;
+     FMasterData.MemMasterData['NM_MASTER']:=Dm.Qtemp.fieldbyname('nm_master').value;
+     FMasterData.MemMasterData['KETERANGAN']:=Dm.Qtemp.fieldbyname('keterangan').value;
+     FMasterData.MemMasterData.post;
+     Dm.Qtemp.next;
+    end;
+    FMasterData.MemMasterData.SortByFields('KD_MASTER asc');
+  end;
+
+  Dm.Qtemp.Close;
+end;
 
 procedure TFMasterData.DBGridCustomerDblClick(Sender: TObject);
 var 
@@ -68,6 +112,28 @@ begin
 // cr ds 17-02-2026
   with FPengajuan_AppJurnal_Trans do
   begin
+      if vcall='realisasi_biaya_tp' then
+      begin
+        Fdaftar_realisasi_biaya.kode_tp:=MemMasterData['KD_MASTER'];
+        Fdaftar_realisasi_biaya.nama_tp.editvalue:=MemMasterData['NM_MASTER'];
+      end;
+      if vcall='realisasi_biaya_gb' then
+      begin
+        Fdaftar_realisasi_biaya.kode_group_biaya:=MemMasterData['KD_MASTER'];
+        Fdaftar_realisasi_biaya.group_biaya.editvalue:=MemMasterData['NM_MASTER'];
+      end;
+
+    if vcall='rekappiutangtp' then
+    begin
+      FRekapPiutang.strCodeTP:=MemMasterData['KD_MASTER'];
+      FRekapPiutang.cbTP.EditValue:=MemMasterData['NM_MASTER'];
+    end;
+
+    if vcall='group_biaya' then
+    begin
+      FNew_Group_biaya.EdKd_Persd.text:=MemMasterData['KD_MASTER'];
+      FNew_Group_biaya.Ednm_Persd.text:=MemMasterData['NM_MASTER'];
+    end;
     if vcall='apppenjualan_kr' then
     begin
       edkd_kares.text:=MemMasterData['KD_MASTER'];
@@ -501,6 +567,29 @@ begin
     FRekapPenjualan.edKaresidenan.EditValue:='';
     FRekapPenjualan.vkd_kab:='';
     FRekapPenjualan.edKabupaten.EditValue:='';
+  end;
+  if vcall='rekaptagihankolektor_kab' then
+  begin
+    FRekapTagihanKolektor2.strCodeKabupaten:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor2.edKabupaten.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekaptagihankolektor_kares' then
+  begin
+    FRekapTagihanKolektor2.strCodeKaresidenan:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor2.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapTagihanKolektor2.strCodeKabupaten:='';
+    FRekapTagihanKolektor2.edKabupaten.EditValue:='';
+    FRekapTagihanKolektor2.strCodeTP:='';
+    FRekapTagihanKolektor2.edTP.EditValue:='';
+  end;
+  if vcall='rekaptagihankolektor_tp' then
+  begin
+    FRekapTagihanKolektor2.strCodeTP:=MemMasterData['KD_MASTER'];
+    FRekapTagihanKolektor2.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    FRekapTagihanKolektor2.strCodeKaresidenan:='';
+    FRekapTagihanKolektor2.edKaresidenan.EditValue:='';
+    FRekapTagihanKolektor2.strCodeKabupaten:='';
+    FRekapTagihanKolektor2.edKabupaten.EditValue:='';
   end;
   if vcall='listpenjualan_kares' then
   begin
@@ -1004,6 +1093,11 @@ begin
   begin
     FDaftarKlasifikasi.edkd_jenis_usaha.Text:=MemMasterData['KD_MASTER'];
     FDaftarKlasifikasi.ednm_jenis_usaha.Text:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekapmonitoringtargetjenisusaha' then
+  begin
+    FMonitoringTargetOmset.strKodeJenisUsaha:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.edJenisUsaha.EditValue:=MemMasterData['NM_MASTER'];
   end;
   if vcall='jns_pelanggan_klasifikasi' then
   begin

@@ -300,11 +300,11 @@ begin
     if QCetakBHP.RecordCount=0 then
     begin
       showmessage('Tidak ada data yang bisa dicetak !');
-      exit;
+//      exit;
     end;
-
-    if QCetakBHP.RecordCount<>0 then
-    begin
+//
+//    if QCetakBHP.RecordCount<>0 then
+//    begin
 
       cLocation := ExtractFilePath(Application.ExeName);
       Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanNew'+ '.fr3');
@@ -324,12 +324,12 @@ begin
       end else begin
         SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
       end;
-
+      Report.PreviewOptions.Buttons := Report.PreviewOptions.Buttons - [pbExport, pbSave];
       Report.ShowReport();
 
 
 
-    end;
+//    end;
 //  end;
 ////////////////////////////////////////
 //Script Lama
@@ -969,11 +969,11 @@ begin
   if QCetakBHP.RecordCount=0 then
   begin
     showmessage('Tidak ada data yang bisa dicetak !');
-    exit;
+//    exit;
   end;
-
-  if QCetakBHP.RecordCount<>0 then
-  begin
+//
+//  if QCetakBHP.RecordCount<>0 then
+//  begin
 
     cLocation := ExtractFilePath(Application.ExeName);
     Report.LoadFromFile(cLocation +'report/rpt_BukuHarianPenjualanTemplate2'+ '.fr3');
@@ -993,12 +993,12 @@ begin
     end else begin
       SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
     end;
-
+//    Report.PreviewOptions.Buttons := Report.PreviewOptions.Buttons - [pbExport, pbSave];
     Report.ShowReport();
 
 
 
-  end;
+//  end;
 
 end;
 
@@ -1022,7 +1022,7 @@ procedure TFBHPenjualan.edKaresidenanPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='bhpenjualan_kares';
-  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

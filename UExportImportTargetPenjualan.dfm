@@ -3,8 +3,8 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Export dan Import Target Penjualan'
-  ClientHeight = 263
-  ClientWidth = 455
+  ClientHeight = 262
+  ClientWidth = 451
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,20 +18,18 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 0
-    Width = 455
-    Height = 263
+    Width = 451
+    Height = 262
     Hint = ''
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
-    ExplicitWidth = 451
-    ExplicitHeight = 262
+    ExplicitWidth = 447
+    ExplicitHeight = 261
     FixedDimension = 21
     object TabSheet1: TRzTabSheet
       Caption = 'Export'
-      ExplicitWidth = 447
-      ExplicitHeight = 237
       object Label11: TLabel
         Left = 21
         Top = 22
@@ -387,6 +385,8 @@ object FExportImportTargetPenjualan: TFExportImportTargetPenjualan
     end
     object TabSheet2: TRzTabSheet
       Caption = 'Import'
+      ExplicitWidth = 443
+      ExplicitHeight = 236
       object LabelSBU: TLabel
         Left = 12
         Top = 58

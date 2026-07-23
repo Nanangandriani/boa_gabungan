@@ -119,7 +119,7 @@ end;
 
 procedure TFSearch_MaterialRetur.FormShow(Sender: TObject);
 begin
-if Qmaterial.Active=false then Qmaterial.Active:=true;
+//if Qmaterial.Active=false then Qmaterial.Active:=true;
 end;
 
 end.

@@ -81,7 +81,7 @@ begin
               'LEFT JOIN t_cash_bank_acceptance c on c.voucher_no=a.voucher_no '+
               'WHERE (c.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') AND '+
               '((a.position = ''K'') OR (a.position = ''D'' AND a.paid_amount > 0 AND b.header_code NOT IN (''1102'', ''1101''))) '+
-              'and c.word_amount IS NULL '+
+//              'and c.word_amount IS NULL '+
               'GROUP BY a.voucher_no';
     open;
   end;

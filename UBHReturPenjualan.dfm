@@ -2,8 +2,8 @@ object FBHReturPenjualan: TFBHReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Buku Harian Retur Penjualan'
-  ClientHeight = 627
-  ClientWidth = 1207
+  ClientHeight = 626
+  ClientWidth = 1203
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1207
+    Width = 1203
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -40,8 +40,8 @@ object FBHReturPenjualan: TFBHReturPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1207
-    Height = 500
+    Width = 1203
+    Height = 499
     Align = alClient
     DataSource = DsBHReturPenjualan
     DrawMemoText = True
@@ -112,7 +112,6 @@ object FBHReturPenjualan: TFBHReturPenjualan
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.##'
         DynProps = <>
         EditButtons = <>
         FieldName = 'amount'
@@ -1097,7 +1096,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 46069.444574745370000000
+    ReportOptions.LastChange = 46069.444574745400000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1689,7 +1688,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
         end
         object Kabupaten: TfrxMemoView
           AllowVectorExport = True
-          Left = 104.314960629921300000
+          Left = 104.314960629921000000
           Top = 83.911921790000000000
           Width = 299.274431440000000000
           Height = 18.897650000000000000
@@ -2284,7 +2283,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
           AllowVectorExport = True
           Left = 790.740570000000000000
           Top = 18.897637800000000000
-          Width = 418.015748031496100000
+          Width = 418.015748031496000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2292,7 +2291,7 @@ object FBHReturPenjualan: TFBHReturPenjualan
           AllowVectorExport = True
           Left = 791.407236670000000000
           Top = 37.795275590000000000
-          Width = 418.015748031496100000
+          Width = 418.015748031496000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end

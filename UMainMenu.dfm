@@ -6510,7 +6510,7 @@ object FMainMenu: TFMainMenu
       ''
       'end.')
     Left = 552
-    Top = 24
+    Top = 16
     Datasets = <>
     Variables = <>
     Style = <>
@@ -6578,7 +6578,7 @@ object FMainMenu: TFMainMenu
   object TimerCekVersi: TTimer
     Interval = 3600000
     OnTimer = TimerCekVersiTimer
-    Left = 361
-    Top = 191
+    Left = 769
+    Top = 15
   end
 end

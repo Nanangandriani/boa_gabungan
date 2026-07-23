@@ -40,7 +40,7 @@ type
     Procedure Autonumberlot;
     procedure Autonumber2;
     procedure AddItemToPembelian(Q: TDataSet; IsReceive: Boolean);
-    var pono:string;
+    var pono,call:string;
   end;
 
 function FSearch_TerimaBarang: TFSearch_TerimaBarang;
@@ -246,6 +246,20 @@ begin
     MemTerimaDet['spesifikasi_asset'] := Q['spesifikasi_asset'];
     //
     MemTerimaDet.Post;
+
+    //
+  end;
+  with FNew_Pembelian do
+  begin
+            MemUangMuka.active:=true;
+          MemUangMuka.append;
+          memuangmuka['trans_no']:=Q['um_no'];
+          memuangmuka['um_value']:=Q['um_value'];
+          memuangmuka['po_no']:=Q['po_no'];
+          memuangmuka['voucher_no']:=Q['voucher_no'];
+          memuangmuka['amount']:=Q['amount'];
+          edkd_akunum.Text:=Q['um_account_code'];
+          memuangmuka.post;
   end;
 end;
 
@@ -254,6 +268,7 @@ procedure TFSearch_TerimaBarang.BEditClick(Sender: TObject);
 var
   i: Integer;
 begin
+
   // GRID 1
   if DBGridEh1.Visible and (DBGridEh1.SelectedRows.Count > 0) then
   begin
@@ -307,6 +322,7 @@ begin
     end;
   end;
   // start cr ds 26-03-2026
+ //off 22-07-2026
   with dm.qtemp do
   begin                                                                                                                                                                            //receive_no
   close;
@@ -320,24 +336,64 @@ else
 
   Open;
   end;
+ //off 22-07-2026
   pono:=dm.Qtemp['po_no'];
   if dm.Qtemp['um_status']=true then
     begin
-      with FNew_Pembelian.QUM do
+    with FNew_Pembelian do
+    begin
+     with FNew_Pembelian.QUM do
       begin
         close;
         sql.clear;
-        sql.text:='select a.*,b.supplier_name  from t_advance_payment a  INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+        sql.text:='select a.*,b.supplier_name,voucher_no,c.paid_amount bayar from t_advance_payment a '+
+        ' INNER JOIN t_supplier b on a.supplier_code=b.supplier_code '+
+        ' left Join t_cash_bank_expenditure_submission_payable c on a.no_trans=c.invoice_no'+
         ' where a.po_no='+QuotedStr(pono);
         open;
       end;
+      if FNew_Pembelian.QUM['bayar']=null then
+      BEGIN
+        ShowMessage('Maaf Uang muka belum di lakukan pembayaran,Silahkan lakukan pembayaran');
+        Exit;
+      END;
      // fnew_pembelian.EdJum_Um.Value:=Fnew_pembelian.DBGrid_UM.Columns[3].Footer.sumvalue;
      if VarIsNull(Fnew_pembelian.DBGrid_UM.Columns[3].Footer.SumValue) then
       fnew_pembelian.EdJum_Um.Value := 0
       else
       fnew_pembelian.EdJum_Um.Value :=Fnew_pembelian.DBGrid_UM.Columns[3].Footer.SumValue;
     end;
-      // End cr ds 26-03-2026
+    // cr ds 21-06-2026
+  {  FNew_Pembelian.qum.First;
+    while not fnew_pembelian.MemUangMuka.eof do
+    begin
+      FNew_Pembelian.MemUangMuka.insert;
+      FNew_Pembelian.MemUangMuka['no_trans']:=FNew_Pembelian.QUM['no_trans'];
+      FNew_Pembelian.MemUangMuka['tanggal']:=FNew_Pembelian.QUM['trans_date'];
+      FNew_Pembelian.MemUangMuka['nilai_um']:=FNew_Pembelian.QUM['bayar'];
+      FNew_Pembelian.MemUangMuka['no_bk']:=FNew_Pembelian.QUM['voucher_no'];
+      FNew_Pembelian.MemUangMuka.post;
+    end;
+    FNew_Pembelian.QUM.next; }
+      // End cr ds 22-07-2026
+    {  FNew_Pembelian.MemUangMuka.active:=true;
+      QMaterial.First;
+      while not fnew_pembelian.MemUangMuka.eof do
+      begin
+        with fnew_pembelian do
+        begin
+          MemUangMuka.insert;
+          memuangmuka['trans_no']:=QMaterial['um_no'];
+          memuangmuka['um_value']:=QMaterial['um_value'];
+          memuangmuka['po_no']:=QMaterial['po_no'];
+          memuangmuka['voucher_no']:=QMaterial['voucher_no'];
+          memuangmuka['amount']:=QMaterial['amount'];
+          memuangmuka.post;
+        end;
+        QMaterial.Next;
+      end;                           }
+    end;
+      FNew_Pembelian.DBGrid_UMColExit(sender);
       FNew_Pembelian.DBGridDetailpoColEnter(Sender);
       Close;
 end;
@@ -1004,6 +1060,7 @@ begin
    FNew_Pembelian.EdJum_hutang.text:=FNew_Pembelian.DBGridDetailpo.Columns[25].Footer.sumvalue;
    FNew_Pembelian.EdJum_totalhut.Value:=(FNew_Pembelian.EdJum_Hutang.Value)-(FNew_Pembelian.EdJum_Um.Value)-(FNew_Pembelian.EdJum_PotPem.Value)-(FNew_Pembelian.EdJum_ReturPemb.Value);
   // cr ds 4-2-2026
+
    Close;
 end;
 

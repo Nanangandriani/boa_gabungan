@@ -317,6 +317,7 @@ begin
           end else begin
             MemMasterData['is_bundle'] := False;
 
+
             MemMasterData['ad_on_qty_bundle'] := 0;
             MemMasterData['jumlah']:=qty;
 //            MemMasterData['harga_satuan']:=bruto+(hjual*nBonus);
@@ -647,7 +648,10 @@ begin
         //showmessage('brutoDIS1 '+floattostr(bruto)+'= disc1 '+floattostr(disc1));
 
            ndiscBruto1:=round(bruto*(disc1/100));
+//           ShowMessage(FloatToStr(ndiscBruto1));
            disc1:= ndiscBruto1;
+//           ShowMessage(FloatToStr(disc1));
+
         end;
         if disc2<>0 then
         begin

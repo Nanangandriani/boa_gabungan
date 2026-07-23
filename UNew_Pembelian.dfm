@@ -154,8 +154,7 @@ object FNew_Pembelian: TFNew_Pembelian
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1344
-      ExplicitTop = 4
+      ExplicitLeft = 1346
     end
     object BEdit: TRzBitBtn
       Left = 1275
@@ -1378,6 +1377,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
+        ExplicitWidth = 1489
+        ExplicitHeight = 333
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0
@@ -1386,9 +1387,8 @@ object FNew_Pembelian: TFNew_Pembelian
           Align = alClient
           DataGrouping.GroupLevels = <
             item
-              ColumnName = 'Column_1_supplier_name'
             end>
-          DataSource = DS_UM
+          DataSource = DSUangMuka
           DynProps = <>
           FooterRowCount = 1
           HorzScrollBar.ExtraPanel.Visible = True
@@ -1402,28 +1402,10 @@ object FNew_Pembelian: TFNew_Pembelian
               CellButtons = <>
               DynProps = <>
               EditButtons = <>
-              FieldName = 'no_trans'
+              FieldName = 'trans_no'
               Footers = <>
               Title.Caption = 'No Trans'
-              Width = 121
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'supplier_name'
-              Footers = <>
-              Title.Caption = 'Supplier'
-              Width = 200
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
-              FieldName = 'trans_date'
-              Footers = <>
-              Title.Caption = 'Tanggal'
-              Width = 100
+              Width = 207
             end
             item
               CellButtons = <>
@@ -1435,7 +1417,7 @@ object FNew_Pembelian: TFNew_Pembelian
               Footer.ValueType = fvtSum
               Footers = <>
               Title.Caption = 'Nilai Uang Muka'
-              Width = 100
+              Width = 140
             end
             item
               CellButtons = <>
@@ -1444,7 +1426,27 @@ object FNew_Pembelian: TFNew_Pembelian
               FieldName = 'po_no'
               Footers = <>
               Title.Caption = 'No.PO'
-              Width = 150
+              Visible = False
+              Width = 227
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'voucher_no'
+              Footers = <>
+              Title.Caption = 'No BK'
+              Width = 224
+            end
+            item
+              CellButtons = <>
+              DisplayFormat = '#,##0.00'
+              DynProps = <>
+              EditButtons = <>
+              FieldName = 'amount'
+              Footers = <>
+              Title.Caption = 'Bayar'
+              Width = 215
             end>
           object RowDetailData: TRowDetailPanelControlEh
             object DBGridEh2: TDBGridEh
@@ -1975,8 +1977,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabCicilan: TRzTabSheet
         Color = 15987699
         Caption = 'Cicilan'
-        ExplicitWidth = 1489
-        ExplicitHeight = 333
         object DBGridEh1: TDBGridEh
           Left = 0
           Top = 0
@@ -2622,41 +2622,53 @@ object FNew_Pembelian: TFNew_Pembelian
     Top = 369
   end
   object MemUangMuka: TMemTableEh
+    Active = True
     Params = <>
     Left = 811
     Top = 313
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
-        object no_trans: TMTStringDataFieldEh
-          FieldName = 'no_trans'
+        object trans_no: TMTStringDataFieldEh
+          FieldName = 'trans_no'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
-        object tanggal: TMTDateTimeDataFieldEh
-          FieldName = 'tanggal'
-          DateTimeDataType = fdtDateEh
-          DisplayWidth = 20
-        end
-        object supplier: TMTStringDataFieldEh
-          FieldName = 'supplier'
-          StringDataType = fdtStringEh
-          DisplayWidth = 20
-        end
-        object nilai_um: TMTNumericDataFieldEh
-          FieldName = 'nilai_um'
-          NumericDataType = fdtSmallintEh
+        object um_value: TMTNumericDataFieldEh
+          FieldName = 'um_value'
+          NumericDataType = fdtCurrencyEh
           AutoIncrement = False
           DisplayWidth = 20
           currency = False
           Precision = 15
         end
-        object no_po: TMTStringDataFieldEh
-          FieldName = 'no_po'
+        object po_no: TMTStringDataFieldEh
+          FieldName = 'po_no'
           StringDataType = fdtStringEh
           DisplayWidth = 20
         end
+        object voucher_no: TMTStringDataFieldEh
+          FieldName = 'voucher_no'
+          StringDataType = fdtStringEh
+          DisplayWidth = 50
+          Size = 50
+        end
+        object amount: TMTNumericDataFieldEh
+          FieldName = 'amount'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 50
+          currency = False
+          Precision = 50
+        end
       end
       object RecordsList: TRecordsListEh
+        Data = (
+          (
+            ''
+            nil
+            nil
+            nil
+            nil))
       end
     end
   end
@@ -2734,8 +2746,8 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object MemDetail: TMemTableEh
     Params = <>
-    Left = 232
-    Top = 264
+    Left = 216
+    Top = 280
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
         object voucher_no: TMTStringDataFieldEh
@@ -2789,7 +2801,7 @@ object FNew_Pembelian: TFNew_Pembelian
   end
   object DataSource1: TDataSource
     DataSet = MemDetail
-    Left = 304
-    Top = 264
+    Left = 328
+    Top = 288
   end
 end

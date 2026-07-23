@@ -340,7 +340,9 @@ begin
                 'left join (select trans_no,faktur_no from t_purchase_invoice where  deleted_at is null  '+
                 ' union all select return_no as trans_no,faktur_no from t_purchase_return where  deleted_at is null '+
                 ') c on a.trans_no=c.trans_no group by c.trans_no,c.faktur_no,b.item_stock_code,b.item_name,a.unit order by b.item_stock_code,b.item_name,a.unit)hh '+
-                ' on gg.noinv=hh.trans_no AND gg.kode = hh.item_stock_code ORDER BY tanggal, trans_no, faktur_no asc)jj '+
+                ' on gg.noinv=hh.trans_no AND gg.kode = hh.item_stock_code '+
+                ' ORDER BY tanggal, faktur_no, noinv, trans_no asc)jj '+
+                //' ORDER BY tanggal, noinv, trans_no, faktur_no asc)jj '+
 
                 'UNION ALL '+
                 'select 1 as nomor,''Saldo Awal'' ket,kodesup,''Saldo Awal'' nasup,'''' address,'''' telp,'''' noinv, '+
@@ -384,6 +386,7 @@ begin
                 'ON aaa.noinv=x.trans_no) zz '+
                 'LEFT JOIN v_ak_account v ON zz.account_code=v.account_code2)gg '+
                 'ORDER BY nomor ASC ';
+                //'ORDER BY nomor,noinv ASC ';
       open;
     end;
 

@@ -135,10 +135,11 @@ begin
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+
-          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
-          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
-          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' '+
-          ' GROUP BY account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
+          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select b.account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
+          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real a inner join t_ak_account_sub b on a.account_code=b.account_code2'+
+          ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+'  and a.deleted_at ISNULL'+
+          ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
           ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2 where dbend>0 or kdend>0  ORDER BY tb2.account_code';
 
           open;
@@ -190,10 +191,11 @@ begin
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+
-          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
-          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
-          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' '+
-          ' GROUP BY account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
+          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select b.account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
+          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real a inner join t_ak_account_sub b on a.account_code=b.account_code2'+
+          ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
+          ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
           ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';
 
            open;
@@ -243,10 +245,11 @@ begin
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+
-          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
-          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
-          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' '+
-          ' GROUP BY account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
+          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select b.account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
+          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real a inner join t_ak_account_sub b on a.account_code=b.account_code2'+
+          ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
+          ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
           ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2 where dbend>0 or kdend>0  ORDER BY tb2.account_code';
 
           open;
@@ -300,10 +303,11 @@ begin
           ')'+
           ' taab  on taab.account_code=taa.account_code2  GROUP BY taa.account_code,taa.posisi_dk,taa.account_name,taab.trans_year,taab.trans_month '+
           ' ORDER BY taa.account_code)ab GROUP BY ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month)ab2                '+
-          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
-          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
-          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' '+
-          ' GROUP BY account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
+          '  LEFT JOIN (select account_code,sum(trdb) trdb,sum(trkd) trkd from (select b.account_code,case when status_dk=''D'' THEN sum(AMOUNT) ELSE 0 END trdb,'+
+          ' case when status_dk=''K'' then sum(amount) else 0 end trkd from t_general_ledger_real a inner join t_ak_account_sub b on a.account_code=b.account_code2'+
+          ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
+          ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
+          ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
           ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';
              open;
            end;

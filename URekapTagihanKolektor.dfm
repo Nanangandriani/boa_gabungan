@@ -2,8 +2,8 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
   Left = 0
   Top = 0
   Caption = 'Rekap Tagihan Kolektor'
-  ClientHeight = 442
-  ClientWidth = 767
+  ClientHeight = 441
+  ClientWidth = 763
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 767
+    Width = 763
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -32,6 +32,7 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 767
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -53,8 +54,8 @@ object FRekapTagihanKolektor: TFRekapTagihanKolektor
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 767
-    Height = 315
+    Width = 763
+    Height = 314
     Align = alClient
     DataSource = DsRekapTagihanPenjualan
     DrawMemoText = True

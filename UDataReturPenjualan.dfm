@@ -847,7 +847,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object MemDetailJUMLAH: TFloatField
       FieldName = 'JUMLAH'
-      DisplayFormat = '#,##0.##'
     end
     object MemDetailHARGA_SATUAN: TFloatField
       FieldName = 'HARGA_SATUAN'
@@ -929,8 +928,6 @@ object FDataReturPenjualan: TFDataReturPenjualan
           NumericDataType = fdtFloatEh
           AutoIncrement = False
           DisplayWidth = 20
-          DisplayFormat = '#,##0.##'
-          EditFormat = '#,##0.##'
           currency = False
           Precision = 15
         end

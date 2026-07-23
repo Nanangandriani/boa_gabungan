@@ -2,8 +2,8 @@ object FDataListPenjualan: TFDataListPenjualan
   Left = 0
   Top = 0
   Caption = 'Penjualan'
-  ClientHeight = 518
-  ClientWidth = 1064
+  ClientHeight = 517
+  ClientWidth = 1060
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FDataListPenjualan: TFDataListPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1064
+    Width = 1060
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -51,8 +51,8 @@ object FDataListPenjualan: TFDataListPenjualan
   object DBGridOrder: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1064
-    Height = 391
+    Width = 1060
+    Height = 390
     Align = alClient
     AllowedOperations = []
     DataSource = DsPenjualan
@@ -16397,7 +16397,7 @@ object FDataListPenjualan: TFDataListPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45545.574615104200000000
-    ReportOptions.LastChange = 46098.339561539350000000
+    ReportOptions.LastChange = 46203.647124004600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'var isBundle: Integer;'
@@ -16423,16 +16423,16 @@ object FDataListPenjualan: TFDataListPenjualan
       '    isBundle:=1;'
       
         '    frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> +' +
-        ' '#39' '#39' + <vTerbilang_qty> + #13 +          '
+        ' '#39' '#39' + <vTerbilang_qty> + #13 +'
       
         '                                   '#39'(PROMO BELI '#39' + FloatToStr(<' +
         'frxDBDCetakSJ."qty_bundle">) +'
       
         '                                   '#39' GRATIS '#39'+FloatToStr(<frxDBD' +
-        'CetakSJ."add_on_qty">)+'#39')'#39';   '
+        'CetakSJ."add_on_qty">)+'#39')'#39';'
       
         '    {frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> ' +
-        '+ '#39' '#39' + <vTerbilang_qty>;}  '
+        '+ '#39' '#39' + <vTerbilang_qty>;}'
       '  end'
       '  else'
       '  begin'
@@ -16499,14 +16499,15 @@ object FDataListPenjualan: TFDataListPenjualan
         Width = 755.906000000000000000
         object nama_pt: TfrxMemoView
           AllowVectorExport = True
-          Width = 207.724800000000000000
+          Left = 0.755905511811024000
+          Width = 234.783623530000000000
           Height = 40.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -19
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'nama_pt')
@@ -16523,15 +16524,15 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 207.779530000000000000
-          Width = 340.976500000000000000
+          Left = 234.779530000000000000
+          Width = 308.452061140000000000
           Height = 40.440944880000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -20
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'SURAT JALAN')
@@ -16690,9 +16691,9 @@ object FDataListPenjualan: TFDataListPenjualan
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 549.000000000000000000
+          Left = 543.118110240000000000
           Top = 0.102350000000000000
-          Width = 207.724800000000000000
+          Width = 213.543307086614000000
           Height = 40.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

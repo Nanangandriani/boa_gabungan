@@ -2,8 +2,8 @@ object FRegisterCekMundur: TFRegisterCekMundur
   Left = 0
   Top = 0
   Caption = 'FRegisterCekMundur'
-  ClientHeight = 442
-  ClientWidth = 927
+  ClientHeight = 441
+  ClientWidth = 923
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,12 +24,11 @@ object FRegisterCekMundur: TFRegisterCekMundur
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 927
+    Width = 923
     Height = 73
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 923
     object RzLabel1: TRzLabel
       Left = 16
       Top = 16
@@ -93,12 +92,11 @@ object FRegisterCekMundur: TFRegisterCekMundur
   object RzGroupBox1: TRzGroupBox
     Left = 0
     Top = 73
-    Width = 927
+    Width = 923
     Height = 57
     Align = alTop
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 923
     object btBaru: TRzBitBtn
       Left = 16
       Top = 16
@@ -136,8 +134,8 @@ object FRegisterCekMundur: TFRegisterCekMundur
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 130
-    Width = 927
-    Height = 312
+    Width = 923
+    Height = 311
     Align = alClient
     DataSource = DSDetail
     DynProps = <>

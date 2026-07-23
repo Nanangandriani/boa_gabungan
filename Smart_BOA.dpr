@@ -364,7 +364,13 @@ uses
   UNoteCancel2 in 'UNoteCancel2.pas' {FNoteCancel2},
   UImage in 'UImage.pas' {FImage},
   UExportReport in 'UExportReport.pas' {FExportReport},
-  UDataApproveDaftarPenagihanPiutang in 'UDataApproveDaftarPenagihanPiutang.pas' {FDataApproveDaftarPenagihanPiutang};
+  UDataApproveDaftarPenagihanPiutang in 'UDataApproveDaftarPenagihanPiutang.pas' {FDataApproveDaftarPenagihanPiutang},
+  URekapTagihanKolektor2 in 'URekapTagihanKolektor2.pas' {FRekapTagihanKolektor2},
+  UGroup_Biaya in 'UGroup_Biaya.pas' {FGroup_biaya},
+  UNew_Group_Biaya in 'UNew_Group_Biaya.pas' {FNew_Group_biaya},
+  URekapPiutang in 'URekapPiutang.pas' {FRekapPiutang},
+  USingkronisasiPusat in 'USingkronisasiPusat.pas' {FSingkronisasiPusat},
+  U_daftar_realisasi_biaya in 'U_daftar_realisasi_biaya.pas' {Fdaftar_realisasi_biaya};
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -554,6 +560,11 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFNoteCancel2, FNoteCancel2);
   Application.CreateForm(TFImage, FImage);
   Application.CreateForm(TFDataApproveDaftarPenagihanPiutang, FDataApproveDaftarPenagihanPiutang);
+  Application.CreateForm(TFGroup_biaya, FGroup_biaya);
+  Application.CreateForm(TFNew_Group_biaya, FNew_Group_biaya);
+  Application.CreateForm(TFSingkronisasiPusat, FSingkronisasiPusat);
+  //  Application.CreateForm(TFRekapPiutang, FRekapPiutang);
+  //  Application.CreateForm(TFRekapTagihanKolektor2, FRekapTagihanKolektor2);
   //  Application.CreateForm(TFExportReport, FExportReport);
   //  Application.CreateForm(TFKartuUangMukaPenjualan, FKartuUangMukaPenjualan);
   //  Application.CreateForm(TFRegisterCekMundur, FRegisterCekMundur);

@@ -288,7 +288,6 @@ begin
     strSBU:=FHomeLogin.vKodePRSH;
   end;
 
-
   mm:=cbBulan.ItemIndex+1;
   DBGrid.StartLoadingStatus();
   try

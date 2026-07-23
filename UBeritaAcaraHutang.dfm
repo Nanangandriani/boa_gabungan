@@ -202,8 +202,8 @@ object FBeritaAcaraHutang: TFBeritaAcaraHutang
   object MemSisaHutang: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 408
-    Top = 280
+    Left = 400
+    Top = 264
     object MemSisaHutangkodesup: TStringField
       FieldName = 'kodesup'
       Size = 10
@@ -1792,8 +1792,8 @@ object FBeritaAcaraHutang: TFBeritaAcaraHutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 768
-    Top = 152
+    Left = 744
+    Top = 176
   end
   object DSQTgl_Hutang: TDataSource
     DataSet = QTgl_hutang

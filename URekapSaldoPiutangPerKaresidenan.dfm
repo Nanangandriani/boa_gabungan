@@ -32,6 +32,7 @@ object FRekapSaldoPiutangPerKaresidenan: TFRekapSaldoPiutangPerKaresidenan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 692
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

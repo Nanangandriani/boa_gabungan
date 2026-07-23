@@ -94,7 +94,6 @@ begin
 //    DM.Koneksi.SpecificOptions.Values['LockTimeout'] := '120';
     DM.Koneksi.Connected:=True;
 
-
     //PUSAT
     DM.Koneksi_PST.Connected:=False;
     DM.Koneksi_PST.Server:=dm.ABSTable1Ip_db_Pusat.AsString;
@@ -146,7 +145,7 @@ procedure TFHomeLogin.CbSBUKeyPress(Sender: TObject; var Key: Char);
 begin
   if key=#13 then
   begin
-     Eduser.SetFocus;
+    Eduser.SetFocus;
   end;
 end;
 
@@ -154,7 +153,7 @@ procedure TFHomeLogin.EdPassKeyPress(Sender: TObject; var Key: Char);
 begin
   if key=#13 then
   begin
-     ImgTransaksiClick(sender);
+    ImgTransaksiClick(sender);
   end;
 end;
 
@@ -162,7 +161,7 @@ procedure TFHomeLogin.EduserKeyPress(Sender: TObject; var Key: Char);
 begin
   if key=#13 then
   begin
-     EdPass.SetFocus;
+    EdPass.SetFocus;
   end;
 end;
 
@@ -237,8 +236,26 @@ begin
       ShowMessage('User Anda Tidak Terdaftar..!!!');
       Exit;
     end;
+
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.clear;
+//      sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+//              ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+//              ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+//              ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+//              ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+//              ' FROM "public"."t_user_copy1" aa '+
+//              ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+//              ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
+//              ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
+//              ' and "password"=crypt('+QuotedStr(EdPass.Text)+', "password")  and aa.deleted_at IS NULL ');
+//      open;
+//    end;
     with dm.Qtemp do
     begin
+
       close;
       sql.clear;
       sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
@@ -250,9 +267,28 @@ begin
               ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
               ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
               ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
-              ' and "password"='+QuotedStr(EdPass.Text)+'  and aa.deleted_at IS NULL ');
+              ' and "password"=crypt('+QuotedStr(EdPass.Text)+', "password") and aa.deleted_at IS NULL ');
       open;
+
+
+      if isEmpty then
+      begin
+        close;
+        sql.clear;
+        sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+                ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+                ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+                ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+                ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+                ' FROM "public"."t_user" aa '+
+                ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+                ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
+                ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
+                ' and "password"='+QuotedStr(EdPass.Text)+' and aa.deleted_at IS NULL ');
+        open;
+      end;
     end;
+
     if dm.Qtemp.RecordCount=0 then
     begin
       ShowMessage('User Pasword Anda Tidak Terdaftar..!!!');

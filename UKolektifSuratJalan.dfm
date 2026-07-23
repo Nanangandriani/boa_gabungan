@@ -4,8 +4,8 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Cetak Kolektif Surat Jalan'
-  ClientHeight = 122
-  ClientWidth = 437
+  ClientHeight = 121
+  ClientWidth = 433
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -38,16 +38,16 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 80
-    Width = 437
+    Top = 79
+    Width = 433
     Height = 42
     Align = alBottom
     Color = 15987699
     TabOrder = 0
-    ExplicitTop = 79
-    ExplicitWidth = 433
+    ExplicitTop = 78
+    ExplicitWidth = 429
     object BBatal: TRzBitBtn
-      Left = 360
+      Left = 356
       Top = 2
       Height = 38
       Align = alRight
@@ -106,10 +106,10 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 356
+      ExplicitLeft = 352
     end
     object BPrint: TRzBitBtn
-      Left = 273
+      Left = 269
       Top = 2
       Width = 87
       Height = 38
@@ -248,7 +248,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 269
+      ExplicitLeft = 265
     end
   end
   object dtTanggalAwal: TRzDateTimePicker
@@ -304,184 +304,77 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
   object Report: TfrxReport
     Version = '2022.1.3'
     DotMatrixReport = False
-    EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46098.346643865740000000
+    ReportOptions.CreateDate = 45545.574615104200000000
+    ReportOptions.LastChange = 46206.624478784720000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      'var'
-      '  isBundle: Integer;'
-      ''
-      'function TglIndo(Tanggal: TDateTime): String;'
-      'var'
-      '  bln: Integer;'
-      '  namaBln: String;'
-      'begin'
-      '  bln := StrToInt(FormatDateTime('#39'mm'#39', Tanggal));'
-      ''
-      '  case bln of'
-      '    1: namaBln := '#39'Januari'#39';'
-      '    2: namaBln := '#39'Februari'#39';'
-      '    3: namaBln := '#39'Maret'#39';'
-      '    4: namaBln := '#39'April'#39';'
-      '    5: namaBln := '#39'Mei'#39';'
-      '    6: namaBln := '#39'Juni'#39';'
-      '    7: namaBln := '#39'Juli'#39';'
-      '    8: namaBln := '#39'Agustus'#39';'
-      '    9: namaBln := '#39'September'#39';'
-      '    10: namaBln := '#39'Oktober'#39';'
-      '    11: namaBln := '#39'November'#39';'
-      '    12: namaBln := '#39'Desember'#39';'
-      '  end;'
+      'var isBundle: Integer;'
       ''
       
-        '  Result := FormatDateTime('#39'dd'#39', Tanggal) + '#39' '#39' + namaBln + '#39' '#39' ' +
-        '+ FormatDateTime('#39'yyyy'#39', Tanggal);'
+        'procedure frxDBDCetakSJname_itemOnBeforePrint(Sender: TfrxCompon' +
+        'ent);'
+      'begin'
+      '{  if <frxDBDCetakSJ."qty_bundle"> > 0 then'
+      '  begin'
+      
+        '    frxDBDCetakSJname_item.Text:=<frxDBDCetakSJ."name_item"> <vT' +
+        'erbilang_qty> '#39'KELIPATAN '#39'<frxDBDCetakSJ."qty_bundle"> '#39'GRATIS 1' +
+        #39' <frxDBDCetakSJ."name_unit">;'
+      '  end else begin'
+      
+        '    frxDBDCetakSJname_item.Text:=<frxDBDCetakSJ."name_item"> <vT' +
+        'erbilang_qty>;'
+      '  end;  }'
+      ''
+      '  if <frxDBDCetakSJ."qty_bundle"> > 0 then'
+      '  begin'
+      '    isBundle:=1;'
+      
+        '    frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> +' +
+        ' '#39' '#39' + <vTerbilang_qty> + #13 +'
+      
+        '                                   '#39'(PROMO BELI '#39' + FloatToStr(<' +
+        'frxDBDCetakSJ."qty_bundle">) +'
+      
+        '                                   '#39' GRATIS '#39'+FloatToStr(<frxDBD' +
+        'CetakSJ."add_on_qty">)+'#39')'#39';'
+      
+        '    {frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> ' +
+        '+ '#39' '#39' + <vTerbilang_qty>;}'
+      '  end'
+      '  else'
+      '  begin'
+      
+        '    frxDBDCetakSJname_item.Text := <frxDBDCetakSJ."name_item"> +' +
+        ' '#39' '#39' + <vTerbilang_qty>;'
+      '  end;'
       'end;'
       ''
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
+      '  if isBundle=1 then'
       
-        '  if isBundle=1 then Memo31.Text:='#39'PROMO BELI '#39'+FloatToStr(<frxD' +
-        'BDSuratJalan."qty_bundle">)+'#39' GRATIS '#39'+ FloatToStr(<frxDBDSuratJ' +
-        'alan."add_on_qty">) else Memo31.Text:='#39#39';'
-      'end;'
-      ''
-      'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      '    Line16.Height:=214;'
-      '    Line11.Height:=214;'
-      '    Line10.Height:=214;'
-      '    Line26.Height:=452;'
-      '    Line24.Height:=452;'
-      'end;'
-      ''
-      'procedure ReportOnStopReport(Sender: TfrxComponent);'
-      'begin'
-      'end;'
-      ''
-      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      'end;'
-      ''
-      'procedure GroupHeader1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      ' isBundle := 0;'
-      ' if <frxDBDSuratJalan."tare_weight"> <> 0 then'
-      '  begin'
-      '    labelberatisi.Visible := True;'
-      '    labelberatkosong.Visible := True;'
-      '    beratisi.Visible := True;'
-      '    beratkosong.Visible := True;'
-      '    Memo25.Visible := True;'
-      '    Memo26.Visible := True;'
-      '  end'
-      '  else'
-      '  begin'
-      '    labelberatisi.Visible := False;'
-      '    labelberatkosong.Visible := False;'
-      '    beratisi.Visible := False;'
-      '    beratkosong.Visible := False;'
-      '    Memo25.Visible := False;'
-      '    Memo26.Visible := False;'
-      '  end;'
-      '  tanggal.Text:=TglIndo(<frxDBDSuratJalan."trans_date">);'
-      'end;'
-      ''
-      'procedure ReportTitle1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      'end;'
-      ''
-      'procedure length_alamatOnAfterData(Sender: TfrxComponent);'
-      'begin'
-      'end;'
-      ''
-      ''
-      'procedure GroupHeader1OnAfterPrint(Sender: TfrxComponent);'
-      'begin'
-      '  Memo29.Text:= <frxDBDSuratJalan."address2">;'
-      'end;'
-      ''
-      'procedure MemPOOnBeforePrint(Sender: TfrxComponent);'
-      'var'
-      '  IsHasPO: Boolean;'
-      'begin'
-      '{  IsHasPO := Trim(<frxDBDPenjualan."po_order">) <> '#39#39';'
-      ''
-      '  memPO.Visible  := IsHasPO;'
-      '  memo51.Visible := IsHasPO;'
-      '  memo52.Visible := IsHasPO;'
-      '  Line10.Visible := IsHasPO;'
-      '  Line11.Visible := IsHasPO;'
-      '  Line27.Visible := IsHasPO;       }'
-      ''
-      'end;'
-      ''
-      'procedure tanggalOnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      ''
-      'end;'
-      ''
-      
-        'procedure frxDBDPenjualanunit_priceOnBeforePrint(Sender: TfrxCom' +
-        'ponent);'
-      'begin'
-      '  if <frxDBDSuratJalan."qty_bundle"> > 0 then'
-      '  begin'
-      '    isBundle := 1;'
-      
-        '    TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
-        '+ '#39' '#39' +'
-      
-        '                                 <frxDBDSuratJalan."word_amount_' +
-        'qty"> + '#39' '#39' +'
-      
-        '                                 <frxDBDSuratJalan."name_unit"> ' +
-        '+ #13 +          '
-      
-        '                                 '#39'(PROMO BELI '#39' + FloatToStr(<fr' +
-        'xDBDSuratJalan."qty_bundle">) +'
-      
-        '                                 '#39' GRATIS '#39' + FloatToStr(<frxDBD' +
-        'SuratJalan."add_on_qty">) +'#39')'#39';'
-      
-        '  { TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
-        '+ '#39' '#39' +'
-      
-        '                                 <frxDBDSuratJalan."word_amount_' +
-        'qty"> + '#39' '#39' +'
-      
-        '                                 <frxDBDSuratJalan."name_unit">;' +
-        '      }  '
-      '  end'
-      '  else'
-      '  begin'
-      
-        '    TfrxMemoView(Sender).Text := <frxDBDSuratJalan."name_item"> ' +
-        '+ '#39' '#39' +'
-      
-        '                                 <frxDBDSuratJalan."word_amount_' +
-        'qty"> + '#39' '#39' +'
-      '                                 <frxDBDSuratJalan."name_unit">;'
-      '  end;'
-      ''
+        '  Memo31.Text:= '#39'PROMO BELI '#39'+FloatToStr(<frxDBDCetakSJ."qty_bun' +
+        'dle">)+'#39' GRATIS '#39'+FloatToStr(<frxDBDCetakSJ."add_on_qty">) else ' +
+        ' Memo31.Text:='#39#39';'
       'end;'
       ''
       'begin'
+      '  // Inisialisasi awal saat report mulai dijalankan'
       '  isBundle := 0;'
+      ''
       'end.')
-    OnStopReport = 'ReportOnStopReport'
     Left = 16
     Top = 87
     Datasets = <
       item
-        DataSet = frxDBDSuratJalan
-        DataSetName = 'frxDBDSuratJalan'
+        DataSet = FDataListPenjualan.frxDBDCetakSJ
+        DataSetName = 'frxDBDCetakSJ'
       end>
     Variables = <
       item
@@ -489,11 +382,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         Value = Null
       end
       item
-        Name = 'vlokasi_pt'
-        Value = Null
-      end
-      item
-        Name = 'vTerbilang'
+        Name = 'vTerbilang_qty'
         Value = Null
       end>
     Style = <>
@@ -503,171 +392,57 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     end
     object Page1: TfrxReportPage
       PaperWidth = 210.000000000000000000
-      PaperHeight = 140.000000000000000000
+      PaperHeight = 139.700000000000000000
       PaperSize = 256
-      LeftMargin = 8.000000000000000000
-      RightMargin = 8.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
+      LeftMargin = 5.000000000000000000
+      RightMargin = 5.000000000000000000
+      TopMargin = 5.000000000000000000
+      BottomMargin = 5.000000000000000000
       Frame.Typ = []
       MirrorMode = []
-      OnBeforePrint = 'Page1OnBeforePrint'
-      object MasterData1: TfrxMasterData
+      object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 18.897637800000000000
-        Top = 291.023810000000000000
-        Width = 733.228820000000000000
-        OnBeforePrint = 'MasterData1OnBeforePrint'
-        DataSet = frxDBDSuratJalan
-        DataSetName = 'frxDBDSuratJalan'
-        KeepFooter = True
-        RowCount = 0
-        Stretched = True
-        object frxDBDPenjualanamount: TfrxMemoView
-          IndexTag = 1
+        Height = 155.716535430000000000
+        Top = 18.897650000000000000
+        Width = 755.906000000000000000
+        object nama_pt: TfrxMemoView
           AllowVectorExport = True
-          Left = 143.622047240000000000
-          Top = -0.100597780000000000
-          Width = 109.606299210000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'name_unit'
-          DataSet = frxDBDSuratJalan
-          DataSetName = 'frxDBDSuratJalan'
-          DisplayFormat.FormatStr = '%0.0n'
-          DisplayFormat.Kind = fkNumeric
+          Left = 0.755905511811024000
+          Width = 234.783623530000000000
+          Height = 40.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -19
           Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
-            '[frxDBDSuratJalan."name_unit"]')
+            'nama_pt')
           ParentFont = False
-        end
-        object frxDBDPenjualanunit_price: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 257.007874020000000000
-          Top = -0.100597780000000000
-          Width = 478.519685040000000000
-          Height = 18.897650000000000000
-          OnBeforePrint = 'frxDBDPenjualanunit_priceOnBeforePrint'
-          StretchMode = smMaxHeight
-          DataSet = frxDBDSuratJalan
-          DataSetName = 'frxDBDSuratJalan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          ParentFont = False
-          Formats = <
-            item
-              FormatStr = '%2.n'
-              Kind = fkNumeric
-            end
-            item
-            end
-            item
-            end>
-        end
-        object frxDBDPenjualanname_item: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 44.976377950000000000
-          Top = -0.100597780000000000
-          Width = 96.377952760000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          DataField = 'amount'
-          DataSet = frxDBDSuratJalan
-          DataSetName = 'frxDBDSuratJalan'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[frxDBDSuratJalan."amount"]')
-          ParentFont = False
-        end
-        object Memo15: TfrxMemoView
-          AllowVectorExport = True
-          Left = 0.377952760000000000
-          Top = -0.100597780000000000
-          Width = 43.464566930000000000
-          Height = 18.897650000000000000
-          StretchMode = smMaxHeight
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[Line]')
-          ParentFont = False
-        end
-      end
-      object GroupHeader1: TfrxGroupHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Height = 167.341402020000000000
-        Top = 102.047310000000000000
-        Width = 733.228820000000000000
-        OnAfterPrint = 'GroupHeader1OnAfterPrint'
-        OnBeforePrint = 'GroupHeader1OnBeforePrint'
-        Condition = '<frxDBDSuratJalan."trans_no">'
-        KeepTogether = True
-        StartNewPage = True
-        object Line26: TfrxLineView
-          AllowVectorExport = True
-          Top = 0.308179570000000000
-          Height = 153.448818900000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line24: TfrxLineView
-          AllowVectorExport = True
-          Left = 735.421052630000000000
-          Height = 153.448818900000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
+          VAlign = vaCenter
         end
         object Line1: TfrxLineView
           AllowVectorExport = True
-          Left = 118.276639570000000000
+          Left = 119.795300000000000000
           Top = 63.267780000000000000
-          Width = 377.952755905512000000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 206.260869570000000000
-          Width = 340.976500000000000000
+          Left = 234.779530000000000000
+          Width = 308.452061140000000000
           Height = 40.440944880000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -20
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
@@ -679,7 +454,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 110.016899570000000000
+          Left = 111.535560000000000000
           Top = 46.165430000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
@@ -696,10 +471,11 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         object frxDBDCetakSJname_cust: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 121.583999570000000000
+          Left = 123.102660000000000000
           Top = 45.842610000000000000
-          Width = 375.259104110000000000
+          Width = 387.023810000000000000
           Height = 18.897650000000000000
+          DataField = 'name_cust'
           DataSet = FDataListPenjualan.frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
@@ -709,15 +485,15 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDSuratJalan."name_cust"]')
+            '[frxDBDCetakSJ."name_cust"]')
           ParentFont = False
         end
         object frxDBDCetakSJaddress: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 121.583999570000000000
+          Left = 123.102660000000000000
           Top = 68.519790000000000000
-          Width = 376.435574700000000000
+          Width = 387.023810000000000000
           Height = 34.913420000000000000
           DataSet = FDataListPenjualan.frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
@@ -729,30 +505,39 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Frame.Typ = []
           LineSpacing = 4.000000000000000000
           Memo.UTF8W = (
-            '[frxDBDSuratJalan."address"]')
+            '[frxDBDCetakSJ."address"]')
           ParentFont = False
         end
         object Line4: TfrxLineView
           AllowVectorExport = True
-          Left = 0.260869570000000000
+          Left = 0.779530000000000000
           Top = 128.889920000000000000
-          Width = 735.496062992126000000
+          Width = 755.149606300000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line5: TfrxLineView
           AllowVectorExport = True
-          Left = 0.260869570000000000
+          Left = 0.779530000000000000
           Top = 153.566929130000000000
-          Width = 735.496062992126000000
+          Width = 755.149606299213000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
+        object Line6: TfrxLineView
+          AllowVectorExport = True
+          Left = 0.649095220000000000
+          Top = 40.889920000000000000
+          Height = 444.472440940000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 45.040399570000000000
+          Left = 46.559060000000000000
           Top = 131.889920000000000000
-          Width = 96.475935220000000000
+          Width = 95.606370000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -767,7 +552,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 143.646769570000000000
+          Left = 145.165430000000000000
           Top = 132.779527560000000000
           Width = 109.606370000000000000
           Height = 18.897650000000000000
@@ -784,9 +569,9 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 256.855677830000000000
+          Left = 265.330860000000000000
           Top = 131.779527560000000000
-          Width = 479.578893630000000000
+          Width = 486.228510000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -801,25 +586,42 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 255.812199570000000000
+          Left = 257.330860000000000000
           Top = 129.149606300000000000
-          Height = 22.677165350000000000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line11: TfrxLineView
           AllowVectorExport = True
-          Left = 142.426299570000000000
+          Left = 143.944960000000000000
           Top = 129.149606300000000000
-          Height = 22.677165350000000000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
+        object Memo13: TfrxMemoView
+          AllowVectorExport = True
+          Left = 543.118110240000000000
+          Top = 0.102350000000000000
+          Width = 213.543307086614000000
+          Height = 40.456710000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '  [frxDBDCetakSJ."no_traveldoc"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 0.481339570000000000
+          Left = 2.000000000000000000
           Top = 46.102350000000000000
           Width = 100.559060000000000000
           Height = 18.897650000000000000
@@ -835,7 +637,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 0.371103350000000000
+          Left = 1.889763780000000000
           Top = 68.102350000000000000
           Width = 105.559060000000000000
           Height = 18.897650000000000000
@@ -851,7 +653,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 109.481339570000000000
+          Left = 111.000000000000000000
           Top = 68.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
@@ -867,23 +669,23 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 118.142756890000000000
+          Left = 119.661417320000000000
           Top = 84.102350000000000000
-          Width = 377.952755905512000000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
-        object Line14: TfrxLineView
+        object Line13: TfrxLineView
           AllowVectorExport = True
-          Left = 118.142756890000000000
+          Left = 119.661417320000000000
           Top = 102.102350000000000000
-          Width = 377.952755905512000000
+          Width = 391.559055118110000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 503.308111220000000000
+          Left = 524.826771650000000000
           Top = 45.102350000000000000
           Width = 61.559060000000000000
           Height = 18.897650000000000000
@@ -899,7 +701,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 503.437861310000000000
+          Left = 524.956521740000000000
           Top = 105.841480430000000000
           Width = 61.559060000000000000
           Height = 18.897650000000000000
@@ -916,7 +718,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object labelberatkosong: TfrxMemoView
           AllowVectorExport = True
-          Left = 503.481339570000000000
+          Left = 525.000000000000000000
           Top = 66.102350000000000000
           Width = 117.559060000000000000
           Height = 18.897650000000000000
@@ -932,7 +734,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object labelberatisi: TfrxMemoView
           AllowVectorExport = True
-          Left = 503.481339570000000000
+          Left = 525.000000000000000000
           Top = 87.102350000000000000
           Width = 94.559060000000000000
           Height = 18.897650000000000000
@@ -948,7 +750,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 607.481339570000000000
+          Left = 629.000000000000000000
           Top = 66.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
@@ -964,8 +766,8 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 607.481339570000000000
-          Top = 86.232784780000000000
+          Left = 629.000000000000000000
+          Top = 87.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -980,7 +782,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 607.437861310000000000
+          Left = 628.956521740000000000
           Top = 105.841480430000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
@@ -997,7 +799,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 607.497087600000000000
+          Left = 629.015748030000000000
           Top = 45.102350000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
@@ -1013,23 +815,23 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object tanggal: TfrxMemoView
           AllowVectorExport = True
-          Left = 614.551181102362000000
+          Left = 637.000000000000000000
           Top = 45.102350000000000000
-          Width = 115.653543310000000000
+          Width = 115.653543307087000000
           Height = 18.897650000000000000
-          OnBeforePrint = 'tanggalOnBeforePrint'
-          DisplayFormat.Kind = fkDateTime
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
+          Memo.UTF8W = (
+            'Tanggal')
           ParentFont = False
         end
         object beratkosong: TfrxMemoView
           AllowVectorExport = True
-          Left = 614.481339570000000000
+          Left = 636.000000000000000000
           Top = 66.102350000000000000
           Width = 115.653543310000000000
           Height = 18.897650000000000000
@@ -1040,12 +842,12 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDSuratJalan."tare_weight"]')
+            'Tanggal')
           ParentFont = False
         end
         object beratisi: TfrxMemoView
           AllowVectorExport = True
-          Left = 613.611774350000000000
+          Left = 636.000000000000000000
           Top = 87.102350000000000000
           Width = 115.653543310000000000
           Height = 18.897650000000000000
@@ -1056,21 +858,30 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDSuratJalan."gross_weight"]')
+            'Tanggal')
           ParentFont = False
         end
-        object Line16: TfrxLineView
+        object Line7: TfrxLineView
           AllowVectorExport = True
-          Left = 45.481339570000000000
+          Left = 756.661417320000000000
+          Top = 40.818897637795300000
+          Height = 444.472440940000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
+        object Line14: TfrxLineView
+          AllowVectorExport = True
+          Left = 47.000000000000000000
           Top = 129.102350000000000000
-          Height = 22.677165350000000000
+          Height = 234.330708661417000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 0.481339570000000000
+          Left = 2.000000000000000000
           Top = 132.102350000000000000
           Width = 43.606370000000000000
           Height = 18.897650000000000000
@@ -1087,7 +898,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object nopol: TfrxMemoView
           AllowVectorExport = True
-          Left = 615.437861310000000000
+          Left = 636.956521740000000000
           Top = 105.841480430000000000
           Width = 115.653543310000000000
           Height = 18.897650000000000000
@@ -1102,38 +913,106 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
             'Tanggal')
           ParentFont = False
         end
-        object Memo13: TfrxMemoView
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Height = 18.897637800000000000
+        Top = 234.330860000000000000
+        Width = 755.906000000000000000
+        DataSet = FDataListPenjualan.frxDBDCetakSJ
+        DataSetName = 'frxDBDCetakSJ'
+        RowCount = 0
+        Stretched = True
+        object frxDBDCetakSJamount: TfrxMemoView
+          IndexTag = 1
           AllowVectorExport = True
-          Left = 543.891595980000000000
-          Top = 0.102350000000000000
-          Width = 191.054310520000000000
-          Height = 40.456710000000000000
+          Left = 47.559060000000000000
+          Width = 93.826840000000000000
+          Height = 18.897650000000000000
+          DataField = 'amount'
+          DataSet = FDataListPenjualan.frxDBDCetakSJ
+          DataSetName = 'frxDBDCetakSJ'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
-          Memo.UTF8W = (
-            '[frxDBDSuratJalan."no_traveldoc"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object nama_pt: TfrxMemoView
-          AllowVectorExport = True
-          Width = 206.855234780000000000
-          Height = 40.456710000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -19
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop, ftBottom]
+          Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'PT [frxDBDSuratJalan."company_code"]')
+            '[frxDBDCetakSJ."amount"]')
           ParentFont = False
-          VAlign = vaCenter
+        end
+        object frxDBDCetakSJcode_item: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 147.724490000000000000
+          Width = 105.826840000000000000
+          Height = 18.897650000000000000
+          DataSet = FDataListPenjualan.frxDBDCetakSJ
+          DataSetName = 'frxDBDCetakSJ'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frxDBDCetakSJ."name_unit"]')
+          ParentFont = False
+        end
+        object frxDBDCetakSJname_item: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 259.110390000000000000
+          Width = 496.448980000000000000
+          Height = 18.897650000000000000
+          OnBeforePrint = 'frxDBDCetakSJname_itemOnBeforePrint'
+          StretchMode = smMaxHeight
+          DataSet = FDataListPenjualan.frxDBDCetakSJ
+          DataSetName = 'frxDBDCetakSJ'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          ParentFont = False
+          Formats = <
+            item
+            end
+            item
+            end>
+        end
+        object Memo15: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 1.000000000000000000
+          Top = -1.330860000000000000
+          Width = 43.826840000000000000
+          Height = 18.897650000000000000
+          DataSet = FDataListPenjualan.frxDBDCetakSJ
+          DataSetName = 'frxDBDCetakSJ'
+          DisplayFormat.FormatStr = '%0.0n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[Line#]')
+          ParentFont = False
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1143,22 +1022,14 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 109.224488480000000000
-        Top = 370.393940000000000000
-        Width = 733.228820000000000000
+        Height = 128.047310000000000000
+        Top = 313.700990000000000000
+        Width = 755.906000000000000000
         OnBeforePrint = 'PageFooter1OnBeforePrint'
-        object Line7: TfrxLineView
-          AllowVectorExport = True
-          Width = 735.496062990000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 379.914037580000000000
-          Top = 0.075084780000000000
-          Width = 149.493925280000000000
+          Left = 395.338590000000000000
+          Width = 158.905690000000000000
           Height = 57.913420000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1174,9 +1045,9 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object kota_tanggal: TfrxMemoView
           AllowVectorExport = True
-          Left = 557.356706400000000000
-          Top = 4.193204780000000000
-          Width = 170.639328820000000000
+          Left = 575.134200000000000000
+          Top = 4.118120000000000000
+          Width = 172.992270000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1189,10 +1060,18 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
             'Pengirim,')
           ParentFont = False
         end
+        object Line8: TfrxLineView
+          AllowVectorExport = True
+          Left = -0.220470000000000000
+          Width = 757.417322830000000000
+          Color = clBlack
+          Frame.Typ = []
+          Diagonal = True
+        end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 373.869565220000000000
-          Top = 83.374094780000000000
+          Left = 394.000000000000000000
+          Top = 97.299010000000000000
           Width = 162.992270000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1208,8 +1087,8 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 561.869565220000000000
-          Top = 84.374094780000000000
+          Left = 582.000000000000000000
+          Top = 98.299010000000000000
           Width = 162.992270000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1225,27 +1104,26 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Line15: TfrxLineView
           AllowVectorExport = True
-          Left = -0.130434780000000000
-          Top = 108.374094780000000000
-          Width = 736.251968503937000000
+          Top = 122.299010000000000000
+          Width = 758.173228346457000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
-        object Line13: TfrxLineView
+        object Line16: TfrxLineView
           AllowVectorExport = True
-          Left = 364.869565220000000000
-          Top = 0.374094780000000000
-          Height = 108.850393700787000000
+          Left = 385.000000000000000000
+          Top = 0.299010000000000000
+          Height = 122.456692910000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line17: TfrxLineView
           AllowVectorExport = True
-          Left = 548.869565220000000000
-          Top = 0.197624190000000000
-          Height = 108.850393700000000000
+          Left = 568.000000000000000000
+          Top = 1.299010000000000000
+          Height = 122.456692910000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -1253,10 +1131,10 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         object Memo29: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 4.869565220000000000
-          Top = 18.374094780000000000
+          Left = 4.000000000000000000
+          Top = 25.299010000000000000
           Width = 352.023810000000000000
-          Height = 88.990343070000000000
+          Height = 95.605727690000000000
           DataSet = FDataListPenjualan.frxDBDCetakSJ
           DataSetName = 'frxDBDCetakSJ'
           Font.Charset = DEFAULT_CHARSET
@@ -1265,12 +1143,14 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBDCetakSJ."address2"]')
           ParentFont = False
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 4.869565220000000000
-          Top = 2.374094780000000000
+          Left = 4.000000000000000000
+          Top = 9.299010000000000000
           Width = 166.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1285,9 +1165,9 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
         end
         object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 5.102564100000000000
-          Top = 87.041957440000000000
-          Width = 352.307692300000000000
+          Left = 3.589743600000000000
+          Top = 100.145163840000000000
+          Width = 376.923076920000000000
           Height = 19.487179490000000000
           Visible = False
           Font.Charset = DEFAULT_CHARSET
@@ -1298,27 +1178,6 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
           Frame.Typ = []
           ParentFont = False
         end
-      end
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Top = 18.897650000000000000
-        Width = 733.228820000000000000
-        OnBeforePrint = 'ReportTitle1OnBeforePrint'
-      end
-      object PageHeader1: TfrxPageHeader
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Top = 41.574830000000000000
-        Width = 733.228820000000000000
       end
     end
   end

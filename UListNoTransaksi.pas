@@ -30,7 +30,8 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UNew_Penjualan, UNew_DataPenjualan, UMasterData, UMy_Function,
-  UDataPenerimaanBank, UNew_SalesOrder, UDataReturPenjualan;
+  UDataPenerimaanBank, UNew_SalesOrder, UDataReturPenjualan, UNew_PO,
+  UNew_Pembelian;
 
 procedure TFListNoTransaksi.DBGridEh1DblClick(Sender: TObject);
 var trans_no,hasil: String;
@@ -61,6 +62,20 @@ begin
     FDataReturPenjualan.strNoTransaksiDiGanti:=trans_no;
     order_no:=QListTransNo.FieldValues['order_no'];
     FDataReturPenjualan.edNoTrans.text:=hasil;
+  end;
+  if vcall='pembelian' then
+  begin
+   // ShowMessage(hasil);
+    FNew_Pembelian.EdNo.text:=hasil;
+    FNew_Pembelian.strNoTransaksiDiGanti:=trans_no;
+    FNew_Pembelian.Edurut.Text:=QListTransNo.FieldValues['order_no'];
+  end;
+  if vcall='PO' then     //02-07-2026  cr ds
+  begin
+    FNew_PO.Ednopo.text:=hasil;
+    FNew_PO.strNoTransaksiDiGanti:=trans_no;
+//    Urut:=QListTransNo.FieldValues['order_no'];
+    FNew_PO.Edurut.Text:=QListTransNo.FieldValues['order_no'];
   end;
 
   close;

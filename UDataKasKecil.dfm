@@ -875,7 +875,7 @@ object FDataKasKecil: TFDataKasKecil
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 648
+    Left = 664
     Top = 360
   end
   object dsDetailHutang: TDataSource

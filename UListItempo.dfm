@@ -22,8 +22,8 @@ object Flistitempo: TFlistitempo
     Left = 0
     Top = 0
     Width = 583
-    Height = 193
-    Align = alTop
+    Height = 286
+    Align = alClient
     DataSource = DsMaterial_stok
     DrawMemoText = True
     DynProps = <>
@@ -111,8 +111,8 @@ object Flistitempo: TFlistitempo
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 277
-    ExplicitWidth = 577
+    ExplicitTop = 285
+    ExplicitWidth = 579
     object BBatal: TRzBitBtn
       Left = 507
       Top = 1
@@ -173,7 +173,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 501
+      ExplicitLeft = 503
     end
     object BEdit: TRzBitBtn
       Left = 432
@@ -235,7 +235,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 426
+      ExplicitLeft = 428
     end
     object Bedit2: TRzBitBtn
       Left = 357
@@ -298,7 +298,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 351
+      ExplicitLeft = 353
     end
     object BEdit3: TRzBitBtn
       Left = 282
@@ -361,7 +361,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 276
+      ExplicitLeft = 278
     end
     object BEdit4: TRzBitBtn
       Left = 207
@@ -424,7 +424,7 @@ object Flistitempo: TFlistitempo
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 201
+      ExplicitLeft = 203
     end
   end
   object QMaterial_stok: TUniQuery

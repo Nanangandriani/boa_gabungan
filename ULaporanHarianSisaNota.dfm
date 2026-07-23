@@ -2,8 +2,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
   Left = 0
   Top = 0
   Caption = 'Laporan Harian Sisa Nota'
-  ClientHeight = 442
-  ClientWidth = 1066
+  ClientHeight = 441
+  ClientWidth = 1062
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1066
+    Width = 1062
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -53,8 +53,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1066
-    Height = 315
+    Width = 1062
+    Height = 314
     Align = alClient
     Ctl3D = True
     DataSource = DsRekapPenjualanperCustomer
@@ -1602,7 +1602,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46171.595775613400000000
+    ReportOptions.LastChange = 46209.643390370370000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -3520,7 +3520,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
-              'ta1)+<frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount">]')
+              'ta1,2)+<frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount">]'
+            '')
           ParentFont = False
           VAlign = vaCenter
         end

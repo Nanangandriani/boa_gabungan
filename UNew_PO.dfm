@@ -70,14 +70,14 @@ object FNew_PO: TFNew_PO
     end
     object Label11: TLabel
       Left = 564
-      Top = 39
+      Top = 56
       Width = 103
       Height = 15
       Caption = 'No. Purchase Order'
     end
     object Label13: TLabel
       Left = 714
-      Top = 39
+      Top = 56
       Width = 3
       Height = 15
       Caption = ':'
@@ -126,21 +126,21 @@ object FNew_PO: TFNew_PO
     end
     object Label20: TLabel
       Left = 564
-      Top = 71
-      Width = 68
+      Top = 88
+      Width = 67
       Height = 15
       Caption = 'Jatuh Tempo'
     end
     object Label27: TLabel
       Left = 714
-      Top = 71
+      Top = 88
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label28: TLabel
       Left = 856
-      Top = 71
+      Top = 88
       Width = 22
       Height = 15
       Caption = 'Hari'
@@ -148,7 +148,7 @@ object FNew_PO: TFNew_PO
     object Label29: TLabel
       Left = 564
       Top = 10
-      Width = 42
+      Width = 41
       Height = 15
       Caption = 'Tanggal'
     end
@@ -212,14 +212,14 @@ object FNew_PO: TFNew_PO
     end
     object Label38: TLabel
       Left = 660
-      Top = 130
+      Top = 147
       Width = 57
       Height = 15
       Caption = 'Akun Perk.'
     end
     object Label39: TLabel
       Left = 714
-      Top = 101
+      Top = 118
       Width = 3
       Height = 15
       Caption = ':'
@@ -247,13 +247,14 @@ object FNew_PO: TFNew_PO
       Height = 15
       Caption = 'Kategori :'
     end
-    object SpeedButton1: TSpeedButton
+    object Btn_no: TSpeedButton
       Left = 899
-      Top = 36
+      Top = 51
       Width = 23
-      Height = 22
+      Height = 23
       Caption = '...'
-      OnClick = SpeedButton1Click
+      Enabled = False
+      OnClick = Btn_noClick
     end
     object EdKd_supp: TEdit
       Left = 190
@@ -287,7 +288,7 @@ object FNew_PO: TFNew_PO
     end
     object DtBln: TRzDateTimeEdit
       Left = 966
-      Top = 36
+      Top = 53
       Width = 57
       Height = 23
       EditType = etDate
@@ -297,7 +298,7 @@ object FNew_PO: TFNew_PO
     end
     object DtTh: TRzDateTimeEdit
       Left = 1103
-      Top = 36
+      Top = 50
       Width = 57
       Height = 23
       EditType = etDate
@@ -316,7 +317,7 @@ object FNew_PO: TFNew_PO
     end
     object EdNopo: TRzEdit
       Left = 729
-      Top = 36
+      Top = 53
       Width = 164
       Height = 23
       Text = ''
@@ -376,7 +377,7 @@ object FNew_PO: TFNew_PO
     end
     object Edjatuh_tempo: TRzEdit
       Left = 729
-      Top = 68
+      Top = 85
       Width = 121
       Height = 23
       Text = '0'
@@ -410,8 +411,8 @@ object FNew_PO: TFNew_PO
       TabOrder = 13
     end
     object RzBitBtn1: TRzBitBtn
-      Left = 564
-      Top = 208
+      Left = 510
+      Top = 206
       Width = 121
       Height = 30
       Caption = 'Tambah Barang'
@@ -515,7 +516,7 @@ object FNew_PO: TFNew_PO
     end
     object Edbln: TEdit
       Left = 968
-      Top = 68
+      Top = 85
       Width = 58
       Height = 23
       TabOrder = 20
@@ -523,7 +524,7 @@ object FNew_PO: TFNew_PO
     end
     object Edth: TEdit
       Left = 1032
-      Top = 68
+      Top = 85
       Width = 58
       Height = 23
       TabOrder = 21
@@ -531,7 +532,7 @@ object FNew_PO: TFNew_PO
     end
     object Edhari: TEdit
       Left = 903
-      Top = 68
+      Top = 85
       Width = 58
       Height = 23
       TabOrder = 22
@@ -561,7 +562,7 @@ object FNew_PO: TFNew_PO
     end
     object Dthari: TRzDateTimeEdit
       Left = 1029
-      Top = 36
+      Top = 53
       Width = 57
       Height = 23
       EditType = etDate
@@ -582,7 +583,7 @@ object FNew_PO: TFNew_PO
     end
     object CkUangmk: TCheckBox
       Left = 564
-      Top = 101
+      Top = 118
       Width = 97
       Height = 17
       Caption = 'Uang Muka'
@@ -591,7 +592,7 @@ object FNew_PO: TFNew_PO
     end
     object Ednm_akun: TRzButtonEdit
       Left = 805
-      Top = 127
+      Top = 144
       Width = 285
       Height = 23
       Text = ''
@@ -615,7 +616,7 @@ object FNew_PO: TFNew_PO
     end
     object EdUM: TRzNumericEdit
       Left = 899
-      Top = 97
+      Top = 114
       Width = 191
       Height = 23
       Enabled = False
@@ -625,7 +626,7 @@ object FNew_PO: TFNew_PO
     end
     object NoTransUM: TRzComboBox
       Left = 729
-      Top = 98
+      Top = 115
       Width = 164
       Height = 23
       TabOrder = 31
@@ -701,7 +702,7 @@ object FNew_PO: TFNew_PO
     end
     object Edheader: TEdit
       Left = 729
-      Top = 127
+      Top = 144
       Width = 74
       Height = 23
       TabOrder = 40
@@ -751,6 +752,15 @@ object FNew_PO: TFNew_PO
       TabOrder = 45
       Visible = False
     end
+    object ckno_penganti: TCheckBox
+      Left = 729
+      Top = 33
+      Width = 126
+      Height = 17
+      Caption = 'Nomor Penganti'
+      TabOrder = 46
+      OnClick = ckno_pengantiClick
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -795,7 +805,7 @@ object FNew_PO: TFNew_PO
     object Label21: TLabel
       Left = 832
       Top = 16
-      Width = 49
+      Width = 48
       Height = 15
       Caption = 'Sub Total'
       Visible = False
@@ -819,7 +829,7 @@ object FNew_PO: TFNew_PO
     object Label24: TLabel
       Left = 832
       Top = 110
-      Width = 61
+      Width = 60
       Height = 15
       Caption = 'Grand Total'
       Visible = False
@@ -1188,12 +1198,24 @@ object FNew_PO: TFNew_PO
       ExplicitHeight = 32
     end
     object RzBitBtn3: TRzBitBtn
-      Left = 856
+      Left = 463
       Top = 6
       Caption = 'RzBitBtn3'
       TabOrder = 4
       Visible = False
       OnClick = RzBitBtn3Click
+    end
+    object BCorrection: TRzBitBtn
+      Left = 884
+      Top = 1
+      Width = 98
+      Height = 33
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 5
+      OnClick = BCorrectionClick
+      ExplicitLeft = 880
+      ExplicitHeight = 32
     end
   end
   object Panel3: TPanel

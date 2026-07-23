@@ -2,8 +2,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
   Left = 0
   Top = 0
   Caption = 'FLaporanHarianSisaNotaPerTP'
-  ClientHeight = 442
-  ClientWidth = 861
+  ClientHeight = 441
+  ClientWidth = 857
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 861
+    Width = 857
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -32,6 +32,7 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 853
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -53,8 +54,8 @@ object FLaporanHarianSisaNotaPerTP: TFLaporanHarianSisaNotaPerTP
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 861
-    Height = 315
+    Width = 857
+    Height = 314
     Align = alClient
     Ctl3D = True
     DataSource = DsLaporanHarianSisaNotaPerTP

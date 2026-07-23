@@ -122,7 +122,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNew_PO, UDataModule,UMainMenu, UCetak_POkoletif;
+uses UNew_PO, UDataModule,UMainMenu, UCetak_POkoletif, UKoreksi, UMy_Function;
 // implementasi function
 function FPO: TFPO;
 begin
@@ -724,10 +724,24 @@ procedure TFPO.ActDelExecute(Sender: TObject);
 var
   OldNo, NewNo: string;
 begin
-    OldNo := DBGridPO.Fields[0].AsString;
+{    OldNo := DBGridPO.Fields[0].AsString;
     NewNo := OldNo + '-DEL';
+    with dm.Qtemp do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='Select trans_no from t_purchase_invoice_det where right(trans_no,4)<>''-DEL'' AND po_no='+QuotedStr(DBGridPO.Fields[0].AsString)+''+
+                ' GROUP BY trans_no';
+      open;
+    end;
+{       FNew_Po.iserror:=0;
+   if CheckJurnalPosting(DBGridTerima1.Fields[1].AsString)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+      FNew_Pembelian.iserror:=1;
+   end;       }
 
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPO.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+{    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPO.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
     with dm.Qtemp do
     begin
@@ -753,6 +767,57 @@ begin
     end;
     ActROExecute(sender);
     ShowMessage('Data Berhasil di Hapus');
+    end;                                     }
+
+    OldNo := DBGridPO.Fields[12].AsString;
+    NewNo := OldNo + '-DEL';
+   fnew_po.iserror:=0;
+
+   if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridPO.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+    begin
+
+    //cr ds 02-07-2026
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:=' select * from (select a.receive_no,a.po_no,b.deleted_at from t_item_receive_det a inner join t_item_receive b on '+
+        ' a.receive_no=b.receive_no GROUP BY a.receive_no,a.po_no,b.deleted_at  UNION all   '+
+        ' select a.trans_no,a.po_no,b.deleted_at  from t_purchase_invoice_det a inner join t_purchase_invoice b on a.trans_no=b.trans_no'+
+        ' GROUP BY a.trans_no,a.po_no,b.deleted_at) a WHERE a.po_no='+QuotedStr(DBGridPO.Fields[0].AsString)+' AND a.deleted_at is NULL';
+        open;
+      end;
+
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+                  'no_transaksi='+QuotedStr(DBGridPO.Fields[0].AsString)+' and status=0 and deleted_at is null';
+        open;
+      end;
+
+      if dm.Qtemp2.RecordCount>0 then
+      begin
+        MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+      end else
+      if dm.Qtemp.RecordCount>0 then
+       begin
+          MessageDlg('Nota sudah dibuat faktur pembelian tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+        end else
+        begin
+            if MessageDlg('Apakah Anda Yakin Ingin Membatalkan PO ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+            begin
+              FKoreksi.vcall:=SelectRow('select Upper(b.submenu) menu from t_menu a '+
+                            'left join t_menu_sub b on b.menu_code=a.menu_code '+
+                            'where link='+QuotedStr(FPO.Name)); //Mendapatkan nama Menu
+              FKoreksi.Status:=0;
+              FKoreksi.AksiTipe:='DELETE';
+              FKoreksi.vnotransaksi:=Mempo.FieldByName('po_no').AsString;
+              FKoreksi.ShowModal;
+            end;
+        end;
+       // ShowMessage('Data Berhasil di Hapus');
     end;
 end;
 
@@ -768,12 +833,56 @@ end;
 
 procedure TFPO.ActRoExecute(Sender: TObject);
 begin
-    if QPo.Active=False then Qpo.Active:=True;
+{    if QPo.Active=False then Qpo.Active:=True;
     if Mempo.Active=False then Mempo.Active:=True;
-    if Qdetailpo.Active=False then Qdetailpo.Active:=True;
+    if Qdetailpo.Active=False then Qdetailpo.Active:=True;     }
+    Mempo.Close;
     DBGridPO.StartLoadingStatus();
-      QPo.Close;
-      QPo.Open;
+    if RzComboBox1.Text='' then
+    begin
+     with Qpo do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+                   'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
+                   'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
+                   'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
+                   'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
+                   'a.um_account_code,a.as_status,um_no,a.deleted_at '+
+                   'from t_po A '+
+                   'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
+                   'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
+                   'WHERE  '+
+                   'a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+                   'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                   'Order by a.po_date desc,A.po_no desc ';
+         open;
+       end;
+    end;
+    if RzComboBox1.Text<>'' then
+    begin
+     with Qpo do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+                   'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
+                   'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
+                   'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
+                   'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
+                   'a.um_account_code,a.as_status,um_no,a.deleted_at '+
+                   'from t_po A '+
+                   'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
+                   'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
+                   'WHERE a.trans_category='+QuotedStr(RzComboBox1.Text)+' '+
+                   'and a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+                   'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                   'Order by a.po_date desc,A.po_no desc ';
+         open;
+       end;
+    end;
+    if Mempo.Active=False then Mempo.Active:=True;
       Qdetailpo.Close;
       Qdetailpo.Open;
     DBGridPO.FinishLoadingStatus();
@@ -796,7 +905,7 @@ begin
         Show;
         EdStatus.Enabled:=false;
         EdNm_supp.Enabled:=false;
-        StatusTr:=1;
+        StatusTr:='1';
         Caption:='Update Purchase Order';
         BSimpan.Visible:=false;
         BEdit.Visible:=true;
@@ -991,24 +1100,50 @@ procedure TFPO.CariClick(Sender: TObject);
 begin
    DBGridPO.StartLoadingStatus();
    with Qpo do
-   begin
-     close;
-     sql.Clear;
-     sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
-               'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
-               'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
-               'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
-               'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
-               'a.um_account_code,a.as_status,um_no,a.deleted_at '+
-               'from t_po A '+
-               'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
-               'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
-               'WHERE a.trans_category='+QuotedStr(RzComboBox1.Text)+' '+
-               'and a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
-               'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
-               'Order by a.po_date desc,A.po_no desc ';
-     open;
-   end;
+   if RzComboBox1.Text='' then
+    begin
+     with Qpo do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+                   'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
+                   'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
+                   'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
+                   'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
+                   'a.um_account_code,a.as_status,um_no,a.deleted_at '+
+                   'from t_po A '+
+                   'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
+                   'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
+                   'WHERE  '+
+                   'a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+                   'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                   'Order by a.po_date desc,A.po_no desc ';
+         open;
+       end;
+    end;
+    if RzComboBox1.Text<>'' then
+    begin
+     with Qpo do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:='select 	(case WHEN a."approval_status"=0 THEN ''PENGAJUAN'' WHEN a."approval_status"=1 THEN ''APPROVE'' else ''REJECT'' '+
+                   'END) AS status_app, (case WHEN a.status=''1'' THEN ''AKTIF'' WHEN a.status=''0'' THEN ''SELESAI'' '+
+                   'END) AS status,a.po_no,a.contract_no,a.po_date,a.supplier_code,a.pph23,a.ppn,a.order_no,a.valas_value,a.po_type, '+
+                   'a.valas,a.remarks,a.type,a.status,a.transportation_type,a.division_code,a.delivery_date,B.supplier_name,a.trans_category, '+
+                   'a.due_date,a."approval_status",a.approval,a.wh_code,c.wh_name,a.delivery2_date,a.id,a.trans_day,a.trans_month,a.trans_year,a.sbu_code,a.correction_status,a.um_status,a.um_value, '+
+                   'a.um_account_code,a.as_status,um_no,a.deleted_at '+
+                   'from t_po A '+
+                   'Inner join t_supplier B on A.supplier_code=B.supplier_code '+
+                   'INNER JOIN t_wh c on a.wh_code=c.wh_code '+
+                   'WHERE a.trans_category='+QuotedStr(RzComboBox1.Text)+' '+
+                   'and a.po_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+                   'and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
+                   'Order by a.po_date desc,A.po_no desc ';
+         open;
+       end;
+    end;
    //Qpo.Close;
    //Qpo.Open;
    mempo.Close;
@@ -1114,7 +1249,7 @@ begin
       BSimpan.visible:=true;
       BEdit.Visible:=false;
       Caption:='New Purchase Order';
-      StatusTr:=0;
+      StatusTr:='0';
       load_currency;
       EdJenisAngkut.Text:='SUPPLIER';
       cb_gudang.ItemIndex:=0;

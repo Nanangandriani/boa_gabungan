@@ -58,9 +58,9 @@ uses UDataModule, UUser, UMainMenu, UHomeLogin;
 
 procedure TFNew_User.BBatalClick(Sender: TObject);
 begin
-   Close;
-   //FUser.dxbarRefreshClick(sender);
-   FUser.ActROExecute(sender);
+  Close;
+  //FUser.dxbarRefreshClick(sender);
+  FUser.ActROExecute(sender);
 end;
 
 procedure TFNew_User.BSimpanClick(Sender: TObject);
@@ -122,7 +122,7 @@ begin
       sql.Clear;
       sql.Text:='insert into t_user(code,user_name,full_name,password,dept_code,position_code,created_at,created_by)values('+QuotedStr(EdNik.Text)+','+
                 ''+QuotedStr(EdNama.Text)+','+QuotedStr(Edfull_name.Text)+','+
-                ''+QuotedStr(EdPass.Text)+','+
+                'crypt(' + QuotedStr(EdPass.Text) + ', gen_salt(''bf'', 10)), ' +
                 ''+QuotedStr(kddept.Text)+','+
                 ''+QuotedStr(kdJab.Text)+',NOW(),'+QuotedStr(Nm)+' )';
       ExecSQL;
@@ -134,10 +134,10 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='Update t_user set '+
+      sql.Text:=' Update t_user set '+
                 ' user_name='+QuotedStr(EdNama.Text)+','+
                 ' full_name='+QuotedStr(Edfull_name.Text)+','+
-                ' Password='+QuotedStr(EdPass.Text)+','+
+                ' Password=crypt(' + QuotedStr(EdPass.Text) + ', gen_salt(''bf'', 10)),'+
                 ' dept_code='+QuotedStr(kddept.Text)+','+
                 ' position_code='+QuotedStr(kdjab.Text)+','+
                 ' updated_at=NOW(),updated_by='+QuotedStr(Nm)+' '+
@@ -152,8 +152,8 @@ begin
   Except
   on E :Exception do
   begin
-  MessageDlg(E.Message,mtError,[MBok],0);
-  dm.koneksi.Rollback;
+    MessageDlg(E.Message,mtError,[MBok],0);
+    dm.koneksi.Rollback;
   end;
   end;
   FMainMenu.TampilTabForm2;
@@ -182,14 +182,14 @@ end;
 
 procedure TFNew_User.EdDeptSelect(Sender: TObject);
 begin
-   with dm.Qtemp do
-   begin
-     close;
-     sql.Clear;
-     sql.Text:='select * from t_dept where dept='+Quotedstr(Eddept.Text)+' ';
-     Open;
-   end;
-   kddept.Text:=dm.Qtemp.FieldByName('dept_code').AsString;
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select * from t_dept where dept='+Quotedstr(Eddept.Text)+' ';
+    Open;
+  end;
+  kddept.Text:=dm.Qtemp.FieldByName('dept_code').AsString;
 end;
 
 procedure TFNew_User.FormShow(Sender: TObject);

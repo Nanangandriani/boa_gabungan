@@ -2,8 +2,8 @@ object FListReturPenjualan: TFListReturPenjualan
   Left = 0
   Top = 0
   Caption = 'Retur Penjualan'
-  ClientHeight = 486
-  ClientWidth = 1188
+  ClientHeight = 485
+  ClientWidth = 1184
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FListReturPenjualan: TFListReturPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1188
+    Width = 1184
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -43,8 +43,8 @@ object FListReturPenjualan: TFListReturPenjualan
   object DBGridList: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1188
-    Height = 359
+    Width = 1184
+    Height = 358
     Align = alClient
     DataSource = DsReturJual
     DrawMemoText = True
@@ -139,7 +139,7 @@ object FListReturPenjualan: TFListReturPenjualan
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1140
+        Width = 1136
         Height = 168
         Align = alClient
         DataSource = DSdetail
@@ -183,7 +183,6 @@ object FListReturPenjualan: TFListReturPenjualan
           end
           item
             CellButtons = <>
-            DisplayFormat = '#,##0.##'
             DynProps = <>
             EditButtons = <>
             FieldName = 'amount'
@@ -1489,7 +1488,7 @@ object FListReturPenjualan: TFListReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 45966.459738842590000000
+    ReportOptions.LastChange = 46226.412694201390000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1527,7 +1526,7 @@ object FListReturPenjualan: TFListReturPenjualan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 291.023622047244100000
+        Height = 291.023622047244000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
         object Memo2: TfrxMemoView
@@ -1549,7 +1548,7 @@ object FListReturPenjualan: TFListReturPenjualan
         object nama_pt: TfrxMemoView
           AllowVectorExport = True
           Left = 10.118120000000000000
-          Top = 7.897650000000000000
+          Top = -0.102350000000000000
           Width = 335.244280000000000000
           Height = 30.236240000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1565,7 +1564,7 @@ object FListReturPenjualan: TFListReturPenjualan
         object kota: TfrxMemoView
           AllowVectorExport = True
           Left = 10.118120000000000000
-          Top = 38.133890000000000000
+          Top = 30.133890000000000000
           Width = 279.244280000000000000
           Height = 30.236240000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1581,9 +1580,9 @@ object FListReturPenjualan: TFListReturPenjualan
         object alamat: TfrxMemoView
           AllowVectorExport = True
           Left = 9.784786670000000000
-          Top = 70.149660000000000000
+          Top = 62.530612380000000000
           Width = 287.244280000000000000
-          Height = 45.354360000000000000
+          Height = 52.973407620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -15
@@ -2033,7 +2032,7 @@ object FListReturPenjualan: TFListReturPenjualan
           Height = 18.897650000000000000
           DataSet = frxDBDRetPenjualan
           DataSetName = 'frxDBDRetPenjualan'
-          DisplayFormat.FormatStr = '%2.n'
+          DisplayFormat.FormatStr = '%2.4f'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

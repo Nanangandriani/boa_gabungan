@@ -2,8 +2,8 @@ object FRekapPenjualan: TFRekapPenjualan
   Left = 0
   Top = 0
   Caption = 'Rekap Penjualan'
-  ClientHeight = 675
-  ClientWidth = 1374
+  ClientHeight = 674
+  ClientWidth = 1370
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FRekapPenjualan: TFRekapPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1374
+    Width = 1370
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -40,8 +40,8 @@ object FRekapPenjualan: TFRekapPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1374
-    Height = 548
+    Width = 1370
+    Height = 547
     Align = alClient
     DataSource = DsRekapPenjualan
     DrawMemoText = True
@@ -1925,9 +1925,11 @@ object FRekapPenjualan: TFRekapPenjualan
     Top = 208
   end
   object frxXLSXExport1: TfrxXLSXExport
+    FileName = 'C:\Users\HP\Downloads\RekapTagihanKolektor2.xlsx'
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    CreationTime = 46195.384114675920000000
     DataOnly = False
     ChunkSize = 0
     OpenAfterExport = False

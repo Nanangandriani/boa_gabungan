@@ -40,7 +40,7 @@ uses UNew_KategoriBarang, UNew_ItemType, UNew_Barang, UNew_KelompokBarang,
   UDataMasterAkunTrans, UDataPenerimaanBank, UMy_Function,
   U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UNewKontrakTagihan,
   UDataKasBon, UDataKasKecil, UDataPengeluaranKasBank, UPerhitunganAsset,
-  UNew_PO, UbrowseUangMukaDibayarkan;
+  UNew_PO, UbrowseUangMukaDibayarkan, Ulap_Rekap_Hutang_Kredit;
 
 var RealFCari_DaftarPerk: TFCari_DaftarPerk;
 function FCari_DaftarPerk: TFCari_DaftarPerk;
@@ -52,6 +52,12 @@ end;
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 var akun_uang_muka_penjualan: string;
 begin
+    if vpanggil='Lap_Rekap_Hutang_Kredit' then
+    begin
+      Flap_Rekap_Hutang_Kredit.edkode_akun.EditValue:=QDaftar_Perk.fieldbyname('code').AsString;
+      Flap_Rekap_Hutang_Kredit.Ed_Account.EditValue:=QDaftar_Perk.fieldbyname('account_name').AsString;
+    end;
+
     if (vpanggil ='pph_po') then
     begin
       with FNew_PO do

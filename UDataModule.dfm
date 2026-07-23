@@ -216,4 +216,25 @@ object dm: Tdm
     Left = 347
     Top = 117
   end
+  object KoneksiPusatMysql: TUniConnection
+    AutoCommit = False
+    ProviderName = 'MySQL'
+    Port = 3306
+    Database = 'db_hk_dev'
+    Username = 'programmer'
+    Server = 'boa.hastaprimasolusi.com'
+    LoginPrompt = False
+    Left = 240
+    Top = 200
+    EncryptedPassword = 'CBFF90FF8AFFD2FF9DFF9AFFACFFABFF'
+  end
+  object MySQLUniProvider2: TMySQLUniProvider
+    Left = 328
+    Top = 200
+  end
+  object QtempPusatMysql: TUniQuery
+    Connection = KoneksiPusatMysql
+    Left = 251
+    Top = 261
+  end
 end

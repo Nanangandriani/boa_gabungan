@@ -296,33 +296,7 @@ begin
     begin
      close;
      sql.clear;
-     sql.add('SELECT zz.loading_date, '+
-//     zz.code_kabupaten,zz.kabupaten,
-            'zz.notrans,  '+
-             ' zz.cust_vendor,zz.cust_name_vendor, '+
-            'zz.number_of_vehicles,zz.code_items,zz.name_item, '+
-            'zz.amount,zz.unit,CONCAT(zz.name_item, '' '', CAST(SUM(zz.amount) AS INTEGER), '' '', zz.unit) AS banyaknya '+
-            'FROM ( '+
-            'SELECT '+
-//            b.code_kabupaten,b.kabupaten,
-            'c.notrans,a.code_cust AS cust_vendor,'+
-            'a.name_cust AS cust_name_vendor,c.number_of_vehicles,a.code_items, '+
-            'a.name_item,SUM(a.amount) AS amount,a.unit,c.loading_date '+
-            'FROM "public"."t_spm_det" a '+
-            'LEFT JOIN "public".get_selling(NULL) b ON a."notrans_sale" = b."trans_no" '+
-            'LEFT JOIN t_spm c ON c.notrans = a.notrans '+
-            'WHERE a."notrans" = '+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
-            'GROUP BY '+
-//            b.code_kabupaten,b.kabupaten,
-            'c.notrans,a.code_cust, '+
-            'a.name_cust,c.number_of_vehicles,a.code_items,a.name_item,a.unit,c.loading_date ) zz '+
-            'GROUP BY zz.loading_date, '+
-//            zz.code_kabupaten,zz.kabupaten,
-            'zz.notrans, '+
-            'zz.cust_vendor,zz.cust_name_vendor, '+
-            'zz.number_of_vehicles, '+
-            'zz.code_items,zz.name_item,zz.amount,zz.unit '+
-            'ORDER BY zz.notrans DESC;');
+     sql.Text:='SELECT * from get_sp_muat_det('+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+')';
 //     sql.add(' select b.code_kabupaten,b.kabupaten,c.notrans, "notrans_do", "notrans_sale", a."code_cust" as cust_vendor, '+
 //             ' a."name_cust" as cust_name_vendor, b."name_cust" as an_terima,c.number_of_vehicles, "code_items", '+
 //             ' "name_item", "amount", "unit", '+

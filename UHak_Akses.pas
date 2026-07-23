@@ -104,56 +104,56 @@ end;
 
 procedure TFHak_Akses.ActDelExecute(Sender: TObject);
 begin
-    if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridAkses.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
-    then begin
-      with dm.Qtemp do
-      begin
-        Close;
-        sql.Clear;
-        sql.Text:='Delete From t_akses where akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString);
-        Execute;
-      end;
-      ActROExecute(sender);
-      ShowMessage('Data Berhasil di Hapus');
+  if messageDlg ('Anda Yakin Akan Menghapus Data '+DBGridAkses.Fields[0].AsString+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes
+  then begin
+    with dm.Qtemp do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text:='Delete From t_akses where akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString);
+      Execute;
     end;
+    ActROExecute(sender);
+    ShowMessage('Data Berhasil di Hapus');
+  end;
 end;
 
 procedure TFHak_Akses.ActROExecute(Sender: TObject);
 begin
-    DBGridAkses.StartLoadingStatus();
-    QAkses.Close;
-    MemAkses.close;
-    QAkses.Open;
-    MemAkses.Open;
-    DBGridAkses.FinishLoadingStatus();
+  DBGridAkses.StartLoadingStatus();
+  QAkses.Close;
+  MemAkses.close;
+  QAkses.Open;
+  MemAkses.Open;
+  DBGridAkses.FinishLoadingStatus();
 end;
 
 procedure TFHak_Akses.ActUpdateExecute(Sender: TObject);
 begin
-    with FNew_Hak_Akses do
+  with FNew_Hak_Akses do
+  begin
+    Show;
+    Load;
+    Status:=1;
+    Caption:='Update Hak Akses';
+    with FNew_Hak_Akses.QDetail do
     begin
-      Show;
-      Load;
-      Status:=1;
-      Caption:='Update Hak Akses';
-      with FNew_Hak_Akses.QDetail do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a '+
-                  ' inner join t_menu_sub b on a.submenu_code=b.submenu_code '+
-                  ' inner join t_dept c on a.dept_code=c.dept_code '+
-                  ' inner join t_position d on a.position_code=d.position_code '+
-                  ' where a.akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
-                  ' order by a.akses_no Asc ';
-      end;
-      EdNo.Text:=MemAkses['akses_no'];
-      Edkd.Text:=MemAkses['dept_code'];
-      EdNm.Text:=MemAkses['dept'];
-      EdkdJabatan.Text:=MemAkses['position_code'];
-      EdJabatan.Text:=MemAkses['position'];
-      EdNmSelect(sender);
+      close;
+      sql.Clear;
+      sql.Text:=' select A.*,b.submenu,c.Dept from t_akses  a '+
+                ' inner join t_menu_sub b on a.submenu_code=b.submenu_code '+
+                ' inner join t_dept c on a.dept_code=c.dept_code '+
+                ' inner join t_position d on a.position_code=d.position_code '+
+                ' where a.akses_no='+QuotedStr(DBGridAkses.Fields[0].AsString)+''+
+                ' order by a.akses_no Asc ';
     end;
+    EdNo.Text:=MemAkses['akses_no'];
+    Edkd.Text:=MemAkses['dept_code'];
+    EdNm.Text:=MemAkses['dept'];
+    EdkdJabatan.Text:=MemAkses['position_code'];
+    EdJabatan.Text:=MemAkses['position'];
+    EdNmSelect(sender);
+  end;
 end;
 
 procedure TFHak_Akses.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -173,9 +173,8 @@ end;
 
 procedure TFHak_Akses.FormShow(Sender: TObject);
 begin
-FormatSettings.TimeSeparator := ':';
-FormatSettings.DecimalSeparator := '.';
-
+  FormatSettings.TimeSeparator := ':';
+  FormatSettings.DecimalSeparator := '.';
   //QAkses.UpdateObject := UpdateAkses;
   QAkses.KeyFields := 'id';
 end;

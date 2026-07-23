@@ -48,7 +48,6 @@ begin
     DBGridOrder.Columns[1].Visible:=True;
     DBGridOrder.Columns[5].Visible:=True;
   end;
-
 end;
 
 procedure TFbrowseUangMukaDibayarkan.Refresh;
@@ -64,7 +63,6 @@ begin
     end else begin
       strWhere:=' code_head_office='+QuotedStr(strCodeHeadOffice)+' AND ';
     end;
-
 
     with Qdetail do
     begin
@@ -85,7 +83,6 @@ begin
     isValidasi:=0 ;
     with FNew_Penjualan do
     begin
-
       MemUangMuka.First;
       while not MemUangMuka.Eof do
       begin
@@ -93,7 +90,6 @@ begin
         begin
           isValidasi:=1;
         end;
-
         MemUangMuka.Next;
       end;
 

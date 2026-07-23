@@ -191,7 +191,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 0
     Top = 140
-    Width = 933
+    Width = 929
     Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -317,8 +317,8 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 36
     Align = alBottom
     TabOrder = 5
-    ExplicitTop = 443
-    ExplicitWidth = 927
+    ExplicitTop = 451
+    ExplicitWidth = 929
     object BBatal: TRzBitBtn
       Left = 857
       Top = 1
@@ -379,7 +379,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 851
+      ExplicitLeft = 853
     end
     object BSimpan: TRzBitBtn
       Left = 782
@@ -441,7 +441,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 776
+      ExplicitLeft = 778
     end
     object RzBitBtn1: TRzBitBtn
       Left = 700

@@ -128,7 +128,7 @@ type
     strtgl, strbulan, strtahun,StrKetLog,StrUsername,Strsubmenu,Strsubmenu_code,
     Strversi, Stripuser,Strketerangan,Stralasan,strVehicleGroupId,StrKodeGudang,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
-    isCancel,val_bank_garansi,val_piutang: Integer;
+    isCancel,val_bank_garansi,val_piutang,val_target: Integer;
     procedure Clear;
     procedure Save;
     procedure Update;
@@ -249,7 +249,6 @@ begin
     resp.Free;
   end;
 
-  //MOVE JSON
   json.JSONText := memo1.text;
   StrStatusUpdateTele:=json.StringTree['status'];
 end;
@@ -294,11 +293,13 @@ procedure TFNew_SalesOrder.CekTargetSales;
 var Strmonth,StrYear,StrKdItem,StrQuery,strCategoryName: String;
     TotBarangSO,TotTargetBarang,TotCategorySO,QtyCategorySO: Real	;
     IntCategoryID: Integer;
+    Bmk: TBookmark;
 begin
   Strmonth:=FormatDateTime('mm', dtTanggal_Pesan.Date);
   StrYear:=FormatDateTime('yyyy', dtTanggal_Pesan.Date);
   TotCategorySO:=0;
   MemDetail.First;
+
   while not MemDetail.Eof do
   begin
     //Cek kategori barang ada target atau tidak
@@ -317,6 +318,8 @@ begin
     if dm.Qtemp.FieldValues['istarget']=true then
     begin
 
+//      ShowMessage(MemDetail['KD_ITEM']+' - '+MemDetail['CATEGORY_NAME']);
+
       IntCategoryID:=MemDetail['CATEGORY_id'];
       strCategoryName:=MemDetail['CATEGORY_NAME'];
       StrKdItem:=MemDetail['KD_ITEM'];
@@ -326,20 +329,40 @@ begin
       QtyCategorySO:=(MemDetail['JUMLAH']);
 
       //Hitung jumlah Qty Kategori barang di memDetail
-      MemDetail.First;
-      while not MemDetail.Eof do
-      begin
+//      MemDetail.First;
+//      while not MemDetail.Eof do
+//      begin
+//
+//        ShowMessage(MemDetail['KD_ITEM']+' - '+MemDetail['CATEGORY_NAME']);
+//
+//        if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem=MemDetail['KD_ITEM']) then
+//        begin
+//          TotCategorySO:=MemDetail['JUMLAH'];
+//        end else if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem<>MemDetail['KD_ITEM']) then
+//        begin
+//          TotCategorySO:=TotCategorySO+MemDetail['JUMLAH'];
+//        end;
+//
+//
+//        MemDetail.Next
+//      end;
 
-        if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem=MemDetail['KD_ITEM']) then
+      Bmk := MemDetail.GetBookmark;
+      try
+        // 2. Hitung jumlah Qty Kategori barang di memDetail (Sub-Loop aman)
+        MemDetail.First;
+        while not MemDetail.Eof do
         begin
-          TotCategorySO:=MemDetail['JUMLAH'];
-        end else if (IntCategoryID=MemDetail['CATEGORY_id']) and (StrKdItem<>MemDetail['KD_ITEM']) then
-        begin
-          TotCategorySO:=TotCategorySO+MemDetail['JUMLAH'];
+          if MemDetail['CATEGORY_id'] = IntCategoryID then
+          begin
+            TotCategorySO := TotCategorySO + MemDetail['JUMLAH'];
+          end;
+          MemDetail.Next; // Menambahkan titik koma yang kurang
         end;
-
-
-        MemDetail.Next
+      finally
+        // KEMBALIKAN POSISI POINTER ke baris loop luar yang seharusnya
+        MemDetail.GotoBookmark(Bmk);
+        MemDetail.FreeBookmark(Bmk);
       end;
 
       //Total Jumlah Qty pada sales order berdasarkan kategori
@@ -400,10 +423,12 @@ begin
 //        end else begin
 //          islanjut:=0;
 //        end;
-        MessageDlg('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target '+FloatToStr(TotTargetBarang)+'..!!',mtInformation,[mbRetry],0);
+        MessageDlg('Jumlah barang kategori '+MemDetail['CATEGORY_NAME']+' melebihi target '+FloatToStr(TotTargetBarang)+'..!!',mtInformation,[mbOK],0);
         iserror:=1;
+        islanjut:=1;
+        val_target:=1;
 
-        exit;
+//        exit;
       end;
     end;
     MemDetail.Next;
@@ -658,6 +683,7 @@ begin
   val_bank_garansi:=0;
   val_piutang:=0;
   valKonversi:=0;
+  val_target:=0;
   isBalanceBerat:=0;
   iserror:=0;
   islanjut:=1;
@@ -797,7 +823,7 @@ begin
       if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeOrder.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
       begin
         CekTargetSales;
-        if iserror=0 then begin
+        if (iserror=0) OR (islanjut=1) then begin
           CekBankGaransi;
           if islanjut=1 then begin
             Save;
@@ -815,7 +841,7 @@ begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
         CekTargetSales;
-        if iserror=0 then begin
+        if (iserror=0) OR (islanjut=1) then begin
           CekBankGaransi;
           if islanjut=1 then begin
             Update;
@@ -1292,6 +1318,7 @@ begin
 
   if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
 
+  try
   with dm.Qtemp do
   begin
     close;
@@ -1302,7 +1329,7 @@ begin
             ' "order_no", "additional_code", "trans_day", "trans_month", "trans_year",'+
             'status,note,sbu_code,load_conversion,vehicle_group_id,type_vehicles_code,'+
             'type_vehicles_name,capacity,po_order,vehicles,vehicle_group_sort_number,'+
-            'val_bank_garansi,val_piutang,is_no_replacement) '+
+            'val_bank_garansi,val_piutang,val_target,is_no_replacement) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(Nm)+', '+
@@ -1326,7 +1353,8 @@ begin
             ' '+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKodeTypeKendaraan.Text)+','+
             ' '+QuotedStr(edTypeKendaraan.Text)+','+
             ' '+QuotedStr(FloatToStr(edKapasitas.value))+','+QuotedStr(edPOOrder.Text)+','+
-            ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+', '+
+            ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+
+            ''+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+', '+IntToStr(val_target)+', '+
             ''+QuotedStr(strIsNoReplacement)+'  );');
     ExecSQL;
   end;
@@ -1355,6 +1383,12 @@ begin
   Close;
   FMainMenu.TampilTabForm2;
 //  FSalesOrder.Refresh;
+  except
+    on E: Exception do
+    begin
+      MessageDlg('Gagal menyimpan data Sales Order: ' + E.Message, mtError, [mbOK], 0);
+    end;
+  end;
 end;
 
 procedure TFNew_SalesOrder.SpeedButton1Click(Sender: TObject);
@@ -1469,7 +1503,8 @@ begin
               ' po_order='+QuotedStr(edPOOrder.Text)+','+
               ' capacity='+QuotedStr(FloatToStr(edKapasitas.value))+', '+
               ' val_bank_garansi='+IntToStr(val_bank_garansi)+','+
-              ' val_piutang='+IntToStr(val_piutang)+' '+
+              ' val_piutang='+IntToStr(val_piutang)+', '+
+              ' val_target='+IntToStr(val_target)+' '+
   //            ' order_no='+QuotedStr(order_no)+','+
   //            ' additional_code='+QuotedStr(kd_kares)+','+
   //            ' trans_day='+QuotedStr(strtgl)+','+

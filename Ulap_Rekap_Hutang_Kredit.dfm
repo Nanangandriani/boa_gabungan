@@ -1591,8 +1591,8 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         'tween '#39'2025-02-04'#39' and '#39'2025-02-18'#39' order by a.trans_date asc))y' +
         'y where yy.voucher is not null  order by yy.tanggal,yy.voucher,y' +
         'y.nofaktur asc)xx ')
-    Left = 688
-    Top = 165
+    Left = 632
+    Top = 173
   end
   object frxdbRekap_Hutang_Kredit: TfrxDBDataset
     UserName = 'frxdbdeposito'
@@ -3435,7 +3435,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         'and a.account_pph_code='#39'2142'#39' and a.receive_no not in (select lp' +
         'b_no from t_buy_pay)')
     Left = 368
-    Top = 8
+    Top = 65520
   end
   object frxrekdafkredittrx2: TfrxDBDataset
     UserName = 'frxdbdafrekapkredittrx'

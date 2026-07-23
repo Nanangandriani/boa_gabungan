@@ -2,8 +2,8 @@ object FBHPenjualan: TFBHPenjualan
   Left = 0
   Top = 0
   Caption = 'Buku Harian Penjualan'
-  ClientHeight = 603
-  ClientWidth = 1209
+  ClientHeight = 602
+  ClientWidth = 1205
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FBHPenjualan: TFBHPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1209
+    Width = 1205
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -41,12 +41,13 @@ object FBHPenjualan: TFBHPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1209
-    Height = 476
+    Width = 1205
+    Height = 475
     Align = alClient
     DataSource = DsBHPenjualan
     DrawMemoText = True
     DynProps = <>
+    FrozenCols = 1
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Active = True
@@ -62,7 +63,7 @@ object FBHPenjualan: TFBHPenjualan
         FieldName = 'trans_no'
         Footers = <>
         Title.Caption = 'Nomor Transaksi'
-        Width = 177
+        Width = 234
       end
       item
         CellButtons = <>
@@ -150,7 +151,7 @@ object FBHPenjualan: TFBHPenjualan
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1161
+        Width = 1157
         Height = 198
         Align = alClient
         DataSource = DSDetailBarang
@@ -972,11 +973,10 @@ object FBHPenjualan: TFBHPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 46157.619946122690000000
+    ReportOptions.LastChange = 46067.384366423600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      'var'
-      '  LastTrans: String;'
+      ''
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       ''
@@ -987,66 +987,10 @@ object FBHPenjualan: TFBHPenjualan
       ''
       'end;'
       ''
-      'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
-      'begin'
-      '  LastTrans := <frxDBDataCetakBHP."trans_no">;'
-      'end;'
-      ''
-      'procedure Memo53OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      ''
-      'end;'
-      ''
-      'procedure ReportOnStartReport(Sender: TfrxComponent);'
-      'begin'
-      '  LastTrans := '#39#39';'
-      'end;'
-      ''
-      'procedure Memo53OnAfterPrint(Sender: TfrxComponent);'
-      'begin'
-      ''
-      'end;'
-      ''
-      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      '  if <frxDBDataCetakBHP."trans_no"> = LastTrans then'
-      '  begin'
-      '    Memo35.Visible := False;'
-      '    Memo53.Visible := False;'
-      '    Memo38.Visible := False;'
-      '    Memo42.Visible := False;'
-      '    Memo43.Visible := False;'
-      '   { Memo39.Text := '#39#39';'
-      '    Memo39.Frame.Typ := Memo39.Frame.Typ - ftTop; }'
-      '    {Memo40.Frame.Typ := Memo40.Frame.Typ - ftTop;'
-      '    Memo41.Frame.Typ := Memo41.Frame.Typ - ftTop;   }'
-      '   { Memo39.Visible := False;'
-      '    Memo40.Visible := False;'
-      '    Memo41.Visible := False; }'
-      '  end'
-      '  else'
-      '  begin'
-      '    Memo35.Visible := True;'
-      '    Memo53.Visible := True;'
-      '    Memo38.Visible := True;'
-      '    Memo42.Visible := True;'
-      '    Memo43.Visible := True;'
-      '  {  Memo39.Text := <frxDBDataCetakBHP."account_code_piutang">;'
-      '    Memo39.Frame.Typ := ftTop;}'
-      ' {   Memo39.Frame.Typ := Memo39.Frame.Typ + ftTop;'
-      '    Memo40.Frame.Typ := Memo39.Frame.Typ + ftTop;'
-      '    Memo41.Frame.Typ := Memo39.Frame.Typ + ftTop; }'
-      '  {  Memo39.Visible := True;'
-      '    Memo40.Visible := True;'
-      '    Memo41.Visible := True; }'
-      '  end;'
-      'end;'
-      ''
       'begin'
       ''
       'end.')
     OnGetValue = ReportGetValue
-    OnStartReport = 'ReportOnStartReport'
     Left = 888
     Top = 120
     Datasets = <
@@ -1743,8 +1687,6 @@ object FBHPenjualan: TFBHPenjualan
         Height = 29.600000000000000000
         Top = 249.448980000000000000
         Width = 1209.449600000000000000
-        OnAfterPrint = 'MasterData1OnAfterPrint'
-        OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDataCetakBHP
         DataSetName = 'frxDBDataCetakBHP'
         RowCount = 0
@@ -1768,12 +1710,11 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."trans_date"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 45.133858270000000000
-          Width = 105.070866140000000000
+          Width = 105.070866141732000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'trans_no'
@@ -1788,7 +1729,6 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."trans_no"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
@@ -1808,7 +1748,6 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."code_cust"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
@@ -1824,7 +1763,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."name_cust"]')
           ParentFont = False
@@ -1884,7 +1823,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_piutang"]')
@@ -1904,7 +1843,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."d_code_lain"]')
           ParentFont = False
@@ -1912,7 +1851,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 699.131610800000000000
-          Width = 91.464566930000000000
+          Width = 91.464566929133900000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'd_name_lain'
@@ -1923,7 +1862,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."d_name_lain"]')
           ParentFont = False
@@ -1944,7 +1883,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_debet_lain"]')
@@ -1964,7 +1903,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."account_code_penjualan"]')
           ParentFont = False
@@ -1985,7 +1924,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftRight, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_penjualan"]')
@@ -2005,7 +1944,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."k_code_lain"]')
           ParentFont = False
@@ -2013,7 +1952,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo45: TfrxMemoView
           AllowVectorExport = True
           Left = 1028.483243740000000000
-          Width = 94.110236220000000000
+          Width = 94.110236220472400000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'k_name_lain'
@@ -2024,7 +1963,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."k_name_lain"]')
           ParentFont = False
@@ -2045,7 +1984,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop, ftBottom]
+          Frame.Typ = [ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount_kredit_lain"]')
@@ -2056,8 +1995,6 @@ object FBHPenjualan: TFBHPenjualan
           Left = 536.546437040000000000
           Width = 41.196850390000000000
           Height = 20.000000000000000000
-          OnAfterPrint = 'Memo53OnAfterPrint'
-          OnBeforePrint = 'Memo53OnBeforePrint'
           StretchMode = smMaxHeight
           DataField = 'account_code_piutang'
           DataSet = frxDBDataCetakBHP
@@ -2067,7 +2004,7 @@ object FBHPenjualan: TFBHPenjualan
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftRight, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."account_code_piutang"]')
           ParentFont = False
@@ -2075,7 +2012,7 @@ object FBHPenjualan: TFBHPenjualan
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 367.657504370000000000
-          Width = 88.818897640000000000
+          Width = 88.818897637795300000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
           DataField = 'name_item'
@@ -2110,78 +2047,6 @@ object FBHPenjualan: TFBHPenjualan
           Memo.UTF8W = (
             '[frxDBDataCetakBHP."amount"]')
           ParentFont = False
-        end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Left = 578.461538460000000000
-          Top = 0.294609740000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Left = 653.846153850000000000
-          Top = -0.218210770000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line4: TfrxLineView
-          AllowVectorExport = True
-          Left = 908.717948720000000000
-          Top = -0.218210770000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line5: TfrxLineView
-          AllowVectorExport = True
-          Left = 987.692307690000000000
-          Top = 0.294609740000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line6: TfrxLineView
-          AllowVectorExport = True
-          Left = 698.974358970000000000
-          Top = 0.294609740000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line7: TfrxLineView
-          AllowVectorExport = True
-          Left = 790.769230770000000000
-          Top = -0.218210770000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line8: TfrxLineView
-          AllowVectorExport = True
-          Left = 867.692307690000000000
-          Top = 0.807430260000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line10: TfrxLineView
-          AllowVectorExport = True
-          Left = 320.512820510000000000
-          Top = 0.294609740000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
         end
       end
       object Footer1: TfrxFooter
@@ -2303,7 +2168,7 @@ object FBHPenjualan: TFBHPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataCetakBHP."amount_piutang2">,MasterData1)]')
+            '[SUM(<frxDBDataCetakBHP."amount_piutang">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2345,7 +2210,7 @@ object FBHPenjualan: TFBHPenjualan
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxDBDataCetakBHP."amount_penjualan2">,MasterData1)]')
+            '[SUM(<frxDBDataCetakBHP."amount_penjualan">,MasterData1)]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2375,14 +2240,15 @@ object FBHPenjualan: TFBHPenjualan
           AllowVectorExport = True
           Left = 789.740570000000000000
           Top = 18.897637800000000000
-          Width = 418.771653540000000000
+          Width = 418.771653543307000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line49: TfrxLineView
-          Align = baClient
           AllowVectorExport = True
-          Width = 1209.449600000000000000
+          Left = 790.407236670000000000
+          Top = 37.795275590000000000
+          Width = 418.771653540000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2456,40 +2322,15 @@ object FBHPenjualan: TFBHPenjualan
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line75: TfrxLineView
-          AllowVectorExport = True
-          Left = 762.333333330000000000
-          Top = 97.732837580000000000
-          Width = 445.984540000000000000
-          Visible = False
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Line9: TfrxLineView
-          AllowVectorExport = True
-          Left = 790.256410260000000000
-          Top = 39.176061540000000000
-          Width = 418.771653540000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
       end
-      object ColumnFooter1: TfrxColumnFooter
-        FillType = ftBrush
-        FillGap.Top = 0
-        FillGap.Left = 0
-        FillGap.Bottom = 0
-        FillGap.Right = 0
-        Frame.Typ = []
-        Top = 461.102660000000000000
-        Width = 1209.449600000000000000
-        object Line3: TfrxLineView
-          Align = baClient
-          AllowVectorExport = True
-          Width = 1209.449600000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
+      object Line75: TfrxLineView
+        AllowVectorExport = True
+        Left = 762.333333330000000000
+        Top = 400.095237580000000000
+        Width = 445.984540000000000000
+        Visible = False
+        Color = clBlack
+        Frame.Typ = [ftTop]
       end
     end
   end
@@ -2775,8 +2616,8 @@ object FBHPenjualan: TFBHPenjualan
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 152
-    Top = 152
+    Left = 168
+    Top = 128
     Datasets = <
       item
         DataSet = frxDBDataset2

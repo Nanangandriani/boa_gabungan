@@ -288,6 +288,7 @@ begin
     if edKodeSumberTagihan.Text='2' then
     begin
 //    ShowMessage('PenagihanPiutang')  ;
+
       FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
       FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
       FDaftarPenagihanPiutang.tglTagih1:=dtPeriode1.Date;
@@ -386,7 +387,7 @@ begin
                   'SELECT id FROM ( '+
                   'SELECT id FROM t_dpp '+
                   'WHERE no_invoice = '+QuotedStr(MemDetailPiutang['no_tagihan'])+' '+
-                  'AND date_dpp < '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+                  'AND date_dpp <= '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
                   'ORDER BY date_dpp DESC '+
                   'LIMIT 1 '+
                   ') AS tmp '+
@@ -411,7 +412,7 @@ begin
                   'SELECT id FROM ( '+
                   'SELECT id FROM t_dpp '+
                   'WHERE no_invoice = '+QuotedStr(MemDetailPiutang['no_tagihan'])+' '+
-                  'AND date_dpp < '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
+                  'AND date_dpp <= '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
                   'ORDER BY date_dpp DESC '+
                   'LIMIT 1 '+
                   ') AS tmp '+
@@ -857,7 +858,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_receivable" '+
+      sql.Text:=' DELETE FROM "public"."t_cash_bank_acceptance_receivable" '+
                 ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
       ExecSQL;
     end;
@@ -933,7 +934,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_down_payment" '+
+      sql.Text:=' DELETE FROM "public"."t_cash_bank_acceptance_down_payment" '+
                 ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
       ExecSQL;
     end;

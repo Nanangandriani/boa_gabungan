@@ -126,8 +126,10 @@ type
     ed_vehicle_group_id: TEdit;
     ed_vehicle_group_sort_number: TEdit;
     Ed_kode: TEdit;
-    SpeedButton1: TSpeedButton;
-    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
+    Btn_no: TSpeedButton;
+    IdSSLIOHandlerSofcketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
+    BCorrection: TRzBitBtn;
+    ckno_penganti: TCheckBox;
     procedure BSimpanClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdNm_suppButtonClick(Sender: TObject);
@@ -175,14 +177,17 @@ type
     procedure DBGridDetailColumns17EditButtons0Click(Sender: TObject;
       var Handled: Boolean);
     procedure DBGridDetailColExit(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure Btn_noClick(Sender: TObject);
+    procedure BCorrectionClick(Sender: TObject);
+    procedure ckno_pengantiClick(Sender: TObject);
 
   private
     { Private declarations }
      procedure Clear;
   public
     { Public declarations }
-     kdsbu, jenispo,kategori_tr:string;
+     IntStatusKoreksi, iserror, isCancel: integer;
+     kdsbu, jenispo,kategori_tr,strNoTransaksiDiGanti:string;
      function AmbilDanUpdateNomorUrut: Integer;
      Procedure Loaditem;
      Procedure Loaditem2;
@@ -226,7 +231,7 @@ implementation
 uses UDataModule, UNew_Penomoran,UPO, USearch_Supplier, UListItempo,
   UMainMenu,UMy_Function, UPengajuanAsset, UDetailPengajuanAsset, USettingPO,
   UListSupplier,UAkun_Perkiraan_TerimaMat,UCari_DaftarPerk, U_List_SO_PO,
-  UListItemSo, UlistItemDo, maenangka, UListNoTransaksi;
+  UListItemSo, UlistItemDo, maenangka, UListNoTransaksi, UKoreksi;
 
 var
   realFNew_PO: TFNew_PO;
@@ -1074,7 +1079,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:=' select A.*,B.supplier_name ,e."type", C.item_name,C.buy price,CAST(0 AS NUMERIC) total_price '+
+      sql.Text:=' select A.*,B.supplier_name ,e."type", C.item_name,c.buy price,'+
+                ' CAST(0 AS NUMERIC) total_price '+
                 //' select A.*,B.supplier_name ,e."type", C.item_name,CAST(0 AS NUMERIC) price,CAST(0 AS NUMERIC) total_price '+
                 ' ,CAST(0 AS NUMERIC) remaining_qty from t_item_stock A  '+
                 ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
@@ -1097,8 +1103,8 @@ begin
                 '	a.qty,case when f.itemproduct_satuan is null then  c.unit else f.itemproduct_satuan end unit, a.merk,a.item_name,0 as	qty_conv, '+    //add 24-11-2025
                 //' f.unit_conv,b.supplier_name , c.item_name,e.type '+
                 //' b.supplier_name , c.item_name,e.type,CAST(0 AS NUMERIC) price,CAST(0 AS NUMERIC) total_price '+
-                ' b.supplier_name , c.item_name,e.type,c.buy price,CAST(0 AS NUMERIC) total_price '+
-                ' ,CAST(0 AS NUMERIC) remaining_qty from t_item_stock A  '+
+                ' b.supplier_name , c.item_name,e.type,case when c.unit<>f.itemproduct_satuan then 0 else c.buy end price,'+
+                ' CAST(0 AS NUMERIC) total_price,CAST(0 AS NUMERIC) remaining_qty from t_item_stock A  '+
                 ' left join t_supplier B on A.supplier_code=B.supplier_code  '+
                 ' inner join t_item C on A.item_code=C.item_code  '+
                 ' INNER JOIN t_item_category d on c.category_id=d.category_id '+
@@ -2333,7 +2339,19 @@ begin
       execsql;
     end;
   end;
-
+  // CR DS 21-07-2026
+   If ckno_penganti.Checked=True then
+              begin
+                with dm.Qtemp do
+                begin
+                  close;
+                  sql.clear;
+                  sql.Text:='UPDATE "public"."t_po" SET'+
+                            ' trans_no_replacement='+QuotedStr(EdNopo.Text)+
+                            ' Where PO_no='+QuotedStr(strNoTransaksiDiGanti);
+                  ExecSQL;
+                end;
+              end;
 
 
 end;
@@ -2588,7 +2606,19 @@ begin
       execsql;
     end;
   end;
-
+  // CR DS 21-07-2026
+   If ckno_penganti.Checked=True then
+              begin
+                with dm.Qtemp do
+                begin
+                  close;
+                  sql.clear;
+                  sql.Text:='UPDATE "public"."t_po" SET'+
+                            ' trans_no_replacement='+QuotedStr(EdNopo.Text)+
+                            ' Where PO_no='+QuotedStr(strNoTransaksiDiGanti);
+                  ExecSQL;
+                end;
+              end;
 end;
 
 procedure TFNew_PO.Update;
@@ -3073,6 +3103,21 @@ begin
    //FList_SO.Show;
 end;
 
+procedure TFNew_PO.BCorrectionClick(Sender: TObject);
+begin
+   iserror:=0;
+   if CheckJurnalPosting(edNo.Text)>0 then
+   begin
+      MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan koreksi..!!',mtInformation,[mbRetry],0);
+      iserror:=1;
+   end;
+   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                'where link='+QuotedStr(FPO.Name)); //Mendapatkan nama Menu
+   FKoreksi.Status:=0;
+   FKoreksi.vnotransaksi:=EdNo.Text; //Mendapatkan Nomor Transaksi
+   FKoreksi.ShowModal;
+end;
+
 procedure TFNew_PO.BEditClick(Sender: TObject);
 begin
       MemItempo.First;
@@ -3155,6 +3200,11 @@ begin
       if DBGridDetail.Fields[0].AsString='' then
       begin
          MemItempo.Delete;
+      end;
+      if MemItempo.IsEmpty then
+      begin
+        ShowMessage('Data detail tidak boleh kosong!');
+        Exit;
       end;
 
         if (VarIsNull(MemItempo['Qty'])) or (MemItempo['Qty'] < 1) then
@@ -3273,6 +3323,12 @@ begin
       Exit;
     end;
 
+        if MemItempo.IsEmpty then
+      begin
+      MessageDlg('detail Tidak Boleh Kosong ',MtWarning,[MbOk],0);
+        Exit;
+      end;
+
     MemItempo.First;
     while not MemItempo.Eof do
     begin
@@ -3290,9 +3346,15 @@ begin
       DBGridDetail.SetFocus;
       Exit;  }
     end;
+
     if (VarIsNull(MemItempo['Qty'])) or (MemItempo['Qty'] < 1) then
     begin
       MessageDlg('Kuantum Tidak Boleh Kosong '+DBGridDetail.Fields[0].value,MtWarning,[MbOk],0);
+      Exit;
+    end;
+    if (VarIsNull(MemItempo['Qty'])) or (MemItempo['Qty'] < 1) then
+    begin
+      MessageDlg('Harga Tidak Boleh Kosong '+DBGridDetail.Fields[0].value,MtWarning,[MbOk],0);
       Exit;
     end;
     MemItempo.Next;
@@ -3310,7 +3372,7 @@ begin
    if (WajibNPWP) and (NPWP_Supplier<>'') then
    begin
 
-    Autonumber;
+    if ckno_penganti.Checked=False then Autonumber;
     if messageDlg ('Anda Yakin Disimpan Kontrak No.'+EdNo_kontrak.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
     begin
       if not dm.koneksi.InTransaction then
@@ -3318,7 +3380,7 @@ begin
       try
       begin
          DtPOChange(sender);
-         Autonumber;
+         if ckno_penganti.Checked=False then Autonumber; // cr ds 07-02-2026
          if EdStatus.Text='KONTRAK KERJASAMA' then
          begin
            Simpan;
@@ -3424,6 +3486,11 @@ begin
     begin
       status_as:='0';
     end;
+end;
+
+procedure TFNew_PO.ckno_pengantiClick(Sender: TObject);
+begin
+  if ckno_penganti.Checked=true then Btn_no.Enabled:=true else Btn_no.Enabled:=false;
 end;
 
 procedure TFNew_PO.load_no_kontrak;
@@ -3570,9 +3637,9 @@ begin
 end;
 
 
-procedure TFNew_PO.SpeedButton1Click(Sender: TObject);
+procedure TFNew_PO.Btn_noClick(Sender: TObject);
 begin
-  FListNoTransaksi.vcall:='pembelian';
+  FListNoTransaksi.vcall:='PO';
   FListNoTransaksi.update_grid('po_no','order_no','t_po','WHERE po_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtpo.Date))+' and deleted_at is NOT NULL '+
   'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY po_no ASC');
   FListNoTransaksi.ShowModal;

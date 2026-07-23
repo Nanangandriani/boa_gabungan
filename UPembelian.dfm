@@ -1693,8 +1693,8 @@ object FPembelian: TFPembelian
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 46060.443445775460000000
-    ReportOptions.LastChange = 46060.443445775460000000
+    ReportOptions.CreateDate = 46207.390776273150000000
+    ReportOptions.LastChange = 46207.390776273150000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''

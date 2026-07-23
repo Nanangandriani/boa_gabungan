@@ -52,6 +52,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     AllowedOperations = []
     DataSource = DsPenerimaanBank
     DynProps = <>
+    FrozenCols = 1
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     SearchPanel.Enabled = True
@@ -99,7 +100,17 @@ object FListPenerimaanBank: TFListPenerimaanBank
         ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Jenis Transaksi'
-        Width = 250
+        Width = 168
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'payment_name'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'Sumber Penerimaan'
+        Width = 112
       end
       item
         CellButtons = <>
@@ -110,7 +121,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nomor Rekening'
-        Width = 150
+        Width = 139
       end
       item
         CellButtons = <>
@@ -121,7 +132,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Nama Rekening'
-        Width = 200
+        Width = 125
       end
       item
         CellButtons = <>
@@ -1154,6 +1165,10 @@ object FListPenerimaanBank: TFListPenerimaanBank
     end
     object QPenerimaanBankdeleted_at: TDateTimeField
       FieldName = 'deleted_at'
+    end
+    object QPenerimaanBankpayment_name: TStringField
+      FieldName = 'payment_name'
+      Size = 255
     end
   end
   object DsPenerimaanBank: TDataSource

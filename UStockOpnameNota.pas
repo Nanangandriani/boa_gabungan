@@ -116,17 +116,34 @@ end;
 
 procedure TFStockOpnameNota.SaveStockOpname;
 begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.clear;
+
+    sql.Text:='DELETE FROM public.t_stock_opname_nota WHERE no_invoice in ( '+
+              'SELECT no_invoice FROM t_stock_opname_nota a '+
+              'LEFT JOIN get_selling(False) b ON b.trans_no=a.no_invoice '+
+              'LEFT JOIN t_selling_initial_balance c ON c.trans_no = a.no_invoice '+
+              'LEFT JOIN get_customer() d ON d.customer_code = c.customer_code '+
+              'WHERE '+
+              'COALESCE(b.tp, d.tp) = '+QuotedStr(edKaresidenan.Text)+' '+
+              'AND a.date = '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+' )';
+
+    ExecSQL;
+  end;
+
   MemDetail.First;
   while not MemDetail.Eof do
   begin
-    with dm.Qtemp do
-    begin
-      close;
-      sql.clear;
-      sql.Text:=' DELETE FROM  "public"."t_stock_opname_nota" '+
-                ' WHERE "no_invoice"='+QuotedStr(MemDetail['trans_no'])+';';
-      ExecSQL;
-    end;
+//    with dm.Qtemp do
+//    begin
+//      close;
+//      sql.clear;
+//      sql.Text:=' DELETE FROM  "public"."t_stock_opname_nota" '+
+//                ' WHERE "no_invoice"='+QuotedStr(MemDetail['trans_no'])+';';
+//      ExecSQL;
+//    end;
 
     with dm.Qtemp do
     begin
@@ -186,6 +203,10 @@ begin
                 QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+',NULL,NULL,FALSE,TRUE,'+strKaresidenan+') a '+
                 'LEFT JOIN  vstock_opname_nota_sum b on COALESCE(b.karesidenan,'''') = COALESCE(a.karesidenan,'''') '+
                 'and date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date));
+// sql.Text:='SELECT a.*,b.* FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+',NULL,'+
+//                'NULL,NULL,FALSE,TRUE,'+strKaresidenan+') a '+
+//                'LEFT JOIN  vstock_opname_nota_sum b on COALESCE(b.karesidenan,'''') = COALESCE(a.karesidenan,'''') '+
+//                'and date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date));
       open
     end;
     if QReport.RecordCount=0 then
@@ -215,9 +236,8 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+',NULL,'+strKaresidenan+') '+
-                'ORDER BY karesidenan,kabupaten,kecamatan,customer_name ASC';
-      open
+      sql.Text:='select * from get_stock_opname_nota('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date+1))+',NULL,'+strKaresidenan+')';
+      open;
     end;
     if QReport.RecordCount=0 then
     begin
