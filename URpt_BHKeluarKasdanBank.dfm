@@ -1615,8 +1615,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 492
-    Top = 16
+    Left = 436
+    Top = 32
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -2192,8 +2192,8 @@ object FRpt_BHKeluarKasdanBank: TFRpt_BHKeluarKasdanBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 663
-    Top = 32
+    Left = 639
+    Top = 40
   end
   object frxDBDatasetPers: TfrxDBDataset
     UserName = 'frxDBDatasetPers'

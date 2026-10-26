@@ -21,16 +21,18 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     Width = 963
     Height = 657
     Hint = ''
-    ActivePage = TabMemorial
+    ActivePage = TabPembelian
     Align = alClient
     HotTrackStyle = htsTabBar
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 959
     ExplicitHeight = 656
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Pembelian'
+      ExplicitWidth = 955
+      ExplicitHeight = 631
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 137
@@ -202,6 +204,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 955
         object Label1: TLabel
           Left = 33
           Top = 21
@@ -246,6 +249,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
+          ExplicitWidth = 953
           object BTampil_Pemb: TRzBitBtn
             Left = 585
             Top = 1
@@ -307,6 +311,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 581
           end
           object BSelect_Pemb: TRzBitBtn
             Left = 679
@@ -369,6 +374,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
+            ExplicitLeft = 675
           end
           object BApp_Pemb: TRzBitBtn
             Left = 777
@@ -431,6 +437,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 773
           end
           object BPrint_Pemb: TRzBitBtn
             Left = 862
@@ -493,6 +500,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 858
           end
           object Ckapp: TCheckBox
             Left = 35
@@ -1687,8 +1695,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
     end
     object TabMemorial: TRzTabSheet
       Caption = 'Memorial'
-      ExplicitWidth = 955
-      ExplicitHeight = 631
       object DBGridEh7: TDBGridEh
         Left = 0
         Top = 89
@@ -1824,7 +1830,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
-        ExplicitWidth = 955
         object Label5: TLabel
           Left = 40
           Top = 24
@@ -1862,7 +1867,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
           Height = 36
           Align = alBottom
           TabOrder = 2
-          ExplicitWidth = 953
           object btTampilMemorial: TRzBitBtn
             Left = 585
             Top = 1
@@ -1924,7 +1928,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               AD82ADE6E6E68882ADE8E8E8E8E8E8E8E381E3ACACACE281E3E8E8E8E8E8E8E8
               E8E38882828282E3E8E8E8E8E8E8E8E8E8E3E281818181E3E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 581
           end
           object btSelectMemo: TRzBitBtn
             Left = 679
@@ -1987,7 +1990,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               D7D7D7D7D7D7D7D7D75EE881D7D7D7D7D7D7D7D7D7D7D7D7D781E85E5E5E5E5E
               5E5E5E5E5E5E5E5E5E5EE8818181818181818181818181818181}
             NumGlyphs = 2
-            ExplicitLeft = 675
           end
           object btApprovMemo: TRzBitBtn
             Left = 777
@@ -2050,7 +2052,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 773
           end
           object btCetakMemorial: TRzBitBtn
             Left = 862
@@ -2113,7 +2114,6 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
               5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 858
           end
           object CkApp_Memo: TCheckBox
             Left = 13
@@ -43521,22 +43521,7 @@ object FPengajuan_AppJurnal_Trans: TFPengajuan_AppJurnal_Trans
   object Qdetail_Pembelian: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      
-        'SELECT a.Trans_no,a.trans_date,LEFT(a.account_code,7) account_co' +
-        'de,b.account_name,a.status_dk,sum(db) db,sum(kd) kd FROM '
-      
-        '(select trans_no,trans_date,account_code,amount,status_dk,case w' +
-        'hen status_dk ='#39'D'#39'then amount else '#39'0'#39' end db,'
-      
-        'case when status_dk ='#39'K'#39'then amount else '#39'0'#39' end kd,deleted_at  ' +
-        'from t_general_ledger where amount<>0 ) A left JOIN t_ak_account' +
-        ' b '
-      
-        'on LEFT(a.account_code,7)=b.code where a.deleted_at is null and ' +
-        'a.account_code is not null '
-      
-        'GROUP BY a.Trans_no,a.trans_date,a.account_code,b.account_name,a' +
-        '.status_dk order by status_dk desc')
+      'select * from "v_app_purchase_invoice_det"')
     MasterSource = DsPembelian
     MasterFields = 'trans_no'
     DetailFields = 'trans_no'

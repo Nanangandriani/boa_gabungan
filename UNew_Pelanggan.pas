@@ -155,6 +155,7 @@ type
     edVAatasNama: TEdit;
     Label53: TLabel;
     Label54: TLabel;
+    cbAktifJual: TCheckBox;
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure EdkodeKeyPress(Sender: TObject; var Key: Char);
@@ -252,8 +253,15 @@ begin
   begin
     Close;
     sql.Clear;
-    sql.Text := 'SELECT RIGHT(number_va, 4) AS no_urut FROM t_customer WHERE  LEFT(CONCAT(company_code_bank,number_va), 11) = '+QuotedStr(PrefixVA)+' ORDER BY no_urut DESC';
-    Open;
+    sql.Text := 'SELECT RIGHT(number_va, 4) AS no_urut FROM t_customer '+
+                'WHERE LEFT(CONCAT(company_code_bank,number_va), 11) = '+QuotedStr(PrefixVA)+' ORDER BY no_urut DESC';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp1.RecordCount = 0 then
@@ -295,7 +303,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='DELETE FROM t_customer_prospect_tmp WHERE idprospek='+inttostr(vid_prospek);
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -311,7 +325,7 @@ var
   res: String;
   date: TDate;
   max,min: Integer;
-        //component
+  //component
   gNet:TIdHTTP;
   //respon component
   httpresult: TIdHTTP ;
@@ -394,7 +408,6 @@ begin
     StatusErr:=False;
     exit;
   end;
-
 end;
 
 
@@ -413,7 +426,13 @@ begin
     sql.clear;
     sql.Text:=' DELETE FROM  "t_customer_address" '+
               ' WHERE "customer_code"='+QuotedStr(Edkode.Text)+';';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   MemDetailPel.First;
@@ -434,11 +453,16 @@ begin
               ' '+QuotedStr(strContactPerson3)+', '+
               ' '+QuotedStr(MemDetailPel['LONGITUDE'])+', '+
               ' '+QuotedStr(MemDetailPel['LATITUDE'])+' );';
-    ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
-  MemDetailPel.Next;
+    MemDetailPel.Next;
   end;
-
 end;
 
 procedure TFNew_Pelanggan.RefreshGrid;
@@ -452,7 +476,13 @@ begin
     sql.add(' SELECT code as code_details, name as name_details FROM '+
             ' t_customer_details WHERE deleted_at IS NULL '+
             ' Order By code desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemDetailPel.active:=false;
   MemDetailPel.active:=true;
@@ -487,7 +517,13 @@ begin
 //                ' and code_details_address='+QuotedSTR(Dm.Qtemp1.FieldByName('code_details').AsString)+' '+
                 ' and code_details_address=''001'' '+
                 ' Order By code_details_address desc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if  Dm.Qtemp.RecordCount=0 then
@@ -519,7 +555,7 @@ begin
        FNew_Pelanggan.MemDetailPel['URUTAN_KE']:=URUTAN_KE;
        FNew_Pelanggan.MemDetailPel.post;
       end;
-       Dm.Qtemp1.next;
+      Dm.Qtemp1.next;
     end;
   end;
 end;
@@ -562,7 +598,13 @@ begin
     Close;
     SQL.Clear;
     Sql.Text := 'select * from t_customer  ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   CompanySerial:=SelectRow('SELECT company_serial FROM "public"."t_company" where company_code='+QuotedStr(UpperCase(edSBU.Text)));
@@ -575,7 +617,13 @@ begin
         Close;
         Sql.Clear;
         Sql.Text := 'select count(customer_code) as hasil from t_customer ';
-        Open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
       Urut := dm.Qtemp.FieldByName('hasil').AsInteger + 1;
   end;
@@ -608,7 +656,6 @@ begin
   begin
     kode := kode;
   end;
-
 
   if FHomeLogin.vStatOffice=0 then
   begin
@@ -752,6 +799,7 @@ begin
   btGetAkunPerkiraan.Visible:=False;
   GetAkunPerkiraan;
   edVAatasNama.Text:='';
+  cbAktifJual.Checked:=True;
 end;
 
 procedure TFNew_Pelanggan.GetAkunPerkiraan;
@@ -781,7 +829,13 @@ begin
             ' from "public"."t_master_trans_account" '+
             ' where deleted_at is null and code_module=''1'' AND code_trans=''1.001'' '+
             ' order by code_module, account_number_bank, code_trans asc)xx ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   // Retur Penjualan
@@ -796,7 +850,13 @@ begin
             ' from "public"."t_master_trans_account" '+
             ' where deleted_at is null and code_module=''1'' AND code_trans=''1.003'' '+
             ' order by code_module, account_number_bank, code_trans asc)xx ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if edkode.Text='' then
@@ -1052,11 +1112,9 @@ begin
   RefreshGrid;
   if Status=1 then
   begin
-
     btGetAkunPerkiraan.Visible:=True;
     btGetVA.Visible:=False;
   end;
-
 
   if SelectRow('select value_parameter from t_parameter where key_parameter=''mode'' ')<> 'dev' then
   begin
@@ -1144,15 +1202,30 @@ begin
               ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+', ');
         if cbpkp.Checked=true then
         begin
-          sql.add(' stat_pkp=true');
+          sql.add(' stat_pkp=true,');
         end;
         if cbpkp.Checked=false then
         begin
-          sql.add(' stat_pkp=false');
+          sql.add(' stat_pkp=false,');
+        end;
+
+        if cbAktifJual.Checked=true then
+        begin
+          sql.add(' status_sell=true');
+        end;
+        if cbAktifJual.Checked=false then
+        begin
+          sql.add(' status_sell=false');
         end;
 
       sql.add(' Where customer_code='+QuotedStr(Edkode.Text)+'');
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     InsertDetailAlamat;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
@@ -1184,7 +1257,7 @@ begin
             ' code_type_business, name_type_business, '+
             ' code_selling_type, name_selling_type, code_group, name_group, '+
             ' email,payment_term,created_at,created_by,sbu_code,company_code_bank,header_code_uang_muka,'+
-            ' account_code_uang_muka,header_code_retur,account_code_retur,va_name, stat_pkp ) '+
+            ' account_code_uang_muka,header_code_retur,account_code_retur,va_name, stat_pkp,status_sell ) '+
             ' Values( '+
             ' '+QuotedStr(inttostr(vid_prospek))+', '+
             ' '+QuotedStr(Edkode.Text)+', '+
@@ -1225,13 +1298,28 @@ begin
             ' '+QuotedStr(KodeHeaderRetur)+','+QuotedStr(edAkunRetur.Text)+','+QuotedStr(edVAatasNama.Text)+',');
       if cbpkp.Checked=true then
       begin
-        sql.add('true);');
+        sql.add('true,');
       end;
       if cbpkp.Checked=false then
       begin
+        sql.add('false,');
+      end;
+
+      if cbAktifJual.Checked=true then
+      begin
+        sql.add('true);');
+      end;
+      if cbAktifJual.Checked=false then
+      begin
         sql.add('false);');
       end;
-    ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
   end;
   InsertDetailAlamat;
   UpdateStatusProspek;

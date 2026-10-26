@@ -1,7 +1,7 @@
 object FGroup_biaya: TFGroup_biaya
   Left = 0
   Top = 0
-  Caption = 'FGroup_biaya'
+  Caption = 'Form Group Biaya'
   ClientHeight = 519
   ClientWidth = 899
   Color = clBtnFace
@@ -47,6 +47,8 @@ object FGroup_biaya: TFGroup_biaya
     Align = alClient
     DataSource = DataSource1
     DynProps = <>
+    SearchPanel.Enabled = True
+    SearchPanel.CaseSensitive = True
     TabOrder = 1
     OnDblClick = ActUpdateExecute
     Columns = <
@@ -545,7 +547,8 @@ object FGroup_biaya: TFGroup_biaya
     SQL.Strings = (
       
         'select a.*,b.cost_type from t_ak_account a INNER JOIN t_ak_type_' +
-        'cost b on  a.cost_st_id=b.id where cost_st_id >0')
+        'cost b on  a.cost_st_id=b.id where cost_st_id >0'
+      'order by cost_type,a.code asc')
     Left = 584
     Top = 208
   end

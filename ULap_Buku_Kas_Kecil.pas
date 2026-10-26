@@ -165,7 +165,7 @@ procedure TFLap_Buku_Kas_Kecil.dxBarLargeButton1Click(Sender: TObject);
 var
   query:string;
   tglawal,tglakhir: string;
-  tgl1:tdate;
+  tgl1,dt_awal:tdate;
   dd,mm,yy:word;
   ketemu:boolean;
   bulan_sa, tahun_sa : string;
@@ -192,6 +192,22 @@ begin
     bulan_sa := FormatDateTime('mm', tgl_sa);   // hasil: '04'
     tahun_sa := FormatDateTime('yyyy', tgl_sa); // hasil: '2026'
 
+
+
+    //batas data
+    dt_awal:=DTPick11.EditValue;
+    {if VarToDateTime(DTPick11.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+
+      tgl_sa := dt_awal;
+      tgl_sa := IncMonth(tgl_sa, -1); // mundur 1 bulan
+
+      tgl1 := StartOfTheMonth(dt_awal);
+      bulan_sa := FormatDateTime('mm', tgl_sa);   // hasil: '04'
+      tahun_sa := FormatDateTime('yyyy', tgl_sa); // hasil: '2026'
+    end;}
+
     //ShowMessage('Bulan: ' + bulan_sa + ' Tahun: ' + tahun_sa);
     //
     query:='SELECT zzz.*,sum(sa+debit-kredit) over (ORDER BY nomor asc )  saldo  FROM '+
@@ -211,7 +227,7 @@ begin
             'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
             'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
             //'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
-            'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' '+
+            'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
             'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
             'and code_account='+QuotedStr(txtkdacckredit.Text)+'  '+
             ' UNION ALL '+
@@ -219,8 +235,18 @@ begin
             'c.order_no,''0'' as actors_code,''0'' as code from t_cash_bank_expenditure_det a '+
             'INNER JOIN t_cash_bank_expenditure c ON a.no_voucher=c.voucher_no '+
             'where c.deleted_at is null and "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
-            'and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' '+
+            'and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
             'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
+
+            //Baca Memorial
+            'union all '+
+            'select "trans_date", a.memo_no as "voucher_no", notes as "description", '+
+            'a.created_by as "actors_name", a."order_no", ''0'' as "actors_code", ''0'' as"code" '+
+            'from t_memorial_journal a left join t_memorial_journal_detail b '+
+            'on a.memo_no=b.memo_no where b.account_code=''1101.02'' '+
+            ' and a.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
+
             ') deb  order by trans_date,voucher_no )a '+
             'left join (select voucher_no,sum(paid_amount)as jumlah from '+
             ' t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' ) '+
@@ -230,8 +256,23 @@ begin
             ' else sum(paid_amount) end)jumlah   from t_cash_bank_expenditure_det '+
             ' where "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
             ' group by no_voucher '+
+
+            //baca memorial
+            'union all '+
+            'select memo_no as voucher_no,sum(debit)as jumlah  from t_memorial_journal_detail '+
+            'where debit<>0 and account_code='+QuotedStr(txtkdacckredit.Text)+' group by memo_no '+
+
             ' order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
-            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
+            'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det '+
+            'where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) '+
+            'group by voucher_no '+
+
+            //baca memorial
+            'union all '+
+            'select memo_no as voucher_no,sum(kredit)as jumlah  from t_memorial_journal_detail '+
+            'where kredit<>0 and account_code='+QuotedStr(txtkdacckredit.Text)+' group by memo_no '+
+
+            'order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
             'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
             'where (a."position"=''D'') and '+
             '(a.code_account=b.code)and (b.type_id=2)group by voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no '+
@@ -256,18 +297,44 @@ begin
             '(select r.code_account,(case when sum(r.paid_amount)is null then 0 else sum(r.paid_amount) end)jum_debit  from t_petty_cash_det r '+
             'INNER JOIN t_petty_cash s on r.voucher_no=s.voucher_no '+
             'where s.deleted_at is null and (s.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
-            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal-1)) +') '+
             'and r.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''D'' '+
             'group by code_account '+
             ' UNION ALL '+
             'SELECT code_account,(case when sum(paid_amount)is null then 0 else sum(paid_amount) end)jum_debit '+
             'from vexpenditure_det where "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
             'and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
-            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +' group by code_account '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal-1)) +' group by code_account '+
+
+            //Baca Memorial
+            'union all '+
+            'select b.account_code as code_account, (case when sum(b.debit)is null '+
+            'then 0 else sum(b.debit) end)jum_debit from t_memorial_journal a '+
+            'left join t_memorial_journal_detail b on a.memo_no=b.memo_no where '+
+            'b.account_code=''1101.02'' and a.deleted_at is null and b.debit<>0 and '+
+            'trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal-1)) +' '+
+            'GROUP BY b.account_code '+
+
             'order by code_account)a on a.code_account=x.kodesp '+
             'left join (select j.code_account,(case when sum(j.paid_amount)is null then 0 else sum(j.paid_amount) end)jum_kredit from t_petty_cash_det j '+
             'INNER JOIN t_petty_cash k on j.voucher_no=k.voucher_no '+
-            'where k.deleted_at is null and (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue-1)) +') and j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' group by code_account order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
+            'where k.deleted_at is null and (k.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal-1)) +') and '+
+            'j.code_account='+QuotedStr(txtkdacckredit.Text)+' and "position"=''K'' '+
+            'group by code_account '+
+
+            //baca memorial
+            'union all '+
+            'select b.account_code as code_account, (case when sum(b.kredit)is null then 0 '+
+            'else sum(b.kredit) end)jum_debit from t_memorial_journal a '+
+            'left join t_memorial_journal_detail b on a.memo_no=b.memo_no '+
+            'where b.account_code=''1101.02'' and a.deleted_at is null and b.kredit<>0 and '+
+            'trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+' '+
+            'and '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal-1)) +' '+
+            ' GROUP BY b.account_code '+
+
+            'order by code_account)b on b.code_account=x.kodesp)xx on yy.kodesp=xx.kodesp '+
             'GROUP BY  yy.kodesp,yy.balance,xx.jum_debit,xx.jum_kredit)yyy '+
             ')zzz '+
             'GROUP BY zzz.nomor, zzz.trans_date,zzz.voucher_no, zzz.description,zzz.actors_name,zzz.order_no,zzz.actors_code,zzz.code,zzz.jumdebit,zzz.jumkredit,zzz.penjualan,zzz.adm,zzz.bop,zzz.urutan,zzz.sa,zzz.debit,zzz.kredit ORDER BY nomor ASC ';
@@ -346,6 +413,8 @@ begin
 end;
 
 procedure TFLap_Buku_Kas_Kecil.DxRefreshClick(Sender: TObject);
+var
+ dt_awal: TDate;
 begin
    if DTPick11.EditValue = null then
     begin
@@ -353,6 +422,13 @@ begin
       DTPick11.SetFocus;
       Exit;
     end;
+    //batas data
+    dt_awal:=DTPick11.EditValue;
+    {if VarToDateTime(DTPick11.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+    end;}
+
 
     DBGridKasKecil.StartLoadingStatus();
     with QBHKasKecil do
@@ -362,15 +438,65 @@ begin
       sql.Text:='SELECT  "row_number"() over (ORDER BY urutan)+1 nomor,trans_date,voucher_no,description,actors_name,order_no,actors_code,code '+
                 ',jumdebit,jumkredit,penjualan,adm,bop,urutan,0 sa,jumdebit debit,jumkredit kredit '+
                 'FROM '+
-                '(select distinct a.trans_date,a.voucher_no,a.description,a.actors_name,a.order_no,a.actors_code,a.code,'+
+                '(/*transaksi*/ select distinct a.trans_date,a.voucher_no,'+
+                //a.description,'+
+                ' case when debit.jumlah<>0 then a.description '+
+                ' when d.jumlah is null then ''BIAYA ADM & UMUM'' '+
+                ' else ''BIAYA PENJUALAN'' end description, '+
+                ' a.actors_name,a.order_no,a.actors_code,a.code,'+
                 '(case when debit.jumlah is null then 0 else debit.jumlah end)jumdebit,(case when kredit.jumlah is null then 0 else kredit.jumlah end)jumkredit,'+
                 '(case when d.jumlah is null then 0 else d.jumlah end)penjualan,(case when b.jumlah is null then 0 else b.jumlah end)adm,(case when c.jumlah is null then 0 else c.jumlah end)bop,(case when debit.jumlah>0 then 1 else 10 end)urutan from '+
+                '(SELECT * from'+
                 '(select distinct c.trans_date,c.voucher_no,c.description,c.actors_name,c.order_no,c.actors_code,b.code from t_petty_cash_det a '+
                 'INNER JOIN t_petty_cash c ON a.voucher_no=a.voucher_no '+
                 'LEFT JOIN t_cost_actors b on c.actors_code=b.code '+
-                'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
-                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' )and("position"=''D'') group by voucher_no order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
-                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) group by voucher_no order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
+                //'where trans_date = '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and code_account='+QuotedStr(txtkdacckredit.Text)+'  order by trans_date,voucher_no)a '+
+                'where c.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
+                'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
+                'and code_account='+QuotedStr(txtkdacckredit.Text)+'  '+
+                ' UNION ALL '+
+                'select distinct c.trans_date,c.voucher_no,c.remark as description,''KASIR'' as actors_name,'+
+                'c.order_no,''0'' as actors_code,''0'' as code from t_cash_bank_expenditure_det a '+
+                'INNER JOIN t_cash_bank_expenditure c ON a.no_voucher=c.voucher_no '+
+                'where c.deleted_at is null and "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
+                'and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
+                'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
+
+                //Baca Memorial
+                'union all '+
+                'select "trans_date", a.memo_no as "voucher_no", notes as "description", '+
+                'a.created_by as "actors_name", a."order_no", ''0'' as "actors_code", ''0'' as"code" '+
+                'from t_memorial_journal a left join t_memorial_journal_detail b '+
+                'on a.memo_no=b.memo_no where b.account_code=''1101.02'' '+
+                ' and a.deleted_at is null and trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
+                'and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+'  '+
+
+                ') deb  order by trans_date,voucher_no )a '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from '+
+                ' t_petty_cash_det where (code_account='+QuotedStr(txtkdacckredit.Text)+' ) '+
+                ' and("position"=''D'') group by voucher_no '+
+                ' union all '+
+                ' SELECT no_voucher as voucher_no,(case when sum(paid_amount)is null then 0 '+
+                ' else sum(paid_amount) end)jumlah   from t_cash_bank_expenditure_det '+
+                ' where "position"=''D'' and code_account='+QuotedStr(txtkdacckredit.Text)+' '+
+                ' group by no_voucher '+
+
+                //baca memorial
+                'union all '+
+                'select memo_no as voucher_no,sum(debit)as jumlah  from t_memorial_journal_detail '+
+                'where debit<>0 and account_code='+QuotedStr(txtkdacckredit.Text)+' group by memo_no '+
+
+                ' order by voucher_no)debit on a.voucher_no=debit.voucher_no '+
+                'left join (select voucher_no,sum(paid_amount)as jumlah from t_petty_cash_det '+
+                'where ("position"=''K'')and(code_account='+QuotedStr(txtkdacckredit.Text)+' ) '+
+                'group by voucher_no '+
+
+                //baca memorial
+                'union all '+
+                'select memo_no as voucher_no,sum(kredit)as jumlah  from t_memorial_journal_detail '+
+                'where kredit<>0 and account_code='+QuotedStr(txtkdacckredit.Text)+' group by memo_no '+
+
+                'order by voucher_no)kredit on a.voucher_no=kredit.voucher_no '+
                 'left join (select a.voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
                 'where (a."position"=''D'') and '+
                 '(a.code_account=b.code)and (b.type_id=2)group by voucher_no order by voucher_no)b on a.voucher_no=b.voucher_no '+
@@ -381,12 +507,9 @@ begin
                 'left join '+
                 '(select voucher_no,sum(a.paid_amount)as jumlah from t_petty_cash_det a,t_ak_account b '+
                 'where (a.code_account=b.code)and (b.type_id=4) group by voucher_no order by voucher_no)d on a.voucher_no=d.voucher_no '+
-                'union '+
-                'SELECT trans_date,	voucher_no,	description,	''KAS KECIL'' actors_name,	0 order_no,	'''' actors_code,	'''' code,	paid_amount jumdebit,	0 as jumkredit,	0 as penjualan,	0 as adm,0 as	bop,	11 as urutan FROM '+
-                '(SELECT a.trans_date,a.voucher_no,b.description,b.paid_amount FROM t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher WHERE b.code_account=''1101.02'' and b."position"=''D'' and a.deleted_at ISNULL '+
-                'and a.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick11.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DTPick12.EditValue))+')aa '+
-                'ORDER BY trans_date,order_no, urutan, voucher_no '+
-                ')xxx ';
+                'group by trans_date,a.voucher_no,debit.jumlah,a.description,d.jumlah, '+
+                'a.actors_name,a.order_no,a.actors_code,a.code,kredit.jumlah,b.jumlah,c.jumlah '+
+                'order by trans_date,urutan,order_no,voucher_no)xxx ';
       open;
     end;
       MemBHKasKecil.Close;

@@ -217,7 +217,7 @@ begin
       Open;
     end;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_lr.fr3');
-    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan.Text+' - '+edth.Text);
+    Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' - '+edth.Text);
   //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:=UpperCase(' '+FormatDateTime('dd',dtmulai1.Date)+' - '+FormatDateTime('dd/MMM/yyy',dtselesai1.Date));
     Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH;
     Tfrxmemoview(Rpt.FindObject('Memo11')).Memo.Text:=UpperCase(' % ');

@@ -3,8 +3,8 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Daftar Penagihan Piutang'
-  ClientHeight = 558
-  ClientWidth = 1070
+  ClientHeight = 557
+  ClientWidth = 1200
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,13 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1070
+    Width = 1200
     Height = 105
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1066
+    ExplicitWidth = 1196
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -145,29 +145,30 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 105
-    Width = 1070
-    Height = 421
+    Width = 1200
+    Height = 420
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1066
-    ExplicitHeight = 420
+    ExplicitWidth = 1196
+    ExplicitHeight = 419
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitWidth = 1062
-      ExplicitHeight = 395
+      ExplicitWidth = 1192
+      ExplicitHeight = 394
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1066
-        Height = 396
+        Width = 1196
+        Height = 395
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
+        FrozenCols = 4
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
         TabOrder = 0
@@ -221,6 +222,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
           end
           item
             CellButtons = <>
+            DisplayFormat = 'dd/mm/yyyy'
             DynProps = <>
             EditButtons = <>
             FieldName = 'tglfaktur'
@@ -236,7 +238,113 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
             FieldName = 'jum_piutang'
             Footers = <>
             Title.Caption = 'Total'
-            Width = 150
+            Width = 136
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'cash'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Tunai'
+            Width = 115
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'bank_receipt'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Bank Resi'
+            Width = 154
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = 'dd/mm/yyyy'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'date_receipt'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Tanggal Resi'
+            Width = 84
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'receipt'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Jumlah Resi'
+            Width = 96
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'name_bank_cheque'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Bank Chek/Giro'
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'no_cheque'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|No. Cek/Giro'
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = 'dd/mm/yyyy'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'date_tempo_cheque'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Tanggal Cek/Giro'
+            Width = 78
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'cheque_amount1'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Nilai Cek/Giro'
+            Width = 87
+          end
+          item
+            CellButtons = <>
+            DisplayFormat = '#,##0.00'
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'counter_bill'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 'Penerimaan Uang Dari Kolektor|Kontrabon'
+            Width = 84
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'status_dpp_kolektor_harmoni'
+            Footers = <>
+            ReadOnly = True
+            Title.Caption = 
+              'Penerimaan Uang Dari Kolektor|Status Penerimaan Uang Dari Kolekt' +
+              'or'
+            Width = 131
           end
           item
             CellButtons = <>
@@ -253,20 +361,21 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   end
   object Panel2: TPanel
     Left = 0
-    Top = 526
-    Width = 1070
+    Top = 525
+    Width = 1200
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 525
-    ExplicitWidth = 1066
+    ExplicitTop = 524
+    ExplicitWidth = 1196
     object BBatal: TRzBitBtn
-      Left = 994
+      Left = 1124
       Top = 1
       Height = 30
       Align = alRight
       Caption = 'Close'
       TabOrder = 1
+      OnClick = BBatalClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
         08000000000000020000630B0000630B00000001000000000000000000003300
@@ -319,10 +428,10 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 990
+      ExplicitLeft = 1120
     end
     object BSave: TRzBitBtn
-      Left = 919
+      Left = 1049
       Top = 1
       Height = 30
       Align = alRight
@@ -381,13 +490,13 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 915
+      ExplicitLeft = 1045
     end
   end
   object MemDetailPiutang: TMemTableEh
     Params = <>
-    Left = 552
-    Top = 330
+    Left = 376
+    Top = 298
     object MemDetailPiutangnotrans: TStringField
       FieldName = 'notrans'
       Size = 100
@@ -423,6 +532,39 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
     object MemDetailPiutangid_dpp: TStringField
       FieldName = 'id_dpp'
       Size = 250
+    end
+    object MemDetailPiutangcash: TFloatField
+      FieldName = 'cash'
+    end
+    object MemDetailPiutangreceipt: TFloatField
+      FieldName = 'receipt'
+    end
+    object MemDetailPiutangcounter_bill: TFloatField
+      FieldName = 'counter_bill'
+    end
+    object MemDetailPiutangbank_receipt: TStringField
+      FieldName = 'bank_receipt'
+      Size = 100
+    end
+    object MemDetailPiutangdate_receipt: TStringField
+      FieldName = 'date_receipt'
+    end
+    object MemDetailPiutangname_bank_cheque: TStringField
+      FieldName = 'name_bank_cheque'
+    end
+    object MemDetailPiutangno_cheque: TStringField
+      FieldName = 'no_cheque'
+    end
+    object MemDetailPiutangcheque_amount1: TFloatField
+      FieldName = 'cheque_amount1'
+    end
+    object MemDetailPiutangdate_tempo_cheque: TStringField
+      FieldName = 'date_tempo_cheque'
+      Size = 100
+    end
+    object MemDetailPiutangstatus_dpp_kolektor_harmoni: TStringField
+      FieldName = 'status_dpp_kolektor_harmoni'
+      Size = 100
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -484,6 +626,71 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
           DisplayWidth = 100
           Size = 250
         end
+        object cash: TMTNumericDataFieldEh
+          FieldName = 'cash'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object receipt: TMTNumericDataFieldEh
+          FieldName = 'receipt'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object counter_bill: TMTNumericDataFieldEh
+          FieldName = 'counter_bill'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object bank_receipt: TMTStringDataFieldEh
+          FieldName = 'bank_receipt'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object date_receipt: TMTStringDataFieldEh
+          FieldName = 'date_receipt'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+        end
+        object name_bank_cheque: TMTStringDataFieldEh
+          FieldName = 'name_bank_cheque'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+        end
+        object no_cheque: TMTStringDataFieldEh
+          FieldName = 'no_cheque'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+        end
+        object cheque_amount1: TMTNumericDataFieldEh
+          FieldName = 'cheque_amount1'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object date_tempo_cheque: TMTStringDataFieldEh
+          FieldName = 'date_tempo_cheque'
+          StringDataType = fdtStringEh
+          DisplayWidth = 20
+          Size = 100
+        end
+        object status_dpp_kolektor_harmoni: TMTStringDataFieldEh
+          FieldName = 'status_dpp_kolektor_harmoni'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
       end
       object RecordsList: TRecordsListEh
       end
@@ -491,7 +698,7 @@ object FDaftarPenagihanPiutang: TFDaftarPenagihanPiutang
   end
   object dsDetailPiutang: TDataSource
     DataSet = MemDetailPiutang
-    Left = 448
-    Top = 330
+    Left = 272
+    Top = 306
   end
 end

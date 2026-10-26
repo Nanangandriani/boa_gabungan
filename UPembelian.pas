@@ -465,6 +465,7 @@ begin
           MemterimaDet['subtotal']:=QTerimaDet.FieldByName('subtotal').AsString;
           MemterimaDet['subtotalrp']:=QTerimaDet.FieldByName('subtotalrp').AsString;
           MemterimaDet['ppn']:=QTerimaDet.FieldByName('ppn').AsString;
+          MemterimaDet['ppn']:=QTerimaDet.FieldByName('ppn').AsString;
           MemterimaDet['ppn_rp']:=QTerimaDet.FieldByName('ppn_rp').AsString;
           MemterimaDet['pph']:=QTerimaDet.FieldByName('pph').AsString;
           MemterimaDet['pph_rp']:=QTerimaDet.FieldByName('pph_rp').AsString;
@@ -478,6 +479,8 @@ begin
           MemterimaDet['pemb_dpp']:=QTerimaDet.FieldByName('pemb_dpp').AsString;
           MemterimaDet['ref_no']:=Memterima_material.FieldByName('ref_code').AsString;
           MemterimaDet['header_code']:=QTerimaDet.FieldByName('header_code').AsString;
+          kd_akppn:=QTerimaDet['ppn_account'];
+         // MemterimaDet['pemb_ppn']:=QTerimaDet['ppn_pembulatan'];
           MemterimaDet['nourut']:='0' ;
           MemterimaDet.Post;
           QTerimaDet.Next;

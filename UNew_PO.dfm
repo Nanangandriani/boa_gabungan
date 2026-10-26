@@ -127,7 +127,7 @@ object FNew_PO: TFNew_PO
     object Label20: TLabel
       Left = 564
       Top = 88
-      Width = 67
+      Width = 68
       Height = 15
       Caption = 'Jatuh Tempo'
     end
@@ -148,7 +148,7 @@ object FNew_PO: TFNew_PO
     object Label29: TLabel
       Left = 564
       Top = 10
-      Width = 41
+      Width = 42
       Height = 15
       Caption = 'Tanggal'
     end
@@ -805,7 +805,7 @@ object FNew_PO: TFNew_PO
     object Label21: TLabel
       Left = 832
       Top = 16
-      Width = 48
+      Width = 49
       Height = 15
       Caption = 'Sub Total'
       Visible = False
@@ -829,7 +829,7 @@ object FNew_PO: TFNew_PO
     object Label24: TLabel
       Left = 832
       Top = 110
-      Width = 60
+      Width = 61
       Height = 15
       Caption = 'Grand Total'
       Visible = False

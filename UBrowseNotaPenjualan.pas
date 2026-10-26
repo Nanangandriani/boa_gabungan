@@ -61,7 +61,13 @@ begin
                 'where customer_code='+QuotedStr(FBrowseNotaPenjualan.strKodePelanggan)+' AND '+
                 'trans_no_nota='+QuotedStr(Qselling.FieldValues['trans_no'])+' AND '+
                 'deleted_at is NULL';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp.RecordCount>0 then
     begin
@@ -111,7 +117,13 @@ begin
       sql.Clear;
       sql.Text:='SELECT * FROM get_piutang_invoice((SELECT get_end_of_month((SELECT NOW())::DATE))) WHERE sisa_piutang>0 '+strWhereTgl+strWhereKodePelanggan;
 //      sql.Text:='SELECT * FROM t_selling WHERE deleted_at is NULL '+strWhereTgl+strWhereKodePelanggan;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   finally
   DBGridEh1.FinishLoadingStatus();

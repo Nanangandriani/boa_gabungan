@@ -123,6 +123,7 @@ type
     edKaresidenan: TcxBarEditItem;
     dxBarLargeButton4: TdxBarLargeButton;
     QReturJualcancel_reason: TMemoField;
+    QCetakno_inv: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -198,7 +199,13 @@ begin
                   'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                   ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
                   'order by trans_date DESC, trans_no DESC';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
    Qdetail.Close;
    Qdetail.Open;
@@ -241,7 +248,13 @@ begin
     sql.Clear;
     sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
               'no_transaksi='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' and status=0 and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.RecordCount>0 then
@@ -287,10 +300,16 @@ begin
      close;
      sql.Clear;
      sql.Text:=' select b.no_inv_tax,a.* from "public"."t_sales_returns" a '+
-                'LEFT JOIN t_selling b on b.trans_no=a.no_inv '+
+               ' LEFT JOIN t_selling b on b.trans_no=a.no_inv '+
                ' WHERE a.trans_no='+QuotedSTr(QReturJual.FieldByName('trans_no').AsString)+' '+
                ' order by a.created_at Desc ';
-     open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
   end;
   if Dm.Qtemp.RecordCount=0 then
   begin
@@ -322,12 +341,22 @@ begin
       strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
       strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
       strtahun:=Dm.Qtemp.FieldByName('trans_year').AsString;
-      edDPP.Value:=dm.Qtemp.FieldValues['sub_total'];
-      edDPPNilaiLain.Value:=dm.Qtemp.FieldValues['dpp_nilai_lain'];
-      edTotPPN.Value:=dm.Qtemp.FieldValues['ppn_value'];
-      edGrandTot.Value:=dm.Qtemp.FieldValues['grand_tot'];
+      if dm.Qtemp.FieldValues['subtotal_gross']<>NULL then
+      edTotHarga.Value:= dm.Qtemp.FieldValues['subtotal_gross'] else edTotHarga.Value:=0;
+      if dm.Qtemp.FieldValues['piece_value']<>NULL then
+      edPotongan.Value:= dm.Qtemp.FieldValues['piece_value'] else edPotongan.Value:=0;
+      if dm.Qtemp.FieldValues['sub_total']<>NULL then
+      edDPP.Value:=dm.Qtemp.FieldValues['sub_total'] else edDPP.Value:=0;
+      if dm.Qtemp.FieldValues['dpp_nilai_lain']<>NULL then
+      edDPPNilaiLain.Value:=dm.Qtemp.FieldValues['dpp_nilai_lain'] else edDPPNilaiLain.Value:=0 ;
+      if dm.Qtemp.FieldValues['ppn_value']<>NULL then
+      edTotPPN.Value:=dm.Qtemp.FieldValues['ppn_value'] else edTotPPN.Value:=0;
+      if dm.Qtemp.FieldValues['grand_tot']<>NULL then
+      edGrandTot.Value:=dm.Qtemp.FieldValues['grand_tot'] else edGrandTot.Value:=0;
       StrNoINV:=dm.Qtemp.FieldValues['no_inv'];
       IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+      if dm.Qtemp.FieldValues['no_reference']<>NULL then
+      edNoRef.Text:= Dm.Qtemp.FieldValues['no_reference'] else edNoRef.Text:='';
 
       if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
       begin
@@ -337,7 +366,6 @@ begin
       end;
     end;
   end;
-
   FDataReturPenjualan.Status := 1;
   FDataReturPenjualan.edNoTrans.Enabled:=false;
   FDataReturPenjualan.RefreshGrid;
@@ -376,14 +404,19 @@ begin
             ' "ppn_account", "ppn_percent",  "ppn_value", "pph_account", "pph_value", '+
             ' "pph_name", "pph_percent", "grand_tot", "account_code", "no_trans_sale"  '+
             ' FROM  "public"."t_sales_returns_det") a  '+
-            ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust" '+
+            ' LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_cust",no_inv '+
             ' from "public"."t_sales_returns") b  ON a.trans_no=b.trans_no '+
             ' LEFT JOIN (SELECT "customer_code", "address" from "public"."t_customer_address" where "code_details"=''001'') d on b.code_cust=d.customer_code '+
             ' WHERE a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' '+
             ' Order By a.trans_no, code_item desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
-
 
   if QCetak.RecordCount=0 then
   begin
@@ -402,9 +435,14 @@ begin
              ' from "public"."t_sales_returns" a '+
              ' where a.deleted_at is null and '+
              ' a.trans_no='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+' ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
-    //
 
     with dm.Qtemp3 do
     begin
@@ -416,7 +454,14 @@ begin
                 QReturJual.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
                 QReturJual.FieldByName('trans_no').AsString+' '', '+
                 'True,'+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+');';
-      ExecSQL;
+
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
      cLocation := ExtractFilePath(Application.ExeName);
@@ -432,7 +477,6 @@ begin
      //Report.DesignReport();
      Report.ShowReport();
   end;
-
 end;
 
 procedure TFListReturPenjualan.dxBarLargeButton2Click(Sender: TObject);
@@ -443,7 +487,13 @@ begin
     sql.clear;
     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
          ' where "trans_no"='+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+'');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QJurnal.RecordCount=0 then
@@ -464,7 +514,13 @@ begin
                 QReturJual.FieldByName('name_cust').AsString+' dengan nomor transaksi '+
                 QReturJual.FieldByName('trans_no').AsString+' '', '+
                 'True,'+QuotedStr(QReturJual.FieldByName('trans_no').AsString)+');';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     cLocation := ExtractFilePath(Application.ExeName);

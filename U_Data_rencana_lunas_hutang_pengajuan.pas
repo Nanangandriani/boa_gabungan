@@ -157,20 +157,20 @@ begin
            sql.add(query);
            if (Length(cbsupp.Text)=0)   then
              begin
-               sql.add('where a.source_plan_id=1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('where a.deleted_at is null and a.paid_status=0 and a.source_plan_id=1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
                //sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
                sql.add('order by a.supplier_code,a.faktur_no');
              end
              else
            if (Length(cbrencanake.Text)=0)  then
              begin
-               sql.add('where a.source_plan_id=1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('where a.deleted_at is null and a.paid_status=0 and a.source_plan_id=1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
                //sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
                sql.add('order by a.supplier_code,a.faktur_no');
              end
              else
              begin
-               sql.add('where a.source_plan_id=1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' and a.plan_to='+QuotedStr(CBrencanake.Text)+' ');
+               sql.add('where a.deleted_at is null and a.paid_status=0 and a.source_plan_id=1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' and a.plan_to='+QuotedStr(CBrencanake.Text)+' ');
                //sql.add('order by a.supplier_code,a.faktur_date,a.faktur_no');
                sql.add('order by a.supplier_code,a.faktur_no');
              end;
@@ -218,12 +218,12 @@ begin
            sql.add(query);
            if (Length(cbsupp.Text)=0)   then
              begin
-               sql.add('where a.source_plan_id<>1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('where a.deleted_at is null and a.source_plan_id<>1 and a.approve_status=true and a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+'  and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
                sql.add('order by a.supplier_code,a.faktur_no');
              end
              else
              begin
-               sql.add('where a.source_plan_id<>1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
+               sql.add('where a.deleted_at is null and a.source_plan_id<>1 and a.supplier_code='+QuotedStr(cbsupp.Text)+'  and approve_status=true and  a.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.Date))+' and a.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.Date))+' ');
                sql.add('order by a.supplier_code,a.faktur_no');
              end;
            open;
@@ -431,7 +431,7 @@ begin
              FDataPengajuanPengeluaranKasBank.tgl_cek.Date:=MemDataRencana['cek_date'];
              FDataPengajuanPengeluaranKasBank.edUntukPengeluaran.Text:='PELUNASAN HUTANG';
              FDataPengajuanPengeluaranKasBank.MemKeterangan.Text:='PELUNASAN HUTANG';
-
+             FDataPengajuanPengeluaranKasBank.btncek.Enabled:=false;
              //Ganti Akun Header bank Menjadi Akun No Rekening
               with FDataPengajuanPengeluaranKasBank do
               begin

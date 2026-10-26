@@ -8,7 +8,7 @@ uses
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, MemTableEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, RzButton, Vcl.ComCtrls, RzDTP,
   Vcl.Samples.Spin, Vcl.Mask, RzEdit, RzBtnEdt, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, RzRadChk;
 
 type
   TFDataPerintahMuat = class(TForm)
@@ -53,6 +53,8 @@ type
     MemDetailsatuan: TStringField;
     BCorrection: TRzBitBtn;
     BDelete: TRzBitBtn;
+    btnNoTransaksi: TRzBitBtn;
+    chkNomorPengganti: TRzCheckBox;
     procedure edNoKendMuatanButtonClick(Sender: TObject);
     procedure edNama_Vendor_KendButtonClick(Sender: TObject);
     procedure btAddDetailClick(Sender: TObject);
@@ -65,15 +67,17 @@ type
     procedure BCorrectionClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure BDeleteClick(Sender: TObject);
+    procedure btnNoTransaksiClick(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     tot_jumlah : real;
     stat_proses : Boolean;
-    strtgl, strbulan, strtahun, trans_id_link, kd_kares,strVehicleGroupID: string;
+    strtgl, strbulan, strtahun, trans_id_link, kd_kares,strVehicleGroupID,strNoTransaksiDiGanti: string;
     Year, Month, Day: Word;
-    Status,IntStatusKoreksi: Integer;
+    Status,IntStatusKoreksi,isCancel: Integer;
     procedure Clear;
     procedure Autonumber;
     procedure Save;
@@ -93,7 +97,7 @@ implementation
 {$R *.dfm}
 
 uses USearch_Supplier, UPerintahMuat_Sumber, UDataModule, UHomeLogin,
-  UMy_Function, UListPerintahMuat, UDaftarKendaraan, UKoreksi;
+  UMy_Function, UListPerintahMuat, UDaftarKendaraan, UKoreksi, UListNoTransaksi;
 
 procedure TFDataPerintahMuat.CheckJasaTransportDefault;
 begin
@@ -104,7 +108,13 @@ begin
     sql.Text:='select supplier_code,supplier_name from t_supplier '+
               'where supplier_code=(select value_parameter from t_parameter '+
               'where key_parameter=''default_penyedia_jasa'') and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp.RecordCount>0 then
   begin
@@ -126,7 +136,14 @@ begin
       sql.Text:=' update "public"."t_spm_stock_details" set '+
                 ' "trans_spm_no"='+QuotedStr(edKodeMuat.Text)+' '+
                 ' WHERE "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+' ; ';
-      ExecSQL;
+
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 end;
@@ -141,7 +158,13 @@ begin
               ' FROM "public"."t_spm_stock_details"  a '+
               ' WHERE "trans_spm_no"=''0'' '+
               ' and "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+' ' );
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if  Dm.Qtemp.RecordCount<>0 then
@@ -157,7 +180,13 @@ begin
           sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
                     ' "qtyout"=qtyout-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
                     ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
         with dm.Qtemp1 do
         begin
@@ -165,7 +194,13 @@ begin
           sql.clear;
           sql.Text:=' delete from "public"."t_spm_stock_details" '+
                     ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
       Dm.Qtemp.next;
       end;
@@ -183,7 +218,13 @@ begin
       sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
                 ' total_stock from "public"."t_spm_stock_details" '+
                 ' WHERE "trans_id"='+QuotedStr(FDataPerintahMuat.trans_id_link)+'; ';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -196,18 +237,34 @@ begin
       sql.Text:=' select  case when sum(qty) is null then 0 else sum(qty) end '+
                 ' total_stock from "public"."t_spm_stock_details" '+
                 ' WHERE "trans_spm_no"='+QuotedStr(edKodeMuat.Text)+' ; ';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 end;
 
+procedure TFDataPerintahMuat.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
+  else btnNoTransaksi.Visible:=False;
+
+  edKodeMuat.Clear;
+end;
+
 procedure TFDataPerintahMuat.Save;
-//var
-//  Stradditional_code: String;
+var strIsNoReplacement:String;
 begin
 //  if (kd_kares='') OR (kd_kares='0') then
 //  Stradditional_code:='NULL'
 //  else Stradditional_code:=QuotedStr(kd_kares);
+
+  if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
+
 
   with dm.Qtemp do
   begin
@@ -217,7 +274,7 @@ begin
             ' "notrans", "loading_date", "delivery_date", "code_vendor", '+
             ' "name_vendor", "number_of_vehicles", "description", "order_no", '+
 //            ' "additional_code", '+
-            ' "trans_day", "trans_month", "trans_year",sbu_code) '+
+            ' "trans_day", "trans_month", "trans_year",sbu_code,is_no_replacement) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -233,9 +290,36 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+', '+
-            ' '+QuotedStr(FHomeLogin.vKodePRSH)+'  );');
-    ExecSQL;
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+', '+
+            ' '+QuotedStr(strIsNoReplacement)+'   );');
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE "public"."t_spm" SET'+
+                ' trans_no_replacement='+QuotedStr(edKodeMuat.Text)+
+                ' Where notrans='+QuotedStr(strNoTransaksiDiGanti);
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
+  end;
+
   InsertDetail;
 //  proses_stock;
   MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -265,7 +349,13 @@ begin
               ' trans_month='+QuotedStr(strbulan)+','+
               ' trans_year='+QuotedStr(strtahun)+' '+
               ' Where notrans='+QuotedStr(edKodeMuat.Text)+'');
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     InsertDetail;
 //    proses_stock;
@@ -284,19 +374,31 @@ begin
             ' SELECT * from "public"."t_spm_det"'+
             ' WHERE "notrans"='+QuotedStr(edKodeMuat.Text)+' ) a '+
             ' Order By notrans desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_spm_det" '+
-            ' WHERE "notrans"='+QuotedStr(edKodeMuat.Text)+';';
-  ExecSQL;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_spm_det" '+
+                ' WHERE "notrans"='+QuotedStr(edKodeMuat.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
   end;
 
   MemDetail.First;
@@ -304,22 +406,28 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Text:=' INSERT INTO "public"."t_spm_det" ( "notrans", "notrans_do", '+
-              ' "notrans_sale", "code_cust", "name_cust", "code_items", "name_item", '+
-              ' "amount", "unit") '+
-              ' Values( '+
-              ' '+QuotedStr(edKodeMuat.Text)+', '+
-              ' '+QuotedStr(MemDetail['nodo'])+', '+
-              ' '+QuotedStr(MemDetail['notrans'])+', '+
-              ' '+QuotedStr(MemDetail['kode_vendor'])+', '+
-              ' '+QuotedStr(MemDetail['name_vendor'])+', '+
-              ' '+QuotedStr(MemDetail['kd_barang'])+', '+
-              ' '+QuotedStr(MemDetail['nm_barang'])+', '+
-              ' '+QuotedStr(MemDetail['jumlah'])+', '+
-              ' '+QuotedStr(MemDetail['satuan'])+');';
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_spm_det" ( "notrans", "notrans_do", '+
+                ' "notrans_sale", "code_cust", "name_cust", "code_items", "name_item", '+
+                ' "amount", "unit") '+
+                ' Values( '+
+                ' '+QuotedStr(edKodeMuat.Text)+', '+
+                ' '+QuotedStr(MemDetail['nodo'])+', '+
+                ' '+QuotedStr(MemDetail['notrans'])+', '+
+                ' '+QuotedStr(MemDetail['kode_vendor'])+', '+
+                ' '+QuotedStr(MemDetail['name_vendor'])+', '+
+                ' '+QuotedStr(MemDetail['kd_barang'])+', '+
+                ' '+QuotedStr(MemDetail['nm_barang'])+', '+
+                ' '+QuotedStr(MemDetail['jumlah'])+', '+
+                ' '+QuotedStr(MemDetail['satuan'])+');';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDetail.Next;
   end;
@@ -336,6 +444,7 @@ begin
   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FListPerintahMuat.Name)); //Mendapatkan nama Menu
   FKoreksi.Status:=0;
+  FKoreksi.AksiTipe:='KOREKSI';
   FKoreksi.vnotransaksi:=edKodeMuat.Text; //Mendapatkan Nomor Transaksi
   FKoreksi.ShowModal;
 end;
@@ -412,12 +521,19 @@ begin
       MessageDlg('Pastikan Detail Muatan Sudah Lengkap..!!',mtInformation,[mbRetry],0);
       edKodeMuat.SetFocus;
     end
+    else if (chkNomorPengganti.Checked=True) AND (edKodeMuat.Text='') then
+    begin
+      MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      Exit;
+    end
     else if FDataPerintahMuat.Status = 0 then
     begin
-      FDataPerintahMuat.Autonumber;
+
     //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeMuat.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        if chkNomorPengganti.Checked=False then
+        FDataPerintahMuat.Autonumber;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -468,6 +584,14 @@ begin
   end;
 end;
 
+procedure TFDataPerintahMuat.btnNoTransaksiClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='suratperintahmuat';
+  FListNoTransaksi.update_grid('notrans','order_no','t_spm','WHERE loading_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtMuat.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY notrans ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFDataPerintahMuat.Clear;
 begin
   strVehicleGroupID:='';
@@ -482,6 +606,8 @@ begin
   MemDetail.active:=true;
   MemDetail.EmptyTable;
   kd_kares:='0';
+  strNoTransaksiDiGanti:='';
+  chkNomorPengganti.Checked:=False;
 end;
 
 procedure TFDataPerintahMuat.DBGridDetailColumns0EditButtons0Click(
@@ -548,19 +674,55 @@ end;
 
 procedure TFDataPerintahMuat.FormShow(Sender: TObject);
 begin
-  if (Status=1) AND (IntStatusKoreksi=2) then
+//
+//  if (Status=1) AND (IntStatusKoreksi=2) then
+//  begin
+//    BSave.Enabled:=True;
+//    BCorrection.Visible:=True;
+//    BCorrection.Enabled:=False;
+//  end else if Status=0 then
+//  begin
+//    BSave.Enabled:=True;
+//    BCorrection.Visible:=False;
+//  end else begin
+//    BSave.Enabled:=False;
+//    BCorrection.Visible:=True;
+//    BCorrection.Enabled:=True;
+//  end;
+  if isCancel = 1 then
   begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=False;
-  end else if Status=0 then
-  begin
-    BSave.Enabled:=True;
-    BCorrection.Visible:=False;
+    BSave.Enabled := False;
   end else begin
-    BSave.Enabled:=False;
-    BCorrection.Visible:=True;
-    BCorrection.Enabled:=True;
+    BSave.Enabled := True;
+  end;
+
+  if (Status = 1) and (IntStatusKoreksi = 2) AND (isCancel=0) then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := False;
+  end
+  else if Status = 0 then
+  begin
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+  end
+  else if (Status = 1) and (IntStatusKoreksi <> 2)  AND (isCancel=0) then
+  begin
+    BSave.Enabled := False;
+    BCorrection.Visible := True;
+    BCorrection.Enabled := True;
+  end;
+
+  if Status=1 then
+  begin
+    dtMuat.Enabled:=False;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=False;
+  end else begin
+    dtMuat.Enabled:=True;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=True;
   end;
 end;
 

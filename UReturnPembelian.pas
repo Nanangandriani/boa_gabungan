@@ -81,21 +81,6 @@ type
     Qxls: TUniQuery;
     SaveDialog1: TSaveDialog;
     dxBarLargeButton2: TdxBarLargeButton;
-    QReturnPembeliantrans_day: TSmallintField;
-    QReturnPembeliantrans_month: TSmallintField;
-    QReturnPembeliantrans_year: TSmallintField;
-    QReturnPembeliansupplier_code: TStringField;
-    QReturnPembelianvalas: TStringField;
-    QReturnPembelianvalas_value: TFloatField;
-    QReturnPembelianreceive_no: TStringField;
-    QReturnPembeliansupplier_name: TStringField;
-    QReturnPembelianreturn_no: TStringField;
-    QReturnPembelianreturn_date: TDateField;
-    QReturnPembelianfaktur_no: TStringField;
-    QReturnPembelianprice: TFloatField;
-    QReturnPembeliantotal_price: TFloatField;
-    QReturnPembelianppn: TFloatField;
-    QReturnPembelianppnrp: TFloatField;
     RzPanel1: TRzPanel;
     Label1: TLabel;
     Label2: TLabel;
@@ -131,14 +116,14 @@ uses UNew_ReturnPembelian, UDataModule, UMainMenu, UMy_Function;
 
 procedure TFReturnPembelian.ActBaruExecute(Sender: TObject);
 begin
-    with FNew_returnPemb do
-    begin
-      Show;
-      //Autonumber;
-      //Refresh;
-      Caption:='New Retur Pembelian';
-      status:=0;
-    end;
+  with FNew_returnPemb do
+  begin
+    Show;
+    //Autonumber;
+    //Refresh;
+    Caption:='New Retur Pembelian';
+    status:=0;
+  end;
 end;
 
 procedure TFReturnPembelian.ActDelExecute(Sender: TObject);
@@ -198,17 +183,19 @@ procedure TFReturnPembelian.ActRoExecute(Sender: TObject);
 begin
     DBGridReturnPemb.StartLoadingStatus();
     DBGridReturnPemb.FinishLoadingStatus();
-  QReturnPembelian.Close;
-  MemReturn.Active:=false;
-  QDetail.Close;
-  with QReturnPembelian do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:=' Select * from "v_purchase_return" where return_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP1.date))+' and '+
-              ' return_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP2.date))+'';
-    open;
-  end;
+    DTP1.DateTime:=now;
+    DTp2.DateTime:=now;
+    QReturnPembelian.Close;
+    MemReturn.Active:=false;
+    QDetail.Close;
+    with QReturnPembelian do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:=' Select * from "v_purchase_return" where return_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP1.date))+' and '+
+                ' return_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTP2.date))+'';
+      open;
+    end;
     MemReturn.Active:=true;
     QDetail.Active:=True;
 end;
@@ -229,6 +216,8 @@ begin
       edvls.Text:=MemReturn['valas'];
       ednilai_vls.Text:=MemReturn['valas_value'];
       edno_terima.Text:=MemReturn['receive_no'];
+      akunHut:=Memreturn['account_code'];
+      AkunRetur:=Memreturn['account_code2'];
 
       QDetail.First;
       while not QDetail.Eof do
@@ -418,22 +407,25 @@ begin
       ExecSQL;
    end;
    QRptReturnPemb.Open;
+   if MemReturn['valas']='IDR' then
+   frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian2.Fr3')
+   else
    frxReport1.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_ReturnPembelian.Fr3');
    frxReport1.ShowReport();
 end;
 
 procedure TFReturnPembelian.dxbarRefreshClick(Sender: TObject);
 begin
-    DBGridReturnPemb.StartLoadingStatus();
-    DBGridReturnPemb.FinishLoadingStatus();
-    QReturnPembelian.Close;
-    MemReturn.Close;
-    QDetail.Close;
-    if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
-    if MemReturn.Active=False then MemReturn.Active:=True;
-    if QDetail.Active=False then QDetail.Active:=True;
-    if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
-    if QRptDet.Active=False then QRptDet.Active:=True;
+  DBGridReturnPemb.StartLoadingStatus();
+  DBGridReturnPemb.FinishLoadingStatus();
+  QReturnPembelian.Close;
+  MemReturn.Close;
+  QDetail.Close;
+  if QReturnPembelian.Active=false then QReturnPembelian.Active:=True;
+  if MemReturn.Active=False then MemReturn.Active:=True;
+  if QDetail.Active=False then QDetail.Active:=True;
+  if QRptReturnPemb.Active=False then QRptReturnPemb.Active:=True;
+  if QRptDet.Active=False then QRptDet.Active:=True;
 end;
 
 procedure TFReturnPembelian.FormShow(Sender: TObject);

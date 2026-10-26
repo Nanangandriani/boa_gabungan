@@ -32,8 +32,6 @@ object FRekapPiutang: TFRekapPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitLeft = -301
-    ExplicitWidth = 1062
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -1511,7 +1509,7 @@ object FRekapPiutang: TFRekapPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46223.593797407400000000
+    ReportOptions.LastChange = 46233.657375671300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1557,9 +1555,9 @@ object FRekapPiutang: TFRekapPiutang
         object Memo20: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Left = 0.000244094488188989
+          Left = 0.000244094488000002
           Top = 49.493506530000000000
-          Width = 755.905511811023600000
+          Width = 755.905511811024000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1644,9 +1642,9 @@ object FRekapPiutang: TFRekapPiutang
         object Memo10: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Left = 0.000244094488188989
+          Left = 0.000244094488000002
           Top = 5.045601050000000000
-          Width = 755.905511811023600000
+          Width = 755.905511811024000000
           Height = 21.454040980000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1680,7 +1678,7 @@ object FRekapPiutang: TFRekapPiutang
           Width = 139.206365350000000000
           Height = 22.677165350000000000
           StretchMode = smMaxHeight
-          DataField = 'customer_name'
+          DataField = 'customer_name_pkp'
           DataSet = frxDBDatasetRekapPiutang
           DataSetName = 'frxDBDatasetRekapPiutang'
           Font.Charset = DEFAULT_CHARSET
@@ -1690,7 +1688,7 @@ object FRekapPiutang: TFRekapPiutang
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDatasetRekapPiutang."customer_name"]')
+            '[frxDBDatasetRekapPiutang."customer_name_pkp"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2089,7 +2087,7 @@ object FRekapPiutang: TFRekapPiutang
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 654.190476190000000000
-          Width = 102.047244094488200000
+          Width = 102.047244094488000000
           Height = 27.212598430000000000
           DataSet = frxDBDatasetRekapPiutang
           DataSetName = 'frxDBDatasetRekapPiutang'
@@ -2201,8 +2199,8 @@ object FRekapPiutang: TFRekapPiutang
     PdfA = False
     PDFStandard = psNone
     PDFVersion = pv17
-    Left = 336
-    Top = 200
+    Left = 192
+    Top = 272
   end
   object frxXLSExport1: TfrxXLSExport
     UseFileCache = True
@@ -2216,7 +2214,7 @@ object FRekapPiutang: TFRekapPiutang
     PageBreaks = True
     EmptyLines = True
     SuppressPageHeadersFooters = False
-    Left = 320
-    Top = 256
+    Left = 264
+    Top = 272
   end
 end

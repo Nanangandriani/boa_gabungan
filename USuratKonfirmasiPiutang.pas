@@ -130,7 +130,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
+      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date) )+') '+
                 'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0;';
       open;
     end;
@@ -142,8 +142,8 @@ begin
       begin
         close;
         sql.Clear;
-        sql.Text:='select name_cust,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
-                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0 GROUP BY name_cust,address;';
+        sql.Text:='select name_cust,customer_name_pkp,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date) )+') '+
+                'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0 GROUP BY name_cust,address,customer_name_pkp;';
 //        sql.Text:='select name_cust,address,sum(sisa_piutang) total_piutang from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1))+') '+
 //                  'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' GROUP BY name_cust,address;';
         open;
@@ -165,7 +165,7 @@ begin
     begin
       close;
       sql.Clear;
-      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date-1) )+') '+
+      sql.Text:='select * from get_piutang_invoice('+QuotedStr(FormatDateTime('yyyy-mm-dd', dtPerTanggal.Date) )+') '+
                 'where code_cust='+QuotedStr(StrSKPKodePelanggan)+' AND sisa_piutang>0;';
       open;
     end;
@@ -227,7 +227,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select a.full_name from t_user  a left join t_position b on b.position_code=a.position_code where b.level=2 and status_signature=true';
+    sql.Text:='select a.full_name from t_user a left join t_position b on b.position_code=a.position_code where a.status=true and b.level=2 and status_signature=true';
     open;
   end;
   StrNonOp:=dm.Qtemp.FieldValues['full_name'] ;
@@ -249,7 +249,7 @@ begin
   if CompareText(VarName, 'tgl_surat') = 0 then
   Value := tgl+' '+bulan+' '+tahun ;
   if CompareText(VarName, 'parNamaPelanggan') = 0 then
-  Value := dm.Qtemp1.FieldValues['name_cust'];
+  Value := dm.Qtemp1.FieldValues['customer_name_pkp'];
   if CompareText(VarName, 'parAlamatPelanggan') = 0 then
   Value := dm.Qtemp1.FieldValues['address'];
   if CompareText(VarName, 'nmsbu') = 0 then

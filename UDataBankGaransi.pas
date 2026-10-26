@@ -70,7 +70,13 @@ begin
       sql.Clear;
       SQL.Text:=' SELECT * from "public"."t_customer_bank_guarantee" '+
                 ' where "customer_code"='+QuotedStr(Edkode.Text)+'';
-      Execute;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     FDataBankGaransi.MemMaster.active:=false;
@@ -113,7 +119,13 @@ begin
     sql.clear;
     sql.Text:=' DELETE FROM  "public"."t_customer_bank_guarantee" '+
               ' WHERE customer_code='+QuotedStr(Edkode.Text)+';';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   MemMaster.First;
@@ -141,7 +153,13 @@ begin
                   ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemMaster['tgl_tempo']))+', '+
                   ' '+QuotedStr(MemMaster['nomor_bg'])+', '+
                   ' '+QuotedStr(MemMaster['nilai'])+','+QuotedStr(FHomeLogin.vKodePRSH)+');';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemMaster.Next;
   end;

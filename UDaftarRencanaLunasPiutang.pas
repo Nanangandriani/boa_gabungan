@@ -144,6 +144,7 @@ begin
            MemDetailPiutang.Next;
            end;
          end;
+         FDataPenerimaanBank.RefreshGridAkunBankPiutang;
       end
       Except on E :Exception do
         begin

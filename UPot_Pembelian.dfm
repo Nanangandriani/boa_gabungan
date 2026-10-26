@@ -1908,8 +1908,8 @@ object FPot_Pembelian: TFPot_Pembelian
         't_date,a.faktur_no,a.price,a.receive_no,a.n_valas,a.valas,a.pric' +
         'e_rp,a.total,a.ppn,a.ppnrp'
       'ORDER BY a.discount_no DESC')
-    Left = 240
-    Top = 32
+    Left = 224
+    Top = 24
   end
   object QDetail: TUniQuery
     Connection = dm.Koneksi

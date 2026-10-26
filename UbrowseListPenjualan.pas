@@ -67,7 +67,13 @@ begin
     sql.Text:='SELECT false as pilih,trans_no,code_cust,name_cust,customer_name_pkp,no_reference,karesidenan,tp,'+
               'kabupaten,kecamatan,grand_tot from get_selling(False) WHERE deleted_at is NULL '+
               'and trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+'  ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   QPenjualanDet.Close;
   QPenjualanDet.Open;
@@ -110,7 +116,13 @@ begin
                 'LEFT JOIN get_selling(False) b ON b.trans_no = a.trans_no ' +
                 'WHERE a.trans_no IN (' + ListTransNo + ') ' +
                 'AND b.deleted_at IS NULL';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if not dm.Qtemp3.IsEmpty then
   begin

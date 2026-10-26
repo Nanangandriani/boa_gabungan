@@ -1182,6 +1182,7 @@ begin
    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FPembelian.Name)); //Mendapatkan nama Menu
    FKoreksi.Status:=0;
+    FKoreksi.AksiTipe:='KOREKSI';
    FKoreksi.vnotransaksi:=EdNo.Text; //Mendapatkan Nomor Transaksi
    FKoreksi.ShowModal;
 end;
@@ -1761,7 +1762,7 @@ begin
         if ((DBGridDetailpo.SelectedIndex=17)) then
         begin
         //showmessage('C');
-          if MemterimaDet['pph']<>0 then
+          if MemterimaDet['ppn']<>0 then
           BEGIN
             MemterimaDet['ppn_rp']:=(MemterimaDet['Subtotal']/100)*MemterimaDet['ppn'];
           END;
@@ -1780,8 +1781,8 @@ begin
           END;
         end;
 
-        MemterimaDet['grandtotal']:=MemterimaDet['Subtotal']+MemterimaDet['pemb_dpp']+(MemterimaDet['ppn_rp']+MemterimaDet['pemb_ppn'])-MemterimaDet['pph_rp'];
-
+       // MemterimaDet['grandtotal']:=MemterimaDet['Subtotal']+MemterimaDet['pemb_dpp']+(MemterimaDet['ppn_rp']+MemterimaDet['pemb_ppn'])-MemterimaDet['pph_rp'];
+        MemterimaDet['grandtotal']:=MemterimaDet['Subtotal']+MemterimaDet['pemb_dpp']+(MemterimaDet['ppn_rp']+MemterimaDet['ppn_rp_pembulatan'])-MemterimaDet['pph_rp'];
         MemterimaDet.Post;
         //Self.Totalpo;
         //cr ds 26-03-2026
@@ -1929,7 +1930,7 @@ begin
                         ' LEFT JOIN t_purchase_invoice_det inv on b.po_no=inv.po_no and b.item_code=inv.item_code '+
                         ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+' '+//and b.po_no='+QuotedStr(Cb_ref.Text)+'
                         ' and b.remaining_qty > 0'+
-                        ' and inv.po_no IS NULL '+
+                        ' and inv.po_no IS NULL and c.deleted_at ISNULL '+
                         ' GROUP BY a.item_stock_code,a.item_code, b.item_name, a.order_no,b.price,b.remaining_qty,'+
                         ' b.unit,b.wh_code,f.wh_name,b.ppn,b.pph,b.po_no, c.supplier_code,e.account_code, c.due_date '+
                         ' ,c.valas,c.valas_value,f.wh_code,c."type",b.pemb_dpp,b.id_pengajuan_asset,b.no_pengajuan_asset,'+
@@ -1973,6 +1974,7 @@ begin
                         ' inner join t_ak_account_sub g on e.acc_pemb=g.account_code2 '+
                         ' LEFT JOIN t_purchase_invoice_det inv on b.po_no=inv.po_no and b.item_code=inv.item_code '+
                         ' where c.supplier_code='+QuotedStr(Edkd_supp.Text)+'  and inv.po_no IS NULL and c.status_on_faktur<>''1'''+
+                        ' and c.deleted_at ISNULL '+
                         //' and b.receive_no='+QuotedStr(Cb_Ref.Text)+' '+
                         ' GROUP BY c.sj_no,a.item_stock_code,a.item_code,a.item_name, a.order_no,b.price,b.qty,  '+
                         //' b.unit,b.wh_code,f.wh_name,c.receive_no,b.ppn,b.pph,b.po_no,c.supplier_code,d.spb_no,e.account_code,'+

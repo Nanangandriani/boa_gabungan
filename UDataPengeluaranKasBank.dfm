@@ -342,6 +342,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Top = 186
       Width = 93
       Height = 23
+      Color = clInfoBk
+      ReadOnly = True
       TabOrder = 9
       DisplayFormat = '0.00#,##'
     end
@@ -392,7 +394,7 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       Visible = False
     end
     object EdNo: TEdit
-      Left = 497
+      Left = 552
       Top = 106
       Width = 96
       Height = 23
@@ -545,6 +547,24 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
       TabOrder = 26
       Visible = False
       OnChange = CbGroup_BiayaChange
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 464
+      Top = 81
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 27
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 497
+      Top = 104
+      Width = 30
+      Caption = '...'
+      TabOrder = 28
+      OnClick = btnNoTransaksiClick
     end
   end
   object Panel2: TPanel
@@ -1238,6 +1258,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
             DynProps = <>
             EditButtons = <>
             FieldName = 'kredit'
+            Footer.FieldName = 'kredit'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Jumlah | Kredit'
             Width = 150
@@ -1598,8 +1620,8 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
   end
   object dsDetailHutang: TDataSource
     DataSet = MemDetailHutang
-    Left = 712
-    Top = 520
+    Left = 720
+    Top = 504
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
@@ -1968,14 +1990,14 @@ object FDataPengeluaranKasBank: TFDataPengeluaranKasBank
     Top = 528
   end
   object DSTP: TDataSource
-    Left = 1000
+    Left = 1016
     Top = 160
   end
   object QTP_Real: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 920
-    Top = 168
+    Left = 872
+    Top = 200
   end
 end

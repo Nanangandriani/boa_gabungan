@@ -75,7 +75,13 @@ begin
       SQL.Clear;
       SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
       // Use Open() for SELECT statement
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     // Fill the TdxBarCombo
@@ -116,7 +122,13 @@ begin
       Close;
       SQL.Clear;
       SQL.Text := 'select company_code, company_name from t_company where stat_office=1 order by company_name ASC';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if not Dm.Qtemp.IsEmpty then
@@ -405,21 +417,45 @@ begin
   //end;
 end;
 
+//function SelectRow(cSelect: String): String;
+//var
+//  UniQuery1: TUniQuery;
+//begin
+//  UniQuery1 := TUniQuery.Create(nil);
+//  UniQuery1.Connection := dm.Koneksi;
+//  UniQuery1.SQL.Text := cSelect;
+//  if UniQuery1.Active then
+//    UniQuery1.Refresh
+//  else
+//    UniQuery1.Open;
+//
+//  Result := UniQuery1.Fields.Fields[0].AsString;
+//  UniQuery1.Close;
+//  UniQuery1.Free;
+//end;
+
 function SelectRow(cSelect: String): String;
 var
   UniQuery1: TUniQuery;
 begin
+  Result := '';
   UniQuery1 := TUniQuery.Create(nil);
-  UniQuery1.Connection := dm.Koneksi;
-  UniQuery1.SQL.Text := cSelect;
-  if UniQuery1.Active then
-    UniQuery1.Refresh
-  else
-    UniQuery1.Open;
-
-  Result := UniQuery1.Fields.Fields[0].AsString;
-  UniQuery1.Close;
-  UniQuery1.Free;
+  try
+    UniQuery1.Connection := dm.Koneksi;
+    UniQuery1.SQL.Text := cSelect;
+    try
+      UniQuery1.Open;
+    except
+      dm.Koneksi.Close;
+      dm.Koneksi.Open;
+      UniQuery1.Open;
+    end;
+    if not UniQuery1.IsEmpty then
+      Result := UniQuery1.Fields[0].AsString;
+  finally
+    UniQuery1.Close;
+    UniQuery1.Free;
+  end;
 end;
 
 function Sys_Batas_Data(fieldtanggal: String): String;

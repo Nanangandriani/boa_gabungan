@@ -232,7 +232,7 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           'ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
@@ -253,7 +253,7 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           ' and  left(l.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           ' GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  '+
@@ -272,7 +272,7 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
                           'and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
@@ -295,7 +295,7 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           ' and  left(l.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           ' GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id '+
@@ -315,7 +315,7 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,concat(a.bank,'''',a.cek_no)as ket from '+
                           '(select * from t_paid_debt_det '+
-                          'where factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'where deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           //'and approve_status=false'+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
@@ -342,7 +342,7 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'WHERE deleted_at is null and paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
@@ -365,7 +365,7 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code '+
-                          'where k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'where k.deleted_at is null and k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           'and k.plan_to='+QuotedStr(CbRencana.Text)+' and  '+
                           'left(l.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           'GROUP BY m.id,k.inv_no,n.item_name,n.unit '+
@@ -396,7 +396,12 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,amount,urutan,concat(bank,''-'',cek_no)  as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and '+
+                          'supplier_code='+QuotedStr(code_supp.EditValue)+' and  '+
+                          'periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+
+                          'periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  '+
+                          //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          ' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -415,7 +420,10 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+
+                          'periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
                           'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
                           '  GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id '+
@@ -433,7 +441,7 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
                           'and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  '+
                           //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
@@ -456,7 +464,7 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
                           'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
@@ -477,7 +485,7 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,concat(a.bank,'''',a.cek_no)as ket from '+
                           '(select * from t_paid_debt_det '+
-                          'where factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'where deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           //'and approve_status=false'+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
@@ -489,7 +497,7 @@ begin
                           'where faktur_no is not null) c on a.inv_no=c.trans_no or a.faktur_no=c.trans_no '+
                           //'left join t_purchase_invoice c on a.inv_no=c.trans_no '+
                           'left join t_supplier b on a.supplier_code=b.supplier_code '+
-                          'where left(c.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
+                          //'where left(c.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           'order by a.supplier_code,c.trans_date,a.cek_no,c.trans_no,a.plan_to asc -- 7';
                 Open;
               end;
@@ -504,7 +512,7 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'WHERE deleted_at is null and paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
@@ -527,7 +535,7 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code '+
-                          'where k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'where k.deleted_at is null and k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           'and k.plan_to='+QuotedStr(CbRencana.Text)+' '+
                           'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
                           'GROUP BY m.id,k.inv_no,n.item_name,n.unit '+
@@ -736,7 +744,7 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ' ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
@@ -757,7 +765,7 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and '+
                           ' k.factory_code='+QuotedStr(vKODEPRSH)+'  '+
                           ' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
                           ' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
@@ -778,7 +786,7 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
@@ -801,7 +809,7 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           ' and  left(l.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           ' GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id '+
@@ -821,7 +829,7 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,concat(a.bank,'''',a.cek_no)as ket from '+
                           '(select * from t_paid_debt_det '+
-                          'where factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'where deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           //'and approve_status=false'+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
@@ -848,7 +856,7 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'WHERE deleted_at is null and paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type=''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
@@ -871,7 +879,7 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code '+
-                          'where k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'where k.deleted_at is null and k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           'and k.plan_to='+QuotedStr(CbRencana.Text)+' '+
                           'and  left(l.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           'GROUP BY m.id,k.inv_no,n.item_name,n.unit '+
@@ -903,7 +911,12 @@ begin
                 sql.Text:='SELECT inv_no,bank,supplier_code,paid_date,cek_no, principle_name,tanggal,nofakturpajak,sj_no,tgltempo,jumlah as amount,urutan,concat(bank,''-'',cek_no) as ket '+
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and  periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  and plan_to='+QuotedStr(CbRencana.Text)+' ORDER BY supplier_code ASC)a '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'and supplier_code='+QuotedStr(code_supp.EditValue)+' and  '+
+                          'periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
+                          'and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  '+
+                          //'and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'ORDER BY supplier_code ASC)a '+
                           'LEFT JOIN t_supplier b on a.supplier_code=b.supplier_code '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
                           'faktur_date, due_date, account_code  from t_purchase_invoice '+
@@ -922,7 +935,10 @@ begin
                           '(SELECT distinct m.id,k.inv_no,n.item_name,sum(m.qty) qty,n.unit from t_paid_debt_det k '+
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
-                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.factory_code='+QuotedStr(vKODEPRSH)+'  and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
+                          'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  '+
+                          'and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and '+
+                          'periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
                           //'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
                           'and  l.account_code in(SELECT acc_code_pemb from t_item_type where type NOT IN(''DAGANG'')) '+
                           '  GROUP BY m.id,k.inv_no,n.item_name,n.unit ) z  group by z.inv_no,z.id '+
@@ -942,7 +958,7 @@ begin
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,'+
                           'c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo, '+
                           'a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
-                          '(SELECT * FROM t_paid_debt_det WHERE factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          '(SELECT * FROM t_paid_debt_det WHERE deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
                           'and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+'  '+
@@ -967,7 +983,7 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code where '+
-                          'k.factory_code='+QuotedStr(vKODEPRSH)+'  and '+
+                          'k.deleted_at is null and k.factory_code='+QuotedStr(vKODEPRSH)+'  and '+
                           'k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' '+
                           'and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           //'and k.plan_to='+QuotedStr(CBrencana.Text)+' '+
@@ -991,7 +1007,7 @@ begin
                 sql.Clear;
                 sql.Text:='SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount,concat(a.bank,'''',a.cek_no)as ket from '+
                           '(select * from t_paid_debt_det '+
-                          'where factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
+                          'where deleted_at is null and factory_code='+QuotedStr(vKODEPRSH)+' and supplier_code='+QuotedStr(code_supp.EditValue)+' and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           //'and approve_status=false'+
                           ')a '+
                           'LEFT JOIN (SELECT trans_no, trans_date, faktur_no, sj_no, '+
@@ -1003,7 +1019,7 @@ begin
                           'where faktur_no is not null) c on a.inv_no=c.trans_no or a.faktur_no=c.trans_no '+
                           //'left join t_purchase_invoice c on a.inv_no=c.trans_no '+
                           'left join t_supplier b on a.supplier_code=b.supplier_code '+
-                          'where left(c.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
+                          //' where left(c.account_code,7)='+Quotedstr(vkd_jenis_hutang)+' '+
                           ' order by a.supplier_code,c.trans_date,a.cek_no,c.trans_no,a.plan_to asc -- 7';
                 Open;
               end;
@@ -1018,7 +1034,7 @@ begin
                           'FROM '+
                           '(SELECT a.inv_no,a.bank,a.supplier_code,a.paid_date,a.cek_no,b.supplier_name as principle_name,c.trans_date as tanggal,c.faktur_no as nofakturpajak,c.sj_no,c.faktur_date+due_date as tgltempo,a.amount as jumlah,1 as urutan,bb.nm as ket FROM '+
                           '(SELECT * FROM t_paid_debt_det '+
-                          'WHERE paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
+                          'WHERE deleted_at is null and paid_status=0 and factory_code='+QuotedStr(vKODEPRSH)+' '+
                           'and supplier_code IN (select supplier_code from t_supplier a  LEFT JOIN t_item_type b on a.header_code=b.acc_code_pemb  where type<>''DAGANG'') '+
                           'and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' and plan_to='+QuotedStr(CbRencana.Text)+' '+
                           ')a '+
@@ -1041,7 +1057,7 @@ begin
                           'LEFT JOIN t_purchase_invoice l ON k.inv_no=l.trans_no '+
                           'INNER JOIN t_purchase_invoice_det m ON l.trans_no=m.trans_no '+
                           'INNER JOIN t_item_stock n ON m.item_stock_code=n.item_stock_code '+
-                          'where k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
+                          'where k.deleted_at is null and k.paid_status=0 and k.factory_code='+QuotedStr(vKODEPRSH)+' and k.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp1.EditValue))+' and k.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtp2.EditValue))+' '+
                           'and k.plan_to='+QuotedStr(CbRencana.Text)+' '+
                           'and  l.account_code in(SELECT account_code FROM t_expenses_payable_account) '+
                           'GROUP BY m.id,k.inv_no,n.item_name,n.unit '+

@@ -65,7 +65,7 @@ implementation
 {$R *.dfm}
 
 uses UDataModule, UMy_Function, UListKoreksi, UHomeLogin, UBrowseTransaksi,
-  UMainMenu;
+  UMainMenu, UListDeliveryOrder;
 
 procedure TFKoreksi.Approve;
 begin
@@ -74,7 +74,13 @@ begin
     Close;
     Sql.Clear;
     Sql.Text:='select table_trans,field_no_trans from t_menu_sub where UPPER(submenu)='+QuotedStr(cbMenu.Text);
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   tbl:= dm.QTemp2.FieldValues['table_trans'];
   field_no_trans:= dm.QTemp2.FieldValues['field_no_trans'];
@@ -85,7 +91,13 @@ begin
     Sql.Text := 'Update t_correction_trans set status=1,approved_rejected_by='+QuotedStr(Nm)+', '+
                 'approved_rejected_at=NOW(),note_approved_rejected='+QuotedStr(MemKetApprove.Text)+' Where '+
                 'code='+QuotedStr(edKode.Text);
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   if AksiTipe='DELETE' then
@@ -101,8 +113,21 @@ begin
                   'WHERE ' + field_no_trans + ' LIKE CONCAT(' + QuotedStr(edNoTransaksi.Text) + ', ''-DEL%'') ' +
                   'AND deleted_at IS NOT NULL) ) ' +
                   'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
+
+    if FKoreksi.vcall=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListDeliveryOrder')) then
+    begin
+      FListDeliveryOrder.DeleteDOChakra(edNoTransaksi.Text);
+    end;
+
   end else begin
     with dm.Qtemp do
     begin
@@ -110,7 +135,13 @@ begin
       sql.clear;
       Sql.Text := 'Update '+tbl+' set status_correction=2 '+
                   'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
   MessageDlg('Data Berhasil di Setujui..!!',mtInformation,[MBOK],0);
@@ -125,7 +156,13 @@ begin
     Close;
     Sql.Clear;
     Sql.Text:='select table_trans,field_no_trans from t_menu_sub where UPPER(submenu)='+QuotedStr(cbMenu.Text);
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   tbl:= dm.QTemp2.FieldValues['table_trans'];
   field_no_trans:= dm.QTemp2.FieldValues['field_no_trans'];
@@ -136,7 +173,13 @@ begin
     Sql.Text := 'Update t_correction_trans set status=99,approved_rejected_by='+QuotedStr(Nm)+', '+
                 'approved_rejected_at=NOW(),note_approved_rejected='+QuotedStr(MemKetApprove.Text)+' Where '+
                 'code='+QuotedStr(edKode.Text);
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   with dm.Qtemp do
   begin
@@ -144,7 +187,13 @@ begin
     sql.clear;
     Sql.Text := 'Update '+tbl+' set status_correction=0 '+
                 'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   MessageDlg('Data Berhasil di Tolak ..!!',mtInformation,[MBOK],0);
   FMainMenu.TampilTabForm2;
@@ -160,7 +209,13 @@ begin
     sql.Text:='select a.*,b.table_trans,b.field_no_trans from vcorrection_trans a '+
               'LEFT JOIN t_menu_sub b on b.submenu_code=a.menu_trans '+
               'where a.code='+QuotedStr(kode_koreksi);
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   edKode.Text:=dm.Qtemp.FieldValues['code'];
   vnotransaksi:=dm.Qtemp.FieldValues['no_transaksi'];
@@ -177,7 +232,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_dpp_temp() WHERE id='+QuotedStr(vnotransaksi);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     edNoNota.Text:=dm.Qtemp.FieldValues['no_invoice'];
     edNamaKolektor.Text:=dm.Qtemp.FieldValues['name_collector'];
@@ -196,7 +257,13 @@ begin
     Sql.Clear;
     Sql.Text:='select status from t_correction_trans where no_transaksi ='+QuotedStr(edNoTransaksi.Text)+' and '+
               'deleted_at is NULL ORDER BY created_at DESC LIMIT 1;';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.FieldByName('status').Value = '0' then
@@ -212,7 +279,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='select submenu_code from t_menu_sub where upper(submenu)='+QuotedStr(vcall);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     strKodeSubMenu:=dm.Qtemp.FieldValues['submenu_code'];
 
@@ -222,7 +295,7 @@ begin
     begin
       close;
       sql.clear;
-      sql.Text:='Insert into "public"."t_correction_trans" (code,created_at,created_by,'+
+      sql.Text:='Insert into t_correction_trans(code,created_at,created_by,'+
                 'menu_trans,note,no_transaksi,additional_code,order_no,trans_day,trans_month,trans_year,status,is_delete) '+
               ' VALUES (  '+
               ' '+QuotedStr(edKode.Text)+', '+
@@ -236,7 +309,13 @@ begin
               ' '+QuotedStr(strtgl)+', '+
               ' '+QuotedStr(strbulan)+', '+
               ' '+QuotedStr(strtahun)+',0,'+QuotedStr(strIsDelete)+');';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     with dm.Qtemp do
@@ -245,7 +324,13 @@ begin
       sql.clear;
       Sql.Text := 'Update '+tbl+' set status_correction=1 '+
                   'Where '+field_no_trans+'='+QuotedStr(edNoTransaksi.Text);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
@@ -269,7 +354,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
   edKode.Text:=getNourut(strday2,'public.t_correction_trans',FKoreksi.kd_kares);
@@ -296,7 +387,13 @@ begin
               'where upper(c.master_name)=''TRANSAKSI'' '+
               'GROUP BY b.menu,a.submenu '+
               'order by b.menu,a.submenu ASC';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   while not DM.Qtemp.Eof do
   begin
@@ -325,6 +422,9 @@ begin
 end;
 
 procedure TFKoreksi.FormShow(Sender: TObject);
+var
+  BaseHeight: Integer;
+  BaseTopMemKet, BaseTopRzLabel4, BaseTopMemKetApprove, BaseTopRzLabel6: Integer;
 begin
 
   if AksiTipe='DELETE' then FKoreksi.Caption:='Hapus Transaksi' else FKoreksi.Caption:='Koreksi Transaksi';
@@ -336,26 +436,25 @@ begin
   vcall2 :=SelectRow('select Upper(submenu) menu from t_menu_sub  '+
                     'where link=''FListApproveDaftarPenagihanPiutang'' ');
 
-//  Autonumber;
   if Status=0 then
   begin
 
     if vcall<>vcall2 then
     begin
-      FKoreksi.Height:=294;
+      BaseHeight:=294;
       BtnReject.Visible:=False;
       BtnApprove.Visible:=False;
       BSave.Visible:=True;
-      BBatal.Visible:=True;
+//      BBatal.Visible:=True;
       memKet.Enabled:=True;
       MemKetApprove.Visible:=False;
       RzLabel6.Visible:=False;
 
 
-      memKet.Top:=129;
-      RzLabel4.Top:=132;
-      MemKetApprove.Top:=225;
-      RzLabel6.Top:=228;
+      BaseTopMemKet:=129;
+      BaseTopRzLabel4:=132;
+      BaseTopMemKetApprove:=225;
+      BaseTopRzLabel6:=228;
 
       edNoNota.Visible:=False;
       edNamaKolektor.Visible:=False;
@@ -367,19 +466,19 @@ begin
       RzLabel10.Visible:=False;
 
     end else begin
-      FKoreksi.Height:=410;
+      BaseHeight:=410;
       BtnReject.Visible:=False;
       BtnApprove.Visible:=False;
       BSave.Visible:=True;
-      BBatal.Visible:=True;
+//      BBatal.Visible:=True;
       memKet.Enabled:=True;
       MemKetApprove.Visible:=False;
       RzLabel6.Visible:=False;
 
-      memKet.Top:=243;
-      RzLabel4.Top:=246;
-      MemKetApprove.Top:=339;
-      RzLabel6.Top:=342;
+      BaseTopMemKet:=243;
+      BaseTopRzLabel4:=246;
+      BaseTopMemKetApprove:=339;
+      BaseTopRzLabel6:=342;
 
       edNoNota.Visible:=True;
       edNamaKolektor.Visible:=True;
@@ -396,29 +495,36 @@ begin
       close;
       sql.Clear;
       sql.Text:='select table_trans,field_no_trans FROM t_menu_sub where UPPER(submenu)='+QuotedStr(vcall);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     tbl:= dm.Qtemp.FieldValues['table_trans'];
     field_no_trans:= dm.Qtemp.FieldValues['field_no_trans'];
+    memKet.SetFocus;
 
   end else if Status=1 then begin
 
     Detail;
     if vcall<>vcall2 then
     begin
-      FKoreksi.Height:=394;
+      BaseHeight:=394;
       MemKetApprove.Visible:=True;
       RzLabel6.Visible:=True;
       BtnReject.Visible:=False;
       BtnApprove.Visible:=True;
       BSave.Visible:=False;
-      BBatal.Visible:=False;
+//      BBatal.Visible:=False;
       memKet.Enabled:=False;
 
-      memKet.Top:=129;
-      RzLabel4.Top:=132;
-      MemKetApprove.Top:=225;
-      RzLabel6.Top:=228;
+      BaseTopMemKet:=129;
+      BaseTopRzLabel4:=132;
+      BaseTopMemKetApprove:=225;
+      BaseTopRzLabel6:=228;
 
       edNoNota.Visible:=False;
       edNamaKolektor.Visible:=False;
@@ -430,19 +536,19 @@ begin
       RzLabel10.Visible:=False;
 
     end else begin
-      FKoreksi.Height:=510;
+      BaseHeight:=510;
       MemKetApprove.Visible:=True;
       RzLabel6.Visible:=True;
       BtnReject.Visible:=False;
       BtnApprove.Visible:=True;
       BSave.Visible:=False;
-      BBatal.Visible:=False;
+//      BBatal.Visible:=False;
       memKet.Enabled:=False;
 
-      memKet.Top:=243;
-      RzLabel4.Top:=246;
-      MemKetApprove.Top:=339;
-      RzLabel6.Top:=342;
+      BaseTopMemKet:=243;
+      BaseTopRzLabel4:=246;
+      BaseTopMemKetApprove:=339;
+      BaseTopRzLabel6:=342;
 
       edNoNota.Visible:=True;
       edNamaKolektor.Visible:=True;
@@ -453,25 +559,26 @@ begin
       RzLabel9.Visible:=True;
       RzLabel10.Visible:=True;
     end;
+    MemKetApprove.SetFocus;
 
   end else if Status=2 then begin
 
     Detail;
     if vcall<>vcall2 then
     begin
-      FKoreksi.Height:=394;
+      BaseHeight:=394;
       MemKetApprove.Visible:=True;
       RzLabel6.Visible:=True;
       BtnReject.Visible:=True;
       BtnApprove.Visible:=False;
       BSave.Visible:=False;
-      BBatal.Visible:=False;
+//      BBatal.Visible:=False;
       memKet.Enabled:=False;
 
-      memKet.Top:=129;
-      RzLabel4.Top:=132;
-      MemKetApprove.Top:=225;
-      RzLabel6.Top:=228;
+      BaseTopMemKet:=129;
+      BaseTopRzLabel4:=132;
+      BaseTopMemKetApprove:=225;
+      BaseTopRzLabel6:=228;
 
       edNoNota.Visible:=False;
       edNamaKolektor.Visible:=False;
@@ -483,19 +590,19 @@ begin
       RzLabel10.Visible:=False;
 
     end else begin
-      FKoreksi.Height:=510;
+      BaseHeight:=510;
       MemKetApprove.Visible:=True;
       RzLabel6.Visible:=True;
       BtnReject.Visible:=True;
       BtnApprove.Visible:=False;
       BSave.Visible:=False;
-      BBatal.Visible:=False;
+//      BBatal.Visible:=False;
       memKet.Enabled:=False;
 
-      memKet.Top:=243;
-      RzLabel4.Top:=246;
-      MemKetApprove.Top:=339;
-      RzLabel6.Top:=342;
+      BaseTopMemKet:=243;
+      BaseTopRzLabel4:=246;
+      BaseTopMemKetApprove:=339;
+      BaseTopRzLabel6:=342;
 
       edNoNota.Visible:=True;
       edNamaKolektor.Visible:=True;
@@ -506,12 +613,18 @@ begin
       RzLabel9.Visible:=True;
       RzLabel10.Visible:=True;
     end;
+    MemKetApprove.SetFocus;
 
   end;
   vcall:=UpperCase(vcall);
-
   edNoTransaksi.Text:=vnotransaksi;
   cbMenu.Text:=vcall;
+
+  FKoreksi.Height             := MulDiv(BaseHeight, CurrentPPI, 96);
+  memKet.Top                  := MulDiv(BaseTopMemKet, CurrentPPI, 96);
+  RzLabel4.Top                := MulDiv(BaseTopRzLabel4, CurrentPPI, 96);
+  MemKetApprove.Top           := MulDiv(BaseTopMemKetApprove, CurrentPPI, 96);
+  RzLabel6.Top                := MulDiv(BaseTopRzLabel6, CurrentPPI, 96);
 end;
 
 procedure TFKoreksi.BBatalClick(Sender: TObject);

@@ -186,7 +186,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,FALSE,FALSE,'+QuotedStr(strTpID)+') ORDER BY kabupaten ASC';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if Qreport.RecordCount=0 then
     begin
@@ -218,7 +224,13 @@ begin
       sql.Clear;
 //      sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(cbKaresidenan.EditValue)+',NULL,FALSE,FALSE)';
       sql.Text:='SELECT * FROM get_lhsn_sum('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+','+QuotedStr(strKaresidenanID)+',NULL,FALSE,FALSE,'+QuotedStr(strTpID)+') ORDER BY kabupaten ASC ';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;

@@ -70,7 +70,13 @@ begin
       sql.clear;
       sql.text:='SELECT * FROM get_down_payment_sales()'+
                 'WHERE '+strWhere+' sisa_uang_muka>0';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;

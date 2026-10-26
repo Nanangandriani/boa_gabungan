@@ -315,7 +315,7 @@ begin
         Execute;
       END;
         QRekap_Mutasi.Open;
-        Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_rekapmutasi.fr3');
+        Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\rpt_rekapmutasixl.fr3');
 
          if Rpt.FindObject('Mtgl') <> nil then
     TfrxMemoView(Rpt.FindObject('Mtgl')).Memo.Text:='Periode  : '+(FormatDateTime('dd mmmm yyy',DtMulai.EditValue))+' - '+(FormatDateTime('dd MMMM yyy',DtSelesai.EditValue));

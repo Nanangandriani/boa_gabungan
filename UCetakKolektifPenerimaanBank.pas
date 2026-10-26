@@ -83,7 +83,13 @@ begin
               '((a.position = ''K'') OR (a.position = ''D'' AND a.paid_amount > 0 AND b.header_code NOT IN (''1102'', ''1101''))) '+
 //              'and c.word_amount IS NULL '+
               'GROUP BY a.voucher_no';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   terbilang:='';
   if dm.Qtemp.RecordCount>0 then
@@ -99,7 +105,14 @@ begin
         sql.Text:=' UPDATE t_cash_bank_acceptance'+
                   ' SET word_amount='+QuotedStr(terbilang)+' '+
                   ' WHERE "voucher_no"='+QuotedStr(dm.Qtemp.FieldValues['voucher_no'])+';';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       dm.Qtemp.Next;
     end;
@@ -174,7 +187,13 @@ begin
 ////              ' "position"=''K'' '+strTransaksi+' AND '+
 //              ' (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAwal.Date))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.Date))+') '+strNoRekening+
 //              'order by voucher_no ASC, account_name=''Piutang Barang Dagang'' ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if QBuktiTerima.RecordCount=0 then
@@ -245,7 +264,13 @@ begin
     close;
     sql.clear;
     sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
     first;
   end;
 
@@ -286,7 +311,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT DISTINCT bank_name FROM t_bank where deleted_at is NULL order by bank_name ASC';
-    ExecSQL;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
@@ -305,7 +336,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT DISTINCT rekening_no FROM t_bank WHERE bank_name='+QuotedStr(cbBank.Text)+' AND deleted_at is NULL';
-    ExecSQL;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do

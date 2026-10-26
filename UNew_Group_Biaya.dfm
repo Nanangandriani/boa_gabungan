@@ -2,8 +2,8 @@ object FNew_Group_biaya: TFNew_Group_biaya
   Left = 0
   Top = 0
   Caption = 'Form New Group Biaya'
-  ClientHeight = 153
-  ClientWidth = 595
+  ClientHeight = 154
+  ClientWidth = 599
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -56,13 +56,13 @@ object FNew_Group_biaya: TFNew_Group_biaya
   end
   object Panel2: TPanel
     Left = 0
-    Top = 121
-    Width = 595
+    Top = 122
+    Width = 599
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 117
-    ExplicitWidth = 564
+    ExplicitTop = 121
+    ExplicitWidth = 595
     object BBatal: TRzBitBtn
       Left = 523
       Top = 1
@@ -123,7 +123,7 @@ object FNew_Group_biaya: TFNew_Group_biaya
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 488
+      ExplicitLeft = 519
     end
     object BSave: TRzBitBtn
       Left = 438
@@ -186,7 +186,7 @@ object FNew_Group_biaya: TFNew_Group_biaya
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 403
+      ExplicitLeft = 434
     end
   end
   object Edkd_by: TRzEdit

@@ -40,6 +40,7 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
     AutoFitColWidths = True
     DataSource = DsPelakuBiaya
     DynProps = <>
+    ReadOnly = True
     SearchPanel.Enabled = True
     TabOrder = 1
     Columns = <
@@ -95,12 +96,20 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
         Footers = <>
         Title.Caption = 'Wilayah TP'
         Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'nm_cost'
+        Footers = <>
+        Title.Caption = 'Nama Biaya'
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object ActMenu: TActionManager
-    Left = 600
+    Left = 624
     Top = 32
     StyleName = 'Platform Default'
     object ActBaru: TAction
@@ -670,8 +679,11 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
   object QPelakuBiaya: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select a.*,b.name from "public"."t_cost_actors" a'
+      
+        'select a.*,b.name,c.description as nm_cost from "public"."t_cost' +
+        '_actors" a'
       'LEFT JOIN t_region_tp b on a.karesidenan_code=b.code'
+      'left join t_type_cost_actor c on a.type_cost=c.id'
       'where a.deleted_at is null order by created_at ASC'
       ''
       ''
@@ -708,6 +720,9 @@ object FDataListPelakuBiaya: TFDataListPelakuBiaya
       FieldName = 'name_1'
       ReadOnly = True
       Size = 255
+    end
+    object QPelakuBiayanm_cost: TStringField
+      FieldName = 'nm_cost'
     end
   end
   object DsPelakuBiaya: TDataSource

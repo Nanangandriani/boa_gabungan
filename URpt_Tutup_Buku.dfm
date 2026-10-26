@@ -40,6 +40,7 @@ object FRpt_Tutup_Buku: TFRpt_Tutup_Buku
     Height = 528
     Align = alClient
     DataSource = DSTutup_Buku
+    DrawMemoText = True
     DynProps = <>
     SearchPanel.Enabled = True
     SearchPanel.WholeWords = True
@@ -632,6 +633,7 @@ object FRpt_Tutup_Buku: TFRpt_Tutup_Buku
         7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
         F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
+      OnClick = dxBarLargeButton1Click
     end
     object DxRefresh: TdxBarLargeButton
       Caption = 'Proses'

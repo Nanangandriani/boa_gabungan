@@ -22,6 +22,8 @@ object FSingkronisasiPusat: TFSingkronisasiPusat
     Align = alClient
     Color = 15987699
     TabOrder = 0
+    ExplicitWidth = 615
+    ExplicitHeight = 313
     object RzLabel1: TRzLabel
       Left = 24
       Top = 16
@@ -83,7 +85,7 @@ object FSingkronisasiPusat: TFSingkronisasiPusat
     end
     object btProses: TRzBitBtn
       Left = 319
-      Top = 13
+      Top = 11
       Width = 132
       Caption = 'Proses'
       TabOrder = 3

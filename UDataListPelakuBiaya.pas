@@ -63,6 +63,7 @@ type
     QPelakuBiayaaddress: TMemoField;
     QPelakuBiayakaresidenan_code: TStringField;
     QPelakuBiayaname_1: TStringField;
+    QPelakuBiayanm_cost: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -82,7 +83,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPeLakuBiaya, UDataModule, UMainMenu;
+uses UDataPeLakuBiaya, UDataModule, UMainMenu, UMy_Function;
 
 procedure TFDataListPelakuBiaya.ActBaruExecute(Sender: TObject);
 begin
@@ -90,6 +91,7 @@ begin
   FDataPeLakuBiaya.Autocode;
   FDataPeLakuBiaya.Edkode.Enabled:=false;
   FDataPeLakuBiaya.Status:=0;
+  FDataPeLakuBiaya.load_combo;
   FDataPeLakuBiaya.ShowModal;
 end;
 
@@ -128,7 +130,10 @@ begin
    begin
        close;
        sql.Clear;
-       sql.Text:=' select * from "public"."t_cost_actors" a '+
+       sql.Text:=' select "id", "created_at", "created_by", "updated_at", "updated_by",'+
+                 ' "deleted_at", "deleted_by", "code", "nik_employee", "name", "phone_number", '+
+                 ' "address", "karesidenan_code", "no_rekening", "nik_ktp", "stat_ptkp", "type_gender", '+
+                 ' "type_cost" from "public"."t_cost_actors" a '+
                  ' WHERE code='+QuotedSTr(QPelakuBiaya.FieldByName('code').AsString)+' '+
                  ' AND deleted_at is null order by code,created_at Desc ';
        open;
@@ -143,12 +148,32 @@ begin
   begin
   with FDataPeLakuBiaya do
   begin
+
+    load_combo;
     Edkode.Text:=Dm.Qtemp.FieldByName('code').AsString;
     Ednama.Text:=Dm.Qtemp.FieldByName('name').AsString;
     edNikKaryawan.Text:=Dm.Qtemp.FieldByName('nik_employee').AsString;
     EdNoTelp.Text:=Dm.Qtemp.FieldByName('phone_number').AsString;
     MemAlamat.Text:=Dm.Qtemp.FieldByName('address').AsString;
     kd_Karesidenan.Text:=Dm.Qtemp.FieldByName('karesidenan_code').AsString;
+
+    edno_rek.Text:=Dm.Qtemp.FieldByName('no_rekening').AsString;
+    ednik_ktp.Text:=Dm.Qtemp.FieldByName('nik_ktp').AsString;
+    edkd_ptkp.Text:=Dm.Qtemp.FieldByName('stat_ptkp').AsString;
+    ednm_ptkp.Text:=SelectRow('select description from t_m_ptkp where code='+QuotedStr(Dm.Qtemp.FieldByName('stat_ptkp').AsString)+'');
+    cbjenis_biaya.ItemIndex:=Dm.Qtemp.FieldByName('type_cost').asinteger;
+
+    with dm.Qtemp1 do //ambil id jenis kelamin
+    begin
+      close;
+      sql.clear;
+      sql.add('select * from t_type_gender where code='+quotedSTR(Dm.Qtemp.fieldbyname('type_gender').asstring)+'');
+      open;
+      first;
+    end;
+
+    cbjenis_kelamin.ItemIndex:=dm.Qtemp1.fieldbyname('id').asinteger;
+
   end;
   end;
   FDataPeLakuBiaya.Edkode.Enabled:=false;

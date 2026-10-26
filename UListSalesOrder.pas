@@ -77,7 +77,13 @@ begin
               ' from "public"."t_selling" where  deleted_at is null order by created_at Desc ) '+
               ' AND code_cust='+QuotedStr(FNew_Penjualan.edKode_Pelanggan.Text)+' '+
               ' ORDER BY a.created_at,order_date desc ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     MemMasterData.active:=false;
@@ -154,7 +160,13 @@ begin
         close;
         sql.clear;
         sql.Text:='select * from get_sales_order_not_in_selling('+strDate+','+strKodeKecamatan+','+strKodePelanggan+') '+strWhereTPKares;
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       MemMasterData.active:=false;
@@ -212,7 +224,13 @@ begin
               ' LEFT JOIN t_wh c on c.wh_code=a.wh_code '+
               ' where a.notrans='+QuotedStr(MemMasterData['NO_REFF'])+' and '+
               ' a.deleted_at is null order by a.created_at Desc');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     FNew_Penjualan.MemDetail.active:=false;

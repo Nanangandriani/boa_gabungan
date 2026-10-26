@@ -205,7 +205,13 @@ begin
 //                'where is_active=TRUE and  position_code = (select position_code from t_user  '+
 //                'where user_name='+QuotedStr(Nm)+')) AND EXTRACT(YEAR FROM a.created_at)='+edTahun.Text+strStatus;
 //      sql.Text:='select * from vcorrection_trans where EXTRACT(YEAR FROM created_at)='+edTahun.Text+strStatus;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     dxBarUpdate.Enabled:=True;
   end else begin
@@ -215,7 +221,13 @@ begin
       sql.Clear;
       sql.Text:='select * from vcorrection_trans where EXTRACT(YEAR FROM created_at)='+edTahun.Text+' AND '+
                 'created_by='+QuotedStr(Nm)+strStatus;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     dxBarUpdate.Enabled:=False;
   end;

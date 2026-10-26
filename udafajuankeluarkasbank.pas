@@ -198,7 +198,7 @@ implementation
 
 uses U_keluarkasbank_ajuan, UDataPengajuanPengeluaranKasBank, UDataModule,
   UDataPengeluaranKasBank, UHomeLogin, UMy_Function,UDataKasKecil,Utrx_deposito_ajuan,
-  Udaftar_TP;
+  Udaftar_TP, UKoreksi;
 
 procedure TFdafajuankeluarkasbank.ActBaruExecute(Sender: TObject);
 begin
@@ -223,33 +223,45 @@ end;
 
 procedure TFdafajuankeluarkasbank.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Cek Apakah sudah dilakukan tahap pelunasan apa belum...',mtInformation,[MBOK],0);
-
-  if MessageDlg('Apakah anda yakin ingin membatalkan pelunasan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  with dm.Qtemp do
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_cash_bank_expenditure_submission" SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "voucher_no"='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT * FROM t_cash_bank_expenditure '+
+              ' where voucher_tmp='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
+              ' AND deleted_at is NULL';
+    open;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT * from t_correction_trans WHERE is_delete =true and '+
+              ' no_transaksi='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
+              ' and status=0 and deleted_at is null ';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else if dm.Qtemp.RecordCount>0 then
+  begin
+    MessageDlg('Nota sudah ada  pembayaran..!!',mtInformation,[mbRetry],0);
+  end else if CheckJurnalPosting(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('Fdafajuankeluarkasbank'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString;
+      FKoreksi.ShowModal;
+    end;
   end;
 end;
 
@@ -320,7 +332,7 @@ begin
                     ' "deleted_at", "deleted_by", "trans_type_code", "trans_type_name", '+
                     ' "bank_number_account", "bank_name_account", "additional_code", "id", '+
                     ' "cheque_no", "cheque_date", "cheque_due_date", '+
-                    ' COALESCE(status_correction, 0) AS "status_correction" '+
+                    ' COALESCE(status_correction, 0) AS "status_correction", "is_no_replacement" '+
                     ' from t_cash_bank_expenditure_submission  '+
                     ' where voucher_no='+QuotedStr(Qdaf_PengajuanKasBank.fieldbyname('voucher_no').AsString)+'';
           Open;
@@ -334,6 +346,9 @@ begin
           isCancel := 0;
         end;
         // baca status koreksi
+
+        if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+        else chkNomorPengganti.Checked:=False;
 
         Status := 1;
 
@@ -352,6 +367,19 @@ begin
         begin
            cbsumberdata.Text:='KAS';
            id_module:='6';
+        end;
+
+        with FDataPengajuanPengeluaranKasBank do
+        begin
+         vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString)+' ');
+          if vid_modul='5' then // Bank
+          begin
+            FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=True;
+          end;
+          if vid_modul='6' then // Kas
+          begin
+            FDataPengajuanPengeluaranKasBank.gbDataBank.Visible:=False;
+          end;
         end;
 
         show;
@@ -646,12 +674,19 @@ end;
 procedure TFdafajuankeluarkasbank.DBGridPengajuanKeluarKasBankDblClick(Sender: TObject);
 begin
    //ActUpdateExecute(sender);
+  if not Qdaf_PengajuanKasBank.FieldByName('deleted_at').IsNull  then
+  begin
+    ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
+    exit;
+  end;
+
   if (vcall='keluar_kas')and(Qdaf_PengajuanKasBank.RecordCount<>0) then
   begin
       with FDataPengeluaranKasBank do
       begin
+
          Ed_voucher_ajuan.text:=Qdaf_PengajuanKasBank.fieldbyname('voucher_no').AsString;
-         dtTrans.Date:=Qdaf_PengajuanKasBank.fieldbyname('trans_date').asdatetime;
+         //dtTrans.Date:=Qdaf_PengajuanKasBank.fieldbyname('trans_date').asdatetime;
          dtperiode1.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode1').asdatetime;
          dtperiode2.Date:=Qdaf_PengajuanKasBank.fieldbyname('periode2').asdatetime;
          FDataPengeluaranKasBank.no_bon:=Qdaf_PengajuanKasBank.fieldbyname('bon_no').AsString;
@@ -669,8 +704,6 @@ begin
          edKodeSumberPengeluaran.Text:=Qdaf_PengajuanKasBank.fieldbyname('ref_no').Asstring;
          ednamabank.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_name').AsString;
          edNoRek.Text:=Qdaf_PengajuanKasBank.fieldbyname('bank_norek').AsString;
-         FDataPengeluaranKasBank.code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
-         Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
          Edhari.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_day').AsString;
          Edbln.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_month').AsString;
          Edth.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_year').AsString;
@@ -684,8 +717,30 @@ begin
          //MemDetailHutang['jum_hutang']:=Qdaf_PengajuanKasBank.fieldbyname('amount').AsCurrency;
          //MemDetailHutang['jum_hutang_real']:=Qdaf_PengajuanKasBank.fieldbyname('amount').AsCurrency;
          //MemDetailHutang['keterangan']:=Qdaf_PengajuanKasBank.fieldbyname('remark').AsString;
+
+
+         //Dapetin Refresh Form
+         FDataPengeluaranKasBank.code_trans.Text:=Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString;
+         Ed_id_modul.Text:=Qdaf_PengajuanKasBank.fieldbyname('code_module').AsString;
+
+          if Ed_id_modul.Text='5' then
+          begin
+             cbsumberdata.Text:='BANK';
+             id_module:='5';
+          end;
+          if Ed_id_modul.Text='6' then
+          begin
+             cbsumberdata.Text:='KAS';
+             id_module:='6';
+          end;
+          Cb_jenis_trans.Text:=SelectRow('SELECT name_trans from t_master_trans_account '+
+           ' where code_trans='+QuotedStr(Qdaf_PengajuanKasBank.fieldbyname('trans_type_code').AsString)+' ');
+         //
+
       end;
 
+      FDataPengeluaranKasBank.cbsumberdataSelect(sender);
+      FDataPengeluaranKasBank.Cb_jenis_transSelect(sender);
       with QDetail_Akun_Ajuan do
       begin
          close;
@@ -855,7 +910,6 @@ begin
       Qdaf_PengajuanKasBank.close;
       close;
   end;
-  FDataPengeluaranKasBank.cbsumberdataSelect(sender);
 end;
 
 procedure TFdafajuankeluarkasbank.dxBarLargeButton1Click(Sender: TObject);
@@ -973,7 +1027,9 @@ begin
                  ' "paid_amount", "description", code_account as "account_acc", 0 as "id",2 as urut  '+
                  ' from "public"."t_cash_bank_expenditure_submission_det" a '+
                  ' where a.no_voucher='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
-                 ' and  "position" =''D'' AND LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' and  "position" =''D'' AND '+
+                 //' LEFT(code_account_header,4) NOT IN (''2101'',''2102'')) xx '+
+                 ' LEFT(code_account_header,4) NOT IN (SELECT left(acc_code_pemb,4) from t_item_type group by left(acc_code_pemb,4)) ) xx '+
                  ' LEFT JOIN t_ak_account aa on xx.account_acc=aa.code '+
                  ' )t ORDER BY urut, faktur_date;');
          //sql.add(' select *  from t_cash_bank_expenditure_submission_payable  a '+
@@ -1078,8 +1134,21 @@ begin
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
 
+
+         // Dapetin Grand Total
+         with dm.Qtemp do
+         begin
+           close;
+           sql.clear;
+           sql.add(' select * '+
+                   ' from "public"."t_cash_bank_expenditure_submission_det" a '+
+                   ' where a.no_voucher='+QuotedStr(Qdaf_PengajuanKasBank.FieldByName('voucher_no').AsString)+' '+
+                   ' and code_account_header=''1102'' ');
+           open;
+         end;
+
          Report.Tag := 0;
-         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+         SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('paid_amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;
        if QBukti_Ajuan_Keluar.FieldByName('trans_type_code').AsString='5.003' then //Uang Muka
@@ -1131,7 +1200,14 @@ begin
          SetMemo(Report,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
          //SetMemo(Report,'terbilang',UraikanAngka(floattostr(dm.Qtemp.FieldByName('amount').AsFloat)));
          Report.Tag := 99;
-         Report.Variables['vTerbilang'] := ConvKeHuruf(FloatToStr(dm.Qtemp.FieldByName('amount').AsFloat)) + ' Rupiah';
+         //SetMemo(Report,'Vterbilang','ASD');
+
+         //Report.Variables['vTerbilang'] := ConvKeHuruf(FloatToStr(dm.Qtemp.FieldByName('amount').AsFloat)) + ' Rupiah';
+         SetMemo(Report,'Vterbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+
+
+         //ShowMessage(ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
+
          //SetMemo(Report,'terbilang',ConvKeHuruf(floattostr(dm.Qtemp.FieldByName('amount').AsFloat))+' Rupiah');
          Report.ShowReport();
        end;

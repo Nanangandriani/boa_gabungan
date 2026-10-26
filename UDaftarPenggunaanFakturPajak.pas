@@ -113,7 +113,13 @@ begin
              '   WHEN no_inv_tax IS NOT NULL AND no_inv_tax <> '''' THEN no_inv_tax ' +
              '   ELSE karesidenan || trans_no ' +
              ' END ASC' ;
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QCetak.RecordCount=0 then
@@ -138,7 +144,13 @@ begin
     sql.Text:='SELECT * FROM get_selling(NULL) '+
               'WHERE deleted_at is NULL and trans_date between '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
               ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+' ORDER BY trans_date ASC, trans_no ASC ' ;
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 end;
 

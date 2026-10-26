@@ -20,10 +20,10 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 241
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1020
+    ExplicitWidth = 1022
     object Label1: TLabel
       Left = 24
-      Top = 207
+      Top = 223
       Width = 42
       Height = 15
       Caption = 'No. Ref.'
@@ -31,7 +31,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label3: TLabel
       Left = 24
-      Top = 102
+      Top = 118
       Width = 58
       Height = 15
       Caption = 'No. Terima'
@@ -53,7 +53,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label8: TLabel
       Left = 120
-      Top = 207
+      Top = 223
       Width = 3
       Height = 15
       Caption = ':'
@@ -61,7 +61,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label10: TLabel
       Left = 120
-      Top = 102
+      Top = 118
       Width = 3
       Height = 15
       Caption = ':'
@@ -83,14 +83,14 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label4: TLabel
       Left = 25
-      Top = 130
+      Top = 146
       Width = 56
       Height = 15
       Caption = 'Surat Jalan'
     end
     object Label7: TLabel
       Left = 121
-      Top = 130
+      Top = 146
       Width = 3
       Height = 15
       Caption = ':'
@@ -173,7 +173,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label23: TLabel
       Left = 24
-      Top = 179
+      Top = 195
       Width = 26
       Height = 15
       Caption = 'Valas'
@@ -181,7 +181,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label24: TLabel
       Left = 120
-      Top = 179
+      Top = 195
       Width = 3
       Height = 15
       Caption = ':'
@@ -197,7 +197,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Label22: TLabel
       Left = 25
-      Top = 156
+      Top = 172
       Width = 21
       Height = 15
       Caption = 'SBU'
@@ -219,9 +219,18 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       Caption = 'Akun Perkiraan um'
       Visible = False
     end
+    object Btn_no: TSpeedButton
+      Left = 369
+      Top = 117
+      Width = 23
+      Height = 22
+      Caption = '...'
+      Enabled = False
+      OnClick = Btn_noClick
+    end
     object EdNoSPB: TRzComboBox
       Left = 138
-      Top = 205
+      Top = 221
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -233,7 +242,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNo: TEdit
       Left = 138
-      Top = 100
+      Top = 116
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -243,7 +252,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Dtterima: TRzDateTimeEdit
       Left = 138
-      Top = 72
+      Top = 71
       Width = 121
       Height = 23
       EditType = etDate
@@ -263,7 +272,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdSJ: TEdit
       Left = 138
-      Top = 127
+      Top = 143
       Width = 226
       Height = 23
       CharCase = ecUpperCase
@@ -335,7 +344,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdValas: TRzEdit
       Left = 138
-      Top = 176
+      Top = 192
       Width = 64
       Height = 23
       Text = '0'
@@ -345,7 +354,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object EdNilai_Valas: TRzEdit
       Left = 207
-      Top = 176
+      Top = 192
       Width = 139
       Height = 23
       Text = '0'
@@ -394,7 +403,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Edsbu: TComboBox
       Left = 138
-      Top = 151
+      Top = 167
       Width = 73
       Height = 23
       TabOrder = 16
@@ -451,7 +460,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     end
     object Button1: TButton
       Left = 370
-      Top = 171
+      Top = 187
       Width = 75
       Height = 25
       Caption = 'Button1'
@@ -509,6 +518,15 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
       TabOrder = 28
       Visible = False
     end
+    object ckno_penganti: TCheckBox
+      Left = 138
+      Top = 97
+      Width = 126
+      Height = 17
+      Caption = 'Nomor Penganti'
+      TabOrder = 29
+      OnClick = ckno_pengantiClick
+    end
   end
   object Panel1: TPanel
     Left = 0
@@ -517,8 +535,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 480
-    ExplicitWidth = 1020
+    ExplicitTop = 488
+    ExplicitWidth = 1022
     object BBatal: TRzBitBtn
       Left = 950
       Top = 1
@@ -579,7 +597,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 944
+      ExplicitLeft = 946
     end
     object BSimpan: TRzBitBtn
       Left = 875
@@ -641,7 +659,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 869
+      ExplicitLeft = 871
     end
     object BEdit: TRzBitBtn
       Left = 800
@@ -703,7 +721,7 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 794
+      ExplicitLeft = 796
     end
     object BitBtn1: TBitBtn
       Left = 597
@@ -724,8 +742,8 @@ object FNew_TerimaMaterial: TFNew_TerimaMaterial
     Align = alClient
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1020
-    ExplicitHeight = 239
+    ExplicitWidth = 1022
+    ExplicitHeight = 247
     object DBGridDetailpo: TDBGridEh
       Left = 2
       Top = 2

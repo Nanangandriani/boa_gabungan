@@ -152,7 +152,13 @@ begin
               ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan+' '+
               'GROUP BY code_regency,name_regency,code_karesidenan,code_collector,'+
               'name_collector,wilayah ORDER BY name_collector ASC';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 end;
 
@@ -175,21 +181,28 @@ begin
   begin
     strWhereKaresidenan:='';
   end else begin
-    strWhereKaresidenan:=' AND code_karesidenan='+QuotedStr(strKaresidenanID) +' ';
+    strWhereKaresidenan:=' WHERE code_karesidenan='+QuotedStr(strKaresidenanID) +' ';
 
   end;
   with QRekapTagihanKolektor do
   begin
     close;
     sql.Clear;
-    sql.Text:='select code_regency,name_regency,code_karesidenan,code_collector,'+
-              'name_collector,wilayah,SUM(tot_lmbr_invoice) tot_lmbr_invoice, '+
-              'sum(jum_tagihan) jum_tagihan,sum(nota_tertagih) nota_tertagih, '+
-              'sum(total_tertagih) total_tertagih from  vdpp where date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
-              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan+' '+
-              'GROUP BY code_regency,name_regency,code_karesidenan,code_collector,'+
-              'name_collector,wilayah ORDER BY name_collector ASC';
-    open;
+    SQL.Text:='SELECT * from get_daftar_tagihan_kolektor('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' ,'+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+')'+strWhereKaresidenan;
+//    sql.Text:='select code_regency,name_regency,code_karesidenan,code_collector,'+
+//              'name_collector,wilayah,SUM(tot_lmbr_invoice) tot_lmbr_invoice, '+
+//              'sum(jum_tagihan) jum_tagihan,sum(nota_tertagih) nota_tertagih, '+
+//              'sum(total_tertagih) total_tertagih from  vdpp where date_dpp BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal1.Date))+' and '+
+//              ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+strWhereKaresidenan+' '+
+//              'GROUP BY code_regency,name_regency,code_karesidenan,code_collector,'+
+//              'name_collector,wilayah ORDER BY name_collector ASC';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QRekapTagihanKolektor.RecordCount=0 then

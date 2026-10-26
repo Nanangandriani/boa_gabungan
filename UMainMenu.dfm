@@ -1,7 +1,7 @@
 object FMainMenu: TFMainMenu
   Left = 0
   Top = 0
-  Caption = 'file'
+  Caption = 'SmartBOA'
   ClientHeight = 608
   ClientWidth = 1027
   Color = clBtnFace
@@ -5576,7 +5576,7 @@ object FMainMenu: TFMainMenu
   OnShow = FormShow
   TextHeight = 15
   object Splitter1: TSplitter
-    Left = 260
+    Left = 233
     Top = 126
     Width = 12
     Height = 463
@@ -5729,7 +5729,7 @@ object FMainMenu: TFMainMenu
   object CategoryPanelUtama: TCategoryPanelGroup
     Left = 0
     Top = 126
-    Width = 260
+    Width = 233
     Height = 463
     VertScrollBar.Tracking = True
     ChevronHotColor = clSkyBlue
@@ -5744,9 +5744,9 @@ object FMainMenu: TFMainMenu
     ExplicitHeight = 462
   end
   object PageControl1: TRzPageControl
-    Left = 272
+    Left = 245
     Top = 126
-    Width = 755
+    Width = 782
     Height = 463
     Hint = ''
     ActivePage = TabForm
@@ -5754,46 +5754,46 @@ object FMainMenu: TFMainMenu
     ShowCloseButtonOnActiveTab = True
     TabOrder = 3
     OnClose = PageControl1Close
-    ExplicitWidth = 751
+    ExplicitWidth = 778
     ExplicitHeight = 462
     FixedDimension = 21
     object TabForm: TRzTabSheet
       Color = 15987699
       TabVisible = False
       Caption = 'Dashboard'
-      ExplicitWidth = 747
+      ExplicitWidth = 774
       ExplicitHeight = 458
       object PanelParent: TPanel
         Left = 0
         Top = 0
-        Width = 751
+        Width = 778
         Height = 459
         Align = alClient
         TabOrder = 0
         Visible = False
-        ExplicitWidth = 747
+        ExplicitWidth = 774
         ExplicitHeight = 458
         object EdgeBrowser1: TEdgeBrowser
           Left = 1
           Top = 249
-          Width = 749
+          Width = 776
           Height = 209
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 745
+          ExplicitWidth = 772
           ExplicitHeight = 208
         end
         object WebBrowser1: TWebBrowser
           Left = 1
           Top = 1
-          Width = 749
+          Width = 776
           Height = 248
           Align = alTop
           TabOrder = 1
-          ExplicitWidth = 745
+          ExplicitWidth = 772
           ControlData = {
-            4C000000694D0000A21900000000000000000000000000000000000000000000
+            4C00000034500000A21900000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -6579,6 +6579,40 @@ object FMainMenu: TFMainMenu
     Interval = 3600000
     OnTimer = TimerCekVersiTimer
     Left = 769
+    Top = 16
+  end
+  object TimerCekDPPHarmoni: TTimer
+    Enabled = False
+    Interval = 1000000
+    OnTimer = TimerCekDPPHarmoniTimer
+    Left = 793
+    Top = 72
+  end
+  object TrayIcon1: TTrayIcon
+    BalloonTimeout = 3600000
+    OnBalloonClick = TrayIcon1BalloonClick
+    Left = 846
     Top = 15
+  end
+  object UniAlerter1: TUniAlerter
+    Connection = dm.Koneksi
+    Events = 'penerimaan_kolektor_event'
+    OnEvent = UniAlerter1Event
+    Left = 878
+    Top = 79
+  end
+  object UniAlerter2: TUniAlerter
+    Connection = dm.Koneksi
+    Events = 'correction_event'
+    OnEvent = UniAlerter2Event
+    Left = 840
+    Top = 143
+  end
+  object UniAlerter3: TUniAlerter
+    Connection = dm.Koneksi
+    Events = 'correction_approve_event'
+    OnEvent = UniAlerter3Event
+    Left = 848
+    Top = 231
   end
 end

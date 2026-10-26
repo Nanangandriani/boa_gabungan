@@ -120,7 +120,6 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 707
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -918,8 +917,8 @@ object FLap_Buku_Harian_Kas: TFLap_Buku_Harian_Kas
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_company')
-    Left = 472
-    Top = 32
+    Left = 424
+    Top = 40
   end
   object frxReport2: TfrxReport
     Version = '2022.1.3'

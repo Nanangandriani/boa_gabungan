@@ -211,7 +211,13 @@ begin
 //          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
 //         end;
 //       sql.add(' ORDER BY trans_date, trans_no');
-       open;
+       try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
 
  if QCetak.RecordCount=0 then
@@ -329,7 +335,13 @@ begin
 //          sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
 //         end;
 //       sql.add(' ORDER BY trans_date, trans_no');
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   finally
   DBGrid.FinishLoadingStatus();
@@ -371,7 +383,13 @@ begin
       sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
      end;
     sql.add(' ORDER BY trans_date, trans_no');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QCetak.RecordCount=0 then
@@ -401,7 +419,13 @@ begin
           sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY trans_no, code_item');
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;;
    end;
 
    cLocation := ExtractFilePath(Application.ExeName);
@@ -565,7 +589,13 @@ begin
      SQL.Text:='SELECT a.*,a.karesidenan,a.kabupaten,a.kecamatan from get_selling(False) a '+
                'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strTP+strKabupaten +'Order by a.trans_date,a.trans_no ASC' ;
-     open;
+     try
+        Open;
+     except
+        Connection.Close;
+        Connection.Open;
+        Open;
+     end;
    end;
 
    if QCetak.RecordCount=0 then

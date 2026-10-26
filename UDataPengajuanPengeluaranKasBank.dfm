@@ -446,7 +446,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object EdNo: TEdit
       Left = 497
-      Top = 77
+      Top = 102
       Width = 96
       Height = 23
       CharCase = ecUpperCase
@@ -581,13 +581,31 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       OnClick = Btn_daf_tpClick
     end
     object Cb_debt_source: TComboBox
-      Left = 147
-      Top = 239
+      Left = 149
+      Top = 238
       Width = 186
       Height = 23
       TabOrder = 25
       Visible = False
       OnSelect = Cb_debt_sourceSelect
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 463
+      Top = 52
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 26
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 497
+      Top = 75
+      Width = 30
+      Caption = '...'
+      TabOrder = 27
+      OnClick = btnNoTransaksiClick
     end
   end
   object Panel2: TPanel
@@ -748,7 +766,7 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
       Top = 1
       Height = 30
       Align = alRight
-      Caption = 'Save'
+      Caption = 'SaveX'
       TabOrder = 4
       Visible = False
       OnClick = BEditClick
@@ -1208,6 +1226,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
         Width = 150
         Height = 23
         Text = ''
+        Color = clInfoBk
+        ReadOnly = True
         TabOrder = 2
       end
       object tgl_cek: TDateTimePicker
@@ -1255,8 +1275,6 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1098
-      ExplicitHeight = 162
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
@@ -1349,6 +1367,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     end
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Hutang'
+      ExplicitWidth = 1098
+      ExplicitHeight = 162
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
@@ -1561,8 +1581,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
   end
   object MemDetailHutang: TMemTableEh
     Params = <>
-    Left = 792
-    Top = 448
+    Left = 768
+    Top = 424
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
       Size = 500
@@ -1659,8 +1679,8 @@ object FDataPengajuanPengeluaranKasBank: TFDataPengajuanPengeluaranKasBank
     Connection = dm.Koneksi
     SQL.Strings = (
       'SELECT * FROM t_cost_detail_submission')
-    Left = 888
-    Top = 232
+    Left = 840
+    Top = 208
   end
   object DSTP: TDataSource
     Left = 1000

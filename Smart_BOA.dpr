@@ -370,7 +370,23 @@ uses
   UNew_Group_Biaya in 'UNew_Group_Biaya.pas' {FNew_Group_biaya},
   URekapPiutang in 'URekapPiutang.pas' {FRekapPiutang},
   USingkronisasiPusat in 'USingkronisasiPusat.pas' {FSingkronisasiPusat},
-  U_daftar_realisasi_biaya in 'U_daftar_realisasi_biaya.pas' {Fdaftar_realisasi_biaya};
+  U_daftar_realisasi_biaya in 'U_daftar_realisasi_biaya.pas' {Fdaftar_realisasi_biaya},
+  URekapPenjualanPerItem in 'URekapPenjualanPerItem.pas' {FRekapPenjualanPerItem},
+  URptSaldoHarianBank in 'URptSaldoHarianBank.pas' {FRptSaldoHarianBank},
+  URekapMonitoringTargetOmset in 'URekapMonitoringTargetOmset.pas' {FRekapMonitoringTargetOmset},
+  UDataReturPenjualanCoretax in 'UDataReturPenjualanCoretax.pas' {FDataReturPenjualanCoretax},
+  UListReturPenjualanCoretax in 'UListReturPenjualanCoretax.pas' {FListReturPenjualanCoretax},
+  UbrowseListReturPenjualan in 'UbrowseListReturPenjualan.pas' {FbrowseListReturPenjualan},
+  UListAmbilPengajuan in 'UListAmbilPengajuan.pas' {FListAmbilPengajuan},
+  Ugroup_lr in 'Ugroup_lr.pas' {FGroup_lr},
+  Ugroup_biayalr in 'Ugroup_biayalr.pas' {FGroup_biayalr},
+  UDataRincianHarmoni in 'UDataRincianHarmoni.pas' {FDataRincianHarmoni},
+  UDataKasbon2 in 'UDataKasbon2.pas' {FDataKasbon2},
+  URekapMonitoringTargetOmsetPerArea in 'URekapMonitoringTargetOmsetPerArea.pas' {FRekapMonitoringTargetOmsetPerArea},
+  USumberBarangRetur in 'USumberBarangRetur.pas' {FSumberBarangRetur},
+  U_Upload_Dokumen in 'U_Upload_Dokumen.pas' {FUpload_Dokumen},
+  UAdd_Dokumen in 'UAdd_Dokumen.pas' {FAdd_Dokumen},
+  UFtpHelper in 'UFtpHelper.pas';
 
 //  ULaporanHarianSisaNota in 'ULaporanHarianSisaNota.pas' {FLaporanHarianSisaNota},
 //  ULaporanHarianSisaNotaPerKabupaten in 'ULaporanHarianSisaNotaPerKabupaten.pas' {FLaporanHarianSisaNotaPerKabupaten},
@@ -563,6 +579,20 @@ while FHomeSreen.Timer1.Enabled do
   Application.CreateForm(TFGroup_biaya, FGroup_biaya);
   Application.CreateForm(TFNew_Group_biaya, FNew_Group_biaya);
   Application.CreateForm(TFSingkronisasiPusat, FSingkronisasiPusat);
+  Application.CreateForm(TFDataReturPenjualanCoretax, FDataReturPenjualanCoretax);
+  Application.CreateForm(TFbrowseListReturPenjualan, FbrowseListReturPenjualan);
+  Application.CreateForm(TFListAmbilPengajuan, FListAmbilPengajuan);
+  Application.CreateForm(TFGroup_lr, FGroup_lr);
+  Application.CreateForm(TFGroup_biayalr, FGroup_biayalr);
+  Application.CreateForm(TFDataRincianHarmoni, FDataRincianHarmoni);
+  Application.CreateForm(TFDataKasbon2, FDataKasbon2);
+  Application.CreateForm(TFSumberBarangRetur, FSumberBarangRetur);
+  Application.CreateForm(TFUpload_Dokumen, FUpload_Dokumen);
+  Application.CreateForm(TFAdd_Dokumen, FAdd_Dokumen);
+  //  Application.CreateForm(TFRekapMonitoringTargetOmsetPerArea, FRekapMonitoringTargetOmsetPerArea);
+  //  Application.CreateForm(TFRekapMonitoringTargetOmset, FRekapMonitoringTargetOmset);
+  //  Application.CreateForm(TFRptSaldoHarianBank, FRptSaldoHarianBank);
+  //  Application.CreateForm(TFRekapPenjualanPerItem, FRekapPenjualanPerItem);
   //  Application.CreateForm(TFRekapPiutang, FRekapPiutang);
   //  Application.CreateForm(TFRekapTagihanKolektor2, FRekapTagihanKolektor2);
   //  Application.CreateForm(TFExportReport, FExportReport);

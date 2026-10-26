@@ -78,6 +78,30 @@ type
     DTP2: TDateTimePicker;
     Cari: TRzBitBtn;
     QKasKecildeleted_at: TDateTimeField;
+    dxBarLargeButton4: TdxBarLargeButton;
+    QSelisih_kas_harmoni: TUniQuery;
+    frxDBSelisih_KasKecil: TfrxDBDataset;
+    QSelisih_kas_harmoniemployee_nik: TStringField;
+    QSelisih_kas_harmonistart_date: TDateField;
+    QSelisih_kas_harmoniend_date: TDateField;
+    QSelisih_kas_harmonijum_android: TFloatField;
+    QSelisih_kas_harmonikas_kecil: TFloatField;
+    QSelisih_kas_harmonipotongan: TFloatField;
+    QSelisih_kas_harmoniketerangan: TMemoField;
+    QSelisih_kas_harmoniemployee_name: TStringField;
+    dxBarLargeButton5: TdxBarLargeButton;
+    QSelisih_realisasi_kasbon: TUniQuery;
+    frxDBSelisih_realisasi_kasbon: TfrxDBDataset;
+    QSelisih_realisasi_kasbonvoucher_bon: TStringField;
+    QSelisih_realisasi_kasbonjumlah_bon: TFloatField;
+    QSelisih_realisasi_kasbonjumlah_kas: TFloatField;
+    QSelisih_realisasi_kasbonkepada: TStringField;
+    QSelisih_realisasi_kasbontanggal: TDateField;
+    QSelisih_realisasi_kasbonremark: TStringField;
+    QSelisih_realisasi_kasbonamount: TFloatField;
+    QSelisih_realisasi_kasbonactors_name: TStringField;
+    QSelisih_realisasi_kasboncreated_at: TDateTimeField;
+    QSelisih_realisasi_kasbonactors_code: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -89,6 +113,9 @@ type
     procedure DBGridAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure DBGridSortMarkingChanged(Sender: TObject);
+    procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure dxBarLargeButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -102,56 +129,70 @@ implementation
 
 {$R *.dfm}
 
-uses UDataKasKecil, UDataModule, UHomeLogin, UMy_Function;
+uses UDataKasKecil, UDataModule, UHomeLogin, UMy_Function, UKoreksi;
 
 procedure TFListKasKecil.ActBaruExecute(Sender: TObject);
 begin
   FDataKasKecil.Clear;
   FDataKasKecil.Status:=0;
   FDataKasKecil.edNoTrans.Enabled:=true;
+  FDataKasKecil.isCancel:=0;
+  FDataKasKecil.BCorrection.Visible:=False;
   FDataKasKecil.ShowModal;
 end;
 
 procedure TFListKasKecil.ActDelExecute(Sender: TObject);
 begin
-  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-
-  if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+  if CheckJurnalPosting(QKasKecil.FieldByName('voucher_no').AsString)>0 then
   begin
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-        with dm.Qtemp do
-        begin
-          close;
-          sql.clear;
-          sql.Text:=' UPDATE "public"."t_petty_cash" SET '+
-                    ' "deleted_at"=now(), '+
-                    ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                    ' WHERE "voucher_no"='+QuotedStr(QKasKecil.FieldByName('voucher_no').AsString);
-          ExecSQL;
-        end;
-        MessageDlg('Proses Pembatalan Berhasil..!!',mtInformation,[MBOK],0);
-        Dm.Koneksi.Commit;
-      Except on E :Exception do
-        begin
-          begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
-          end;
-        end;
-      end;
+    MessageDlg('Transaksi sudah approve jurnal tidak bisa melakukan hapus..!!',mtInformation,[mbRetry],0);
+    exit;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT * from t_correction_trans WHERE is_delete =true and '+
+              ' no_transaksi='+QuotedStr(QKasKecil.FieldByName('voucher_no').AsString)+' '+
+              ' and status=0 and deleted_at is null ';
+    open;
+  end;
+
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Nota ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else if CheckJurnalPosting(QKasKecil.FieldByName('voucher_no').AsString)>0 then
+  begin
+    MessageDlg('Nota sudah approve jurnal tidak bisa melakukan pembatalan..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Transaksi ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListKasKecil'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QKasKecil.FieldByName('voucher_no').AsString;
+      FKoreksi.ShowModal;
+    end;
   end;
 end;
 
 procedure TFListKasKecil.ActPrintExecute(Sender: TObject);
 begin
+  if QKasKecil.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Data !!!');
+    Exit;
+  end;
     with QRKasKecil do
     begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM '+
-                '(SELECT a.* ,b.code_account,b.name_account,b."position",b.paid_amount,b.description,b.code_account_header,b.code_group_cost,b.name_group_cost FROM t_petty_cash a INNER JOIN t_petty_cash_det b on a.voucher_no=b.voucher_no )a '+
+                ' (SELECT a.* ,b.code_account,b.name_account,b."position",b.paid_amount, '+
+                ' b.description,b.code_account_header,b.code_group_cost,b.name_group_cost '+
+                ' FROM t_petty_cash a INNER JOIN t_petty_cash_det b on a.voucher_no=b.voucher_no )a '+
                 'where a.position=''D'' and a.voucher_no='+QuotedStr(DBGrid.Fields[0].AsString)+' ';
       open;
     end;
@@ -174,7 +215,7 @@ begin
        sql.Clear;
        sql.Text:=' select * from "public"."t_petty_cash"   '+
                  //' where deleted_at is null '+
-                 ' order by created_at Desc ';
+                 ' order by trans_date asc ';
        open;
    end;
   finally
@@ -199,6 +240,25 @@ begin
     ShowMessage('Data Tidak Dapat Diproses Karena Sudah Dihapus!!!');
     exit;
   end;
+
+  with FDataKasKecil do
+  begin
+    IntStatusKoreksi:=Dm.Qtemp.FieldValues['status_correction'];
+
+    if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+    begin
+      isCancel := 1;
+    end else begin
+      isCancel := 0;
+    end;
+    // baca status koreksi
+
+    if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+      else chkNomorPengganti.Checked:=False;
+  end;
+
+
+
   if Dm.Qtemp.RecordCount=0 then
   begin
     ShowMessage('Pastikan Data Yang Anda Pilih Benar...!!!');
@@ -217,7 +277,7 @@ begin
     edNamaSumberKas.Text:=Dm.Qtemp.FieldByName('source_name').AsString;
     MemKeterangan.Text:=Dm.Qtemp.FieldByName('description').AsString;
     stat_bon:=Dm.Qtemp.FieldByName('stat_receipt').Value;
-      if stat_bon=1 then
+      {if stat_bon=1 then
       begin
         edNomorKasBon.Text:=Dm.Qtemp.FieldByName('voucher_no_receipt').AsString;
         edJumlah.Value:=Dm.Qtemp.FieldByName('amount_receipt').Value;
@@ -238,8 +298,8 @@ begin
         BtnAmbil_Data.Visible:=true;
         gbDataBON.Visible:=false;
         GbHutang.Visible:=true;
-      end;
-
+      end;}
+    FDataKasKecil.RefreshForm;
     order_no:=Dm.Qtemp.FieldByName('order_no').AsString;
     strtgl:=Dm.Qtemp.FieldByName('trans_day').AsString;
     strbulan:=Dm.Qtemp.FieldByName('trans_month').AsString;
@@ -282,6 +342,43 @@ begin
     Dm.Qtemp1.Next;
     end;
 
+    //detail rincian harmoni
+    with Dm.Qtemp1 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT * from ('+
+              ' SELECT * from "public"."t_petty_cash_harmoni"'+
+              ' WHERE "voucher_no"='+QuotedStr(QKasKecil.FieldByName('voucher_no').AsString)+' ) a');
+      open;
+    end;
+
+    if Dm.Qtemp1.RecordCount<>0 then
+    begin
+      MemRincian.EmptyTable;
+      Dm.Qtemp1.First;
+      while not Dm.Qtemp1.Eof do
+      begin
+        with FDataKasKecil do
+        begin
+          MemRincian.insert;
+          MemRincian['component_id']:=Dm.Qtemp1.fieldbyname('component_id').Value;
+          MemRincian['cost']:=Dm.Qtemp1.fieldbyname('cost').Value;
+          MemRincian['component']:=Dm.Qtemp1.fieldbyname('component').Value;
+          MemRincian['id']:=Dm.Qtemp1.fieldbyname('id_harmoni').Value;
+          MemRincian.Post;
+        end;
+      Dm.Qtemp1.Next;
+      end;
+      edtravel_id.Text:=Dm.Qtemp1.fieldbyname('official_travel_id').Value;
+      edno_doc.Text:=Dm.Qtemp1.fieldbyname('document_number').Value;
+      dtawal.Date:= Dm.Qtemp1.fieldbyname('start_date').Value;
+      dtakhir.Date:= Dm.Qtemp1.fieldbyname('end_date').Value;
+      edJumlah.Value:=DBGridAkun.Columns[2].Footer.SumValue;
+      edNomorKasBon.Text:=SelectRow(' SELECT voucher_no_receipt from t_petty_cash_receipt_history '+
+                                    ' where voucher_no_realization='+QuotedStr(edNoTrans.Text)+' ');
+    end;
+
   end;
   end;
   FDataKasKecil.edNoTrans.Enabled:=false;
@@ -301,7 +398,7 @@ begin
                  //' where deleted_at is null and '+
                  ' where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
                  ' and '+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' '+
-                 ' order by trans_date Desc ';
+                 ' order by trans_date asc ';
        open;
    end;
   finally
@@ -329,6 +426,37 @@ begin
 
 end;
 
+procedure TFListKasKecil.DBGridSortMarkingChanged(Sender: TObject);
+var
+  I: Integer;
+  FieldSorting: string;
+begin
+  FieldSorting := '';
+
+  // Membaca kolom yang ditandai untuk sorting
+  for I := 0 to DBGrid.SortMarkedColumns.Count - 1 do
+  begin
+    if FieldSorting <> '' then
+      FieldSorting := FieldSorting + ', '; // Gunakan KOMA (,) bukan titik koma (;)
+
+    FieldSorting := FieldSorting + DBGrid.SortMarkedColumns[I].FieldName;
+
+    // Gunakan kata ASC atau DESC untuk UniDAC
+    if DBGrid.SortMarkedColumns[I].Title.SortMarker = smDownEh then
+      FieldSorting := FieldSorting + ' DESC'
+    else
+      FieldSorting := FieldSorting + ' ASC';
+  end;
+
+  // Terapkan ke UniQuery
+  try
+    QKasKecil.IndexFieldNames := FieldSorting;
+  except
+    on E: Exception do
+      ShowMessage('Gagal melakukan sorting: ' + E.Message);
+  end;
+end;
+
 procedure TFListKasKecil.dxBarLargeButton1Click(Sender: TObject);
 begin
     with QRKasKecil do
@@ -346,6 +474,65 @@ begin
     SetMemo(frxReport1,'nama_pt',FHomeLogin.vKodePRSH);
     SetMemo(frxReport1,'kota_tanggal',FHomeLogin.vKotaPRSH+', '+formatdatetime('dd mmmm yyyy',NOW()));
     SetMemo(frxReport1,'memo_terbilang',UraikanAngka(floattostr(QRKasKecil.FieldByName('paid_amount').AsFloat)));
+    frxReport1.ShowReport();
+end;
+
+procedure TFListKasKecil.dxBarLargeButton4Click(Sender: TObject);
+begin
+  with QSelisih_kas_harmoni do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' SELECT * from v_selisih_kaskecil_harmoni '+
+              '	where start_date='+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+              ' and end_date='+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP2.DateTime))+' ';
+      open;
+    end;
+  if QSelisih_kas_harmoni.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Data !!!');
+    Exit;
+  end;
+    cLocation := ExtractFilePath(Application.ExeName);
+    frxReport1.LoadFromFile(cLocation +'report/Selisih_Kas_Kecil_Harmoni'+'.fr3');
+    SetMemo(frxReport1,'nama_PT',FHomeLogin.vNamaPRSH);
+    SetMemo(frxReport1,'periode',formatdatetime('dd mmmm yyyy',DTP1.DateTime)+' s/d '+formatdatetime('dd mmmm yyyy',DTP2.DateTime));
+    frxReport1.ShowReport();
+end;
+
+procedure TFListKasKecil.dxBarLargeButton5Click(Sender: TObject);
+begin
+  with QSelisih_realisasi_kasbon do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:=' select DISTINCT a.voucher_no_receipt as voucher_bon,  '+
+              ' a.amount_receipt jumlah_bon,  COALESCE(b.jumlah_kas,0) as jumlah_kas, '+
+              ' c.needs kepada,  c.trans_date tanggal,  c.description remark, '+
+              ' a.amount_receipt-COALESCE(b.jumlah_kas,0) as amount,  c.actors_name, '+
+              ' c.created_at, c.actors_code from (select * from t_petty_cash_receipt_history '+
+              ' where amount_receipt  <>0 and approve_at is null )a '+
+              ' left join (SELECT voucher_no_receipt bon_no,  sum(amount) jumlah_kas '+
+              ' from t_petty_cash where deleted_at is null and  '+
+              ' trans_date<='+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+' '+
+              ' GROUP BY voucher_no_receipt )b   on a.voucher_no_receipt=b.bon_no  '+
+              ' LEFT JOIN (SELECT * from t_petty_cash_receipt  where deleted_at is null and '+
+              ' trans_date<='+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+') c '+
+              ' on a.voucher_no_receipt=c.voucher_no  where c.voucher_no is not null and '+
+              //' a.amount_receipt-COALESCE(b.jumlah_kas,0)<>0  and  '+
+              ' c.trans_date<='+ QuotedStr(formatdatetime('yyyy-mm-dd',DTP1.DateTime))+''+
+              ' order by a.voucher_no_receipt';
+      open;
+    end;
+  if QSelisih_realisasi_kasbon.RecordCount=0 then
+  begin
+    ShowMessage('Tidak Ditemukan Data !!!');
+    Exit;
+  end;
+    cLocation := ExtractFilePath(Application.ExeName);
+    frxReport1.LoadFromFile(cLocation +'report/Selisih_Kas_Kecil_Kasbon'+'.fr3');
+    SetMemo(frxReport1,'nama_PT',FHomeLogin.vNamaPRSH);
+    SetMemo(frxReport1,'periode',formatdatetime('dd mmmm yyyy',DTP1.DateTime)+' s/d '+formatdatetime('dd mmmm yyyy',DTP2.DateTime));
     frxReport1.ShowReport();
 end;
 

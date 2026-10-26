@@ -1,11 +1,12 @@
 object FDataReturPenjualan: TFDataReturPenjualan
   Left = 0
   Top = 0
+  ActiveControl = edKode_Pelanggan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Retur Penjualan'
-  ClientHeight = 596
-  ClientWidth = 967
+  ClientHeight = 653
+  ClientWidth = 1313
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +19,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 967
-    Height = 182
+    Width = 1313
+    Height = 188
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 963
-    ExplicitHeight = 181
+    ExplicitWidth = 1309
+    ExplicitHeight = 187
     object Label39: TLabel
       Left = 20
       Top = 89
@@ -86,14 +87,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object Label15: TLabel
       Left = 598
-      Top = 45
+      Top = 74
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label16: TLabel
       Left = 500
-      Top = 45
+      Top = 74
       Width = 60
       Height = 15
       Caption = 'Keterangan'
@@ -121,6 +122,20 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Height = 15
       Caption = ':'
     end
+    object Label5: TLabel
+      Left = 500
+      Top = 45
+      Width = 67
+      Height = 15
+      Caption = 'No Referensi'
+    end
+    object Label6: TLabel
+      Left = 598
+      Top = 45
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
     object edKode_Pelanggan: TRzButtonEdit
       Left = 132
       Top = 86
@@ -128,6 +143,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Height = 23
       Text = ''
       TabOrder = 0
+      OnChange = edKode_PelangganChange
       AllowKeyEdit = False
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
@@ -182,7 +198,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
     end
     object MemKeterangan: TMemo
       Left = 612
-      Top = 42
+      Top = 71
       Width = 344
       Height = 87
       TabOrder = 6
@@ -280,8 +296,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
       OnClick = btnNoTransaksiClick
     end
     object rgJenisRetur: TRadioGroup
-      Left = 500
-      Top = 129
+      Left = 254
+      Top = 141
       Width = 277
       Height = 47
       Caption = 'Jenis Retur'
@@ -292,29 +308,36 @@ object FDataReturPenjualan: TFDataReturPenjualan
       TabOrder = 11
       Visible = False
     end
+    object edNoRef: TEdit
+      Left = 612
+      Top = 42
+      Width = 344
+      Height = 23
+      TabOrder = 12
+    end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
-    Top = 182
-    Width = 967
-    Height = 382
+    Top = 188
+    Width = 1313
+    Height = 433
     Hint = ''
     ActivePage = TabSDetailPel
     Align = alBottom
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitTop = 181
-    ExplicitWidth = 963
+    ExplicitTop = 187
+    ExplicitWidth = 1309
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 959
+      ExplicitWidth = 1305
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 963
-        Height = 242
+        Width = 1309
+        Height = 289
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
@@ -322,22 +345,29 @@ object FDataReturPenjualan: TFDataReturPenjualan
         SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
+        OnCellClick = DBGridDetailCellClick
         OnExit = DBGridDetailExit
         OnKeyPress = DBGridDetailKeyPress
         Columns = <
           item
             CellButtons = <>
             DynProps = <>
-            EditButtons = <
-              item
-                Style = ebsGlyphEh
-                OnClick = DBGridDetailColumns0EditButtons0Click
-              end>
+            EditButtons = <>
             FieldName = 'NO_JUAL'
             Footers = <>
-            Title.Caption = 'Nomor Sumber'
-            Visible = False
-            Width = 153
+            TextEditing = False
+            Title.Caption = 'No Nota'
+            Width = 173
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'NO_FAKTUR'
+            Footers = <>
+            TextEditing = False
+            Title.Caption = 'No Faktur'
+            Width = 140
           end
           item
             CellButtons = <>
@@ -359,8 +389,9 @@ object FDataReturPenjualan: TFDataReturPenjualan
             FieldName = 'NM_ITEM'
             Footers = <>
             ReadOnly = True
+            TextEditing = False
             Title.Caption = 'Nama Item'
-            Width = 200
+            Width = 178
           end
           item
             CellButtons = <>
@@ -375,7 +406,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.ValueType = fvtStaticText
             Footers = <>
             Title.Caption = 'Jumlah'
-            Width = 67
+            Width = 53
           end
           item
             CellButtons = <>
@@ -401,8 +432,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Value = 'Total:'
             Footer.ValueType = fvtStaticText
             Footers = <>
-            Title.Caption = 'Harga Satuan DPP'
-            Width = 111
+            Title.Caption = 'Harga Satuan'
+            Width = 91
           end
           item
             CellButtons = <>
@@ -412,6 +443,24 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footers = <>
             ReadOnly = True
             Visible = False
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'SUBTOTAL_GROSS'
+            Footers = <>
+            Title.Caption = 'Total Harga'
+            Width = 104
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'POTONGAN'
+            Footers = <>
+            Title.Caption = 'Potongan'
+            Width = 83
           end
           item
             CellButtons = <>
@@ -427,9 +476,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Font.Style = [fsBold]
             Footer.ValueType = fvtSum
             Footers = <>
-            ReadOnly = True
             Title.Caption = 'Total DPP'
-            Width = 120
+            Width = 110
           end
           item
             CellButtons = <>
@@ -443,7 +491,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Font.Style = [fsBold]
             Footers = <>
             Title.Caption = 'PPN|Persen (%)'
-            Width = 61
+            Width = 47
           end
           item
             CellButtons = <>
@@ -459,8 +507,9 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footer.Font.Style = [fsBold]
             Footer.ValueType = fvtSum
             Footers = <>
+            ReadOnly = True
             Title.Caption = 'PPN|Nilai'
-            Width = 118
+            Width = 94
           end
           item
             CellButtons = <>
@@ -521,23 +570,23 @@ object FDataReturPenjualan: TFDataReturPenjualan
             Footers = <>
             ReadOnly = True
             Title.Caption = 'Grand Total'
-            Width = 147
+            Width = 123
           end>
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
       object RzPanel1: TRzPanel
         Left = 0
-        Top = 242
-        Width = 963
-        Height = 115
+        Top = 289
+        Width = 1309
+        Height = 119
         Align = alBottom
         Color = 15987699
         TabOrder = 1
-        ExplicitWidth = 959
+        ExplicitWidth = 1305
         object RzLabel2: TRzLabel
-          Left = 638
-          Top = 88
+          Left = 1004
+          Top = 89
           Width = 64
           Height = 15
           Caption = 'Grand Total'
@@ -549,8 +598,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
           ParentFont = False
         end
         object RzLabel3: TRzLabel
-          Left = 638
-          Top = 62
+          Left = 1004
+          Top = 63
           Width = 23
           Height = 15
           Caption = 'PPN'
@@ -562,8 +611,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
           ParentFont = False
         end
         object RzLabel5: TRzLabel
-          Left = 638
-          Top = 38
+          Left = 1004
+          Top = 39
           Width = 75
           Height = 15
           Caption = 'DPP Nilai Lain'
@@ -575,8 +624,8 @@ object FDataReturPenjualan: TFDataReturPenjualan
           ParentFont = False
         end
         object RzLabel6: TRzLabel
-          Left = 638
-          Top = 11
+          Left = 1004
+          Top = 12
           Width = 23
           Height = 15
           Caption = 'DPP'
@@ -588,35 +637,79 @@ object FDataReturPenjualan: TFDataReturPenjualan
           ParentFont = False
         end
         object Label17: TLabel
-          Left = 730
-          Top = 11
+          Left = 1096
+          Top = 12
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label18: TLabel
-          Left = 730
-          Top = 38
+          Left = 1096
+          Top = 39
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label21: TLabel
-          Left = 730
-          Top = 88
+          Left = 1096
+          Top = 89
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label22: TLabel
-          Left = 730
-          Top = 62
+          Left = 1096
+          Top = 63
           Width = 3
           Height = 15
           Caption = ':'
         end
+        object RzLabel1: TRzLabel
+          Left = 670
+          Top = 18
+          Width = 63
+          Height = 15
+          Caption = 'Total Harga'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Visible = False
+        end
+        object Label3: TLabel
+          Left = 762
+          Top = 18
+          Width = 3
+          Height = 15
+          Caption = ':'
+          Visible = False
+        end
+        object Label4: TLabel
+          Left = 762
+          Top = 44
+          Width = 3
+          Height = 15
+          Caption = ':'
+          Visible = False
+        end
+        object RzLabel4: TRzLabel
+          Left = 670
+          Top = 44
+          Width = 53
+          Height = 15
+          Caption = 'Potongan'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Visible = False
+        end
         object edDPP: TRzNumericEdit
-          Left = 736
+          Left = 1102
           Top = 8
           Width = 200
           Height = 23
@@ -627,12 +720,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ReadOnly = True
           TabOrder = 0
+          OnKeyPress = edDPPKeyPress
           DisplayFormat = '0.00#,##'
         end
         object edDPPNilaiLain: TRzNumericEdit
-          Left = 736
-          Top = 33
+          Left = 1102
+          Top = 34
           Width = 200
           Height = 23
           Color = clInfoBk
@@ -642,12 +737,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ReadOnly = True
           TabOrder = 1
+          OnKeyPress = edDPPNilaiLainKeyPress
           DisplayFormat = '0.00#,##'
         end
         object edTotPPN: TRzNumericEdit
-          Left = 736
-          Top = 59
+          Left = 1102
+          Top = 60
           Width = 200
           Height = 23
           Color = clInfoBk
@@ -657,12 +754,14 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ReadOnly = True
           TabOrder = 2
+          OnKeyPress = edTotPPNKeyPress
           DisplayFormat = '0.00#,##'
         end
         object edGrandTot: TRzNumericEdit
-          Left = 736
-          Top = 85
+          Left = 1102
+          Top = 86
           Width = 200
           Height = 23
           Color = clInfoBk
@@ -672,7 +771,43 @@ object FDataReturPenjualan: TFDataReturPenjualan
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
+          ReadOnly = True
           TabOrder = 3
+          OnKeyPress = edGrandTotKeyPress
+          DisplayFormat = '0.00#,##'
+        end
+        object edTotHarga: TRzNumericEdit
+          Left = 768
+          Top = 15
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 4
+          Visible = False
+          OnKeyPress = edTotHargaKeyPress
+          DisplayFormat = '0.00#,##'
+        end
+        object edPotongan: TRzNumericEdit
+          Left = 768
+          Top = 41
+          Width = 200
+          Height = 23
+          Color = clInfoBk
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+          Visible = False
+          OnKeyPress = edPotonganKeyPress
           DisplayFormat = '0.00#,##'
         end
       end
@@ -680,15 +815,15 @@ object FDataReturPenjualan: TFDataReturPenjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 564
-    Width = 967
+    Top = 621
+    Width = 1313
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 563
-    ExplicitWidth = 963
+    ExplicitTop = 620
+    ExplicitWidth = 1309
     object BBatal: TRzBitBtn
-      Left = 891
+      Left = 1237
       Top = 1
       Height = 30
       Align = alRight
@@ -747,10 +882,10 @@ object FDataReturPenjualan: TFDataReturPenjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 887
+      ExplicitLeft = 1233
     end
     object BSave: TRzBitBtn
-      Left = 816
+      Left = 1162
       Top = 1
       Height = 30
       Align = alRight
@@ -809,10 +944,10 @@ object FDataReturPenjualan: TFDataReturPenjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 812
+      ExplicitLeft = 1158
     end
     object BCorrection: TRzBitBtn
-      Left = 718
+      Left = 1064
       Top = 1
       Width = 98
       Height = 30
@@ -820,7 +955,7 @@ object FDataReturPenjualan: TFDataReturPenjualan
       Caption = 'Submit Correction'
       TabOrder = 2
       OnClick = BCorrectionClick
-      ExplicitLeft = 714
+      ExplicitLeft = 1060
     end
   end
   object DSDetail: TDataSource
@@ -903,6 +1038,18 @@ object FDataReturPenjualan: TFDataReturPenjualan
     object MemDetailAKUN_PERK_ITEM: TStringField
       FieldName = 'AKUN_PERK_ITEM'
       Size = 50
+    end
+    object MemDetailPOTONGAN: TFloatField
+      FieldName = 'POTONGAN'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailSUBTOTAL_GROSS: TFloatField
+      FieldName = 'SUBTOTAL_GROSS'
+      DisplayFormat = '#,##0.##'
+    end
+    object MemDetailNO_FAKTUR: TStringField
+      FieldName = 'NO_FAKTUR'
+      Size = 200
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -1038,6 +1185,30 @@ object FDataReturPenjualan: TFDataReturPenjualan
           StringDataType = fdtStringEh
           DisplayWidth = 50
           Size = 50
+        end
+        object POTONGAN: TMTNumericDataFieldEh
+          FieldName = 'POTONGAN'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.##'
+          EditFormat = '#,##0.##'
+          currency = False
+          Precision = 15
+        end
+        object SUBTOTAL_GROSS: TMTNumericDataFieldEh
+          FieldName = 'SUBTOTAL_GROSS'
+          NumericDataType = fdtFloatEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          currency = False
+          Precision = 15
+        end
+        object NO_FAKTUR: TMTStringDataFieldEh
+          FieldName = 'NO_FAKTUR'
+          StringDataType = fdtStringEh
+          DisplayWidth = 200
+          Size = 200
         end
       end
       object RecordsList: TRecordsListEh

@@ -1321,8 +1321,8 @@ object FListReturPenjualan: TFListReturPenjualan
       #9') A'
       
         'LEFT JOIN (SELECT "trans_no", "trans_date", "code_cust", "name_c' +
-        'ust" from "public"."t_sales_returns") b  ON a.trans_no=b.trans_n' +
-        'o '
+        'ust",no_inv from "public"."t_sales_returns") b  ON a.trans_no=b.' +
+        'trans_no '
       
         'LEFT JOIN (SELECT "customer_code", "address" from "public"."t_cu' +
         'stomer_address" where "code_details"='#39'001'#39') d on b.code_cust=d.c' +
@@ -1443,6 +1443,11 @@ object FListReturPenjualan: TFListReturPenjualan
       ReadOnly = True
       BlobType = ftMemo
     end
+    object QCetakno_inv: TStringField
+      FieldName = 'no_inv'
+      ReadOnly = True
+      Size = 255
+    end
   end
   object frxDBDRetPenjualan: TfrxDBDataset
     UserName = 'frxDBDRetPenjualan'
@@ -1471,7 +1476,8 @@ object FListReturPenjualan: TFListReturPenjualan
       'name_cust=name_cust'
       'no_trans_sale=no_trans_sale'
       'trans_date=trans_date'
-      'address=address')
+      'address=address'
+      'no_inv=no_inv')
     DataSet = QCetak
     BCDToCurrency = False
     DataSetOptions = []
@@ -1488,7 +1494,7 @@ object FListReturPenjualan: TFListReturPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45541.429339016200000000
-    ReportOptions.LastChange = 46226.412694201390000000
+    ReportOptions.LastChange = 46319.415410497700000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1526,7 +1532,7 @@ object FListReturPenjualan: TFListReturPenjualan
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 291.023622047244000000
+        Height = 291.023622050000000000
         Top = 18.897650000000000000
         Width = 755.906000000000000000
         object Memo2: TfrxMemoView
@@ -1611,7 +1617,7 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 445.307360000000000000
+          Left = 440.307360000000000000
           Top = 162.519790000000000000
           Width = 95.160173330000000000
           Height = 18.897650000000000000
@@ -1627,7 +1633,7 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 445.307360000000000000
+          Left = 440.307360000000000000
           Top = 188.417440000000000000
           Width = 95.160173330000000000
           Height = 22.677180000000000000
@@ -1643,8 +1649,8 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 540.354670000000000000
-          Top = 162.519790000000000000
+          Left = 535.181102362205000000
+          Top = 161.519790000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1659,8 +1665,8 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 540.354670000000000000
-          Top = 188.417440000000000000
+          Left = 535.354670000000000000
+          Top = 187.417440000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1714,7 +1720,7 @@ object FListReturPenjualan: TFListReturPenjualan
         object frxDBDPenjualandate_trans: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 552.134200000000000000
+          Left = 542.118110240000000000
           Top = 188.976500000000000000
           Width = 200.315090000000000000
           Height = 22.677180000000000000
@@ -1735,9 +1741,9 @@ object FListReturPenjualan: TFListReturPenjualan
         object frxDBDPenjualanno_trans: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 552.134200000000000000
+          Left = 542.134200000000000000
           Top = 162.519790000000000000
-          Width = 200.315090000000000000
+          Width = 211.477880700000000000
           Height = 18.897650000000000000
           DataSet = frxDBDRetPenjualan
           DataSetName = 'frxDBDRetPenjualan'
@@ -1941,7 +1947,7 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 445.984540000000000000
+          Left = 440.984540000000000000
           Top = 215.433210000000000000
           Width = 96.493506670000000000
           Height = 22.677180000000000000
@@ -1957,8 +1963,8 @@ object FListReturPenjualan: TFListReturPenjualan
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 541.031850000000000000
-          Top = 215.433210000000000000
+          Left = 535.181102362205000000
+          Top = 214.433210000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1974,10 +1980,10 @@ object FListReturPenjualan: TFListReturPenjualan
         object Memo31: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 552.811380000000000000
+          Left = 542.118110240000000000
           Top = 215.992270000000000000
-          Width = 200.315090000000000000
-          Height = 22.677180000000000000
+          Width = 213.338345810000000000
+          Height = 35.235319530000000000
           DataSet = frxDBDRetPenjualan
           DataSetName = 'frxDBDRetPenjualan'
           DisplayFormat.FormatStr = 'dd mmmm yyyy'
@@ -1989,7 +1995,7 @@ object FListReturPenjualan: TFListReturPenjualan
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBDRetPenjualan."no_trans_sale"]')
+            '[frxDBDRetPenjualan."no_inv"]')
           ParentFont = False
         end
       end

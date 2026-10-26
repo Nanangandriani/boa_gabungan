@@ -31,6 +31,7 @@ type
     { Public declarations }
     procedure Save;
     procedure clear;
+    var modul:string;
   end;
 
 var
@@ -104,28 +105,86 @@ end;
 
 procedure TFNew_Group_biaya.BSaveClick(Sender: TObject);
 begin
-   with dm.Qtemp do
-   begin
-     close;
-     sql.Clear;
-     sql.Text:=' Update t_ak_account set cost_st_id='+QuotedStr(EdKd_by.Text)+' where code='+QuotedStr(EdKd_Persd.Text)+'';
-     Execute;
-   end;
-   ShowMessage('Data Berhasil di simpan');
-   FGroup_biaya.ActRoExecute(sender);
-   Close;
+    if modul='by' then
+    begin
+       with dm.Qtemp do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:=' Update t_ak_account set cost_st_id='+QuotedStr(EdKd_by.Text)+' where code='+QuotedStr(EdKd_Persd.Text)+'';
+         Execute;
+       end;
+       ShowMessage('Data Berhasil di simpan');
+       FGroup_biaya.ActRoExecute(sender);
+       Close;
+    end;
+    if modul='lr' then
+    begin
+       with dm.Qtemp do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:=' Update t_ak_account set lr_st_id='+QuotedStr(EdKd_by.Text)+' where code='+QuotedStr(EdKd_Persd.Text)+'';
+         Execute;
+       end;
+       ShowMessage('Data Berhasil di simpan');
+       FGroup_biaya.ActRoExecute(sender);
+       Close;
+    end;
+    if modul='bylr' then
+    begin
+       with dm.Qtemp do
+       begin
+         close;
+         sql.Clear;
+         sql.Text:=' Update t_ak_account set by_st_id='+QuotedStr(EdKd_by.Text)+' where code='+QuotedStr(EdKd_Persd.Text)+'';
+         Execute;
+       end;
+       ShowMessage('Data Berhasil di simpan');
+       FGroup_biaya.ActRoExecute(sender);
+       Close;
+    end;
+
 end;
 
 procedure TFNew_Group_biaya.EdNm_bySelect(Sender: TObject);
 begin
-  with dm.Qtemp1 do
-  begin
-    close;
-    sql.Clear;
-    sql.Text:='select * from t_ak_type_cost where cost_type='+QuotedStr(EdNm_by.Text);
-    Open;
-  end;
-  Edkd_by.Text:=dm.Qtemp1['id'];
+
+   if modul='by' then
+   begin
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_cost where cost_type='+QuotedStr(EdNm_by.Text);
+        Open;
+      end;
+        Edkd_by.Text:=dm.Qtemp1['id'];
+   end;
+
+   if modul='lr' then
+   begin
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_lr where lr2='+QuotedStr(EdNm_by.Text);
+        Open;
+      end;
+        Edkd_by.Text:=dm.Qtemp1['id'];
+   end;
+  if modul='bylr' then
+   begin
+      with dm.Qtemp1 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_by where type_by='+QuotedStr(EdNm_by.Text);
+        Open;
+      end;
+        Edkd_by.Text:=dm.Qtemp1['id'];
+   end;
+
 end;
 
 procedure TFNew_Group_biaya.EdNm_PersdButtonClick(Sender: TObject);
@@ -141,17 +200,50 @@ end;
 procedure TFNew_Group_biaya.FormShow(Sender: TObject);
 begin
   EdNm_by.Clear;
-  with dm.Qtemp do
+  if modul='by' then
   begin
-    close;
-    sql.Clear;
-    sql.Text:='select * from t_ak_type_cost where deleted_at ISNULL';
-    open;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_cost where deleted_at ISNULL';
+        open;
+      end;
+      while not dm.Qtemp.Eof do
+      begin
+        EdNm_by.Items.Add(dm.Qtemp['cost_type']);
+        dm.Qtemp.Next;
+      end;
   end;
-  while not dm.Qtemp.Eof do
+  if modul='lr' then
   begin
-    EdNm_by.Items.Add(dm.Qtemp['cost_type']);
-    dm.Qtemp.Next;
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_lr where deleted_at ISNULL';
+        open;
+      end;
+      while not dm.Qtemp.Eof do
+      begin
+        EdNm_by.Items.Add(dm.Qtemp['lr2']);
+        dm.Qtemp.Next;
+      end;
+  end;
+  if modul='bylr' then
+  begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select * from t_ak_type_by where deleted_at ISNULL';
+        open;
+      end;
+      while not dm.Qtemp.Eof do
+      begin
+        EdNm_by.Items.Add(dm.Qtemp['type_by']);
+        dm.Qtemp.Next;
+      end;
   end;
 end;
 

@@ -192,9 +192,21 @@ var
   dd,mm,yy:word;
   bln_akhir,tgl1,tgl2:tdate;
 begin
+//  if (cbBulan.ItemIndex<6) AND (spTahun.EditValue=2026) then
+//  begin
+//        MessageDlg('Tidak ada data ..!!',mtInformation,[mbRetry],0);
+//        exit;
+//  end;
+
   mm:=cbBulan.ItemIndex;
   yy:=spTahun.EditValue;
-  tgl1:=encodedate(yy,mm,1);
+  tgl1 := EncodeDate(yy, mm, 1);
+//  if tgl1 < EncodeDate(2026, 6, 1) then
+//  begin
+//    tgl1 := EncodeDate(2026, 6, 1);
+//  end;
+
+
   tgl2:=encodedate(yy,mm,LastDayOfMonth(yy,mm));
   //bln_akhir:=encodedate(yy,mm-1,LastDayOfMonth(yy,mm-1));
   //tgl2:=encodedate(yy,12,LastDayOfMonth(yy,12));
@@ -304,17 +316,22 @@ begin
     sql.Add('), ');
 
     sql.Add('FilteredCustomerCount AS (');
-    sql.Add('  SELECT *, COUNT(*) OVER (PARTITION BY customer_code) AS TotalRows, ');
-    sql.Add('  CASE ');
-    sql.Add('    WHEN (COUNT(*) OVER (PARTITION BY customer_code) = 1) ');
-    sql.Add('         AND (MAX(CASE WHEN nomor = 1 THEN saldo_awal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) ');
-    sql.Add('         AND (debet = 0 AND kredit = 0) ');
-    sql.Add('    THEN 0 ELSE 1 ');
-    sql.Add('  END AS KeepCustomer FROM RankedData');
+    sql.Add(' SELECT *, COUNT(*) OVER (PARTITION BY customer_code) AS TotalRows, ');
+    sql.Add(' CASE WHEN (COUNT(*) OVER (PARTITION BY customer_code) = 1) ');
+    sql.Add(' AND (MAX(CASE WHEN nomor = 1 THEN saldo_awal ELSE NULL END) OVER (PARTITION BY customer_code) = 0) ');
+    sql.Add(' AND (debet = 0 AND kredit = 0) ');
+    sql.Add(' THEN 0 ELSE 1 ');
+    sql.Add(' END AS KeepCustomer FROM RankedData');
     sql.Add(') ');
-    sql.Add('SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ');
-    sql.Add('ORDER BY customer_code ASC, tgltrans ASC NULLS FIRST, no_urut ASC;');
-     open;
+    sql.Add(' SELECT * FROM FilteredCustomerCount WHERE KeepCustomer = 1 ');
+    sql.Add(' ORDER BY customer_code ASC, tgltrans ASC NULLS FIRST, no_urut ASC;');
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QCetak.RecordCount=0 then
@@ -337,18 +354,32 @@ procedure TFKartuPiutang.btSearchClick(Sender: TObject);
 var
   dd,mm,yy:word;
   bln_akhir,tgl1,tgl2:tdate;
+  dt_awal: TDate;
 begin
+//  if (cbBulan.ItemIndex<6) AND (spTahun.EditValue=2026) then
+//  begin
+//        MessageDlg('Tidak ada data ..!!',mtInformation,[mbRetry],0);
+//        exit;
+//  end;
   mm:=cbBulan.ItemIndex;
   yy:=spTahun.EditValue;
-  tgl1:=encodedate(yy,mm,1);
+  tgl1 := EncodeDate(yy, mm, 1);
+//  if tgl1 < EncodeDate(2026, 6, 1) then
+//  begin
+//    tgl1 := EncodeDate(2026, 6, 1);
+//  end;
+
+
+
   tgl2:=encodedate(yy,mm,LastDayOfMonth(yy,mm));
   //bln_akhir:=encodedate(yy,mm-1,LastDayOfMonth(yy,mm-1));
   //tgl2:=encodedate(yy,12,LastDayOfMonth(yy,12));
 
-  if mm=1 then
-  bln_akhir:=EncodeDate(yy-1,12,LastDayOfMonth(yy,mm-1))
-  else
-  bln_akhir:=EncodeDate(yy,mm-1,LastDayOfMonth(yy,mm-1));
+//  if mm=1 then
+//  bln_akhir:=EncodeDate(yy-1,12,LastDayOfMonth(yy,mm-1))
+//  else
+//  bln_akhir:=EncodeDate(yy,mm-1,LastDayOfMonth(yy,mm-1));
+
 
   DBGrid.StartLoadingStatus();
   try
@@ -379,7 +410,13 @@ begin
       sql.add(' AND customer_code='+QuotedStr(strKodePelanggan)+' ');
      end;
    sql.add(' ORDER BY customer_code, customer_name_pkp asc');
-   open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   FKartuPiutang.MemMaster.active:=false;
@@ -412,11 +449,17 @@ begin
   begin
      close;
      sql.Clear;
-     sql.add(' SELECT * FROM  '+
+     sql.add(' SELECT * FROM '+
              ' "public"."get_piutang_trx2"'+
              ' ('+QuotedStr(formatdatetime('yyyy-mm-dd',tgl1))+','+
              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl2))+') a ');
-     open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
   end;
 
   FKartuPiutang.MemMasterDetail.active:=false;

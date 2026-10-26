@@ -56,7 +56,9 @@ uses UDataModule, UMainMenu, UNew_Pelanggan, UMasterWilayah, USetMasterWilayah,
   USetMasterKaresidenan, USetMasterTP, ULaporanPenjualan, URegisterCekMundur,
   UDaftarTagihan, UKelompokBiayaWilayah, UPengajuanApproval_JurnalTrans,
   UExportReport, URekapTagihanKolektor2, UNew_Group_Biaya, URekapPiutang,
-  U_daftar_realisasi_biaya;
+  U_daftar_realisasi_biaya, URekapPenjualanPerItem, URptSaldoHarianBank,
+  URekapMonitoringTargetOmset, UDataKasbon2, UDataRincianHarmoni,
+  URekapMonitoringTargetOmsetPerArea, UListApproveDaftarPenagihanPiutang;
 
 procedure TFMasterData.update_grid_all(fld_kd,fld_name,fld_ket,tbl_name,vwhere:string);
 begin
@@ -70,7 +72,13 @@ begin
             ' '+fld_ket+' AS keterangan '+
             ' from '+tbl_name+' '+
             ' '+vwhere+' ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   FMasterData.MemMasterData.active:=false;
@@ -112,16 +120,52 @@ begin
 // cr ds 17-02-2026
   with FPengajuan_AppJurnal_Trans do
   begin
-      if vcall='realisasi_biaya_tp' then
-      begin
-        Fdaftar_realisasi_biaya.kode_tp:=MemMasterData['KD_MASTER'];
-        Fdaftar_realisasi_biaya.nama_tp.editvalue:=MemMasterData['NM_MASTER'];
-      end;
-      if vcall='realisasi_biaya_gb' then
-      begin
-        Fdaftar_realisasi_biaya.kode_group_biaya:=MemMasterData['KD_MASTER'];
-        Fdaftar_realisasi_biaya.group_biaya.editvalue:=MemMasterData['NM_MASTER'];
-      end;
+    if vcall='harmoni_pelaku_biaya' then
+    begin
+      FDataRincianHarmoni.edNoKaryawan.Text:=SelectRow(' SELECT nik_employee from '+
+                                                        ' t_cost_actors where '+
+                                                        ' code=' + QuotedStr(MemMasterData['KD_MASTER']));
+      FDataRincianHarmoni.edNamaKaryawan.Text:=MemMasterData['NM_MASTER'];
+    end;
+
+    if vcall='m_sumber_kasbon' then
+    begin
+      FDataKasBon2.edKodeSumber.Text:=MemMasterData['KD_MASTER'];
+      FDataKasBon2.edNamaSumber.Text:=MemMasterData['NM_MASTER'];
+    end;
+
+    if vcall='kasbon_pelaku_biaya2' then
+    begin
+      FDataKasBon2.edKodeKepada.Text:=MemMasterData['KD_MASTER'];
+      FDataKasBon2.edNamaKepada.Text:=MemMasterData['NM_MASTER'];
+    end;
+
+
+    if vcall='status_pkp_pelaku' then
+    begin
+      FDataPeLakuBiaya.edkd_ptkp.Text:=MemMasterData['KD_MASTER'];
+      FDataPeLakuBiaya.ednm_ptkp.Text:=MemMasterData['NM_MASTER'];
+    end;
+    if vcall='realisasi_biaya_tp' then
+    begin
+      Fdaftar_realisasi_biaya.kode_tp:=MemMasterData['KD_MASTER'];
+      Fdaftar_realisasi_biaya.nama_tp.editvalue:=MemMasterData['NM_MASTER'];
+    end;
+    if vcall='rekappenjualanperitem_tp' then
+    begin
+      FRekapPenjualanPerItem.strCodeTP:=MemMasterData['KD_MASTER'];
+      FRekapPenjualanPerItem.edTP.EditValue:=MemMasterData['NM_MASTER'];
+    end;
+    if vcall='rekappenjualanperitem_kelompokbarang' then
+    begin
+      FRekapPenjualanPerItem.strGropID:=MemMasterData['KD_MASTER'];
+      FRekapPenjualanPerItem.edKelompokBarang.EditValue:=MemMasterData['NM_MASTER'];
+    end;
+    if vcall='realisasi_biaya_gb' then
+    begin
+      Fdaftar_realisasi_biaya.kode_group_biaya:=MemMasterData['KD_MASTER'];
+      Fdaftar_realisasi_biaya.group_biaya.editvalue:=MemMasterData['NM_MASTER'];
+    end;
 
     if vcall='rekappiutangtp' then
     begin
@@ -153,7 +197,13 @@ begin
         close;
         sql.Clear;
         sql.Text:='select is_date_range from t_export_report_config where id='+QuotedStr(MemMasterData['KD_MASTER']);
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
       if dm.Qtemp.FieldValues['is_date_range']=False then
       begin
@@ -161,7 +211,6 @@ begin
       end else begin
         FExportReport.dtTanggalAwal.Visible := ivAlways;
       end;
-
     end;
 
     if vcall='apppenjualan_tp' then
@@ -215,6 +264,11 @@ begin
     FKelompokBiayaWilayah.MemTP.Post;
   end;
 //Nanang
+  if vcall='listapprovedpp' then
+  begin
+    FListApproveDaftarPenagihanPiutang.kd_karesidenan:=MemMasterData['KD_MASTER'];
+    FListApproveDaftarPenagihanPiutang.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='daftartagihan_kares' then
   begin
     FDaftarTagihan.strKdKaresidenan:=MemMasterData['KD_MASTER'];
@@ -388,7 +442,6 @@ begin
     FRpt_Kartu_Gudang.vgroup_id:=MemMasterData['KD_MASTER'];
     FRpt_Kartu_Gudang.cxkategori_barang.EditValue:=MemMasterData['NM_MASTER'];
   end;
-  //Mas Anto
   if vcall='perkiraan_supplier_return' then
   begin
     FNew_supplier.edKodePerkiraan_ret.Text:=MemMasterData['KD_MASTER'];
@@ -485,6 +538,13 @@ begin
     FDaftarRekeningKoran.vRekeningBank:=MemMasterData['KD_MASTER'];
     FDaftarRekeningKoran.vNamaBank:=MemMasterData['NM_MASTER'];
   end;
+  if vcall='saldo_harian_bank' then
+  begin
+    FRptSaldoHarianBank.edRekeningBank.EditValue:=MemMasterData['KD_MASTER'];
+    FRptSaldoHarianBank.edNamaBank.EditValue:=MemMasterData['NM_MASTER'];
+    FRptSaldoHarianBank.vRekeningBank:=MemMasterData['KD_MASTER'];
+    FRptSaldoHarianBank.vNamaBank:=MemMasterData['NM_MASTER'];
+  end;
   if vcall='bhpenerimaankas_bank_kares' then
   begin
     FBHPenerimaanKasBank.vkd_kares:=MemMasterData['KD_MASTER'];
@@ -556,7 +616,7 @@ begin
     FRekapPenjualan.edKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
     FRekapPenjualan.vkd_kab:='';
     FRekapPenjualan.edKabupaten.EditValue:='';
-     FRekapPenjualan.vkd_tp:='';
+    FRekapPenjualan.vkd_tp:='';
     FRekapPenjualan.edTP.EditValue:='';
   end;
   if vcall='rekappenjualan_tp' then
@@ -1094,11 +1154,7 @@ begin
     FDaftarKlasifikasi.edkd_jenis_usaha.Text:=MemMasterData['KD_MASTER'];
     FDaftarKlasifikasi.ednm_jenis_usaha.Text:=MemMasterData['NM_MASTER'];
   end;
-  if vcall='rekapmonitoringtargetjenisusaha' then
-  begin
-    FMonitoringTargetOmset.strKodeJenisUsaha:=MemMasterData['KD_MASTER'];
-    FMonitoringTargetOmset.edJenisUsaha.EditValue:=MemMasterData['NM_MASTER'];
-  end;
+
   if vcall='jns_pelanggan_klasifikasi' then
   begin
     FDaftarKlasifikasi.edkd_jenis_pel.Text:=MemMasterData['KD_MASTER'];
@@ -1600,26 +1656,53 @@ begin
   //Nanang
   if vcall='rekapmonitoringtargetkares' then
   begin
+    FRekapMonitoringTargetOmset.strKaresidenanID:=MemMasterData['KD_MASTER'];
+    FRekapMonitoringTargetOmset.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekapmonitoringtargetkelompokbarang' then
+  begin
+    FRekapMonitoringTargetOmset.strKelompokID:=MemMasterData['KD_MASTER'];
+    FRekapMonitoringTargetOmset.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekapmonitoringtargetperareakelompokbarang' then
+  begin
+    FRekapMonitoringTargetOmsetPerArea.strKelompokID:=MemMasterData['KD_MASTER'];
+    FRekapMonitoringTargetOmsetPerArea.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='rekapmonitoringtargetjenisusaha' then
+  begin
+    FRekapMonitoringTargetOmset.strKodeJenisUsaha:=MemMasterData['KD_MASTER'];
+    FRekapMonitoringTargetOmset.edJenisUsaha.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+
+  //Nanang
+  if vcall='monitoringtargetkares' then
+  begin
     FMonitoringTargetOmset.strKaresidenanID:=MemMasterData['KD_MASTER'];
     FMonitoringTargetOmset.cbKaresidenan.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //Nanang
-  if vcall='rekapmonitoringtargetkab' then
+  if vcall='monitoringtargetkab' then
   begin
     FMonitoringTargetOmset.strKabupatenID:=MemMasterData['KD_MASTER'];
     FMonitoringTargetOmset.cbKabupaten.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //Nanang
-  if vcall='rekapmonitoringtargetkec' then
+  if vcall='monitoringtargetkec' then
   begin
     FMonitoringTargetOmset.strKecamatanID:=MemMasterData['KD_MASTER'];
     FMonitoringTargetOmset.cbKecamatan.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //Nanang
-  if vcall='rekapmonitoringtargetkelompokbarang' then
+  if vcall='monitoringtargetkelompokbarang' then
   begin
     FMonitoringTargetOmset.strKelompokID:=MemMasterData['KD_MASTER'];
     FMonitoringTargetOmset.cbKelompok.EditValue:=MemMasterData['NM_MASTER'];
+  end;
+  if vcall='monitoringtargetjenisusaha' then
+  begin
+    FMonitoringTargetOmset.strKodeJenisUsaha:=MemMasterData['KD_MASTER'];
+    FMonitoringTargetOmset.edJenisUsaha.EditValue:=MemMasterData['NM_MASTER'];
   end;
   //Nanang
   if vcall='laporanhariansisanotatp' then
@@ -1781,7 +1864,13 @@ begin
             ' '+fld_ket+' AS keterangan '+
             ' from '+tbl_name+' '+
             ' '+vwhere+' ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   FMasterData.MemMasterData.active:=false;

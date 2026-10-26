@@ -20,16 +20,18 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Width = 823
     Height = 654
     Hint = ''
-    ActivePage = TabPembelian
+    ActivePage = TabReturPenjualan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 0
+    TabIndex = 4
     TabOrder = 0
     ExplicitWidth = 819
     ExplicitHeight = 653
     FixedDimension = 21
     object TabPembelian: TRzTabSheet
       Caption = 'Setting Transaksi Pembelian'
+      ExplicitWidth = 815
+      ExplicitHeight = 628
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -39,6 +41,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 815
+        ExplicitHeight = 628
         object Label14: TLabel
           Left = 178
           Top = 265
@@ -144,6 +148,8 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           Height = 32
           Align = alBottom
           TabOrder = 0
+          ExplicitTop = 595
+          ExplicitWidth = 813
           object btClose_Beli: TRzBitBtn
             Left = 741
             Top = 1
@@ -204,6 +210,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 737
           end
           object btSave_Beli: TRzBitBtn
             Left = 666
@@ -265,6 +272,7 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
               090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
+            ExplicitLeft = 662
           end
         end
         object edNamaModulBeli: TRzButtonEdit
@@ -361,8 +369,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object TabPenjualan: TRzTabSheet
       Caption = 'Setting Transaksi Penjualan'
-      ExplicitWidth = 815
-      ExplicitHeight = 628
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -372,7 +378,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 815
         object Label18: TLabel
           Left = 178
           Top = 83
@@ -522,15 +527,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           UseColoredTabs = True
           TabIndex = 2
           TabOrder = 7
-          ExplicitWidth = 813
           FixedDimension = 21
           object TabSetPPn: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Seting PPn'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Label59: TLabel
               Left = 125
               Top = 115
@@ -670,10 +670,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           object TabSheet1: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Setting PPh'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Panel10: TPanel
               Left = 0
               Top = 0
@@ -766,7 +762,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           object TabSheet2: TRzTabSheet
             Color = clGradientInactiveCaption
             Caption = 'Setting Default Akun Master Pelanggan'
-            ExplicitWidth = 809
             object Label30: TLabel
               Left = 158
               Top = 9
@@ -912,8 +907,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 596
-        ExplicitWidth = 815
         object btClose_Close: TRzBitBtn
           Left = 743
           Top = 1
@@ -974,7 +967,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 739
         end
         object btSave_Jual: TRzBitBtn
           Left = 668
@@ -1036,7 +1028,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 664
         end
       end
       object RzPageControl5: TRzPageControl
@@ -1050,14 +1041,10 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
         UseColoredTabs = True
         TabIndex = 0
         TabOrder = 2
-        ExplicitWidth = 815
-        ExplicitHeight = 235
         FixedDimension = 21
         object RzTabSheet2: TRzTabSheet
           Color = clGradientInactiveCaption
           Caption = 'Data Akun'
-          ExplicitWidth = 811
-          ExplicitHeight = 210
           object DBGridDetailJual: TDBGridEh
             Left = 0
             Top = 0
@@ -2492,7 +2479,6 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     Top = 368
   end
   object MemDetailReturJual: TMemTableEh
-    Active = True
     Params = <>
     Left = 523
     Top = 366
@@ -2509,12 +2495,15 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
     end
     object StringField10: TStringField
       FieldName = 'table_name'
+      Size = 100
     end
     object StringField11: TStringField
       FieldName = 'field_name'
+      Size = 100
     end
     object StringField12: TStringField
       FieldName = 'nilai_name'
+      Size = 100
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -2544,11 +2533,13 @@ object FDataMasterAkunTrans: TFDataMasterAkunTrans
           FieldName = 'field_name'
           StringDataType = fdtStringEh
           DisplayWidth = 20
+          Size = 100
         end
         object nilai_name: TMTStringDataFieldEh
           FieldName = 'nilai_name'
           StringDataType = fdtStringEh
-          DisplayWidth = 20
+          DisplayWidth = 100
+          Size = 100
         end
       end
       object RecordsList: TRecordsListEh

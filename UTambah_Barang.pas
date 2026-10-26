@@ -39,6 +39,9 @@ type
     LabelValue2: TLabel;
     edValue: TRzNumericEdit;
     edcategory_id: TEdit;
+    edNoNota: TRzButtonEdit;
+    LabelNota2: TLabel;
+    LabelNota: TLabel;
     procedure edNamaBarangButtonClick(Sender: TObject);
     procedure edNamaSupplierButtonClick(Sender: TObject);
     procedure edNamaGudangButtonClick(Sender: TObject);
@@ -48,10 +51,12 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure edNoNotaButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    no_faktur: String;
     procedure clear;
     procedure AddSalesOrder;
     procedure AddPenjulan;
@@ -74,7 +79,7 @@ implementation
 uses UCari_Barang2, UMasterData, UDataModule, UNew_SalesOrder, UTemplate_Temp,
   UNew_DataPenjualan, UMy_Function, UDataReturPenjualan,
   UNew_DataTargetPenjualan, UNew_DataPenjualanPromosi, UDaftarKlasifikasi,
-  UNew_TransferBarang, UNewDeliveryOrder;
+  UNew_TransferBarang, UNewDeliveryOrder, USumberBarangRetur;
 
 var
 tambahbarang : TFTambah_Barang;
@@ -335,20 +340,30 @@ begin
         close;
         sql.Clear;
         sql.Text:='SELECT * from t_selling_initial_balance WHERE trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV);
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
       if dm.Qtemp.RecordCount>0 then
       begin
+
+
         FDataReturPenjualan.MemDetail.active:=false;
         FDataReturPenjualan.MemDetail.active:=true;
         FDataReturPenjualan.MemDetail.insert;
-        FDataReturPenjualan.MemDetail['NO_JUAL']:=FDataReturPenjualan.StrNoINV;
+        FDataReturPenjualan.MemDetail['NO_JUAL']:=edNoNota.Text;
+        FDataReturPenjualan.MemDetail['NO_FAKTUR']:=no_faktur;
         FDataReturPenjualan.MemDetail['KD_ITEM']:=edKodeBarang.Text;
         FDataReturPenjualan.MemDetail['NM_ITEM']:=edNamaBarang.Text;
         FDataReturPenjualan.MemDetail['JUMLAH']:= edJumlah.Text;
         FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=edJumlah.Text;
         FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=0;
         FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=0;
+        FDataReturPenjualan.MemDetail['POTONGAN']:=0;
         FDataReturPenjualan.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
         FDataReturPenjualan.MemDetail['NM_SATUAN']:=edSatuan.Text;
         //            FDataReturPenjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('sub_total').AsFloat;
@@ -379,7 +394,13 @@ begin
                   'a.grand_tot, a.ppn_account, a.account_code  FROM  t_selling_det a  '+
                   'WHERE a.deleted_at IS NULL AND a.trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV)+' and '+
                   'a.code_item='+QuotedStr(edKodeBarang.Text)+' ) zz ');
-          open;
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
         if  Dm.Qtemp.RecordCount<>0 then
         begin
@@ -387,12 +408,14 @@ begin
           FDataReturPenjualan.MemDetail.active:=true;
           FDataReturPenjualan.MemDetail.insert;
           FDataReturPenjualan.MemDetail['NO_JUAL']:=Dm.Qtemp.FieldByName('trans_no').AsString;
+          FDataReturPenjualan.MemDetail['NO_FAKTUR']:=no_faktur;
           FDataReturPenjualan.MemDetail['KD_ITEM']:=Dm.Qtemp.FieldByName('code_item').AsString;
           FDataReturPenjualan.MemDetail['NM_ITEM']:=Dm.Qtemp.FieldByName('name_item').AsString;
           FDataReturPenjualan.MemDetail['JUMLAH']:= edJumlah.Text;
           FDataReturPenjualan.MemDetail['JUMLAH_JUAL']:=Dm.Qtemp.FieldByName('amount').AsFloat;
           FDataReturPenjualan.MemDetail['HARGA_SATUAN']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
           FDataReturPenjualan.MemDetail['HARGA_SATUAN_JUAL']:=Dm.Qtemp.FieldByName('sub_total').AsFloat/Dm.Qtemp.FieldByName('amount').AsFloat;
+          FDataReturPenjualan.MemDetail['POTONGAN']:=0;
           FDataReturPenjualan.MemDetail['KD_SATUAN']:=edKodeSatuan.Text;
           FDataReturPenjualan.MemDetail['NM_SATUAN']:=edSatuan.Text;
           //            FDataReturPenjualan.MemDetail['SUB_TOTAL']:= Dm.Qtemp.FieldByName('sub_total').AsFloat;
@@ -558,7 +581,13 @@ begin
           Sql.Text:='SELECT a.group_id,b.group_name FROM t_item a '+
                     'left join t_item_group b on b.group_id=a.group_id '+
                     'where a.item_code='+QuotedStr(edKodeBarang.Text);
-          Open;
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
 
         if vKodeSama=false then
@@ -738,15 +767,17 @@ end;
 
 procedure TFTambah_Barang.clear;
 begin
-    edKodeBarang.Clear;
-    edNamaBarang.Clear;
-    edKodeSupplier.Clear;
-    edNamaSupplier.Clear;
-    edKodeGudang.Clear;
-    edNamaGudang.Clear;
-    edKodeSatuan.Clear;
-    edSatuan.Clear;
-    edJumlah.Value:=0;
+  edKodeBarang.Clear;
+  edNamaBarang.Clear;
+  edKodeSupplier.Clear;
+  edNamaSupplier.Clear;
+  edKodeGudang.Clear;
+  edNamaGudang.Clear;
+  edKodeSatuan.Clear;
+  edNoNota.Clear;
+  no_faktur:='';
+  edSatuan.Clear;
+  edJumlah.Value:=0;
 end;
 
 procedure TFTambah_Barang.BBatalClick(Sender: TObject);
@@ -811,7 +842,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM t_selling_initial_balance where trans_no='+QuotedStr(FDataReturPenjualan.StrNoINV);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if dm.Qtemp3.RecordCount>0 then
@@ -846,6 +883,11 @@ begin
   FMasterData.ShowModal;
 end;
 
+procedure TFTambah_Barang.edNoNotaButtonClick(Sender: TObject);
+begin
+  FSumberBarangRetur.Show;
+end;
+
 procedure TFTambah_Barang.edSatuanButtonClick(Sender: TObject);
 begin
   if edKodeBarang.Text<>'' then
@@ -870,14 +912,25 @@ begin
 end;
 
 procedure TFTambah_Barang.FormShow(Sender: TObject);
+var
+  BaseHeight: Integer;
 begin
   clear;
+  LabelNota.Visible:=False;
+  LabelNota2.Visible:=False;
+  edNoNota.Visible:=False;
+
+  edJumlah.IntegersOnly:=True;
+  edJumlah.DisplayFormat :=',0;(,0)';
+
+  edNamaBarang.Enabled:=True;
   if vStatusTrans='targetpenjualan' then
   begin
     LabelValue.Visible:=True;
     LabelValue2.Visible:=True;
     edValue.Visible:=True;
-    FTambah_Barang.Height:=231;
+
+    BaseHeight:=231;
   end else if vStatusTrans='klasifikasi' then
   begin
     LabelValue.Visible:=False;
@@ -888,7 +941,8 @@ begin
     Label9.Visible:=False;
     edJumlah.Visible:=False;
 
-    FTambah_Barang.Height:=159;
+
+    BaseHeight:=159;
   end else if vStatusTrans='transfer_gudang' then
   begin
     LabelValue.Visible:=False;
@@ -899,7 +953,21 @@ begin
     Label9.Visible:=True;
     edJumlah.Visible:=True;
 
-    FTambah_Barang.Height:=250;
+    BaseHeight:=250;
+  end else if vStatusTrans='returpenjualan' then
+  begin
+    edNamaBarang.Enabled:=False;
+    LabelValue.Visible:=False;
+    LabelValue2.Visible:=False;
+    edValue.Visible:=False;
+
+    LabelNota.Visible:=True;
+    LabelNota2.Visible:=True;
+    edNoNota.Visible:=True;
+    BaseHeight:=187;
+    edJumlah.IntegersOnly:=False;
+    edJumlah.DisplayFormat := '#,##0.00;(#,##0.00);0.00';
+
   end else
   begin
     LabelValue.Visible:=False;
@@ -910,8 +978,10 @@ begin
     Label9.Visible:=True;
     edJumlah.Visible:=True;
 
-    FTambah_Barang.Height:=187;
+    BaseHeight:=187;
   end;
+  FTambah_Barang.Height := MulDiv(BaseHeight, CurrentPPI, 96);
+
 end;
 
 end.

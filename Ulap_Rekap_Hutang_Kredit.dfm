@@ -196,64 +196,87 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'voucher_no'
         Footers = <>
-        Title.Caption = 'No. BK'
-        Width = 100
+        Title.Caption = 'Nomor Transaksi'
+        Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'tanggal'
         Footers = <>
         Title.Caption = 'Tanggal'
-        Width = 100
+        Width = 81
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'kodesp'
         Footers = <>
-        Title.Caption = 'No. Faktur / Invoice'
-        Width = 100
+        Visible = False
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'deskripsi'
         Footers = <>
         Title.Caption = 'Deskripsi'
+        Width = 250
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kepada'
+        Footers = <>
+        Title.Caption = 'Kepada'
         Width = 200
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'nofaktur'
         Footers = <>
-        Title.Caption = 'Nama Kena Pph'
-        Width = 200
+        Visible = False
+      end
+      item
+        CellButtons = <>
+        DisplayFormat = '#,##0.00'
+        DynProps = <>
+        EditButtons = <>
+        EditMask = '#,##0.00'
+        FieldName = 'dpp'
+        Footers = <>
+        Title.Caption = 'Saldo'
+        Width = 150
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'pph'
         Footers = <>
-        Title.Caption = 'Dpp'
-        Width = 100
+        Visible = False
       end
       item
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'nodo'
         Footers = <>
-        Title.Caption = 'Jumlah'
-        Width = 100
+        Visible = False
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
   end
   object DSRekap_Hutang_Kredit: TDataSource
     AutoEdit = False
-    DataSet = MemRekap_Hutang_Kredit
+    DataSet = unirekapkredittrx
     Left = 280
     Top = 280
   end
@@ -1196,6 +1219,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         2D3673322E372D362C362D3673362C322E372C362C3620202623393B2623393B
         2623393B2623393B5332332E332C31382C32302C31387A222F3E0D0A0909093C
         2F673E0D0A09093C2F673E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      OnClick = DxRefreshClick
     end
     object DtMulai: TcxBarEditItem
       Caption = 'Tanggal Awal   '
@@ -1629,84 +1653,11 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
   object unirekapkredittrx: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      ''
       
-        'SELECT  a.voucher_no,a.trans_date tanggal,a.kodesp,x.deskripsi,k' +
-        'epada,a.inv_supp_no as nofaktur ,y.dpp as dpp,a.pph as pph,'#39#39' as' +
-        ' nodo FROM '
-      '(SELECT DISTINCT a.*,b.inv_supp_no,c.saldo as pph FROM '
-      
-        '(SELECT DISTINCT voucher_no,trans_date,to_ kepada,code_account k' +
-        'odesp FROM '
-      
-        '(SELECT a.voucher_no,b.trans_date,a.to_ ,b.code_account,b."posit' +
-        'ion" from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expen' +
-        'diture_det b on a.voucher_no=b.no_voucher)r where trans_date bet' +
-        'ween '#39'2022-11-15'#39' and '#39'2022-11-15'#39' and code_account='#39'2142'#39' and "' +
-        'position"='#39'K'#39')a  LEFT JOIN t_buy_pay b on a.voucher_no=b.voucher' +
-        '_no LEFT JOIN t_credit_trx_real c on a.voucher_no=c.voucher and ' +
-        'b.inv_supp_no=c.inv_supp_no WHERE (c.voucher is not null ) and (' +
-        'b.inv_supp_no is not null)) a LEFT JOIN  t_item_receive f ON f.f' +
-        'aktur_no=a.inv_supp_no LEFT JOIN (SELECT  a.receive_no,string_ag' +
-        'g (b.item_name, '#39', '#39' ) AS deskripsi FROM  t_item_receive_det a L' +
-        'EFT JOIN t_item_stock b ON a.item_stock_code::text = b.item_stoc' +
-        'k_code::text GROUP BY a.receive_no ) x On x.receive_no=f.receive' +
-        '_no LEFT JOIN (SELECT receive_no,sum(subtotal) as dpp FROM t_ite' +
-        'm_receive_det GROUP BY  receive_no) y on f.receive_no=y.receive_' +
-        'no '
-      'UNION ALL '
-      
-        'SELECT aa.voucher_no,aa.trans_date tanggal,aa.kodesp,b.descripti' +
-        'on1,aa.kepada,b.inv_supp_no as nofaktur ,b.dpp as dpp,b.saldo as' +
-        ' pph,'#39#39' as nodo  FROM (SELECT a.*,c.inv_supp_no,b.inv_supp_no FR' +
-        'OM '
-      
-        '(SELECT distinct voucher_no,trans_date,kodesp,kepada FROM (SELEC' +
-        'T a.voucher_no,b.trans_date,b.code_account kodesp,a.to_ kepada,b' +
-        '."position" from t_cash_bank_expenditure a INNER JOIN t_cash_ban' +
-        'k_expenditure_det b on a.voucher_no=b.no_voucher)j where trans_d' +
-        'ate between '#39'2022-11-15'#39' and '#39'2022-11-15'#39' and kodesp='#39'2142'#39' and ' +
-        '"position"='#39'K'#39')a LEFT JOIN t_credit_trx_real b on a.voucher_no=b' +
-        '.voucher LEFT JOIN t_buy_pay c on a.voucher_no=c.voucher_no LEFT' +
-        ' JOIN t_payment_detail_real d on a.voucher_no=d.voucher_no WHERE' +
-        ' (b.voucher is not null) and (b.voucher is null)and (c.voucher_n' +
-        'o is null))aa LEFT JOIN t_credit_trx_real b ON aa.voucher_no=b.v' +
-        'oucher'
-      'UNION ALL '
-      
-        'SELECT DISTINCT m.voucher_no voucher,m.trans_date as tanggal,n.a' +
-        'ccount_code as kodesp,n.description1 deskripsi,m.to_ kepada,n.in' +
-        'v_supp_no nofaktur,n.dpp,n.saldo,'#39#39' as nodo from (SELECT a.vouch' +
-        'er_no,b.trans_date,a.to_ from t_cash_bank_expenditure a INNER JO' +
-        'IN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher) m' +
-        ' ,t_credit_trx_real n where m.voucher_no=n.voucher and n.account' +
-        '_code='#39'2142'#39' and description1<>'#39#39' and m.trans_date between '#39'2022' +
-        '-11-15'#39' and '#39'2022-11-15'#39
-      ''
-      'UNION ALL '
-      'SELECT   '#39#39' as voucher,b.receive_date,a.account_pph_code,'
-      
-        '(case when a.account_pph_code='#39'2130.02'#39' then '#39'Hutang Pajak - PPh' +
-        '.Ps.23'#39' when a.account_pph_code='#39'2130.01'#39' then '#39'Hutang Pajak - P' +
-        'Ph.Ps.21'#39' when a.account_pph_code='#39'2130.03'#39' then '#39'Hutang Pajak -' +
-        ' PPh.Ps.25'#39' when a.account_pph_code='#39'2130.04'#39' then '#39'Hutang Pajak' +
-        ' - PPh.Ps.4(2)'#39' when a.account_pph_code='#39'2130.07'#39' then '#39'Hutang P' +
-        'ajak - PPh.Ps.15'#39' when a.account_pph_code='#39'2130.06'#39' then '#39'Hutang' +
-        ' Pajak - PPh.Ps.22'#39' else a.account_pph_code end) as deskripsi,'
-      
-        'supplier_name as kepada,b.faktur_no,a.subtotalrp as dpp,a.pph_rp' +
-        ' as pph,'#39#39' as nodo'
-      ' from t_item_receive_det a '
-      'left join t_item_receive b on a.receive_no=b.receive_no'
-      'LEFT JOIN t_supplier d on b.supplier_code=d.supplier_code'
-      'where '
-      'b.receive_date >'#39'2024-01-01'#39' '
-      'and b.receive_date BETWEEN '#39'2023-03-01'#39' and '#39'2023-03-31'#39' '
-      
-        'and a.account_pph_code='#39'2142'#39' and a.receive_no not in (select lp' +
-        'b_no from t_buy_pay)')
-    Left = 574
-    Top = 8
+        'select * from v_rekap_hutang_kredit  where  tanggal BETWEEN '#39'202' +
+        '6-07-01'#39' and  '#39'2026-07-28'#39'  and kodesp='#39'2130.02'#39)
+    Left = 526
+    Top = 88
   end
   object frxrekapkreditrx: TfrxReport
     Version = '2022.1.3'
@@ -1717,15 +1668,15 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 45932.629227418980000000
+    ReportOptions.LastChange = 46231.369332430560000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
-      'begin              '
+      'begin'
       'end;'
       ''
       'procedure MasterData1OnAfterPrint(Sender: TfrxComponent);'
-      'begin    '
+      'begin'
       'end;'
       ''
       'begin'
@@ -1833,7 +1784,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 49.133890000000000000
+        Height = 18.897637795275590000
         Top = 257.008040000000000000
         Width = 740.409927000000000000
         OnAfterPrint = 'MasterData1OnAfterPrint'
@@ -1845,7 +1796,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Memo20: TfrxMemoView
           AllowVectorExport = True
           Width = 26.456710000000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1862,8 +1813,8 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 28.031540000000000000
-          Width = 64.252010000000000000
-          Height = 49.133858270000000000
+          Width = 132.283550000000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           DataField = 'voucher_no'
           DataSet = frxrekdafkredittrx
@@ -1882,7 +1833,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Line5: TfrxLineView
           AllowVectorExport = True
           Left = 28.393700790000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1890,9 +1841,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 91.929190000000000000
-          Width = 49.488250000000000000
-          Height = 49.133858270000000000
+          Left = 162.740260000000000000
+          Width = 60.826840000000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           DataField = 'tanggal'
           DataSet = frxrekdafkredittrx
@@ -1908,19 +1859,10 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line7: TfrxLineView
-          AllowVectorExport = True
-          Left = 92.669291340000000000
-          Height = 49.133858270000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Line24: TfrxLineView
           AllowVectorExport = True
-          Left = 142.173228350000000000
-          Height = 49.133858270000000000
+          Left = 161.007874020000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1928,16 +1870,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Line55: TfrxLineView
           AllowVectorExport = True
-          Height = 49.133858270000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line17: TfrxLineView
-          AllowVectorExport = True
-          Left = 565.401574800000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -1945,40 +1878,18 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Line18: TfrxLineView
           AllowVectorExport = True
-          Left = 420.370078740000000000
-          Height = 49.133858270000000000
+          Left = 446.740157480000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
-        object Memo23: TfrxMemoView
-          AllowVectorExport = True
-          Left = 646.504330000000000000
-          Width = 91.063080000000000000
-          Height = 49.133858270000000000
-          StretchMode = smMaxHeight
-          DataSet = frxrekdafkredittrx
-          DataSetName = 'frxdbdafrekapkredittrx'
-          DisplayFormat.FormatStr = '%0.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'arial'
-          Font.Style = []
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[frxdbdafrekapkredittrx."saldo"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
           Left = 227.614410000000000000
-          Width = 193.110390000000000000
-          Height = 49.133858270000000000
+          Width = 215.787570000000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           DataField = 'deskripsi'
           DataSet = frxrekdafkredittrx
@@ -1996,9 +1907,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Memo8: TfrxMemoView
           AllowVectorExport = True
-          Left = 422.118430000000000000
-          Width = 140.196970000000000000
-          Height = 49.133858270000000000
+          Left = 448.575140000000000000
+          Width = 196.889920000000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           DataField = 'kepada'
           DataSet = frxrekdafkredittrx
@@ -2017,7 +1928,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Line2: TfrxLineView
           AllowVectorExport = True
           Left = 740.228820000000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -2026,7 +1937,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Line13: TfrxLineView
           AllowVectorExport = True
           Left = 646.520100000000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
@@ -2034,9 +1945,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 565.897960000000000000
-          Width = 78.614173230000000000
-          Height = 49.133858270000000000
+          Left = 649.047620000000000000
+          Width = 89.952763230000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           DataField = 'dpp'
           DataSet = frxrekdafkredittrx
@@ -2058,36 +1969,17 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         object Line22: TfrxLineView
           AllowVectorExport = True
           Left = 226.771653540000000000
-          Height = 49.133858270000000000
+          Height = 18.897637795275590000
           StretchMode = smMaxHeight
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
-        object Memo28: TfrxMemoView
-          AllowVectorExport = True
-          Left = 143.622140000000000000
-          Width = 83.504020000000000000
-          Height = 49.133858270000000000
-          StretchMode = smMaxHeight
-          DataField = 'nofaktur'
-          DataSet = frxrekdafkredittrx
-          DataSetName = 'frxdbdafrekapkredittrx'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxdbdafrekapkredittrx."nofaktur"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Line20: TfrxLineView
+          Align = baBottom
           AllowVectorExport = True
-          Top = 49.133890000000000000
-          Width = 740.409448818898000000
+          Top = 18.897637795275590000
+          Width = 740.409448820000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -2136,20 +2028,11 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = []
           Diagonal = True
         end
-        object Line6: TfrxLineView
-          AllowVectorExport = True
-          Left = 92.645950000000000000
-          Top = 2.220470000000000000
-          Height = 34.015721180000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo92: TfrxMemoView
           AllowVectorExport = True
           Left = 29.574830000000000000
           Top = 5.000000000000000000
-          Width = 61.984251970000000000
+          Width = 126.236261970000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2163,27 +2046,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo5: TfrxMemoView
-          AllowVectorExport = True
-          Left = 93.401980000000000000
-          Top = 3.220470000000000000
-          Width = 47.606370000000000000
-          Height = 27.354360000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Courier New'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'TANGGAL')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Line10: TfrxLineView
           AllowVectorExport = True
-          Left = 142.000000000000000000
+          Left = 160.897650000000000000
           Top = 1.834570000000000000
           Height = 34.015770000000000000
           Color = clBlack
@@ -2194,7 +2059,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           AllowVectorExport = True
           Left = 225.212740000000000000
           Top = 2.543290000000000000
-          Width = 193.133880240000000000
+          Width = 219.590590240000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2210,7 +2075,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 420.346395670000000000
+          Left = 446.803105670000000000
           Top = 1.440940000000000000
           Height = 34.015748030000000000
           Color = clBlack
@@ -2231,24 +2096,15 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'JUMLAH')
+            'SALDO')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line4: TfrxLineView
-          AllowVectorExport = True
-          Left = 565.228346460000000000
-          Top = 1.220470000000000000
-          Height = 34.015748030000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 422.897960000000000000
+          Left = 453.134200000000000000
           Top = 2.220470000000000000
-          Width = 139.842610000000000000
+          Width = 188.976500000000000000
           Height = 31.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2271,24 +2127,6 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = []
           Diagonal = True
         end
-        object Memo19: TfrxMemoView
-          AllowVectorExport = True
-          Left = 565.897960000000000000
-          Top = 1.779530000000000000
-          Width = 79.370076300000000000
-          Height = 31.133890000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Courier New'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haCenter
-          Memo.UTF8W = (
-            'DPP')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Line21: TfrxLineView
           AllowVectorExport = True
           Left = 226.771800000000000000
@@ -2300,9 +2138,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 145.181200000000000000
+          Left = 164.078850000000000000
           Top = 3.779530000000000000
-          Width = 74.063080000000000000
+          Width = 55.165430000000000000
           Height = 27.354360000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2312,7 +2150,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'NO FAKTUR/ INVOICE')
+            'TANGGAL')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2325,7 +2163,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         FillGap.Right = 0
         Frame.Typ = []
         Height = 26.456710000000000000
-        Top = 411.968770000000000000
+        Top = 381.732530000000000000
         Width = 740.409927000000000000
         object Shape2: TfrxShapeView
           AllowVectorExport = True
@@ -2337,7 +2175,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           AllowVectorExport = True
           Left = 429.811380000000000000
           Top = 0.519480000000000000
-          Width = 109.606370000000000000
+          Width = 211.653680000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2375,36 +2213,9 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[sum(<frxdbdafrekapkredittrx."saldo">)]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo25: TfrxMemoView
-          AllowVectorExport = True
-          Left = 572.488560000000000000
-          Width = 72.165430000000000000
-          Height = 26.456710000000000000
-          DisplayFormat.FormatStr = '%0.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          HAlign = haRight
-          Memo.UTF8W = (
             '[sum(<frxdbdafrekapkredittrx."dpp">)]')
           ParentFont = False
           VAlign = vaCenter
-        end
-        object Line19: TfrxLineView
-          AllowVectorExport = True
-          Left = 565.417322834646000000
-          Height = 26.456692910000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
         end
       end
       object GroupFooter1: TfrxGroupFooter
@@ -2415,7 +2226,8 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         FillGap.Right = 0
         Frame.Typ = []
         Height = 22.677165350000000000
-        Top = 328.819110000000000000
+        Top = 298.582870000000000000
+        Visible = False
         Width = 740.409927000000000000
         object Memo31: TfrxMemoView
           AllowVectorExport = True
@@ -2447,15 +2259,15 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxdbdafrekapkredittrx."saldo">)]')
+            '[SUM(<frxdbdafrekapkredittrx."dpp">)]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo32: TfrxMemoView
           AllowVectorExport = True
-          Left = 465.354631250000000000
+          Left = 420.000271250000000000
           Top = 3.055117500000000000
-          Width = 96.378015000000000000
+          Width = 224.882035000000000000
           Height = 16.535443750000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2463,28 +2275,10 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Frame.Typ = []
-          Memo.UTF8W = (
-            'SUB TOTAL  :                                      ')
-          ParentFont = False
-        end
-        object Memo33: TfrxMemoView
-          AllowVectorExport = True
-          Left = 565.417322830000000000
-          Width = 79.370071420000000000
-          Height = 21.417336670000000000
-          DisplayFormat.FormatStr = '%0.n'
-          DisplayFormat.Kind = fkNumeric
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
-            '[SUM(<frxdbdafrekapkredittrx."dpp">)]')
+            'SUB TOTAL  :')
           ParentFont = False
-          VAlign = vaCenter
         end
       end
       object GroupHeader1: TfrxGroupHeader
@@ -2498,7 +2292,7 @@ object Flap_Rekap_Hutang_Kredit: TFlap_Rekap_Hutang_Kredit
         Top = 211.653680000000000000
         Visible = False
         Width = 740.409927000000000000
-        Condition = 'frxdbdafrekapkredittrx."voucher"'
+        Condition = 'frxdbdafrekapkredittrx."voucher_no"'
         object Memo30: TfrxMemoView
           AllowVectorExport = True
           Top = 1.000000000000000000

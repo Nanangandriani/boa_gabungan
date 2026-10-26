@@ -179,7 +179,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='select '+strSaldoPiutang+',* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') '+strWhere+strKaresidenan+' order by kabupaten,kecamatan ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
   end;
@@ -259,7 +265,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='select '+strSaldoPiutang+',* from rincian_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+') '+strWhere+strKaresidenan+' order by kabupaten,kecamatan ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if QRincianUmurPiutang.RecordCount=0 then
     begin
@@ -273,7 +285,7 @@ begin
       SetMemo(Report,'sbu',FHomeLogin.vNamaPRSH);
       SetMemo(Report,'umur_piutang',cbUmurPiutang.Text);
       if edKaresidenan.EditValue<>'' then
-      SetMemo(Report,'karesidenan','Karesidenan: '+cbUmurPiutang.Text) else  SetMemo(Report,'karesidenan','Karesidenan:');
+      SetMemo(Report,'karesidenan','TP: '+edKaresidenan.EditValue) else  SetMemo(Report,'karesidenan','TP: SEMUA');
       SetMemo(Report,'periode','PERIODE '+strPeriode);
       Report.ShowReport();
     end;

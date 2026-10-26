@@ -235,7 +235,8 @@ begin
                       ' else sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) end)nilai '+
                       ' from t_purchase_return_det a '+
                       'INNER JOIN t_purchase_return b on a.return_no=b.return_no left join t_purchase_invoice dd on b.receive_no=dd.trans_no '+
-                      'INNER JOIN v_ak_account ee on dd.account_code= ee.account_code2 where a.return_no=b.return_no and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
+                      'INNER JOIN v_ak_account ee on dd.account_code= ee.account_code2 where a.return_no=b.return_no '+
+                      'and b.deleted_at is null and return_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
 					  ///and ee.code='+Quotedstr(vkd_jenis_hutang)+' '+
                       'group by b.supplier_code,b.valas order by b.supplier_code)z on a.supplier_code=z.kodesup '+
                       'left join(select bb.supplier_code,sum(bb.price_rp)+sum(bb.ppnrp)as nilai_pot from t_purchase_discount bb left join t_purchase_invoice dd on bb.receive_no=dd.ref_no '+
@@ -284,10 +285,10 @@ begin
                       ' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' and a.deleted_at isnull)	A '+
                       'LEFT JOIN ( SELECT trans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ) AS npph FROM t_purchase_invoice_det  GROUP BY trans_no ORDER BY trans_no ) b ON A.trans_no = b.trans_no '+
                       'LEFT JOIN t_supplier C ON A.supplier_code = C.supplier_code '+
-                      'LEFT JOIN (SELECT A.receive_no, '+
+                      'LEFT JOIN (SELECT b.receive_no, '+
                       //'	SUM ( A.total_price * b.valas_value ) '+
                       ' sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) AS nil_retur 	FROM t_purchase_return_det A INNER JOIN t_purchase_return b 	ON A.return_no = b.return_no WHERE  b.return_date <= '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+' '+
-                      'GROUP BY A.receive_no 	ORDER BY A.receive_no ) retur ON A.trans_no = retur.receive_no '+
+                      'GROUP BY b.receive_no 	ORDER BY b.receive_no ) retur ON A.trans_no = retur.receive_no '+
                       'LEFT JOIN ( SELECT DISTINCT faktur_no , invoice_no , paid_amount  FROM vexpenditure_payable WHERE trans_date <= '+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+' ) byr ON A.trans_no = byr.invoice_no '+
                       'left join (select receive_no,sum(price_rp)as harga_rp from t_purchase_discount where discount_date<='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' group by receive_no order by receive_no ) pot on a.ref_no=pot.receive_no ) xxx GROUP BY	kodesup '+
                       'union all '+
@@ -316,10 +317,10 @@ begin
                       ' WHERE '+//b.code ='+Quotedstr(vkd_jenis_hutang)+'  AND
                       ' ( sj_status = 1 ) AND ( fk_status = 1 )	AND ( invoice_status = 1 )	and trans_date>='+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_htg2))+'	AND ( faktur_date + due_date ) BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl11))+'	AND '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl12))+' AND deleted_at is null)	A '+
                       'LEFT JOIN ( SELECT trans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ) AS npph FROM t_purchase_invoice_det  GROUP BY trans_no ORDER BY trans_no ) b ON A.trans_no = b.trans_no	LEFT JOIN t_supplier C ON A.supplier_code = C.supplier_code '+
-                      'LEFT JOIN (SELECT A.receive_no,	'+
+                      'LEFT JOIN (SELECT b.receive_no,	'+
                       //' SUM ( A.total_price * b.valas_value )'+
                       'sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) AS nil_retur 	FROM t_purchase_return_det A INNER JOIN t_purchase_return b '+
-                      'ON A.return_no = b.return_no WHERE b.return_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+'	GROUP BY A.receive_no ORDER BY A.receive_no) retur ON A.trans_no = retur.receive_no '+
+                      'ON A.return_no = b.return_no WHERE b.return_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+'	GROUP BY b.receive_no ORDER BY b.receive_no) retur ON A.trans_no = retur.receive_no '+
                       //'LEFT JOIN ( SELECT DISTINCT faktur_no as no_inv_supp, invoice_no as no_lpb,paid_amount as bayar FROM t_cash_bank_expenditure_payable WHERE trans_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+' ) byr ON A.trans_no = byr.no_lpb '+
                       ' LEFT JOIN (SELECT	supplier_code,faktur_no,invoice_no AS no_terima,'+
                       ' SUM ( paid_amount ) AS bayar FROM vexpenditure_payable a '+
@@ -363,10 +364,10 @@ begin
                       ' and a.deleted_at isnull	)	A '+
                       'LEFT JOIN ( SELECT trans_no, SUM ( grandtotal ) AS hutang, SUM ( pph_rp ) AS npph FROM t_purchase_invoice_det  GROUP BY trans_no ORDER BY trans_no ) b ON A.trans_no = b.trans_no '+
                       'LEFT JOIN t_supplier C ON A.supplier_code = C.supplier_code '+
-                      'LEFT JOIN (SELECT A.receive_no, '+
+                      'LEFT JOIN (SELECT b.receive_no, '+
                       //'	SUM ( A.total_price * b.valas_value ) '+
-                      ' sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) AS nil_retur 	FROM t_purchase_return_det A INNER JOIN t_purchase_return b 	ON A.return_no = b.return_no WHERE  b.return_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
-                      'GROUP BY A.receive_no 	ORDER BY A.receive_no ) retur ON A.trans_no = retur.receive_no '+
+                      ' sum((a.total_price*b.valas_value + ((a.total_price*b.valas_value)*b.ppn/100)) ) AS nil_retur 	FROM t_purchase_return_det A INNER JOIN t_purchase_return b 	ON A.return_no = b.return_no WHERE b.deleted_at is null and  b.return_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl22))+' '+
+                      'GROUP BY b.receive_no 	ORDER BY b.receive_no ) retur ON A.trans_no = retur.receive_no '+
                       'LEFT JOIN ( SELECT DISTINCT faktur_no , invoice_no , paid_amount  FROM vexpenditure_payable '+
                       ' WHERE trans_date < '+QuotedStr(formatdatetime('yyyy-mm-dd',dp1.EditValue))+' '+
                       ' ) byr ON A.trans_no = byr.invoice_no '+
@@ -393,7 +394,7 @@ begin
                       'left join (select aa.supplier_code,sum(aa.amount)as tot_rcn from t_paid_debt_det aa '+
                       //'LEFT JOIN t_purchase_invoice bb on aa.inv_no=bb.trans_no '+
                       'LEFT JOIN (SELECT trans_no, account_code from t_purchase_invoice union all SELECT faktur_no as trans_no,debt_type  from t_initial_balance_debt_det)  bb on aa.inv_no=bb.trans_no or aa.faktur_no=bb.trans_no '+
-                      'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') '+
+                      'INNER JOIN v_ak_account cc ON bb.account_code=cc.account_code2 where  aa.deleted_at is null and (aa.periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and (aa.periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') '+
                       //ds 24-06 and cc.code='+Quotedstr(vkd_jenis_hutang)+' '+
                       'group by aa.supplier_code order by aa.supplier_code)rcn on rcn.supplier_code=supp.principle_code )xxxx on s.supplier_code=xxxx.principle_code) rrr '+
 
@@ -402,7 +403,7 @@ begin
                       ' LEFT JOIN (SELECT kd_sup, CASE WHEN COUNT(NULLIF(bank,'''')) > 0 THEN '+
                       ' STRING_AGG( bank || '' '' || cek_no || '' '' || TO_CHAR(jumlah, ''FM999,999,999,999,999.00''), E''\n'') '+
                       ' ELSE ''KAS BESAR'' END AS ket FROM ( SELECT supplier_code AS kd_sup, bank, cek_no, '+
-                      ' SUM(amount) AS jumlah FROM t_paid_debt_det WHERE (periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and '+
+                      ' SUM(amount) AS jumlah FROM t_paid_debt_det WHERE deleted_at is null and  (periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',dp4.EditValue))+') and '+
                       ' (periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',dp5.EditValue))+') GROUP BY supplier_code, bank, cek_no ) x GROUP BY kd_sup) '+
                       ' get_ket on kkkk.supplier_code=get_ket.kd_sup '+
                       ' ';

@@ -228,7 +228,7 @@ begin
       //  Tfrxmemoview(Rpt.FindObject('Memo7')).Memo.Text:='  '+FormatDateTime('dd',dtmulai.editvalue)+' - '+FormatDateTime('dd mmm yyy',dtselesai.editvalue);
       //Tfrxmemoview(Rpt.FindObject('Mbln')).Memo.Text:=UpperCase('Bulan  '+cbbulan2.Text+' '+INTTOSTR(spTahun.EditValue));
       TfrxMemoView(Rpt.FindObject('Mbln')).Memo.Text:='Periode : '+CbBulan2.Text+' - '+VarToStr(SpTahun.editvalue);
-      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vKodePRSH ;
+      Tfrxmemoview(Rpt.FindObject('Mpt')).Memo.Text:=''+FHomeLogin.vNamaPRSH ;
       Rpt.ShowReport();
     end;
   //end;

@@ -76,6 +76,7 @@ begin
   begin
     Show;
     clear;
+    modul:='by';
   end;
 end;
 

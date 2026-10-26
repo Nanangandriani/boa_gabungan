@@ -183,7 +183,7 @@ begin
     MessageDlg('Karesidenan wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
     FMasterData.Caption:='Master Data Kabupaten';
-    FMasterData.vcall:='rekapmonitoringtargetkab';
+    FMasterData.vcall:='monitoringtargetkab';
     FMasterData.update_grid('code','name','description','t_region_regency','WHERE	deleted_at IS NULL and code_tp='+QuotedStr(strKaresidenanID)+'');
     FMasterData.ShowModal;
   end;
@@ -205,7 +205,7 @@ procedure TFMonitoringTargetOmset.cbKaresidenanPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
   FMasterData.Caption:='Master Data Karesidenan';
-  FMasterData.vcall:='rekapmonitoringtargetkares';
+  FMasterData.vcall:='monitoringtargetkares';
   FMasterData.update_grid('code','name','description','t_region_tp','WHERE	deleted_at IS NULL ');
   FMasterData.ShowModal;
 end;
@@ -218,7 +218,7 @@ begin
     MessageDlg('Kabupaten wajib diisi ..!!',mtInformation,[mbRetry],0);
   end else begin
     FMasterData.Caption:='Master Data Kecamatan';
-    FMasterData.vcall:='rekapmonitoringtargetkec';
+    FMasterData.vcall:='monitoringtargetkec';
     FMasterData.update_grid('code','name','description','t_region_subdistrict','WHERE	deleted_at IS NULL and code_regency='+QuotedStr(strKabupatenID)+' ');
     FMasterData.ShowModal;
   end;
@@ -228,8 +228,8 @@ procedure TFMonitoringTargetOmset.cbKelompokPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
   FMasterData.Caption:='Kelompok Barang';
-  FMasterData.vcall:='rekapmonitoringtargetkelompokbarang';
-  FMasterData.update_grid('group_id','group_name',QuotedStr(''),'t_item_group','WHERE	deleted_at IS NULL ');
+  FMasterData.vcall:='monitoringtargetkelompokbarang';
+  FMasterData.update_grid('a.group_id','a.group_name',QuotedStr(''),'t_item_group a left join t_item_category b on b.category_id=a.category_id','WHERE	a.deleted_at IS NULL AND b.type_id=1 ');
   FMasterData.ShowModal;
 end;
 
@@ -275,7 +275,13 @@ begin
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
                 +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if Qreport.RecordCount=0 then
     begin
@@ -335,7 +341,13 @@ begin
               '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
               ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
               +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 
@@ -400,7 +412,13 @@ begin
                 '('+edTahun1.Text+','+IntToStr(cbBulan1.ItemIndex+1)+','+
                 ''+QuotedStr(cbKelompok.EditValue)+','+QuotedStr(strKaresidenanID)
                 +','+QuotedStr(strKabupatenID)+','+QuotedStr(strKecamatanID)+') '+strJenisUsaha;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if Qreport.RecordCount=0 then
     begin
@@ -419,7 +437,7 @@ procedure TFMonitoringTargetOmset.edJenisUsahaPropertiesButtonClick(
   Sender: TObject; AButtonIndex: Integer);
 begin
   FMasterData.Caption:='Master Data Kecamatan';
-  FMasterData.vcall:='rekapmonitoringtargetjenisusaha';
+  FMasterData.vcall:='monitoringtargetjenisusaha';
   FMasterData.update_grid('code','name','description','t_customer_type_business','WHERE	deleted_at IS NULL ORDER BY code ASC ');
   FMasterData.ShowModal;
 end;

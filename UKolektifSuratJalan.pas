@@ -71,7 +71,13 @@ begin
               'left join t_item c on c.item_code=a.code_item '+
               'WHERE a.word_amount_qty IS NULL and '+
               'b.trans_no is NOT NULL Order by c.group_id asc';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   terbilang:='';
   if dm.Qtemp.RecordCount>0 then
@@ -87,7 +93,13 @@ begin
         sql.Text:=' UPDATE t_selling_det'+
                   ' SET word_amount_qty='+QuotedStr(terbilang)+' '+
                   ' WHERE "id"='+QuotedStr(dm.Qtemp.FieldValues['id'])+';';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       dm.Qtemp.Next;
     end;
@@ -97,7 +109,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='select (SELECT company_code FROM t_company) company_code,a."trans_no",'+
+    sql.Text:='select (SELECT company_code FROM t_company) company_code,a."trans_no",a.leader_name,'+
             ' "no_traveldoc", "trans_date", a."code_cust", a.customer_name_pkp "name_cust",  d."address",'+
             'e."address" AS address2, b."code_item", b."name_item",  b."amount",  b."code_unit",'+
             ' Upper(b."name_unit") name_unit,b.word_amount_qty, a."no_reference", b."code_unit" as ket, '+
@@ -105,7 +117,7 @@ begin
             'AND code_unit=b.code_unit)  gross_weight, (SELECT SUM(tare_weight) '+
             'FROM t_selling_det WHERE trans_no=a.trans_no AND code_unit=b.code_unit) tare_weight, '+
             'COALESCE((SELECT vehicles FROM t_delivery_order_services WHERE notrans='+
-            '(SELECT DISTINCT notrans from t_delivery_order_load WHERE notrans_load=a.trans_no )),'''')::VARCHAR vehicles  '+
+            '(SELECT DISTINCT dol.notrans from t_delivery_order_load dol left join t_delivery_order dor on dor.notrans=dol.notrans WHERE dor.deleted_at is null and notrans_load=a.trans_no  )),'''')::VARCHAR vehicles  '+
             ', COALESCE(b.qty_bundle,0) qty_bundle,COALESCE(Trunc((b.amount / NULLIF(b.add_on_qty_bundle, 0)) / NULLIF(b.qty_bundle, 0)), 0) AS add_on_qty '+
             'from "public".get_selling(False) a   '+
             'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no '+
@@ -118,11 +130,32 @@ begin
             ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.DateTime))+')'+ KodeKaresidenan+' '+
             ' AND a.deleted_at is null '+
             'order by a.trans_date,a.trans_no,f.group_id ASC';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QSuratJalan.RecordCount>0 then
   begin
+
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='select * from get_user_signature(2) ';
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+
     cLocation := ExtractFilePath(Application.ExeName);
      //ShowMessage(cLocation);
     Report.LoadFromFile(cLocation +'report/rpt_suratjalan_kolektif'+ '.fr3');
@@ -134,6 +167,8 @@ begin
       TfrxMemoView(Report.FindObject('Memo29')).Visible := False;
       TfrxMemoView(Report.FindObject('Memo30')).Visible := False;
     end;
+
+    SetMemo(Report,'signature_name',QSuratJalan.FieldValues['leader_name']);
 
     Report.ShowReport();
   end else begin

@@ -2,8 +2,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   Left = 0
   Top = 0
   Caption = 'Neraca Lajur'
-  ClientHeight = 601
-  ClientWidth = 920
+  ClientHeight = 587
+  ClientWidth = 1179
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -73,16 +73,16 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   end
   object Panel1: TPanel
     Left = 0
-    Top = 560
-    Width = 920
+    Top = 546
+    Width = 1179
     Height = 41
     Align = alBottom
     TabOrder = 2
     Visible = False
-    ExplicitTop = 551
-    ExplicitWidth = 914
+    ExplicitTop = 545
+    ExplicitWidth = 1175
     object BBatal: TRzBitBtn
-      Left = 844
+      Left = 1103
       Top = 1
       Height = 39
       Align = alRight
@@ -141,10 +141,10 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 838
+      ExplicitLeft = 1099
     end
     object BPrint: TRzBitBtn
-      Left = 765
+      Left = 1024
       Top = 1
       Width = 79
       Height = 39
@@ -204,7 +204,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         5E5E5E5E5E5E5E5EE8E8E8E8E8E8E8E2E2E2E2E2E2E2E2E2E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 759
+      ExplicitLeft = 1020
     end
   end
   object ProgressBar1: TProgressBar
@@ -218,7 +218,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 920
+    Width = 1179
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -239,8 +239,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
   object DBGridEh1: TDBGridEh
     Left = 0
     Top = 127
-    Width = 920
-    Height = 433
+    Width = 1179
+    Height = 331
     Align = alClient
     DataSource = DsNeraca_lajur
     DrawMemoText = True
@@ -270,7 +270,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'debit'
@@ -278,11 +278,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Saldo Awal | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kredit'
@@ -290,11 +290,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Saldo Awal | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'db'
@@ -302,11 +302,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Mutasi Total | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kd'
@@ -314,11 +314,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Mutasi Total | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'dbnr'
@@ -326,11 +326,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Neraca Saldo | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kdnr'
@@ -338,11 +338,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Neraca Saldo | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'dbpy'
@@ -350,11 +350,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Penyesuaian | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kdpy'
@@ -362,11 +362,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Penyesuaian | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'dbnr2'
@@ -374,11 +374,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'NearacaSaldo Penyesuaian | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kdnr2'
@@ -386,11 +386,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'NearacaSaldo Penyesuaian | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'dblr'
@@ -398,11 +398,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Laba Rugi | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kdlr'
@@ -410,11 +410,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Laba Rugi | K'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'dbnr3'
@@ -422,11 +422,11 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Neraca | D'
-        Width = 100
+        Width = 150
       end
       item
         CellButtons = <>
-        DisplayFormat = '#,##0.00;'#39#39
+        DisplayFormat = '#,##0.00;(#,##0.00);'
         DynProps = <>
         EditButtons = <>
         FieldName = 'kdnr3'
@@ -434,7 +434,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
         Footer.ValueType = fvtSum
         Footers = <>
         Title.Caption = 'Neraca | K'
-        Width = 100
+        Width = 150
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -460,6 +460,78 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       'Oktober  '
       'November  '
       'Desember  ')
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 458
+    Width = 1179
+    Height = 88
+    Align = alBottom
+    TabOrder = 7
+    Visible = False
+    ExplicitTop = 457
+    ExplicitWidth = 1175
+    object Panel3: TPanel
+      Left = 827
+      Top = 1
+      Width = 351
+      Height = 86
+      Align = alRight
+      TabOrder = 0
+      ExplicitLeft = 823
+      object Label1: TLabel
+        Left = 8
+        Top = 14
+        Width = 75
+        Height = 13
+        Caption = 'Total Laba/Rugi'
+      end
+      object Label4: TLabel
+        Left = 9
+        Top = 55
+        Width = 61
+        Height = 13
+        Caption = 'Total Neraca'
+      end
+      object Label5: TLabel
+        Left = 185
+        Top = 36
+        Width = 25
+        Height = 13
+        Caption = 'Debit'
+      end
+      object Label6: TLabel
+        Left = 312
+        Top = 36
+        Width = 28
+        Height = 13
+        Caption = 'Kredit'
+      end
+      object edtotallr: TRzNumericEdit
+        Left = 89
+        Top = 9
+        Width = 120
+        Height = 21
+        TabOrder = 0
+        DisplayFormat = '#,##0.00;(#,##0.00);'
+      end
+      object ednr_d: TRzNumericEdit
+        Left = 90
+        Top = 52
+        Width = 120
+        Height = 21
+        TabOrder = 1
+        DisplayFormat = '#,##0.00;(#,##0.00);'
+      end
+      object ednr_k: TRzNumericEdit
+        Left = 216
+        Top = 52
+        Width = 131
+        Height = 21
+        TabOrder = 2
+        DisplayFormat = '#,##0.00;(#,##0.00);'
+      end
+    end
   end
   object DbNeraca_lajur: TfrxDBDataset
     UserName = 'DbNeraca_lajur'
@@ -610,8 +682,8 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 46052.934506956020000000
-    ReportOptions.LastChange = 46052.934506956020000000
+    ReportOptions.CreateDate = 46281.415619467600000000
+    ReportOptions.LastChange = 46281.415619467600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -757,7 +829,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D960600000000000036000000280000001800000011000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFF6E3BBFFEEC7
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFF6E3BBFFEEC7
         74FFEABC59FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC
         58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFEABC58FFECC2
         67FFF2D69AFFFEFDFBFFFFFFFFFFFFFFFFFFFFFFFFFFEFCA7CFFE3A41CFFECC3
@@ -817,7 +889,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424DD60500000000000036000000280000001400000012000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFF9A9A
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFF9A9A
         FFFF0000FFFFBCBCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBBBBFFFF0000FFFF9D9DFFFFFFFF
         FFFFFFFFFFFFFEFEFFFF7474FFFF0000FFFF0000FFFF0000FFFF9999FFFFFFFF
@@ -871,7 +943,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D660700000000000036000000280000001700000014000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD6AA
@@ -939,7 +1011,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       Glyph.SourceDPI = 96
       Glyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -1031,7 +1103,7 @@ object FRpt_NeracaLajur: TFRpt_NeracaLajur
       LargeGlyph.SourceDPI = 96
       LargeGlyph.Data = {
         424D2E0B00000000000036000000280000001A0000001B000000010020000000
-        00000000000074120000741200000000000000000000FFFFFFFFFFFFFFFFFFFF
+        000000000000C40E0000C40E00000000000000000000FFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8
         F8FFE6E5E4FFDEDDDBFFDEDDDBFFE9E8E7FFFBFBFCFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

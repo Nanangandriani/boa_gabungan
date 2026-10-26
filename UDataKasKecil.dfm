@@ -2,8 +2,8 @@ object FDataKasKecil: TFDataKasKecil
   Left = 0
   Top = 0
   Caption = 'Kas Kecil'
-  ClientHeight = 491
-  ClientWidth = 1237
+  ClientHeight = 574
+  ClientWidth = 1082
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,14 @@ object FDataKasKecil: TFDataKasKecil
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1237
-    Height = 217
+    Width = 1082
+    Height = 273
     Align = alTop
     BevelOuter = bvNone
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1231
+    ExplicitWidth = 1076
     object LabelPelanggan: TLabel
       Left = 18
       Top = 104
@@ -129,6 +129,7 @@ object FDataKasKecil: TFDataKasKecil
       Width = 344
       Height = 23
       CharCase = ecUpperCase
+      ReadOnly = True
       TabOrder = 3
     end
     object edNamaKepada: TRzButtonEdit
@@ -139,6 +140,7 @@ object FDataKasKecil: TFDataKasKecil
       Text = ''
       CharCase = ecUpperCase
       TabOrder = 4
+      OnKeyPress = edNamaKepadaKeyPress
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaKepadaButtonClick
@@ -151,6 +153,7 @@ object FDataKasKecil: TFDataKasKecil
       Text = ''
       CharCase = ecUpperCase
       TabOrder = 5
+      OnKeyPress = edNamaSumberKasKeyPress
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
       OnButtonClick = edNamaSumberKasButtonClick
@@ -166,7 +169,7 @@ object FDataKasKecil: TFDataKasKecil
     end
     object gbDataBON: TGroupBox
       Left = 524
-      Top = 38
+      Top = 30
       Width = 497
       Height = 107
       Caption = 'Data BON'
@@ -289,7 +292,7 @@ object FDataKasKecil: TFDataKasKecil
     end
     object GbHutang: TGroupBox
       Left = 524
-      Top = 122
+      Top = 12
       Width = 497
       Height = 111
       TabOrder = 9
@@ -414,8 +417,8 @@ object FDataKasKecil: TFDataKasKecil
       end
     end
     object ak_account: TEdit
-      Left = 408
-      Top = 41
+      Left = 422
+      Top = 42
       Width = 76
       Height = 23
       TabOrder = 10
@@ -433,36 +436,300 @@ object FDataKasKecil: TFDataKasKecil
       AltBtnNumGlyphs = 1
       ButtonNumGlyphs = 1
     end
+    object GBRincian: TGroupBox
+      Left = 524
+      Top = 8
+      Width = 549
+      Height = 259
+      Caption = 'Data Rincian Biaya'
+      TabOrder = 12
+      Visible = False
+      object Label23: TLabel
+        Left = 15
+        Top = 46
+        Width = 33
+        Height = 15
+        Caption = 'No. ID'
+      end
+      object Label24: TLabel
+        Left = 125
+        Top = 46
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label25: TLabel
+        Left = 125
+        Top = 17
+        Width = 3
+        Height = 15
+        Caption = ':'
+      end
+      object Label26: TLabel
+        Left = 15
+        Top = 17
+        Width = 42
+        Height = 15
+        Caption = 'Tanggal'
+      end
+      object Label27: TLabel
+        Left = 284
+        Top = 16
+        Width = 17
+        Height = 15
+        Caption = 's/d'
+      end
+      object edtravel_id: TRzButtonEdit
+        Left = 137
+        Top = 43
+        Width = 85
+        Height = 23
+        Text = ''
+        TabOrder = 0
+        OnKeyPress = edtravel_idKeyPress
+        AltBtnNumGlyphs = 1
+        ButtonNumGlyphs = 1
+        OnButtonClick = edtravel_idButtonClick
+      end
+      object edno_doc: TEdit
+        Left = 228
+        Top = 43
+        Width = 293
+        Height = 23
+        ReadOnly = True
+        TabOrder = 1
+        OnChange = edKodeMataUangChange
+      end
+      object RzPageControl1: TRzPageControl
+        Left = 2
+        Top = 79
+        Width = 545
+        Height = 178
+        Hint = ''
+        ActivePage = RzTabSheet1
+        Align = alBottom
+        UseColoredTabs = True
+        TabIndex = 0
+        TabOrder = 2
+        FixedDimension = 21
+        object RzTabSheet1: TRzTabSheet
+          Color = clGradientInactiveCaption
+          Caption = 'Detail Rincian'
+          object DBGridRincian: TDBGridEh
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 535
+            Height = 147
+            Align = alClient
+            AutoFitColWidths = True
+            DataSource = DSRincian
+            DynProps = <>
+            FooterRowCount = 1
+            HorzScrollBar.ExtraPanel.Visible = True
+            ReadOnly = True
+            SearchPanel.Enabled = True
+            SumList.Active = True
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'component_id'
+                Footers = <>
+                Visible = False
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'component'
+                Footers = <>
+                Title.Caption = 'Komponen'
+                Width = 350
+              end
+              item
+                CellButtons = <>
+                DisplayFormat = '#,##0.00'
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'cost'
+                Footer.DisplayFormat = '#,##0.00'
+                Footer.FieldName = 'cost'
+                Footer.ValueType = fvtSum
+                Footers = <>
+                Title.Caption = 'Biaya'
+                Width = 200
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'id'
+                Footers = <>
+                Visible = False
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+        object RzTabSheet2: TRzTabSheet
+          Color = clGradientInactiveCaption
+          TabVisible = False
+          Caption = 'Detail Hutang'
+          object DBGridEh2: TDBGridEh
+            Left = 0
+            Top = 0
+            Width = 541
+            Height = 153
+            Align = alClient
+            DataSource = dsDetailHutang
+            DynProps = <>
+            HorzScrollBar.ExtraPanel.Visible = True
+            SearchPanel.Enabled = True
+            TabOrder = 0
+            TitleParams.MultiTitle = True
+            Visible = False
+            Columns = <
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <
+                  item
+                    Style = ebsPlusEh
+                  end>
+                FieldName = 'no_tagihan'
+                Footers = <>
+                Title.Caption = 'Nomor | Voucher'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'no_sj'
+                Footers = <>
+                Title.Caption = 'Nomor | Surat Jalan'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'no_faktur'
+                Footers = <>
+                Title.Caption = 'Nomor | Faktur'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <
+                  item
+                  end>
+                FieldName = 'tgl_faktur'
+                Footers = <>
+                Title.Caption = 'Tanggal'
+                Width = 100
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'jum_hutang'
+                Footers = <>
+                Title.Caption = 'Jumlah Hutang'
+                Width = 150
+              end
+              item
+                CellButtons = <>
+                DynProps = <>
+                EditButtons = <>
+                FieldName = 'keterangan'
+                Footers = <>
+                Title.Caption = 'Keterangan'
+                Visible = False
+                Width = 250
+              end>
+            object RowDetailData: TRowDetailPanelControlEh
+            end
+          end
+        end
+      end
+      object dtawal: TRzDateTimePicker
+        Left = 137
+        Top = 14
+        Width = 141
+        Height = 23
+        Date = 45405.000000000000000000
+        Format = ''
+        Time = 0.597438842589326700
+        TabOrder = 3
+      end
+      object dtakhir: TRzDateTimePicker
+        Left = 307
+        Top = 14
+        Width = 141
+        Height = 23
+        Date = 45405.000000000000000000
+        Format = ''
+        Time = 0.597438842589326700
+        TabOrder = 4
+        OnChange = dtTransChange
+      end
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 298
+      Top = 41
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 13
+      OnClick = chkNomorPenggantiClick
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 488
+      Top = 11
+      Width = 30
+      Caption = '...'
+      TabOrder = 14
+      OnClick = btnNoTransaksiClick
+    end
   end
   object PGC: TRzPageControl
     Left = 0
-    Top = 217
-    Width = 1237
-    Height = 242
+    Top = 273
+    Width = 1082
+    Height = 269
     Hint = ''
     ActivePage = TabDetailAkun
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1231
-    ExplicitHeight = 233
+    ExplicitWidth = 1076
+    ExplicitHeight = 260
     FixedDimension = 21
     object TabDetailAkun: TRzTabSheet
       Caption = 'Detail Akun'
-      ExplicitWidth = 1227
-      ExplicitHeight = 208
+      ExplicitWidth = 1072
+      ExplicitHeight = 235
       object DBGridAkun: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1233
-        Height = 217
+        Width = 1078
+        Height = 244
         Align = alClient
         AutoFitColWidths = True
         DataSource = DSDetailAkun
         DynProps = <>
+        FooterRowCount = 1
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
+        SumList.Active = True
         TabOrder = 0
         TitleParams.MultiTitle = True
         Columns = <
@@ -492,6 +759,9 @@ object FDataKasKecil: TFDataKasKecil
             DynProps = <>
             EditButtons = <>
             FieldName = 'debit'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'debit'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Jumlah | Debit'
             Width = 150
@@ -501,6 +771,9 @@ object FDataKasKecil: TFDataKasKecil
             DynProps = <>
             EditButtons = <>
             FieldName = 'kredit'
+            Footer.DisplayFormat = '#,##0.00'
+            Footer.FieldName = 'kredit'
+            Footer.ValueType = fvtSum
             Footers = <>
             Title.Caption = 'Jumlah | Kredit'
             Width = 150
@@ -551,6 +824,16 @@ object FDataKasKecil: TFDataKasKecil
         object RowDetailData: TRowDetailPanelControlEh
         end
       end
+      object Memo1: TMemo
+        Left = 472
+        Top = 64
+        Width = 185
+        Height = 89
+        Lines.Strings = (
+          'Memo1')
+        TabOrder = 1
+        Visible = False
+      end
     end
     object TabDetailFaktur: TRzTabSheet
       TabVisible = False
@@ -558,8 +841,8 @@ object FDataKasKecil: TFDataKasKecil
       object DBGridTagihan: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1233
-        Height = 217
+        Width = 1078
+        Height = 244
         Align = alClient
         DataSource = dsDetailHutang
         DynProps = <>
@@ -567,7 +850,6 @@ object FDataKasKecil: TFDataKasKecil
         SearchPanel.Enabled = True
         TabOrder = 0
         TitleParams.MultiTitle = True
-        Visible = False
         Columns = <
           item
             CellButtons = <>
@@ -636,15 +918,15 @@ object FDataKasKecil: TFDataKasKecil
   end
   object Panel2: TPanel
     Left = 0
-    Top = 459
-    Width = 1237
+    Top = 542
+    Width = 1082
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 450
-    ExplicitWidth = 1231
+    ExplicitTop = 533
+    ExplicitWidth = 1076
     object BBatal: TRzBitBtn
-      Left = 1161
+      Left = 1006
       Top = 1
       Height = 30
       Align = alRight
@@ -703,10 +985,10 @@ object FDataKasKecil: TFDataKasKecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1155
+      ExplicitLeft = 1000
     end
     object BSave: TRzBitBtn
-      Left = 1086
+      Left = 931
       Top = 1
       Height = 30
       Align = alRight
@@ -765,11 +1047,11 @@ object FDataKasKecil: TFDataKasKecil
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1080
+      ExplicitLeft = 925
     end
     object Edautocode: TEdit
-      Left = 712
-      Top = 4
+      Left = 608
+      Top = 3
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -777,6 +1059,27 @@ object FDataKasKecil: TFDataKasKecil
       TextHint = 'Autonumber'
       Visible = False
     end
+    object BCorrection: TRzBitBtn
+      Left = 833
+      Top = 1
+      Width = 98
+      Height = 30
+      Align = alRight
+      Caption = 'Submit Correction'
+      TabOrder = 3
+      OnClick = BCorrectionClick
+      ExplicitLeft = 827
+    end
+  end
+  object MemoAPI: TMemo
+    Left = 1213
+    Top = 8
+    Width = 257
+    Height = 89
+    Lines.Strings = (
+      'MemoAPI')
+    TabOrder = 3
+    Visible = False
   end
   object MemDetailAkun: TMemTableEh
     Params = <>
@@ -875,8 +1178,8 @@ object FDataKasKecil: TFDataKasKecil
   end
   object DSDetailAkun: TDataSource
     DataSet = MemDetailAkun
-    Left = 664
-    Top = 360
+    Left = 648
+    Top = 344
   end
   object dsDetailHutang: TDataSource
     DataSet = MemDetailHutang
@@ -886,7 +1189,7 @@ object FDataKasKecil: TFDataKasKecil
   object MemDetailHutang: TMemTableEh
     Active = True
     Params = <>
-    Left = 744
+    Left = 728
     Top = 303
     object MemDetailHutangno_tagihan: TStringField
       FieldName = 'no_tagihan'
@@ -967,5 +1270,92 @@ object FDataKasKecil: TFDataKasKecil
       'select * from t_ak_account limit 1')
     Left = 393
     Top = 311
+  end
+  object MemRincian: TMemTableEh
+    Params = <>
+    Left = 80
+    Top = 192
+    object MemRinciancomponent_id: TStringField
+      FieldName = 'component_id'
+      Size = 500
+    end
+    object MemRinciancost: TCurrencyField
+      FieldName = 'cost'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '#,##0.00'
+    end
+    object MemRinciancomponent: TStringField
+      FieldName = 'component'
+      Size = 500
+    end
+    object MemRincianid: TStringField
+      FieldName = 'id'
+      Size = 100
+    end
+    object MemTableData: TMemTableDataEh
+      object DataStruct: TMTDataStructEh
+        object component_id: TMTStringDataFieldEh
+          FieldName = 'component_id'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object cost: TMTNumericDataFieldEh
+          FieldName = 'cost'
+          NumericDataType = fdtCurrencyEh
+          AutoIncrement = False
+          DisplayWidth = 20
+          DisplayFormat = '#,##0.00'
+          EditFormat = '#,##0.00'
+          currency = False
+          Precision = 15
+        end
+        object component: TMTStringDataFieldEh
+          FieldName = 'component'
+          StringDataType = fdtStringEh
+          DisplayWidth = 500
+          Size = 500
+        end
+        object id: TMTStringDataFieldEh
+          FieldName = 'id'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+      end
+      object RecordsList: TRecordsListEh
+      end
+    end
+  end
+  object DSRincian: TDataSource
+    DataSet = MemRincian
+    Left = 176
+    Top = 192
+  end
+  object IdHTTP1: TIdHTTP
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    Left = 8
+    Top = 192
+  end
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 8
+    Top = 144
   end
 end

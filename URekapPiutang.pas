@@ -194,13 +194,20 @@ begin
                 'SUM(COALESCE(kredit,0))kredit,(SUM(COALESCE(saldo_awal,0))+SUM(COALESCE(debet,0))- SUM(COALESCE(kredit,0))) sisa_piutang,'+
                 'code_tp,tp,code_kabupaten,kabupaten,code_kecamatan,UPPER(kecamatan) kecamatan '+
                 'FROM "public"."get_piutang_trx2" ('+QuotedStr(FormatDateTime('yyyy-mm-dd',TglMulai))+','+QuotedStr(FormatDateTime('yyyy-mm-dd',TglAkhir))+') '+
+                'WHERE (no_inv_tax <> '''' AND no_inv_tax IS NOT NULL) OR LOWER(keterangan2) = ''saldo awal'' '+
                 'GROUP BY customer_code,customer_name, customer_name_pkp, code_tp,tp,code_kabupaten,kabupaten,code_kecamatan,kecamatan '+
                 'HAVING '+
                 '(SUM(COALESCE(saldo_awal,0)) <> 0 OR '+
                 'SUM(COALESCE(debet,0)) <> 0 OR  '+
                 'SUM(COALESCE(kredit,0)) <> 0) AND code_tp='+QuotedStr(strCodeTP)+'  '+
                 'ORDER BY kabupaten asc,kecamatan asc, customer_name ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if Qreport.RecordCount=0 then
@@ -246,7 +253,13 @@ begin
                 'SUM(COALESCE(debet,0)) <> 0 OR  '+
                 'SUM(COALESCE(kredit,0)) <> 0) AND code_tp='+QuotedStr(strCodeTP)+' '+
                 'ORDER BY kabupaten asc,kecamatan asc, customer_name ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;

@@ -162,7 +162,13 @@ begin
                  ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
                  ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
                  ' '+strStatusApproval+' Order By a.created_at DESC ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     finally
     DBGrid.FinishLoadingStatus();
@@ -239,7 +245,13 @@ begin
     sql.Text:=' SELECT status_correction,status_approval '+
               ' FROM	"t_sales_classification" '+
               ' WHERE id='+QuotedStr(QMasterKlasifikasi.FieldValues['id_master']);
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
 
@@ -253,8 +265,10 @@ begin
     FDaftarKlasifikasi.BCorrection.Visible:=False;
     FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
   end else begin
-    FDaftarKlasifikasi.BCorrection.Visible:=True;
-    FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
+//    FDaftarKlasifikasi.BCorrection.Visible:=True;
+    FDaftarKlasifikasi.BCorrection.Visible:=False;
+//    FDaftarKlasifikasi.bt_m_simpan.Enabled:=False;
+    FDaftarKlasifikasi.bt_m_simpan.Enabled:=True;
   end;
 
 
@@ -305,7 +319,6 @@ begin
     try
       ShowModal;
     finally
-
     end;
   end;
 end;

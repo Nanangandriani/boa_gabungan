@@ -128,8 +128,8 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 592
-    Top = 264
+    Left = 616
+    Top = 272
     PixelsPerInch = 96
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
@@ -510,7 +510,7 @@ object FListKelompokBiayaWilayah: TFListKelompokBiayaWilayah
     end
   end
   object ActMenu: TActionManager
-    Left = 504
+    Left = 472
     Top = 272
     StyleName = 'Platform Default'
     object ActBaru: TAction

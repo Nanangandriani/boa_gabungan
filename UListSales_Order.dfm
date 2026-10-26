@@ -25,7 +25,6 @@ object FSalesOrder: TFSalesOrder
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1202
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -48,6 +47,7 @@ object FSalesOrder: TFSalesOrder
     DataSource = DsSalesOrder
     DrawMemoText = True
     DynProps = <>
+    FrozenCols = 1
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
     OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghShowRecNo, dghColumnResize, dghColumnMove, dghExtendVertLines]
     RowDetailPanel.Active = True
@@ -189,6 +189,7 @@ object FSalesOrder: TFSalesOrder
         FieldName = 'cancel_reason'
         Footers = <>
         Title.Caption = 'Alasan Pembatalan'
+        Visible = False
         Width = 500
       end
       item
@@ -205,7 +206,7 @@ object FSalesOrder: TFSalesOrder
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1154
+        Width = 1150
         Height = 168
         Align = alClient
         AllowedOperations = []

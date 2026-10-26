@@ -26,7 +26,7 @@ uses
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, frxClass, frxDBSet, dxBarExtItems,
-  cxCalendar, cxBarEditItem, Printers;
+  cxCalendar, cxBarEditItem, Printers, cxDropDownEdit;
 
 type
   TFListPenerimaanBank = class(TForm)
@@ -115,6 +115,8 @@ type
     QBukti_Terimatot_paid_amount: TFloatField;
     QBukti_Terimaname_cust: TMemoField;
     QPenerimaanBankpayment_name: TStringField;
+    QPenerimaanBankno_invoice: TMemoField;
+    cbNoRekening: TdxBarCombo;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -131,6 +133,7 @@ type
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure cbTransaksiChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -164,32 +167,66 @@ begin
     end;
   end;
 end;
+
+
 procedure TFListPenerimaanBank.Refresh;
 var mm: Integer;
-    strTransaksi: String;
+    strTransaksi, strNoRekening, noRekening: String;
+    p: Integer;
 begin
+
   if cbTransaksi.Text='SEMUA' then
   begin
     strTransaksi:='';
   end else begin
     strTransaksi:=' AND b.name_module='+QuotedStr(cbTransaksi.Text)+' ';
   end;
+
+  if (cbNoRekening.Text = 'SEMUA') or (cbNoRekening.Text='') then
+  begin
+    strNoRekening := '';
+  end else begin
+
+    noRekening := cbNoRekening.Text;
+
+    p := Pos(' - ', noRekening);
+    if p > 0 then
+    begin
+      noRekening := Trim(Copy(noRekening, p + 3, Length(noRekening) - p - 2));
+    end;
+
+    strNoRekening := ' AND a.account_number_bank = ' + QuotedStr(noRekening) + ' ';
+  end;
+
+
   mm:=cbBulan.ItemIndex+1;
+
   DBGridOrder.StartLoadingStatus();
+
   try
-   with QPenerimaanBank do
-   begin
-       close;
-       sql.Clear;
-       sql.Text:= 'select a.* from "public"."t_cash_bank_acceptance" a  '+
-                  'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
-                  'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+
-                  ''+ strTransaksi+' order by a.trans_date Desc, a.voucher_no Desc ';
-       open;
-   end;
+     with QPenerimaanBank do
+     begin
+         close;
+         sql.Clear;
+         sql.Text:= 'select a.*,COALESCE(c.no_invoices, '''') AS no_invoice from "public"."t_cash_bank_acceptance" a  '+
+                    'left join t_master_trans_account b on b.code_trans=a.code_type_trans '+
+                    'LEFT JOIN ( '+
+                    'SELECT voucher_no,string_agg(no_invoice, '', '' ORDER BY no_invoice) AS no_invoices '+
+                    'FROM t_cash_bank_acceptance_receivable '+
+                    'GROUP BY voucher_no) c ON c.voucher_no = a.voucher_no '+
+                    'WHERE (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                   ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+
+                    ''+ strTransaksi+strNoRekening+' order by a.trans_date Desc, a.voucher_no Desc ';
+      try
+        Open;
+      except
+        dm.Koneksi.Close;
+        dm.Koneksi.Open;
+        Open;
+      end;
+  end;
   finally
-  DBGridOrder.FinishLoadingStatus();
+    DBGridOrder.FinishLoadingStatus;
   end;
 end;
 
@@ -213,7 +250,13 @@ begin
     sql.Clear;
     sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
               'no_transaksi='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' and status=0 and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.RecordCount>0 then
@@ -266,7 +309,13 @@ begin
                'left join t_region_karesidenan c on c.code=a.code_karesidenan '+
                'WHERE a.voucher_no='+QuotedSTr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
                'AND a.deleted_at is null order by a.created_at Desc ';
-     open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if Dm.Qtemp.RecordCount=0 then
   begin
@@ -300,7 +349,13 @@ begin
         close;
         sql.clear;
         sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
         first;
       end;
 
@@ -327,7 +382,13 @@ begin
         sql.add(' SELECT * from ('+
                 ' SELECT * from t_master_trans_account  '+
                 ' where code_trans='+QuotedStr(Dm.Qtemp.FieldByName('code_type_trans').AsString)+') a ');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
       cbTransaksi.Text:=Dm.Qtemp1.FieldByName('name_module').AsString;
       cbJenisTransaksi.ItemIndex:=Dm.Qtemp1.FieldByName('status_bill').AsInteger+1;
@@ -443,13 +504,20 @@ begin
                 ' SELECT * from "public"."t_cash_bank_acceptance_det"'+
                 ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
                 ' Order By position asc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       MemDetailAkun.EmptyTable;
       Dm.Qtemp1.First;
       while not Dm.Qtemp1.Eof do
       begin
+
         FDataPenerimaanBank.MemDetailAkun.Insert;
         FDataPenerimaanBank.MemDetailAkun['kd_akun']:=Dm.Qtemp1.fieldbyname('code_account').AsString;
         FDataPenerimaanBank.MemDetailAkun['nm_akun']:=Dm.Qtemp1.fieldbyname('name_account').AsString;
@@ -480,7 +548,13 @@ begin
                 ' WHERE "voucher_no"='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString)+' ) a '+
                 ' LEFT JOIN get_selling(NULL) b ON b.trans_no=a.no_invoice '+
                 ' Order By a.voucher_no desc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       MemDetailPiutang.EmptyTable;
@@ -497,7 +571,6 @@ begin
           end;
           FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=Dm.Qtemp1.fieldbyname('no_invoice_tax').AsString;
           FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp1.fieldbyname('date_invoice_tax').AsDateTime;
-          FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
           FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=Dm.Qtemp1.fieldbyname('no_invoice').AsString;
           FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=Dm.Qtemp1.fieldbyname('paid_amount').Value;
           FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=Dm.Qtemp1.fieldbyname('ar_balance').Value;
@@ -523,17 +596,23 @@ begin
       end;
 
       //UANG MUKA
-      with Dm.Qtemp1 do
+      with Dm.Qtemp2 do
       begin
         close;
         sql.clear;
         sql.Text:='select a.*,b.customer_name,b.customer_name_pkp from t_cash_bank_acceptance_down_payment a '+
                   'LEFT JOIN t_cash_bank_acceptance_customer b on b.trans_no=a.voucher_no and b.customer_code=a.code_cust AND b.deleted_at is null '+
                   'where a.voucher_no='+QuotedStr(Dm.Qtemp.FieldByName('voucher_no').AsString);
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
-      if dm.Qtemp1.RecordCount>0 then
+      if dm.Qtemp2.RecordCount>0 then
       begin
         label33.Visible:=True;
         label34.Visible:=True;
@@ -548,10 +627,10 @@ begin
           gbDataSumberPenerimaan.Visible:=False;
           edJumlah.Enabled:=True;
         end;
-        edKodePelangganSumber.Text:=Dm.Qtemp1.FieldValues['code_cust'];
-        edNamaPelangganSumber.Text:=Dm.Qtemp1.FieldValues['customer_name'];
-        edNoRefSumberPenerimaan.Text:=Dm.Qtemp1.FieldValues['no_trans_down_payment'];
-        edNamaPKPSumber.Text:=Dm.Qtemp1.FieldValues['customer_name_pkp'];
+        edKodePelangganSumber.Text:=Dm.Qtemp2.FieldValues['code_cust'];
+        edNamaPelangganSumber.Text:=Dm.Qtemp2.FieldValues['customer_name'];
+        edNoRefSumberPenerimaan.Text:=Dm.Qtemp2.FieldValues['no_trans_down_payment'];
+        edNamaPKPSumber.Text:=Dm.Qtemp2.FieldValues['customer_name_pkp'];
         cbSumberPenerimaan.Text:=SelectRow('select name from t_cash_bank_acceptance_source where code=''CB001'' ');
       end;
     end;
@@ -559,6 +638,39 @@ begin
   FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   FDataPenerimaanBank.Disable;
   FDataPenerimaanBank.Show;
+end;
+
+procedure TFListPenerimaanBank.cbTransaksiChange(Sender: TObject);
+begin
+  if cbTransaksi.Text	='TERIMA BANK' then
+  begin
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT CONCAT(bank_name,'' - '',rekening_no) rekening_no from t_bank WHERE deleted_at is null order by bank_name ASC ');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+      first;
+    end;
+
+    cbNoRekening.Items.Clear;
+    cbNoRekening.items.Add('SEMUA');
+    while not dm.Qtemp3.eof do
+    begin
+     cbNoRekening.Items.add(dm.Qtemp3.fieldbyname('rekening_no').asstring);
+     dm.Qtemp3.next;
+    end;
+    cbNoRekening.ItemIndex:=0;
+  end else
+  begin
+    cbNoRekening.Items.Clear;
+  end;
 end;
 
 procedure TFListPenerimaanBank.DBGridOrderAdvDrawDataCell(
@@ -625,25 +737,13 @@ begin
             '("position" = ''D'' AND b.paid_amount < 0 AND e.header_code NOT IN (''1102'', ''1101'')) '+
             ') '+
             'ORDER BY b.account_name = ''PIUTANG'' ASC, position DESC;');
-//    sql.add(' SELECT Upper(coalesce(c.customer_name_pkp,a.name_cust)) name_cust, a.*, "code_account_header",b.name_account  "account_name", b.paid_amount, "desc_akun" from ('+
-//           ' select "voucher_no", "trans_date", "code_cust", "name_cust", "account_number_bank", '+
-//           ' "account_name_bank", "for_acceptance", "description", "module_id", paid_amount tot_paid_amount '+
-//           ' from "public"."t_cash_bank_acceptance"  a  '+
-//           ' WHERE "voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' '+
-//           ' AND deleted_at is null) a '+
-//           ' LEFT JOIN (SELECT  "voucher_no", "code_account", aa.name_account, "position",  '+
-//           '"paid_amount", "description" as desc_akun, COALESCE(bb.account_code,aa.code_account) code_account_header, '+
-//           'bb.account_name ,  "amount_rate_results" from "public"."t_cash_bank_acceptance_det" aa  '+
-//           'LEFT JOIN t_ak_account_sub bb ON bb.account_code2=aa."code_account" '+
-//           'LEFT JOIN t_ak_account cc ON cc.code=aa."code_account") b ON '+
-//           'a."voucher_no"=b."voucher_no" '+
-//           'LEFT JOIN t_cash_bank_acceptance_customer c on c.trans_no=a.voucher_no AND c.customer_code=a.code_cust AND c.deleted_at is NULL '+
-//           'LEFT JOIN t_cash_bank_acceptance_down_payment d ON d.voucher_no=a.voucher_no '+
-//           'LEFT JOIN t_ak_account e on e.code=b.code_account_header '+
-//           ' where  a."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'  '+
-//           ' and ( ("position"=''K'') OR ("position"=''D'' AND b.paid_amount > 0) AND e.header_code<>''1102'' AND e.header_code<>''1101'' ) '+
-//           ' order by b.account_name=''PIUTANG'' ASC,position asc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QBukti_Terima.RecordCount=0 then
@@ -661,8 +761,14 @@ begin
       sql.add(' select * '+
              ' from "public"."t_cash_bank_acceptance" a '+
              ' where a.deleted_at is null and '+
-             ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-      open;
+               ' a.voucher_no='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     with QBukti_Terima_det do
@@ -675,7 +781,13 @@ begin
              ' '+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' GROUP BY voucher_no) bb '+
              ' ON aa."voucher_no"=bb."voucher_no" '+
              ' where aa."voucher_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+' ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     cLocation := ExtractFilePath(Application.ExeName);
@@ -709,7 +821,13 @@ begin
     sql.clear;
     sql.add(' SELECT * FROM "public"."VTrans_Journal"  '+
            ' where "trans_no"='+QuotedStr(QPenerimaanBank.FieldByName('voucher_no').AsString)+'');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QJurnal.RecordCount=0 then
@@ -764,7 +882,13 @@ begin
     close;
     sql.clear;
     sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
     first;
   end;
 

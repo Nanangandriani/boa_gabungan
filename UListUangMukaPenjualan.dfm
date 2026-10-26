@@ -381,17 +381,25 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
       ItemLinks = <
         item
           UserDefine = [udWidth]
-          UserWidth = 163
-          Visible = True
-          ItemName = 'cbBulan'
-        end
-        item
-          Visible = True
-          ItemName = 'edTahun'
-        end
-        item
+          UserWidth = 107
           Visible = True
           ItemName = 'cbSBU'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 105
+          Visible = True
+          ItemName = 'dtAwal'
+        end
+        item
+          UserDefine = [udWidth]
+          UserWidth = 106
+          Visible = True
+          ItemName = 'dtAkhir'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
         end
         item
           Visible = True
@@ -406,7 +414,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     object dxBarManager1Bar2: TdxBar
       Caption = 'Custom 1'
       CaptionButtons = <>
-      DockedLeft = 389
+      DockedLeft = 418
       DockedTop = 0
       FloatLeft = 833
       FloatTop = 2
@@ -971,37 +979,10 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
       Visible = ivAlways
       ItemIndex = -1
     end
-    object cbBulan: TdxBarCombo
-      Caption = 'Bulan'
-      Category = 0
-      Hint = 'Bulan'
-      Visible = ivAlways
-      Items.Strings = (
-        'Januari'
-        'Februari'
-        'Maret'
-        'April'
-        'Mei'
-        'Juni'
-        'Juli'
-        'Agustus'
-        'September'
-        'Oktober'
-        'November'
-        'Desember')
-      ItemIndex = -1
-    end
-    object edTahun: TdxBarSpinEdit
-      Caption = 'Tahun'
-      Category = 0
-      Hint = 'Tahun'
-      Visible = ivAlways
-      MaxValue = 5000.000000000000000000
-    end
     object cbSBU: TdxBarCombo
-      Caption = 'SBU   '
+      Caption = 'SBU                 '
       Category = 0
-      Hint = 'SBU   '
+      Hint = 'SBU                 '
       Visible = ivAlways
       ItemIndex = -1
     end
@@ -1059,6 +1040,74 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         000049454E44AE426082}
       OnClick = dxBarLargeButton1Click
     end
+    object dtAwal: TcxBarEditItem
+      Caption = 'Tanggal Awal '
+      Category = 0
+      Hint = 'Tanggal Awal '
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dtAkhir: TcxBarEditItem
+      Caption = 'Tanggal Akhir'
+      Category = 0
+      Hint = 'Tanggal Akhir'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxDateEditProperties'
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Clear'
+      Category = 0
+      Hint = 'Clear'
+      Visible = ivAlways
+      LargeGlyph.SourceDPI = 96
+      LargeGlyph.Data = {
+        89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+        F4000000206348524D00007A26000080840000FA00000080E8000075300000EA
+        6000003A98000017709CBA513C00000006624B474400FF00FF00FFA0BDA79300
+        0000097048597300000EC400000EC401952B0E1B0000000774494D4507E90B14
+        01140E9DE08156000004464944415458C3B5965D681C5514C77FE7EEEC4736D9
+        369A18AD989A362912D434A03E593096A212D42252B12AB460A4205804416CEA
+        93A2F649D00745F0494512022A522D286812C156B482426C4822491389D96C94
+        A4DD7CEECC1C1F6666B3BB49369B6E3C30CCDCB9E7F2FFDD73CFBDF7887ED746
+        C9A64012582ED15FFC079063BDEBBA58C04D40758EC4769900CB081328F6464E
+        16700EB8799BC53D006501971328DF140368DD66E17C536E2DD66DFE5771CFDC
+        629DD69602AF05EF524C9062FE163B708050C9008B40784B11C8148F402DEF00
+        CF03B192006C60A9E4D9F722F4168B80013A8133C0CA96E6B5B9F5213C87CBE5
+        625960F08E95B7FC67BB20FA3074A08C6003D18D1D2DFFBD02BCE97F9F022265
+        CEBC03D7178F831CE8DD3802B227DB194094B31CFD081DC008B6405C8B8A4370
+        0E34E441BCE14314CDDE4DC52B1CE440DFA68324F85005C6DA826604388DB71C
+        AB9B4E8129D6DB059EB8328C0D7C7A232C1B1048CF2AE939C518701C884485DA
+        EFBBD602781047602C1534A33EC42B5988F5017E40781618E642027EAF5A8DAE
+        9048CF6A343DA72B56982B99155C31A02E5811A1AEB72B1FA008C4CB40741D80
+        20ECC3B8C087BB0012C043C02340737A4E2BAFCEEA023028C25911BE765DAEDC
+        B04BF837A56B010074E008C4B31031A00B385C0090426847F9854406DEDE0DD0
+        E2E7D08341D4AEFA4BE05B06F856844E557EABAE31EB5F46727B0FD815417309
+        985EC76D0125892110DF0F7C0C3C9C9B37923FC530D0AECA2722B4CEFEE36E7C
+        1BCABE73B9CD8DFC0C4315003BF1764E4BB6C77501F54E6155BF9DB53B543963
+        0C35E55FC71351FCF53EB43ACF304ED33EB42A81380EBA238136374124EF163B
+        A8CA93E50108CAEB0D06384C70AABA2E4E63134B2FBEC4F233C7701BF7E29C78
+        1AFBF449F4B6C6DC48845579CABA4669CF2C551E9DB90E685E8512CC7412337E
+        19FBEE7B58A9DF83C62A918121E4EFE9C2A4B8B3BC0818054B2B80CA5C0049A5
+        887CF119329F466B6A203D4FA8FB4B48A60A0112E501B8020E4B78658A67AA68
+        753599430FA09555909E87AA4ADCF683707DB57FE4666DA11C00C116C3A5CA59
+        602417C0BDA51E7B7F2BA1C14B44DE7D1F1918C2BDAB056DA807370F60B09C1C
+        4803CB3C9EB2198B7D85B7FF0511CCD828B10FDE2334318E3394243438097B77
+        23C3A360B24BE08AD073AD114821BCC6BD3A453202F03970DE8B8B208B8B58BF
+        5E446666502B842467901F2FC2FC626E0E5C40F868EB00420A38C912DD9C17D8
+        698377529E02C6B27EC67830E0CD3A6472AFBE71113AD565B2548060E834315E
+        E07EBA88FB7FA6B2C5533F701CF82977A0AE2D487F16E1B8E3D017B2564BB2CD
+        EC0F6008E155FEA2272832E5BE5E4FE4E8D1C0AF0F780C78022F271A4588E3DD
+        277F8A7016A15B5D26C3110F4E8AA9EA685BF01907AA112683123BA7942B8408
+        AC02A1363DABF1F49C2E8A30E3382C18037606A231A8EBEF2E19207F3D0AC437
+        04C9A98844201C151C5BA9EBEBCEBAFC0798C4968610769BD500000025744558
+        74646174653A63726561746500323032352D31312D32305430313A31393A3132
+        2B30303A30309A9486D30000002574455874646174653A6D6F64696679003230
+        32352D31312D32305430313A31393A31322B30303A3030EBC93E6F0000002874
+        455874646174653A74696D657374616D7000323032352D31312D32305430313A
+        32303A31332B30303A30307F5C59CF0000001974455874536F66747761726500
+        7777772E696E6B73636170652E6F72679BEE3C1A0000000049454E44AE426082}
+      OnClick = dxBarLargeButton2Click
+    end
   end
   object QUangMukaPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -1095,8 +1144,8 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     PageBreaks = True
     EmptyLines = True
     SuppressPageHeadersFooters = False
-    Left = 464
-    Top = 24
+    Left = 696
+    Top = 80
   end
   object frxXLSXExport1: TfrxXLSXExport
     UseFileCache = True
@@ -1106,8 +1155,8 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     ChunkSize = 0
     OpenAfterExport = False
     PictureType = gpPNG
-    Left = 504
-    Top = 24
+    Left = 712
+    Top = 32
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1118,13 +1167,13 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 46015.547697858800000000
-    ReportOptions.LastChange = 46080.482221238420000000
+    ReportOptions.LastChange = 46253.421738750000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
-    Left = 464
+    Left = 720
     Top = 72
     Datasets = <
       item
@@ -1160,16 +1209,15 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         Width = 2570.080400000000000000
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = -0.130434780000000000
           Top = 69.667567390000000000
-          Width = 114.782608690000000000
+          Width = 243.354037260000000000
           Height = 20.000000000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'No Uang Muka')
@@ -1178,7 +1226,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 114.782608690000000000
+          Left = 243.782608690000000000
           Top = 69.669291340000000000
           Width = 80.602006680000000000
           Height = 20.000000000000000000
@@ -1196,7 +1244,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 313.869565220000000000
+          Left = 442.869565220000000000
           Top = 69.669291340000000000
           Width = 245.217391300000000000
           Height = 20.000000000000000000
@@ -1214,7 +1262,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 195.086956520000000000
+          Left = 324.086956520000000000
           Top = 69.669291340000000000
           Width = 118.216276470000000000
           Height = 20.000000000000000000
@@ -1232,7 +1280,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 558.608695650000000000
+          Left = 687.608695650000000000
           Top = 69.669291338582700000
           Width = 183.478260860000000000
           Height = 20.000000000000000000
@@ -1251,7 +1299,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 742.956521740000000000
+          Left = 871.956521740000000000
           Top = 69.669291340000000000
           Width = 140.869565210000000000
           Height = 20.000000000000000000
@@ -1271,7 +1319,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Top = 0.232784780000000000
-          Width = 1695.118110236220000000
+          Width = 1823.689538810000000000
           Height = 29.565217390000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1288,7 +1336,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         object nama_pt: TfrxMemoView
           AllowVectorExport = True
           Top = 29.798002170000000000
-          Width = 1695.118110236220000000
+          Width = 1823.689538810000000000
           Height = 21.138703810000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1304,7 +1352,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         object periode: TfrxMemoView
           AllowVectorExport = True
           Top = 50.333119230000000000
-          Width = 1695.072463770000000000
+          Width = 1823.643892340000000000
           Height = 19.600242270000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1319,7 +1367,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 884.615384620000000000
+          Left = 1013.615384620000000000
           Top = 69.543307090000000000
           Width = 360.356744700000000000
           Height = 20.000000000000000000
@@ -1338,7 +1386,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 1245.641025640000000000
+          Left = 1374.641025640000000000
           Top = 69.543307090000000000
           Width = 160.356744700000000000
           Height = 20.000000000000000000
@@ -1357,7 +1405,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 1406.666666670000000000
+          Left = 1535.666666670000000000
           Top = 69.543307090000000000
           Width = 99.331103670000000000
           Height = 20.000000000000000000
@@ -1376,7 +1424,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 1506.666666670000000000
+          Left = 1635.666666670000000000
           Top = 69.543307090000000000
           Width = 188.049052390000000000
           Height = 20.000000000000000000
@@ -1409,9 +1457,9 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         RowCount = 0
         object Memo1: TfrxMemoView
           AllowVectorExport = True
-          Width = 113.618684780000000000
+          Width = 244.094875260000000000
           Height = 18.897650000000000000
-          DataField = 'trans_no'
+          DataField = 'no_trans'
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
@@ -1421,12 +1469,12 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
           Font.Style = []
           Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."trans_no"]')
+            '[frxDBDataset1."no_trans"]')
           ParentFont = False
         end
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 114.897637800000000000
+          Left = 243.897637800000000000
           Width = 80.503937010000000000
           Height = 18.897650000000000000
           DataField = 'trans_date'
@@ -1444,7 +1492,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 195.944881890000000000
+          Left = 324.944881890000000000
           Width = 118.299212600000000000
           Height = 18.897650000000000000
           DataField = 'customer_code'
@@ -1462,7 +1510,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 314.236220470000000000
+          Left = 443.236220470000000000
           Width = 245.291338580000000000
           Height = 18.897650000000000000
           DataField = 'customer_name'
@@ -1480,7 +1528,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 560.677165350000000000
+          Left = 689.677165350000000000
           Width = 184.053467390000000000
           Height = 18.897650000000000000
           DataField = 'grand_tot'
@@ -1501,7 +1549,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 744.118110240000000000
+          Left = 873.118110240000000000
           Width = 140.976377950000000000
           Height = 18.897650000000000000
           DataField = 'sisa_uang_muka'
@@ -1522,8 +1570,8 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 886.256410260000000000
-          Width = 360.188976377952800000
+          Left = 1015.256410260000000000
+          Width = 360.188976377953000000
           Height = 18.897650000000000000
           DataField = 'trans_no'
           DataSet = frxDBDataset1
@@ -1540,7 +1588,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 1247.179487180000000000
+          Left = 1376.179487180000000000
           Top = 0.177560260000000000
           Width = 160.251968503937000000
           Height = 18.897650000000000000
@@ -1559,7 +1607,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 1407.179487180000000000
+          Left = 1536.179487180000000000
           Width = 99.401574800000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
@@ -1576,7 +1624,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 1507.692307690000000000
+          Left = 1636.692307690000000000
           Top = 0.177560260000000000
           Width = 188.220472440000000000
           Height = 18.897650000000000000
@@ -1615,7 +1663,7 @@ object FListUangMukaPenjualan: TFListUangMukaPenjualan
     DataSet = QUangMukaPenjualan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 504
-    Top = 72
+    Left = 600
+    Top = 136
   end
 end

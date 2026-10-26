@@ -24,6 +24,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitTop = -6
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -51,6 +52,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     Align = alClient
     AllowedOperations = []
     DataSource = DsPenerimaanBank
+    DrawMemoText = True
     DynProps = <>
     FrozenCols = 1
     IndicatorOptions = [gioShowRowIndicatorEh, gioShowRecNoEh]
@@ -80,7 +82,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
         ReadOnly = True
         Title.Alignment = taCenter
         Title.Caption = 'Tanggal'
-        Width = 100
+        Width = 93
       end
       item
         CellButtons = <>
@@ -155,6 +157,16 @@ object FListPenerimaanBank: TFListPenerimaanBank
         Title.Alignment = taCenter
         Title.Caption = 'Keterangan'
         Width = 250
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'no_invoice'
+        Footers = <>
+        Title.Alignment = taCenter
+        Title.Caption = 'No Nota'
+        Width = 323
       end>
     object RowDetailData: TRowDetailPanelControlEh
     end
@@ -293,6 +305,12 @@ object FListPenerimaanBank: TFListPenerimaanBank
           ItemName = 'cbTransaksi'
         end
         item
+          UserDefine = [udWidth]
+          UserWidth = 256
+          Visible = True
+          ItemName = 'cbNoRekening'
+        end
+        item
           Visible = True
           ItemName = 'dxBarLargeButton4'
         end
@@ -309,7 +327,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     object LaporanKolektif: TdxBar
       Caption = 'Laporan Kolektif'
       CaptionButtons = <>
-      DockedLeft = 601
+      DockedLeft = 934
       DockedTop = 0
       FloatLeft = 1203
       FloatTop = 2
@@ -991,6 +1009,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
       Category = 0
       Hint = 'Transaksi        '
       Visible = ivAlways
+      OnChange = cbTransaksiChange
       ItemIndex = -1
     end
     object dtAwal: TcxBarEditItem
@@ -1121,12 +1140,32 @@ object FListPenerimaanBank: TFListPenerimaanBank
         609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
       OnClick = dxBarLargeButton5Click
     end
+    object cbNoRekening: TdxBarCombo
+      Caption = 'No Rekening'
+      Category = 0
+      Hint = 'No Rekening'
+      Visible = ivAlways
+      ItemIndex = -1
+    end
   end
   object QPenerimaanBank: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'select * from "public"."t_cash_bank_acceptance"'
-      'where deleted_at is null order by created_at Desc')
+      'SELECT '
+      '    a.*, '
+      '    COALESCE(c.no_invoices, '#39#39') AS no_invoice'
+      'FROM "public"."t_cash_bank_acceptance" a'
+      'LEFT JOIN t_master_trans_account b '
+      '    ON b.code_trans = a.code_type_trans'
+      'LEFT JOIN ('
+      '    SELECT '
+      '        voucher_no, '
+      
+        '        string_agg(no_invoice, '#39', '#39' ORDER BY no_invoice) AS no_i' +
+        'nvoices'
+      '    FROM t_cash_bank_acceptance_receivable'
+      '    GROUP BY voucher_no'
+      ') c ON c.voucher_no = a.voucher_no;')
     Left = 1060
     Top = 88
     object QPenerimaanBankvoucher_no: TStringField
@@ -1170,6 +1209,11 @@ object FListPenerimaanBank: TFListPenerimaanBank
       FieldName = 'payment_name'
       Size = 255
     end
+    object QPenerimaanBankno_invoice: TMemoField
+      FieldName = 'no_invoice'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
   end
   object DsPenerimaanBank: TDataSource
     DataSet = QPenerimaanBank
@@ -1201,8 +1245,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
       
         'where  a."voucher_no"='#39'BM/001/03/X/2025/HLJ'#39'   and "position"='#39'K' +
         #39'  order by position asc')
-    Left = 564
-    Top = 56
+    Left = 636
+    Top = 144
     object QBukti_Terimavoucher_no: TStringField
       FieldName = 'voucher_no'
       ReadOnly = True
@@ -1291,8 +1335,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
     DataSet = QBukti_Terima
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 224
-    Top = 72
+    Left = 576
+    Top = 160
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1343,8 +1387,8 @@ object FListPenerimaanBank: TFListPenerimaanBank
       'begin'
       ''
       'end.')
-    Left = 440
-    Top = 72
+    Left = 824
+    Top = 65528
     Datasets = <
       item
         DataSet = frxDBDQBukti_Terima
@@ -2179,8 +2223,7 @@ object FListPenerimaanBank: TFListPenerimaanBank
     MasterSource = dsBukti_Terima
     MasterFields = 'account_name'
     DetailFields = 'name_account'
-    Left = 500
-    Top = 80
+    Left = 708
     ParamData = <
       item
         DataType = ftString
@@ -2255,17 +2298,16 @@ object FListPenerimaanBank: TFListPenerimaanBank
     DataSet = QBukti_Terima_det
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 344
-    Top = 72
+    Left = 760
   end
   object dsBukti_Terima: TDataSource
     DataSet = QBukti_Terima
-    Left = 689
-    Top = 64
+    Left = 769
+    Top = 96
   end
   object dsBukti_Terima_det: TDataSource
     DataSet = QBukti_Terima_det
-    Left = 761
-    Top = 80
+    Left = 881
+    Top = 8
   end
 end

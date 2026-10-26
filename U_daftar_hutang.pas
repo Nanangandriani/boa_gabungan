@@ -245,16 +245,19 @@ begin
            'left join '+
            '(select a.trans_no,b.supplier_code,b.valas,sum(a.grandtotal)as jumlah,'+
            '(case when b.valas=''USD'' then sum(a.subtotalrp) else sum(a.grandtotal) end)as hutang,'+
-           'sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph, a.account_pph_code '+
-           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no and b.deleted_at is null group by a.trans_no,b.supplier_code,b.valas, a.account_pph_code '+
+           'sum(a.subtotal)subtotal,sum(a.ppn_rp)ppn_rp ,sum(a.pph_rp)pph_rp,sum(a.pph_rp)as npph, '+
+           ' max(a.account_pph_code) as account_pph_code  '+
+           'from t_purchase_invoice_det a,t_purchase_invoice b  where a.trans_no=b.trans_no '+
+           'and b.deleted_at is null group by a.trans_no,b.supplier_code,b.valas '+
+           //', a.account_pph_code '+
            'order by trans_no,supplier_code)b on a.trans_no=b.trans_no and a.kodesup=b.supplier_code '+
            'left join '+
            't_supplier c on a.kodesup=c.supplier_code '+
            'left join '+
            '(select faktur_no from t_paid_debt_det)as lunas  on a.nofakturpajak=lunas.faktur_no '+
            'left join '+
-           '(select a.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else b.price+b.ppn_rp end as nil_retur from t_purchase_return_det a,t_purchase_return b '+
-           'where a.return_no=b.return_no  group by a.receive_no,b.valas_value,b.valas,b.price,b.ppn_rp order by a.receive_no)retur on a.trans_no=retur.receive_no '+
+           '(select b.receive_no,b.valas_value,b.valas,case when b.valas=''USD'' then sum(a.total_price)*b.valas_value else b.price+b.ppn_rp end as nil_retur from t_purchase_return_det a,t_purchase_return b '+
+           'where a.return_no=b.return_no  group by b.receive_no,b.valas_value,b.valas,b.price,b.ppn_rp order by b.receive_no)retur on a.trans_no=retur.receive_no '+
            'left join '+
            '(select receive_no,sum(price_rp) as nilai_pot_rp,sum(price) as nilai_pot_dolar,sum(ppnrp)as ppnrp from t_purchase_discount GROUP BY receive_no)pot on a.trans_no=pot.receive_no '+
            'left join '+

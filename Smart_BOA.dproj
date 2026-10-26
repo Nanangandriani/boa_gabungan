@@ -102,9 +102,8 @@
         <Icon_MainIcon>Smart_BOA_Icon5.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Image\BOA smart1.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Image\BOA smart1.png</UWP_DelphiLogo150>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.145.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.145.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_MinorVer>145</VerInfo_MinorVer>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.189.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.189.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_MinorVer>189</VerInfo_MinorVer>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -1488,6 +1487,67 @@
             <Form>Fdaftar_realisasi_biaya</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="URekapPenjualanPerItem.pas">
+            <Form>FRekapPenjualanPerItem</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URptSaldoHarianBank.pas">
+            <Form>FRptSaldoHarianBank</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapMonitoringTargetOmset.pas">
+            <Form>FRekapMonitoringTargetOmset</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataReturPenjualanCoretax.pas">
+            <Form>FDataReturPenjualanCoretax</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListReturPenjualanCoretax.pas">
+            <Form>FListReturPenjualanCoretax</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UbrowseListReturPenjualan.pas">
+            <Form>FbrowseListReturPenjualan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UListAmbilPengajuan.pas">
+            <Form>FListAmbilPengajuan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ugroup_lr.pas">
+            <Form>FGroup_lr</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Ugroup_biayalr.pas">
+            <Form>FGroup_biayalr</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataRincianHarmoni.pas">
+            <Form>FDataRincianHarmoni</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UDataKasbon2.pas">
+            <Form>FDataKasbon2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URekapMonitoringTargetOmsetPerArea.pas">
+            <Form>FRekapMonitoringTargetOmsetPerArea</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="USumberBarangRetur.pas">
+            <Form>FSumberBarangRetur</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="U_Upload_Dokumen.pas">
+            <Form>FUpload_Dokumen</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UAdd_Dokumen.pas">
+            <Form>FAdd_Dokumen</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UFtpHelper.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

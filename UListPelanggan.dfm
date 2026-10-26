@@ -61,6 +61,7 @@ object FListPelanggan: TFListPelanggan
     SearchPanel.Enabled = True
     SearchPanel.FilterOnTyping = True
     TabOrder = 1
+    TitleParams.MultiTitle = True
     Columns = <
       item
         CellButtons = <>
@@ -69,9 +70,8 @@ object FListPelanggan: TFListPelanggan
         FieldName = 'customer_code'
         Footer.ValueType = fvtCount
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Kode Pelanggan'
-        Width = 152
+        Width = 117
       end
       item
         CellButtons = <>
@@ -79,7 +79,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'customer_name'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Nama Pelanggan'
         Width = 275
       end
@@ -89,7 +88,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'customer_name_pkp'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Nama PKP'
         Width = 221
       end
@@ -99,7 +97,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'telp'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Telepon'
         Width = 100
       end
@@ -107,10 +104,19 @@ object FListPelanggan: TFListPelanggan
         CellButtons = <>
         DynProps = <>
         EditButtons = <>
+        FieldName = 'no_npwp'
+        Footers = <>
+        Title.Caption = 'NPWP'
+        Width = 147
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
         FieldName = 'email'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Email'
+        Visible = False
         Width = 150
       end
       item
@@ -119,9 +125,8 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'payment_term'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Tempo Pembayaran'
-        Width = 120
+        Width = 68
       end
       item
         CellButtons = <>
@@ -129,7 +134,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'address'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Alamat'
         Width = 400
       end
@@ -139,9 +143,8 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'tp'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'TP'
-        Width = 119
+        Width = 151
       end
       item
         CellButtons = <>
@@ -149,9 +152,8 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'karesidenan'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Karesidenan'
-        Width = 119
+        Width = 138
       end
       item
         CellButtons = <>
@@ -159,7 +161,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'kabupaten'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Kabupaten'
         Width = 200
       end
@@ -169,7 +170,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'kecamatan'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Kecamatan'
         Width = 200
       end
@@ -179,9 +179,8 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'name_type_business'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Jenis Usaha'
-        Width = 100
+        Width = 68
       end
       item
         CellButtons = <>
@@ -189,7 +188,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'name_type'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Jenis Pelanggan'
         Width = 100
       end
@@ -199,9 +197,8 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'name_selling_type'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Kategori Pelanggan'
-        Width = 100
+        Width = 66
       end
       item
         CellButtons = <>
@@ -209,7 +206,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'name_group'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'Golongan'
         Width = 100
       end
@@ -219,7 +215,6 @@ object FListPelanggan: TFListPelanggan
         EditButtons = <>
         FieldName = 'va'
         Footers = <>
-        Title.Alignment = taCenter
         Title.Caption = 'VA'
         Width = 165
       end>

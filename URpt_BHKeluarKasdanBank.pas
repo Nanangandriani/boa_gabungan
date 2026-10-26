@@ -217,13 +217,22 @@ begin
 end;
 
 procedure TFRpt_BHKeluarKasdanBank.dxBarLargeButton1Click(Sender: TObject);
+var
+  dt_awal: TDate;
 begin
+    //batas data
+    dt_awal:=DtMulai.EditValue;
+    {if VarToDateTime(DtMulai.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+    end;}
+
   with QKasBank do
   begin
       close;
       sql.Clear;
       sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
-                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
                 ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
       ExecSQL;
   end;
@@ -242,13 +251,22 @@ begin
 end;
 
 procedure TFRpt_BHKeluarKasdanBank.dxBarLargeButton2Click(Sender: TObject);
+var
+  dt_awal: TDate;
 begin
+    //batas data
+    dt_awal:=DtMulai.EditValue;
+    {if VarToDateTime(DtMulai.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+    end;}
+
   with QKasBank do
   begin
       close;
       sql.Clear;
       sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
-                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
                 ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
       ExecSQL;
   end;
@@ -270,13 +288,22 @@ begin
 end;
 
 procedure TFRpt_BHKeluarKasdanBank.DxRefreshClick(Sender: TObject);
+var
+  dt_awal: TDate;
 begin
+    //batas data
+    dt_awal:=DtMulai.EditValue;
+    {if VarToDateTime(DtMulai.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+    end;}
+
   with QKasBank do
   begin
       close;
       sql.Clear;
       sql.Text:=' SELECT * from vbh_keluar_kas_bank a '+
-                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',DtMulai.EditValue))+' '+
+                ' where a.tanggal>='+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' '+
                 ' and a.tanggal<='+QuotedStr(formatdatetime('yyyy-mm-dd',DtSelesai.EditValue))+' ';
       ExecSQL;
   end;

@@ -167,8 +167,15 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='UPDATE t_sales_order_customer SET deleted_at=NULL where trans_no ='+QuotedStr(edKodeOrder.Text) ;
-    ExecSQL;
+    sql.Text:='UPDATE t_sales_order_customer SET deleted_at=NOW() where trans_no ='+QuotedStr(edKodeOrder.Text) ;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   with dm.Qtemp1 do
@@ -190,7 +197,13 @@ begin
                 'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
                 'FROM t_customer ' +
                 'WHERE customer_code = '+QuotedStr(edKode_Pelanggan.Text)+' ';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -311,7 +324,13 @@ begin
                  'FROM t_item a '+
                  'LEFT JOIN t_item_group b on b.group_id=a.group_id '+
                  'WHERE a.item_code='+QuotedStr(MemDetail['KD_ITEM'])+';';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     //Jika mempunyai target lanjut pengecekan jumlah percategory diSO
@@ -372,7 +391,13 @@ begin
         Sql.Clear;
         Sql.Text:='SELECT * from "get_sales_order_total_unit"('+StrYear+', '+Strmonth+', '+QuotedStr(edKode_Pelanggan.Text)+', '+IntToStr(IntCategoryID)+','+QuotedStr(edKodeOrder.Text)+');';
 
-        Open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if dm.Qtemp.RecordCount=0 then
@@ -389,7 +414,13 @@ begin
         Sql.Clear;
         sql.Text:='SELECT * FROM "get_customer_sales_target"('+QuotedStr(edKode_Pelanggan.Text)+', '+
                   ''+StrYear+', '+Strmonth+', '+IntToStr(IntCategoryID)+')';
-        Open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if dm.Qtemp.RecordCount=0 then
@@ -471,7 +502,13 @@ begin
               'GROUP  BY a.code_cust';
 //    sql.Text:='select total_receivables from "public"."get_piutang_saldoawal"('+QuotedStr(FormatDateTime('yyyy-mm-dd',NOW()))+') '+
 //    'where customer_code='+QuotedStr(edKode_Pelanggan.Text);
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp.RecordCount=0 then SisaPiutang:=0
   else SisaPiutang:=dm.Qtemp.FieldValues['sisa_piutang'];
@@ -486,7 +523,13 @@ begin
               'first_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' AND '+
               'end_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' '+
               'GROUP BY customer_code;';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   IntCountBankGaransi:=dm.Qtemp.RecordCount;
@@ -504,7 +547,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * from sp_bruto_selling('+QuotedStr(edKode_Pelanggan.Text)+','+QuotedStr(MemDetail['KD_ITEM'])+');';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp.RecordCount>0 then
     begin
@@ -577,7 +626,13 @@ begin
             ' '+
             ' WHERE notrans='+QuotedStr(edKodeOrder.Text)+' '+
             ' Order By notrans, code_item desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if  Dm.Qtemp.RecordCount=0 then
@@ -637,9 +692,15 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:=' DELETE FROM  "public"."t_sales_order_det" '+
+    sql.Text:=' DELETE FROM "public"."t_sales_order_det" '+
               ' WHERE "notrans"='+QuotedStr(edKodeOrder.Text)+';';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   MemDetail.First;
@@ -664,7 +725,13 @@ begin
                 ' COALESCE(' + VarToStrDef(MemDetail['BERAT_KOSONG'], '0') + ',0), '+
                 ' '+QuotedStr(edKodeSumber.Text)+','+QuotedStr(StrKodeGudang)+' );';
 
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDetail.Next;
   end;
@@ -735,7 +802,14 @@ begin
           close;
           sql.Clear;
           sql.Text:='select * from get_unit('+QuotedStr(MemDetail['KD_ITEM'])+')  WHERE unit_code='+QuotedStr(MemDetail['KD_SATUAN']);
-          Open;
+
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
 
         LevelSatuan:=dm.Qtemp.FieldValues['unit_level'];
@@ -749,7 +823,13 @@ begin
             close;
             sql.Clear;
             sql.Text:='select qty_conv from t_item_conversion where item_code='+QuotedStr(MemDetail['KD_ITEM'])+' AND unit='+QuotedStr(MemDetail['KD_SATUAN']);
-            open;
+            try
+              Open;
+            except
+              Connection.Close;
+              Connection.Open;
+              Open;
+            end;
           end;
           Qty:=MemDetail['JUMLAH']*dm.Qtemp1.FieldValues['qty_conv'];
         end;
@@ -818,10 +898,11 @@ begin
     end
     else if Status = 0 then
     begin
-      if chkNomorPengganti.Checked=False then Autonumber;
+
   //    if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeOrder.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        if chkNomorPengganti.Checked=False then Autonumber;
         CekTargetSales;
         if (iserror=0) OR (islanjut=1) then begin
           CekBankGaransi;
@@ -909,7 +990,13 @@ begin
       ' ON b.menu_code = bb.menu_code INNER JOIN t_menu_master cc ON b.master_code=cc.master_code '+
       ' INNER JOIN t_user dd ON dd.dept_code = aa.dept_code '+
       ' WHERE dd.dept_code='+QuotedStr(dept_code)+' and bb.submenu=''Target Penjualan'' ;';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp.RecordCount=0 then
@@ -956,6 +1043,7 @@ begin
   FListNoTransaksi.vcall:='salesorder';
   FListNoTransaksi.update_grid('notrans','order_no','t_sales_order','WHERE order_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal_Pesan.Date))+' and deleted_at is NOT NULL '+
   'AND (trans_no_replacement is NULL OR trans_no_replacement='''')'+strWhereKaresidenan+' ORDER BY notrans ASC');
+  if  FListNoTransaksi.QListTransNo.RecordCount>0 then
   FListNoTransaksi.ShowModal;
 end;
 
@@ -1126,7 +1214,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='select wh_name,wh_code from t_wh where wh_code='+QuotedStr(defaultKodeGudang)+' AND deleted_at is NULL';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if dm.Qtemp.RecordCount>0 then
@@ -1165,7 +1259,13 @@ begin
       Close;
       Sql.Clear;
       Sql.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(code_karesidenan,'''') karesidenan,COALESCE(code_kabupaten,'''') code_kabupaten, COALESCE(kabupaten,'''') kabupaten FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp.FieldValues['karesidenan']='' then
     begin
@@ -1238,7 +1338,13 @@ begin
     close;
     sql.Clear;
     sql.Text := 'select submenu_code from t_menu_sub where link=' + QuotedStr(LBaseName);
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   Strsubmenu_code:=QuotedStr(dm.Qtemp.FieldValues['submenu_code']);
   Strsubmenu:=QuotedStr('Sales Order');
@@ -1262,6 +1368,30 @@ begin
     dtTanggal_Pesan.Enabled:=True;
     btnNoTransaksi.Visible:=False;
     chkNomorPengganti.Enabled:=True;
+
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT code,name,form_target from t_order_source '+
+                'WHERE code=(SELECT value_parameter FROM t_parameter '+
+                'WHERE key_parameter=''sumber_sales_order'')';
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+
+    if dm.Qtemp3.RecordCount>0 then
+    begin
+      edKodeSumber.Text:=dm.Qtemp3.FieldValues['code'];
+      edNamaSumber.Text:=dm.Qtemp3.FieldValues['name'];
+      vFormSumber:=dm.Qtemp3.FieldValues['form_target'];
+    end;
+
   end;
 
   if isCancel=1 then BSave.Enabled:=False;;
@@ -1356,7 +1486,14 @@ begin
             ''+QuotedStr(edKendaraan.Text)+','+QuotedStr(edKelompokKendaraan.Text)+','+
             ''+IntToStr(val_bank_garansi)+','+IntToStr(val_piutang)+', '+IntToStr(val_target)+', '+
             ''+QuotedStr(strIsNoReplacement)+'  );');
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   if chkNomorPengganti.Checked=True then
@@ -1368,7 +1505,13 @@ begin
       sql.Text:='UPDATE "public"."t_sales_order" SET'+
                 ' trans_no_replacement='+QuotedStr(edKodeOrder.Text)+
                 ' Where notrans='+QuotedStr(strNoTransaksiDiGanti);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -1465,7 +1608,13 @@ begin
     //            ' trans_month='+QuotedStr(strbulan)+','+
     //            ' trans_year='+QuotedStr(strtahun)+' '+
                 ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       InsertDetailSO;
       SimpanPelanggan;
@@ -1511,7 +1660,13 @@ begin
   //            ' trans_month='+QuotedStr(strbulan)+','+
   //            ' trans_year='+QuotedStr(strtahun)+' '+
               ' Where notrans='+QuotedStr(edKodeOrder.Text)+'');
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     InsertDetailSO;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);

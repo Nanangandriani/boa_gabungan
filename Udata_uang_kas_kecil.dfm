@@ -195,23 +195,23 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
   object Label27: TLabel
     Left = 135
     Top = 336
-    Width = 34
+    Width = 28
     Height = 15
-    Caption = 'kpg @'
+    Caption = 'lbr @'
   end
   object Label26: TLabel
     Left = 135
     Top = 310
-    Width = 34
+    Width = 28
     Height = 15
-    Caption = 'kpg @'
+    Caption = 'lbr @'
   end
   object Label25: TLabel
     Left = 135
     Top = 280
-    Width = 34
+    Width = 28
     Height = 15
-    Caption = 'kpg @'
+    Caption = 'lbr @'
   end
   object Label24: TLabel
     Left = 211
@@ -336,9 +336,9 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
   object Label8: TLabel
     Left = 135
     Top = 252
-    Width = 34
+    Width = 28
     Height = 15
-    Caption = 'kpg @'
+    Caption = 'lbr @'
   end
   object Label7: TLabel
     Left = 135
@@ -399,14 +399,15 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 288
     Top = 57
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 14
   end
   object edlbr75rb: TEdit
     Left = 8
     Top = 57
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 1
     OnChange = edlbr75rbChange
   end
@@ -414,7 +415,8 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 288
     Top = 32
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 12
   end
   object DTtanggal: TDateTimePicker
@@ -434,7 +436,8 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Height = 41
     Align = alBottom
     TabOrder = 26
-    ExplicitTop = 394
+    ExplicitTop = 392
+    ExplicitWidth = 438
     object BTutup: TRzBitBtn
       Left = 343
       Top = 1
@@ -496,6 +499,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
         57A2A2A2E8E8E8E8E8E8E8DE8181DED781818181E8E8E8E8E8E8E8E8E8AC8257
         57E8E8E8E8E8E8E8E8E8E8E8E8AC818181E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
+      ExplicitLeft = 337
     end
     object BtnSimpan: TRzBitBtn
       Left = 143
@@ -558,7 +562,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 275
+      ExplicitLeft = 137
     end
     object btnnew: TRzBitBtn
       Left = 43
@@ -568,6 +572,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
       Align = alRight
       Caption = 'New'
       TabOrder = 2
+      Visible = False
       OnClick = btnnewClick
       Glyph.Data = {
         36060000424D3606000000000000360400002800000020000000100000000100
@@ -621,7 +626,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
         5E5E5E5E5EE8E8E8E8E8E8E8818181818181818181E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 39
+      ExplicitLeft = 37
     end
     object BtnHapus: TRzBitBtn
       Left = 243
@@ -684,7 +689,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 43
+      ExplicitLeft = 237
     end
   end
   object ednilaitot: TEdit
@@ -706,77 +711,88 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 288
     Top = 82
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 15
   end
   object ednilai20rb: TEdit
     Left = 288
     Top = 110
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 16
   end
   object ednilai10rb: TEdit
     Left = 288
     Top = 138
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 17
   end
   object ednilai5rb: TEdit
     Left = 289
     Top = 165
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 18
   end
   object ednilai2rb: TEdit
     Left = 288
     Top = 193
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 19
   end
   object ednilai1000: TEdit
     Left = 288
     Top = 221
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 20
   end
   object ednilai500: TEdit
     Left = 288
     Top = 249
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 21
   end
   object ednilai200: TEdit
     Left = 288
     Top = 277
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 22
   end
   object ednilai100: TEdit
     Left = 288
     Top = 305
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 23
   end
   object ednilai50: TEdit
     Left = 288
     Top = 332
     Width = 145
-    Height = 21
+    Height = 23
+    ReadOnly = True
     TabOrder = 24
+    OnChange = ednilai50Change
   end
   object edlbr50: TEdit
     Left = 8
     Top = 332
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 11
     OnChange = edlbr50Change
   end
@@ -784,7 +800,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 305
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 10
     OnChange = edlbr100Change
   end
@@ -792,7 +808,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 277
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 9
     OnChange = edlbr200Change
   end
@@ -800,7 +816,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 249
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 8
     OnChange = edlbr500Change
   end
@@ -808,7 +824,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 221
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 7
     OnChange = edlbr1000Change
   end
@@ -816,7 +832,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 193
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 6
     OnChange = edlbr2rbChange
   end
@@ -824,7 +840,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 166
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 5
     OnChange = edlbr5rbChange
   end
@@ -832,7 +848,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 138
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 4
     OnChange = edlbr10rbChange
   end
@@ -840,7 +856,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 110
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 3
     OnChange = edlbr20rbChange
   end
@@ -848,7 +864,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 83
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 2
     OnChange = edlbr50rbChange
   end
@@ -856,7 +872,7 @@ object Fdata_uang_cash_kecil: TFdata_uang_cash_kecil
     Left = 8
     Top = 32
     Width = 121
-    Height = 21
+    Height = 23
     TabOrder = 0
     OnChange = edlbr100rbChange
   end

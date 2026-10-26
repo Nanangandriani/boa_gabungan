@@ -126,12 +126,7 @@ begin
   begin
     Close;
     SQL.Clear;
-//    SQL.Text:='SELECT DISTINCT vehicle_group_id,vehicle_group_sort_number,type_vehicles_code,type_vehicles_name,capacity '+
-//              'FROM t_sales_order a '+
-//              'WHERE sent_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',FNewDeliveryOrder.dtTanggalMuatan.Date))+' AND vehicle_group_id IS NOT NULL '+
-//              'AND vehicle_group_id NOT IN (SELECT aa.vehicle_group_id FROM t_delivery_order_services aa left join t_delivery_order bb on bb.notrans=aa.notrans '+
-//              'WHERE aa.vehicle_group_id IS NOT NULL and bb.deleted_at is null) '+
-//              'Order By vehicle_group_sort_number ASC;';
+
     SQL.Text := 'SELECT DISTINCT a.vehicle_group_id, a.vehicle_group_sort_number, a.type_vehicles_code, a.type_vehicles_name, a.capacity ' +
                 'FROM t_sales_order a ' +
                 'INNER JOIN t_selling b ON b.no_reference = a.notrans AND b.deleted_at IS NULL ' +

@@ -64,6 +64,7 @@ begin
 end;
 
 procedure TFNew_User.BSimpanClick(Sender: TObject);
+var nik:integer;
 begin
   if EdNik.Text='' then
   begin
@@ -144,10 +145,28 @@ begin
                 ' where code='+QuotedStr(EdNik.Text);
       ExecSQL;
     end;
+
   end;
   dm.koneksi.Commit;
+  FUser.ActROExecute(sender);
   Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
-  BBatalClick(sender);
+  if Status=1 then BBatalClick(sender);
+
+  if Status=0 then
+  begin
+    Clear;
+    WITH DM.Qtemp DO
+    BEGIN
+      CLOSE;
+      sql.Clear;
+      sql.Text:=' SELECT count(code) as nk from t_user ';
+      //sql.Text:='SELECT max("right"(code, 1)) nk from t_user';
+      ExecSQL;
+    END;
+    nik:=StrToInt(DM.Qtemp.FieldByName('nk').Value);
+    EdNik.Text:='0'+(IntToStr(nik+1));
+  end;
+
   end
   Except
   on E :Exception do

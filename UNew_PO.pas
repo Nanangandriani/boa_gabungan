@@ -127,7 +127,7 @@ type
     ed_vehicle_group_sort_number: TEdit;
     Ed_kode: TEdit;
     Btn_no: TSpeedButton;
-    IdSSLIOHandlerSofcketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     BCorrection: TRzBitBtn;
     ckno_penganti: TCheckBox;
     procedure BSimpanClick(Sender: TObject);
@@ -1310,6 +1310,7 @@ begin
   if ref_code='AS' then
   begin
     FDetailPengajuanAsset.Show;
+    VMenu:='3';
   end;
 end;
 
@@ -2352,8 +2353,6 @@ begin
                   ExecSQL;
                 end;
               end;
-
-
 end;
 
 
@@ -3114,6 +3113,7 @@ begin
    FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FPO.Name)); //Mendapatkan nama Menu
    FKoreksi.Status:=0;
+   FKoreksi.AksiTipe:='KOREKSI';
    FKoreksi.vnotransaksi:=EdNo.Text; //Mendapatkan Nomor Transaksi
    FKoreksi.ShowModal;
 end;

@@ -32,8 +32,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     FixedDimension = 21
     object TabDataMuatan: TRzTabSheet
       Caption = 'Data Muatan'
-      ExplicitWidth = 1342
-      ExplicitHeight = 614
       object Label12: TLabel
         Left = 125
         Top = 115
@@ -52,57 +50,56 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Left = 0
         Top = 0
         Width = 1346
-        Height = 385
+        Height = 401
         Align = alTop
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1342
         object LabelPelanggan: TLabel
           Left = 20
-          Top = 19
+          Top = 28
           Width = 27
           Height = 15
           Caption = 'Kode'
         end
         object Label5: TLabel
           Left = 20
-          Top = 49
+          Top = 58
           Width = 41
           Height = 15
           Caption = 'Tanggal'
         end
         object Label19: TLabel
           Left = 20
-          Top = 78
+          Top = 87
           Width = 61
           Height = 15
           Caption = 'Sumber DO'
         end
         object Label18: TLabel
           Left = 117
-          Top = 78
+          Top = 87
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label6: TLabel
           Left = 117
-          Top = 49
+          Top = 58
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label3: TLabel
           Left = 117
-          Top = 19
+          Top = 28
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btMasterSumber: TSpeedButton
           Left = 324
-          Top = 75
+          Top = 83
           Width = 23
           Height = 22
           Caption = '+'
@@ -111,35 +108,35 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object Label50: TLabel
           Left = 20
-          Top = 107
+          Top = 116
           Width = 64
           Height = 15
           Caption = 'Lokasi Muat'
         end
         object Label51: TLabel
           Left = 117
-          Top = 107
+          Top = 116
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label52: TLabel
           Left = 20
-          Top = 136
+          Top = 145
           Width = 80
           Height = 15
           Caption = 'Lokasi Bongkar'
         end
         object Label53: TLabel
           Left = 117
-          Top = 136
+          Top = 145
           Width = 3
           Height = 15
           Caption = ':'
         end
         object btMasterLokasiMuat: TSpeedButton
           Left = 626
-          Top = 104
+          Top = 112
           Width = 23
           Height = 22
           Caption = '+'
@@ -147,7 +144,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object btMasterLokasiBongkar: TSpeedButton
           Left = 626
-          Top = 132
+          Top = 140
           Width = 23
           Height = 22
           Caption = '+'
@@ -155,7 +152,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object edKodeDOMuatan: TEdit
           Left = 132
-          Top = 16
+          Top = 25
           Width = 185
           Height = 23
           CharCase = ecUpperCase
@@ -163,7 +160,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object dtTanggalMuatan: TRzDateTimePicker
           Left = 132
-          Top = 45
+          Top = 54
           Width = 186
           Height = 23
           Date = 45405.000000000000000000
@@ -174,7 +171,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object edNamaJenisMuatan: TRzButtonEdit
           Left = 132
-          Top = 75
+          Top = 84
           Width = 186
           Height = 23
           Text = ''
@@ -307,8 +304,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           end
         end
         object RzGroupBox2: TRzGroupBox
-          Left = 20
-          Top = 162
+          Left = 12
+          Top = 171
           Width = 869
           Height = 183
           Caption = 'Data Penyedia Jasa Transport'
@@ -566,7 +563,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object btAddDetail: TRzBitBtn
           Left = 20
-          Top = 349
+          Top = 365
           Width = 116
           Height = 30
           Align = alCustom
@@ -629,7 +626,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object edLokasiMuat: TRzButtonEdit
           Left = 132
-          Top = 104
+          Top = 113
           Width = 493
           Height = 23
           Text = ''
@@ -641,7 +638,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object edLokasiBongkar: TRzButtonEdit
           Left = 132
-          Top = 132
+          Top = 141
           Width = 493
           Height = 23
           Text = ''
@@ -653,9 +650,9 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object chktambahpool: TRzCheckBox
           Left = 655
-          Top = 132
-          Width = 117
-          Height = 19
+          Top = 140
+          Width = 113
+          Height = 17
           Caption = 'Tambah Titik Pool'
           State = cbUnchecked
           TabOrder = 9
@@ -663,13 +660,41 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         end
         object chkDOpool: TRzCheckBox
           Left = 353
-          Top = 79
-          Width = 141
-          Height = 19
+          Top = 86
+          Width = 137
+          Height = 17
           Caption = 'DO Pool ke Pelanggan'
           State = cbUnchecked
           TabOrder = 10
           OnClick = chkDOpoolClick
+        end
+        object chkNomorPengganti: TRzCheckBox
+          Left = 131
+          Top = 4
+          Width = 114
+          Height = 17
+          Caption = 'Nomor Pengganti'
+          State = cbUnchecked
+          TabOrder = 11
+          OnClick = chkNomorPenggantiClick
+        end
+        object btnNoTransaksi: TRzBitBtn
+          Left = 322
+          Top = 25
+          Width = 30
+          Caption = '...'
+          TabOrder = 12
+          OnClick = btnNoTransaksiClick
+        end
+        object cbAdaBiaya: TRzCheckBox
+          Left = 353
+          Top = 57
+          Width = 71
+          Height = 17
+          Caption = 'Ada Biaya'
+          State = cbUnchecked
+          TabOrder = 13
+          OnClick = cbAdaBiayaClick
         end
       end
       object Panel2: TPanel
@@ -679,8 +704,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 32
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 582
-        ExplicitWidth = 1342
         object btNextStep: TRzBitBtn
           Left = 1270
           Top = 1
@@ -741,7 +764,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1266
         end
         object btnSubmitCorrectionMuatan: TRzBitBtn
           Left = 1022
@@ -752,7 +774,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
           Caption = 'Submit Correction'
           TabOrder = 1
           OnClick = BCorrectionClick
-          ExplicitLeft = 1018
         end
         object btnSaveMuatan: TRzBitBtn
           Left = 1120
@@ -814,7 +835,6 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1116
         end
         object btnCloseMuatan: TRzBitBtn
           Left = 1195
@@ -876,14 +896,13 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
-          ExplicitLeft = 1191
         end
       end
       object DBGrid_SumberOrder: TDBGridEh
         Left = 0
-        Top = 385
+        Top = 401
         Width = 1346
-        Height = 198
+        Height = 182
         Align = alClient
         DataSource = dsDataMuatan
         DynProps = <>
@@ -1722,6 +1741,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
     end
     object TabDokumenPendukung: TRzTabSheet
       Caption = 'Dokumen Pendukung'
+      ExplicitWidth = 1342
+      ExplicitHeight = 614
       object Panel3: TPanel
         Left = 0
         Top = 583
@@ -1729,6 +1750,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Height = 32
         Align = alBottom
         TabOrder = 0
+        ExplicitTop = 582
+        ExplicitWidth = 1342
         object btBatalParameter: TRzBitBtn
           Left = 1270
           Top = 1
@@ -1789,6 +1812,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1266
         end
         object btSaveParameter: TRzBitBtn
           Left = 1195
@@ -1850,6 +1874,7 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
             090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
             E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
           NumGlyphs = 2
+          ExplicitLeft = 1191
         end
       end
       object Panel4: TPanel
@@ -1861,6 +1886,8 @@ object FNewDeliveryOrder: TFNewDeliveryOrder
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitWidth = 1342
+        ExplicitHeight = 582
         object Label14: TLabel
           Left = 133
           Top = 94

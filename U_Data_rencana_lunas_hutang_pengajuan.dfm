@@ -2,8 +2,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   Left = 0
   Top = 0
   Caption = 'Daftar  Rencana Pelunasan Hutang'
-  ClientHeight = 527
-  ClientWidth = 873
+  ClientHeight = 577
+  ClientWidth = 981
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,12 +19,12 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 873
+    Width = 981
     Height = 121
     Align = alTop
     Color = 15987699
     TabOrder = 0
-    ExplicitWidth = 867
+    ExplicitWidth = 975
     object Label3: TLabel
       Left = 21
       Top = 21
@@ -146,7 +146,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
     end
     object BCari: TRzBitBtn
       Left = 456
-      Top = 52
+      Top = 49
       Width = 86
       Caption = 'Cari ...'
       TabOrder = 5
@@ -238,36 +238,37 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   object RzPanel2: TRzPanel
     Left = 0
     Top = 121
-    Width = 873
-    Height = 406
+    Width = 981
+    Height = 456
     Align = alClient
     Color = 15987699
     TabOrder = 1
-    ExplicitWidth = 867
-    ExplicitHeight = 397
+    ExplicitWidth = 975
+    ExplicitHeight = 447
     object PGC1: TRzPageControl
       Left = 2
       Top = 2
-      Width = 869
-      Height = 402
+      Width = 977
+      Height = 452
       Hint = ''
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
       TabOrder = 0
-      ExplicitWidth = 863
-      ExplicitHeight = 393
+      ExplicitWidth = 971
+      ExplicitHeight = 443
       FixedDimension = 21
       object TabSheet1: TRzTabSheet
         Color = 15987699
         Caption = 'Data Rencana'
-        ExplicitWidth = 859
-        ExplicitHeight = 368
+        ExplicitWidth = 967
+        ExplicitHeight = 418
         object DBGridEh1: TDBGridEh
-          Left = 0
-          Top = 0
-          Width = 865
-          Height = 333
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 967
+          Height = 377
           Align = alClient
           DataSource = DSMemRencana
           DynProps = <>
@@ -333,6 +334,15 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               CellButtons = <>
               DynProps = <>
               EditButtons = <>
+              FieldName = 'cek_no'
+              Footers = <>
+              Title.Caption = 'No. Cek/BG'
+              Width = 100
+            end
+            item
+              CellButtons = <>
+              DynProps = <>
+              EditButtons = <>
               FieldName = 'periode1'
               Footers = <>
               Title.Caption = 'Periode 1'
@@ -387,14 +397,6 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               CellButtons = <>
               DynProps = <>
               EditButtons = <>
-              FieldName = 'cek_no'
-              Footers = <>
-              Width = 0
-            end
-            item
-              CellButtons = <>
-              DynProps = <>
-              EditButtons = <>
               FieldName = 'cek_date'
               Footers = <>
               Width = 0
@@ -412,16 +414,16 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         end
         object RzPanel3: TRzPanel
           Left = 0
-          Top = 333
-          Width = 865
+          Top = 383
+          Width = 973
           Height = 44
           Align = alBottom
           Color = 15987699
           TabOrder = 1
-          ExplicitTop = 324
-          ExplicitWidth = 859
+          ExplicitTop = 374
+          ExplicitWidth = 967
           object btn_proses: TRzBitBtn
-            Left = 738
+            Left = 846
             Top = 2
             Width = 125
             Height = 40
@@ -481,7 +483,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
               E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
             NumGlyphs = 2
-            ExplicitLeft = 732
+            ExplicitLeft = 840
           end
         end
       end
@@ -492,8 +494,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         object DBGridEh2: TDBGridEh
           Left = 0
           Top = 0
-          Width = 865
-          Height = 333
+          Width = 973
+          Height = 383
           Align = alClient
           DataSource = DSMemRencana
           DynProps = <>
@@ -645,14 +647,14 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         end
         object RzPanel4: TRzPanel
           Left = 0
-          Top = 333
-          Width = 865
+          Top = 383
+          Width = 973
           Height = 44
           Align = alBottom
           Color = 15987699
           TabOrder = 1
           object btn_proses2: TRzBitBtn
-            Left = 738
+            Left = 846
             Top = 2
             Width = 125
             Height = 40
@@ -722,8 +724,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
         object DBGridEh3: TDBGridEh
           Left = 0
           Top = 0
-          Width = 865
-          Height = 377
+          Width = 973
+          Height = 427
           Align = alClient
           DynProps = <>
           SearchPanel.Enabled = True
@@ -1036,7 +1038,7 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
   end
   object DSRencanaNonHutang: TDataSource
     DataSet = MemDataRencana
-    Left = 776
+    Left = 792
     Top = 32
   end
   object QdataRencanaNonHutang: TUniQuery
@@ -1045,8 +1047,8 @@ object FDataRencanaLunasHutangPengajuan: TFDataRencanaLunasHutangPengajuan
       'SELECT a.*,b.supplier_name FROM t_paid_debt_det A'
       'INNER JOIN t_supplier b on a.supplier_code=b.supplier_code'
       'WHERE a.source_plan_id<>1 and approve_status='#39'true'#39)
-    Left = 640
-    Top = 56
+    Left = 608
+    Top = 72
     object StringField1: TStringField
       FieldName = 'supplier_name'
       ReadOnly = True

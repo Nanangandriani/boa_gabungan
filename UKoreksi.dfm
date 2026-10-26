@@ -1,10 +1,10 @@
 object FKoreksi: TFKoreksi
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
+  BorderIcons = []
   Caption = 'Koreksi Transaksi'
-  ClientHeight = 479
-  ClientWidth = 383
+  ClientHeight = 476
+  ClientWidth = 391
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,85 +16,85 @@ object FKoreksi: TFKoreksi
   TextHeight = 15
   object RzLabel1: TRzLabel
     Left = 2
-    Top = 72
+    Top = 63
     Width = 81
     Height = 15
     Caption = 'Menu Transaksi'
   end
   object RzLabel4: TRzLabel
     Left = 2
-    Top = 246
+    Top = 237
     Width = 35
     Height = 15
     Caption = 'Alasan'
   end
   object RzLabel5: TRzLabel
     Left = 2
-    Top = 12
+    Top = 3
     Width = 27
     Height = 15
     Caption = 'Kode'
   end
   object RzLabel2: TRzLabel
     Left = 2
-    Top = 101
+    Top = 92
     Width = 66
     Height = 15
     Caption = 'No Transaksi'
   end
   object RzLabel3: TRzLabel
     Left = 2
-    Top = 43
+    Top = 34
     Width = 41
     Height = 15
     Caption = 'Tanggal'
   end
   object RzLabel6: TRzLabel
     Left = 2
-    Top = 342
+    Top = 333
     Width = 60
     Height = 15
     Caption = 'Keterangan'
   end
   object RzLabel7: TRzLabel
     Left = 2
-    Top = 130
+    Top = 121
     Width = 45
     Height = 15
     Caption = 'No Nota'
   end
   object RzLabel8: TRzLabel
     Left = 2
-    Top = 159
+    Top = 150
     Width = 79
     Height = 15
     Caption = 'Nama Kolektor'
   end
   object RzLabel9: TRzLabel
     Left = 2
-    Top = 190
+    Top = 181
     Width = 66
     Height = 15
     Caption = 'Tanggal DPP'
   end
   object RzLabel10: TRzLabel
     Left = 2
-    Top = 219
+    Top = 210
     Width = 91
     Height = 15
     Caption = 'Nama Pelanggan'
   end
   object Panel2: TPanel
     Left = 0
-    Top = 444
-    Width = 383
+    Top = 441
+    Width = 391
     Height = 35
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 321
-    ExplicitWidth = 389
+    ExplicitTop = 440
+    ExplicitWidth = 387
     object BBatal: TRzBitBtn
-      Left = 307
+      Left = 315
       Top = 1
       Height = 33
       Align = alRight
@@ -153,10 +153,10 @@ object FKoreksi: TFKoreksi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 313
+      ExplicitLeft = 311
     end
     object BSave: TRzBitBtn
-      Left = 232
+      Left = 240
       Top = 1
       Height = 33
       Align = alRight
@@ -216,10 +216,9 @@ object FKoreksi: TFKoreksi
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
       ExplicitLeft = 236
-      ExplicitTop = -1
     end
     object BtnReject: TRzBitBtn
-      Left = 141
+      Left = 149
       Top = 1
       Width = 91
       Height = 33
@@ -358,10 +357,10 @@ object FKoreksi: TFKoreksi
         0000000000000000000000000001000000010000000100000001000000010000
         0001000000010000000100000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      ExplicitLeft = 147
+      ExplicitLeft = 145
     end
     object BtnApprove: TRzBitBtn
-      Left = 39
+      Left = 47
       Top = 1
       Width = 102
       Height = 33
@@ -500,12 +499,12 @@ object FKoreksi: TFKoreksi
         0000000000000000000000000001000000010000000100000001000000010000
         0001000000010000000100000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
-      ExplicitLeft = 45
+      ExplicitLeft = 43
     end
   end
   object cbMenu: TRzComboBox
     Left = 95
-    Top = 69
+    Top = 60
     Width = 217
     Height = 23
     TabOrder = 1
@@ -513,14 +512,14 @@ object FKoreksi: TFKoreksi
   end
   object memKet: TRzMemo
     Left = 95
-    Top = 243
+    Top = 234
     Width = 286
     Height = 90
     TabOrder = 2
   end
   object edKode: TRzEdit
     Left = 95
-    Top = 9
+    Top = 0
     Width = 146
     Height = 23
     Text = ''
@@ -529,7 +528,7 @@ object FKoreksi: TFKoreksi
   end
   object dtTanggal: TRzDateTimePicker
     Left = 95
-    Top = 39
+    Top = 30
     Width = 90
     Height = 23
     Date = 45902.000000000000000000
@@ -540,7 +539,7 @@ object FKoreksi: TFKoreksi
   end
   object edNoTransaksi: TRzButtonEdit
     Left = 95
-    Top = 98
+    Top = 89
     Width = 217
     Height = 23
     Text = ''
@@ -550,15 +549,15 @@ object FKoreksi: TFKoreksi
     OnButtonClick = edNoTransaksiButtonClick
   end
   object MemKetApprove: TRzMemo
-    Left = 95
-    Top = 339
+    Left = 94
+    Top = 330
     Width = 286
     Height = 90
     TabOrder = 6
   end
   object edNoNota: TRzEdit
     Left = 95
-    Top = 127
+    Top = 118
     Width = 218
     Height = 23
     Text = ''
@@ -568,7 +567,7 @@ object FKoreksi: TFKoreksi
   end
   object edNamaKolektor: TRzEdit
     Left = 95
-    Top = 156
+    Top = 147
     Width = 218
     Height = 23
     Text = ''
@@ -578,7 +577,7 @@ object FKoreksi: TFKoreksi
   end
   object dtTglDpp: TRzEdit
     Left = 95
-    Top = 185
+    Top = 176
     Width = 98
     Height = 23
     Text = ''
@@ -588,7 +587,7 @@ object FKoreksi: TFKoreksi
   end
   object edNamaPelanggan: TRzEdit
     Left = 95
-    Top = 214
+    Top = 205
     Width = 287
     Height = 23
     Text = ''

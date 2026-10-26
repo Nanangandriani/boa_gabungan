@@ -80,12 +80,14 @@ type
   public
      IntStatusKoreksi, iserror, isCancel: integer;
      strNoTransaksiDiGanti:string;
+     curOldGrandTot: Currency;
     { Public declarations }
     procedure Clear;
     procedure Save;
     procedure Update;
     procedure Autocode;
     procedure Autonumber;
+    procedure UpdateDPP;
   end;
 
 Function  FNewJurnal_memo: TFNewJurnal_memo;
@@ -107,6 +109,78 @@ begin
     FNewJurnal_memo:= RealFNew_JurnalMemo
   else
     Application.CreateForm(TFNewJurnal_memo, Result);
+end;
+
+procedure TFNewJurnal_memo.UpdateDPP;
+var curCash: Currency;
+    strCash,strAkunPiutang: String;
+begin
+
+  strAkunPiutang := SelectRow('SELECT value_parameter FROM public.t_parameter WHERE key_parameter = ''akun_piutang_dagang''');
+  curCash:=0;
+
+  MemTableEh1.DisableControls;
+  try
+    MemTableEh1.First;
+    while not MemTableEh1.Eof do
+    begin
+      if (MemTableEh1['kode_akun'] = strAkunPiutang) and
+         (MemTableEh1['kredit']<> 0) then
+      begin
+        curCash := curCash + MemTableEh1.FieldByName('kredit').AsCurrency;
+      end;
+      MemTableEh1.Next;
+    end;
+  finally
+    MemTableEh1.EnableControls;
+  end;
+
+  if curCash<>0 then
+  begin
+
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT  COALESCE(cash,0) cash,COALESCE(receipt,0) receipt, '+
+                'COALESCE(cheque_amount1,0) cheque_amount1 '+
+                'FROM t_dpp WHERE id= ( '+
+                'SELECT id FROM ( '+
+                'SELECT id FROM t_dpp '+
+                'WHERE no_invoice = '+QuotedStr(edno_bk_pembulatan.Text)+' '+
+                'AND date_dpp <= '+QuotedStr(FormatDateTime('yyyy-mm-dd',DTtgl.Date))+' '+
+                'ORDER BY date_dpp DESC '+
+                'LIMIT 1 '+
+                ') AS tmp '+
+                ')';
+      open;
+    end;
+    if dm.Qtemp3.RecordCount>0 then
+    begin
+      if Status=0 then
+      curCash:=curCash+dm.Qtemp3.FieldValues['cash']
+      else curCash:=curCash+dm.Qtemp3.FieldValues['cash']-curOldGrandTot;
+
+      strCash    := StringReplace(FloatToStr(curCash), ',', '.', [rfReplaceAll]);
+
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='UPDATE t_dpp SET cash='+strCash+' '+
+                  'WHERE id= ( '+
+                  'SELECT id FROM ( '+
+                  'SELECT id FROM t_dpp '+
+                  'WHERE no_invoice = '+QuotedStr(edno_bk_pembulatan.Text)+' '+
+                  'AND date_dpp <= '+QuotedStr(FormatDateTime('yyyy-mm-dd',DTtgl.Date))+' '+
+                  'ORDER BY date_dpp DESC '+
+                  'LIMIT 1 '+
+                  ') AS tmp '+
+                  ')';
+        ExecSQL;
+      end;
+    end;
+  end;
 end;
 
 procedure TFNewJurnal_memo.Autocode;
@@ -281,6 +355,22 @@ begin
       MemTableEh1.Next;
     end;
 
+    UpdateDPP; // cr nanang 20-08-2026
+	// cr ds 19-08-2026
+    If ckno_penganti.Checked=True then
+        begin
+        with dm.Qtemp do
+           begin
+            close;
+            sql.clear;
+            sql.Text:='UPDATE "public"."t_memorial_journal" SET'+
+                      ' trans_no_replacement='+QuotedStr(edno_bukti_memorial.Text)+
+                      ' Where memo_no='+QuotedStr(strNoTransaksiDiGanti);
+            ExecSQL;
+           end;
+        end;
+
+
     MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
     Clear;
     Close;
@@ -413,7 +503,7 @@ begin
       end;
       MemTableEh1.Next;
     end;
-
+    UpdateDPP;
     MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
     Clear;
     Close;
@@ -612,7 +702,7 @@ end;
 
 procedure TFNewJurnal_memo.Btn_noClick(Sender: TObject);
 begin
-  FListNoTransaksi.vcall:='';
+  FListNoTransaksi.vcall:='memorial';
   FListNoTransaksi.update_grid('memo_no','order_no','t_memorial_journal','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',DTtgl.Date))+' and deleted_at is NOT NULL '+
   'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY memo_no ASC');
   FListNoTransaksi.ShowModal;

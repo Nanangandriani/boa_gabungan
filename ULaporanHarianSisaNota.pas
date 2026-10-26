@@ -253,7 +253,13 @@ begin
       sql.Text:='SELECT * FROM get_lhsn('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+',NULL'+
                 ','+QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+
                 ''+QuotedStr(strKecamatanID)+','+QuotedStr(strTpID)+')';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if Qreport.RecordCount=0 then
     begin
@@ -265,7 +271,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT * FROM get_lhsn_weekly_prev('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(strKecamatanID)+')';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     strReportName:='rpt_laporanhariansisanota';
@@ -321,7 +333,13 @@ begin
       sql.Text:='SELECT * FROM get_lhsn('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+',NULL'+
                 ','+QuotedStr(strKaresidenanID)+','+QuotedStr(strKabupatenID)+','+
                 ''+QuotedStr(strKecamatanID)+','+QuotedStr(strTpID)+')';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     previous:='';
 //    MemTableEh1.EmptyTable;

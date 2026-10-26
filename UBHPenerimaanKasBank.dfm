@@ -25,7 +25,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1201
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -869,47 +868,12 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 46057.030343807900000000
-    ReportOptions.LastChange = 46206.595246666660000000
+    ReportOptions.LastChange = 46314.356976979160000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
-      'var'
-      '  LastTrans: String;'
-      ''
-      'procedure ReportOnStopReport(Sender: TfrxComponent);'
-      'begin'
-      '  LastTrans := '#39#39';'
-      'end;'
-      ''
-      'procedure Memo33OnAfterPrint(Sender: TfrxComponent);'
-      'begin'
-      '  LastTrans := <frxDBDataset12."voucher_no">;'
-      'end;'
-      ''
-      'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
-      'begin'
-      '  if <frxDBDataset12."voucher_no">= LastTrans then'
-      '  begin'
-      '    Memo37.Visible := False;'
-      '    Memo53.Visible := False;'
-      '    Memo38.Visible := False;'
-      '    Memo42.Visible := False;'
-      '    Memo43.Visible := False;        '
-      '  end'
-      '  else'
-      '  begin'
-      '    Memo37.Visible := True;'
-      '    Memo53.Visible := True;'
-      '    Memo38.Visible := True;'
-      '    Memo42.Visible := True;'
-      '    Memo43.Visible := True;        '
-      '  end;'
-      ''
-      'end;'
-      ''
       'begin'
       ''
       'end.')
-    OnStopReport = 'ReportOnStopReport'
     Left = 648
     Top = 56
     Datasets = <
@@ -951,8 +915,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         Width = 1209.449600000000000000
         object kodeprsh: TfrxMemoView
           AllowVectorExport = True
-          Left = 9.488188976377950000
-          Width = 300.041152610000000000
+          Width = 496.785338660000000000
           Height = 21.093382860000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -966,10 +929,10 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object periode: TfrxMemoView
           AllowVectorExport = True
-          Left = 106.582677170000000000
+          Left = 103.582677170000000000
           Top = 42.065244290000000000
-          Width = 300.230058200000000000
-          Height = 21.754792860000000000
+          Width = 393.070866140000000000
+          Height = 18.897637795275590000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
@@ -1035,9 +998,9 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object karesidenan: TfrxMemoView
           AllowVectorExport = True
-          Left = 106.488188980000000000
-          Top = 63.640074290000000000
-          Width = 299.274431440000000000
+          Left = 103.559055120000000000
+          Top = 60.640074290000000000
+          Width = 393.070866140000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1213,9 +1176,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 9.488188980000000000
           Top = 20.918985720000000000
-          Width = 399.241152610000000000
+          Width = 496.915571210000000000
           Height = 21.093382860000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1265,9 +1227,9 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Kabupaten: TfrxMemoView
           AllowVectorExport = True
-          Left = 107.133350270000000000
-          Top = 82.711045650000000000
-          Width = 299.274431440000000000
+          Left = 103.559055120000000000
+          Top = 79.711045650000000000
+          Width = 393.227919810000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1443,9 +1405,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 10.400000000000000000
-          Top = 63.496062990000000000
-          Width = 36.074431440000000000
+          Top = 60.496062990000000000
+          Width = 92.598425200000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1459,9 +1420,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 11.200000000000000000
-          Top = 82.771653543307100000
-          Width = 84.074431440000000000
+          Top = 79.771653540000000000
+          Width = 92.446524460000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1476,8 +1436,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo59: TfrxMemoView
           AllowVectorExport = True
           Left = 92.800000000000000000
-          Top = 63.496062990000000000
-          Width = 15.274431440000000000
+          Top = 60.496062990000000000
+          Width = 10.204724410000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1491,9 +1451,9 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Memo60: TfrxMemoView
           AllowVectorExport = True
-          Left = 92.976377952755900000
-          Top = 82.771653540000000000
-          Width = 15.274431440000000000
+          Left = 92.976377950000000000
+          Top = 79.771653540000000000
+          Width = 10.204724410000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1508,8 +1468,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo61: TfrxMemoView
           AllowVectorExport = True
           Left = 92.976377950000000000
-          Top = 41.952755905511800000
-          Width = 15.274431440000000000
+          Top = 41.487639630000000000
+          Width = 10.158152370000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1523,9 +1483,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 10.582677170000000000
           Top = 41.952755910000000000
-          Width = 78.474431440000000000
+          Width = 92.598425200000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1548,7 +1507,6 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         Height = 20.000000000000000000
         Top = 272.126160000000000000
         Width = 1209.449600000000000000
-        OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDataset12
         DataSetName = 'frxDBDataset12'
         RowCount = 0
@@ -1572,14 +1530,13 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[frxDBDataset12."trans_date"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 45.600000000000000000
+          Top = 0.151020000000000000
           Width = 92.554330710000000000
           Height = 20.000000000000000000
-          OnAfterPrint = 'Memo33OnAfterPrint'
           StretchMode = smMaxHeight
           DataField = 'voucher_no'
           DataSet = frxDBDataset12
@@ -1593,11 +1550,11 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[frxDBDataset12."voucher_no"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
           Left = 138.200000000000000000
+          Top = 0.151020000000000000
           Width = 41.354330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1613,11 +1570,11 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[frxDBDataset12."code_cust"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
           Left = 179.800000000000000000
+          Top = -0.648980000000000000
           Width = 133.354330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1633,11 +1590,11 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[frxDBDataset12."name_cust"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 312.200000000000000000
+          Top = -0.648980000000000000
           Width = 186.954330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1653,11 +1610,11 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[frxDBDataset12."description"]')
           ParentFont = False
-          Duplicates = dmMerge
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
           Left = 497.200000000000000000
+          Top = -0.648980000000000000
           Width = 42.954330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1669,7 +1626,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset12."account_code_bank"]')
           ParentFont = False
@@ -1677,6 +1634,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo38: TfrxMemoView
           AllowVectorExport = True
           Left = 620.800000000000000000
+          Top = -0.648980000000000000
           Width = 77.354330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1690,7 +1648,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset12."amount_bank"]')
@@ -1699,6 +1657,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 697.800000000000000000
+          Top = -0.648980000000000000
           Width = 44.554330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1718,6 +1677,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 743.000000000000000000
+          Top = -0.648980000000000000
           Width = 79.754330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1737,6 +1697,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo41: TfrxMemoView
           AllowVectorExport = True
           Left = 823.400000000000000000
+          Top = -0.648980000000000000
           Width = 66.154330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1759,6 +1720,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo42: TfrxMemoView
           AllowVectorExport = True
           Left = 888.800000000000000000
+          Top = -0.648980000000000000
           Width = 43.754330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1770,7 +1732,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset12."account_code_piutang"]')
           ParentFont = False
@@ -1778,6 +1740,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo43: TfrxMemoView
           AllowVectorExport = True
           Left = 932.000000000000000000
+          Top = -0.648980000000000000
           Width = 72.944881890000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1791,7 +1754,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset12."amount_piutang"]')
@@ -1800,6 +1763,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo44: TfrxMemoView
           AllowVectorExport = True
           Left = 1004.800000000000000000
+          Top = -0.648980000000000000
           Width = 44.554330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1819,6 +1783,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo45: TfrxMemoView
           AllowVectorExport = True
           Left = 1047.600000000000000000
+          Top = -0.648980000000000000
           Width = 91.754330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1838,6 +1803,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo51: TfrxMemoView
           AllowVectorExport = True
           Left = 1139.600000000000000000
+          Top = -0.648980000000000000
           Width = 69.543307090000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1860,6 +1826,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         object Memo53: TfrxMemoView
           AllowVectorExport = True
           Left = 539.800000000000000000
+          Top = -0.648980000000000000
           Width = 82.154330710000000000
           Height = 20.000000000000000000
           StretchMode = smMaxHeight
@@ -1871,59 +1838,10 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftTop]
+          Frame.Typ = [ftLeft, ftBottom]
           Memo.UTF8W = (
             '[frxDBDataset12."account_name_bank"]')
           ParentFont = False
-        end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Left = 497.142857140000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Left = 540.000000000000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line3: TfrxLineView
-          AllowVectorExport = True
-          Left = 620.976377952756000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line4: TfrxLineView
-          AllowVectorExport = True
-          Left = 888.944881889763800000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line5: TfrxLineView
-          AllowVectorExport = True
-          Left = 932.031496062992100000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
-        end
-        object Line6: TfrxLineView
-          AllowVectorExport = True
-          Left = 1004.761904760000000000
-          Top = 1.207173330000000000
-          Height = 18.897637800000000000
-          StretchMode = smMaxHeight
-          Color = clBlack
-          Frame.Typ = [ftLeft]
         end
       end
       object GroupHeader2: TfrxGroupHeader
@@ -1934,6 +1852,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Right = 0
         Frame.Typ = []
         Top = 249.448980000000000000
+        Visible = False
         Width = 1209.449600000000000000
         Condition = 'frxDBDataset12."account_code_bank2"'
       end
@@ -1946,11 +1865,13 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         Frame.Typ = []
         Height = 20.409448820000000000
         Top = 313.700990000000000000
+        Visible = False
         Width = 1209.449600000000000000
         object Memo75: TfrxMemoView
           AllowVectorExport = True
           Width = 621.354330710000000000
           Height = 20.409448820000000000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -1961,7 +1882,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             'SUBTOTAL       ')
@@ -1972,6 +1893,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 620.800000000000000000
           Width = 77.354330710000000000
           Height = 20.409448820000000000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -1982,7 +1904,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDataset12."amount_bank">,MasterData1)]')
@@ -1993,6 +1915,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 697.800000000000000000
           Width = 44.554330710000000000
           Height = 20.409448818897600000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2009,6 +1932,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 743.000000000000000000
           Width = 79.754330710000000000
           Height = 20.409448818897600000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2025,6 +1949,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 823.400000000000000000
           Width = 66.154330710000000000
           Height = 20.409448820000000000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2045,7 +1970,8 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           AllowVectorExport = True
           Left = 888.800000000000000000
           Width = 43.754330710000000000
-          Height = 20.409448820000000000
+          Height = 20.409448818897600000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2054,7 +1980,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           ParentFont = False
         end
         object Memo87: TfrxMemoView
@@ -2062,6 +1988,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 932.000000000000000000
           Width = 72.944881890000000000
           Height = 20.409448820000000000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2072,7 +1999,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Height = -8
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDataset12."amount_piutang">,MasterData1)]')
@@ -2083,6 +2010,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 1004.800000000000000000
           Width = 44.554330710000000000
           Height = 20.409448818897600000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2099,6 +2027,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 1047.600000000000000000
           Width = 91.754330710000000000
           Height = 20.409448818897600000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2115,6 +2044,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Left = 1139.600000000000000000
           Width = 69.543307090000000000
           Height = 20.409448820000000000
+          Visible = False
           StretchMode = smMaxHeight
           DataSet = frxDBDataset12
           DataSetName = 'frxDBDataset12'
@@ -2140,7 +2070,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
         FillGap.Right = 0
         Frame.Typ = []
         Height = 20.409448820000000000
-        Top = 393.071120000000000000
+        Top = 415.748300000000000000
         Width = 1209.449600000000000000
         object Memo63: TfrxMemoView
           AllowVectorExport = True
@@ -2325,6 +2255,24 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Memo.UTF8W = (
             '[SUM(<frxDBDataset12."amount_kredit_lain">,MasterData1)]')
           ParentFont = False
+        end
+      end
+      object ColumnFooter1: TfrxColumnFooter
+        FillType = ftBrush
+        FillGap.Top = 0
+        FillGap.Left = 0
+        FillGap.Bottom = 0
+        FillGap.Right = 0
+        Frame.Typ = []
+        Top = 393.071120000000000000
+        Visible = False
+        Width = 1209.449600000000000000
+        object Line9: TfrxLineView
+          AllowVectorExport = True
+          Width = 1208.923884510000000000
+          StretchMode = smMaxHeight
+          Color = clBlack
+          Frame.Typ = [ftTop]
         end
       end
     end
@@ -4893,7 +4841,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 46210.590935462960000000
+    ReportOptions.LastChange = 46233.387038703700000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -4977,7 +4925,7 @@ object FBHPenerimaanKasBank: TFBHPenerimaanKasBank
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'PT. HASTA KENCANA JAYA')
+            'PT')
           ParentFont = False
         end
         object periode: TfrxMemoView

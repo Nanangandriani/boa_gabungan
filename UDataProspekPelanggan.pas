@@ -75,7 +75,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='select company_code,company_name from t_company where stat_office=1 order by company_name ASC';
-    ExecSQL;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do
@@ -117,7 +123,13 @@ begin
             sql.add(' AND distribution_code='+QuotedStr(Edkodewilayah.Text)+' ');
           end;
         sql.add(' ORDER BY outlet_name Desc ');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       MemMasterData.active:=false;
@@ -170,7 +182,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM t_customer where idprospek='+QuotedStr(MemMasterData['idprospek'])+' AND deleted_at is NULL';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp.RecordCount>0 then
@@ -196,7 +214,13 @@ begin
                    ' AND deleted_at is null  '+
                    ' AND created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
                    ' order by created_at Desc ';
-         open;
+         try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
       if Dm.Qtemp.RecordCount=0 then
       begin
@@ -211,7 +235,7 @@ begin
           if Dm.Qtemp.FieldByName('outlet_name').AsString<>'' then
           begin
             Ednama.Text:=Dm.Qtemp.FieldByName('outlet_name').AsString;
-            Ednama.ReadOnly:=True;
+//            Ednama.ReadOnly:=True;
           end else begin
             Ednama.Text:='';
             Ednama.ReadOnly:=False;
@@ -223,7 +247,7 @@ begin
           if (Dm.Qtemp.FieldByName('no_ktp').AsString<>'0') AND (Dm.Qtemp.FieldByName('no_ktp').AsString<>'') then
           begin
             Ednik.Text:=Dm.Qtemp.FieldByName('no_ktp').AsString;
-            Ednik.ReadOnly:=True;
+//            Ednik.ReadOnly:=True;
           end else begin
             Ednik.Text:='';
             Ednik.ReadOnly:=False;
@@ -233,8 +257,8 @@ begin
           begin
             Edkodewilayah.Text:=Dm.Qtemp.FieldByName('wilayah_code').AsString;
             Ednamawilayah.Text:=Dm.Qtemp.FieldByName('wilayah_name').AsString;
-            Edkodewilayah.ReadOnly:=True;
-            Ednamawilayah.ReadOnly:=True;
+//            Edkodewilayah.ReadOnly:=True;
+//            Ednamawilayah.ReadOnly:=True;
           end else begin
             Edkodewilayah.Text:='';
             Ednamawilayah.ReadOnly:=False;
@@ -247,8 +271,8 @@ begin
           begin
             edKode_jnispel.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_code').AsString;
             edJenisPelanggan.Text:=Dm.Qtemp.FieldByName('jenis_pelanggan_name').AsString;
-            edKode_jnispel.ReadOnly:=True;
-            edJenisPelanggan.ReadOnly:=True;
+//            edKode_jnispel.ReadOnly:=True;
+//            edJenisPelanggan.ReadOnly:=True;
           end else begin
             edKode_jnispel.Text:='';
             edJenisPelanggan.Text:='';
@@ -259,8 +283,8 @@ begin
           begin
             edKode_JenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_code').AsString;
             edJenisUsaha.Text:=Dm.Qtemp.FieldByName('jenis_usaha_name').AsString;
-            edKode_JenisUsaha.ReadOnly:=True;
-            edJenisUsaha.ReadOnly:=True;
+//            edKode_JenisUsaha.ReadOnly:=True;
+//            edJenisUsaha.ReadOnly:=True;
           end else begin
             edKode_JenisUsaha.Text:='';
             edJenisUsaha.Text:='';
@@ -271,8 +295,8 @@ begin
           begin
             edKode_typejual.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_code').AsString;
             edTypePenjualan.Text:=Dm.Qtemp.FieldByName('kategori_pelanggan_name').AsString;
-            edKode_typejual.ReadOnly:=True;
-            edTypePenjualan.ReadOnly:=True;
+//            edKode_typejual.ReadOnly:=True;
+//            edTypePenjualan.ReadOnly:=True;
           end else begin
             edKode_typejual.Text:='';
             edTypePenjualan.Text:='';
@@ -283,8 +307,8 @@ begin
           begin
             edKode_gol.Text:=Dm.Qtemp.FieldByName('customer_group_code').AsString;
             edGolonganPelanggan.Text:=Dm.Qtemp.FieldByName('customer_group_name').AsString;
-            edKode_gol.ReadOnly:=True;
-            edGolonganPelanggan.ReadOnly:=True;
+//            edKode_gol.ReadOnly:=True;
+//            edGolonganPelanggan.ReadOnly:=True;
           end else begin
             edKode_gol.Text:='';
             edGolonganPelanggan.Text:='';
@@ -306,7 +330,13 @@ begin
         close;
         sql.Clear;
         sql.Text:='SELECT * FROM t_customer_details WHERE deleted_at IS NULL';
-        Open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       FNew_Pelanggan.Edkode.Enabled:=false;
@@ -356,14 +386,20 @@ begin
       Close;
       SQL.Clear;
       SQL.Text := 'DELETE FROM t_customer_prospect_tmp WHERE created_by=' + QuotedStr(FHomeLogin.Eduser.Text);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
-    // Tentukan SBU
+
     if FHomeLogin.vStatOffice = 0 then
       strsbu := cbSBU.Text
     else
       strsbu := FHomeLogin.vKodePRSH;
-    // Ambil parameter API
+
     BaseUrl := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''baseurlprospek''');
     key := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''keyapiprospek''');
     Vtoken := SelectRow('SELECT value_parameter FROM "public"."t_parameter" WHERE key_parameter=''tokenapiprospek''');
@@ -456,7 +492,13 @@ begin
             QuotedStr(json.StringTree[row1 + 'jenis_pelanggan_name']) + ', ' +
             QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_code']) + ', ' +
             QuotedStr(json.StringTree[row1 + 'kategori_pelanggan_name']) + ');';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
         progress.Progress := progress.Progress + 1;
       end;
@@ -468,8 +510,6 @@ begin
       ShowMessage('Kesalahan fatal: ' + E.Message);
   end;
 end;
-
-
 
 //procedure TFDataProspekPelanggan.btGetDataProspekClick(Sender: TObject);
 //var

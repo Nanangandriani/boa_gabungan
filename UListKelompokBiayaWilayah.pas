@@ -92,7 +92,7 @@ begin
     Close;
     SQL.Clear;
     SQL.Text := ' SELECT 1 FROM public.t_cost_detail '+
-                ' WHERE voucher_no = :voucher_no '+
+                ' WHERE voucher_no = :voucher_no and deleted_at is null and  '+
                 ' LIMIT 1';
     ParamByName('voucher_no').AsString := AVoucherNo;
     Open;
@@ -116,7 +116,7 @@ begin
       sql.add(' Select trans_no as notrans, trans_date as tanggal, '+
               ' debt_remaining as jumlah, concat(supplier_name,'' '' ,regency_name) as keterangan, '+
               ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
-              ' WHERE b.voucher_no = a.trans_no) THEN ''Lengkap'' '+
+              ' WHERE b.voucher_no = a.trans_no and deleted_at is null) THEN ''Lengkap'' '+
               ' ELSE ''Belum Lengkap'' END AS status '+
               ' from t_purchase_invoice a'+
               ' Left join t_supplier b on a.supplier_code=b.supplier_code '+
@@ -142,14 +142,16 @@ begin
       sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, amount as jumlah, '+
               ' remark as keterangan, '+
               ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b '+
-              ' WHERE b.voucher_no = a.voucher_no) THEN ''Lengkap'' '+
+              ' WHERE b.voucher_no = a.voucher_no and deleted_at is null) THEN ''Lengkap'' '+
               ' ELSE ''Belum Lengkap'' END AS status '+
               ' FROM t_cash_bank_expenditure a '+
               ' LEFT JOIN t_master_trans_account b on a."trans_type_code"=b.code_trans '+
               ' LEFT JOIN t_source_payment c on a."additional_code"=c.code '+
               ' LEFT JOIN t_currency d on a."currency"=d."currency_code" '+
               ' LEFT JOIN t_settlement_data_source e  on a."ref_no"=e."code" '+
-              ' WHERE a.deleted_at is null and trans_type_code not in (''5.001'',''6.001'') and '+
+              ' WHERE a.deleted_at is null and '+
+              //' trans_type_code not in (''5.001'',''6.001'') and '+
+              ' module_id in (''5'',''6'') and '+
               ' trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAkhir.EditValue))+' '+
               ' ORDER BY voucher_no,trans_date desc -- PENGELUARAN KAS DAN BANK');
@@ -166,7 +168,7 @@ begin
       sql.clear;
       sql.add(' SELECT voucher_no as notrans, trans_date as tanggal, '+
               ' amount as jumlah,  concat(description,'' ('',actors_name,'')'') as keterangan, '+
-              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.voucher_no) '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.voucher_no and deleted_at is null) '+
               ' THEN ''Lengkap''  ELSE ''Belum Lengkap'' END AS status  FROM t_petty_cash a '+
               ' WHERE a.deleted_at is null '+
               ' and  trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTglAwal.EditValue))+' and '+
@@ -186,7 +188,7 @@ begin
       sql.add(' SELECT a.memo_no as notrans, trans_date as tanggal,  debit as jumlah, '+
               ' case when a.notes_id isnull then a.notes else '+
               ' concat(b.notes,'' '',f_bulan(a.trans_month::integer),'' '',a.trans_year ) end keterangan, '+
-              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.memo_no) '+
+              ' CASE WHEN EXISTS (SELECT 1 FROM t_cost_detail b  WHERE b.voucher_no = a.memo_no and deleted_at is null) '+
               ' THEN ''Lengkap''  ELSE ''Belum Lengkap'' END AS status '+
               ' FROM t_memorial_journal a '+
               ' left join t_memorial_notes  b ON "a".notes_id = b."id" '+
@@ -277,6 +279,7 @@ begin
           Close;
           SQL.Clear;
           SQL.Text:=' UPDATE "public"."t_cost_detail" SET '+
+                    ' "voucher_no"='+QuotedStr(MemMasterData['notrans']+'-DEL')+', '+
                     ' "deleted_at"=now(), '+
                     ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
                     ' WHERE "voucher_no"='+QuotedStr(MemMasterData['notrans'])+';';

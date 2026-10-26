@@ -168,7 +168,13 @@ begin
           sql.add(' AND code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY trans_date, trans_no');
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;
    end;
 
  if QCetak.RecordCount=0 then
@@ -248,7 +254,13 @@ begin
       sql.add(' AND code_kab='+QuotedStr(vkd_kab)+' ');
      end;
     sql.add(' ORDER BY trans_date, trans_no');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   finally
   DBGrid.FinishLoadingStatus();

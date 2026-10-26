@@ -228,7 +228,8 @@ object FListKelompokKendaraan: TFListKelompokKendaraan
         'STS ('
       '    SELECT 1 '
       '    FROM t_delivery_order_load d '
-      '    WHERE d.no_ref_load = a.notrans'
+      '    LEFT JOIN t_delivery_order e on e.notrans=d.notrans'
+      '    WHERE e.deleted_at is null and d.no_ref_load = a.notrans'
       ') AND b.trans_no is NOT NULL'
       'Order by a.notrans ASC')
     MasterSource = DsKendaraan

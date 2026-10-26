@@ -27,7 +27,8 @@ uses
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinXmas2008Blue, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCore, dxRibbonSkins, dxRibbonCustomizationForm,
-  dxBar, cxClasses, dxRibbon, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni;
+  dxBar, cxClasses, dxRibbon, frxClass, frxDBSet, Data.DB, MemDS, DBAccess, Uni,
+  DAAlerter, UniAlerter;
 
 type
   TFMainMenu = class(TForm)
@@ -73,6 +74,11 @@ type
     RzStatusVersion: TRzStatusPane;
     RzStatusPane2: TRzStatusPane;
     TimerCekVersi: TTimer;
+    TimerCekDPPHarmoni: TTimer;
+    TrayIcon1: TTrayIcon;
+    UniAlerter1: TUniAlerter;
+    UniAlerter2: TUniAlerter;
+    UniAlerter3: TUniAlerter;
     procedure Exit1Click(Sender: TObject);
     procedure RefreshMenu1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -96,11 +102,20 @@ type
     procedure dxBarLargeButton2Click(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure TimerCekVersiTimer(Sender: TObject);
+    procedure TimerCekDPPHarmoniTimer(Sender: TObject);
+    procedure UniAlerter1Event(Sender: TDAAlerter; const EventName,
+      Message: string);
+    procedure TrayIcon1BalloonClick(Sender: TObject);
+    procedure UniAlerter2Event(Sender: TDAAlerter; const EventName,
+      Message: string);
+    procedure UniAlerter3Event(Sender: TDAAlerter; const EventName,
+      Message: string);
 
   private
     { Private declarations }
     function CekAdaUpdate: Boolean;
     function CekAdaInputAktif: Boolean;
+    function CekDataDPPHarmoni: Boolean;
   public
     { Public declarations }
     Procedure ShowForm;
@@ -142,12 +157,14 @@ var
   HTMLWindow: IHTMLWindow2; // parent window of current HTML document
   Nm,loksbu,kdsbu,dept_code,jabatan_code,SBU,Kd_SBU,VMenu,kdgdng,format_tgl, NmFull:string;
   JSFn: string;
+  LastDataDPPID: String;
+  IsMenuApporveDPP,IsMenuApproveCorrection:Integer;
  // statustr:integer;
 implementation
 
 {$R *.dfm} {$R resource.RES}
 uses UDataModule, UHomeLogin, UMy_Function, Usingkronisasi, UUbahPassword,
-  USingkronisasiPusat;
+  USingkronisasiPusat, UListNoTransaksi, UListApproveDaftarPenagihanPiutang;
 
 function TFMainMenu.CekAdaUpdate: Boolean;
 var
@@ -159,12 +176,46 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM app_versions ORDER BY id DESC LIMIT 1';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   VersiDatabase := dm.QtempPusat.FieldValues['version_number'];
   if VersiDatabase <> VersiAplikasiSaya then
     Result := True
   else
+    Result := False;
+end;
+
+function TFMainMenu.CekDataDPPHarmoni: Boolean;
+var
+LastDataDPPIDDatabase:String;
+begin
+  LastDataDPPIDDatabase:='';
+  with dm.QCekDPPHarmoni do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT id FROM t_dpp_temp ORDER BY created_at DESC LIMIT 1';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+  if dm.QCekDPPHarmoni.RecordCount>0 then
+  LastDataDPPIDDatabase := dm.QCekDPPHarmoni.FieldValues['id'];
+  if (LastDataDPPIDDatabase <> LastDataDPPID) then
+  begin
+    LastDataDPPID:=LastDataDPPIDDatabase;
+    Result := True;
+  end else
     Result := False;
 end;
 
@@ -220,16 +271,15 @@ var
   C: TComponent;
 begin
   Result := False;
-  // 1. Sapu semua Form yang sedang terbuka di layar
   for i := 0 to Screen.FormCount - 1 do
   begin
     F := Screen.Forms[i];
     for j := 0 to F.ComponentCount - 1 do
     begin
       C := F.Components[j];
-      if (C is TDataSet) then // Jika komponen tersebut adalah turunan TDataSet (termasuk TUniQuery)
+      if (C is TDataSet) then
       begin
-        // Jika sedang mode Tambah atau Edit, berarti ada proses berjalan
+
         if TDataSet(C).State in [dsInsert, dsEdit] then
         begin
           Result := True;
@@ -238,7 +288,7 @@ begin
       end;
     end;
   end;
-  // 2. Sapu juga DataModule (jika Anda menaruh TUniQuery/TUniConnection di DataModule)
+
   for i := 0 to Screen.DataModuleCount - 1 do
   begin
     for j := 0 to Screen.DataModules[i].ComponentCount - 1 do
@@ -282,7 +332,101 @@ begin
   dxBarLargeButton2.Enabled:=True;
 end;
 
+procedure TFMainMenu.UniAlerter1Event(Sender: TDAAlerter; const EventName,
+  Message: string);
+begin
+  if IsMenuApporveDPP=1 then
+  begin
+    if SameText(EventName, 'penerimaan_kolektor_event') then
+    begin
+      TrayIcon1.BalloonTimeout := 3600000;
+      TrayIcon1.Visible := True;
+      TrayIcon1.BalloonTitle := 'Penerimaan Uang Baru';
+      TrayIcon1.BalloonHint  := 'Ada penerimaan uang dari Kolektor!';
+      TrayIcon1.BalloonFlags := bfInfo;
+      TrayIcon1.ShowBalloonHint;
+    end;
+  end;
+
+end;
+
+procedure TFMainMenu.UniAlerter2Event(Sender: TDAAlerter; const EventName,
+  Message: string);
+begin
+  if IsMenuApproveCorrection=1 then
+  begin
+    if SameText(EventName, 'correction_event') then
+    begin
+      TrayIcon1.BalloonTimeout := 3600000;
+      TrayIcon1.Visible := True;
+      TrayIcon1.BalloonTitle := 'Pengajuan Koreksi Baru';
+      TrayIcon1.BalloonHint  := 'Ada pengajuan koreksi baru yang menunggu approval! (Kode Pengajuan: ' + Message + ')';
+      TrayIcon1.BalloonFlags := bfInfo;
+      TrayIcon1.ShowBalloonHint;
+    end;
+  end;
+end;
+
+procedure TFMainMenu.UniAlerter3Event(Sender: TDAAlerter; const EventName,
+  Message: string);
+  var
+  Parts: TArray<string>;
+  NoTransaksi, CreatedBy: string;
+begin
+  if SameText(EventName, 'correction_approve_event') then
+  begin
+    Parts := Message.Split(['|']);
+    if Length(Parts) >= 2 then
+    begin
+      NoTransaksi := Parts[0];
+      CreatedBy   := Parts[1];
+      if SameText(CreatedBy, Nm) then
+      begin
+        TrayIcon1.BalloonTimeout := 3600000;
+        TrayIcon1.Visible := True;
+        TrayIcon1.BalloonTitle := 'Koreksi Disetujui';
+        TrayIcon1.BalloonHint  := 'Pengajuan koreksi Anda (' + NoTransaksi + ') telah disetujui!';
+        TrayIcon1.BalloonFlags := bfInfo;
+        TrayIcon1.ShowBalloonHint;
+      end;
+    end;
+  end;
+end;
+
 procedure TFMainMenu.UpdateVersi;
+var
+  rStream: TResourceStream;
+  fStream: TFileStream;
+  fname: string;
+  appDir: string;
+begin
+  appDir := ExtractFilePath(ParamStr(0));
+  fname := appDir + 'SmartBOAUpDater.exe';
+  try
+    rStream := TResourceStream.Create(hInstance, 'UpDater', RT_RCDATA);
+    try
+      fStream := TFileStream.Create(fname, fmCreate);
+      try
+        fStream.CopyFrom(rStream, 0);
+      finally
+        fStream.Free;
+      end;
+    finally
+      rStream.Free;
+    end;
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Gagal mengekstrak updater: ' + E.Message);
+      Exit;
+    end;
+  end;
+  ShellExecute(Handle, 'open', PChar(fname), nil, PChar(appDir), SW_SHOWNORMAL);
+  Application.Terminate;
+  ExitProcess(0);
+end;
+
+{procedure TFMainMenu.UpdateVersi;
 var
   rStream: TResourceStream;
   fStream: TFileStream;
@@ -316,7 +460,7 @@ begin
     ShellExecute(Handle,'open','SmartBOAUpDater.exe',nil,nil,SW_SHOWNORMAL);
     Application.Terminate;
 //  end;
-end;
+end;  }
 
 procedure TFMainMenu.CallFoo(S: string; I: Integer);
    { Calls JavaScript foo() function }
@@ -375,7 +519,8 @@ procedure TFMainMenu.Cleartreview;
   var
   SelNode: TTreeNode;
 begin
-  {if TreeView1.Selected <> nil then
+  {
+  if TreeView1.Selected <> nil then
   begin
     SelNode := TreeView1.Selected;
     TreeView1.Selected.Delete;
@@ -471,7 +616,13 @@ begin
     SQL.Clear;
     SQL.Text := 'select * from t_menu_sub where submenu=' +
                 QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp.RecordCount<>1 then
   begin
@@ -536,7 +687,13 @@ begin
         close;
         sql.Clear;
         sql.Text:='SELECT * FROM app_versions ORDER BY release_date DESC LIMIT 1';
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if dm.Qtemp.FieldValues['version_number']=RzVersionInfo1.ProductVersion then
@@ -610,7 +767,13 @@ begin
     SQL.Clear;
     SQL.Text := 'select * from t_menu_sub where submenu=' +
               QuotedStr(vCaptionButton)+' AND deleted_at IS NULL';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp.RecordCount<>1 then
@@ -630,6 +793,38 @@ begin
     AForm.BorderStyle:=BsNone;
     AksesSub(AForm,HakAkses,vCaptionButton);
     AForm.Show;
+  end;
+end;
+
+procedure TFMainMenu.TimerCekDPPHarmoniTimer(Sender: TObject);
+begin
+  if IsMenuApporveDPP=1 then
+  begin
+    TimerCekDPPHarmoni.Enabled := False;
+    try
+      if CekDataDPPHarmoni() then
+      begin
+        if CekAdaInputAktif() then
+        begin
+          TimerCekDPPHarmoni.Enabled := True;
+        end
+        else
+        begin
+          TrayIcon1.Visible := True;
+          TrayIcon1.BalloonTitle := 'Notifikasi Transaksi';
+          TrayIcon1.BalloonHint  := 'Ada penerimaan uang dari Kolektor!';
+          TrayIcon1.BalloonFlags := bfInfo;
+          TrayIcon1.ShowBalloonHint;
+          TimerCekDPPHarmoni.Enabled := True;
+        end;
+      end
+      else
+      begin
+        TimerCekDPPHarmoni.Enabled := True;
+      end;
+    except
+      TimerCekDPPHarmoni.Enabled := True;
+    end;
   end;
 end;
 
@@ -658,9 +853,30 @@ begin
   end;
 end;
 
+procedure TFMainMenu.TrayIcon1BalloonClick(Sender: TObject);
+begin
+{  if (AForm <> nil) and (AForm is TFListApproveDaftarPenagihanPiutang) then
+  begin
+    if AForm.CanFocus then
+    AForm.SetFocus;
+    vCaptionButton := 'Approval Daftar Penagihan Piutang';
+    vNamaButton:='ApprovalDaftarPenagihanPiutang';
+    TampilTabForm;
+    TFListApproveDaftarPenagihanPiutang(AForm).dxBarLargeRefreshClick(Sender);
+  end;
+
+  if (AForm = nil) and not (AForm is TFListApproveDaftarPenagihanPiutang) then
+  begin
+//    CreateSubMenu('admin',dxBarLargeButtonApproval.Caption);
+    vCaptionButton := 'Approval Daftar Penagihan Piutang';
+    vNamaButton:='ApprovalDaftarPenagihanPiutang';
+    TampilTabForm;
+    TFListApproveDaftarPenagihanPiutang(AForm).dxBarLargeRefreshClick(Sender);
+  end;   }
+end;
+
 procedure TFMainMenu.ShowForm;
 begin
-
 end;
 
 procedure TFMainMenu.CreateSubMenu(Role, Menu: String);
@@ -674,7 +890,13 @@ begin
   begin
     Close;
     SQL.Text := 'SELECT dept_code, position_code FROM t_user WHERE user_name = ' + QuotedStr(nm) + ' AND deleted_at IS NULL';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
     if Eof then Exit;
     dept_code := FieldByName('dept_code').AsString;
     jabatan_code := FieldByName('position_code').AsString;
@@ -695,7 +917,13 @@ begin
     SQL.Add('AND cc.master_name = ' + QuotedStr(Menu));
     SQL.Add('GROUP BY e.menu,bb.submenu ');
     SQL.Add('ORDER BY e.menu,bb.submenu');
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   TCategoryPanelGroup.Create(nil);
@@ -984,7 +1212,14 @@ begin
     close;
     sql.Clear;
     sql.Text:='select * from t_user where user_name='+QuotedStr(nm)+' AND deleted_at IS NULL';
-    ExecSQL;
+//    ExecSQL;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   dept_code:=dm.Qtemp['dept_code'];
   jabatan_code:=dm.Qtemp['position_code'];
@@ -1005,7 +1240,13 @@ begin
                ' WHERE dd.dept_code='+QuotedStr(dept_code)+
                ' and d.position_code='+QuotedStr(jabatan_code)+' '+
                ' Order by cc.created_at asc';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
     First;
   end;
    //CategoryPanelUtama.RemoveComponent(TCustomCategoryPanel(CategoryPanelUtama.Panels[0]));
@@ -1043,7 +1284,13 @@ begin
       ' and dd.position_code='+QuotedStr(jabatan_code)+' '+
       ' AND bb.SubMenu='+QuotedStr(vCaptionButton);
       //' AND aa.SubMenu='+QuotedStr('Pemakaian Produksi');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
   end;
   if dm.Qtemp1.RecordCount=0 then
   begin
@@ -1148,10 +1395,18 @@ begin
     close;
     sql.Clear;
     sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(FHomeLogin.Eduser.Text)+','+QuotedStr(GetLocalIP)+',False,True,'+QuotedStr(FMainMenu.RzVersionInfo1.ProductVersion)+');';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
+  UniAlerter1.Active := False;
+  UniAlerter2.Active := False;
+  UniAlerter3.Active := False;
   Application.Terminate;
-  //FHomeLogin.show;
 end;
 
 procedure TFMainMenu.FormResize(Sender: TObject);

@@ -25,7 +25,6 @@ object FKartuPiutang: TFKartuPiutang
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1257
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

@@ -64,7 +64,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT * from t_selling WHERE word_amount IS NULL';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   terbilang:='';
   if dm.Qtemp.RecordCount>0 then
@@ -80,7 +86,13 @@ begin
         sql.Text:=' UPDATE t_selling'+
                   ' SET word_amount='+QuotedStr(terbilang)+' '+
                   ' WHERE "trans_no"='+QuotedStr(dm.Qtemp.FieldValues['trans_no'])+';';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       dm.Qtemp.Next;
     end;
@@ -103,9 +115,10 @@ begin
               'case when "piece_second" is null then 0 else "piece_second" end "piece_second",  '+
               'case when "piece_third" is null then 0 else "piece_third" end "piece_third",  '+
               'case when "piece_fourth" is null then 0 else "piece_fourth" end "piece_fourth",  '+
-              'a.customer_name_pkp,a.deleted_at '+
+              'a.customer_name_pkp,a.deleted_at,a.leader_name '+
               ',(select DISTINCT * from get_user_signature(2)) signature_name, '+
-              '(SELECT company_name FROM t_company) company_name,va_name,company_code_bank,number_va,bank_name '+
+              '(SELECT company_name FROM t_company) company_name,va_name,company_code_bank,number_va,bank_name, '+
+              'amount_down_payment, grand_tot_amount_down_payment '+
               'from "public".get_selling(FALSE) a  '+
               'LEFT JOIN "public"."t_selling_det" b ON a.trans_no=b.trans_no  '+
               'LEFT JOIN "public"."t_selling_piece" c ON b.trans_no=c.trans_no and b.code_item=c.code_item  '+
@@ -115,7 +128,13 @@ begin
               'a.deleted_at is NULL '+
               'order by a.trans_date, a.trans_no, '+
               'f.group_id  ASC';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   with dm.Qtemp2 do
@@ -123,7 +142,13 @@ begin
     close;
     sql.clear;
     sql.Text:='select * from get_user_signature(2) ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QPenjualan.RecordCount>0 then
@@ -167,7 +192,7 @@ begin
   if CompareText(VarName, 'vsignature_name') = 0 then
   begin
     status_pakai_terbilang:= 2;
-    Value := dm.Qtemp2.FieldValues['full_name'];
+    Value := QPenjualan.FieldValues['leader_name'];
   end;
 
 end;

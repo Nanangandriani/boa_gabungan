@@ -80,7 +80,13 @@ begin
             ' "status_promo"='+IntToStr(QMasterKlasifikasi.FieldByName('status_promo').AsInteger)+' AND '+
             ' deleted_at IS NULL '+
             ' Order By "code_item_category" desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   FDaftarKlasifikasi.MemKlasifikasi.active:=false;
   FDaftarKlasifikasi.MemKlasifikasi.active:=true;
@@ -102,7 +108,13 @@ begin
                 ' AND "id_master"='+QuotedStr(id_klasifikasi)+' '+
                 ' ) a '+
                 ' Order By "code_item" desc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if Dm.Qtemp.RecordCount<>0 then
@@ -164,7 +176,13 @@ begin
                  ' LEFT JOIN t_sell_type f ON a.code_sell_type = f.code '+
                  ' LEFT JOIN t_customer_type_business g ON a.code_type_business = g.code '+
                  ' WHERE a.status_approval=1 AND code_item_category='+QuotedStr(FDaftarKlasifikasi.edkd_kategori.Text)+' Order By a.created_at DESC ';
-       open;
+       try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
     end;
     finally
     DBGrid.FinishLoadingStatus();

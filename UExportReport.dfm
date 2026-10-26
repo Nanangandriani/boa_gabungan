@@ -145,7 +145,7 @@ object FExportReport: TFExportReport
       ItemLinks = <
         item
           UserDefine = [udWidth]
-          UserWidth = 196
+          UserWidth = 297
           Visible = True
           ItemName = 'cbLaporoan'
         end
@@ -191,7 +191,7 @@ object FExportReport: TFExportReport
     object dxBarManager1Bar1: TdxBar
       Caption = 'Action'
       CaptionButtons = <>
-      DockedLeft = 294
+      DockedLeft = 395
       DockedTop = 0
       FloatLeft = 1171
       FloatTop = 10

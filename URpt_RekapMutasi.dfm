@@ -408,7 +408,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44708.624305300900000000
-    ReportOptions.LastChange = 46158.441649699070000000
+    ReportOptions.LastChange = 46241.471664108790000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure Memo30OnBeforePrint(Sender: TfrxComponent);'
@@ -467,7 +467,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         FillGap.Right = 0
         Frame.Typ = []
         Height = 18.897637800000000000
-        Top = 192.756030000000000000
+        Top = 154.960730000000000000
         Width = 1224.567720000000000000
         DataSet = DbRekap_mutasi
         DataSetName = 'DbRekap_mutasi'
@@ -674,7 +674,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo70: TfrxMemoView
           AllowVectorExport = True
           Left = 734.007895980000000000
-          Width = 88.818897637795280000
+          Width = 88.818897637795300000
           Height = 18.897637800000000000
           StretchMode = smMaxHeight
           DataField = 'kdadm'
@@ -816,7 +816,8 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         FillGap.Right = 0
         Frame.Typ = []
         Height = 19.118107800000000000
-        Top = 272.126160000000000000
+        Top = 234.330860000000000000
+        Visible = False
         Width = 1224.567720000000000000
         object Memo76: TfrxMemoView
           AllowVectorExport = True
@@ -1120,7 +1121,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
           VAlign = vaCenter
         end
       end
-      object PageHeader2: TfrxPageHeader
+      object Header1: TfrxHeader
         FillType = ftBrush
         FillGap.Top = 0
         FillGap.Left = 0
@@ -1132,7 +1133,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         Width = 1224.567720000000000000
         object Memo92: TfrxMemoView
           AllowVectorExport = True
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 52.913385830000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1149,7 +1150,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo93: TfrxMemoView
           AllowVectorExport = True
           Left = 53.370086060000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 113.385826770000000000
           Height = 30.236220470000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1167,7 +1168,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo94: TfrxMemoView
           AllowVectorExport = True
           Left = 166.299212600000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 79.370078740000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1185,7 +1186,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo95: TfrxMemoView
           AllowVectorExport = True
           Left = 166.299212600000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 158.740157480000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1203,7 +1204,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo96: TfrxMemoView
           AllowVectorExport = True
           Left = 245.669291340000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 79.370078740000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1221,7 +1222,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo97: TfrxMemoView
           AllowVectorExport = True
           Left = 325.039370080000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 75.590551180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1239,7 +1240,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo98: TfrxMemoView
           AllowVectorExport = True
           Left = 400.629921260000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 75.590551180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1257,7 +1258,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo99: TfrxMemoView
           AllowVectorExport = True
           Left = 325.039370080000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 151.181102360000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1275,7 +1276,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo100: TfrxMemoView
           AllowVectorExport = True
           Left = 476.220472440000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 151.181102360000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1293,7 +1294,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo101: TfrxMemoView
           AllowVectorExport = True
           Left = 476.220472440000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 75.590551180000000000
           Height = 15.118110240000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1311,7 +1312,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo102: TfrxMemoView
           AllowVectorExport = True
           Left = 551.811023620000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 75.590551180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1329,7 +1330,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo103: TfrxMemoView
           AllowVectorExport = True
           Left = 627.401574800000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 196.535462360000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1347,7 +1348,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo104: TfrxMemoView
           AllowVectorExport = True
           Left = 627.401574800000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 105.826791180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1365,8 +1366,8 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo105: TfrxMemoView
           AllowVectorExport = True
           Left = 734.007895980000000000
-          Top = 98.267758030000000000
-          Width = 88.818897637795280000
+          Top = 77.267758030000000000
+          Width = 88.818897640000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1383,7 +1384,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo109: TfrxMemoView
           AllowVectorExport = True
           Left = 823.936944410000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 185.196872360000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1401,7 +1402,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo110: TfrxMemoView
           AllowVectorExport = True
           Left = 823.936944410000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 94.488201180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1419,7 +1420,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo111: TfrxMemoView
           AllowVectorExport = True
           Left = 918.425145590000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 90.708671180000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1437,7 +1438,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo112: TfrxMemoView
           AllowVectorExport = True
           Left = 1009.133816770000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 100.157497400000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1455,7 +1456,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo113: TfrxMemoView
           AllowVectorExport = True
           Left = 1109.291314170000000000
-          Top = 98.267758030000000000
+          Top = 77.267758030000000000
           Width = 111.496084960000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1473,7 +1474,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         object Memo114: TfrxMemoView
           AllowVectorExport = True
           Left = 1009.133816770000000000
-          Top = 83.149647800000000000
+          Top = 62.149647800000000000
           Width = 211.653582360000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1490,9 +1491,9 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         end
         object SysMemo2: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 1092.284170000000000000
-          Top = 64.252010000000000000
-          Width = 132.283550000000000000
+          Left = 1009.134510000000000000
+          Top = 44.354360000000000000
+          Width = 211.653680000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1508,9 +1509,8 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         end
         object Mtgl: TfrxMemoView
           AllowVectorExport = True
-          Left = -0.000002440000000000
           Top = 41.574803150000000000
-          Width = 1209.448818900000000000
+          Width = 1220.787408900000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1526,9 +1526,9 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         end
         object Memo116: TfrxMemoView
           AllowVectorExport = True
-          Left = 7.559057560000000000
-          Top = 21.897637800000000000
-          Width = 1209.448818900000000000
+          Left = -0.220470000000000000
+          Top = 24.559047800000000000
+          Width = 1220.787408900000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1544,8 +1544,7 @@ object FRpt_RekapMutasi: TFRpt_RekapMutasi
         end
         object Mpt: TfrxMemoView
           AllowVectorExport = True
-          Left = -0.000002440000000000
-          Width = 1209.448818900000000000
+          Width = 1220.787408900000000000
           Height = 18.897650000000000000
           DataSet = DbRekap_mutasi
           DataSetName = 'DbRekap_mutasi'

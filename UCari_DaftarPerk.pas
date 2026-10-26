@@ -52,6 +52,7 @@ end;
 procedure TFCari_DaftarPerk.DBGridDaftar_PerkDblClick(Sender: TObject);
 var akun_uang_muka_penjualan: string;
 begin
+    akun_uang_muka_penjualan:='';
     if vpanggil='Lap_Rekap_Hutang_Kredit' then
     begin
       Flap_Rekap_Hutang_Kredit.edkode_akun.EditValue:=QDaftar_Perk.fieldbyname('code').AsString;
@@ -97,12 +98,12 @@ begin
       FDataPenerimaanBank.MemDetailAkun.edit;
       FDataPenerimaanBank.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataPenerimaanBank.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
-//      if (QDaftar_Perk.FieldByName('code').AsString='2103.01') AND (FDataPenerimaanBank.cbJenisTransaksi.Text='PIUTANG') then
-//      begin
-//        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
-//      end else begin
-      FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
-//      end;
+      if (QDaftar_Perk.FieldByName('code').AsString=akun_uang_muka_penjualan) then
+      begin
+        FDataPenerimaanBank.MemDetailAkun['kredit']:=FbrowseUangMukaDibayarkan.vuang_muka;
+      end else begin
+        FDataPenerimaanBank.MemDetailAkun['kredit']:=0;
+      end;
 
       FDataPenerimaanBank.MemDetailAkun['debit']:=0;
       FDataPenerimaanBank.MemDetailAkun['jumlah_hasil_kurs']:=0;
@@ -112,8 +113,35 @@ begin
       QDaftar_Perk.Close;
     end;
 
+//    if (vpanggil = 'kas_kecil')then
+//    begin
+//      FDataKasKecil.MemDetailAkun.edit;
+//      FDataKasKecil.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
+//      FDataKasKecil.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
+//      FDataKasKecil.MemDetailAkun['kredit']:=0;
+//      FDataKasKecil.MemDetailAkun['debit']:=0;
+//      FDataKasKecil.MemDetailAkun['keterangan']:='-';
+//      FDataKasKecil.MemDetailAkun['kd_group_biaya']:=SelectRow('SELECT cost_st_id from t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
+//      FDataKasKecil.MemDetailAkun['nm_group_biaya']:=SelectRow('SELECT cost_type from t_ak_type_cost a left join t_ak_account b on a.id=b.cost_st_id where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'');
+//      FDataKasKecil.MemDetailAkun['kd_header_akun']:=SelectRow('SELECT header_code from t_ak_account where code='+QuotedSTR(QDaftar_Perk.fieldbyname('code').AsString)+'') ;
+//      FDataKasKecil.MemDetailAkun.post;
+//      QDaftar_Perk.Close;
+//    end;
     if (vpanggil = 'kas_kecil')then
     begin
+      if SelectRow(' SELECT cost_st_id from '+
+                   ' t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'')='0' then
+      begin
+        ShowMessage('Akun Belum Setting Kelompok Biaya, Silakan Hubungi IT !!!');
+        exit;
+      end;
+      if SelectRow(' SELECT cost_st_id from '+
+                   ' t_ak_account where code='+QuotedStr(QDaftar_Perk.fieldbyname('code').AsString)+'')='' then
+      begin
+        ShowMessage('Akun Belum Setting Kelompok Biaya, Silakan Hubungi IT !!!');
+        exit;
+      end;
+
       FDataKasKecil.MemDetailAkun.edit;
       FDataKasKecil.MemDetailAkun['kd_akun']:=QDaftar_Perk.fieldbyname('code').AsString;
       FDataKasKecil.MemDetailAkun['nm_akun']:=QDaftar_Perk.fieldbyname('account_name').AsString;
@@ -126,6 +154,7 @@ begin
       FDataKasKecil.MemDetailAkun.post;
       QDaftar_Perk.Close;
     end;
+
     if (vpanggil = 'kas_bon')then
     begin
       FDataKasBon.MemDetailAkun.edit;

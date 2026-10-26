@@ -65,6 +65,8 @@ type
     Label5: TLabel;
     Label6: TLabel;
     RzBitBtn2: TRzBitBtn;
+    MemDetailno_counter_bill: TStringField;
+    MemDetaildate_counter_bill: TDateField;
     procedure edNamaKolektorButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure DBGridDetailColumns1EditButtons0Click(Sender: TObject;
@@ -116,7 +118,7 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:=' SELECT * from get_dpp_prev('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+','+QuotedStr(edKodeKolektor.Text)+')';
+    sql.Text:='SELECT * from get_dpp_prev('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+','+QuotedStr(edKodeKolektor.Text)+')';
 //    sql.Text:='SELECT *,customer_name from ( '+
 //               'SELECT "date_dpp", "date_print", "code_collector", "name_collector", '+
 //               '"code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
@@ -142,7 +144,13 @@ begin
 //            ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
 //            ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
 //            ' Order By "date_dpp", "no_invoice" desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
     FDataPenagihanPiutang.MemDetail.active:=false;
@@ -186,6 +194,14 @@ begin
      FDataPenagihanPiutang.MemDetail['nilai_cek']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
      FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
      FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
+
+     FDataPenagihanPiutang.MemDetail['no_counter_bill']:=Dm.Qtemp.FieldByName('no_counter_bill').AsString;
+     if (formatdatetime('yyyy-mm-dd',Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime)='1899-12-30') OR (Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime=null) then
+      FDataPenagihanPiutang.MemDetail['date_counter_bill']:=null
+      else
+     FDataPenagihanPiutang.MemDetail['date_counter_bill']:=Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime;
+
+
      FDataPenagihanPiutang.MemDetail['isdpp_prev']:=1;
 
      FDataPenagihanPiutang.MemDetail.post;
@@ -207,13 +223,19 @@ begin
             ' "code_cust", "no_invoice", "no_invoice_tax", "date_trans", "date_tempo", '+
             ' "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", "date_receipt", '+
             ' "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2",'+
-            ' "date_tempo_cheque", "kodeprsh", isdpp_prev '+
+            ' "date_tempo_cheque", "kodeprsh", isdpp_prev, no_counter_bill, date_counter_bill '+
             ' FROM  "public"."t_dpp") a '+
             ' LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
             ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' '+
             ' Order By "date_dpp", "no_invoice" desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
     FDataPenagihanPiutang.MemDetail.active:=false;
@@ -258,6 +280,12 @@ begin
      FDataPenagihanPiutang.MemDetail['kontra_bon']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
      FDataPenagihanPiutang.MemDetail['no_invoice']:=Dm.Qtemp.FieldByName('no_invoice').AsString;
      FDataPenagihanPiutang.MemDetail['isdpp_prev']:=Dm.Qtemp.FieldByName('isdpp_prev').AsString;
+
+     FDataPenagihanPiutang.MemDetail['no_counter_bill']:=Dm.Qtemp.FieldByName('no_counter_bill').AsString;
+     if (formatdatetime('yyyy-mm-dd',Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime)='1899-12-30') OR (Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime=null) then
+      FDataPenagihanPiutang.MemDetail['date_counter_bill']:=null
+      else
+     FDataPenagihanPiutang.MemDetail['date_counter_bill']:=Dm.Qtemp.FieldByName('date_counter_bill').AsDateTime;
 
      FDataPenagihanPiutang.MemDetail.post;
      Dm.Qtemp.next;
@@ -324,7 +352,13 @@ begin
                 sql.add( '  "date_tempo_cheque"='+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+' ');
     sql.add(  ' Where "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+' AND'+
               ' "code_collector"='+QuotedStr(edKodeKolektor.Text)+'');
-    ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDetail.Next;
   end;
@@ -335,6 +369,146 @@ begin
 end;
 
 procedure TFDataPenagihanPiutang.Save;
+var
+  ListInvoice: string;
+  SLInvoiceCheck: TStringList;
+  CurrInvoice: string;
+begin
+  if MemDetail.IsEmpty then
+  begin
+    MessageDlg('Data detail masih kosong!', mtWarning, [mbOK], 0);
+    Exit;
+  end;
+
+  SLInvoiceCheck := TStringList.Create;
+
+  SLInvoiceCheck.Sorted := True;
+  SLInvoiceCheck.Duplicates := dupIgnore;
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    CurrInvoice := Trim(VarToStr(MemDetail['no_invoice']));
+    if CurrInvoice <> '' then
+    begin
+      if SLInvoiceCheck.IndexOf(CurrInvoice) <> -1 then
+      begin
+        MessageDlg('Gagal Simpan! Terdapat Nomor Invoice ganda di data detail: ' +
+                   QuotedStr(CurrInvoice), mtError, [mbOK], 0);
+        Exit;
+      end;
+      SLInvoiceCheck.Add(CurrInvoice);
+    end;
+    MemDetail.Next;
+  end;
+
+  ListInvoice := '';
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    if ListInvoice <> '' then
+      ListInvoice := ListInvoice + ', ';
+    ListInvoice := ListInvoice + QuotedStr(MemDetail['no_invoice']);
+    MemDetail.Next;
+  end;
+
+  if ListInvoice <> '' then
+  begin
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text := 'DELETE FROM "public"."t_dpp" ' +
+                  'WHERE "code_collector" = ' + QuotedStr(edKodeKolektor.Text) + ' ' +
+                  'AND "date_dpp" = ' + QuotedStr(FormatDateTime('yyyy-mm-dd', dtTagih.Date)) + ' ' +
+                  'AND "no_invoice" NOT IN (' + ListInvoice + ');';
+      ExecSQL;
+    end;
+  end;
+
+  MemDetail.First;
+  while not MemDetail.Eof do
+  begin
+    with dm.Qtemp do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('INSERT INTO "public"."t_dpp" ( ');
+      SQL.Add('  "created_at", "created_by", "date_dpp", "date_print", "code_collector", ');
+      SQL.Add('  "name_collector", "code_cust", "no_invoice", "no_invoice_tax", "date_trans", ');
+      SQL.Add('  "date_tempo", "paid_amount", "cash", "receipt", "counter_bill", "bank_receipt", ');
+      SQL.Add('  "date_receipt", "name_bank_cheque", "no_cheque", "cheque_amount1", "cheque_amount2", ');
+      SQL.Add('  "date_tempo_cheque",no_counter_bill, date_counter_bill, "isdpp_prev", "sbu_code" ');
+      SQL.Add(') VALUES ( ');
+      SQL.Add('  NOW(), ' + QuotedStr(Nm) + ', ' + QuotedStr(FormatDateTime('yyyy-mm-dd', dtTagih.Date)) + ', ');
+      SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', dtCetak.Date)) + ', ' + QuotedStr(edKodeKolektor.Text) + ', ');
+      SQL.Add('  ' + QuotedStr(edNamaKolektor.Text) + ', ' + QuotedStr(MemDetail['kode_pel']) + ', ');
+      SQL.Add('  ' + QuotedStr(MemDetail['no_invoice']) + ', ' + QuotedStr(MemDetail['no_invoice_tax']) + ', ');
+      SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', MemDetail['tgl_faktur'])) + ', ');
+      SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', MemDetail['tgl_tempo'])) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['jum_piutang'], ',', '.', [])) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['tunai'], ',', '.', [])) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['resi'], ',', '.', [])) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['kontra_bon'], ',', '.', [])) + ', ');
+      SQL.Add('  ' + QuotedStr(MemDetail['bank_resi']) + ', ');
+
+      if not VarIsNull(MemDetail['tgl_resi']) then
+        SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', MemDetail['tgl_resi'])) + ', ')
+      else
+        SQL.Add('  NULL, ');
+
+      SQL.Add('  ' + QuotedStr(MemDetail['nama_bank_cek']) + ', ' + QuotedStr(MemDetail['no_cek']) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['nilai_cek'], ',', '.', [])) + ', ');
+      SQL.Add('  ' + QuotedStr(StringReplace(MemDetail['nilai_cek'], ',', '.', [])) + ', ');
+
+      if not VarIsNull(MemDetail['tgl_tempo_cek']) then
+        SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', MemDetail['tgl_tempo_cek'])) + ', ')
+      else
+        SQL.Add('  NULL, ');
+
+      SQL.Add('  ' + QuotedStr(MemDetail['no_counter_bill']) + ', ');
+
+      if not VarIsNull(MemDetail['date_counter_bill']) then
+        SQL.Add('  ' + QuotedStr(FormatDateTime('yyyy-mm-dd', MemDetail['date_counter_bill'])) + ', ')
+      else
+        SQL.Add('  NULL, ');
+
+      if not VarIsNull(MemDetail['isdpp_prev']) then
+        SQL.Add('  ' + QuotedStr(MemDetail['isdpp_prev']) + ', ' + QuotedStr(FHomeLogin.vKodePRSH))
+      else
+        SQL.Add('  False, ' + QuotedStr(FHomeLogin.vKodePRSH));
+
+      SQL.Add(') ');
+
+
+      SQL.Add('ON CONFLICT (code_collector, date_dpp, no_invoice) ');
+      SQL.Add('DO UPDATE SET ');
+      SQL.Add('  paid_amount = EXCLUDED.paid_amount, ');
+      SQL.Add('  cash = EXCLUDED.cash, ');
+      SQL.Add('  receipt = EXCLUDED.receipt, ');
+      SQL.Add('  counter_bill = EXCLUDED.counter_bill, ');
+      SQL.Add('  bank_receipt = EXCLUDED.bank_receipt, ');
+      SQL.Add('  date_receipt = EXCLUDED.date_receipt, ');
+      SQL.Add('  name_bank_cheque = EXCLUDED.name_bank_cheque, ');
+      SQL.Add('  no_cheque = EXCLUDED.no_cheque, ');
+      SQL.Add('  cheque_amount1 = EXCLUDED.cheque_amount1, ');
+      SQL.Add('  cheque_amount2 = EXCLUDED.cheque_amount2, ');
+      SQL.Add('  date_tempo_cheque = EXCLUDED.date_tempo_cheque, ');
+      SQL.Add('  no_counter_bill = EXCLUDED.no_counter_bill, ');
+      SQL.Add('  date_counter_bill = EXCLUDED.date_counter_bill, ');
+      SQL.Add('  isdpp_prev = EXCLUDED.isdpp_prev ');
+
+      ExecSQL;
+    end;
+    MemDetail.Next;
+  end;
+
+  MessageDlg('Simpan Berhasil..!!', mtInformation, [mbOK], 0);
+  Clear;
+  FDataPenagihanPiutang.Refresh;
+  Close;
+end;
+
+{procedure TFDataPenagihanPiutang.Save;
 begin
   with dm.Qtemp do
   begin
@@ -343,21 +517,14 @@ begin
     sql.Text:=' DELETE FROM "public"."t_dpp"'+
               ' WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
               ' "date_dpp"='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTagih.Date))+';';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
-
-//ShowMessage(QuotedStr(MemDetail['nama_bank_cek']));
-//ShowMessage(QuotedStr(MemDetail['no_cek']));
-//ShowMessage(QuotedStr(FloatToStr(MemDetail['nilai_cek'])));
-//ShowMessage(QuotedStr(MemDetail['isdpp_prev']));
-//if not VarIsNull(MemDetail['tgl_resi']) then
-//ShowMessage(QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi'])))
-//else ShowMessage( 'Resi NULL, ');
-//if not VarIsNull(MemDetail['tgl_resi']) then
-//ShowMessage(QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek'])))
-//else ShowMessage( 'Tempo NULL, ');
-
-//ShowMessage(QuotedStr(MemDetail['tgl_resi']));
 
   MemDetail.First;
   while not MemDetail.Eof do
@@ -391,26 +558,16 @@ begin
                 ' '+QuotedStr(StringReplace(MemDetail['resi'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemDetail['kontra_bon'],',','.',[]))+','+
 
-//                ' '+QuotedStr(FloatToStr(MemDetail['jum_piutang']))+', '+
-//                ' '+QuotedStr(FloatToStr(MemDetail['tunai']))+', '+
-//                ' '+QuotedStr(FloatToStr(MemDetail['resi']))+', '+
-//                ' '+QuotedStr(FloatToStr(MemDetail['kontra_bon']))+', '+
                 ' '+QuotedStr(MemDetail['bank_resi'])+', ');
                 if not VarIsNull(MemDetail['tgl_resi']) then
                 sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ')
                 else sql.add( ' NULL, ');
 
-//                if (MemDetail['tgl_resi']=NULL) OR (MemDetail['tgl_resi']='')then
-//                begin
-//                  sql.add( ' NULL, ');
-//                end  else
-//                  sql.add(  ' '+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_resi']))+', ');
       sql.add(  ' '+QuotedStr(MemDetail['nama_bank_cek'])+', '+
                 ' '+QuotedStr(MemDetail['no_cek'])+', '+
                 ' '+QuotedStr(StringReplace(MemDetail['nilai_cek'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemDetail['nilai_cek'],',','.',[]))+',');
-//                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', '+
-//                ' '+QuotedStr(FloatToStr(MemDetail['nilai_cek']))+', ');
+
 
                 if not VarIsNull(MemDetail['tgl_tempo_cek']) then
                 sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+',')
@@ -420,13 +577,13 @@ begin
                 sql.add( ' '+QuotedStr(MemDetail['isdpp_prev'])+','+QuotedStr(FHomeLogin.vKodePRSH)+' );')
                 else sql.add( 'False,'+QuotedStr(FHomeLogin.vKodePRSH)+' );');
 
-//              if ((MemDetail['tgl_tempo_cek']=NULL) OR (MemDetail['tgl_tempo_cek']=''))then
-//              begin
-//                sql.add( ' NULL,'+QuotedStr(MemDetail['isdpp_prev'])+' );');
-//              end  else
-//                sql.add( ''+QuotedStr(formatdatetime('yyyy-mm-dd',MemDetail['tgl_tempo_cek']))+','+QuotedStr(MemDetail['isdpp_prev'])+' );');
-
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemDetail.Next;
   end;
@@ -434,7 +591,7 @@ begin
   Clear;
   FDataPenagihanPiutang.Refresh;
   Close;
-end;
+end;}
 
 procedure TFDataPenagihanPiutang.BBatalClick(Sender: TObject);
 begin
@@ -500,7 +657,13 @@ begin
             'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
             'and isdpp_prev=True  Order By "date_dpp", "no_invoice" desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   with Qdppbelumditagih do
@@ -516,7 +679,13 @@ begin
             'WHERE "code_collector"='+QuotedStr(edKodeKolektor.Text)+' AND '+
             ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTagih.Date))+' '+
             'and isdpp_prev=False Order By "date_dpp", "no_invoice" desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   cLocation := ExtractFilePath(Application.ExeName);
@@ -748,6 +917,7 @@ begin
     FDaftarTagihan.edKecamatan.Text:='';
 
     FDaftarTagihan.vcall:='dpp';
+    FDaftarTagihan.dtTanggal.Date:=dtTagih.Date;
 //    FDaftarTagihan.kd_outlet:=MemDetail['kode_pel'];
     FDaftarTagihan.RefreshGrid;
     FDaftarTagihan.show;

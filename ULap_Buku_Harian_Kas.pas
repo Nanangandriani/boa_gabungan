@@ -106,6 +106,8 @@ begin
 end;
 
 Procedure TFLap_Buku_Harian_Kas.queryreport;    //cr ds 29-05-2026
+var
+dt_awal:TDate;
 begin
     if DateTimePicker1.EditValue= null then
       begin
@@ -119,6 +121,13 @@ begin
       DateTimePicker2.SetFocus;
       Exit;
     end;
+    //batas data
+    dt_awal:=DateTimePicker1.EditValue;
+    {if VarToDateTime(DateTimePicker1.EditValue) < EncodeDate(2026, 6, 1) then
+    begin
+      dt_awal := EncodeDate(2026, 6, 1);
+    end;}
+
     dm.QPerusahaan.Close;
     dm.QPerusahaan.Open;
     if FormatDateTime('mm',datetimepicker1.EditValue)='01' then
@@ -151,10 +160,10 @@ begin
                      'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
                      'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
                      'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
-                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
+                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
                      //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      ') e on d.no_voucher=e.no_voucher '+
-                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
+                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
                      'and d."position"=''K''  and k.deleted_at is null'+
                      //'and k.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      ')x '+
@@ -169,7 +178,7 @@ begin
                      'LEFT JOIN t_purchase_invoice d ON a.invoice_no= d.trans_no '+
                      'INNER JOIN t_purchase_invoice_det e ON d.trans_no=e.trans_no '+
                      'INNER JOIN t_item_stock f ON e.item_stock_code=f.item_stock_code '+
-                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
+                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
                      'GROUP BY voucher_no,acc_balance ) y ON x.no_voucher=y.voucher_no '+
                      'left join '+
                      '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
@@ -177,23 +186,23 @@ begin
                      '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
                      'FROM t_cash_bank_expenditure_payable a '+
                      'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
-                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
+                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
                      'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_date '+
                      'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,trans_date) a GROUP BY voucher_no,trans_date ) z  ON y.voucher_no=z.voucher_no '+
                      'UNION ALL '+
                      'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,'''' as ket2,paid_amount debit,0 kredit from '+
                      '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher where a.deleted_at is null)j '+
-                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
+                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
                      'and "position"=''D'' '+
                      //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      'UNION ALL '+
                      'select voucher_no as voucher,code_account as kodesp,''D''::character varying as dk,trans_date as tgltrans,'''' kepada,'''' nm,'''' sj,description::character varying as ket, description::character varying as ket2,paid_amount debit,0 kredit from '+
-                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
                      'and "position"=''D''  and code_account=''1101.01'' '+
                      'UNION ALL '+
                      'SELECT  voucher,kredit_account as kodesp,''K''::character varying as dk,tgltrans,''''kepada,'''' nm, '''' sj,information::character varying as ket,information::character varying as ket2,debit,kredit from '+
                      '(select a.adjustment_proof_no as voucher,b.kredit_account,''K''::character varying as dk,a."date" as tgltrans,a.information,a.information as ket2,b.debit,b.kredit from t_adjustment_journal a '+
-                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
                      'and b.kredit_account=''1101.01'' order by tgltrans,voucher Asc)n ) x '+
 
                      'UNION '+
@@ -202,9 +211,9 @@ begin
                      ' from (select ab.account_code,(ab.balance+ case when gl2.amount<>0 then gl2.amount else 0 end) total   from t_ak_account_balance ab LEFT JOIN  '+
                      ' (select sum(d-k) amount,account_code from (select case when status_dk=''D'' then amount else 0 end d ,case when status_dk=''K'' then amount else 0 end k,'+
                      ' account_code from t_general_ledger where  module_id in (4,5,6) and account_code=''1101.01'' and '+
-                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',datetimepicker1.EditValue),'-01'))+' and '+
-                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',datetimepicker1.EditValue))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
-                    ' where trans_year='+QuotedStr(IntToStr(StrToInt(FormatDateTime('yyyy',datetimepicker1.EditValue))-1))+' and trans_month=''12'' and ab.account_code=''1101.01'')sa) xxx ORDER BY nomor ASC ';
+                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',dt_awal),'-01'))+' and '+
+                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dt_awal))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
+                    ' where trans_year='+QuotedStr(IntToStr(StrToInt(FormatDateTime('yyyy',dt_awal))-1))+' and trans_month=''12'' and ab.account_code=''1101.01'')sa) xxx ORDER BY nomor ASC ';
            Open;
         end;
     end;
@@ -239,10 +248,10 @@ begin
                      'INNER JOIN t_cash_bank_expenditure k ON d.no_voucher=k.voucher_no '+
                      'left join (select e.no_voucher,e.code_account,(case when f.currency=''USD'' then f.amount*f.kurs else f.amount end) pph23 from t_cash_bank_expenditure_det e '+
                      'INNER JOIN t_cash_bank_expenditure f ON e.no_voucher=f.voucher_no '+
-                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
+                     'where e.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and e.code_account=''2142'' '+
                      //'and f.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      ') e on d.no_voucher=e.no_voucher '+
-                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
+                     'where d.trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) + ' and d.code_account=''1101.01'' '+
                      'and d."position"=''K''  and k.deleted_at is null'+
                      //'and k.company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      ')x '+
@@ -257,7 +266,7 @@ begin
                      'LEFT JOIN t_purchase_invoice d ON a.invoice_no= d.trans_no '+
                      'INNER JOIN t_purchase_invoice_det e ON d.trans_no=e.trans_no '+
                      'INNER JOIN t_item_stock f ON e.item_stock_code=f.item_stock_code '+
-                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
+                     'where a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +'  GROUP BY a.voucher_no,e.id,f.item_name,e.unit,b.code ) a  GROUP BY a.voucher_no,a.item_name,a.unit,a.acc_balance ) a '+
                      'GROUP BY voucher_no,acc_balance ) y ON x.no_voucher=y.voucher_no '+
                      'left join '+
                      '(SELECT voucher_no, string_agg (concat(''SJ.'',a.sj_no), '', '' ) nosj  FROM '+
@@ -265,23 +274,23 @@ begin
                      '(SELECT "row_number"() over (PARTITION by voucher_no order by invoice_no) URUT,a.voucher_no,invoice_no,b.sj_no,b.trans_date '+
                      'FROM t_cash_bank_expenditure_payable a '+
                      'LEFT JOIN t_purchase_invoice b ON a.invoice_no= b.trans_no '+
-                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
+                     'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue))+' '+
                      'GROUP BY a.voucher_no,a.invoice_no,a.sj_no,b.sj_no,b.trans_date '+
                      'ORDER BY b.trans_date,a.invoice_no)A ORDER BY voucher_no,trans_date) a GROUP BY voucher_no,trans_date ) z  ON y.voucher_no=z.voucher_no '+
                      'UNION ALL '+
                      'select voucher_no,code_account as kodesp,"position" dk,trans_date as tgltrans,to_ as kepada,to_getout nm,'''' nosj,remark as ket,'''' as ket2,paid_amount debit,0 kredit from '+
                      '(SELECT a.voucher_no,b.code_account,b."position",b.trans_date,a.to_,a.to_getout,a.remark,b.paid_amount from t_cash_bank_expenditure a INNER JOIN t_cash_bank_expenditure_det b on a.voucher_no=b.no_voucher where a.deleted_at is null)j '+
-                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
+                     'where trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' and code_account=''1101.01'' '+
                      'and "position"=''D'' '+
                      //'and company_code='+QuotedStr(FHomeLogin.vKodePRSH)+' '+
                      'UNION ALL '+
                      'select voucher_no as voucher,code_account as kodesp,''D''::character varying as dk,trans_date as tgltrans,'''' kepada,'''' nm,'''' sj,description::character varying as ket, description::character varying as ket2,paid_amount debit,0 kredit from '+
-                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     't_cash_bank_acceptance_det where trans_date between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and  '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
                      'and "position"=''D''  and code_account=''1101.01'' '+
                      'UNION ALL '+
                      'SELECT  voucher,kredit_account as kodesp,''K''::character varying as dk,tgltrans,''''kepada,'''' nm, '''' sj,information::character varying as ket,information::character varying as ket2,debit,kredit from '+
                      '(select a.adjustment_proof_no as voucher,b.kredit_account,''K''::character varying as dk,a."date" as tgltrans,a.information,a.information as ket2,b.debit,b.kredit from t_adjustment_journal a '+
-                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.EditValue))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
+                     'INNER JOIN t_adjustment_journal_det b ON a.adjustment_proof_no=b.adjustment_proof_no WHERE a."date" between '+QuotedStr(formatdatetime('yyyy-mm-dd',dt_awal))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.EditValue)) +' '+
                      'and b.kredit_account=''1101.01'' order by tgltrans,voucher Asc)n ) x '+
 
                      'UNION '+
@@ -290,10 +299,10 @@ begin
                      ' from (select ab.account_code,(ab.balance+ case when gl2.amount<>0 then gl2.amount else 0 end) total   from t_ak_account_balance ab LEFT JOIN  '+
                      ' (select sum(d-k) amount,account_code from (select case when status_dk=''D'' then amount else 0 end d ,case when status_dk=''K'' then amount else 0 end k,'+
                      ' account_code from t_general_ledger where  module_id in (4,5,6) and account_code=''1101.01'' and '+
-                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',datetimepicker1.EditValue),'-01'))+' and '+
-                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',datetimepicker1.EditValue))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
-                     ' where trans_year='+QuotedStr(FormatDateTime('yyyy',datetimepicker1.EditValue))+' and '+
-                     ' trans_month='+QuotedStr(IntToStr(StrToInt(FormatDateTime('mm',datetimepicker1.EditValue))-1))+''+
+                     ' trans_date between '+QuotedStr(concat(FormatDateTime('yyyy-mm',dt_awal),'-01'))+' and '+
+                     ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dt_awal))+' and deleted_at is null) gl GROUP BY account_code)gl2 on ab.account_code=gl2.account_code'+
+                     ' where trans_year='+QuotedStr(FormatDateTime('yyyy',dt_awal))+' and '+
+                     ' trans_month='+QuotedStr(IntToStr(StrToInt(FormatDateTime('mm',dt_awal))-1))+''+
                      ' and ab.account_code=''1101.01'') sa ) xxx ORDER BY nomor ASC ' ;
              Open;
         end;

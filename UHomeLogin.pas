@@ -215,6 +215,7 @@ begin
   end
   else if (EdPass.Text<>'') and (Eduser.Text<>'') then
   begin
+
    //cek User
     with dm.Qtemp do
     begin
@@ -229,13 +230,20 @@ begin
              ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
              ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
              ' where "user_name"='+QuotedStr(Eduser.Text)+' and aa.deleted_at IS NULL ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp.RecordCount=0 then
     begin
       ShowMessage('User Anda Tidak Terdaftar..!!!');
       Exit;
     end;
+
 
 //    with dm.Qtemp do
 //    begin
@@ -268,25 +276,31 @@ begin
               ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
               ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
               ' and "password"=crypt('+QuotedStr(EdPass.Text)+', "password") and aa.deleted_at IS NULL ');
-      open;
-
-
-      if isEmpty then
-      begin
-        close;
-        sql.clear;
-        sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
-                ' "password", "role_id", "is_active", "last_login", "last_logout", '+
-                ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
-                ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
-                ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
-                ' FROM "public"."t_user" aa '+
-                ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
-                ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
-                ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
-                ' and "password"='+QuotedStr(EdPass.Text)+' and aa.deleted_at IS NULL ');
-        open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
       end;
+
+
+//      if isEmpty then
+//      begin
+//        close;
+//        sql.clear;
+//        sql.add(' SELECT "user_id", "code", "user_name", "full_name", "branch_id", '+
+//                ' "password", "role_id", "is_active", "last_login", "last_logout", '+
+//                ' "signature", aa."position", "status", aa."created_at", aa."updated_at", '+
+//                ' aa."deleted_at", "job_level_id", aa."created_by", aa."updated_by", '+
+//                ' aa."deleted_by", aa."dept_code", aa."position_code", "ttd" '+
+//                ' FROM "public"."t_user" aa '+
+//                ' INNER JOIN t_dept bb on aa.dept_code=bb.dept_code and bb.deleted_at IS NULL '+
+//                ' INNER JOIN t_position cc on aa.position_code=cc.position_code and cc.deleted_at IS NULL '+
+//                ' where "user_name"='+QuotedStr(Eduser.Text)+' '+
+//                ' and "password"='+QuotedStr(EdPass.Text)+' and aa.deleted_at IS NULL ');
+//        open;
+//      end;
     end;
 
     if dm.Qtemp.RecordCount=0 then
@@ -331,7 +345,13 @@ begin
       sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
              ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
              ' "tax_status", "currency", stat_office FROM "t_company" ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 //    FMainMenu := TFMainMenu.Create(Application);
     if dm.Qtemp.RecordCount<>0 then
@@ -358,7 +378,13 @@ begin
          sql.add(' SELECT "company_code", "company_name", "address", "telp", "email", '+
                  ' "npwp", "city", "address2", "type_of_business", "latitude", "longitude", '+
                  ' "tax_status", "currency", stat_office FROM "t_company" where stat_office=0 limit 1 ');
-         open;
+         try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
         with FHomeLogin do
         begin
@@ -377,16 +403,89 @@ begin
       close;
       sql.Clear;
       sql.Text:='CALL "InsertSPLogLogin" ('+QuotedStr(Eduser.Text)+','+QuotedStr(GetLocalIP)+',True,False,'+QuotedStr(FMainMenu.RzVersionInfoStatus1.VersionInfo.ProductVersion)+');';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     Nm:=Eduser.Text;
   end;
+
+  with dm.Qtemp3 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT link from t_akses a '+
+              'LEFT JOIN t_user b on b.dept_code=a.dept_code AND b.position_code=a.position_code '+
+              'LEFT JOIN t_menu_sub c on c.submenu_code=a.submenu_code and c.deleted_at is null '+
+              'WHERE b.user_name='+QuotedStr(Eduser.Text)+'  AND b.deleted_at is null AND a.deleted_at is null '+
+              'and c.link in  (''FListApproveDaftarPenagihanPiutang'',''FListKoreksi'')';
+//    sql.Text:='SELECT a.submenu,b.link from t_akses a '+
+//              'LEFT JOIN t_user b on b.dept_code=a.dept_code AND b.position_code=a.position_code '+
+//              'WHERE b.user_name='+QuotedStr(Eduser.Text)+' AND b.deleted_at is null AND a.deleted_at is null '+
+//              'and a.submenu_code in ( '+
+//              'SELECT submenu_code from t_menu_sub WHERE link(''FListApproveDaftarPenagihanPiutang'',''FListKoreksi''))';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+
+  IsMenuApporveDPP := 0;
+  IsMenuApproveCorrection := 0;
+
+  dm.Qtemp3.First;
+  while not dm.Qtemp3.Eof do
+  begin
+    if SameText(dm.Qtemp3.FieldByName('link').AsString, 'FListApproveDaftarPenagihanPiutang') then
+      IsMenuApporveDPP := 1
+    else if SameText(dm.Qtemp3.FieldByName('link').AsString, 'FListKoreksi') then
+      IsMenuApproveCorrection := 1;
+    dm.Qtemp3.Next;
+  end;
+
+//  ShowMessage(IntToStr(IsMenuApporveDPP));
+//  ShowMessage(IntToStr(IsMenuApproveCorrection));
+
+
+//  if dm.Qtemp3.RecordCount>0 then IsMenuApporveDPP:=1 else IsMenuApporveDPP:=0;
+
+//  with dm.QCekDPPHarmoni do
+//  begin
+//    close;
+//    sql.Clear;
+//    sql.Text:='SELECT id FROM t_dpp_temp ORDER BY created_at DESC LIMIT 1';
+//    try
+//      Open;
+//    except
+//      Connection.Close;
+//      Connection.Open;
+//      Open;
+//    end;
+//  end;
+//  if dm.QCekDPPHarmoni.RecordCount>0 then
+//  LastDataDPPID := dm.QCekDPPHarmoni.FieldValues['id'];
+
+//  FMainMenu.TimerCekDPPHarmoni.Enabled:=True;
+
   with dm.QtempPusat do
   begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM app_versions ORDER BY id DESC LIMIT 1';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if (dm.QtempPusat.FieldValues['version_number']<>FMainMenu.RzVersionInfo1.ProductVersion) AND (dm.QtempPusat.FieldValues['status_must_change']=0) then
   begin
@@ -401,9 +500,13 @@ begin
     MessageDlg('Aplikasi harus diperbaharui..!!', mtWarning, [mbOK], 0);
     FMainMenu.UpdateVersi;
   end;
+
+
 //  Application.CreateForm(TFMainMenu, FMainMenu);
 //  CbSBU.Clear;
-
+  FMainMenu.UniAlerter1.Active:=True;
+  FMainMenu.UniAlerter2.Active:=True;
+  FMainMenu.UniAlerter3.Active:=True;
   FMainMenu.EnableMenu;
   Self.Close;
 //  FMainMenu.Show;

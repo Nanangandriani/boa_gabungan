@@ -218,6 +218,7 @@ begin
         end;
         //Qrencana.close;
         //Qrencana.open;
+      MessageDlg('Proses Berhasil!!',mtInformation,[mbOK],0);
       end;
     end;
 end;
@@ -344,8 +345,10 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from v_plan_paid_debt '+
-                    'where paid_status=0 and periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
+          sql.text:=' select * from v_plan_paid_debt '+
+                    ' where paid_status=0 and periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' '+
+                    ' and periode2= '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' '+
+                    ' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
           open;
         end;
       end
@@ -355,9 +358,12 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from v_plan_paid_debt '+
-                    'where paid_status=0 and  periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' and '+
-                    'supplier_code='+QuotedStr(txtkdsupp.Text) ;
+          sql.text:=' select * from v_plan_paid_debt '+
+                    ' where paid_status=0 and '+
+                    ' periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' '+
+                    ' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' '+
+                    ' and plan_to='+Quotedstr(CbRencanake.Text)+' and '+
+                    ' supplier_code='+QuotedStr(txtkdsupp.Text) ;
           open;
         end;
       end;
@@ -370,9 +376,11 @@ begin
         begin
           close;
           sql.clear;
-          sql.text:='select * from v_plan_paid_debt '+
-                    'where paid_status=1 and '+
-                    'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
+          sql.text:=' select * from v_plan_paid_debt '+
+                    ' where paid_status=1 and '+
+                    ' periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' '+
+                    ' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' '+
+                    ' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
           open;
         end;
       end
@@ -384,7 +392,9 @@ begin
           sql.clear;
           sql.text:='select * from v_plan_paid_debt '+
                     'where paid_status=1 and '+
-                    'periode1 between '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' and '+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' and '+
+                    ' periode1='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker1.Date))+' '+
+                    ' and periode2='+QuotedStr(formatdatetime('yyyy-mm-dd',DateTimePicker2.Date))+' '+
+                    ' and '+
                     'supplier_code='+QuotedStr(txtkdsupp.Text)+' and plan_to='+Quotedstr(CbRencanake.Text)+' ';
 
           open;

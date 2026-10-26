@@ -111,13 +111,14 @@ type
     procedure edlbr50Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ednilaitotChange(Sender: TObject);
+    procedure ednilai50Change(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
     procedure Clear;
-    procedure Total_nilai;
     procedure Save;
     procedure Update;
+    procedure HitungGrandTotal;
   end;
 
 //var
@@ -125,6 +126,9 @@ type
 
 Function Fdata_uang_cash_kecil: TFdata_uang_cash_kecil;
 var  a,b,c,d,e,f,g,h,i,j,k,l,m:Real;
+function Ribuan(RzEdit: TEdit): String;
+function GetNilaiAngka(Edit: TEdit): Currency;
+procedure ProcessPecahan(EdtLembar, EdtTotal: TEdit; Nominal: Currency);
 
 implementation
 
@@ -143,19 +147,78 @@ begin
     Application.CreateForm(TFdata_uang_cash_kecil, Result);
 end;
 
-
-Function Ribuan(RzEdit : TEdit):String;
+procedure TFdata_uang_cash_kecil.HitungGrandTotal;
 var
-   NilaiRupiah: string;
-   AngkaRupiah: Currency;
+  GrandTotal: Currency;
 begin
-  if RzEdit.Text='' then Exit;
-   NilaiRupiah := RzEdit.text;
-   NilaiRupiah := StringReplace(NilaiRupiah,',','',[rfReplaceAll,rfIgnoreCase]);
-   NilaiRupiah := StringReplace(NilaiRupiah,'.','',[rfReplaceAll,rfIgnoreCase]);
-   AngkaRupiah := StrToCurrDef(NilaiRupiah,0);
-   RzEdit.Text := FormatCurr('#,###',AngkaRupiah);
-   RzEdit.SelStart := length(RzEdit.text);
+  GrandTotal := GetNilaiAngka(ednilai100rb) +
+                GetNilaiAngka(ednilai75rb) +
+                GetNilaiAngka(ednilai50rb) +
+                GetNilaiAngka(ednilai20rb) +
+                GetNilaiAngka(ednilai10rb) +
+                GetNilaiAngka(ednilai5rb) +
+                GetNilaiAngka(ednilai2rb) +
+                GetNilaiAngka(ednilai1000) +
+                GetNilaiAngka(ednilai500) +
+                GetNilaiAngka(ednilai200) +
+                GetNilaiAngka(ednilai100) +
+                GetNilaiAngka(ednilai50);
+
+  // Tampilkan ke TEdit Grand Total di paling bawah
+  ednilaitot.Text := FormatCurr('#,##0', GrandTotal);
+end;
+
+// 1. FUNGSI RIBUAN (Taruh paling atas)
+function Ribuan(RzEdit: TEdit): String;
+var
+  NilaiRupiah: string;
+  AngkaRupiah: Currency;
+begin
+  Result := '';
+  if Trim(RzEdit.Text) = '' then Exit;
+
+  NilaiRupiah := RzEdit.Text;
+  NilaiRupiah := StringReplace(NilaiRupiah, ',', '', [rfReplaceAll, rfIgnoreCase]);
+  NilaiRupiah := StringReplace(NilaiRupiah, '.', '', [rfReplaceAll, rfIgnoreCase]);
+
+  AngkaRupiah := StrToCurrDef(NilaiRupiah, 0);
+
+  RzEdit.Text := FormatCurr('#,##0', AngkaRupiah);
+  RzEdit.SelStart := Length(RzEdit.Text);
+
+  Result := RzEdit.Text;
+end;
+
+// 2. FUNGSI GET NILAI ANGKA (Taruh kedua)
+function GetNilaiAngka(Edit: TEdit): Currency;
+var
+  S: string;
+begin
+  if Edit.Text = '' then Exit(0);
+
+  S := Edit.Text;
+  S := StringReplace(S, '.', '', [rfReplaceAll]);
+  S := StringReplace(S, ',', '', [rfReplaceAll]);
+
+  Result := StrToCurrDef(S, 0);
+end;
+
+// 3. PROSEDUR PROCESS PECAHAN (Taruh di bawahnya)
+procedure ProcessPecahan(EdtLembar, EdtTotal: TEdit; Nominal: Currency);
+var
+  JumlahLembar: Currency;
+  Total: Currency;
+begin
+  // Sekarang Ribuan(EdtLembar) sudah dikenal oleh compiler
+  Ribuan(EdtLembar);
+
+  JumlahLembar := GetNilaiAngka(EdtLembar);
+  Total := JumlahLembar * Nominal;
+
+  if Total > 0 then
+    EdtTotal.Text := FormatCurr('#,##0', Total)
+  else
+    EdtTotal.Text := '0';
 end;
 
 Function HapusFormat(Nilai:TEdit):Real;
@@ -170,567 +233,119 @@ end;
 
 procedure TFdata_uang_cash_kecil.Save;
 begin
-      with DM.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='Insert Into t_petty_cash_money_data(trans_date,lbr100000,lbr75000,lbr50000,lbr20000,'+
-                  'lbr10000,lbr5000,lbr2000,lbr1000,lbr500,lbr200,lbr100,lbr50,'+
-                  'nilai100000,nilai75000,nilai50000,nilai20000,nilai10000,nilai5000,nilai2000,'+
-                  'nilai1000,nilai500,nilai200,nilai100,nilai50,total_money,created_at,created_by) '+
-                  'Values (:partgl_trans,:parlbr100000,:parlbr50000,:parlbr75000,:parlbr20000,'+
-                  ':parlbr10000,:parlbr5000,:parlbr2000,:parlbr1000,:parlbr500,:parlbr200,:parlbr100,:parlbr50,'+
-                  ':parnilai100000,:parnilai75000,:parnilai50000,:parnilai20000,:parnilai10000,:parnilai5000,:parnilai2000,'+
-                  ':parnilai1000,:parnilai500,:parnilai200,:parnilai100,:parnilai50,:partotal_uang,:parcreated_at,:parcreated_by)';
-        parambyname('partgl_trans').Value:=FormatDateTime('yyyy-mm-dd',DTtanggal.date);
-        if edlbr100rb.Text='' then
-        begin
-          parambyname('parlbr100000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr100000').Value:=HapusFormat(edlbr100rb);
-        end;
+  with DM.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text :=
+      'INSERT INTO t_petty_cash_money_data ( ' +
+      '  trans_date, lbr100000, lbr75000, lbr50000, lbr20000, lbr10000, lbr5000, lbr2000, lbr1000, lbr500, lbr200, lbr100, lbr50, ' +
+      '  nilai100000, nilai75000, nilai50000, nilai20000, nilai10000, nilai5000, nilai2000, nilai1000, nilai500, nilai200, nilai100, nilai50, ' +
+      '  total_money, created_at, created_by ' +
+      ') VALUES ( ' +
+      '  :partgl_trans, :parlbr100000, :parlbr75000, :parlbr50000, :parlbr20000, :parlbr10000, :parlbr5000, :parlbr2000, :parlbr1000, :parlbr500, :parlbr200, :parlbr100, :parlbr50, ' +
+      '  :parnilai100000, :parnilai75000, :parnilai50000, :parnilai20000, :parnilai10000, :parnilai5000, :parnilai2000, :parnilai1000, :parnilai500, :parnilai200, :parnilai100, :parnilai50, ' +
+      '  :partotal_uang, :parcreated_at, :parcreated_by ' +
+      ')';
 
-        if edlbr75rb.Text='' then
-        begin
-          parambyname('parlbr75000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr75000').Value:=HapusFormat(edlbr75rb);
-        end;
+    // 1. Parameter Utama
+    ParamByName('partgl_trans').AsString   := FormatDateTime('yyyy-mm-dd', DTtanggal.Date);
+    ParamByName('partotal_uang').AsFloat := GetNilaiAngka(ednilaitot);
+    ParamByName('parcreated_at').AsString := FormatDateTime('yyyy-mm-dd', Date);
+    ParamByName('parcreated_by').AsString := FHomeLogin.Eduser.Text;
 
-        if edlbr50rb.Text='' then
-        begin
-          parambyname('parlbr50000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr50000').Value:=HapusFormat(edlbr50rb);
-        end;
+    // 2. Parameter Jumlah Lembar (Menggunakan GetNilaiAngka - Otomatis 0 jika kosong)
+    ParamByName('parlbr100000').AsFloat := GetNilaiAngka(edlbr100rb);
+    ParamByName('parlbr75000').AsFloat  := GetNilaiAngka(edlbr75rb);
+    ParamByName('parlbr50000').AsFloat  := GetNilaiAngka(edlbr50rb);
+    ParamByName('parlbr20000').AsFloat  := GetNilaiAngka(edlbr20rb);
+    ParamByName('parlbr10000').AsFloat  := GetNilaiAngka(edlbr10rb);
+    ParamByName('parlbr5000').AsFloat   := GetNilaiAngka(edlbr5rb);
+    ParamByName('parlbr2000').AsFloat   := GetNilaiAngka(edlbr2rb);
+    ParamByName('parlbr1000').AsFloat   := GetNilaiAngka(edlbr1000);
+    ParamByName('parlbr500').AsFloat    := GetNilaiAngka(edlbr500);
+    ParamByName('parlbr200').AsFloat    := GetNilaiAngka(edlbr200);
+    ParamByName('parlbr100').AsFloat    := GetNilaiAngka(edlbr100);
+    ParamByName('parlbr50').AsFloat     := GetNilaiAngka(edlbr50);
 
-        if edlbr20rb.Text='' then
-        begin
-          parambyname('parlbr20000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr20000').Value:=HapusFormat(edlbr20rb);
-        end;
+    // 3. Parameter Nilai Total per Pecahan
+    ParamByName('parnilai100000').AsFloat := GetNilaiAngka(ednilai100rb);
+    ParamByName('parnilai75000').AsFloat  := GetNilaiAngka(ednilai75rb);
+    ParamByName('parnilai50000').AsFloat  := GetNilaiAngka(ednilai50rb);
+    ParamByName('parnilai20000').AsFloat  := GetNilaiAngka(ednilai20rb);
+    ParamByName('parnilai10000').AsFloat  := GetNilaiAngka(ednilai10rb);
+    ParamByName('parnilai5000').AsFloat   := GetNilaiAngka(ednilai5rb);
+    ParamByName('parnilai2000').AsFloat   := GetNilaiAngka(ednilai2rb);
+    ParamByName('parnilai1000').AsFloat   := GetNilaiAngka(ednilai1000);
+    ParamByName('parnilai500').AsFloat    := GetNilaiAngka(ednilai500);
+    ParamByName('parnilai200').AsFloat    := GetNilaiAngka(ednilai200);
+    ParamByName('parnilai100').AsFloat    := GetNilaiAngka(ednilai100);
+    ParamByName('parnilai50').AsFloat     := GetNilaiAngka(ednilai50);
 
-        if edlbr10rb.Text='' then
-        begin
-          parambyname('parlbr10000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr10000').Value:=HapusFormat(edlbr10rb);
-        end;
+    ExecSQL;
+  end;
 
-        if edlbr5rb.Text='' then
-        begin
-          parambyname('parlbr5000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr5000').Value:=HapusFormat(edlbr5rb);
-        end;
-
-        if edlbr2rb.Text='' then
-        begin
-          parambyname('parlbr2000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr2000').Value:=HapusFormat(edlbr2rb);
-        end;
-
-        if edlbr1000.Text='' then
-        begin
-          parambyname('parlbr1000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr1000').Value:=HapusFormat(edlbr1000);
-        end;
-
-        if edlbr500.Text='' then
-        begin
-          parambyname('parlbr500').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr500').Value:=HapusFormat(edlbr500);
-        end;
-
-        if edlbr200.Text='' then
-        begin
-          parambyname('parlbr200').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr200').Value:=HapusFormat(edlbr200);
-        end;
-
-        if edlbr100.Text='' then
-        begin
-          parambyname('parlbr100').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr100').Value:=HapusFormat(edlbr100);
-        end;
-
-        if edlbr50.Text='' then
-        begin
-          parambyname('parlbr50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr50').Value:=HapusFormat(edlbr50);
-        end;
-
-        if ednilai100rb.Text='' then
-        begin
-          parambyname('parnilai100000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai100000').Value:=HapusFormat(ednilai100rb);
-        end;
-
-        if ednilai75rb.Text='' then //14-06-2020
-        begin
-          parambyname('parnilai75000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai75000').Value:=HapusFormat(ednilai75rb);
-        end;
-
-        if ednilai50rb.Text='' then
-        begin
-          parambyname('parnilai50000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50000').Value:=HapusFormat(ednilai50rb);
-        end;
-
-        if ednilai20rb.Text='' then
-        begin
-          parambyname('parnilai20000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai20000').Value:=HapusFormat(ednilai20rb);
-        end;
-
-        if ednilai10rb.Text='' then
-        begin
-          parambyname('parnilai10000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai10000').Value:=HapusFormat(ednilai10rb);
-        end;
-
-        if ednilai5rb.Text='' then
-        begin
-          parambyname('parnilai5000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai5000').Value:=HapusFormat(ednilai5rb);
-        end;
-
-        if ednilai2rb.Text='' then
-        begin
-          parambyname('parnilai2000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai2000').Value:=HapusFormat(ednilai2rb);
-        end;
-
-        if ednilai1000.Text='' then
-        begin
-          parambyname('parnilai1000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai1000').Value:=HapusFormat(ednilai1000);
-        end;
-
-        if ednilai500.Text='' then
-        begin
-          parambyname('parnilai500').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai500').Value:=HapusFormat(ednilai500);
-        end;
-
-        if ednilai200.Text='' then
-        begin
-          parambyname('parnilai200').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai200').Value:=HapusFormat(ednilai200);
-        end;
-
-        if ednilai100.Text='' then
-        begin
-          parambyname('parnilai100').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai100').Value:=HapusFormat(ednilai100);
-        end;
-
-        if ednilai50.Text='' then
-        begin
-          parambyname('parnilai50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50').Value:=HapusFormat(ednilai50);
-        end;
-
-        if ednilai50.Text='' then
-        begin
-          parambyname('parnilai50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50').Value:=HapusFormat(ednilai50);
-        end;
-
-        parambyname('partotal_uang').Value:=HapusFormat(ednilaitot);
-        parambyname('parcreated_at').Value:=NOW;
-         parambyname('parcreated_by').Value:=FHomeLogin.Eduser.Text;
-        execsql;
-      end;
-      MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
+  MessageDlg('Simpan Berhasil..!!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFdata_uang_cash_kecil.Update;
 begin
-      with dm.Qtemp do
-      begin
-        close;
-        sql.Clear;
-        sql.Text:='Update t_petty_cash_money_data set trans_date=:partgl_trans,lbr100000=:parlbr100000,lbr75000=:parlbr75000,'+
-                  'lbr50000=:parlbr50000,lbr20000=:parlbr20000,'+
-                  'lbr10000=:parlbr10000,lbr5000=:parlbr5000,lbr2000=:parlbr2000,lbr1000=:parlbr1000,'+
-                  'lbr500=:parlbr500,lbr200=:parlbr200,lbr100=:parlbr100,lbr50=:parlbr50,'+
-                  'nilai100000=:parnilai100000,nilai75000=:parnilai75000,nilai50000=:parnilai50000,nilai20000=:parnilai20000,'+
-                  'nilai10000=:parnilai10000,nilai5000=:parnilai5000,nilai2000=:parnilai2000,'+
-                  'nilai1000=:parnilai1000,nilai500=:parnilai500,nilai200=:parnilai200,'+
-                  'nilai100=:parnilai100,nilai50=:parnilai50,total_money=:partotal_uang,'+
-                  'updated_at=:parupdate_date,updated_by=:parupdate_by '+
-                  'where trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTtanggal.date)) ;
+with DM.Qtemp do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Text :=
+      'UPDATE t_petty_cash_money_data SET ' +
+      '  trans_date = :partgl_trans, ' +
+      '  lbr100000 = :parlbr100000, lbr75000 = :parlbr75000, lbr50000 = :parlbr50000, ' +
+      '  lbr20000 = :parlbr20000, lbr10000 = :parlbr10000, lbr5000 = :parlbr5000, ' +
+      '  lbr2000 = :parlbr2000, lbr1000 = :parlbr1000, lbr500 = :parlbr500, ' +
+      '  lbr200 = :parlbr200, lbr100 = :parlbr100, lbr50 = :parlbr50, ' +
+      '  nilai100000 = :parnilai100000, nilai75000 = :parnilai75000, nilai50000 = :parnilai50000, ' +
+      '  nilai20000 = :parnilai20000, nilai10000 = :parnilai10000, nilai5000 = :parnilai5000, ' +
+      '  nilai2000 = :parnilai2000, nilai1000 = :parnilai1000, nilai500 = :parnilai500, ' +
+      '  nilai200 = :parnilai200, nilai100 = :parnilai100, nilai50 = :parnilai50, ' +
+      '  total_money = :partotal_uang, updated_at = :parupdate_date, updated_by = :parupdate_by ' +
+      'WHERE trans_date = :parwhere_tgl';
 
-        parambyname('partgl_trans').Value:=FormatDateTime('yyyy-mm-dd',DTtanggal.date);
-        if edlbr100rb.Text='' then
-        begin
-          parambyname('parlbr100000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr100000').Value:=HapusFormat(edlbr100rb);
-        end;
+    // 1. Parameter Utama & WHERE
+    ParamByName('parwhere_tgl').AsString      := FormatDateTime('yyyy-mm-dd', DTtanggal.Date);
+    ParamByName('partgl_trans').AsString       := FormatDateTime('yyyy-mm-dd', DTtanggal.Date);
+    ParamByName('partotal_uang').AsFloat     := GetNilaiAngka(ednilaitot);
+    ParamByName('parupdate_date').AsString := FormatDateTime('yyyy-mm-dd', Date);
+    ParamByName('parupdate_by').AsString     := FHomeLogin.Eduser.Text;
 
-        if edlbr75rb.Text='' then
-        begin
-          parambyname('parlbr75000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr75000').Value:=HapusFormat(edlbr75rb);
-        end;
+    // 2. Parameter Jumlah Lembar
+    ParamByName('parlbr100000').AsFloat := GetNilaiAngka(edlbr100rb);
+    ParamByName('parlbr75000').AsFloat  := GetNilaiAngka(edlbr75rb);
+    ParamByName('parlbr50000').AsFloat  := GetNilaiAngka(edlbr50rb);
+    ParamByName('parlbr20000').AsFloat  := GetNilaiAngka(edlbr20rb);
+    ParamByName('parlbr10000').AsFloat  := GetNilaiAngka(edlbr10rb);
+    ParamByName('parlbr5000').AsFloat   := GetNilaiAngka(edlbr5rb);
+    ParamByName('parlbr2000').AsFloat   := GetNilaiAngka(edlbr2rb);
+    ParamByName('parlbr1000').AsFloat   := GetNilaiAngka(edlbr1000);
+    ParamByName('parlbr500').AsFloat    := GetNilaiAngka(edlbr500);
+    ParamByName('parlbr200').AsFloat    := GetNilaiAngka(edlbr200);
+    ParamByName('parlbr100').AsFloat    := GetNilaiAngka(edlbr100);
+    ParamByName('parlbr50').AsFloat     := GetNilaiAngka(edlbr50);
 
-        if edlbr50rb.Text='' then
-        begin
-          parambyname('parlbr50000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr50000').Value:=HapusFormat(edlbr50rb);
-        end;
+    // 3. Parameter Nilai Total per Pecahan
+    ParamByName('parnilai100000').AsFloat := GetNilaiAngka(ednilai100rb);
+    ParamByName('parnilai75000').AsFloat  := GetNilaiAngka(ednilai75rb);
+    ParamByName('parnilai50000').AsFloat  := GetNilaiAngka(ednilai50rb);
+    ParamByName('parnilai20000').AsFloat  := GetNilaiAngka(ednilai20rb);
+    ParamByName('parnilai10000').AsFloat  := GetNilaiAngka(ednilai10rb);
+    ParamByName('parnilai5000').AsFloat   := GetNilaiAngka(ednilai5rb);
+    ParamByName('parnilai2000').AsFloat   := GetNilaiAngka(ednilai2rb);
+    ParamByName('parnilai1000').AsFloat   := GetNilaiAngka(ednilai1000);
+    ParamByName('parnilai500').AsFloat    := GetNilaiAngka(ednilai500);
+    ParamByName('parnilai200').AsFloat    := GetNilaiAngka(ednilai200);
+    ParamByName('parnilai100').AsFloat    := GetNilaiAngka(ednilai100);
+    ParamByName('parnilai50').AsFloat     := GetNilaiAngka(ednilai50);
 
-        if edlbr20rb.Text='' then
-        begin
-          parambyname('parlbr20000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr20000').Value:=HapusFormat(edlbr20rb);
-        end;
-
-        if edlbr10rb.Text='' then
-        begin
-          parambyname('parlbr10000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr10000').Value:=HapusFormat(edlbr10rb);
-        end;
-
-        if edlbr5rb.Text='' then
-        begin
-          parambyname('parlbr5000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr5000').Value:=HapusFormat(edlbr5rb);
-        end;
-
-        if edlbr2rb.Text='' then
-        begin
-          parambyname('parlbr2000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr2000').Value:=HapusFormat(edlbr2rb);
-        end;
-
-        if edlbr1000.Text='' then
-        begin
-          parambyname('parlbr1000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr1000').Value:=HapusFormat(edlbr1000);
-        end;
-
-        if edlbr500.Text='' then
-        begin
-          parambyname('parlbr500').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr500').Value:=HapusFormat(edlbr500);
-        end;
-
-        if edlbr200.Text='' then
-        begin
-          parambyname('parlbr200').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr200').Value:=HapusFormat(edlbr200);
-        end;
-
-        if edlbr100.Text='' then
-        begin
-          parambyname('parlbr100').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr100').Value:=HapusFormat(edlbr100);
-        end;
-
-        if edlbr50.Text='' then
-        begin
-          parambyname('parlbr50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parlbr50').Value:=HapusFormat(edlbr50);
-        end;
-
-        if ednilai100rb.Text='' then
-        begin
-          parambyname('parnilai100000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai100000').Value:=HapusFormat(ednilai100rb);
-        end;
-        if ednilai75rb.Text='' then
-        begin
-          parambyname('parnilai75000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai75000').Value:=HapusFormat(ednilai75rb);
-        end;
-
-        if ednilai50rb.Text='' then
-        begin
-          parambyname('parnilai50000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50000').Value:=HapusFormat(ednilai50rb);
-        end;
-
-        if ednilai20rb.Text='' then
-        begin
-          parambyname('parnilai20000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai20000').Value:=HapusFormat(ednilai20rb);
-        end;
-
-        if ednilai10rb.Text='' then
-        begin
-          parambyname('parnilai10000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai10000').Value:=HapusFormat(ednilai10rb);
-        end;
-
-        if ednilai5rb.Text='' then
-        begin
-          parambyname('parnilai5000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai5000').Value:=HapusFormat(ednilai5rb);
-        end;
-
-        if ednilai2rb.Text='' then
-        begin
-          parambyname('parnilai2000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai2000').Value:=HapusFormat(ednilai2rb);
-        end;
-
-        if ednilai1000.Text='' then
-        begin
-          parambyname('parnilai1000').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai1000').Value:=HapusFormat(ednilai1000);
-        end;
-
-        if ednilai500.Text='' then
-        begin
-          parambyname('parnilai500').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai500').Value:=HapusFormat(ednilai500);
-        end;
-
-        if ednilai200.Text='' then
-        begin
-          parambyname('parnilai200').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai200').Value:=HapusFormat(ednilai200);
-        end;
-
-        if ednilai100.Text='' then
-        begin
-          parambyname('parnilai100').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai100').Value:=HapusFormat(ednilai100);
-        end;
-
-        if ednilai50.Text='' then
-        begin
-          parambyname('parnilai50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50').Value:=HapusFormat(ednilai50);
-        end;
-
-        if ednilai50.Text='' then
-        begin
-          parambyname('parnilai50').Value:=0;
-        end
-        else
-        begin
-          parambyname('parnilai50').Value:=HapusFormat(ednilai50);
-        end;
-
-        parambyname('partotal_uang').Value:=HapusFormat(ednilaitot);
-        parambyname('parupdate_by').Value:=FHomeLogin.Eduser.Text;
-        parambyname('parupdate_date').Value:=NOW;
-        execsql;
-      end;
-      MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
-end;
-
-procedure TFdata_uang_cash_kecil.Total_nilai;
-begin
-  if ednilai100rb.Text='' then
-  a:=0
-  else
-  a:=HapusFormat(ednilai100rb);
-
-  if ednilai75rb.Text='' then
-  m:=0
-  else
-  m:=HapusFormat(ednilai75rb);
-
-
-  if ednilai50rb.Text='' then
-  b:=0
-  else
-  b:=HapusFormat(ednilai50rb);
-
-  if ednilai20rb.Text='' then
-  c:=0
-  else
-  c:=HapusFormat(ednilai20rb);
-
-  if ednilai10rb.Text='' then
-  d:=0
-  else
-  d:=HapusFormat(ednilai10rb);
-
-  if ednilai5rb.Text='' then
-  e:=0
-  else
-  e:=HapusFormat(ednilai5rb);
-
-  if ednilai2rb.Text='' then
-  f:=0
-  else
-  f:=HapusFormat(ednilai2rb);
-
-  if ednilai1000.Text='' then
-  g:=0
-  else
-  g:=HapusFormat(ednilai1000);
-
-  if ednilai500.Text='' then
-  h:=0
-  else
-  h:=HapusFormat(ednilai500);
-
-  if ednilai200.Text='' then
-  i:=0
-  else
-  i:=HapusFormat(ednilai200);
-
-  if ednilai100.Text='' then
-  j:=0
-  else
-  j:=HapusFormat(ednilai100);
-
-  if ednilai50.Text='' then
-  k:=0
-  else
-  k:=HapusFormat(ednilai50);
-
-  l:=a+b+c+d+e+f+g+h+i+j+k+m;
-  ednilaitot.text:=FloatToStr(l);
+    ExecSQL;
+  end;
+  MessageDlg('Ubah Berhasil..!!',mtInformation,[MBOK],0);
 end;
 
 procedure TFdata_uang_cash_kecil.btnnewClick(Sender: TObject);
@@ -817,7 +432,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='select * from t_cash_money_data WHERE trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTtanggal.date));
+      Sql.Text:='select * from t_petty_cash_money_data WHERE trans_date='+QuotedStr(FormatDateTime('yyyy-mm-dd',DTtanggal.date));
       Open;
     end;
     if dm.QTemp2.RecordCount>0 then
@@ -843,194 +458,79 @@ end;
 
 procedure TFdata_uang_cash_kecil.edlbr1000Change(Sender: TObject);
 begin
-  if edlbr1000.Text='' then
-  begin
-    ednilai1000.Text:='';
-  end
-  else
-  begin
-    a:=StrToFloat(edlbr1000.Text);
-    b:=strtofloat('1000');
-    c:=a*b;
-    ednilai1000.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr1000, ednilai1000, 1000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr100Change(Sender: TObject);
 begin
-  if edlbr100.Text='' then
-  begin
-    ednilai100.Text:='';
-  end
-  else
-  begin
-    a:=StrToFloat(edlbr100.Text);
-    b:=strtofloat('100');
-    c:=a*b;
-    ednilai100.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr100, ednilai100, 100);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr100rbChange(Sender: TObject);
 begin
-  if edlbr100rb.Text='' then
-  begin
-    ednilai100rb.Text:='';
-  end
-  else
-  begin
-    a:=strtofloat(edlbr100rb.Text);
-    b:=strtofloat('100000');
-    c:=a*b;
-    ednilai100rb.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr100rb, ednilai100rb, 100000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr10rbChange(Sender: TObject);
 begin
-  if edlbr10rb.Text='' then
-  begin
-    ednilai10rb.Text:='';
-  end
-  else
-  begin
-    a:=StrToFloat(edlbr10rb.Text);
-    b:=strtofloat('10000');
-    c:=a*b;
-    ednilai10rb.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr10rb, ednilai10rb, 10000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr200Change(Sender: TObject);
 begin
-    if edlbr200.Text='' then
-    begin
-      ednilai200.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr200.Text);
-      b:=strtofloat('200');
-      c:=a*b;
-      ednilai200.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr200, ednilai200, 200);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr20rbChange(Sender: TObject);
 begin
-    if edlbr20rb.Text='' then
-    begin
-      ednilai20rb.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr20rb.Text);
-      b:=strtofloat('20000');
-      c:=a*b;
-      ednilai20rb.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr20rb, ednilai20rb, 20000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr2rbChange(Sender: TObject);
 begin
-    if edlbr2rb.Text='' then
-    begin
-      ednilai2rb.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr2rb.Text);
-      b:=strtofloat('2000');
-      c:=a*b;
-      ednilai2rb.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr2rb, ednilai2rb, 2000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr500Change(Sender: TObject);
 begin
-    if edlbr500.Text='' then
-    begin
-      ednilai500.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr500.Text);
-      b:=strtofloat('500');
-      c:=a*b;
-      ednilai500.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr500, ednilai500, 500);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr50Change(Sender: TObject);
 begin
-    if edlbr50.Text='' then
-    begin
-      ednilai50.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr50.Text);
-      b:=strtofloat('50');
-      c:=a*b;
-      ednilai50.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr50, ednilai50, 50);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr50rbChange(Sender: TObject);
 begin
-    if edlbr50rb.Text='' then
-    begin
-      ednilai50rb.Text:='';
-    end
-    else
-    begin
-      a:=StrToFloat(edlbr50rb.Text);
-      b:=strtofloat('50000');
-      c:=a*b;
-      ednilai50rb.text:=FloatToStr(c);
-    end;
-    Total_nilai;
+    ProcessPecahan(edlbr50rb, ednilai50rb, 50000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr5rbChange(Sender: TObject);
 begin
-  if edlbr5rb.Text='' then
-  begin
-    ednilai5rb.Text:='';
-  end
-  else
-  begin
-    a:=StrToFloat(edlbr5rb.Text);
-    b:=strtofloat('5000');
-    c:=a*b;
-    ednilai5rb.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr5rb, ednilai5rb, 5000);
+    HitungGrandTotal;
 end;
 
 procedure TFdata_uang_cash_kecil.edlbr75rbChange(Sender: TObject);
 begin
-  if edlbr75rb.Text='' then
-  begin
-    ednilai75rb.Text:='';
-  end
-  else
-  begin
-    a:=StrToFloat(edlbr75rb.Text);
-    b:=strtofloat('75000');
-    c:=a*b;
-    ednilai75rb.text:=FloatToStr(c);
-  end;
-  Total_nilai;
+    ProcessPecahan(edlbr75rb, ednilai75rb, 75000);
+    HitungGrandTotal;
+end;
+
+procedure TFdata_uang_cash_kecil.ednilai50Change(Sender: TObject);
+begin
+    Ribuan(ednilai50);
 end;
 
 procedure TFdata_uang_cash_kecil.ednilaitotChange(Sender: TObject);
@@ -1040,6 +540,7 @@ end;
 
 procedure TFdata_uang_cash_kecil.FormShow(Sender: TObject);
 begin
+  self.Clear;
   DTtanggal.Date:=Now();
 end;
 

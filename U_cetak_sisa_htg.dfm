@@ -2,8 +2,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   Left = 0
   Top = 0
   Caption = 'F_cetak_sisa_htg'
-  ClientHeight = 433
-  ClientWidth = 1132
+  ClientHeight = 424
+  ClientWidth = 1126
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object DBGridSisaHutang: TDBGridEh
     Left = 0
     Top = 127
-    Width = 1132
-    Height = 306
+    Width = 1126
+    Height = 297
     Align = alClient
     DataSource = DSisaHutang
     DrawMemoText = True
@@ -134,7 +134,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1132
+    Width = 1126
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -142,6 +142,7 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 1132
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'
@@ -156,8 +157,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 696
-    Top = 128
+    Left = 680
+    Top = 152
   end
   object frxReport2: TfrxReport
     Version = '2022.1.3'
@@ -2518,8 +2519,8 @@ object F_cetak_sisa_htg: TF_cetak_sisa_htg
   object MemSisaHutang: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 384
-    Top = 136
+    Left = 400
+    Top = 144
   end
   object DSisaHutang: TDataSource
     DataSet = MemSisaHutang

@@ -985,8 +985,8 @@ object FListDeliveryOrder: TFListDeliveryOrder
         'det spm_det left join t_spm spm on spm.notrans=spm_det.notrans w' +
         'here spm.deleted_at is null)d on d.notrans_do=a.notrans'
       ' ORDER BY a.created_at Desc')
-    Left = 884
-    Top = 16
+    Left = 812
+    Top = 24
     object QDeliveryOrdernotrans: TStringField
       FieldName = 'notrans'
       Size = 100

@@ -440,7 +440,13 @@ begin
       sql.Text:='SELECT '+strVolume+'* FROM get_rekap_penjualan_percustomer() '+
                 'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                 strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+QuotedStr(strTglAkhir)+')';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if Qreport.RecordCount=0 then
@@ -497,10 +503,16 @@ begin
                  'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                  strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+
                  QuotedStr(strTglAkhir)+') group by thn,bln2,bln,kode';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
-    IntCount:=3;
+    IntCount:=4;
     strSelectTotQty:='';
     strWhereTahun:='';
     strWhereBulan:='';
@@ -509,7 +521,7 @@ begin
 
     if DBGrid.Columns.Count-1>IntCount then
     begin
-      for i:=DBGrid.Columns.Count-1 downto 3 do begin
+      for i:=DBGrid.Columns.Count-1 downto 4 do begin
         DBGrid.Columns[i].FieldName:='';
         DBGrid.Columns[i].Destroy;
       end;
@@ -561,7 +573,7 @@ begin
         EmptyParam;
         close;
         sql.Clear;
-        sql.Text:='SELECT nama_kabupaten,nama_kecamatan,outlet_name, '+
+        sql.Text:='SELECT nama_kabupaten,nama_kecamatan,outlet_name,customer_name_pkp, '+
                   strSelectTotQty +' '+
                   'SUM('+strVolume+') AS grand_total '+
                   'FROM get_rekap_penjualan_percustomer() '+
@@ -569,11 +581,17 @@ begin
                   strKelompokBarang+' '+
                   'AND thn IN ('+strWhereTahun+') '+
                   'AND bln2 IN ('+strWhereBulan+') '+
-                  'GROUP BY nama_kabupaten,nama_kecamatan,outlet_name '+
+                  'GROUP BY nama_kabupaten,nama_kecamatan,outlet_name,customer_name_pkp '+
                   'ORDER BY nama_kabupaten, nama_kecamatan, outlet_name;';
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
-      for i:=DBGrid.Columns.Count-1 downto 3 do begin
+      for i:=DBGrid.Columns.Count-1 downto 4 do begin
         DBGrid.Columns[i].Width:= DBGrid.Columns[i].Width+30;
         DBGrid.Columns[i].Footer.ValueType:=fvtSum;
         DBGrid.Columns[i].Footer.Font.Style:=[fsBold];
@@ -647,7 +665,13 @@ begin
       sql.Text:='SELECT '+strVolume+'* FROM get_rekap_penjualan_percustomer() '+
                 'WHERE '+strKaresidenan+strKabupaten+strKecamatan+strJenisUsaha+
                 strKelompokBarang+' AND (trans_date BETWEEN '+QuotedStr(strTglAwal)+' AND '+QuotedStr(strTglAkhir)+')';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if Qreport.RecordCount=0 then
@@ -707,7 +731,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT code , description,  description AS keterangan  from t_customer_type_business  WHERE	deleted_at IS NULL';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   cbJenisUsaha.Items.Add('Semua');
   ListCodeUsaha.Add('');

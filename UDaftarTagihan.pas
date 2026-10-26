@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBGridEhGrouping, ToolCtrlsEh,
   DBGridEhToolCtrls, DynVarsEh, MemTableDataEh, Data.DB, RzButton, Vcl.ExtCtrls,
   MemTableEh, EhLibVCL, GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, Vcl.StdCtrls,
-  Vcl.Mask, RzEdit, RzBtnEdt, RzPanel, RzLabel, Vcl.Buttons;
+  Vcl.Mask, RzEdit, RzBtnEdt, RzPanel, RzLabel, Vcl.Buttons, Vcl.ComCtrls, RzDTP;
 
 type
   TFDaftarTagihan = class(TForm)
@@ -40,6 +40,8 @@ type
     MemDetailPiutangkecamatan: TStringField;
     RzPanel2: TRzPanel;
     SpeedButton1: TSpeedButton;
+    dtTanggal: TRzDateTimePicker;
+    RzLabel4: TRzLabel;
     procedure BSaveClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -50,6 +52,8 @@ type
     procedure edKaresidenanChange(Sender: TObject);
     procedure edKabupatenChange(Sender: TObject);
     procedure RzButton1Click(Sender: TObject);
+    procedure dtTanggalChange(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -174,7 +178,13 @@ begin
           close;
           sql.Clear;
           sql.Text:='select no_invoice from t_dpp WHERE no_invoice='+QuotedStr(MemDetailPiutang['no_tagihan'])+' AND date_dpp='+QuotedStr(FormatDateTime('yyyy-mm-dd',FDataPenagihanPiutang.dtTagih.Date))+' AND deleted_at is NULL';
-          open;
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
 
         if dm.Qtemp.RecordCount>0 then
@@ -238,6 +248,9 @@ begin
               //FDataPenagihanPiutang.MemDetail['tgl_tempo_cek']:='';
               FDataPenagihanPiutang.MemDetail['nilai_cek']:='0';
               FDataPenagihanPiutang.MemDetail['kontra_bon']:='0';
+              FDataPenagihanPiutang.MemDetail['no_counter_bill']:='';
+              FDataPenagihanPiutang.MemDetail['date_counter_bill']:=null;
+
               FDataPenagihanPiutang.MemDetail.post;
          end;
        MemDetailPiutang.Next;
@@ -315,6 +328,7 @@ begin
            MemDetailPiutang.Next;
            end;
          end;
+         FDataPenerimaanBank.RefreshGridAkunBankPiutang;
       end
       Except on E :Exception do
         begin
@@ -379,6 +393,15 @@ begin
 end;
 end;
 
+procedure TFDaftarTagihan.dtTanggalChange(Sender: TObject);
+begin
+  if (vcall='dpp') AND (dtTanggal.Date<FDataPenagihanPiutang.dtTagih.Date) then
+  begin
+    MessageDlg('Tanggal tidak boleh lebih kurang dari tanggal penagihan..!!',mtInformation,[mbRetry],0);
+    dtTanggal.Date:=FDataPenagihanPiutang.dtTagih.Date;
+  end;
+end;
+
 procedure TFDaftarTagihan.edKabupatenButtonClick(Sender: TObject);
 begin
   if edKaresidenan.Text<>'' then
@@ -438,6 +461,7 @@ end;
 
 procedure TFDaftarTagihan.FormShow(Sender: TObject);
 begin
+  DBGridEh1.SearchPanel.SearchingText:='';
   if vcall='edit_terima_bank' then
   begin
     DBGridEh1.Columns[8].Visible:=False;
@@ -447,7 +471,15 @@ begin
     Panel2.Visible:=True;
   end;
 
-  if vcall='dpp' then RzPanel1.Visible:=True else RzPanel1.Visible:=False;
+  if vcall='dpp' then
+  begin
+    RzPanel1.Visible:=True;
+    dtTanggal.Date:=FDataPenagihanPiutang.dtTagih.Date;
+  end
+  else begin
+    RzPanel1.Visible:=False;
+    dtTanggal.Date:=NOW();
+  end;
 
   if vcall='terima_bank' then
   begin
@@ -480,24 +512,29 @@ begin
       strWhereKecamatan:=' AND code_kecamatan='+QuotedStr(strKdKecamatan)+' ';
     end;
 
-
     with Dm.Qtemp do
     begin
       close;
       sql.clear;
       sql.Text:='select code_cust,name_cust,customer_name_pkp,trans_no no_trans,trans_date date_trans,date_tempo,no_inv_tax,sisa_piutang total_receivables,code_kabupaten,kabupaten,code_kecamatan,kecamatan '+
-                'from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',FDataPenagihanPiutang.dtTagih.Date))+') '+
+                'from get_piutang_invoice('+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+') '+
                 'where '+
 //                code_cust='+QuotedStr(kd_outlet)+' and
 //                'code_kabupaten='+QuotedStr(FDataPenagihanPiutang.strKabupatenID)+' AND
                 'no_inv_tax is not null and no_inv_tax<>'''' AND trans_no NOT IN (SELECT no_invoice from get_dpp_cash_bank_acceptance('+QuotedStr(formatdatetime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+')) AND sisa_piutang>0 '+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+
-                'order by (kabupaten='+QuotedStr(FDataPenagihanPiutang.edKabupaten.Text)+') ASC,kabupaten DESC, name_cust DESC, trans_no ASC  ';
+                'order by (kabupaten='+QuotedStr(FDataPenagihanPiutang.edKabupaten.Text)+') ASC,kabupaten DESC, name_cust DESC, trans_date ASC, trans_no ASC  ';
 //      sql.add(' SELECT * from ('+
 //              ' SELECT * '+
 //              ' FROM "public"."vget_piutang") a '+
 //              ' WHERE "code_cust"='+QuotedStr(kd_outlet)+' and no_inv_tax is not null and no_inv_tax<>'''' '+
 //              ' ORDER BY date_tempo desc');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 
@@ -532,7 +569,13 @@ begin
                 'where code_cust='+QuotedStr(kd_outlet)+' AND '+
                 'trans_no NOT IN (SELECT no_invoice from get_dpp_cash_bank_acceptance('+QuotedStr(formatdatetime('yyyy-mm-dd',FDataPenerimaanBank.dtTrans.Date))+','+QuotedStr(kd_outlet)+')) AND sisa_piutang>0'+
                 strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+' ORDER BY date_tempo desc';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 
@@ -549,7 +592,13 @@ begin
               ' AND date_tempo BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',periode1))+' '+
               ' AND '+QuotedStr(formatdatetime('yyyy-mm-dd',periode2))+' '+
               ' ORDER BY date_tempo desc');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 
@@ -567,34 +616,38 @@ begin
 
   if  Dm.Qtemp.RecordCount<>0 then
   begin
-
     Dm.Qtemp.first;
     while not Dm.Qtemp.Eof do
     begin
-     FDaftarTagihan.MemDetailPiutang.insert;
-     if (vcall='dpp') OR (vcall='terima_bank') OR (vcall='edit_terima_bank') then
-     begin
-      FDaftarTagihan.MemDetailPiutang['code_cust']:=Dm.Qtemp.FieldByName('code_cust').AsString;
-      FDaftarTagihan.MemDetailPiutang['name_cust']:=Dm.Qtemp.FieldByName('name_cust').AsString;
-      FDaftarTagihan.MemDetailPiutang['customer_name_pkp']:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
-      FDaftarTagihan.MemDetailPiutang['kabupaten']:=Dm.Qtemp.FieldByName('kabupaten').AsString;
-      FDaftarTagihan.MemDetailPiutang['kecamatan']:=Dm.Qtemp.FieldByName('kecamatan').AsString;
-     end;
+      FDaftarTagihan.MemDetailPiutang.insert;
+      if (vcall='dpp') OR (vcall='terima_bank') OR (vcall='edit_terima_bank') then
+      begin
+        FDaftarTagihan.MemDetailPiutang['code_cust']:=Dm.Qtemp.FieldByName('code_cust').AsString;
+        FDaftarTagihan.MemDetailPiutang['name_cust']:=Dm.Qtemp.FieldByName('name_cust').AsString;
+        FDaftarTagihan.MemDetailPiutang['customer_name_pkp']:=Dm.Qtemp.FieldByName('customer_name_pkp').AsString;
+        FDaftarTagihan.MemDetailPiutang['kabupaten']:=Dm.Qtemp.FieldByName('kabupaten').AsString;
+        FDaftarTagihan.MemDetailPiutang['kecamatan']:=Dm.Qtemp.FieldByName('kecamatan').AsString;
+      end;
 
-     FDaftarTagihan.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
-     FDaftarTagihan.MemDetailPiutang['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
-     FDaftarTagihan.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_trans').AsString;
-     FDaftarTagihan.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
-     FDaftarTagihan.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('total_receivables').AsFloat;
-     FDaftarTagihan.MemDetailPiutang['pilih']:=0;
-     FDaftarTagihan.MemDetailPiutang.post;
-     Dm.Qtemp.next;
+      FDaftarTagihan.MemDetailPiutang['tgl_faktur']:=Dm.Qtemp.FieldByName('date_trans').AsDateTime;
+      FDaftarTagihan.MemDetailPiutang['tgl_tempo']:=Dm.Qtemp.FieldByName('date_tempo').AsDateTime;
+      FDaftarTagihan.MemDetailPiutang['no_tagihan']:=Dm.Qtemp.FieldByName('no_trans').AsString;
+      FDaftarTagihan.MemDetailPiutang['no_faktur']:=Dm.Qtemp.FieldByName('no_inv_tax').AsString;
+      FDaftarTagihan.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('total_receivables').AsFloat;
+      FDaftarTagihan.MemDetailPiutang['pilih']:=0;
+      FDaftarTagihan.MemDetailPiutang.post;
+      Dm.Qtemp.next;
     end;
   end;
 end;
 
 
 procedure TFDaftarTagihan.RzButton1Click(Sender: TObject);
+begin
+  RefreshGrid;
+end;
+
+procedure TFDaftarTagihan.SpeedButton1Click(Sender: TObject);
 begin
   RefreshGrid;
 end;

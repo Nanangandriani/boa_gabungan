@@ -279,12 +279,12 @@ begin
   if edNamaPelanggan.Text='' then
   begin
     MessageDlg('Nama Pelanggan Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    cbJenisBarang.SetFocus;
+//    cbJenisBarang.SetFocus;
   end else
   if cbKelompokBarang.Text='' then
   begin
     MessageDlg('Kelompok Barang Wajib Diisi..!!',mtInformation,[mbRetry],0);
-    cbKelompokBarang.SetFocus;
+//    cbKelompokBarang.SetFocus;
   end else
   begin
 //    AClass := FindClass('TFTambah_Barang');

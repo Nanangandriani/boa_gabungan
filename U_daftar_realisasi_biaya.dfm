@@ -230,7 +230,7 @@ object Fdaftar_realisasi_biaya: TFdaftar_realisasi_biaya
   object Mem_Lap_Realiasasi_Biaya: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 440
+    Left = 472
     Top = 216
     object Mem_Lap_Realiasasi_Biayavoucher_no: TStringField
       FieldName = 'voucher_no'
@@ -266,7 +266,7 @@ object Fdaftar_realisasi_biaya: TFdaftar_realisasi_biaya
   end
   object DataSetDriverEh1: TDataSetDriverEh
     ProviderDataSet = QLap_Realiasasi_Biaya
-    Left = 448
+    Left = 464
     Top = 264
   end
   object ActMenu: TActionManager
@@ -978,6 +978,7 @@ object Fdaftar_realisasi_biaya: TFdaftar_realisasi_biaya
       Hint = 'Sumber Data'
       Visible = ivAlways
       Items.Strings = (
+        '<<SEMUA SUMBER>>'
         'PEMBELIAN'
         'PENGELUARAN KAS DAN BANK'
         'KAS KECIL'

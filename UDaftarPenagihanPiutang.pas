@@ -38,10 +38,21 @@ type
     MemDetailPiutangtglfaktur: TDateField;
     MemDetailPiutangpilih: TBooleanField;
     MemDetailPiutangid_dpp: TStringField;
+    MemDetailPiutangcash: TFloatField;
+    MemDetailPiutangreceipt: TFloatField;
+    MemDetailPiutangcounter_bill: TFloatField;
+    MemDetailPiutangbank_receipt: TStringField;
+    MemDetailPiutangdate_receipt: TStringField;
+    MemDetailPiutangname_bank_cheque: TStringField;
+    MemDetailPiutangno_cheque: TStringField;
+    MemDetailPiutangcheque_amount1: TFloatField;
+    MemDetailPiutangdate_tempo_cheque: TStringField;
+    MemDetailPiutangstatus_dpp_kolektor_harmoni: TStringField;
     procedure btTampilkanClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGridEh1DblClick(Sender: TObject);
+    procedure BBatalClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,75 +73,100 @@ implementation
 
 uses UDataModule, UDataPenerimaanBank;
 
+procedure TFDaftarPenagihanPiutang.BBatalClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFDaftarPenagihanPiutang.BSaveClick(Sender: TObject);
 var
   rec: Integer;
 begin
   Status:=0;
   rec:=0;
-      if not dm.Koneksi.InTransaction then
-       dm.Koneksi.StartTransaction;
-      try
-      if MemDetailPiutang.RecordCount=0 then
-      begin
-        MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
-        //edKodeVendorMuatan.SetFocus;
-      end
-      else if Status = 0 then
-      begin
-         //cek ada yang di tandai tidak
-         MemDetailPiutang.First;
-         while not MemDetailPiutang.Eof do
-         begin
-           if MemDetailPiutang['pilih']=true then
-           begin
-            rec:=rec+1;
-           end;
-         MemDetailPiutang.Next;
-         end;
+  if not dm.Koneksi.InTransaction then
+   dm.Koneksi.StartTransaction;
+  try
+  if MemDetailPiutang.RecordCount=0 then
+  begin
+    MessageDlg('Tidak Ada Data',mtInformation,[mbRetry],0);
+    //edKodeVendorMuatan.SetFocus;
+  end
+  else if Status = 0 then
+  begin
+     //cek ada yang di tandai tidak
+     MemDetailPiutang.First;
+     while not MemDetailPiutang.Eof do
+     begin
+       if MemDetailPiutang['pilih']=true then
+       begin
+        rec:=rec+1;
+       end;
 
-         if rec=0 then
-         begin
-           ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
-           exit;
-         end;
+       if MemDetailPiutang['status_dpp_kolektor_harmoni']='Pengajuan' then
+       begin
+        MessageDlg('Status penerimaan uang dari kolektor ada yang masih dalam pengajuan..!!',mtInformation,[mbRetry],0);
+        Exit;
+       end;
 
-         //data di tandai kirm ke do
-         if rec>0 then
-         begin
-           FDataPenerimaanBank.MemDetailPiutang.active:=false;
-           FDataPenerimaanBank.MemDetailPiutang.active:=true;
-           FDataPenerimaanBank.MemDetailPiutang.EmptyTable;
+     MemDetailPiutang.Next;
+     end;
 
-           MemDetailPiutang.First;
-           while not MemDetailPiutang.Eof do
-           begin
-             if MemDetailPiutang['pilih']=true then
-             begin
-                  FDataPenerimaanBank.MemDetailPiutang.insert;
-                  FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=MemDetailPiutang['tglfaktur'];
-                  FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=MemDetailPiutang['no_faktur'];
-                  FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=MemDetailPiutang['no_tagihan'];
-                  FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=MemDetailPiutang['jum_piutang'];
-                  FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=MemDetailPiutang['jum_piutang'];
-                  FDataPenerimaanBank.MemDetailPiutang['keterangan']:='PELUNASAN PIUTANG ';
-                  FDataPenerimaanBank.MemDetailPiutang['id_dpp']:=MemDetailPiutang['id_dpp'];;
-                  FDataPenerimaanBank.MemDetailPiutang.post;
-             end;
-           MemDetailPiutang.Next;
-           end;
-         end;
-      end
-      Except on E :Exception do
-        begin
+     if rec=0 then
+     begin
+       ShowMessage('Tidak Ada Data Yang Di Tandai.. !!');
+       exit;
+     end;
+
+     //data di tandai kirm ke do
+     if rec>0 then
+     begin
+       FDataPenerimaanBank.MemDetailPiutang.active:=false;
+       FDataPenerimaanBank.MemDetailPiutang.active:=true;
+       FDataPenerimaanBank.MemDetailPiutang.EmptyTable;
+
+
+
+       MemDetailPiutang.First;
+       while not MemDetailPiutang.Eof do
+       begin
+         if MemDetailPiutang['pilih']=true then
+         begin
+          FDataPenerimaanBank.MemDetailPiutang.insert;
+          FDataPenerimaanBank.MemDetailPiutang['tgl_faktur']:=MemDetailPiutang['tglfaktur'];
+          FDataPenerimaanBank.MemDetailPiutang['no_faktur']:=MemDetailPiutang['no_faktur'];
+          FDataPenerimaanBank.MemDetailPiutang['no_tagihan']:=MemDetailPiutang['no_tagihan'];
+          FDataPenerimaanBank.MemDetailPiutang['jum_piutang']:=MemDetailPiutang['jum_piutang'];
+          FDataPenerimaanBank.MemDetailPiutang['jum_piutang_real']:=MemDetailPiutang['jum_piutang'];
+          FDataPenerimaanBank.MemDetailPiutang['keterangan']:='PELUNASAN PIUTANG ';
+          FDataPenerimaanBank.MemDetailPiutang['id_dpp']:=MemDetailPiutang['id_dpp'];
+
+          if UpperCase(MemDetailPiutang['status_dpp_kolektor_harmoni'])<>'BELUM ADA PENGAJUAN' then
           begin
-            MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-            Dm.koneksi.Rollback ;
+            if FDataPenerimaanBank.edKodeJenisBayar.Text = '1' then
+              FDataPenerimaanBank.MemDetailPiutang['jum_piutang'] := MemDetailPiutang['cash']
+            else if (FDataPenerimaanBank.edKodeJenisBayar.Text = '2') OR (FDataPenerimaanBank.edKodeJenisBayar.Text= '4') then
+              FDataPenerimaanBank.MemDetailPiutang['jum_piutang'] := MemDetailPiutang['receipt']
+            else if FDataPenerimaanBank.edKodeJenisBayar.Text = '3' then
+              FDataPenerimaanBank.MemDetailPiutang['jum_piutang'] := MemDetailPiutang['cheque_amount1'];
           end;
-        end;
+          FDataPenerimaanBank.MemDetailPiutang.post;
+         end;
+       MemDetailPiutang.Next;
+       end;
+     end;
+     FDataPenerimaanBank.RefreshGridAkunBankPiutang;
+  end
+  Except on E :Exception do
+    begin
+      begin
+        MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+        Dm.koneksi.Rollback ;
       end;
-      FDataPenerimaanBank.GetKeterangan;
-      Close;
+    end;
+  end;
+  FDataPenerimaanBank.GetKeterangan;
+  Close;
 end;
 
 procedure TFDaftarPenagihanPiutang.btTampilkanClick(Sender: TObject);
@@ -232,7 +268,13 @@ begin
         sql.add(' AND a.code_cust='+QuotedStr(kd_outlet)+' ');
       end;
       sql.add(' ORDER BY a.code_cust,a.date_dpp desc');    }
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 
@@ -262,6 +304,18 @@ begin
      FDaftarPenagihanPiutang.MemDetailPiutang['kode_pelanggan']:=Dm.Qtemp.FieldByName('code_cust').AsString;
      FDaftarPenagihanPiutang.MemDetailPiutang['nama_pelanggan']:=Dm.Qtemp.FieldByName('customer_name').AsString;
      FDaftarPenagihanPiutang.MemDetailPiutang['jum_piutang']:=Dm.Qtemp.FieldByName('paid_amount').AsFloat;
+
+     FDaftarPenagihanPiutang.MemDetailPiutang['cash']:=Dm.Qtemp.FieldValues['cash'];
+     FDaftarPenagihanPiutang.MemDetailPiutang['receipt']:=Dm.Qtemp.FieldByName('receipt').AsFloat;
+     FDaftarPenagihanPiutang.MemDetailPiutang['counter_bill']:=Dm.Qtemp.FieldByName('counter_bill').AsFloat;
+     FDaftarPenagihanPiutang.MemDetailPiutang['bank_receipt']:=Dm.Qtemp.FieldByName('bank_receipt').AsString;
+     FDaftarPenagihanPiutang.MemDetailPiutang['date_receipt']:=Dm.Qtemp.FieldByName('date_receipt').AsString;
+     FDaftarPenagihanPiutang.MemDetailPiutang['name_bank_cheque']:=Dm.Qtemp.FieldByName('name_bank_cheque').AsString;
+     FDaftarPenagihanPiutang.MemDetailPiutang['no_cheque']:=Dm.Qtemp.FieldByName('no_cheque').AsString;
+     FDaftarPenagihanPiutang.MemDetailPiutang['cheque_amount1']:=Dm.Qtemp.FieldByName('cheque_amount1').AsFloat;
+     FDaftarPenagihanPiutang.MemDetailPiutang['date_tempo_cheque']:=Dm.Qtemp.FieldByName('date_tempo_cheque').AsString;
+     FDaftarPenagihanPiutang.MemDetailPiutang['status_dpp_kolektor_harmoni']:=Dm.Qtemp.FieldByName('status_dpp_kolektor_harmoni').AsString;
+
      FDaftarPenagihanPiutang.MemDetailPiutang['pilih']:=0;
      FDaftarPenagihanPiutang.MemDetailPiutang['id_dpp']:=dm.Qtemp.FieldValues['id'];
      FDaftarPenagihanPiutang.MemDetailPiutang.post;

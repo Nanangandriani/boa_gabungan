@@ -104,7 +104,11 @@ type
     QTargetPenjualandeleted_at: TDateTimeField;
     QTargetPenjualandeleted_by: TStringField;
     QTargetPenjualansbu_code: TStringField;
-    QTargetPenjualancustomer_name: TStringField;
+    QTargetPenjualankaresidenan: TMemoField;
+    QTargetPenjualantp: TMemoField;
+    QTargetPenjualankabupaten: TMemoField;
+    QTargetPenjualankecamatan: TMemoField;
+    QTargetPenjualancustomer_name: TMemoField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -295,8 +299,8 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Text:='SELECT a.*,b.customer_name FROM t_customer_sales_target a '+
-                'LEFT JOIN t_customer b on b.customer_code=a.customer_code '+
+      Sql.Text:='SELECT a.*,b.customer_name,b.karesidenan,b.tp,b.kabupaten,b.kecamatan FROM t_customer_sales_target a '+
+                'LEFT JOIN get_customer() b on b.customer_code=a.customer_code '+
                 'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND a.year='+edTahun.Text+' AND a.month='+(IntToStr(mm))+' and a.deleted_at is NULL;';
       Open;
     end;

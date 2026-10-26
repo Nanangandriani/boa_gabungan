@@ -1268,7 +1268,7 @@ object Flap_Rencana_Pelunasan_Hutang: TFlap_Rencana_Pelunasan_Hutang
     Connection = dm.Koneksi
     SQL.Strings = (
       'select * from t_tmpsyst')
-    Left = 624
+    Left = 608
     Top = 200
   end
   object QLap_renc_pelunasan_hutang: TUniQuery

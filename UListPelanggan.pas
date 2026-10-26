@@ -295,7 +295,13 @@ begin
                 'payment_term, customer_name_pkp,kabupaten,karesidenan,Upper(kecamatan) kecamatan, '+
                 'tp,name_type,name_selling_type,name_group,name_type_business,no_npwp,no_nik,code_cust_old,concat(company_code_bank, ''-'', number_va) AS va from get_customer() '+
                 'WHERE deleted_at is null'+strWhereSBU+strWhereKaresidenan+strWhereKabupaten+strWhereKecamatan+strWhereJenisUsaha+' order by created_at Desc';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   finally
   DBGridcustomer.FinishLoadingStatus();
@@ -374,7 +380,13 @@ begin
     sql.Clear;
     sql.Text:='SELECT SUM(sisa_piutang) sisa_piutang FROM get_piutang_invoice2(CURRENT_DATE) '+
               'WHERE code_cust='+QuotedStr(DBGridCustomer.Fields[0].AsString)+' GROUP BY code_cust';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
 //  if (dm.Qtemp.RecordCount>0) AND (dm.Qtemp2.FieldValues['sisa_piutang']>0) then
@@ -393,7 +405,13 @@ begin
         sql.Text:=' Update t_customer set deleted_at=NOW(),deleted_by=:deleted_by '+
                   ' where customer_code='+QuotedStr(DBGridCustomer.Fields[0].AsString);
         parambyname('deleted_by').AsString:=Nm;
-        execsql;
+        try
+          execsql;
+        except
+          Connection.Close;
+          Connection.Open;
+          execsql;
+        end;
       end;
       MessageDlg('Hapus Berhasil..!!',mtInformation,[MBOK],0);
       Refresh;
@@ -407,10 +425,16 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' select a.* from get_customer() a '+
+    sql.Text:='select a.* from get_customer() a '+
              ' WHERE a.customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
              ' AND a.deleted_at is null order by a.created_at Desc ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if Dm.Qtemp.RecordCount=0 then
   begin
@@ -598,7 +622,13 @@ begin
        sql.Text:=' select * from t_customer a '+
                  ' WHERE customer_code='+QuotedSTr(QPelanggan.FieldByName('customer_code').AsString)+' '+
                  ' AND deleted_at is null order by created_at Desc ';
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;
    end;
   if Dm.Qtemp.RecordCount=0 then
   begin

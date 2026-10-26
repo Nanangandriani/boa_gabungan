@@ -1486,8 +1486,8 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
   end
   object DsRekapUmurPiutang: TDataSource
     DataSet = QRekapUmurPiutang
-    Left = 505
-    Top = 312
+    Left = 329
+    Top = 336
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -1498,15 +1498,15 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 46041.436237881940000000
+    ReportOptions.LastChange = 46240.501835196760000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
       ''
       'end.')
     OnGetValue = ReportGetValue
-    Left = 432
-    Top = 312
+    Left = 160
+    Top = 224
     Datasets = <
       item
         DataSet = frxDBDatasetRekapUmurPiutang
@@ -1542,9 +1542,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Memo1: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Left = 42.519712500000000000
+          Left = -0.337430355000000000
           Top = 3.779530000000000000
-          Width = 1114.961350000000000000
+          Width = 1200.675635710000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1560,9 +1560,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Memo8: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Left = 44.409477500000000000
+          Left = -0.352427260000000000
           Top = 44.677180000000000000
-          Width = 1111.181820000000000000
+          Width = 1200.705629520000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1578,9 +1578,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Memo10: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Left = 44.409477500000000000
+          Left = -0.352427260000000000
           Top = 23.338590000000000000
-          Width = 1111.181820000000000000
+          Width = 1200.705629520000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1609,15 +1609,14 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         RowCount = 0
         object Memo20: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.338590000000000000
-          Width = 26.456710000000000000
-          Height = 18.897650000000000000
+          Width = 30.266233810000000000
+          Height = 30.326221430000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[line#]')
@@ -1625,9 +1624,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo21: TfrxMemoView
           AllowVectorExport = True
-          Left = 33.692950000000000000
-          Width = 90.708720000000000000
-          Height = 26.456710000000000000
+          Left = 30.614173230000000000
+          Width = 96.377952760000000000
+          Height = 30.266233810000000000
           DataField = 'tp'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1636,32 +1635,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -11
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."tp"]')
           ParentFont = False
         end
-        object Line13: TfrxLineView
-          AllowVectorExport = True
-          Left = 126.992125980000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line5: TfrxLineView
-          AllowVectorExport = True
-          Left = 30.614173230000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 130.400433330000000000
-          Width = 34.015770000000000000
-          Height = 26.456710000000000000
+          Left = 127.131450060000000000
+          Width = 37.284753270000000000
+          Height = 30.266233810000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -1670,7 +1653,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -1683,10 +1666,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 517.921460000000000000
-          Top = 0.228200000000000000
-          Width = 22.677180000000000000
-          Height = 26.456710000000000000
+          Left = 515.095205170000000000
+          Width = 30.074863400000000000
+          Height = 29.885281430000000000
           DataField = 'dua_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1697,7 +1679,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."dua_minggu"]')
@@ -1705,10 +1687,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo28: TfrxMemoView
           AllowVectorExport = True
-          Left = 408.208720000000000000
-          Top = 0.228200000000000000
-          Width = 67.585343330000000000
-          Height = 26.456710000000000000
+          Left = 405.923005710000000000
+          Width = 69.871057620000000000
+          Height = 29.885281430000000000
           DataField = 'saldo_satu_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1719,7 +1700,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_satu_minggu"]')
@@ -1727,10 +1708,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 236.000000000000000000
-          Top = 0.228200000000000000
-          Width = 26.811070000000000000
-          Height = 26.456710000000000000
+          Left = 232.818897640000000000
+          Width = 31.370078740000000000
+          Height = 30.806774350000000000
           DataField = 'baru'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1741,7 +1721,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."baru"]')
@@ -1749,10 +1729,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo32: TfrxMemoView
           AllowVectorExport = True
-          Left = 665.708720000000000000
-          Top = 0.228200000000000000
-          Width = 22.677180000000000000
-          Height = 26.456710000000000000
+          Left = 659.222233510000000000
+          Width = 33.487990810000000000
+          Height = 29.699953240000000000
           DataField = 'tiga_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1763,7 +1742,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."tiga_minggu"]')
@@ -1771,10 +1750,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
-          Left = 548.000000000000000000
-          Top = 0.228200000000000000
-          Width = 64.606370000000000000
-          Height = 26.456710000000000000
+          Left = 545.385826770000000000
+          Width = 68.787401570000000000
+          Height = 29.885281430000000000
           DataField = 'saldo_dua_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1785,25 +1763,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_dua_minggu"]')
           ParentFont = False
         end
-        object Line7: TfrxLineView
-          AllowVectorExport = True
-          Left = 232.818897640000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo49: TfrxMemoView
           AllowVectorExport = True
-          Left = 376.425480000000000000
-          Width = 26.811070000000000000
-          Height = 26.456710000000000000
+          Left = 374.711194290000000000
+          Width = 30.239641420000000000
+          Height = 29.885281430000000000
           DataField = 'satu_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1814,25 +1784,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."satu_minggu"]')
           ParentFont = False
         end
-        object Line41: TfrxLineView
-          AllowVectorExport = True
-          Left = 476.220472440000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 696.008350000000000000
-          Width = 68.385900000000000000
-          Height = 26.456710000000000000
+          Left = 692.765106760000000000
+          Width = 73.791305400000000000
+          Height = 29.699953240000000000
           DataField = 'saldo_tiga_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1843,26 +1805,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu"]')
           ParentFont = False
         end
-        object Line29: TfrxLineView
-          AllowVectorExport = True
-          Left = 809.952755910000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
-          Left = 811.378480000000000000
-          Top = 0.228200000000000000
-          Width = 26.456710000000000000
-          Height = 26.456710000000000000
+          Left = 809.756858380000000000
+          Width = 30.753314290000000000
+          Height = 29.699953240000000000
           DataField = 'empat_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1873,7 +1826,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."empat_minggu"]')
@@ -1881,9 +1834,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
-          Left = 844.678110000000000000
-          Width = 68.385900000000000000
-          Height = 26.456710000000000000
+          Left = 841.379426710000000000
+          Width = 72.765664370000000000
+          Height = 30.240493780000000000
           DataField = 'saldo_empat_minggu'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -1894,34 +1847,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_empat_minggu"]')
           ParentFont = False
         end
-        object Line42: TfrxLineView
-          AllowVectorExport = True
-          Left = 954.440944880000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line43: TfrxLineView
-          AllowVectorExport = True
-          Left = 841.322834650000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
-          Left = 956.882500000000000000
-          Top = 0.228200000000000000
-          Width = 26.456710000000000000
-          Height = 26.456710000000000000
+          Left = 954.075176550000000000
+          Width = 30.885655070000000000
+          Height = 29.699953240000000000
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
           DisplayFormat.FormatStr = '#,##0.##'
@@ -1931,7 +1867,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             
@@ -1941,10 +1877,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo53: TfrxMemoView
           AllowVectorExport = True
-          Left = 988.015463330000000000
-          Top = -0.833333330000000000
-          Width = 60.826840000000000000
-          Height = 26.456710000000000000
+          Left = 984.876840840000000000
+          Width = 65.587084110000000000
+          Height = 30.236240000000000000
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
@@ -1954,7 +1889,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -1962,99 +1897,11 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'RekapUmurPiutang."saldo_nota_bermasalah">]')
           ParentFont = False
         end
-        object Line44: TfrxLineView
-          AllowVectorExport = True
-          Left = 1050.708661417320000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line45: TfrxLineView
-          AllowVectorExport = True
-          Left = 984.944881890000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line46: TfrxLineView
-          AllowVectorExport = True
-          Left = 1201.205351730000000000
-          Top = 0.779529999999994000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line27: TfrxLineView
-          AllowVectorExport = True
-          Left = 692.787401570000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line21: TfrxLineView
-          AllowVectorExport = True
-          Left = 165.590551180000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line40: TfrxLineView
-          AllowVectorExport = True
-          Left = 263.811023620000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line24: TfrxLineView
-          AllowVectorExport = True
-          Left = 405.921259842520000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line23: TfrxLineView
-          AllowVectorExport = True
-          Left = 515.370078740000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line26: TfrxLineView
-          AllowVectorExport = True
-          Left = 659.527559060000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line47: TfrxLineView
-          AllowVectorExport = True
-          Left = 1093.417322834650000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line55: TfrxLineView
-          AllowVectorExport = True
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 169.094620000000000000
-          Width = 64.252010000000000000
-          Height = 26.456710000000000000
+          Left = 165.285096190000000000
+          Width = 67.109152860000000000
+          Height = 30.266233810000000000
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
           DisplayFormat.FormatStr = '%0.2n'
@@ -2064,7 +1911,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -2075,60 +1922,11 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'atasetRekapUmurPiutang."saldo_tiga_bulan">]')
           ParentFont = False
         end
-        object Line59: TfrxLineView
-          AllowVectorExport = True
-          Left = 374.653543310000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line60: TfrxLineView
-          AllowVectorExport = True
-          Left = 545.385826770000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line64: TfrxLineView
-          AllowVectorExport = True
-          Left = 614.842519690000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line65: TfrxLineView
-          AllowVectorExport = True
-          Left = 766.866141730000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line66: TfrxLineView
-          AllowVectorExport = True
-          Left = 915.023622050000000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line67: TfrxLineView
-          AllowVectorExport = True
-          Left = 1127.433070866140000000
-          Height = 30.236240000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo48: TfrxMemoView
           AllowVectorExport = True
-          Left = 266.275820000000000000
-          Top = 0.881880000000000000
-          Width = 64.606370000000000000
-          Height = 26.456710000000000000
+          Left = 263.830517560000000000
+          Width = 68.956434340000000000
+          Height = 29.313852850000000000
           DataField = 'saldo_baru'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -2139,26 +1937,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_baru"]')
           ParentFont = False
         end
-        object Line58: TfrxLineView
-          AllowVectorExport = True
-          Left = 332.976377950000000000
-          Height = 30.236225350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo66: TfrxMemoView
           AllowVectorExport = True
-          Left = 334.732530000000000000
-          Top = 1.000000000000000000
-          Width = 38.149660000000000000
-          Height = 26.456710000000000000
+          Left = 333.018244290000000000
+          Width = 41.578231420000000000
+          Height = 29.854393390000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2167,23 +1956,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_baru">/(<frxDBDatasetRekap' +
-              'UmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_s' +
-              'atu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<' +
-              'frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetR' +
-              'ekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiut' +
-              'ang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_baru">/(<frxDBDatasetRekapUmurPiutan' +
+              'g."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_satu_minggu' +
+              '">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<frxDBDatas' +
+              'etRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetRekapUmurPi' +
+              'utang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutang."saldo' +
+              '_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo68: TfrxMemoView
           AllowVectorExport = True
-          Left = 479.236550000000000000
-          Width = 34.370130000000000000
-          Height = 26.456710000000000000
+          Left = 476.348519110000000000
+          Width = 37.829589460000000000
+          Height = 29.885281430000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2192,23 +1986,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_satu_minggu">/(<frxDBDatas' +
-              'etRekapUmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."' +
-              'saldo_satu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_min' +
-              'ggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBD' +
-              'atasetRekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapU' +
-              'murPiutang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_satu_minggu">/(<frxDBDatasetRekapUmu' +
+              'rPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_satu' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<frx' +
+              'DBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetReka' +
+              'pUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutang' +
+              '."saldo_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo70: TfrxMemoView
           AllowVectorExport = True
-          Left = 618.299630000000000000
-          Width = 38.149660000000000000
-          Height = 26.456710000000000000
+          Left = 614.515846220000000000
+          Width = 44.636146480000000000
+          Height = 30.240493780000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2217,23 +2016,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">/(<frxDBDatase' +
-              'tRekapUmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."s' +
-              'aldo_satu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_ming' +
-              'gu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDa' +
-              'tasetRekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUm' +
-              'urPiutang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_dua_minggu">/(<frxDBDatasetRekapUmur' +
+              'Piutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_satu_' +
+              'minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<frxD' +
+              'BDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetRekap' +
+              'UmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutang.' +
+              '"saldo_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo72: TfrxMemoView
           AllowVectorExport = True
-          Left = 769.803650000000000000
-          Width = 38.149660000000000000
-          Height = 26.456710000000000000
+          Left = 767.100947300000000000
+          Width = 41.392903240000000000
+          Height = 29.699953240000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2242,23 +2046,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">/(<frxDBDatas' +
-              'etRekapUmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."' +
-              'saldo_satu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_min' +
-              'ggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBD' +
-              'atasetRekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapU' +
-              'murPiutang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_tiga_minggu">/(<frxDBDatasetRekapUmu' +
+              'rPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_satu' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<frx' +
+              'DBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetReka' +
+              'pUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutang' +
+              '."saldo_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo74: TfrxMemoView
           AllowVectorExport = True
-          Left = 914.307670000000000000
-          Width = 38.149660000000000000
-          Height = 26.456710000000000000
+          Left = 914.820490510000000000
+          Width = 38.717920570000000000
+          Height = 29.699953240000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2267,23 +2076,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">/(<frxDBData' +
-              'setRekapUmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang.' +
-              '"saldo_satu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_mi' +
-              'nggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDB' +
-              'DatasetRekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekap' +
-              'UmurPiutang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_empat_minggu">/(<frxDBDatasetRekapUm' +
+              'urPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_sat' +
+              'u_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<fr' +
+              'xDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetRek' +
+              'apUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutan' +
+              'g."saldo_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo76: TfrxMemoView
           AllowVectorExport = True
-          Left = 1052.709340000000000000
-          Width = 40.062992125984300000
-          Height = 26.456710000000000000
+          Left = 1051.192339130000000000
+          Width = 41.579993000000000000
+          Height = 29.699953240000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -2292,24 +2106,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[<frxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">/(<frxDBDatase' +
-              'tRekapUmurPiutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."s' +
-              'aldo_satu_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_ming' +
-              'gu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDa' +
-              'tasetRekapUmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUm' +
-              'urPiutang."saldo_tiga_bulan">)*100]%')
+              '[IIF((<frxDBDatasetRekapUmurPiutang."saldo_baru">+<frxDBDatasetR' +
+              'ekapUmurPiutang."saldo_satu_minggu">+<frxDBDatasetRekapUmurPiuta' +
+              'ng."saldo_dua_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_tiga' +
+              '_minggu">+<frxDBDatasetRekapUmurPiutang."saldo_empat_minggu">+<f' +
+              'rxDBDatasetRekapUmurPiutang."saldo_tiga_bulan">) > 0, (<frxDBDat' +
+              'asetRekapUmurPiutang."saldo_tiga_bulan">/(<frxDBDatasetRekapUmur' +
+              'Piutang."saldo_baru">+<frxDBDatasetRekapUmurPiutang."saldo_satu_' +
+              'minggu">+<frxDBDatasetRekapUmurPiutang."saldo_dua_minggu">+<frxD' +
+              'BDatasetRekapUmurPiutang."saldo_tiga_minggu">+<frxDBDatasetRekap' +
+              'UmurPiutang."saldo_empat_minggu">+<frxDBDatasetRekapUmurPiutang.' +
+              '"saldo_tiga_bulan">)*100), 0)]%')
           ParentFont = False
         end
         object Memo78: TfrxMemoView
           AllowVectorExport = True
-          Left = 1098.725110000000000000
-          Top = 0.228200000000000000
-          Width = 22.677180000000000000
-          Height = 26.456710000000000000
+          Left = 1093.424325340000000000
+          Width = 33.923910610000000000
+          Height = 29.699953240000000000
           DataField = 'jum_nota_bermasalah'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -2320,7 +2138,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."jum_nota_bermasalah"]')
@@ -2328,9 +2146,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo79: TfrxMemoView
           AllowVectorExport = True
-          Left = 1126.024740000000000000
-          Width = 72.165430000000000000
-          Height = 26.456710000000000000
+          Left = 1127.750982370000000000
+          Width = 72.601349790000000000
+          Height = 29.699953240000000000
           DataField = 'saldo_nota_bermasalah'
           DataSet = frxDBDatasetRekapUmurPiutang
           DataSetName = 'frxDBDatasetRekapUmurPiutang'
@@ -2341,7 +2159,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight]
           HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDatasetRekapUmurPiutang."saldo_nota_bermasalah"]')
@@ -2355,27 +2173,26 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 75.590600000000000000
+        Height = 76.297773810000000000
         Top = 117.165430000000000000
         Width = 1200.000775000000000000
         object Shape1: TfrxShapeView
           AllowVectorExport = True
+          Top = 0.029993810000000000
           Width = 1201.071430000000000000
           Height = 75.590600000000000000
           Frame.Typ = []
         end
         object Memo2: TfrxMemoView
           AllowVectorExport = True
-          Left = 2.169295000000000000
-          Top = 3.779530000000000000
           Width = 30.177180000000000000
-          Height = 68.031540000000000000
+          Height = 75.650587620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'No.')
@@ -2384,51 +2201,32 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo4: TfrxMemoView
           AllowVectorExport = True
-          Left = 129.126160000000000000
-          Top = 3.779529999999990000
-          Width = 37.795300000000000000
-          Height = 67.929190000000000000
+          Left = 126.992125980000000000
+          Width = 38.747680950000000000
+          Height = 75.548237620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Total Nota')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line1: TfrxLineView
-          AllowVectorExport = True
-          Left = 30.574830000000000000
-          Height = 75.590600000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line6: TfrxLineView
-          AllowVectorExport = True
-          Left = 165.543307086614000000
-          Top = 1.000000000000000000
-          Height = 75.590551180000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo92: TfrxMemoView
           AllowVectorExport = True
-          Left = 34.354360000000000000
-          Top = 3.779530000000000000
-          Width = 90.708720000000000000
-          Height = 68.031540000000000000
+          Left = 30.544836190000000000
+          Width = 96.232529530000000000
+          Height = 75.650587620000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'TP')
@@ -2437,61 +2235,33 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo5: TfrxMemoView
           AllowVectorExport = True
-          Left = 169.614410000000000000
-          Top = 3.779530000000000000
-          Width = 62.724490000000000000
-          Height = 68.929190000000000000
+          Left = 165.804886190000000000
+          Width = 66.534013810000000000
+          Height = 75.933798300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Total Nominal')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line3: TfrxLineView
-          AllowVectorExport = True
-          Left = 126.992125984252000000
-          Top = 1.000000000000000000
-          Height = 75.590600000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line8: TfrxLineView
-          AllowVectorExport = True
-          Left = 475.000000000000000000
-          Top = 19.614100000000000000
-          Width = 208.520100000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line10: TfrxLineView
-          AllowVectorExport = True
-          Left = 232.834645670000000000
-          Top = 0.614099999999993000
-          Height = 75.590600000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 265.842610000000000000
-          Top = 40.677180000000000000
-          Width = 64.252010000000000000
-          Height = 30.133890000000000000
+          Left = 263.937848100000000000
+          Top = 38.802411910000000000
+          Width = 69.013914760000000000
+          Height = 37.138498290000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2500,16 +2270,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo15: TfrxMemoView
           AllowVectorExport = True
-          Left = 236.315090000000000000
-          Top = 40.779530000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 232.818897640000000000
+          Top = 38.904761910000000000
+          Width = 31.409090950000000000
+          Height = 37.081496590000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2517,72 +2287,36 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line14: TfrxLineView
-          AllowVectorExport = True
-          Left = 263.921460000000000000
-          Top = 40.000000000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line15: TfrxLineView
-          AllowVectorExport = True
-          Left = 233.000000000000000000
-          Top = 19.614100000000000000
-          Width = 968.692913385827000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo23: TfrxMemoView
           AllowVectorExport = True
-          Left = 237.000000000000000000
-          Top = 0.614099999999993000
-          Width = 959.126470000000000000
-          Height = 16.133890000000000000
+          Left = 232.818897640000000000
+          Top = 0.029993810000000000
+          Width = 967.672158540000000000
+          Height = 20.044393910000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Perincian Umur Piutang')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line2: TfrxLineView
-          AllowVectorExport = True
-          Left = 374.551181102362000000
-          Top = 19.338590000000000000
-          Height = 58.370130000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line4: TfrxLineView
-          AllowVectorExport = True
-          Left = 233.220780000000000000
-          Top = 39.338590000000000000
-          Width = 964.913385826772000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 236.834880000000000000
-          Top = 20.559060000000000000
-          Width = 127.629870000000000000
-          Height = 16.133890000000000000
+          Left = 232.818897640000000000
+          Top = 18.874768100000000000
+          Width = 141.915584280000000000
+          Height = 20.324366180000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nota Baru')
@@ -2591,16 +2325,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 408.992270000000000000
-          Top = 42.795300000000000000
-          Width = 64.252010000000000000
-          Height = 30.133890000000000000
+          Left = 406.135127140000000000
+          Top = 39.396722380000000000
+          Width = 69.394867150000000000
+          Height = 36.493337000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2609,16 +2343,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 378.464750000000000000
-          Top = 42.897650000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 374.464750000000000000
+          Top = 39.499072380000000000
+          Width = 31.028138570000000000
+          Height = 36.061976120000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2626,54 +2360,36 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line9: TfrxLineView
-          AllowVectorExport = True
-          Left = 406.071120000000000000
-          Top = 40.118120000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 377.984540000000000000
-          Top = 21.677180000000000000
-          Width = 135.188930000000000000
-          Height = 16.133890000000000000
+          Left = 374.555968570000000000
+          Top = 18.927631610000000000
+          Width = 139.760358570000000000
+          Height = 20.705318570000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '1 Minggu')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line12: TfrxLineView
-          AllowVectorExport = True
-          Left = 515.527559055118000000
-          Top = 18.897650000000000000
-          Height = 58.370130000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 548.157700000000000000
-          Top = 42.795300000000000000
-          Width = 64.252010000000000000
-          Height = 30.133890000000000000
+          Left = 545.007874020000000000
+          Top = 39.396722380000000000
+          Width = 69.394867150000000000
+          Height = 36.302388170000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2682,16 +2398,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
-          Left = 518.630180000000000000
-          Top = 42.897650000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 514.688788060000000000
+          Top = 38.927643810000000000
+          Width = 30.398101940000000000
+          Height = 36.804692320000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2699,54 +2415,36 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line16: TfrxLineView
-          AllowVectorExport = True
-          Left = 545.236550000000000000
-          Top = 40.118120000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Left = 519.149970000000000000
-          Top = 22.677180000000000000
-          Width = 138.968460000000000000
-          Height = 16.133890000000000000
+          Left = 514.637149480000000000
+          Top = 18.927631610000000000
+          Width = 144.052709090000000000
+          Height = 20.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '2 Minggu')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line17: TfrxLineView
-          AllowVectorExport = True
-          Left = 659.535870000000000000
-          Top = 18.897650000000000000
-          Height = 58.370130000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo22: TfrxMemoView
           AllowVectorExport = True
-          Left = 695.661720000000000000
-          Top = 42.795300000000000000
-          Width = 68.031540000000000000
-          Height = 30.133890000000000000
+          Left = 692.804577140000000000
+          Top = 39.396722380000000000
+          Width = 73.745825720000000000
+          Height = 36.567069720000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2755,16 +2453,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 662.134200000000000000
-          Top = 42.897650000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 659.277057140000000000
+          Top = 38.927643810000000000
+          Width = 32.742424290000000000
+          Height = 36.995641150000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2775,7 +2473,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Line18: TfrxLineView
           AllowVectorExport = True
           Left = 692.740570000000000000
-          Top = 40.118120000000000000
+          Top = 40.148113810000000000
           Height = 35.692950000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2783,43 +2481,34 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo27: TfrxMemoView
           AllowVectorExport = True
-          Left = 663.653990000000000000
-          Top = 22.677180000000000000
-          Width = 142.747990000000000000
-          Height = 16.133890000000000000
+          Left = 659.653990000000000000
+          Top = 18.927631610000000000
+          Width = 150.176561430000000000
+          Height = 20.705318570000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '3 Minggu')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line19: TfrxLineView
-          AllowVectorExport = True
-          Left = 810.039890000000000000
-          Top = 18.897650000000000000
-          Height = 58.370130000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo39: TfrxMemoView
           AllowVectorExport = True
-          Left = 844.165740000000000000
-          Top = 42.795300000000000000
-          Width = 68.031540000000000000
-          Height = 30.133890000000000000
+          Left = 841.308597140000000000
+          Top = 38.825293810000000000
+          Width = 74.317254290000000000
+          Height = 35.848175710000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2828,16 +2517,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo40: TfrxMemoView
           AllowVectorExport = True
-          Left = 810.638220000000000000
-          Top = 42.897650000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 810.066791430000000000
+          Top = 38.927643810000000000
+          Width = 30.456710000000000000
+          Height = 36.276747140000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2845,54 +2534,36 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line20: TfrxLineView
-          AllowVectorExport = True
-          Left = 841.244590000000000000
-          Top = 40.118120000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo41: TfrxMemoView
           AllowVectorExport = True
-          Left = 817.158010000000000000
-          Top = 21.677180000000000000
-          Width = 131.409400000000000000
-          Height = 16.133890000000000000
+          Left = 810.300867140000000000
+          Top = 18.927631610000000000
+          Width = 143.409400000000000000
+          Height = 20.787401570000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '4 Minggu')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line34: TfrxLineView
-          AllowVectorExport = True
-          Left = 954.330708661417000000
-          Top = 18.897650000000000000
-          Height = 58.370130000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo42: TfrxMemoView
           AllowVectorExport = True
-          Left = 987.890230000000000000
-          Top = 42.795300000000000000
-          Width = 60.472480000000000000
-          Height = 30.133890000000000000
+          Left = 985.033087140000000000
+          Top = 39.396722380000000000
+          Width = 65.615337150000000000
+          Height = 35.848175720000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2901,16 +2572,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo43: TfrxMemoView
           AllowVectorExport = True
-          Left = 956.362710000000000000
-          Top = 42.897650000000000000
-          Width = 26.456710000000000000
-          Height = 31.133890000000000000
+          Left = 954.076995710000000000
+          Top = 40.070500950000000000
+          Width = 31.028138580000000000
+          Height = 34.562461430000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -2921,7 +2592,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Line37: TfrxLineView
           AllowVectorExport = True
           Left = 984.969080000000000000
-          Top = 40.118120000000000000
+          Top = 40.148113810000000000
           Height = 35.692950000000000000
           Color = clBlack
           Frame.Typ = []
@@ -2929,43 +2600,34 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 954.882500000000000000
-          Top = 22.677180000000000000
-          Width = 131.409400000000000000
-          Height = 16.133890000000000000
+          Left = 954.311071430000000000
+          Top = 18.927631610000000000
+          Width = 138.266542860000000000
+          Height = 20.705318570000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '> 3 Bulan')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line38: TfrxLineView
-          AllowVectorExport = True
-          Left = 1093.322834650000000000
-          Top = 20.897650000000000000
-          Height = 54.590600000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 1094.606990000000000000
-          Top = 20.897650000000000000
-          Width = 101.173160000000000000
-          Height = 16.133890000000000000
+          Left = 1092.892704290000000000
+          Top = 18.927631610000000000
+          Width = 107.716535433071000000
+          Height = 20.133890000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nota Bermasalah')
@@ -2974,16 +2636,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 1131.473100000000000000
-          Top = 40.913420000000000000
-          Width = 64.252010000000000000
-          Height = 33.913420000000000000
+          Left = 1127.055118110000000000
+          Top = 38.657699520000000000
+          Width = 73.700787400000000000
+          Height = 37.224775320000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight]
           HAlign = haCenter
           Memo.UTF8W = (
             'Nominal')
@@ -2992,16 +2654,16 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo47: TfrxMemoView
           AllowVectorExport = True
-          Left = 1095.945580000000000000
-          Top = 41.015770000000000000
-          Width = 30.236240000000000000
-          Height = 31.133890000000000000
+          Left = 1093.088437140000000000
+          Top = 39.331478100000000000
+          Width = 34.236240000000000000
+          Height = 36.276747140000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             'JML '
@@ -3009,90 +2671,54 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line39: TfrxLineView
-          AllowVectorExport = True
-          Left = 1127.551950000000000000
-          Top = 40.236240000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line56: TfrxLineView
-          AllowVectorExport = True
-          Left = 333.062992130000000000
-          Top = 39.795300000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 334.953000000000000000
-          Top = 41.574830000000000000
-          Width = 37.795300000000000000
-          Height = 30.133890000000000000
+          Left = 333.048238100000000000
+          Top = 38.747680950000000000
+          Width = 40.652442850000000000
+          Height = 36.800556670000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
           ParentFont = False
           VAlign = vaCenter
-        end
-        object Line57: TfrxLineView
-          AllowVectorExport = True
-          Left = 476.236550000000000000
-          Top = 40.574830000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 479.016080000000000000
-          Top = 41.574830000000000000
-          Width = 34.015770000000000000
-          Height = 30.133890000000000000
+          Left = 476.158937140000000000
+          Top = 39.319109520000000000
+          Width = 39.158627150000000000
+          Height = 36.567069730000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line25: TfrxLineView
-          AllowVectorExport = True
-          Left = 614.929133858268000000
-          Top = 40.015770000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo62: TfrxMemoView
           AllowVectorExport = True
-          Left = 619.299630000000000000
-          Top = 41.574830000000000000
-          Width = 30.236240000000000000
-          Height = 30.133890000000000000
+          Left = 615.268741970000000000
+          Top = 38.747680950000000000
+          Width = 43.981413740000000000
+          Height = 37.138498300000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
@@ -3102,7 +2728,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         object Line61: TfrxLineView
           AllowVectorExport = True
           Left = 766.700787400000000000
-          Top = 40.574830000000000000
+          Top = 40.604823810000000000
           Height = 35.692950000000000000
           Color = clBlack
           Frame.Typ = []
@@ -3110,70 +2736,52 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo63: TfrxMemoView
           AllowVectorExport = True
-          Left = 769.583180000000000000
-          Top = 41.574830000000000000
-          Width = 37.795300000000000000
-          Height = 30.133890000000000000
+          Left = 766.726037140000000000
+          Top = 39.319109520000000000
+          Width = 43.509585720000000000
+          Height = 36.567069730000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
           ParentFont = False
           VAlign = vaCenter
-        end
-        object Line62: TfrxLineView
-          AllowVectorExport = True
-          Left = 915.196850390000000000
-          Top = 40.574830000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
         end
         object Memo64: TfrxMemoView
           AllowVectorExport = True
-          Left = 917.866730000000000000
-          Top = 41.574830000000000000
-          Width = 30.236240000000000000
-          Height = 30.133890000000000000
+          Left = 915.040475170000000000
+          Top = 39.319109520000000000
+          Width = 38.776780540000000000
+          Height = 35.276747150000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line63: TfrxLineView
-          AllowVectorExport = True
-          Left = 1050.709340000000000000
-          Top = 40.574830000000000000
-          Height = 35.692950000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo65: TfrxMemoView
           AllowVectorExport = True
-          Left = 1054.488870000000000000
-          Top = 41.574830000000000000
-          Width = 34.015770000000000000
-          Height = 30.133890000000000000
+          Left = 1051.060298570000000000
+          Top = 39.319109520000000000
+          Width = 41.444341430000000000
+          Height = 35.276747150000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft]
           HAlign = haCenter
           Memo.UTF8W = (
             '%')
@@ -3188,37 +2796,28 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 26.456710000000000000
+        Height = 25.888967690000000000
         Top = 343.937230000000000000
         Width = 1200.000775000000000000
         object Shape2: TfrxShapeView
           AllowVectorExport = True
-          Top = 0.078539999999975400
-          Width = 1201.448980000000000000
-          Height = 26.456710000000000000
-          Frame.Typ = []
-        end
-        object Line11: TfrxLineView
-          AllowVectorExport = True
-          Left = 126.992125984252000000
-          Top = 1.078539999999970000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
+          Top = 0.078540000000000000
+          Width = 1200.377952755910000000
+          Height = 25.700787401574800000
+          Frame.Typ = [ftTop, ftBottom]
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.000000000000000000
-          Top = 3.078539999999980000
-          Width = 120.944960000000000000
-          Height = 15.118120000000000000
+          Left = 0.512820510000000000
+          Top = 0.001616919999999994
+          Width = 126.073165120000000000
+          Height = 25.887350770000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Courier New'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             'TOTAL')
@@ -3227,10 +2826,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo12: TfrxMemoView
           AllowVectorExport = True
-          Left = 168.409710000000000000
-          Top = 0.897650000000000000
-          Width = 64.252010000000000000
-          Height = 22.677180000000000000
+          Left = 165.845607440000000000
+          Width = 66.816112560000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%0.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3239,7 +2837,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3252,10 +2850,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 132.030303330000000000
-          Top = 0.897650000000000000
-          Width = 34.015770000000000000
-          Height = 22.677180000000000000
+          Left = 127.414918710000000000
+          Width = 37.605513590000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3264,7 +2861,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3277,10 +2874,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 517.874150000000000000
-          Top = 0.755905510000000000
-          Width = 26.456710000000000000
-          Height = 22.677180000000000000
+          Left = 515.310047440000000000
+          Width = 30.046453590000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3289,7 +2885,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."dua_minggu">,MasterData1)]')
@@ -3297,10 +2893,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 407.328076670000000000
-          Top = 0.755905510000000000
-          Width = 67.585343330000000000
-          Height = 22.677180000000000000
+          Left = 406.302435640000000000
+          Width = 69.123804870000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3309,7 +2904,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3319,10 +2914,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 235.952690000000000000
-          Top = 0.755905510000000000
-          Width = 26.811070000000000000
-          Height = 22.677180000000000000
+          Left = 232.875766920000000000
+          Width = 29.887993080000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3331,7 +2925,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."baru">,MasterData1)]')
@@ -3339,10 +2933,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo36: TfrxMemoView
           AllowVectorExport = True
-          Left = 663.661410000000000000
-          Top = 0.755905510000000000
-          Width = 26.456710000000000000
-          Height = 22.677180000000000000
+          Left = 659.149606300000000000
+          Width = 33.637795275590600000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3351,7 +2944,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."tiga_minggu">,MasterData1)]')
@@ -3359,10 +2952,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 546.952690000000000000
-          Top = 0.755905510000000000
-          Width = 64.606370000000000000
-          Height = 22.677180000000000000
+          Left = 545.414228470000000000
+          Width = 68.708934100000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3371,7 +2963,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3379,21 +2971,11 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'a1)]')
           ParentFont = False
         end
-        object Line22: TfrxLineView
-          AllowVectorExport = True
-          Left = 232.818897640000000000
-          Top = -0.102350000000000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo38: TfrxMemoView
           AllowVectorExport = True
-          Left = 266.228510000000000000
-          Top = 0.755905510000000000
-          Width = 64.606370000000000000
-          Height = 22.677180000000000000
+          Left = 263.664407440000000000
+          Width = 68.196113590000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3402,7 +2984,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."saldo_baru">,MasterData1)]')
@@ -3410,10 +2992,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo56: TfrxMemoView
           AllowVectorExport = True
-          Left = 376.378170000000000000
-          Top = 0.755905510000000000
-          Width = 26.811070000000000000
-          Height = 22.677180000000000000
+          Left = 374.326887950000000000
+          Width = 31.426454610000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3422,27 +3003,17 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."satu_minggu">,MasterData1)]')
           ParentFont = False
         end
-        object Line28: TfrxLineView
-          AllowVectorExport = True
-          Left = 405.921259842520000000
-          Top = 0.897650000000000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo57: TfrxMemoView
           AllowVectorExport = True
-          Left = 695.961040000000000000
-          Top = 0.897650000000000000
-          Width = 68.385900000000000000
-          Height = 22.677180000000000000
+          Left = 692.884116920000000000
+          Width = 73.514105130000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3451,7 +3022,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3461,10 +3032,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo58: TfrxMemoView
           AllowVectorExport = True
-          Left = 815.331170000000000000
-          Top = 0.755905510000000000
-          Width = 22.677180000000000000
-          Height = 22.677180000000000000
+          Left = 809.690144360000000000
+          Width = 30.614173230000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3473,7 +3043,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             '[SUM(<frxDBDatasetRekapUmurPiutang."empat_minggu">,MasterData1)]')
@@ -3481,10 +3051,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo59: TfrxMemoView
           AllowVectorExport = True
-          Left = 840.630800000000000000
-          Top = 0.897650000000000000
-          Width = 72.165430000000000000
-          Height = 22.677180000000000000
+          Left = 841.322834645669000000
+          Width = 72.944881889763800000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3493,7 +3062,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3501,30 +3070,11 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'ata1)]')
           ParentFont = False
         end
-        object Line30: TfrxLineView
-          AllowVectorExport = True
-          Left = 954.330708661417000000
-          Top = 0.897649999999999000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line31: TfrxLineView
-          AllowVectorExport = True
-          Left = 841.322834645669000000
-          Top = 0.897649999999999000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo60: TfrxMemoView
           AllowVectorExport = True
-          Left = 952.835190000000000000
-          Top = 0.755905510000000000
+          Left = 954.708661420000000000
           Width = 30.236240000000000000
-          Height = 22.677180000000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3533,7 +3083,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             
@@ -3543,10 +3093,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo61: TfrxMemoView
           AllowVectorExport = True
-          Left = 988.134820000000000000
-          Top = 0.897650000000000000
-          Width = 60.826840000000000000
-          Height = 22.677180000000000000
+          Left = 984.188976377953000000
+          Width = 66.141732283464600000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3555,7 +3104,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3563,157 +3112,11 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'asetRekapUmurPiutang."saldo_nota_bermasalah">)]')
           ParentFont = False
         end
-        object Line32: TfrxLineView
-          AllowVectorExport = True
-          Left = 1050.708661417320000000
-          Top = 0.897649999999999000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line33: TfrxLineView
-          AllowVectorExport = True
-          Left = 984.944881889764000000
-          Top = 0.897649999999999000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line35: TfrxLineView
-          AllowVectorExport = True
-          Left = 1127.433070866140000000
-          Top = 0.677180000000021000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line36: TfrxLineView
-          AllowVectorExport = True
-          Left = 165.543307086614000000
-          Top = 0.125850000000014000
-          Height = 28.133890000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line48: TfrxLineView
-          AllowVectorExport = True
-          Left = 332.976377950000000000
-          Height = 26.456692913385800000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line49: TfrxLineView
-          AllowVectorExport = True
-          Left = 374.551181102362000000
-          Top = 0.125850000000014000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line50: TfrxLineView
-          AllowVectorExport = True
-          Left = 476.220472440000000000
-          Top = 0.125850000000000000
-          Height = 26.456692913385800000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line51: TfrxLineView
-          AllowVectorExport = True
-          Left = 545.385826771654000000
-          Top = 0.125850000000014000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line52: TfrxLineView
-          AllowVectorExport = True
-          Left = 614.929133860000000000
-          Top = 0.125850000000014000
-          Height = 27.212593540000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line53: TfrxLineView
-          AllowVectorExport = True
-          Left = 692.787401574803000000
-          Top = 0.125850000000014000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line54: TfrxLineView
-          AllowVectorExport = True
-          Left = 766.866141732283000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line68: TfrxLineView
-          AllowVectorExport = True
-          Left = 263.811023622047000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line70: TfrxLineView
-          AllowVectorExport = True
-          Left = 659.527559055118000000
-          Height = 27.212593540000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line71: TfrxLineView
-          AllowVectorExport = True
-          Left = 809.952755905512000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line72: TfrxLineView
-          AllowVectorExport = True
-          Left = 915.023622047244000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line73: TfrxLineView
-          AllowVectorExport = True
-          Left = 1093.417322834650000000
-          Height = 26.456710000000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
-        object Line69: TfrxLineView
-          AllowVectorExport = True
-          Left = 515.527559055118000000
-          Height = 26.456695350000000000
-          Color = clBlack
-          Frame.Typ = []
-          Diagonal = True
-        end
         object Memo67: TfrxMemoView
           AllowVectorExport = True
-          Left = 335.786333330000000000
-          Top = -0.077427820000000000
-          Width = 38.149660000000000000
-          Height = 22.677180000000000000
+          Left = 332.709410250000000000
+          Width = 41.226583080000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3722,7 +3125,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3736,10 +3139,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo69: TfrxMemoView
           AllowVectorExport = True
-          Left = 477.016080000000000000
-          Top = 0.755905510000000000
-          Width = 38.149660000000000000
-          Height = 22.677180000000000000
+          Left = 476.503259490000000000
+          Width = 38.662480510000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3748,7 +3150,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3762,10 +3164,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo71: TfrxMemoView
           AllowVectorExport = True
-          Left = 616.520100000000000000
-          Top = 0.755905510000000000
-          Width = 41.929190000000000000
-          Height = 22.677180000000000000
+          Left = 614.981638460000000000
+          Width = 43.980472050000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3774,7 +3175,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3788,10 +3189,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo73: TfrxMemoView
           AllowVectorExport = True
-          Left = 769.803650000000000000
-          Top = 0.755905510000000000
-          Width = 38.149660000000000000
-          Height = 22.677180000000000000
+          Left = 766.726726920000000000
+          Width = 41.739403590000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3800,7 +3200,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3814,10 +3214,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo75: TfrxMemoView
           AllowVectorExport = True
-          Left = 915.087200000000000000
-          Top = 0.755905510000000000
-          Width = 38.149660000000000000
-          Height = 22.677180000000000000
+          Left = 914.645669290000000000
+          Width = 38.551181100000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3826,7 +3225,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3840,10 +3239,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo77: TfrxMemoView
           AllowVectorExport = True
-          Left = 1052.709340000000000000
-          Top = 0.755905510000000000
-          Width = 39.307086614173200000
-          Height = 22.677180000000000000
+          Left = 1050.708661420000000000
+          Width = 42.330708660000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '%2.2f'
           DisplayFormat.Kind = fkNumeric
@@ -3852,7 +3250,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3866,10 +3264,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo80: TfrxMemoView
           AllowVectorExport = True
-          Left = 1098.945580000000000000
-          Top = 1.000000000000000000
-          Width = 26.456710000000000000
-          Height = 22.677180000000000000
+          Left = 1092.661417320000000000
+          Width = 34.393700790000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,##0.##'
           DisplayFormat.Kind = fkNumeric
@@ -3878,7 +3275,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
             
@@ -3888,10 +3285,9 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
         end
         object Memo81: TfrxMemoView
           AllowVectorExport = True
-          Left = 1131.245210000000000000
-          Top = 0.141744490000000000
-          Width = 64.606370000000000000
-          Height = 22.677180000000000000
+          Left = 1127.055118110000000000
+          Width = 73.322834650000000000
+          Height = 25.700787400000000000
           DataSetName = 'frxdbumurpiutang'
           DisplayFormat.FormatStr = '#,###,###,###0.00'
           DisplayFormat.Kind = fkNumeric
@@ -3900,7 +3296,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
           Font.Height = -9
           Font.Name = 'arial'
           Font.Style = []
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
             
@@ -3908,6 +3304,14 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
               'erData1)]')
           ParentFont = False
         end
+      end
+      object Line46: TfrxLineView
+        AllowVectorExport = True
+        Left = 1201.205351730000000000
+        Height = 30.236240000000000000
+        Color = clBlack
+        Frame.Typ = []
+        Diagonal = True
       end
     end
   end
@@ -3976,7 +3380,7 @@ object FRekapUmurPiutang: TFRekapUmurPiutang
     PdfA = False
     PDFStandard = psNone
     PDFVersion = pv17
-    Left = 360
-    Top = 288
+    Left = 184
+    Top = 176
   end
 end

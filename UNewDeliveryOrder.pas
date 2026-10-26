@@ -181,6 +181,9 @@ type
     btnCloseMuatan: TRzBitBtn;
     chktambahpool: TRzCheckBox;
     chkDOpool: TRzCheckBox;
+    chkNomorPengganti: TRzCheckBox;
+    btnNoTransaksi: TRzBitBtn;
+    cbAdaBiaya: TRzCheckBox;
     procedure edNamaJenisMuatanButtonClick(Sender: TObject);
     procedure edKodeVendorMuatanButtonClick(Sender: TObject);
     procedure edNomorReffUtamaMuatanButtonClick(Sender: TObject);
@@ -235,6 +238,9 @@ type
     procedure chktambahpoolClick(Sender: TObject);
     procedure chkDOpoolClick(Sender: TObject);
     procedure DBGridSumberPenjualanColExit(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
+    procedure btnNoTransaksiClick(Sender: TObject);
+    procedure cbAdaBiayaClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -243,7 +249,7 @@ type
     Grand_Tot: Real;
     vFormSumber01,vFormSumber02, kd_kares, strtgl, strbulan, strtahun,
     strLastKodeJenisKendMuatan,strLastNamaLokasi,
-    strLastNamaKabupaten,strLastTotalTitik,strPlateNo,kodelokasimuat,kodelokasibongkar,strVehicleGroupId : string;
+    strLastNamaKabupaten,strLastTotalTitik,strPlateNo,kodelokasimuat,kodelokasibongkar,strVehicleGroupId,strNoTransaksiDiGanti : string;
     IntStatusDO,IntStatusKoreksi: Integer;
     StatusCekBiaya,StatusPerubahanBiaya: Integer;
     Year, Month, Day: Word;
@@ -271,7 +277,7 @@ type
 
 var
   FNewDeliveryOrder: TFNewDeliveryOrder;
-  Status,StatusDO: Integer;
+  Status,StatusDO,isCancel: Integer;
   AClass: TPersistentClass;
   AFormClass: TFormClass;
   AForm: TForm;
@@ -287,7 +293,7 @@ uses UMasterData, UTemplate_Temp, UCari_DaftarPerk, UDataModule,
   UListDeliveryOrder, UHomeLogin, UDaftarKendaraan, UDataPool, ulkJSON,
   UListPerbandinganBiayaDo, UMainMenu, UKoreksi, UListKelompokKendaraan,
   ULokasiMuat, ULokasiBongkar, UTambah_Barang, UDeliveryOrder_SumberPO,
-  UbrowseListPenjualan;
+  UbrowseListPenjualan, UListNoTransaksi;
 
 procedure TFNewDeliveryOrder.InsertStatus;
 begin
@@ -298,7 +304,13 @@ begin
     sql.Text:='INSERT INTO t_delivery_order_log_status (no_trans,status,date,user_cretae) '+
               ' VALUES ('+QuotedStr(edKodeDOMuatan.Text)+','+IntToStr(StatusDO)+',NOW(),'+
               ''+QuotedStr(FHomeLogin.Eduser.Text)+')';
-    Execute;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -392,7 +404,13 @@ begin
                 'left join t_selling b on b.trans_no=a.notrans_load and b.deleted_at is null ' +
                 'left JOIN t_sales_order c on c.notrans=b.no_reference and c.deleted_at is null ' +
                 'WHERE a.notrans=' + QuotedStr(edKodeDOMuatan.Text) + ' and c.no_reference is not null';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp.RecordCount > 0 then
   begin
@@ -440,7 +458,7 @@ var
   jsonBody: TStringStream;
   TotPPH,PPHPercent: Currency;
 begin
-  Application.ProcessMessages; // agar UI tetap responsif
+  Application.ProcessMessages;
   try
 
     with dm.Qtemp2 do
@@ -450,7 +468,13 @@ begin
       SQl.Text:='select CAST(FLOOR(SUM(pph_value)) AS BIGINT) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     TotPPH:= dm.Qtemp2.FieldValues['pph_value'];
@@ -514,7 +538,13 @@ begin
       SQl.Text:='select CAST(FLOOR(SUM(pph_value)) AS BIGINT) pph_value,COALESCE((SELECT DISTINCT percent_pph FROM t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+' AND percent_pph<>0),0) percent_pph  from t_delivery_order_cost '+
                 'WHERE notrans='+QuotedStr(edKodeDOMuatan.Text)+';';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     TotPPH:= dm.Qtemp2.FieldValues['pph_value'];
@@ -734,6 +764,7 @@ begin
       MessageDlg(json.StringTree['message'] + '..!!', mtInformation, [mbOK], 0);
       Exit;
     end;
+
     // Ambil jumlah data di JSON
     cnt := json.TreeCount['data'];
     if cnt = 0 then
@@ -741,6 +772,7 @@ begin
       ShowMessage('Data Tidak Ditemukan');
       Exit;
     end;
+
     // Update dataset biaya
     MemDataBiaya.First;
     while not MemDataBiaya.Eof do
@@ -803,7 +835,6 @@ begin
   try
 //  IntTitikTambahan:=StrToInt(spTotalTitik.Text)-1;
   notrans:=edKodeDOMuatan.Text;
-//  notrans:='DO/001/13/III/2025/HLJ';
   //BaseUrl:=edBaseURL.Text;
   BaseUrl:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''baseurlchakra''');
   key:=SelectRow('SELECT value_parameter FROM "public"."t_parameter" where key_parameter=''keyapichakra''');
@@ -1017,6 +1048,16 @@ begin
   if chkDOpool.Checked=True then btAddDetail.Visible:=True else btAddDetail.Visible:=False;
 end;
 
+procedure TFNewDeliveryOrder.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
+  else btnNoTransaksi.Visible:=False;
+
+  edKodeDOMuatan.Clear;
+  edKodeDOBiaya.Clear;
+  edKodeDODok.Clear;
+end;
+
 procedure TFNewDeliveryOrder.chktambahpoolClick(Sender: TObject);
 var LastVendor: String;
     IntTitik:Integer;
@@ -1028,7 +1069,7 @@ begin
   end;
   IntTitik := 0;
   LastVendor := '';
-  
+
   MemDataMuatan.DisableControls;
   try
     MemDataMuatan.First;
@@ -1058,7 +1099,7 @@ end;
 
 procedure TFNewDeliveryOrder.Save;
 var
-  vAddPool,vPoolToCustomer: string;
+  vAddPool,vPoolToCustomer,strIsNoReplacement: string;
 begin
   if chktambahpool.Checked then
     vAddPool := 'true'
@@ -1069,6 +1110,10 @@ begin
     vPoolToCustomer := 'true'
   else
     vPoolToCustomer := 'false';
+
+
+  if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
+
   with dm.Qtemp do
   begin
     close;
@@ -1079,7 +1124,7 @@ begin
             ' "regency_name", "number_of_points", "description", "formsumbervendor", "order_no", '+
             //' "additional_code", '+
             ' "trans_day", "trans_month", "trans_year",status,starting_loc_regencie_id,'+
-            'sbu_code,add_pool_points,pool_to_customers) '+
+            'sbu_code,add_pool_points,pool_to_customers,is_no_replacement) '+
             ' VALUES ( '+
             ' NOW(), '+
             ' '+QuotedStr(FHomeLogin.Eduser.Text)+', '+
@@ -1101,10 +1146,45 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+',1,'+QuotedStr(edlokasiregencyid.Text)+','+
-            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+vAddPool+','+vPoolToCustomer+');');
-    ExecSQL;
+            ' '+QuotedStr(FHomeLogin.vKodePRSH)+','+vAddPool+','+vPoolToCustomer+','+
+            ' '+QuotedStr(strIsNoReplacement)+' );');
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
-  InsertDetailLoad;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:='UPDATE "public"."t_delivery_order" SET'+
+                ' trans_no_replacement='+QuotedStr(edKodeDOMuatan.Text)+
+                ' Where notrans='+QuotedStr(strNoTransaksiDiGanti);
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;;
+    end;
+  end;
+
+//  if True then
+
+  if edKodeJenisMuatan.Text='007' then
+  begin
+    InsertDetailLoadMuatan;
+  end else begin
+    InsertDetailLoad;
+  end;
+
   InsertDetailCost;
   InsertDetailService;
   UpdateStatusTele;
@@ -1154,7 +1234,13 @@ begin
             ' '+QuotedStr(strtahun)+',1, '+
 //            '+QuotedStr(edlokasiregencyid.Text)+','+
             ' '+QuotedStr(FHomeLogin.vKodePRSH)+');');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   InsertDetailLoadMuatan;
   InsertDetailService;
@@ -1285,9 +1371,21 @@ begin
             ' add_pool_points=' + vAddPool +
             ' ,pool_to_customers='+ vPoolToCustomer +
             ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
-  InsertDetailLoad;
+  if edKodeJenisMuatan.Text='007' then
+  begin
+    InsertDetailLoadMuatan;
+  end else begin
+    InsertDetailLoad;
+  end;
+
   InsertDetailCost;
   InsertDetailService;
 
@@ -1335,7 +1433,13 @@ begin
             ' trans_year='+QuotedStr(strtahun)+', '+
             ' status_correction=0 '+
             ' Where notrans='+QuotedStr(edKodeDOMuatan.Text)+'');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   InsertDetailLoadMuatan;
   InsertDetailService;
@@ -1355,18 +1459,30 @@ begin
             ' SELECT * from "public"."t_delivery_order_load"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
-              ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
+                ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -1375,18 +1491,24 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "item_code", '+
-              ' "item_name","amount", "unit", "source_load") '+
-              ' Values( '+
-              ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
-              ' '+QuotedStr(MemDataMuatan['kd_barang'])+', '+
-              ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
-              ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
-              ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
-              ' '+IntToStr(sumber_do)+' );';
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "item_code", '+
+                ' "item_name","amount", "unit", "source_load") '+
+                ' Values( '+
+                ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
+                ' '+QuotedStr(MemDataMuatan['kd_barang'])+', '+
+                ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
+                ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
+                ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
+                ' '+IntToStr(sumber_do)+' );';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDataMuatan.Next;
   end;
@@ -1402,19 +1524,31 @@ begin
             ' SELECT * from "public"."t_delivery_order_load"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
-            ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
-  ExecSQL;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_delivery_order_load" '+
+                ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
   end;
 
   MemDataMuatan.First;
@@ -1422,23 +1556,29 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "notrans_load", '+
-              ' "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", '+
-              ' "item_name","amount", "unit", "source_load") '+
-              ' Values( '+
-              ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
-              ' '+QuotedStr(MemDataMuatan['notrans'])+', '+
-              ' '+QuotedStr(MemDataMuatan['kode_vendor'])+', '+
-              ' '+QuotedStr(MemDataMuatan['name_vendor'])+', '+
-              ' '+QuotedStr(MemDataMuatan['no_reff'])+', '+
-              ' '+QuotedStr(MemDataMuatan['kd_barang'])+', '+
-              ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
-              ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
-              ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
-              ' '+IntToStr(sumber_do)+' );';
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_delivery_order_load" ("notrans", "notrans_load", '+
+                ' "code_vendor_load", "name_vendor_load", "no_ref_load", "item_code", '+
+                ' "item_name","amount", "unit", "source_load") '+
+                ' Values( '+
+                ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
+                ' '+QuotedStr(MemDataMuatan['notrans'])+', '+
+                ' '+QuotedStr(MemDataMuatan['kode_vendor'])+', '+
+                ' '+QuotedStr(MemDataMuatan['name_vendor'])+', '+
+                ' '+QuotedStr(MemDataMuatan['no_reff'])+', '+
+                ' '+QuotedStr(MemDataMuatan['kd_barang'])+', '+
+                ' '+QuotedStr(MemDataMuatan['nm_barang'])+', '+
+                ' '+QuotedStr(MemDataMuatan['jumlah'])+', '+
+                ' '+QuotedStr(MemDataMuatan['satuan'])+', '+
+                ' '+IntToStr(sumber_do)+' );';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDataMuatan.Next;
   end;
@@ -1454,19 +1594,31 @@ begin
             ' SELECT * from "public"."t_delivery_order_cost"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_delivery_order_cost" '+
-            ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
-  ExecSQL;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_delivery_order_cost" '+
+                ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
   end;
 
   Grand_Tot:=0;
@@ -1475,31 +1627,37 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Text:=' INSERT INTO "public"."t_delivery_order_cost" ("notrans", '+
-              ' "cost_code", "cost_name", '+
-              ' "percent_pph", "code_pph", "name_pph", "percent_ppn", "code_ppn", "name_ppn", '+
-              ' "sub_total", "ppn_value", "pph_value", '+
-              ' "grand_total") '+
-              ' Values( '+
-              ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
-              ' '+QuotedStr(MemDataBiaya['kd_biaya'])+', '+
-              ' '+QuotedStr(MemDataBiaya['nm_biaya'])+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['persen_pph'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(MemDataBiaya['akun_pph'])+', '+
-              ' '+QuotedStr(MemDataBiaya['nama_pph'])+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['persen_ppn'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(MemDataBiaya['akun_ppn'])+', '+
-              ' '+QuotedStr(MemDataBiaya['nama_ppn'])+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['dpp'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['ppn'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['pph'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-              ' '+QuotedStr(stringreplace(MemDataBiaya['total'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+' );';
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Text:=' INSERT INTO "public"."t_delivery_order_cost" ("notrans", '+
+                ' "cost_code", "cost_name", '+
+                ' "percent_pph", "code_pph", "name_pph", "percent_ppn", "code_ppn", "name_ppn", '+
+                ' "sub_total", "ppn_value", "pph_value", '+
+                ' "grand_total") '+
+                ' Values( '+
+                ' '+QuotedStr(edKodeDOMuatan.Text)+', '+
+                ' '+QuotedStr(MemDataBiaya['kd_biaya'])+', '+
+                ' '+QuotedStr(MemDataBiaya['nm_biaya'])+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['persen_pph'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+                ' '+QuotedStr(MemDataBiaya['akun_pph'])+', '+
+                ' '+QuotedStr(MemDataBiaya['nama_pph'])+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['persen_ppn'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+                ' '+QuotedStr(MemDataBiaya['akun_ppn'])+', '+
+                ' '+QuotedStr(MemDataBiaya['nama_ppn'])+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['dpp'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['ppn'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['pph'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
+                ' '+QuotedStr(stringreplace(MemDataBiaya['total'], ',', '.',[rfReplaceAll, rfIgnoreCase]))+' );';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
-  Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
-  MemDataBiaya.Next;
+    Grand_Tot:=Grand_Tot+MemDataBiaya['total'];
+    MemDataBiaya.Next;
   end;
 end;
 
@@ -1516,7 +1674,13 @@ begin
             ' SELECT * from "public"."t_delivery_order_services"'+
             ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+' ) a '+
             ' Order By notrans desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
@@ -1527,7 +1691,13 @@ begin
       sql.clear;
       sql.Text:=' DELETE FROM  "public"."t_delivery_order_services" '+
                 ' WHERE "notrans"='+QuotedStr(edKodeDOMuatan.Text)+';';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -1559,7 +1729,13 @@ begin
               ' '+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+','+
               ' '+QuotedStr(edLokasiMuat.Text)+','+QuotedStr(edLokasiBongkar.Text)+','+QuotedStr(strVehicleGroupId)+','+QuotedStr(edKelompokKendaraan.Text)+');';
               //' '+QuotedStr(VarToStr(DBGridSumberPenjualan.Columns[5].Footer.Value))+' );';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -1594,6 +1770,10 @@ begin
   MemDataBiaya.EmptyTable;
   MemDataMuatan.EmptyTable;
   strVehicleGroupId:='';
+  strNoTransaksiDiGanti:='';
+  chkNomorPengganti.Checked:=False;
+  cbAdaBiaya.Checked:=False;
+  cbAdaBiaya.Visible:=False;
 
   //Muatan
   edKodeDOMuatan.Clear;
@@ -1657,7 +1837,13 @@ begin
               'where supplier_code='+
               '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
               'and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp2.RecordCount>0 then
   begin
@@ -1727,7 +1913,9 @@ begin
   begin
     edKodeVendorTransMuatan.Text:=FHomeLogin.vKodePRSH;
     edNamaVendorTransMuatan.Text:=FHomeLogin.vNamaPRSH;
+    spTotalTitik.ReadOnly:=False;
   end else begin
+    spTotalTitik.ReadOnly:=True;
     with dm.Qtemp2 do
     begin
       close;
@@ -1736,7 +1924,13 @@ begin
                 'where supplier_code='+
                 '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
                 'and deleted_at is null';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp2.RecordCount>0 then
     begin
@@ -1782,6 +1976,7 @@ end;
 
 procedure TFNewDeliveryOrder.RefreshGridRincianBiaya;
 begin
+
   with Dm.Qtemp do
   begin
     close;
@@ -1793,7 +1988,13 @@ begin
             'WHERE a.deleted_at IS NULL '+
             ' AND a.code_master='+QuotedStr(edKodeJenisMuatan.Text)+' '+
             ' Order By code, name desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   FNewDeliveryOrder.MemDataBiaya.active:=false;
@@ -1889,6 +2090,7 @@ begin
   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FListDeliveryOrder.Name)); //Mendapatkan nama Menu
   FKoreksi.Status:=0;
+  FKoreksi.AksiTipe:='KOREKSI';
   FKoreksi.vnotransaksi:=edKodeDOMuatan.Text; //Mendapatkan Nomor Transaksi
   FKoreksi.ShowModal;
 end;
@@ -1948,6 +2150,14 @@ begin
   FNewDeliveryOrder.dtTerimaTagihan.Date:=dtTanggalMuatan.Date;
 end;
 
+procedure TFNewDeliveryOrder.btnNoTransaksiClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='deliveryorder';
+  FListNoTransaksi.update_grid('notrans','order_no','t_delivery_order','WHERE date_trans='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggalMuatan.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY notrans ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFNewDeliveryOrder.btnSaveMuatanClick(Sender: TObject);
 var
   Year, Month, Day: Word;
@@ -1990,13 +2200,19 @@ begin
     end else if (MemDataMuatan.RecordCount=0) then
     begin
       MessageDlg('Detail Muatan Wajib Diisi..!!',mtInformation,[mbRetry],0);
+    end else if (chkNomorPengganti.Checked=True) AND (edKodeDOMuatan.Text='') then
+    begin
+      MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+      Exit;
     end
     else if Status = 0 then
     begin
-      FNewDeliveryOrder.Autonumber;
+
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeDOMuatan.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        if chkNomorPengganti.Checked=False then
+        FNewDeliveryOrder.Autonumber;
         SaveOffline;
         Dm.Koneksi.Commit;
       end;
@@ -2135,7 +2351,13 @@ begin
             ' updated_at=NOW(), '+
             ' updated_by='+QuotedStr(FHomeLogin.Eduser.Text)+',status=6 '+
             ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   with dm.Qtemp do
   begin
@@ -2146,7 +2368,13 @@ begin
             ' no_invoice='+QuotedStr(edNomorTagihanVendor.Text)+','+
             ' total_cost='+QuotedStr(stringreplace(FloatToStr(Grand_Tot), ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
             ' Where notrans='+QuotedStr(edKodeDODok.Text)+'');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   ShowMessage('Data Berhasil Diperbarui..');
@@ -2195,10 +2423,12 @@ begin
     end
     else if Status = 0 then
     begin
-      FNewDeliveryOrder.Autonumber;
+
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edKodeDOMuatan.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        if chkNomorPengganti.Checked=False then
+        FNewDeliveryOrder.Autonumber;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -2232,6 +2462,74 @@ begin
   end;
 end;
 
+
+procedure TFNewDeliveryOrder.cbAdaBiayaClick(Sender: TObject);
+begin
+  if cbAdaBiaya.Checked=True then
+  begin
+    TabDataBiaya.TabVisible:=True;
+    TabDataMuatan.TabVisible:=True;
+    edKelompokKendaraan.AllowKeyEdit:=False;
+    edKelompokKendaraan.ButtonVisible:=True;
+    edNamaJenisKendMuatan.ReadOnly:=True;
+    edNoKendMuatan.ReadOnly:=True;
+    DBGrid_SumberOrder.Columns[0].Visible:=False;
+    DBGrid_SumberOrder.Columns[2].Visible:=False;
+    DBGrid_SumberOrder.Columns[3].Visible:=False;
+    btNextStep.Visible:=True;
+    btnSubmitCorrectionMuatan.Visible:=False;
+    btnCloseMuatan.Visible:=False;
+    btnSaveMuatan.Visible:=False;
+    edKodeVendorTransMuatan.Text:='';
+    edNamaVendorTransMuatan.Text:='';
+    with dm.Qtemp2 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='select supplier_code,supplier_name from t_supplier '+
+                'where supplier_code='+
+                '(select value_parameter from t_parameter where key_parameter=''default_penyedia_jasa'') '+
+                'and deleted_at is null';
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+    if dm.Qtemp2.RecordCount>0 then
+    begin
+      edKodeVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_code'];
+      edNamaVendorTransMuatan.Text:=dm.Qtemp2.FieldValues['supplier_name'];
+    end;
+
+
+  end else begin
+    TabDataBiaya.TabVisible:=False;
+    TabDataMuatan.TabVisible:=False;
+    edKelompokKendaraan.AllowKeyEdit:=True;
+    edKelompokKendaraan.ButtonVisible:=False;
+    edNamaJenisKendMuatan.ReadOnly:=False;
+    edNoKendMuatan.ReadOnly:=False;
+    DBGrid_SumberOrder.Columns[0].Visible:=False;
+    DBGrid_SumberOrder.Columns[2].Visible:=False;
+    DBGrid_SumberOrder.Columns[3].Visible:=False;
+    btNextStep.Visible:=False;
+    btnSubmitCorrectionMuatan.Visible:=True;
+    btnCloseMuatan.Visible:=True;
+    btnSaveMuatan.Visible:=True;
+    edKodeVendorTransMuatan.Text:=FHomeLogin.vKodePRSH;
+    edNamaVendorTransMuatan.Text:=FHomeLogin.vNamaPRSH;
+  end;
+  if (edKodeJenisMuatan.Text='005') OR (edKodeJenisMuatan.Text='006') then
+  begin
+    DBGrid_SumberOrder.Columns[0].Visible:=True;
+    DBGrid_SumberOrder.Columns[2].Visible:=True;
+    DBGrid_SumberOrder.Columns[3].Visible:=True;
+  end;
+
+end;
 
 procedure TFNewDeliveryOrder.DBGridSumberPenjualanColEnter(Sender: TObject);
 var IntTitik:Integer;
@@ -2292,7 +2590,13 @@ begin
                 ' left join t_ak_header c on b.header_code=c.header_code'+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;
@@ -2313,7 +2617,13 @@ begin
                 ' left join t_ak_header c on b.header_code=c.header_code '+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;
@@ -2562,6 +2872,7 @@ begin
   RefreshForm;
   if (edKodeJenisMuatan.Text='005') OR (edKodeJenisMuatan.Text='006') then
   begin
+    cbAdaBiaya.Visible:=False;
     TabDataBiaya.TabVisible:=True;
     TabDataMuatan.TabVisible:=True;
     edKelompokKendaraan.AllowKeyEdit:=False;
@@ -2579,6 +2890,8 @@ begin
   end else
   if edKodeJenisMuatan.Text='007' then
   begin
+    cbAdaBiaya.Visible:=True;
+    cbAdaBiaya.Checked:=False;
     TabDataBiaya.TabVisible:=False;
     TabDataMuatan.TabVisible:=False;
     edKelompokKendaraan.AllowKeyEdit:=True;
@@ -2595,6 +2908,7 @@ begin
     edKodeVendorTransMuatan.Text:=FHomeLogin.vKodePRSH;
     edNamaVendorTransMuatan.Text:=FHomeLogin.vNamaPRSH;
   end else begin
+    cbAdaBiaya.Visible:=False;
     TabDataBiaya.TabVisible:=True;
     TabDataMuatan.TabVisible:=True;
     edKelompokKendaraan.AllowKeyEdit:=False;
@@ -2732,7 +3046,10 @@ begin
   if edNamaJenisMuatan.Text='' then
   begin
     ShowMessage('Jenis Muatan Wajib Diisi..!');
-  end else if (edKodeJenisMuatan.Text='006') OR (chkDOpool.Checked=True) then
+  end else if (edKodeJenisMuatan.Text = '006') or
+   (edKodeJenisMuatan.Text = '007') or
+   chkDOpool.Checked or
+   cbAdaBiaya.Checked then
   begin
     FDaftarKendaraan.vcall:='delivery_order';
     FDaftarKendaraan.GetDataViaAPI;
@@ -2896,6 +3213,17 @@ begin
     btnSubmitCorrectionMuatan.Visible := False;
     btnSaveMuatan.Visible := False;
     btnCloseMuatan.Visible:=False;
+  end;
+
+  if Status=1 then
+  begin
+    dtTanggalMuatan.Enabled:=False;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=False;
+  end else begin
+    dtTanggalMuatan.Enabled:=True;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=True;
   end;
 
 end;

@@ -193,6 +193,8 @@ object Fbrowse_data_pelanggan: TFbrowse_data_pelanggan
       Align = alLeft
       Caption = 'GBType2'
       TabOrder = 1
+      ExplicitLeft = 585
+      ExplicitTop = -5
     end
     object Panel2: TPanel
       Left = 1

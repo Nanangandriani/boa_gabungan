@@ -256,7 +256,13 @@ begin
                   ' '+QuotedStr(edKode_Pelanggan.Text)+', '+
                   ' 0 ,NOW(), '+
                   ' '+QuotedStr(Nm)+' );';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
       Dm.Koneksi.Commit;
@@ -281,7 +287,13 @@ begin
                   ' "id_master_det"='+QuotedStr(MemGroup['id_master_det'])+' AND '+
                   ' "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+' '+
                   ' ;';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       MessageDlg('Data Berhasil Diperbarui..!!',mtInformation,[MBOK],0);
       Dm.Koneksi.Commit;
@@ -324,7 +336,13 @@ begin
               ' '+IntToStr(rgPajak.ItemIndex)+', '+
               ' '+IntToStr(rgPotongan.ItemIndex)+', '+
               ' '+IntToStr(rgPromo.ItemIndex)+');';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   if MemKlasifikasi.RecordCount<>0 then
@@ -350,7 +368,13 @@ begin
               ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
               ' deleted_at IS NULL '+
               ' Order By "code_type_customer" desc ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   //id_master:= Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2);
 
@@ -380,7 +404,13 @@ begin
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc2'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc3'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc4'],',','.',[]))+');';
-      ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
 
 
@@ -393,7 +423,13 @@ begin
                 ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
                 ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' AND '+
                 ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+' ');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if Dm.Qtemp3.RecordCount=0 then
@@ -410,7 +446,13 @@ begin
                     ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
 //                     ' '+QuotedStr(StringReplace(MemKlasifikasi['harga_satuan'],',','.',[]))+','+
                     ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
       end;
 
@@ -426,7 +468,13 @@ begin
                   ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' and  '+
                   ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' and '+
                   ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+';';
-        ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
       end;
       //end cek master harga
@@ -450,7 +498,13 @@ begin
               ' updated_at=now(), '+
               ' updated_by='+QuotedStr(Nm)+' ');
       sql.add(' Where id='+QuotedStr(id_master)+';' );
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     if MemKlasifikasi.RecordCount<>0 then
@@ -476,7 +530,13 @@ begin
               ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
               ' deleted_at IS NULL '+
               ' Order By "code_type_customer" desc ');
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     id_master:= Copy(Dm.Qtemp1.FieldByName('id_master').AsString, 2, Length(Dm.Qtemp1.FieldByName('id_master').AsString) - 2);
 
@@ -486,7 +546,13 @@ begin
       sql.clear;
       sql.Text:='UPDATE t_sales_classification set status_disc='+IntToStr(rgPotongan.ItemIndex)+' '+
                 'WHERE id='+QuotedStr(id_master)+';';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     with dm.Qtemp2 do
@@ -495,7 +561,13 @@ begin
       sql.clear;
       sql.add(' Delete From "t_sales_classification_det" '+
               ' Where id_master='+QuotedStr(id_master)+';' );
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     MemKlasifikasi.First;
@@ -525,7 +597,13 @@ begin
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc2'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc3'],',','.',[]))+','+
                 ' '+QuotedStr(StringReplace(MemKlasifikasi['disc4'],',','.',[]))+');';
-      ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       with Dm.Qtemp3 do //cek data master harga
       begin
@@ -536,7 +614,13 @@ begin
                 ' where "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
                 ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' AND '+
                 ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+' ');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if Dm.Qtemp3.RecordCount=0 then
@@ -552,7 +636,13 @@ begin
                   ' '+QuotedStr(MemKlasifikasi['kd_barang'])+', '+
                   ' '+QuotedStr(MemKlasifikasi['kd_satuan'])+', '+
                   ' '+QuotedStr(MemKlasifikasi['harga_satuan'])+');';
-        ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
       end;
 
@@ -568,7 +658,13 @@ begin
                   ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' and  '+
                   ' "code_item"='+QuotedStr(MemKlasifikasi['kd_barang'])+' and '+
                   ' "code_unit"='+QuotedStr(MemKlasifikasi['kd_satuan'])+';';
-        ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
       end;
       //end cek master harga
@@ -583,28 +679,69 @@ end;
 
 procedure TFDaftarKlasifikasi.bt_m_simpanClick(Sender: TObject);
 begin
-  with Dm.Qtemp3 do
+
+  if rgGrouping.ItemIndex=0 then
   begin
-    close;
-    sql.clear;
-    sql.add(' SELECT "id" as id_master,"code_type_customer", "code_item_category", "code_type_count", '+
-            ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
-            ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
-            ' FROM "t_sales_classification" '+
-            ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
-            ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
-            ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
-            ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
-            ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
-            ' "code_sell_type"='+QuotedStr(edkd_jenis_jual.Text)+' AND '+
-            ' "status_payment"='+IntToStr(rgPembayaran.ItemIndex)+' AND '+
-            ' "status_grouping"='+IntToStr(rgGrouping.ItemIndex)+' AND '+
-            ' "status_tax"='+IntToStr(rgPajak.ItemIndex)+' AND '+
-//            ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
-            ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
-            ' deleted_at IS NULL '+
-            ' Order By "code_item_category" desc ');
-    open;
+
+    with Dm.Qtemp3 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT "id" as id_master,"code_type_customer", "code_item_category", "code_type_count", '+
+              ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
+              ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
+              ' FROM "t_sales_classification" '+
+              ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+              ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+              ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
+              ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
+              ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
+              ' "code_sell_type"='+QuotedStr(edkd_jenis_jual.Text)+' AND '+
+              ' "status_payment"='+IntToStr(rgPembayaran.ItemIndex)+' AND '+
+              ' "status_grouping"='+IntToStr(rgGrouping.ItemIndex)+' AND '+
+              ' "status_tax"='+IntToStr(rgPajak.ItemIndex)+' AND '+
+  //            ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
+              ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
+              ' deleted_at IS NULL '+
+              ' Order By "code_item_category" desc ');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+  end else begin
+    with Dm.Qtemp3 do
+    begin
+      close;
+      sql.clear;
+      sql.add(' SELECT "id" as id_master,"code_type_customer", "code_item_category", "code_type_count", '+
+              ' "code_customer_selling_type", "code_sell_type", "status_payment", '+
+              ' "status_grouping", "status_tax", "status_disc", "status_promo" '+
+              ' FROM "t_sales_classification" '+
+              ' where "code_type_business"='+QuotedStr(edkd_jenis_usaha.Text)+' AND '+
+              ' "code_type_customer"='+QuotedStr(edkd_jenis_pel.Text)+' AND '+
+              ' "code_item_category"='+QuotedStr(edkd_kategori.Text)+' AND  '+
+              ' "code_type_count"='+QuotedStr(edkd_type_hitung.Text)+' AND  '+
+              ' "code_customer_selling_type"='+QuotedStr(edkd_type_jual.Text)+' AND  '+
+              ' "code_sell_type"='+QuotedStr(edkd_jenis_jual.Text)+' AND '+
+              ' "status_payment"='+IntToStr(rgPembayaran.ItemIndex)+' AND '+
+              ' "status_grouping"='+IntToStr(rgGrouping.ItemIndex)+' AND '+
+              ' "status_tax"='+IntToStr(rgPajak.ItemIndex)+' AND '+
+              ' "status_disc"='+IntToStr(rgPotongan.ItemIndex)+' AND '+
+              ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
+              ' deleted_at IS NULL '+
+              ' Order By "code_item_category" desc ');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
   end;
 
   if (Dm.Qtemp3.RecordCount>0) AND (StatusNonGroup=0) then
@@ -687,7 +824,13 @@ begin
             ' "status_promo"='+IntToStr(rgPromo.ItemIndex)+' AND '+
             ' deleted_at IS NULL '+
             ' Order By "code_item_category" desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemKlasifikasi.active:=false;
   MemKlasifikasi.active:=true;
@@ -714,7 +857,13 @@ begin
                 ' AND "id_master"='+QuotedStr(id_master)+' '+
                 ' ) a '+
                 ' Order By "code_item" desc');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       if Dm.Qtemp.RecordCount<>0 then
@@ -760,7 +909,13 @@ begin
             ' "status_grouping"=1 and a.status_approval=1 AND a.status_tax='+IntToStr(rgPajak.ItemIndex)+' )xx where  id_detail NOT IN (SELECT "id_master_det" '+
             ' FROM "t_sales_classification_group" where "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+') '+
             ' Order By "code_item" desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemMaster.active:=false;
   MemMaster.active:=true;
@@ -833,7 +988,13 @@ begin
             ' "status_grouping"=1 AND status_tax='+IntToStr(rgPajak.ItemIndex)+' )xx where  id_detail IN (SELECT "id_master_det" '+
             ' FROM "t_sales_classification_group" where "code_cust"='+QuotedStr(edKode_Pelanggan.Text)+') '+
             ' Order By "code_item" desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemGroup.active:=false;
   MemGroup.active:=true;
@@ -948,9 +1109,11 @@ end;
 
 procedure TFDaftarKlasifikasi.BCorrectionClick(Sender: TObject);
 begin
+
   FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FListKlasifikasi.Name)); //Mendapatkan nama Menu
   FKoreksi.Status:=0;
+  FKoreksi.AksiTipe:='KOREKSI';
   FKoreksi.vnotransaksi:=id_master; //Mendapatkan Nomor Transaksi
   FKoreksi.ShowModal;
 end;

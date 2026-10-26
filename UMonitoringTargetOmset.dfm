@@ -1622,7 +1622,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45694.980101134300000000
-    ReportOptions.LastChange = 46213.608220300930000000
+    ReportOptions.LastChange = 46213.608220300900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2022,7 +2022,7 @@ object FMonitoringTargetOmset: TFMonitoringTargetOmset
           AllowVectorExport = True
           Top = 22.995052380000000000
           Width = 171.911079960000000000
-          Height = 49.511811023622000000
+          Height = 49.511811020000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -12

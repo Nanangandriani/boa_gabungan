@@ -181,7 +181,13 @@ begin
                ' ORDER BY nomor ASC ');    }
        sql.Text:='SELECT * from get_daftar_cek_bulan('+QuotedStr(vRekeningBank)+', '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' ,'+
                   ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+')';
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;
     end;
   end;
 
@@ -275,7 +281,13 @@ begin
                ' FROM (select saldo_akhir from '+
                ' "public"."get_bank_saldoakhir"('+QuotedStr(vRekeningBank)+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue-1))+'))x)xx '+
                ' ORDER BY nomor ASC ');
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   finally
   DBGrid.FinishLoadingStatus();

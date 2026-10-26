@@ -44,8 +44,10 @@ object FKolektifPenjualan: TFKolektifPenjualan
     Align = alBottom
     Color = 15987699
     TabOrder = 0
+    ExplicitTop = 62
+    ExplicitWidth = 436
     object BBatal: TRzBitBtn
-      Left = 367
+      Left = 363
       Top = 2
       Height = 38
       Align = alRight
@@ -104,10 +106,10 @@ object FKolektifPenjualan: TFKolektifPenjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 363
+      ExplicitLeft = 359
     end
     object BPrint: TRzBitBtn
-      Left = 280
+      Left = 276
       Top = 2
       Width = 87
       Height = 38
@@ -246,7 +248,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 276
+      ExplicitLeft = 272
     end
   end
   object dtTanggalAwal: TRzDateTimePicker
@@ -291,7 +293,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44526.601395243100000000
-    ReportOptions.LastChange = 46028.252854050900000000
+    ReportOptions.LastChange = 46318.657002199080000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'procedure PageFooter1OnBeforePrint(Sender: TfrxComponent);'
@@ -397,6 +399,27 @@ object FKolektifPenjualan: TFKolektifPenjualan
       '    MemVA10.Visible:= False;'
       '   end;'
       ''
+      '   if (<frxDBDPenjualan."amount_down_payment"> > 0) then'
+      '   begin'
+      
+        '    MemUM3.Text := '#39'Nota ini sudah dilakukan pembayaran sebesar ' +
+        #39' + '
+      
+        '                 FormatFloat('#39'#,##0.##'#39', <frxDBDPenjualan."amoun' +
+        't_down_payment">) + '
+      '                 '#39' dan sisa piutang sebesar '#39' + '
+      
+        '                 FormatFloat('#39'#,##0.##'#39', <frxDBDPenjualan."grand' +
+        '_tot_amount_down_payment">);                  '
+      '    MemUM1.Visible := True;'
+      '    MemUM2.Visible := True;'
+      '    MemUM3.Visible := True;         '
+      '   end else begin'
+      '    MemUM3.Text:='#39#39';                   '
+      '    MemUM1.Visible := False;'
+      '    MemUM2.Visible := False;'
+      '    MemUM3.Visible := False;'
+      '   end;       '
       ''
       'end;'
       ''
@@ -445,6 +468,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
+      HGuides.Strings = (
+        '97,6744186')
       PaperWidth = 210.000000000000000000
       PaperHeight = 279.400000000000000000
       PaperSize = 256
@@ -1435,7 +1460,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object Memo8: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 249.448980000000000000
+          Top = 253.448980000000000000
           Width = 64.251961180000000000
           Height = 37.795287800000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1471,7 +1496,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA1: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 162.519790000000000000
+          Top = 134.519790000000000000
           Width = 241.889920000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1487,7 +1512,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA2: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 181.417440000000000000
+          Top = 153.417440000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1503,7 +1528,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA5: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 200.315090000000000000
+          Top = 172.315090000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1519,7 +1544,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA8: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
-          Top = 220.082305220000000000
+          Top = 192.082305220000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1535,7 +1560,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA3: TfrxMemoView
           AllowVectorExport = True
           Left = 79.826840000000000000
-          Top = 181.417440000000000000
+          Top = 153.417440000000000000
           Width = 7.559055120000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1551,7 +1576,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA6: TfrxMemoView
           AllowVectorExport = True
           Left = 79.826840000000000000
-          Top = 200.315090000000000000
+          Top = 172.315090000000000000
           Width = 7.559055120000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1567,7 +1592,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA9: TfrxMemoView
           AllowVectorExport = True
           Left = 79.826840000000000000
-          Top = 219.212740000000000000
+          Top = 191.212740000000000000
           Width = 7.559060000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1583,7 +1608,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA4: TfrxMemoView
           AllowVectorExport = True
           Left = 87.385900000000000000
-          Top = 181.417440000000000000
+          Top = 153.417440000000000000
           Width = 264.566929130000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1597,7 +1622,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA7: TfrxMemoView
           AllowVectorExport = True
           Left = 87.385900000000000000
-          Top = 200.315090000000000000
+          Top = 172.315090000000000000
           Width = 264.566929130000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -1617,7 +1642,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object MemVA10: TfrxMemoView
           AllowVectorExport = True
           Left = 87.385900000000000000
-          Top = 219.212740000000000000
+          Top = 191.212740000000000000
           Width = 355.605581030000000000
           Height = 18.897650000000000000
           StretchMode = smMaxHeight
@@ -1859,7 +1884,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
         object signature_name: TfrxMemoView
           AllowVectorExport = True
           Left = 505.922233330000000000
-          Top = 243.444496190000000000
+          Top = 273.598425200000000000
           Width = 223.379406670000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1877,7 +1902,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
           IndexTag = 1
           AllowVectorExport = True
           Left = 504.333333330000000000
-          Top = 167.318799520000000000
+          Top = 161.318799520000000000
           Width = 224.363636670000000000
           Height = 18.897637800000000000
           DataSet = frxDBDPenjualan
@@ -1949,6 +1974,57 @@ object FKolektifPenjualan: TFKolektifPenjualan
           HAlign = haRight
           ParentFont = False
         end
+        object MemUM1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.720930230000000000
+          Top = 211.283362090000000000
+          Width = 70.690198500000000000
+          Height = 16.572068590000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Catatan')
+          ParentFont = False
+        end
+        object MemUM3: TfrxMemoView
+          AllowVectorExport = True
+          Left = 86.325581390000000000
+          Top = 211.414961980000000000
+          Width = 208.829733380000000000
+          Height = 43.083696500000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            
+              'Nota ini sudah dilakukan pembayaran sebesar 180.000 dan sisa piu' +
+              'tang sebesar 12.627.043')
+          ParentFont = False
+        end
+        object MemUM2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 79.790697670000000000
+          Top = 211.414961980000000000
+          Width = 6.288225600000000000
+          Height = 18.897650000000000000
+          AutoWidth = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            ':')
+          ParentFont = False
+        end
       end
       object ReportTitle1: TfrxReportTitle
         FillType = ftBrush
@@ -1989,6 +2065,7 @@ object FKolektifPenjualan: TFKolektifPenjualan
     CloseDataSource = False
     FieldAliases.Strings = (
       'company_name=company_name'
+      'full_name=full_name'
       'company_city=company_city'
       'trans_no=trans_no'
       'no_inv_tax=no_inv_tax'
@@ -2034,12 +2111,14 @@ object FKolektifPenjualan: TFKolektifPenjualan
       'va_name=va_name'
       'company_code_bank=company_code_bank'
       'number_va=number_va'
-      'bank_name=bank_name')
+      'bank_name=bank_name'
+      'amount_down_payment=amount_down_payment'
+      'grand_tot_amount_down_payment=grand_tot_amount_down_payment')
     DataSet = QPenjualan
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 48
-    Top = 63
+    Left = 56
+    Top = 47
   end
   object QPenjualan: TUniQuery
     Connection = dm.Koneksi
@@ -2069,7 +2148,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
       ',(select DISTINCT * from get_user_signature(2)) signature_name,'
       
         '(SELECT company_name FROM t_company) company_name,va_name,compan' +
-        'y_code_bank,number_va,bank_name'
+        'y_code_bank,number_va,bank_name,amount_down_payment, grand_tot_a' +
+        'mount_down_payment '
       
         'from "public".get_selling(FALSE) a  LEFT JOIN "public"."t_sellin' +
         'g_det" b ON a.trans_no=b.trans_no  LEFT JOIN "public"."t_selling' +
@@ -2079,8 +2159,8 @@ object FKolektifPenjualan: TFKolektifPenjualan
         'ustomer_code   LEFT JOIN t_item f ON f.item_code=b.code_item  wh' +
         'ere  a.trans_date BETWEEN '#39'2025-10-01'#39' AND '#39'2025-10-01'#39'  order b' +
         'y f.group_id,b.code_item ASC;')
-    Left = 96
-    Top = 64
+    Left = 112
+    Top = 40
   end
   object DSBuktiTerima: TDataSource
     DataSet = QPenjualan

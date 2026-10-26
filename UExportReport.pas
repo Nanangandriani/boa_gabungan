@@ -29,7 +29,7 @@ uses
   frxExportBaseDialog, frxExportPDF, MemTableEh, MemDS, DBAccess, Uni, frxDBSet,
   dxBarExtItems, cxBarEditItem, dxBar, cxClasses, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL, GridsEh,
-  DBAxisGridsEh, DBGridEh, dxRibbon, scExcelExport, System.Win.ComObj;
+  DBAxisGridsEh, DBGridEh, dxRibbon, scExcelExport, System.Win.ComObj, ShellAPI;
 
 type
   TFExportReport = class(TForm)
@@ -150,12 +150,29 @@ begin
     Application.CreateForm(TFExportReport, Result);
 end;
 
+function CleanSheetName(const AName: string): string;
+var
+  i: Integer;
+const
+  InvalidChars: set of Char = [':', '\', '/', '?', '*', '[', ']'];
+begin
+  Result := AName;
+  // Hapus karakter terlarang
+  for i := Length(Result) downto 1 do
+  begin
+    if CharInSet(Result[i], InvalidChars) then
+      Delete(Result, i, 1);
+  end;
+  // Potong maksimal 31 karakter (aturan keras dari Excel)
+  Result := Copy(Trim(Result), 1, 31);
+end;
+
 procedure TFExportReport.cbLaporoanPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
   FMasterData.Caption:='Data Laporan';
   FMasterData.vcall:='exportreport';
-  FMasterData.update_grid('id','report_name','sp_name','t_export_report_config','WHERE is_active=True');
+  FMasterData.update_grid('id','report_name','sp_name','t_export_report_config','WHERE is_active=True ORDER BY report_name ASC');
   FMasterData.ShowModal;
 end;
 
@@ -167,8 +184,6 @@ var
   TotalRows, TotalCols: Integer;
   vExcel: Variant;
 begin
-
-
   if cbLaporoan.EditValue <> '' then
   begin
     vparameter := '';
@@ -203,7 +218,9 @@ begin
 
     if SaveDialog1.Execute then
     begin
-      scExcelExport1.WorksheetName := 'Export ' + cbLaporoan.EditValue;
+
+//      scExcelExport1.WorksheetName := 'Export ' + VarToStr(cbLaporoan.EditValue);
+      scExcelExport1.WorksheetName := 'Export' ;
       scExcelExport1.ExcelVisible := False;
 
       try
@@ -330,6 +347,15 @@ begin
 
         MessageDlg('Export data ke Excel berhasil..!!',mtInformation,[MBOK],0);
 
+        ShellExecute(
+          Handle,
+          'open',
+          PChar(SaveDialog1.FileName),
+          nil,
+          nil,
+          SW_SHOWNORMAL
+        );
+
       finally
         try
           if scExcelExport1.Connected then
@@ -360,11 +386,11 @@ begin
   begin
     vparameter:='';
 
-    if FExportReport.dtTanggalAwal.Visible=ivNever then
+     if FExportReport.dtTanggalAwal.Visible = ivNever then
     begin
-      vtgl:=QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.EditValue));
+      vtgl := QuotedStr(FormatDateTime('yyyy-mm-dd', dtTanggalAkhir.EditValue));
     end else begin
-      vtgl:=QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggalAkhir.EditValue));
+      vtgl := QuotedStr(FormatDateTime('yyyy-mm-dd', dtTanggalAwal.EditValue)) + ',' + QuotedStr(FormatDateTime('yyyy-mm-dd', dtTanggalAkhir.EditValue));
     end;
 
     vparameter:='('+vtgl+')';

@@ -4,8 +4,8 @@ object FDaftarTagihan: TFDaftarTagihan
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Daftar Tagihan'
-  ClientHeight = 489
-  ClientWidth = 1080
+  ClientHeight = 487
+  ClientWidth = 1072
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,27 +18,26 @@ object FDaftarTagihan: TFDaftarTagihan
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 98
-    Width = 1080
-    Height = 359
+    Width = 1072
+    Height = 357
     Hint = ''
     ActivePage = TabDetailFaktur
     Align = alClient
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 0
-    ExplicitTop = 57
-    ExplicitWidth = 1076
-    ExplicitHeight = 399
+    ExplicitWidth = 1068
+    ExplicitHeight = 356
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Detail Tagihan'
-      ExplicitWidth = 1072
-      ExplicitHeight = 374
+      ExplicitWidth = 1064
+      ExplicitHeight = 331
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 1076
-        Height = 334
+        Width = 1068
+        Height = 332
         Align = alClient
         DataSource = dsDetailPiutang
         DynProps = <>
@@ -156,15 +155,15 @@ object FDaftarTagihan: TFDaftarTagihan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 457
-    Width = 1080
+    Top = 455
+    Width = 1072
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 456
-    ExplicitWidth = 1076
+    ExplicitTop = 454
+    ExplicitWidth = 1068
     object BBatal: TRzBitBtn
-      Left = 1004
+      Left = 996
       Top = 1
       Height = 30
       Align = alRight
@@ -223,10 +222,10 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 1000
+      ExplicitLeft = 992
     end
     object BSave: TRzBitBtn
-      Left = 929
+      Left = 921
       Top = 1
       Height = 30
       Align = alRight
@@ -285,43 +284,51 @@ object FDaftarTagihan: TFDaftarTagihan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 925
+      ExplicitLeft = 917
     end
   end
   object RzPanel1: TRzPanel
     Left = 0
     Top = 0
-    Width = 1080
+    Width = 1072
     Height = 57
     Align = alTop
     Color = 15987699
     TabOrder = 2
-    ExplicitWidth = 1076
+    ExplicitWidth = 1068
     object RzLabel1: TRzLabel
-      Left = 8
-      Top = 21
+      Left = 9
+      Top = 16
       Width = 64
       Height = 15
       Caption = 'Karesidenan'
     end
     object RzLabel2: TRzLabel
-      Left = 302
-      Top = 21
+      Left = 278
+      Top = 16
       Width = 57
       Height = 15
       Caption = 'Kabupaten'
     end
     object RzLabel3: TRzLabel
-      Left = 593
-      Top = 21
+      Left = 526
+      Top = 16
       Width = 59
       Height = 15
       Caption = 'Kecamatan'
     end
+    object RzLabel4: TRzLabel
+      Left = 3
+      Top = 46
+      Width = 41
+      Height = 15
+      Caption = 'Tanggal'
+      Visible = False
+    end
     object edKaresidenan: TRzButtonEdit
-      Left = 78
-      Top = 18
-      Width = 185
+      Left = 79
+      Top = 13
+      Width = 187
       Height = 23
       Text = ''
       TabOrder = 0
@@ -331,9 +338,9 @@ object FDaftarTagihan: TFDaftarTagihan
       OnButtonClick = edKaresidenanButtonClick
     end
     object edKabupaten: TRzButtonEdit
-      Left = 368
-      Top = 18
-      Width = 185
+      Left = 341
+      Top = 13
+      Width = 182
       Height = 23
       Text = ''
       TabOrder = 1
@@ -343,8 +350,8 @@ object FDaftarTagihan: TFDaftarTagihan
       OnButtonClick = edKabupatenButtonClick
     end
     object edKecamatan: TRzButtonEdit
-      Left = 660
-      Top = 18
+      Left = 593
+      Top = 13
       Width = 185
       Height = 23
       Text = ''
@@ -354,24 +361,35 @@ object FDaftarTagihan: TFDaftarTagihan
       OnButtonClick = edKecamatanButtonClick
     end
     object RzButton1: TRzButton
-      Left = 872
-      Top = 16
+      Left = 784
+      Top = 11
       Width = 113
       Caption = 'Cari'
       TabOrder = 3
       OnClick = RzButton1Click
     end
+    object dtTanggal: TRzDateTimePicker
+      Left = 50
+      Top = 42
+      Width = 98
+      Height = 23
+      Date = 46312.000000000000000000
+      Format = ''
+      Time = 0.364682384257321200
+      TabOrder = 4
+      Visible = False
+      OnChange = dtTanggalChange
+    end
   end
   object RzPanel2: TRzPanel
     Left = 0
     Top = 57
-    Width = 1080
+    Width = 1072
     Height = 41
     Align = alTop
+    Color = 15987699
     TabOrder = 3
-    ExplicitLeft = 120
-    ExplicitTop = 63
-    ExplicitWidth = 185
+    ExplicitWidth = 1068
     object SpeedButton1: TSpeedButton
       Left = 0
       Top = 6
@@ -431,6 +449,7 @@ object FDaftarTagihan: TFDaftarTagihan
         5A5A000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
+      OnClick = SpeedButton1Click
     end
   end
   object dsDetailPiutang: TDataSource

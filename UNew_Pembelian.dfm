@@ -303,7 +303,8 @@ object FNew_Pembelian: TFNew_Pembelian
       Caption = 'Submit Correction'
       TabOrder = 5
       OnClick = BCorrectionClick
-      ExplicitLeft = 1098
+      ExplicitLeft = 1096
+      ExplicitTop = 4
     end
   end
   object Panel2: TPanel
@@ -974,6 +975,8 @@ object FNew_Pembelian: TFNew_Pembelian
       object TabBarang2: TRzTabSheet
         Color = 15987699
         Caption = 'Barang'
+        ExplicitWidth = 1489
+        ExplicitHeight = 333
         object DBGridDetailpo: TDBGridEh
           Left = 0
           Top = 0
@@ -1377,8 +1380,6 @@ object FNew_Pembelian: TFNew_Pembelian
       object Tab_UM: TRzTabSheet
         Color = 15987699
         Caption = 'Uang Muka'
-        ExplicitWidth = 1489
-        ExplicitHeight = 333
         object DBGrid_UM: TDBGridEh
           Left = 0
           Top = 0

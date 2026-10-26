@@ -162,7 +162,13 @@ begin
                  '('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+','+
                  ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+
                  'WHERE customer_code='+QuotedStr(strKodePelanggan);
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if QCetak.RecordCount=0 then
@@ -201,7 +207,13 @@ begin
                '('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+','+
                ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+
                'WHERE customer_code='+QuotedStr(strKodePelanggan)+' and urut=0';
-     open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     MemMaster.active:=false;
@@ -239,7 +251,13 @@ begin
                ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+
                'WHERE customer_code='+QuotedStr(strKodePelanggan)+' ORDER BY '+
                'customer_code DESC,trans_date DESC NULLS LAST,urut DESC,created_at DESC';
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;
     end;
 
     MemMasterDetail.active:=false;

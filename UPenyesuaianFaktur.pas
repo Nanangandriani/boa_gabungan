@@ -353,17 +353,13 @@ var
   CellValue: Variant;
   FileName: string;
 begin
-
   OpenDialog := TOpenDialog.Create(nil);
   try
     OpenDialog.Filter := 'Excel Files|*.xls;*.xlsx';
     OpenDialog.Title := 'Pilih File Excel untuk Diimpor';
-
     if OpenDialog.Execute then
     begin
       FileName := OpenDialog.FileName;
-
-
       ExcelApp := CreateOleObject('Excel.Application');
       try
 
@@ -396,28 +392,26 @@ begin
               ExecSQL;
             end;
           end;
-            MemDetail.Active:=false;
-            MemDetail.Active:=true;
-            MemDetail.EmptyTable;
+          MemDetail.Active:=false;
+          MemDetail.Active:=true;
+          MemDetail.EmptyTable;
         end;
 
         if dm.Qtemp.RecordCount=0 then
         begin
-            MemDetail.Active:=false;
-            MemDetail.Active:=true;
-            MemDetail.EmptyTable;
+          MemDetail.Active:=false;
+          MemDetail.Active:=true;
+          MemDetail.EmptyTable;
 
-            with dm.Qtemp1 do
-            begin
-              close;
-              sql.clear;
-              sql.add(' delete from t_selling_compare_coretax '+
-                      ' Where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ');
-              ExecSQL;
-            end;
-
+          with dm.Qtemp1 do
+          begin
+            close;
+            sql.clear;
+            sql.add(' delete from t_selling_compare_coretax '+
+                    ' Where created_by='+QuotedStr(FHomeLogin.Eduser.Text)+' ');
+            ExecSQL;
+          end;
         end;
-
 
         DBGridEh1.StartLoadingStatus();
         try
@@ -427,38 +421,36 @@ begin
 					begin
 						with dm.Qtemp1 do
 						begin
-						close;
-						sql.clear;
-						sql.add(' INSERT INTO t_selling_compare_coretax (created_by, created_at, '+
-								    ' npwp_nik, no_referensi, no_faktur_coretax, dpp_coretax, nppn_coretax, '+
-								    ' total_coretax, dpp_nilai_lain_coretax) '+
-								    ' VALUES ('+
-								    ' '+QuotedStr(FHomeLogin.Eduser.Text)+' ,'+
-								    ' NOW(), '+
-								    ' '+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' ,'+
-								    ' '+QuotedStr(WorkSheet.Cells[Row, 15].Value)+' ,'+
-								    ' '+QuotedStr(WorkSheet.Cells[Row, 4].Value)+' ,'+
-								    ' '+QuotedStr(stringreplace(WorkSheet.Cells[Row, 10].Value, ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-								    ' '+QuotedStr(stringreplace(WorkSheet.Cells[Row, 12].Value, ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-                    ' '+QuotedStr(stringreplace(FloatToStr(Round(WorkSheet.Cells[Row, 10].Value+WorkSheet.Cells[Row, 12].Value)), ',', '.',[rfReplaceAll, rfIgnoreCase]))+', '+
-								    ' '+QuotedStr(stringreplace(WorkSheet.Cells[Row, 11].Value, ',', '.',[rfReplaceAll, rfIgnoreCase]))+' '+
-								    ' )');
-						ExecSQL;
+              close;
+              sql.clear;
+              sql.add(' INSERT INTO t_selling_compare_coretax (created_by, created_at, '+
+                      ' npwp_nik, no_referensi, no_faktur_coretax, dpp_coretax, nppn_coretax, '+
+                      ' total_coretax, dpp_nilai_lain_coretax) '+
+                      ' VALUES ('+
+                      ' '+QuotedStr(FHomeLogin.Eduser.Text)+' ,'+
+                      ' NOW(), '+
+                      ' '+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' ,'+
+                      ' '+QuotedStr(WorkSheet.Cells[Row, 15].Value)+' ,'+
+                      ' '+QuotedStr(WorkSheet.Cells[Row, 4].Value)+' ,'+
+                      ' '+QuotedStr(StringReplace(StringReplace(VarToStr(WorkSheet.Cells[Row, 10].Value), '.', '', [rfReplaceAll, rfIgnoreCase]), ',', '.', [rfReplaceAll, rfIgnoreCase]))+', '+
+                      ' '+QuotedStr(StringReplace(StringReplace(VarToStr(WorkSheet.Cells[Row, 12].Value), '.', '', [rfReplaceAll, rfIgnoreCase]), ',', '.', [rfReplaceAll, rfIgnoreCase]))+', '+
+                      ' '+QuotedStr(StringReplace(FloatToStr(Round(
+                        StrToFloatDef(StringReplace(StringReplace(VarToStr(WorkSheet.Cells[Row, 10].Value), '.', '', [rfReplaceAll, rfIgnoreCase]), ',', '.', [rfReplaceAll, rfIgnoreCase]), 0) +
+                        StrToFloatDef(StringReplace(StringReplace(VarToStr(WorkSheet.Cells[Row, 12].Value), '.', '', [rfReplaceAll, rfIgnoreCase]), ',', '.', [rfReplaceAll, rfIgnoreCase]), 0)
+                      )), ',', '.', [rfReplaceAll, rfIgnoreCase]))+', '+
+                      ' '+QuotedStr(StringReplace(StringReplace(VarToStr(WorkSheet.Cells[Row, 11].Value), '.', '', [rfReplaceAll, rfIgnoreCase]), ',', '.', [rfReplaceAll, rfIgnoreCase]))+' '+
+                      ' )');
+              ExecSQL;
 						end;
 					end;
 		   end;
         finally
-
           DBGridEh1.FinishLoadingStatus();
-
         end;
-
-
         WorkBook.Close(False);
       finally
         ExcelApp.Quit;
       end;
-
     end
 		else
 		begin

@@ -148,7 +148,13 @@ begin
                  'WHERE (trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+strKaresidenan+strPelanggan+' AND deleted_at IS NULL '+
                  'order by trans_date Desc,trans_no Desc ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if QLapPenjualan.RecordCount>0 then
     begin
@@ -192,7 +198,13 @@ begin
       sql.Clear;
       sql.Text:='select * from get_laporan_penjualan() WHERE trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                 ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+strKaresidenan+strTP+strPelanggan+strKelompokBarang;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if QCetak.RecordCount=0 then
     begin
@@ -254,7 +266,13 @@ begin
       sql.Clear;
       sql.Text:='select * from get_laporan_penjualan() WHERE trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                 ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+strKaresidenan+strTP+strPelanggan+strKelompokBarang;
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if QCetak.RecordCount=0 then
     begin
@@ -298,7 +316,13 @@ begin
     sql.Clear;
     sql.Text:='select a.group_id,a.group_name from t_item_group a '+
               'order by a.group_name asc';
-    ExecSQL;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   Dm.Qtemp.First;
   while not Dm.Qtemp.Eof do

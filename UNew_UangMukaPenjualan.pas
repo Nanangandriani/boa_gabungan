@@ -65,7 +65,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='select a.id,b.additional_status from t_numb_type a inner join t_numb b on a.id=b.reset_type where numb_type='+QuotedStr(idmenu);
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if dm.Qtemp['additional_status']='0' then kd_kares:='' else kd_kares:=kd_kares;
   //  ShowMessage(kd_kares);
@@ -104,10 +110,10 @@ begin
     end
     else if Status = 0 then
     begin
-      Autonumber;
-  //    if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoUangMuka.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        Autonumber;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -171,7 +177,14 @@ begin
             ' '+QuotedStr(strtgl)+', '+
             ' '+QuotedStr(strbulan)+', '+
             ' '+QuotedStr(strtahun)+'  );';
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   MessageDlg('Simpan Berhasil ..!!',mtInformation,[MBOK],0);
@@ -190,7 +203,13 @@ begin
               ' account_code='+QuotedStr(edAkunUangMuka.Text)+', account_name='+QuotedStr(edNamaAkunUangMuka.Text)+','+
               ' grand_tot='+QuotedStr(FloatToStr(edJumlah.Value))+' '+
               ' WHERE no_trans='+QuotedStr(edNoUangMuka.Text)+' AND deleted_at IS NULL';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   MessageDlg('Ubah Berhasil ..!!',mtInformation,[MBOK],0);

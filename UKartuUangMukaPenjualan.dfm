@@ -959,6 +959,7 @@ object FKartuUangMukaPenjualan: TFKartuUangMukaPenjualan
           Top = 3.866110000000000000
           Width = 260.842610000000000000
           Height = 18.897650000000000000
+          DataSet = FListUangMukaPenjualan.frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -977,6 +978,7 @@ object FKartuUangMukaPenjualan: TFKartuUangMukaPenjualan
           Width = 253.228346460000000000
           Height = 52.913420000000000000
           StretchMode = smMaxHeight
+          DataSet = FListUangMukaPenjualan.frxDBDataset1
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack

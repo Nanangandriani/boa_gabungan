@@ -8,7 +8,7 @@ uses
   DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls, DynVarsEh, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, RzTabs, Vcl.StdCtrls, RzButton, RzEdit,
   Vcl.ComCtrls, RzDTP, Vcl.Mask, RzBtnEdt, Vcl.ExtCtrls, MemTableEh, Vcl.Buttons,
-  RzCmboBx, MemDS, DBAccess, Uni;
+  RzCmboBx, MemDS, DBAccess, Uni, RzRadChk;
 
 type
   TFDataPengeluaranKasBank = class(TForm)
@@ -145,6 +145,8 @@ type
     BEdit: TRzBitBtn;
     Ed_kd_bank: TEdit;
     BCorrection: TRzBitBtn;
+    chkNomorPengganti: TRzCheckBox;
+    btnNoTransaksi: TRzBitBtn;
     procedure edNamaJenisTransButtonClick(Sender: TObject);
     procedure BBatalClick(Sender: TObject);
     procedure BSaveClick(Sender: TObject);
@@ -179,15 +181,17 @@ type
     procedure Btn_daf_tpClick(Sender: TObject);
     procedure Ed_kd_bankChange(Sender: TObject);
     procedure BCorrectionClick(Sender: TObject);
+    procedure chkNomorPenggantiClick(Sender: TObject);
+    procedure btnNoTransaksiClick(Sender: TObject);
   private
     { Private declarations }
     vtotal_debit, vtotal_kredit, vtotal_hutang, vhutang_debit : Currency;
   public
     { Public declarations }
     IntStatusKoreksi, iserror, isCancel: integer;
-    Status,KetemuCekPosisiDK : Integer;
+    Status,KetemuCekPosisiDK, KetemuCekAkun : Integer;
     next_proses:boolean;
-    akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya,id_module : String;
+    akun_d, akun_k,kd_ak_supplier,vid_modul,vkd_biaya,id_module,strNoTransaksiDiGanti : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5,nobk_tmp,no_bon : String;
     { Public declarations }
     procedure Clear;
@@ -208,6 +212,7 @@ type
     procedure refresh_form;
     procedure load_group_biaya;
     procedure InsertGroupBiaya;
+    procedure SetReadOnly(status:Integer);
   end;
 
 var
@@ -220,7 +225,7 @@ implementation
 
 uses UDataModule, UCari_DaftarPerk, UMasterData, USearch_Supplier,
   udafajuankeluarkasbank, UMy_Function, u_daf_keluar_kas_bank, UHomeLogin,
-  Utrx_deposito, Udaftar_TP, UKoreksi;
+  Utrx_deposito, Udaftar_TP, UKoreksi, UListAmbilPengajuan, UListNoTransaksi;
 
 //var
   //RealFDataPengeluaranKasBank: TFDataPengeluaranKasBank;
@@ -233,8 +238,56 @@ begin
      Application.CreateForm(TFDataPengeluaranKasBank,Result);
 end;}
 
+procedure TFDataPengeluaranKasBank.SetReadOnly(status: Integer);
+var
+  IsReadOnly: Boolean;
+begin
+  IsReadOnly := (status = 1); // Hasilnya True jika status = 1, False jika status = 0
+  edNoTrans.ReadOnly               := IsReadOnly;
+  edNamaJenisTrans.ReadOnly       := IsReadOnly;
+  edKodeJenisTrans.ReadOnly       := IsReadOnly;
+  edNamaMataUang.ReadOnly         := IsReadOnly;
+  edKodeMataUang.ReadOnly         := IsReadOnly;
+  edKurs.ReadOnly                 := IsReadOnly;
+  edJumlah.ReadOnly               := IsReadOnly;
+  edUntukPengeluaran.ReadOnly      := IsReadOnly;
+  Edautocode.ReadOnly             := IsReadOnly;
+  edKode_supplier.ReadOnly        := IsReadOnly;
+  edNama_Supplier.ReadOnly        := IsReadOnly;
+  edNamaBank.ReadOnly             := IsReadOnly;
+  edNoRek.ReadOnly                := IsReadOnly;
+  edNMSumberHutang.ReadOnly       := IsReadOnly;
+  edNMJenisBayar.ReadOnly         := IsReadOnly;
+  edKodeSumberTagihan.ReadOnly    := IsReadOnly;
+  edKodeJenisBayar.ReadOnly       := IsReadOnly;
+  Ed_kepada.ReadOnly              := IsReadOnly;
+  Edth.ReadOnly                   := IsReadOnly;
+  Edbln.ReadOnly                  := IsReadOnly;
+  Edhari.ReadOnly                 := IsReadOnly;
+  EdNo.ReadOnly                   := IsReadOnly;
+  Ed_id_modul.ReadOnly            := IsReadOnly;
+  code_trans.ReadOnly             := IsReadOnly;
+  Ed_Additional.ReadOnly          := IsReadOnly;
+  edKodeSumberPengeluaran.ReadOnly:= IsReadOnly;
+  Ed_voucher_ajuan.ReadOnly       := IsReadOnly;
+  ak_account.ReadOnly             := IsReadOnly;
+  Ed_nocek.ReadOnly               := IsReadOnly;
+  Ed_kd_bank.ReadOnly             := IsReadOnly;
+  // Untuk Enabled, gunakan kebalikan dari IsReadOnly (tambahkan not)
+  dtPeriode1.Enabled              := not IsReadOnly;
+  dtPeriode2.Enabled              := not IsReadOnly;
+  cbsumberdata.Enabled            := not IsReadOnly;
+  Cb_jenis_trans.Enabled          := not IsReadOnly;
+  Cb_debt_source.Enabled          := not IsReadOnly;
+  CbRencana.Enabled               := not IsReadOnly;
+  tgl_tempo_cek.Enabled           := not IsReadOnly;
+  tgl_cek.Enabled                 := not IsReadOnly;
+  CbGroup_Biaya.Enabled           := not IsReadOnly;
+end;
+
 procedure TFDataPengeluaranKasBank.Clear;
 begin
+  dtTrans.Enabled:=false;
    MemDetailAkun.EmptyTable;
   MemDetailHutang.EmptyTable;
   edNoTrans.Clear;
@@ -289,32 +342,35 @@ begin
         open;
       end;
 
-      MemDetailAkun.EmptyTable;
-      MemDetailHutang.EmptyTable;
-      edNoTrans.Clear;
-      dtTrans.date:=now();
-      dtPeriode1.date:=now();
-      dtPeriode2.date:=now();
-      edKodeJenisTrans.Clear;
-      edNamaJenisTrans.Clear;
-      edNamaBank.Clear;
-      edNoRek.Clear;
-      edKode_supplier.Clear;
-      edNama_supplier.Clear;
-      edNoRek.Clear;
-      edNamaBank.Clear;
-      //edKodeMataUang.Clear;
-      //edNamaMataUang.Clear;
-      edUntukPengeluaran.Clear;
-      edKurs.value:=1.00;
-      edJumlah.value:=0.00;
-      MemKeterangan.Clear;
-      MemDetailAkun.Active:=true;
-      MemDetailHutang.Active:=true;
-      edKodeSumberPengeluaran.Clear;
-      cb_debt_source.Clear;
-      edKodeJenisBayar.Clear;
-      edNMJenisBayar.Clear;
+      {if Status = 0 then
+      begin
+        MemDetailAkun.EmptyTable;
+        MemDetailHutang.EmptyTable;
+        edNoTrans.Clear;
+        dtTrans.date:=now();
+        dtPeriode1.date:=now();
+        dtPeriode2.date:=now();
+        edKodeJenisTrans.Clear;
+        edNamaJenisTrans.Clear;
+        edNamaBank.Clear;
+        edNoRek.Clear;
+        edKode_supplier.Clear;
+        edNama_supplier.Clear;
+        edNoRek.Clear;
+        edNamaBank.Clear;
+        //edKodeMataUang.Clear;
+        //edNamaMataUang.Clear;
+        edUntukPengeluaran.Clear;
+        edKurs.value:=1.00;
+        edJumlah.value:=0.00;
+        MemKeterangan.Clear;
+        MemDetailAkun.Active:=true;
+        MemDetailHutang.Active:=true;
+        edKodeSumberPengeluaran.Clear;
+        cb_debt_source.Clear;
+        edKodeJenisBayar.Clear;
+        edNMJenisBayar.Clear;
+      end; }
 
       edKodeJenisTrans.Text:=Dm.Qtemp1.FieldByName('code_trans').AsString;
       edNamaJenisTrans.Text:=Dm.Qtemp1.FieldByName('name_trans').AsString;
@@ -433,12 +489,15 @@ begin
             ' "bank_number_account" = NULL, '+
             ' "bank_name_account" = NULL, '+
             ' "status_correction"= 0, '+
+            ' "is_no_replacement" = :paris_no_replacement, ' +
             ' "additional_code" = '+QuotedStr(Ed_Additional.Text)+', '+
             ' "module_id" = '+QuotedStr(Ed_id_modul.Text)+', '+
             ' "cheque_no" = '+QuotedStr(Ed_nocek.Text)+', '+
             ' "cheque_date" = '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cek.Date))+', '+
             ' "cheque_due_date" = '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_tempo_cek.Date))+' '+
             ' WHERE "voucher_no" = '+QuotedStr(edNoTrans.Text)+';');
+      // Binding parameter boolean pengganti
+      ParamByName('paris_no_replacement').AsBoolean := chkNomorPengganti.Checked;
     ExecSQL;
   end;
    {with dm.Qtemp do
@@ -580,9 +639,11 @@ begin
                   ' '+QuotedStr(cb_Jenis_Trans.Text)+', '+
                   ' '+QuotedStr(edNoRek.Text)+', '+
                   ' '+QuotedStr(edNamaBank.Text)+', '+
-                  ' '+QuotedStr(FloatToStr(MemDetailHutang['jum_hutang']))+', '+
+                  //' '+QuotedStr(FloatToStr(MemDetailHutang['jum_hutang']))+', '+
+                  ' :parjum_hutang, '+
                   ' '+QuotedStr(MemDetailHutang['keterangan'])+', '+
                   ' '+QuotedStr(ak_account.Text)+') ');
+          ParamByName('parjum_hutang').Value:=MemDetailHutang['jum_hutang'];
           ExecSQL;
       end;
       MemDetailHutang.Next;
@@ -677,7 +738,8 @@ begin
             ' "time_lock","update_time","stat_lock","currency","kurs","bon_no",'+
             ' "post_status","created_at","created_by","updated_at","updated_by","deleted_at", '+
             ' "deleted_by","bank_norek","bank_name","cek_no","trans_type_code","trans_type_name", '+
-            ' "bank_number_account","bank_name_account","additional_code","module_id",cheque_no,cheque_date,cheque_due_date) '+
+            ' "bank_number_account","bank_name_account","additional_code","module_id",'+
+            ' cheque_no,cheque_date,cheque_due_date,"is_no_replacement") '+
             ' VALUES ( '+
             ' '+QuotedStr(edNoTrans.Text)+','+QuotedStr(Ed_voucher_ajuan.Text)+',NULL,'+QuotedStr(MemKeterangan.Text)+',Now(),'+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', '+
             ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode1.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtPeriode2.Date))+', '+
@@ -692,9 +754,26 @@ begin
             ' NULL,NULL,NULL, '+QuotedStr(edKodeMataUang.Text)+','+QuotedStr(FloatToStr(edKurs.value))+',NULL,'+
             ' 0,NOW(),'+QuotedStr(FHomeLogin.Eduser.Text)+',NULL, NULL, NULL, '+
             ' NULL,'+QuotedStr(edNoRek.Text)+','+QuotedStr(edNamaBank.Text)+',NULL,'+QuotedStr(code_Trans.Text)+','+QuotedStr(Cb_Jenis_Trans.Text)+', '+
-            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+','+QuotedStr(Ed_id_modul.Text)+','+QuotedStr(Ed_nocek.Text)+','+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cek.Date))+','+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_tempo_cek.Date))+' );');
+            ' NULL,NULL,'+QuotedStr(Ed_Additional.Text)+','+QuotedStr(Ed_id_modul.Text)+','+
+            ' '+QuotedStr(Ed_nocek.Text)+','+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_cek.Date))+','+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',tgl_tempo_cek.Date))+',:paris_no_replacement );');
+      parambyname('paris_no_replacement').Value := chkNomorPengganti.Checked;
     ExecSQL;
   end;
+
+    if chkNomorPengganti.Checked then
+    begin
+      with dm.Qtemp do
+      begin
+        close;
+        sql.clear;
+        sql.Text := 'UPDATE "public"."t_cash_bank_expenditure" SET'+
+                    ' trans_no_replacement='+QuotedStr(edNoTrans.Text)+
+                    ' Where voucher_no='+QuotedStr(strNoTransaksiDiGanti);
+        ExecSQL;
+      end;
+    end;
+
 
   if MemDetailAkun.RecordCount<>0 then
   begin
@@ -801,13 +880,58 @@ begin
           KetemuCekPosisiDK:=1;
         end;
       end;
-
       end;
+
+      if MemDetailAkun['kd_akun']<>'0' then
+      begin
+        with Dm.Qtemp do
+        begin
+          close;
+          sql.clear;
+          sql.add(' SELECT * from ('+
+                  ' SELECT * from t_ak_account_sub where '+
+                  ' account_code2='+QuotedStr(MemDetailAkun['kd_akun'])+') a ');
+          open;
+        end;
+      end;
+      if Dm.Qtemp.RecordCount=0 then
+      begin
+          ShowMessage('Akun '+MemDetailAkun['nm_akun']+' Tidak Terdaftar, Silakan Pilih Akun Yang Benar !!!');
+          KetemuCekAkun:=1;
+      end;
+
+
+
+
     end;
    Except;
    end;
 end;
 
+
+procedure TFDataPengeluaranKasBank.chkNomorPenggantiClick(Sender: TObject);
+begin
+  if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
+  else btnNoTransaksi.Visible:=False;
+  edNoTrans.Clear;
+
+  if chkNomorPengganti.Checked=True then
+  begin
+    self.load_sumber_data;
+    load_source_debt;
+    dtTrans.Date:=Now();
+    dtPeriode1.Date:=Now();
+    dtPeriode2.Date:=Now();
+    dttrans.OnChange(sender);
+    tgl_cek.Date:=now();
+    tgl_tempo_cek.Date:=now();
+    load_group_biaya;
+    edKodeMataUang.Text:='IDR';
+    edKodeMataUangChange(sender);
+    CbRencana.Text:='1';
+    strNoTransaksiDiGanti:='';
+  end;
+end;
 
 procedure TFDataPengeluaranKasBank.HitungKurs;
 begin
@@ -914,6 +1038,7 @@ begin
     FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(Fdaf_pengeluaran_kas_bank.Name)); //Mendapatkan nama Menu
 
+    FKoreksi.AksiTipe:='KOREKSI';
     FKoreksi.Status:=0;
     FKoreksi.vnotransaksi:=edNoTrans.Text; //Mendapatkan Nomor Transaksi
     FKoreksi.ShowModal;
@@ -928,9 +1053,15 @@ end;
 procedure TFDataPengeluaranKasBank.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
+  LOriginalName: string;
+  LBaseName: string;
+  LLastUnderscorePos: Integer;
+  LSuffix: string;
+  LDummyInt: Integer;
 begin
       //Rferesh hasil Kurs, cek posisi DK
     KetemuCekPosisiDK:=0;
+    KetemuCekAkun:=0;
     MemDetailAkun.First;
     while not MemDetailAkun.Eof do
     begin
@@ -940,6 +1071,11 @@ begin
     end;
     //Cek Posisi Akun DK
     if KetemuCekPosisiDK<>0 then
+    begin
+      Exit;
+    end;
+    //Cek Akun Terdaftar apa enggk di t_ak_account_sub
+    if KetemuCekAkun<>0 then
     begin
       Exit;
     end;
@@ -959,6 +1095,48 @@ begin
        if not dm.Koneksi.InTransaction then
        dm.Koneksi.StartTransaction;
        try
+          if (chkNomorPengganti.Checked=True) AND (edNoTrans.Text='') then
+          begin
+            MessageDlg('No Transaksi Wajib Diisi..!!',mtInformation,[mbRetry],0);
+            Exit;
+          end;
+
+          //else
+          if (chkNomorPengganti.Checked=True) AND (edNoTrans.Text<>'') then
+          begin
+            if status=0 then
+            begin
+              with dm.Qtemp2 do
+              begin
+                close;
+                sql.Clear;
+                sql.Text:=' SELECT * FROM t_cash_bank_expenditure '+
+                          ' WHERE voucher_no='+QuotedStr(edNoTrans.Text);
+                open;
+              end;
+            end;
+
+            if (dm.Qtemp2.RecordCount>0) AND (status=0) then
+            begin
+              MessageDlg('No Transaksi Sudah Ada..!!',mtInformation,[mbRetry],0);
+              Exit;
+            end else begin
+              LOriginalName := Fdaf_pengeluaran_kas_bank.Name;
+              LBaseName := LOriginalName;
+              LLastUnderscorePos := LastDelimiter('_', LBaseName);
+              if (LLastUnderscorePos > 0) and (LLastUnderscorePos < Length(LBaseName)) then
+              begin
+                LSuffix := Copy(LBaseName, LLastUnderscorePos + 1, MaxInt);
+                if TryStrToInt(LSuffix, LDummyInt) then
+                begin
+                  LBaseName := Copy(LBaseName, 1, LLastUnderscorePos - 1);
+                end;
+              end;
+
+              idmenu:=SelectRow('select submenu_code from t_menu_sub where link='+QuotedStr(LBaseName)+'');
+            end;
+          end;
+
           if code_Trans.Text='' then
           begin
             MessageDlg('Pastikan Jenis Transaksi Anda Sudah Benar..!!',mtInformation,[mbRetry],0);
@@ -998,7 +1176,8 @@ begin
           if Status = 0 then
           begin
               dtTransChange(Sender);
-              Autonumber;
+              //Autonumber;
+              if chkNomorPengganti.Checked=False then Autonumber;
               if MessageDlg ('Anda Yakin Disimpan Order No. '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
               begin
                 Save;
@@ -1035,6 +1214,14 @@ end;
 procedure TFDataPengeluaranKasBank.BtnDepositoClick(Sender: TObject);
 begin
    Ftrx_deposito.Show;
+end;
+
+procedure TFDataPengeluaranKasBank.btnNoTransaksiClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='pengeluaran_kas_bank';
+  FListNoTransaksi.update_grid('voucher_no','order_no','t_cash_bank_expenditure','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY voucher_no ASC');
+  FListNoTransaksi.ShowModal;
 end;
 
 procedure TFDataPengeluaranKasBank.Btn_daf_tpClick(Sender: TObject);
@@ -1514,6 +1701,7 @@ end;
 procedure TFDataPengeluaranKasBank.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+   SetReadOnly(0);
    Clear;
    //Action:=CaFree;
 end;
@@ -1535,6 +1723,8 @@ begin
    dtTrans.Date:=Now;
    dtPeriode1.Date:=Now;
    dtPeriode2.Date:=Now;
+   dtperiode1.Enabled:=true;
+   dtperiode2.Enabled:=true;
    tgl_cek.Date:=Now;
    tgl_tempo_cek.Date:=Now;
    cbsumberdata.OnSelect(sender);
@@ -1559,20 +1749,24 @@ begin
     BSave.Enabled := True;
     BCorrection.Visible := False;
     dtTrans.Enabled := True;
+    chkNomorPengganti.Enabled:=true;
   end
   else if (Status = 1) and (IntStatusKoreksi = 2) then
   begin
     BSave.Enabled := True;
     BCorrection.Visible := True;
     BCorrection.Enabled := False;
+    dtTrans.Enabled := True;
+    chkNomorPengganti.Enabled:=False;
   end
   else
   begin
     BSave.Enabled := False;
     BCorrection.Visible := True;
     BCorrection.Enabled := True;
+    chkNomorPengganti.Enabled:=False;
 
-    dtTrans.Enabled := False;
+    //dtTrans.Enabled := False;
   end;
 end;
 
@@ -1628,7 +1822,8 @@ begin
       begin
         FDataPengeluaranKasBank.MemDetailAkun.insert;
         FDataPengeluaranKasBank.MemDetailAkun['kd_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
-        FDataPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
+        FDataPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=Copy(Dm.Qtemp1.FieldByName('code_account').AsString, 1, 4);
+        //FDataPengeluaranKasBank.MemDetailAkun['kd_header_akun']:=Dm.Qtemp1.fieldbyname('code_account').value;
         FDataPengeluaranKasBank.MemDetailAkun['nm_akun']:=Dm.Qtemp1.fieldbyname('name_account').value;
         if Dm.Qtemp1.fieldbyname('position').Value='D' then
         begin
@@ -1718,8 +1913,14 @@ procedure TFDataPengeluaranKasBank.RzBitBtn1Click(Sender: TObject);
 begin
    MemDetailAkun.EmptyTable;
    MemDetailHutang.EmptyTable;
-   Fdafajuankeluarkasbank.vcall:='keluar_kas';
-   Fdafajuankeluarkasbank.Show;
+   FListAmbilPengajuan.vcall:='keluar_kas_bank';
+
+   FListAmbilPengajuan.DateTimePicker1.Date:=dtPeriode1.Date;
+   FListAmbilPengajuan.DateTimePicker2.Date:=dtPeriode2.Date;
+   FListAmbilPengajuan.ShowModal;
+
+   //Fdafajuankeluarkasbank.vcall:='keluar_kas';
+   //Fdafajuankeluarkasbank.Show;
 
 end;
 
@@ -1805,8 +2006,15 @@ begin
     vtotal_kredit:=vtotal_kredit+MemDetailAkun.FieldByName('kredit').AsCurrency; //MemDetailAkun['kredit'];
     if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
     vhutang_debit:=MemDetailAkun.FieldByName('debit').AsCurrency; //MemDetailAkun['debit'];
-    if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code_um from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
-    vhutang_debit:=MemDetailAkun.FieldByName('kredit').AsCurrency; //MemDetailAkun['debit'];
+    //if MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code_um from t_supplier where supplier_code='+QuotedStr(edKode_supplier.Text)+' ') then
+    //vhutang_debit:=MemDetailAkun.FieldByName('kredit').AsCurrency; //MemDetailAkun['debit'];
+
+    if ( (MemDetailAkun['kd_header_akun']=SelectRow('SELECT header_code_um from t_supplier '+
+        ' where supplier_code='+QuotedStr(edKode_supplier.Text)+' ')) or
+        (MemDetailAkun['kd_header_akun']='1131.08') ) then
+    vhutang_debit:=vhutang_debit+MemDetailAkun['debit'];
+
+
 
     MemDetailAkun.Next;
   end;
@@ -1814,7 +2022,7 @@ begin
   if vtotal_debit <> vtotal_kredit then
   begin
     ShowMessage('Nominal Pengeluaran Tidak Balance, Pastikan Debit Kredit Anda Sudah Benar...!!!');
-    //ShowMessage(FloatToStr(vtotal_debit)+'0'+FloatToStr(vtotal_kredit));
+    //ShowMessage(FloatToStr(vtotal_debit)+'-0-'+FloatToStr(vtotal_kredit));
     next_proses:=false;
     exit;
   end;

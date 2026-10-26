@@ -88,9 +88,9 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:='INSERT INTO t_sync_data_log(id_sync_data,sync_data_name,year,month,created_by) '+
+    sql.Text:='INSERT INTO t_sync_data_log(id_sync_data,sync_data_name,year,month,version,created_by) '+
               'VALUES((SELECT id from t_sync_data WHERE data_name='+QuotedStr(cbData.Text)+'	),'+QuotedStr(cbData.Text)+','+
-              ''+strYear+','+strMonth+','+QuotedStr(Nm)+')';
+              ''+strYear+','+strMonth+','+QuotedStr(FMainMenu.RzVersionInfo1.ProductVersion)+','+QuotedStr(Nm)+')';
     ExecSQL;
   end;
 end;
@@ -115,36 +115,34 @@ begin
 
   dm.Qtemp.Close;
   dm.Qtemp.SQL.Clear;
-  dm.Qtemp.SQL.Text :=
-    ' SELECT r.code as kode_tp, r.name as nama_tp, c.initial_code AS kode_group_biaya, '+
-    ' c.cost_type AS nama_group_biaya, '+
-    ' COALESCE(bulan, ' + QuotedStr(IntToStr(Tahun) + '-' + FormatFloat('00', Bulan) + '-01') + ') AS bulan, '+
-    '	COALESCE(biaya, 0) AS biaya,	COALESCE(sbu_code, (select sbu_code from t_tmpsyst) ) AS sbu_code '+
-    ' FROM t_region_tp r '+
-    ' CROSS JOIN t_ak_type_cost c '+
-    ' LEFT JOIN ( SELECT tp_code as kode_tp, initial_code as kode_grouping, '+
-     ' TO_CHAR(c.tanggal, ''YYYY-MM-01'') as bulan, sum(amount) as biaya, '+
-     ' (select sbu_code from t_tmpsyst) as sbu_code	'+
-      ' from t_cost_detail a '+
-      ' left join (SELECT a.code, b.cost_type, b.initial_code from t_ak_account a '+
-       ' left join t_ak_type_cost b on a.cost_st_id=b.id '+
-       ' where cost_st_id>0) b on a.account_code=b.code '+
-      ' left join vtransaksi_cost c on a.voucher_no=c.notrans '+
-      '	where TO_CHAR(c.tanggal, ''YYYY'')='+QuotedStr(IntToStr(Tahun))+' '+
-      ' and TO_CHAR(c.tanggal, ''mm'')='+QuotedStr(Format('%.2d', [Bulan]))+' '+
-      '	group by tp_code, initial_code ,TO_CHAR(c.tanggal, ''YYYY-MM-01'') '+
-      '	) trans on r.code=trans.kode_tp and c.initial_code=trans.kode_grouping;';
+  dm.Qtemp.SQL.Text :='SELECT r.code as kode_tp, r.name as nama_tp, c.initial_code AS kode_group_biaya, '+
+                      ' c.cost_type AS nama_group_biaya, '+
+                      ' COALESCE(bulan, ' + QuotedStr(IntToStr(Tahun) + '-' + FormatFloat('00', Bulan) + '-01') + ') AS bulan, '+
+                      '	COALESCE(biaya, 0) AS biaya,	COALESCE(sbu_code, (select sbu_code from t_tmpsyst) ) AS sbu_code '+
+                      ' FROM t_region_tp r '+
+                      ' CROSS JOIN t_ak_type_cost c '+
+                      ' LEFT JOIN ( SELECT tp_code as kode_tp, initial_code as kode_grouping, '+
+                      ' TO_CHAR(c.tanggal, ''YYYY-MM-01'') as bulan, sum(amount) as biaya, '+
+                      ' (select sbu_code from t_tmpsyst) as sbu_code	'+
+                      ' from t_cost_detail a '+
+                      ' left join (SELECT a.code, b.cost_type, b.initial_code from t_ak_account a '+
+                      ' left join t_ak_type_cost b on a.cost_st_id=b.id '+
+                      ' where cost_st_id>0) b on a.account_code=b.code '+
+                      ' left join vtransaksi_cost c on a.voucher_no=c.notrans '+
+                      '	where a.deleted_at is null and TO_CHAR(c.tanggal, ''YYYY'')='+QuotedStr(IntToStr(Tahun))+' '+
+                      ' and TO_CHAR(c.tanggal, ''mm'')='+QuotedStr(Format('%.2d', [Bulan]))+' '+
+                      '	group by tp_code, initial_code ,TO_CHAR(c.tanggal, ''YYYY-MM-01'') '+
+                      '	) trans on r.code=trans.kode_tp and c.initial_code=trans.kode_grouping;';
   dm.Qtemp.Open;
 
   dm.KoneksiPusatMysql.Connected := True;
   dm.QtempPusatMysql.Close;
   dm.QtempPusatMysql.SQL.Clear;
-  dm.QtempPusatMysql.SQL.Text :=
-    ' DELETE FROM t_biaya_tp '+
-    ' WHERE YEAR(bulan)='+QuotedStr(IntToStr(Tahun))+' '+
-    ' AND MONTH(bulan)='+QuotedStr(IntToStr(Bulan))+' ' +
-    ' AND data_sumber = 1 '+
-    ' AND sbu_code = '+QuotedStr(FHomeLogin.vKodePRSH);
+  dm.QtempPusatMysql.SQL.Text :='DELETE FROM t_biaya_tp '+
+                                ' WHERE YEAR(bulan)='+QuotedStr(IntToStr(Tahun))+' '+
+                                ' AND MONTH(bulan)='+QuotedStr(IntToStr(Bulan))+' ' +
+                                ' AND data_sumber = 1 '+
+                                ' AND sbu_code = '+QuotedStr(FHomeLogin.vKodePRSH);
   dm.QtempPusatMysql.ExecSQL;
 
   TotalRec := dm.Qtemp.RecordCount;
@@ -161,14 +159,14 @@ begin
 
         dm.QtempPusatMysql.Close;
         dm.QtempPusatMysql.SQL.Clear;
-        dm.QtempPusatMysql.SQL.Text :=
-          'INSERT INTO t_biaya_tp(`data_sumber`, `kode_tp`, `kode_grouping`, `bulan`, `biaya`, `sbu_code`) ' +
-          'VALUES (1 , ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_tp').AsString)+ ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_group_biaya').AsString)+ ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('bulan').AsString)+', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('biaya').AsFloat), ',', '.', [])) +', ' +
-          QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString)+')';
+        dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_biaya_tp(data_sumber, kode_tp, '+
+                                      'kode_grouping, bulan, biaya, sbu_code) ' +
+                                      'VALUES (1 , ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_tp').AsString)+ ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_group_biaya').AsString)+ ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('bulan').AsString)+', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('biaya').AsFloat), ',', '.', [])) +', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString)+')';
         dm.QtempPusatMysql.ExecSQL;
 
         FMainMenu.Load.Percent := Round((CurrentRec / TotalRec) * 90);
@@ -221,7 +219,7 @@ begin
                       'address_faktur,0 outlet_target,latitude,longitude,'''' kode_distribusi,'''' kode_distribusi2,'+
                       '0 outlet_piutang,COALESCE(npwp,no_npwp) npwp,0 outlet_disc,'+
                       'contact_person1 no_telp,'''' no_hp,0 balance,COALESCE(payment_term,0) jangka_kredit,'+
-                      '0 stat_pesan,0 disc_sbn,0 stat_outlet,CASE WHEN deleted_at is NULL then ''1'' else ''0'' end stat_aktif, '+
+                      '0 stat_pesan,0 disc_sbn,CASE WHEN code_type_business=''MT'' then 1 else 2 end stat_outlet,CASE WHEN deleted_at is NULL then ''1'' else ''0'' end stat_aktif, '+
                       '0 stat_noa,0 parkir,created_at,'+QuotedStr(FHomeLogin.vKodePRSH)+' sbu_code,'+
                       '0 stat_download,'''' ket_prospek,number_va bank_va,no_nik nik,'+
                       '0 type_jual,1 jenisgolongan_ID,email,'''' noHP,idprospek idProspek,'+
@@ -376,21 +374,32 @@ begin
 
   dm.Qtemp.Close;
   dm.Qtemp.SQL.Clear;
-  dm.Qtemp.SQL.Text :='SELECT '''' kode_kab,COALESCE(b.code_tp,c.code_tp) kode_tp,' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' bulan,'+
-                      'COUNT(a.no_invoice) jum_nota_tagihan,SUM(a.paid_amount) jum_nominal_tagihan, '+
-                      'SUM(CASE WHEN a.cash > 0::numeric THEN 1 ELSE 0 END)+ '+
-                      'SUM(CASE WHEN a.receipt > 0::numeric THEN 1 ELSE 0 END)+ '+
-                      'SUM(CASE WHEN a.counter_bill > 0::numeric THEN 1 ELSE 0 END)+ '+
-                      'SUM(CASE WHEN a.cheque_amount1 > 0::numeric THEN 1 ELSE 0 END) jum_nota_tertagih, '+
-                      '(SUM(a.cash)+SUM(a.receipt)+SUM(a.counter_bill)+SUM(a.cheque_amount1)) jum_nominal_tertagih,'+
-                      ' ' + QuotedStr(FHomeLogin.vKodePRSH)+' sbu_code,''0'' jenis_kolektor, 1 sumber_date,'+
-                      'COALESCE(b.code_kecamatan,c.code_kecamatan) code_kecamatan '+
-                      'FROM t_dpp a '+
-                      'LEFT JOIN get_selling(False) b on b.trans_no=a.no_invoice '+
-                      'LEFT JOIN get_customer() c on c.customer_code=a.code_cust '+
-                      'WHERE a.date_dpp BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND '+
-                      ' ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' '+
-                      'GROUP BY COALESCE(b.code_tp,c.code_tp) ,COALESCE(b.code_kecamatan,c.code_kecamatan)';
+//  dm.Qtemp.SQL.Text :='SELECT '''' kode_kab,COALESCE(b.code_tp,c.code_tp) kode_tp,' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' bulan,'+
+//                      'COUNT(a.no_invoice) jum_nota_tagihan,SUM(a.paid_amount) jum_nominal_tagihan, '+
+//                      'SUM(CASE WHEN a.cash > 0::numeric THEN 1 ELSE 0 END)+ '+
+//                      'SUM(CASE WHEN a.receipt > 0::numeric THEN 1 ELSE 0 END)+ '+
+//                      'SUM(CASE WHEN a.counter_bill > 0::numeric THEN 1 ELSE 0 END)+ '+
+//                      'SUM(CASE WHEN a.cheque_amount1 > 0::numeric THEN 1 ELSE 0 END) jum_nota_tertagih, '+
+//                      '(SUM(a.cash)+SUM(a.receipt)+SUM(a.counter_bill)+SUM(a.cheque_amount1)) jum_nominal_tertagih,'+
+//                      ' ' + QuotedStr(FHomeLogin.vKodePRSH)+' sbu_code,''0'' jenis_kolektor, 1 sumber_date,'+
+//                      'COALESCE(b.code_kecamatan,c.code_kecamatan) code_kecamatan '+
+//                      'FROM t_dpp a '+
+//                      'LEFT JOIN get_selling(False) b on b.trans_no=a.no_invoice '+
+//                      'LEFT JOIN get_customer() c on c.customer_code=a.code_cust '+
+//                      'WHERE a.date_dpp BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND '+
+//                      ' ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' '+
+//                      'GROUP BY COALESCE(b.code_tp,c.code_tp) ,COALESCE(b.code_kecamatan,c.code_kecamatan)';
+  dm.Qtemp.SQL.Text:= 'SELECT b.kode_kabupaten_pusat kode_kab,code_karesidenan kode_tp,'+
+                      '' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai))+' bulan,'+
+                      'SUM(tot_lmbr_invoice) jum_nota_tagihan,SUM(jum_tagihan) jum_nominal_tagihan,'+
+                      'SUM(nota_tertagih) jum_nota_tertagih,SUM(total_tertagih) jum_nominal_tertagih,'+
+                      ' ' + QuotedStr(FHomeLogin.vKodePRSH)+' sbu_code,''0'' jenis_kolektor, 1 sumber_data '+
+                      'from get_daftar_tagihan_kolektor(' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' ,' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ') a '+
+                      'LEFT JOIN ( '+
+                      'SELECT DISTINCT ON (kode_kabupaten) kode_kabupaten, kode_kabupaten_pusat '+
+                      'FROM t_kabupaten_pusat '+
+                      ') b on b.kode_kabupaten=a.code_regency '+
+                      'GROUP BY b.kode_kabupaten_pusat, code_karesidenan;';
   dm.Qtemp.Open;
 
   dm.KoneksiPusatMysql.Connected := True;
@@ -415,7 +424,7 @@ begin
         dm.QtempPusatMysql.SQL.Clear;
         dm.QtempPusatMysql.SQL.Text :='INSERT t_eva_kolektor_temp (kode_kab,kode_tp,bulan,jum_nota_tagihan,jum_nominal_tagihan,'+
                                       'jum_nota_tertagih,jum_nominal_tertagih,sbu_code,jenis_kolektor,'+
-                                      'sumber_data,kode_kec_bps) ' +
+                                      'sumber_data) ' +
                                       'VALUES (' +
                                       QuotedStr(dm.Qtemp.FieldByName('kode_kab').AsString) + ', ' +
                                       QuotedStr(dm.Qtemp.FieldByName('kode_tp').AsString) + ', ' +
@@ -426,8 +435,7 @@ begin
                                       StringReplace(FloatToStr(dm.Qtemp.FieldByName('jum_nominal_tertagih').AsFloat), ',', '.', []) + ', ' +
                                       QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString) + ', ' +
                                       QuotedStr(dm.Qtemp.FieldByName('jenis_kolektor').AsString) + ', ' +
-                                      IntToStr(dm.Qtemp.FieldByName('sumber_date').AsInteger) + ', ' +
-                                      QuotedStr(dm.Qtemp.FieldByName('code_kecamatan').AsString) + ')';
+                                      IntToStr(dm.Qtemp.FieldByName('sumber_data').AsInteger) + ')';
         dm.QtempPusatMysql.ExecSQL;
 
 
@@ -449,13 +457,12 @@ begin
       dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_eva_kolektor(kode_kab,kode_tp,bulan,jum_nota_tagihan,'+
                                     'jum_nominal_tagihan,jum_nota_tertagih,jum_nominal_tertagih,sbu_code,'+
                                     'jenis_kolektor,sumber_data) '+
-                                    'SELECT LEFT(b.kode_distribusi,10) kode_kabupaten '+
-                                    ',a.kode_tp,a.bulan,SUM(a.jum_nota_tagihan),SUM(a.jum_nominal_tagihan),'+
-                                    'SUM(a.jum_nota_tertagih),SUM(a.jum_nominal_tertagih),a.sbu_code,a.jenis_kolektor,a.sumber_data '+
+                                    'SELECT a.kode_kab '+
+                                    ',a.kode_tp,a.bulan,a.jum_nota_tagihan,a.jum_nominal_tagihan,'+
+                                    'a.jum_nota_tertagih,a.jum_nominal_tertagih,a.sbu_code,a.jenis_kolektor,a.sumber_data '+
                                     'FROM t_eva_kolektor_temp a '+
-                                    'LEFT JOIN t_wilayah b on b.kode_kec_bps=a.kode_kec_bps '+
-                                    'WHERE a.sbu_code=' + QuotedStr(FHomeLogin.vKodePRSH)+' GROUP BY LEFT(b.kode_distribusi,10) ,a.kode_tp,'+
-                                    'a.bulan,a.sbu_code,a.jenis_kolektor,a.sumber_data;';
+//                                    'LEFT JOIN t_wilayah b on b.kode_kec_bps=a.kode_kec_bps '+
+                                    'WHERE a.sbu_code=' + QuotedStr(FHomeLogin.vKodePRSH)+' ;';
       dm.QtempPusatMysql.ExecSQL;
 
       LogSync;
@@ -463,7 +470,6 @@ begin
       GetLog;
       FMainMenu.Load.Percent := 100;
       MessageDlg('Simpan Berhasil..!!', mtInformation, [mbOK], 0);
-
 
     finally
       FMainMenu.Load.Percent := 0;
@@ -496,11 +502,20 @@ begin
 
   dm.Qtemp.Close;
   dm.Qtemp.SQL.Clear;
-  dm.Qtemp.SQL.Text :='SELECT code_cust,'''' kode_child,name_cust,'''' kode_kecamatan,''''kode_kabupaten,'''' kode_distributor,'+
-                      'code_tp kode_tp,'''' nama_kecamatan,'''' nama_kabupaten,'''' nama_distributor,'''' nama_tp,'+
-                      ' ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' bulan,no_inv_tax no_faktur,trans_date,'''' jenis_produk,''0'' id_jenis,'+
-                      'piutang,bayar,sisa_piutang,sbu_code,1 sumber_date,code_kecamatan '+
-                      'FROM get_piutang_invoice2(' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ');';
+//  dm.Qtemp.SQL.Text :='SELECT code_cust,'''' kode_child,name_cust,'''' kode_kecamatan,''''kode_kabupaten,'''' kode_distributor,'+
+//                      'code_tp kode_tp,'''' nama_kecamatan,'''' nama_kabupaten,'''' nama_distributor,'''' nama_tp,'+
+//                      ' ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' bulan,no_inv_tax no_faktur,trans_date,'''' jenis_produk,''0'' id_jenis,'+
+//                      'piutang,bayar,sisa_piutang,sbu_code,1 sumber_date,code_kecamatan '+
+//                      'FROM get_piutang_invoice2(' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ');';
+  dm.Qtemp.SQL.Text:= 'SELECT code_cust,'''' kode_child,name_cust,'''' kode_kecamatan,'+
+                      ' ''''kode_kabupaten,'''' kode_distributor,code_tp kode_tp,'+
+                      ' '''' nama_kecamatan,'''' nama_kabupaten,'''' nama_distributor,'''' nama_tp,'+
+                      ' ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' bulan,no_inv_tax no_faktur,'+
+                      'trans_date,'''' jenis_produk,''0'' id_jenis, tot_piutang piutang,'+
+                      'tot_paid_amount bayar,tot_piutang-tot_paid_amount sisa_piutang,' + QuotedStr(FHomeLogin.vKodePRSH)+' sbu_code,'+
+                      '1 sumber_date,code_kecamatan '+
+                      'FROM get_piutang_pusat( ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ')';
+
   dm.Qtemp.Open;
 
   dm.KoneksiPusatMysql.Connected := True;
@@ -585,7 +600,6 @@ begin
       FMainMenu.Load.Percent := 100;
       MessageDlg('Simpan Berhasil..!!', mtInformation, [mbOK], 0);
 
-
     finally
       FMainMenu.Load.Percent := 0;
       FMainMenu.Load.ShowPercent:=False;
@@ -615,29 +629,28 @@ begin
 
   dm.Qtemp.Close;
   dm.Qtemp.SQL.Clear;
-  dm.Qtemp.SQL.Text :=
-    'SELECT a.customer_code, d.item_code_integration kode, NULL id_jenis, NULL id_kategori, ' +
-    'code_tp, tp nama_tp, '''' kode_area, '''' nama_area, '''' nama_kabupaten, '''' nama_kecamatan, ' +
-    'a.month bulan, a.year tahun, COALESCE(c.qty, 0) qty, COALESCE(c.value, 0) value, ' +
-    'CASE WHEN a.deleted_at IS NULL THEN ''1'' ELSE ''0'' END status, ' +
-    'a.sbu_code, 1 sumber_data, b.code_kecamatan kode_kec_bps, ' +
-    'd.item_code_integration kode_barang_smart ' +
-    'FROM t_customer_sales_target a ' +
-    'LEFT JOIN get_customer() b ON b.customer_code = a.customer_code ' +
-    'LEFT JOIN t_customer_sales_target_det c ON c.id_customer_sales_target = a.id_customer_sales_target AND c.status = TRUE ' +
-    'LEFT JOIN t_item d ON d.item_code = c.item_code ' +
-    'WHERE a.customer_code <> '''' AND a.customer_code IS NOT NULL ' +
-    'AND a.year = ' + QuotedStr(cbTahun.Text) + ' AND a.month = ' + IntToStr(Bulan) + ' ' +
-    'AND a.deleted_at IS NULL ' +
-    'ORDER BY a.year ASC, a.month ASC, a.customer_code ASC;';
+  dm.Qtemp.SQL.Text :='SELECT a.customer_code, d.item_code_integration kode, NULL id_jenis, NULL id_kategori, ' +
+                      'code_tp, tp nama_tp, '''' kode_area, '''' nama_area, '''' nama_kabupaten, '''' nama_kecamatan, ' +
+                      'a.month bulan, a.year tahun, COALESCE(c.qty, 0) qty, COALESCE(c.value, 0) value, ' +
+                      'CASE WHEN a.deleted_at IS NULL THEN ''1'' ELSE ''0'' END status, ' +
+                      'a.sbu_code, 1 sumber_data, b.code_kecamatan kode_kec_bps, ' +
+                      'd.item_code_integration kode_barang_smart ' +
+                      'FROM t_customer_sales_target a ' +
+                      'LEFT JOIN get_customer() b ON b.customer_code = a.customer_code ' +
+                      'LEFT JOIN t_customer_sales_target_det c ON c.id_customer_sales_target = a.id_customer_sales_target AND c.status = TRUE ' +
+                      'LEFT JOIN t_item d ON d.item_code = c.item_code ' +
+                      'WHERE a.customer_code <> '''' AND a.customer_code IS NOT NULL ' +
+                      'AND a.year = ' + QuotedStr(cbTahun.Text) + ' AND a.month = ' + IntToStr(Bulan) + ' ' +
+                      'AND a.deleted_at IS NULL ' +
+                      'ORDER BY a.year ASC, a.month ASC, a.customer_code ASC;';
   dm.Qtemp.Open;
+
 
   dm.KoneksiPusatMysql.Connected := True;
   dm.QtempPusatMysql.Close;
   dm.QtempPusatMysql.SQL.Clear;
-  dm.QtempPusatMysql.SQL.Text :=
-    'DELETE FROM t_mtarget_item_temp WHERE tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ' ' +
-    'AND sumber_data = 1 AND lokasi = ' + QuotedStr(FHomeLogin.vKodePRSH);
+  dm.QtempPusatMysql.SQL.Text :='DELETE FROM t_mtarget_item_temp WHERE tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ' ' +
+                                'AND sumber_data = 1 AND lokasi ='+QuotedStr(FHomeLogin.vKodePRSH);
   dm.QtempPusatMysql.ExecSQL;
 
   TotalRec := dm.Qtemp.RecordCount;
@@ -654,30 +667,29 @@ begin
 
         dm.QtempPusatMysql.Close;
         dm.QtempPusatMysql.SQL.Clear;
-        dm.QtempPusatMysql.SQL.Text :=
-          'INSERT INTO t_mtarget_item_temp (kode_outlet, kode, id_jenis, ' +
-          'id_kategori, kode_tp, nama_tp, kode_area, nama_area, nama_kabupaten, nama_kecamatan, ' +
-          'bulan, tahun, qty, value, status, lokasi, sumber_data, kode_kec_bps, kode_barang_smart) ' +
-          'VALUES (' +
-          QuotedStr(dm.Qtemp.FieldByName('customer_code').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode').AsString) + ', ' +
-          'NULL, ' + // id_jenis
-          'NULL, ' + // id_kategori
-          QuotedStr(dm.Qtemp.FieldByName('code_tp').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_tp').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_area').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_area').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_kabupaten').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_kecamatan').AsString) + ', ' +
-          IntToStr(dm.Qtemp.FieldByName('bulan').AsInteger) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('tahun').AsString) + ', ' +
-          StringReplace(FloatToStr(dm.Qtemp.FieldByName('qty').AsFloat), ',', '.', []) + ', ' +
-          StringReplace(FloatToStr(dm.Qtemp.FieldByName('value').AsFloat), ',', '.', []) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('status').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString) + ', ' +
-          IntToStr(dm.Qtemp.FieldByName('sumber_data').AsInteger) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_kec_bps').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_barang_smart').AsString) + ')';
+        dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_mtarget_item_temp (kode_outlet, kode, id_jenis, ' +
+                                      'id_kategori, kode_tp, nama_tp, kode_area, nama_area, nama_kabupaten, nama_kecamatan, ' +
+                                      'bulan, tahun, qty, value, status, lokasi, sumber_data, kode_kec_bps, kode_barang_smart) ' +
+                                      'VALUES (' +
+                                      QuotedStr(dm.Qtemp.FieldByName('customer_code').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode').AsString) + ', ' +
+                                      'NULL, ' + // id_jenis
+                                      'NULL, ' + // id_kategori
+                                      QuotedStr(dm.Qtemp.FieldByName('code_tp').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_tp').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_area').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_area').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_kabupaten').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_kecamatan').AsString) + ', ' +
+                                      IntToStr(dm.Qtemp.FieldByName('bulan').AsInteger) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('tahun').AsString) + ', ' +
+                                      StringReplace(FloatToStr(dm.Qtemp.FieldByName('qty').AsFloat), ',', '.', []) + ', ' +
+                                      StringReplace(FloatToStr(dm.Qtemp.FieldByName('value').AsFloat), ',', '.', []) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('status').AsString) + ', ' +
+                                      QuotedStr(FHomeLogin.vKodePRSH) + ', ' +
+                                      IntToStr(dm.Qtemp.FieldByName('sumber_data').AsInteger) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_kec_bps').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_barang_smart').AsString) + ')';
         dm.QtempPusatMysql.ExecSQL;
 
 
@@ -689,27 +701,25 @@ begin
 
       dm.QtempPusatMysql.Close;
       dm.QtempPusatMysql.SQL.Clear;
-      dm.QtempPusatMysql.SQL.Text :=
-        'DELETE FROM t_mtarget_item WHERE tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ' ' +
-        'AND sumber_data = 1 AND lokasi = ' + QuotedStr(FHomeLogin.vKodePRSH);
+      dm.QtempPusatMysql.SQL.Text :='DELETE FROM t_mtarget_item WHERE tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ' ' +
+                                    'AND sumber_data = 1 AND lokasi ='+QuotedStr(FHomeLogin.vKodePRSH);
       dm.QtempPusatMysql.ExecSQL;
       FMainMenu.Load.Percent := 95;
 
       dm.QtempPusatMysql.Close;
       dm.QtempPusatMysql.SQL.Clear;
-      dm.QtempPusatMysql.SQL.Text :=
-        'INSERT INTO t_mtarget_item (kode_outlet, kode, id_jenis, ' +
-        'id_kategori, kode_tp, nama_tp, kode_area, nama_area, nama_kabupaten, nama_kecamatan, ' +
-        'bulan, tahun, qty, value, status, lokasi, sumber_data) ' +
-        'SELECT a.kode_outlet, a.kode, e.jenisProduct_ID id_jenis, ' +
-        'e.kategori_id id_kategori, a.kode_tp, a.nama_tp, c.kode_area, ' +
-        'd.nama_area, b.nama_kabupaten, b.nama_kecamatan, a.bulan, a.tahun, ' +
-        'a.qty, a.value, a.status, a.lokasi, a.sumber_data FROM t_mtarget_item_temp a ' +
-        'LEFT JOIN t_wilayah b ON b.kode_kec_bps = a.kode_kec_bps ' +
-        'LEFT JOIN t_m_tp c ON c.kodetp = b.kode_tp2 AND c.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
-        'LEFT JOIN t_m_area d ON d.kode_area = c.kode_area AND d.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
-        'LEFT JOIN t_item_product e ON e.itemProduct_code = a.kode WHERE ' +
-        'tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ';';
+      dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_mtarget_item (kode_outlet, kode, id_jenis, ' +
+                                    'id_kategori, kode_tp, nama_tp, kode_area, nama_area, nama_kabupaten, nama_kecamatan, ' +
+                                    'bulan, tahun, qty, value, status, lokasi, sumber_data) ' +
+                                    'SELECT a.kode_outlet, a.kode, e.jenisProduct_ID id_jenis, ' +
+                                    'e.kategori_id id_kategori, a.kode_tp, a.nama_tp, c.kode_area, ' +
+                                    'd.nama_area, b.nama_kabupaten, b.nama_kecamatan, a.bulan, a.tahun, ' +
+                                    'a.qty, a.value, a.status, a.lokasi, a.sumber_data FROM t_mtarget_item_temp a ' +
+                                    'LEFT JOIN t_wilayah b ON b.kode_kec_bps = a.kode_kec_bps ' +
+                                    'LEFT JOIN t_m_tp c ON c.kodetp = b.kode_tp2 AND c.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
+                                    'LEFT JOIN t_m_area d ON d.kode_area = c.kode_area AND d.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
+                                    'LEFT JOIN t_item_product e ON e.itemProduct_code = a.kode WHERE ' +
+                                    'tahun = ' + QuotedStr(cbTahun.Text) + ' AND bulan = ' + IntToStr(Bulan) + ';';
       dm.QtempPusatMysql.ExecSQL;
 
       LogSync;
@@ -753,26 +763,26 @@ begin
 
   dm.Qtemp.Close;
   dm.Qtemp.SQL.Clear;
-  dm.Qtemp.SQL.Text :=
-    'SELECT a.trans_no, a.no_inv_tax, a.code_cust, a.name_cust, NULL kode_distribusi, '''' kode_area, ' +
-    'a.code_tp kode_tp, NULL kode_kabupaten, NULL kode_kecamatan, '''' kode_distributor, NULL nama_kecamatan, ' +
-    'NULL nama_kabupaten, NULL nama_tp, '''' nama_area, '''' nama_distributor, a.trans_date tgltrans, ' +
-    'item_code_integration kdbrg, NULL kode_jenis, NULL id_jenis, ' +
-    'NULL jenis_outlet, ''0'' stat_noa, b.unit_price harga, b.amount qty, ' +
-    'b.sub_total dpp, b.ppn_percent ppn, b.ppn_value jum_ppn, b.grand_tot jum_netto, a.sbu_code, 1 sumber_data, ' +
-    'a.code_kecamatan kode_kec_bps, c.item_code_integration, code_type kode_jenis_smartboa FROM get_selling(false) a ' +
-    'LEFT JOIN t_selling_det b ON b.trans_no = a.trans_no ' +
-    'LEFT JOIN t_item c ON c.item_code = b.code_item ' +
-    'WHERE a.trans_date BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' AND ' +
-    'a.deleted_at IS NULL ORDER BY trans_date ASC, trans_no ASC;';
+  dm.Qtemp.SQL.Text :='SELECT a.trans_no, a.no_inv_tax, a.code_cust, a.name_cust, NULL kode_distribusi, '''' kode_area, ' +
+                      'a.code_tp kode_tp, NULL kode_kabupaten, NULL kode_kecamatan, '''' kode_distributor, NULL nama_kecamatan, ' +
+                      'NULL nama_kabupaten, NULL nama_tp, '''' nama_area, '''' nama_distributor, a.trans_date tgltrans, ' +
+                      'item_code_integration kdbrg, NULL kode_jenis, NULL id_jenis, ' +
+                      'NULL jenis_outlet, ''0'' stat_noa, b.unit_price harga, '+
+                      'COALESCE(ts.level1_qty_out, 0)::numeric qty, ' +
+                      'b.sub_total dpp, b.ppn_percent ppn, b.ppn_value jum_ppn, b.grand_tot jum_netto, a.sbu_code, 1 sumber_data, ' +
+                      'a.code_kecamatan kode_kec_bps, c.item_code_integration, code_type kode_jenis_smartboa FROM get_selling(false) a ' +
+                      'LEFT JOIN t_selling_det b ON b.trans_no = a.trans_no AND b.deleted_at IS NULL ' +
+                      'LEFT JOIN t_item c ON c.item_code = b.code_item ' +
+                      'LEFT JOIN tbl_transaksi_stock ts ON ts.notrans=b.trans_no AND ts.item_code=b.code_item AND ts.type=''OUT'' '+
+                      'WHERE a.trans_date BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' AND ' +
+                      'a.deleted_at IS NULL ORDER BY trans_date ASC, trans_no ASC;';
   dm.Qtemp.Open;
 
   dm.KoneksiPusatMysql.Connected := True;
-  dm.QtempPusatMysql.Close;
-  dm.QtempPusatMysql.SQL.Clear;
-  dm.QtempPusatMysql.SQL.Text :=
-    'DELETE FROM t_jual_temp WHERE tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' ' +
-    'AND sumber_data = 1 AND sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH);
+
+  dm.QtempPusatMysql.SQL.Clear;  dm.QtempPusatMysql.Close;
+  dm.QtempPusatMysql.SQL.Text :='DELETE FROM t_jual_temp WHERE tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' ' +
+                                'AND sumber_data = 1 AND sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH);
   dm.QtempPusatMysql.ExecSQL;
 
   TotalRec := dm.Qtemp.RecordCount;
@@ -789,41 +799,40 @@ begin
 
         dm.QtempPusatMysql.Close;
         dm.QtempPusatMysql.SQL.Clear;
-        dm.QtempPusatMysql.SQL.Text :=
-          'INSERT INTO t_jual_temp(no_inv, nofakturpajak, kocus, nama_outlet, ' +
-          'kode_distribusi, kode_area, kode_tp, kode_kabupaten, kode_kecamatan, ' +
-          'kode_distributor, nama_kecamatan, nama_kabupaten, nama_tp, nama_area, ' +
-          'nama_distributor, tgltrans, kdbrg, kode_jenis, id_jenis, jenis_outlet, ' +
-          'stat_noa, harga, qty, dpp, ppn, jum_ppn, jum_netto, sbu_code, sumber_data, ' +
-          'kode_kec_bps, item_code_integration, kode_jenis_smartboa) ' +
-          'VALUES (' +
-          QuotedStr(dm.Qtemp.FieldByName('trans_no').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('no_inv_tax').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('code_cust').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('name_cust').AsString) + ', ' +
-          'NULL, ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_area').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_tp').AsString) + ', ' +
-          'NULL, NULL, ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_distributor').AsString) + ', ' +
-          'NULL, NULL, NULL, ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_area').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('nama_distributor').AsString) + ', ' +
-          QuotedStr(FormatDateTime('yyyy-mm-dd', dm.Qtemp.FieldByName('tgltrans').AsDateTime)) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kdbrg').AsString) + ', ' +
-          'NULL, NULL, NULL, ' +
-          QuotedStr(dm.Qtemp.FieldByName('stat_noa').AsString) + ', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('harga').AsFloat), ',', '.', [])) + ', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('qty').AsFloat), ',', '.', [])) + ', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('dpp').AsFloat), ',', '.', [])) + ', ' +
-          FloatToStr(dm.Qtemp.FieldByName('ppn').AsFloat) + ', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('jum_ppn').AsFloat), ',', '.', [])) + ', ' +
-          QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('jum_netto').AsFloat), ',', '.', [])) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString) + ', ' +
-          IntToStr(dm.Qtemp.FieldByName('sumber_data').AsInteger) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_kec_bps').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kdbrg').AsString) + ', ' +
-          QuotedStr(dm.Qtemp.FieldByName('kode_jenis_smartboa').AsString) + ')';
+        dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_jual_temp(no_inv, nofakturpajak, kocus, nama_outlet, ' +
+                                      'kode_distribusi, kode_area, kode_tp, kode_kabupaten, kode_kecamatan, ' +
+                                      'kode_distributor, nama_kecamatan, nama_kabupaten, nama_tp, nama_area, ' +
+                                      'nama_distributor, tgltrans, kdbrg, kode_jenis, id_jenis, jenis_outlet, ' +
+                                      'stat_noa, harga, qty, dpp, ppn, jum_ppn, jum_netto, sbu_code, sumber_data, ' +
+                                      'kode_kec_bps, item_code_integration, kode_jenis_smartboa) ' +
+                                      'VALUES (' +
+                                      QuotedStr(dm.Qtemp.FieldByName('trans_no').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('no_inv_tax').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('code_cust').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('name_cust').AsString) + ', ' +
+                                      'NULL, ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_area').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_tp').AsString) + ', ' +
+                                      'NULL, NULL, ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_distributor').AsString) + ', ' +
+                                      'NULL, NULL, NULL, ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_area').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('nama_distributor').AsString) + ', ' +
+                                      QuotedStr(FormatDateTime('yyyy-mm-dd', dm.Qtemp.FieldByName('tgltrans').AsDateTime)) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kdbrg').AsString) + ', ' +
+                                      'NULL, NULL, NULL, ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('stat_noa').AsString) + ', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('harga').AsFloat), ',', '.', [])) + ', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('qty').AsFloat), ',', '.', [])) + ', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('dpp').AsFloat), ',', '.', [])) + ', ' +
+                                      FloatToStr(dm.Qtemp.FieldByName('ppn').AsFloat) + ', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('jum_ppn').AsFloat), ',', '.', [])) + ', ' +
+                                      QuotedStr(StringReplace(FloatToStr(dm.Qtemp.FieldByName('jum_netto').AsFloat), ',', '.', [])) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('sbu_code').AsString) + ', ' +
+                                      IntToStr(dm.Qtemp.FieldByName('sumber_data').AsInteger) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_kec_bps').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kdbrg').AsString) + ', ' +
+                                      QuotedStr(dm.Qtemp.FieldByName('kode_jenis_smartboa').AsString) + ')';
         dm.QtempPusatMysql.ExecSQL;
 
         FMainMenu.Load.Percent := Round((CurrentRec / TotalRec) * 60);
@@ -834,39 +843,37 @@ begin
 
       dm.QtempPusatMysql.Close;
       dm.QtempPusatMysql.SQL.Clear;
-      dm.QtempPusatMysql.SQL.Text :=
-        'DELETE FROM t_jual WHERE tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' ' +
-        'AND sumber_data = 1 AND sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH);
+      dm.QtempPusatMysql.SQL.Text :='DELETE FROM t_jual WHERE tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' ' +
+                                    'AND sumber_data = 1 AND sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH);
       dm.QtempPusatMysql.ExecSQL;
       FMainMenu.Load.Percent := 65;
 
       dm.QtempPusatMysql.Close;
       dm.QtempPusatMysql.SQL.Clear;
-      dm.QtempPusatMysql.SQL.Text :=
-        'INSERT INTO t_jual (no_inv, nofakturpajak, kocus, nama_outlet, kode_distribusi, ' +
-        'kode_area, kode_tp, kode_kabupaten, kode_kecamatan, kode_distributor, ' +
-        'nama_kecamatan, nama_kabupaten, nama_tp, nama_area, nama_distributor, ' +
-        'tgltrans, kdbrg, kode_jenis, id_jenis, jenis_outlet, ' +
-        'stat_noa, harga, qty, dpp, ppn, jum_ppn, jum_netto, sbu_code, sumber_data) ' +
-        'SELECT a.no_inv, a.nofakturpajak, a.kocus, a.nama_outlet, b.kode_distribusi, c.kode_area, ' +
-        'a.kode_tp, LEFT(b.kode_distribusi, 10) kode_kabupaten, LEFT(b.kode_distribusi, 13) kode_kecamatan, ' +
-        'b.kode_distributor, b.nama_kecamatan, b.nama_kabupaten, b.nama_tp, d.nama_area, '''' nama_distributor, ' +
-        'a.tgltrans, a.kdbrg, f.kode_jenis, e.jenisProduct_ID id_jenis, ' +
-        'g.kode_jenis_pusat jenis_outlet, ' +
-        'a.stat_noa, a.harga, a.qty, a.dpp, a.ppn, a.jum_ppn, a.jum_netto, a.sbu_code, a.sumber_data ' +
-        'FROM t_jual_temp a ' +
-        'LEFT JOIN t_wilayah b ON b.kode_kec_bps = a.kode_kec_bps ' +
-        'LEFT JOIN t_m_tp c ON c.kodetp = b.kode_tp2 AND c.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
-        'LEFT JOIN t_m_area d ON d.kode_area = c.kode_area AND d.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
-        'LEFT JOIN t_item_product e ON e.itemProduct_code = a.kdbrg ' +
-        'LEFT JOIN t_jenis_product f ON f.ID = e.jenisProduct_ID ' +
-        'LEFT JOIN t_jenis_outlet_integrasi g ON g.kode = a.kode_jenis_smartboa ' +
-        'WHERE a.tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' AND ' +
-        'a.sumber_data = 1 AND a.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ORDER BY a.no_inv ASC;';
+      dm.QtempPusatMysql.SQL.Text :='INSERT INTO t_jual (no_inv, nofakturpajak, kocus, nama_outlet, kode_distribusi, ' +
+                                    'kode_area, kode_tp, kode_kabupaten, kode_kecamatan, kode_distributor, ' +
+                                    'nama_kecamatan, nama_kabupaten, nama_tp, nama_area, nama_distributor, ' +
+                                    'tgltrans, kdbrg, kode_jenis, id_jenis, jenis_outlet, ' +
+                                    'stat_noa, harga, qty, dpp, ppn, jum_ppn, jum_netto, sbu_code, sumber_data) ' +
+                                    'SELECT a.no_inv, a.nofakturpajak, a.kocus, a.nama_outlet, b.kode_distribusi, c.kode_area, ' +
+                                    'a.kode_tp, LEFT(b.kode_distribusi, 10) kode_kabupaten, LEFT(b.kode_distribusi, 13) kode_kecamatan, ' +
+                                    'b.kode_distributor, b.nama_kecamatan, b.nama_kabupaten, b.nama_tp, d.nama_area, '''' nama_distributor, ' +
+                                    'a.tgltrans, a.kdbrg, f.kode_jenis, e.kategori_id id_jenis, ' +
+                                    'g.kode_jenis_pusat jenis_outlet, ' +
+                                    'a.stat_noa, a.harga, a.qty, a.dpp, a.ppn, a.jum_ppn, a.jum_netto, a.sbu_code, a.sumber_data ' +
+                                    'FROM t_jual_temp a ' +
+                                    'LEFT JOIN t_wilayah b ON b.kode_kec_bps = a.kode_kec_bps ' +
+                                    'LEFT JOIN t_m_tp c ON c.kodetp = b.kode_tp2 AND c.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
+                                    'LEFT JOIN t_m_area d ON d.kode_area = c.kode_area AND d.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ' +
+                                    'LEFT JOIN t_item_product e ON e.itemProduct_code = a.kdbrg ' +
+                                    'LEFT JOIN t_jenis_product f ON f.ID = e.jenisProduct_ID ' +
+                                    'LEFT JOIN t_jenis_outlet_integrasi g ON g.kode = a.kode_jenis_smartboa ' +
+                                    'WHERE a.tgltrans BETWEEN ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglMulai)) + ' AND ' + QuotedStr(FormatDateTime('yyyy-mm-dd', TglAkhir)) + ' AND ' +
+                                    'a.sumber_data = 1 AND a.sbu_code = ' + QuotedStr(FHomeLogin.vKodePRSH) + ' ORDER BY a.no_inv ASC;';
       dm.QtempPusatMysql.ExecSQL;
 
-      LogSync;
-      GetLog;
+//      LogSync;
+//      GetLog;
       FMainMenu.Load.Percent := 70;
       Application.ProcessMessages;
 //      MessageDlg('Simpan Berhasil..!!', mtInformation, [mbOK], 0);
@@ -947,7 +954,7 @@ begin
   begin
     close;
     sql.Clear;
-    sql.Text:=' SELECT data_name FROM t_sync_data ORDER BY data_name ASC';
+    sql.Text:='SELECT data_name FROM t_sync_data ORDER BY data_name ASC';
     ExecSQL;
   end;
   Dm.Qtemp.First;

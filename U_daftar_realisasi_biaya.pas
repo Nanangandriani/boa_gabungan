@@ -167,10 +167,13 @@ begin
             ' LEFT JOIN t_ak_type_cost b on a.cost_st_id=b.id '+
             '	where cost_st_id>0) b on a.account_code=b.code '+
             '	left join vtransaksi_cost c on a.voucher_no=c.notrans '+
-            '	where c.tanggal between'+QuotedStr(formatdatetime('yyyy-mm-dd',dtp1.EditValue))+' and '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtp2.EditValue))+' '+
-            ' and norut='+IntToStr(sumber_data.ItemIndex+1)+' ');
+            '	where a.deleted_at is null and c.tanggal between'+QuotedStr(formatdatetime('yyyy-mm-dd',dtp1.EditValue))+' and '+
+            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtp2.EditValue))+' ');
 
+    if (sumber_data.ItemIndex<>0) then
+    begin
+      sql.add(' and norut='+IntToStr(sumber_data.ItemIndex)+'');
+    end;
     if (kode_tp<>'') and (kode_tp<>'*') then
     begin
       sql.add(' and tp_code='+QuotedStr(kode_tp)+'');

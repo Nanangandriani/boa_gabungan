@@ -31,13 +31,43 @@ implementation
 
 uses UDataModule, UNew_Penjualan, UNew_DataPenjualan, UMasterData, UMy_Function,
   UDataPenerimaanBank, UNew_SalesOrder, UDataReturPenjualan, UNew_PO,
-  UNew_Pembelian;
+  UNew_Pembelian, UDataPerintahMuat, UNew_TerimaMaterial, UNewDeliveryOrder,
+  UDataPengajuanPengeluaranKasBank, UNewJurnal_memorial, UDataKasKecil,
+  UDataKasbon2, UDataPengeluaranKasBank;
 
 procedure TFListNoTransaksi.DBGridEh1DblClick(Sender: TObject);
 var trans_no,hasil: String;
 begin
   trans_no:=QListTransNo.FieldValues['trans_no'];
   hasil := Copy(trans_no, 1, Pos('-DEL', trans_no) - 1);
+
+  if vcall='pengeluaran_kas_bank' then
+  begin
+    FDataPengeluaranKasBank.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FDataPengeluaranKasBank.edNoTrans.text:=hasil;
+  end;
+
+  if vcall='kas_bon' then
+  begin
+    FDataKasbon2.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FDataKasbon2.edNoTrans.text:=hasil;
+  end;
+  if vcall='kas_kecil' then
+  begin
+    FDataKasKecil.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FDataKasKecil.edNoTrans.text:=hasil;
+  end;
+
+
+  if vcall='Terima_barang' then     //23-07-2026  cr ds
+  begin
+    FNew_TerimaMaterial.EdNo.text:=hasil;
+    FNew_TerimaMaterial.strNoTransaksiDiGanti:=trans_no;
+    FNew_TerimaMaterial.Edurut.Text:=QListTransNo.FieldValues['order_no'];
+  end;
 
   if vcall='penjualan' then
   begin
@@ -63,6 +93,12 @@ begin
     order_no:=QListTransNo.FieldValues['order_no'];
     FDataReturPenjualan.edNoTrans.text:=hasil;
   end;
+  if vcall='suratperintahmuat' then
+  begin
+    FDataPerintahMuat.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FDataPerintahMuat.edKodeMuat.text:=hasil;
+  end;
   if vcall='pembelian' then
   begin
    // ShowMessage(hasil);
@@ -76,6 +112,26 @@ begin
     FNew_PO.strNoTransaksiDiGanti:=trans_no;
 //    Urut:=QListTransNo.FieldValues['order_no'];
     FNew_PO.Edurut.Text:=QListTransNo.FieldValues['order_no'];
+  end;
+  if vcall='deliveryorder' then
+  begin
+    FNewDeliveryOrder.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FNewDeliveryOrder.edKodeDOMuatan.text:=hasil;
+    FNewDeliveryOrder.edKodeDOBiaya.text:=hasil;
+    FNewDeliveryOrder.edKodeDODok.text:=hasil;
+  end;
+  if vcall='pengajuan_kas_bank' then
+  begin
+    FDataPengajuanPengeluaranKasBank.strNoTransaksiDiGanti:=trans_no;
+    order_no:=QListTransNo.FieldValues['order_no'];
+    FDataPengajuanPengeluaranKasBank.edNoTrans.text:=hasil;
+  end;
+  if vcall='memorial' then
+  begin
+    FNewJurnal_memo.edno_bukti_memorial.text:=hasil;
+    FNewJurnal_memo.strNoTransaksiDiGanti:=trans_no;
+    Urut:=QListTransNo.FieldValues['order_no'];
   end;
 
   close;
@@ -92,11 +148,10 @@ begin
             ' '+vwhere+' ');
     open;
   end;
-
+  QListTransNo.Refresh;
   if  QListTransNo.RecordCount=0 then
   begin
     Showmessage('Maaf, Data Tidak Ditemukan..');
-    QListTransNo.Close;
     FListNoTransaksi.Close;
   end;
 

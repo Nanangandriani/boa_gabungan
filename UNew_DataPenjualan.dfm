@@ -3,8 +3,8 @@ object FNew_Penjualan: TFNew_Penjualan
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Penjualan'
-  ClientHeight = 632
-  ClientWidth = 870
+  ClientHeight = 631
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,13 +18,13 @@ object FNew_Penjualan: TFNew_Penjualan
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 870
+    Width = 866
     Height = 201
     Align = alTop
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 866
+    ExplicitWidth = 862
     object LabelPelanggan: TLabel
       Left = 19
       Top = 7
@@ -508,15 +508,15 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object Panel2: TPanel
     Left = 0
-    Top = 600
-    Width = 870
+    Top = 599
+    Width = 866
     Height = 32
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 599
-    ExplicitWidth = 866
+    ExplicitTop = 598
+    ExplicitWidth = 862
     object BBatal: TRzBitBtn
-      Left = 794
+      Left = 790
       Top = 1
       Height = 30
       Align = alRight
@@ -575,10 +575,10 @@ object FNew_Penjualan: TFNew_Penjualan
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 790
+      ExplicitLeft = 786
     end
     object BSave: TRzBitBtn
-      Left = 719
+      Left = 715
       Top = 1
       Height = 30
       Align = alRight
@@ -637,7 +637,7 @@ object FNew_Penjualan: TFNew_Penjualan
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 715
+      ExplicitLeft = 711
     end
     object btHitungPotongan: TRzBitBtn
       Left = 1
@@ -764,7 +764,7 @@ object FNew_Penjualan: TFNew_Penjualan
       NumGlyphs = 2
     end
     object BCorrection: TRzBitBtn
-      Left = 621
+      Left = 617
       Top = 1
       Width = 98
       Height = 30
@@ -772,10 +772,11 @@ object FNew_Penjualan: TFNew_Penjualan
       Caption = 'Submit Correction'
       TabOrder = 4
       OnClick = BCorrectionClick
-      ExplicitLeft = 617
+      ExplicitLeft = 611
+      ExplicitTop = -2
     end
     object BCetakBuktiPenarikanUangMuka: TRzBitBtn
-      Left = 488
+      Left = 484
       Top = 1
       Width = 133
       Height = 30
@@ -914,36 +915,34 @@ object FNew_Penjualan: TFNew_Penjualan
         A5FFD1B3A4FFD1B3A4FFD0B2A4FFD1B2A4FFD0B2A4FFCFB2A3FFCFB2A3FFCFB2
         A3FFCFB0A3FFCFB1A2FFCFB0A2FFCEB0A2FFCEB0A2FFCEAFA1FF998277C10000
         0007000000020000000000000000000000000000000000000000}
-      ExplicitLeft = 484
+      ExplicitLeft = 480
     end
   end
   object RzPageControl1: TRzPageControl
     Left = 0
     Top = 201
-    Width = 870
-    Height = 233
+    Width = 866
+    Height = 232
     Hint = ''
-    ActivePage = TabSDetailPel
+    ActivePage = TabUangMuka
     Align = alClient
     BackgroundColor = clBtnFace
     BoldCurrentTab = True
     UseColoredTabs = True
     ParentBackgroundColor = False
     ParentColor = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
-    ExplicitWidth = 866
-    ExplicitHeight = 232
+    ExplicitWidth = 862
+    ExplicitHeight = 231
     FixedDimension = 21
     object TabSDetailPel: TRzTabSheet
       Caption = 'Detail Order'
-      ExplicitWidth = 862
-      ExplicitHeight = 207
       object DBGridDetail: TDBGridEh
         Left = 0
         Top = 0
-        Width = 866
-        Height = 208
+        Width = 862
+        Height = 207
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSDetail
@@ -1199,11 +1198,13 @@ object FNew_Penjualan: TFNew_Penjualan
     end
     object TabUangMuka: TRzTabSheet
       Caption = 'Uang Muka'
+      ExplicitWidth = 858
+      ExplicitHeight = 206
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
-        Width = 866
-        Height = 208
+        Width = 862
+        Height = 207
         Align = alClient
         AllowedOperations = [alopUpdateEh, alopDeleteEh, alopAppendEh]
         DataSource = DSUangMuka
@@ -1289,14 +1290,14 @@ object FNew_Penjualan: TFNew_Penjualan
   end
   object RzPanel1: TRzPanel
     Left = 0
-    Top = 434
-    Width = 870
+    Top = 433
+    Width = 866
     Height = 166
     Align = alBottom
     Color = 15987699
     TabOrder = 3
-    ExplicitTop = 433
-    ExplicitWidth = 866
+    ExplicitTop = 432
+    ExplicitWidth = 862
     object RzLabel1: TRzLabel
       Left = 501
       Top = 138
@@ -1986,8 +1987,8 @@ object FNew_Penjualan: TFNew_Penjualan
         'LEFT JOIN get_selling(false) b on b.trans_no=a.trans_no AND b.de' +
         'leted_at IS NULL'
       'WHERE a.trans_no_down_payment='#39'UM-PJ/0001/10/IV/2026/HLJ'#39';')
-    Left = 496
-    Top = 104
+    Left = 176
+    Top = 48
   end
   object Report: TfrxReport
     Version = '2022.1.3'
@@ -2006,7 +2007,7 @@ object FNew_Penjualan: TFNew_Penjualan
       'begin'
       ''
       'end.')
-    Left = 360
+    Left = 168
     Top = 112
     Datasets = <
       item
@@ -2520,7 +2521,7 @@ object FNew_Penjualan: TFNew_Penjualan
     DataSet = QUangMuka
     BCDToCurrency = False
     DataSetOptions = []
-    Left = 424
+    Left = 232
     Top = 112
   end
 end

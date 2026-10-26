@@ -104,9 +104,10 @@ type
   private
     { Private declarations }
     procedure GetStatus;
-    procedure DeleteDOChakra;
+
   public
     { Public declarations }
+    procedure DeleteDOChakra(NoDO: string);
     procedure Refresh;
   end;
 
@@ -118,7 +119,7 @@ implementation
 
 {$R *.dfm}
 
-uses UNewDeliveryOrder, UDataModule, UMy_Function, UHomeLogin;
+uses UNewDeliveryOrder, UDataModule, UMy_Function, UHomeLogin, UKoreksi;
 
 procedure TFListDeliveryOrder.Refresh;
 var mm: Integer;
@@ -148,7 +149,13 @@ begin
 //                  'WHERE EXTRACT(YEAR FROM a.date_trans)='+edTahun.Text+' AND '+
 //                  'EXTRACT(MONTH FROM a.date_trans)='+(IntToStr(mm))+' AND '+
                   ''+strStatus+' ORDER BY a.date_trans Desc, a.notrans DESC ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   finally
   DBGridList.FinishLoadingStatus();
@@ -163,7 +170,14 @@ begin
     close;
     sql.Clear;
     sql.Text:='select status_name from t_delivery_order_status where status=true order by kode ASC';
-    ExecSQL;
+
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   cbStatus.Items.Add('Semua');
   Dm.Qtemp.First;
@@ -211,7 +225,7 @@ begin
     Params.Font.Color := clRed;
 end;
 
-procedure TFListDeliveryOrder.DeleteDOChakra;
+procedure TFListDeliveryOrder.DeleteDOChakra(NoDO: string);
 var
   key, url, BaseUrl, Vpath, Vtoken, res: string;
   gNet: TIdHTTP;
@@ -229,7 +243,8 @@ begin
     url := BaseUrl + Vpath;
 
     jsonBody := TStringStream.Create(
-      '{"notrans": "'+QDeliveryOrder.FieldByName('notrans').AsString+'"}',
+//      '{"notrans": "'+QDeliveryOrder.FieldByName('notrans').AsString+'"}',
+        '{"notrans": "'+NoDO+'"}',
       TEncoding.UTF8
     );
 
@@ -261,46 +276,102 @@ end;
 
 procedure TFListDeliveryOrder.ActDelExecute(Sender: TObject);
 begin
-//  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
-  if QDeliveryOrder.FieldByName('no_spm').AsString<>'' then
+  with dm.Qtemp1 do
   begin
-    MessageDlg('DO Sudah jadi SPM tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
-  end
+    close;
+    sql.Clear;
+    sql.Text:='SELECT 1 from t_spm_det a '+
+              'left join t_spm b on b.notrans=a.notrans '+
+              'WHERE b.deleted_at is null  AND a.notrans_do='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString)+';';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+
+  with dm.Qtemp2 do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString)+' and status=0 and deleted_at is null';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+
+  if not QDeliveryOrder.FieldByName('deleted_at').IsNull then
+  begin
+    MessageDlg('DO sudah pernah dihapus..!!', mtWarning, [mbOK], 0);
+  end else
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('DO ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else if dm.Qtemp1.RecordCount>0 then
+  begin
+    MessageDlg('DO sudah jadi Surat Perintah Muat..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListDeliveryOrder'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QDeliveryOrder.FieldByName('notrans').AsString;
+      FKoreksi.ShowModal;
+
+    end;
+  end;
+
+
+
+//  MessageDlg('Buatkan Validasi Tagihan Sudah Dibuat Tahap Lanjut Belum...',mtInformation,[MBOK],0);
+//  if QDeliveryOrder.FieldByName('no_spm').AsString<>'' then
+//  begin
+//    MessageDlg('DO Sudah jadi SPM tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
+//  end
 //  else if QDeliveryOrder.FieldByName('status').AsInteger>5 then     //tadinya diatas >4
 //  begin
 //    MessageDlg('Status DO Sudah '+QDeliveryOrder.FieldByName('status_name').AsString+', tidak dapat dihapus..!!',mtInformation,[mbRetry],0);
 //  end
-  else begin
-
-    if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
-    begin
-        if not dm.Koneksi.InTransaction then
-         dm.Koneksi.StartTransaction;
-        try
-          with dm.Qtemp do
-          begin
-            close;
-            sql.clear;
-            sql.Text:=' UPDATE "public"."t_delivery_order"  SET '+
-                      ' "deleted_at"=now(), '+
-                      ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
-                      ' WHERE "notrans"='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString);
-            ExecSQL;
-          end;
-
-          DeleteDOChakra;
-          MessageDlg('Proses Hapus Berhasil, Pastikan kordinasi dengan Pihak Chakra..!!',mtInformation,[MBOK],0);
-          Dm.Koneksi.Commit;
-        Except on E :Exception do
-          begin
-            begin
-              MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
-              Dm.koneksi.Rollback ;
-            end;
-          end;
-        end;
-    end;
-  end;
+//  else begin
+//
+//    if MessageDlg('Apakah anda yakin ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+//    begin
+//        if not dm.Koneksi.InTransaction then
+//         dm.Koneksi.StartTransaction;
+//        try
+//          with dm.Qtemp do
+//          begin
+//            close;
+//            sql.clear;
+//            sql.Text:=' UPDATE "public"."t_delivery_order"  SET '+
+//                      ' "deleted_at"=now(), '+
+//                      ' "deleted_by"='+QuotedStr(FHomeLogin.Eduser.Text)+'  '+
+//                      ' WHERE "notrans"='+QuotedStr(QDeliveryOrder.FieldByName('notrans').AsString);
+//            ExecSQL;
+//          end;
+//
+//          DeleteDOChakra;
+//          MessageDlg('Proses Hapus Berhasil, Pastikan kordinasi dengan Pihak Chakra..!!',mtInformation,[MBOK],0);
+//          Dm.Koneksi.Commit;
+//        Except on E :Exception do
+//          begin
+//            begin
+//              MessageDlg(E.ClassName +' : '+E.Message, MtError,[mbok],0);
+//              Dm.koneksi.Rollback ;
+//            end;
+//          end;
+//        end;
+//    end;
+//  end;
 end;
 
 procedure TFListDeliveryOrder.ActROExecute(Sender: TObject);
@@ -316,6 +387,7 @@ begin
 end;
 
 procedure TFListDeliveryOrder.ActUpdateExecute(Sender: TObject);
+var IntAdaBiaya: Integer;
 begin
    FNewDeliveryOrder.Clear;
    if not dm.Koneksi.Connected then
@@ -328,7 +400,13 @@ begin
        sql.Text:= 'select * from "public"."t_delivery_order" '+
                   'WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                   ' order by created_at Desc ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   if Dm.Qtemp.RecordCount=0 then
   begin
@@ -339,8 +417,12 @@ begin
     ShowMessage('Data DO sudah di batalkan...!!!');
     exit;
   end else begin
+    IntAdaBiaya:=0;
     with FNewDeliveryOrder do
     begin
+      if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+      else chkNomorPengganti.Checked:=False;
+
       edKodeJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_code').AsString;
       edNamaJenisMuatan.Text:=Dm.Qtemp.FieldByName('type_do_name').AsString;
 
@@ -440,11 +522,18 @@ begin
        sql.Text:=' select * from "public"."t_delivery_order_cost" a '+
                  ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                  ' order by cost_code Desc ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if Dm.Qtemp1.RecordCount<>0 then
     begin
+    IntAdaBiaya:=1;
     FNewDeliveryOrder.Grand_Tot:=0;
     FNewDeliveryOrder.MemDataBiaya.active:=false;
     FNewDeliveryOrder.MemDataBiaya.active:=true;
@@ -483,7 +572,13 @@ begin
      sql.Text:=' select * from "public"."t_delivery_order_load" a '+
                ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                ' order by notrans_load Desc ';
-     open;
+     try
+      Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+     end;
   end;
 
   if  Dm.Qtemp1.RecordCount<>0 then
@@ -522,7 +617,13 @@ begin
      sql.Text:=' select * from "public"."t_delivery_order_services" a '+
                ' WHERE "notrans"='+QuotedSTr(QDeliveryOrder.FieldByName('notrans').AsString)+' '+
                ' order by vendor_code Desc ';
-     open;
+     try
+        Open;
+     except
+        Connection.Close;
+        Connection.Open;
+        Open;
+     end;
   end;
 
   if  Dm.Qtemp1.RecordCount<>0 then
@@ -571,6 +672,10 @@ begin
   FNewDeliveryOrder.edKodeDODok.ReadOnly:=True;
   FNewDeliveryOrder.RzPageControl1.ActivePage:=FNewDeliveryOrder.TabDataMuatan;
   Status := 1;
+  if IntAdaBiaya=1 then
+  begin
+    FNewDeliveryOrder.cbAdaBiaya.Checked:=True;
+  end;
   FNewDeliveryOrder.ShowModal;
 end;
 
@@ -604,7 +709,13 @@ begin
 //                'coalesce(a.pickup_location,'''') ,coalesce(a.delivery_location) ,'+
 //                'd.company_name,d.address,d.telp,COALESCE(vehicles,'''') ,'+
 //                'vehicles,dol.item_name,dol.unit ORDER BY item_name ASC';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     with QCetak2 do
@@ -615,7 +726,13 @@ begin
                 'left join t_customer_address b on b.customer_code=a.code_vendor_load '+
                 'and code_details=''003'' '+
                 'WHERE notrans='+QuotedStr(QDeliveryOrder.FieldValues['notrans']);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
 

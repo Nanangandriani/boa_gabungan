@@ -28,7 +28,7 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxCore, dxRibbonSkins,
   dxRibbonCustomizationForm, cxCalendar, dxBar, cxBarEditItem, cxClasses,
   dxRibbon, cxButtonEdit, cxTextEdit, cxDropDownEdit, frxExportBaseDialog,
-  frxExportXLSX, frxExportXLS, ShellAPI;
+  frxExportXLSX, frxExportXLS, ShellAPI, frxExportPDF;
 
 type
   TFRpt_BukuHarianPembelian = class(TForm)
@@ -75,6 +75,7 @@ type
     dxBarLargeButton3: TdxBarLargeButton;
     frxXLSXExport1: TfrxXLSXExport;
     frxXLSExport1: TfrxXLSExport;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BBatalClick(Sender: TObject);
@@ -229,6 +230,8 @@ begin
 end;
 
 procedure TFRpt_BukuHarianPembelian.queryreport;
+var
+dt_awal:TDate;
 begin
     if dtmulai.EditValue = null then
     begin
@@ -242,9 +245,38 @@ begin
       DtSelesai.SetFocus;
       Exit;
     end;
+
+   //batas data
+    dt_awal:=dtmulai.EditValue;
+    if VarToDateTime(dtmulai.EditValue) < EncodeDate(2025, 1, 1) then
+    begin
+      dt_awal := EncodeDate(2025, 1, 1);
+    end;
     dm.QPerusahaan.Close;
     dm.QPerusahaan.Open;
-  if Length(CbKategori.EditValue)<>0 then
+    if CbKategori.EditValue<>null then
+    begin
+       with QRptBHP do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT *  FROM public.sp_bhpembelian('+QuotedStr(FormatDateTime('yyyy-mm-dd',dt_awal))+','+
+                  ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.EditValue))+', '+QuotedStr(CbKategori.EditValue)+')';
+        Execute;
+      end;
+    end;
+    if CbKategori.EditValue=null then
+    begin
+       with QRptBHP do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT *  FROM public.sp_bhpembelian('+QuotedStr(FormatDateTime('yyyy-mm-dd',dt_awal))+','+
+                  ''+QuotedStr(FormatDateTime('yyyy-mm-dd',dtselesai.EditValue))+', '''')';
+        Execute;
+      end;
+    end;
+ { if Length(CbKategori.EditValue)<>0 then
   begin
     with QRptBHP do
     begin
@@ -274,7 +306,7 @@ begin
       ' and a.trans_date<='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtSelesai.EditValue))+' '+
       ' ORDER BY a.trans_date,a.faktur_no ASC ';  }
       //update ds 5-2-2026
-    sql.Text:=' select trans_no,trans_date,faktur_no,po_no,debt_remaining,item_code,qty,unit,item_stock_code,item_name,'+
+   { sql.Text:=' select trans_no,trans_date,faktur_no,po_no,debt_remaining,item_code,qty,unit,item_stock_code,item_name,'+
     ' '''' ppn_account,subtotalrp,0 ppn_rp,account_pph_code,pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,ak_pemb,'+
     ' ak_pemb_name,'''' ak_ppn,'''' ak_ppn_name,ak_pph,ak_pph_name,group_name,supplier_name,supplier_code,purchase_type from'+
     ' "VBHPembelian" where purchase_type='+QuotedStr(CbKategori.EditValue)+'  '+
@@ -298,7 +330,7 @@ begin
     ' inner join (select ac.code,ac.account_name,acs.account_code2 account_code from t_ak_account ac '+
     ' inner join t_ak_account_sub acs on ac.code=acs.account_code) ac on pi.account_um_code=ac.account_code '+
     ' inner join t_supplier sp on pi.supplier_code=sp.supplier_code where um_value >0 )yy on xx.trans_no=yy.trans_no'+
-    ' ORDER BY trans_date,faktur_no,grandtotal  ASC ';
+    ' ORDER BY  supplier_name,trans_date,faktur_no,grandtotal  ASC ';
       Execute;
     end;
   end;
@@ -366,7 +398,7 @@ begin
       ' and a.deleted_at isnull '+
       ' ORDER BY trans_date,trans_no ASC ';      }
       //cr ds 5-2-2026
-        sql.Text:=' select trans_no,trans_date,faktur_no,po_no,debt_remaining,item_code,qty,unit,item_stock_code,item_name,'+
+  {      sql.Text:=' select trans_no,trans_date,faktur_no,po_no,debt_remaining,item_code,qty,unit,item_stock_code,item_name,'+
     ' '''' ppn_account,subtotalrp,0 ppn_rp,account_pph_code,pph_rp,0 grandtotal,'''' ak_htng,'''' ak_ht_name,ak_pemb,'+
     ' ak_pemb_name,'''' ak_ppn,'''' ak_ppn_name,ak_pph,ak_pph_name,group_name,supplier_name,supplier_code,purchase_type from'+
     ' "VBHPembelian" where trans_date>='+QuotedStr(FormatDateTime('yyyy-mm-dd',DtMulai.EditValue))+''+
@@ -388,10 +420,10 @@ begin
     ' inner join (select ac.code,ac.account_name,acs.account_code2 account_code from t_ak_account ac '+
     ' inner join t_ak_account_sub acs on ac.code=acs.account_code) ac on pi.account_um_code=ac.account_code '+
     ' inner join t_supplier sp on pi.supplier_code=sp.supplier_code where um_value >0 )yy on xx.trans_no=yy.trans_no'+
-    ' ORDER BY trans_date,trans_no,grandtotal ASC ';
+    ' ORDER BY  supplier_name,trans_date,trans_no,grandtotal ASC ';
      Execute;
     end;
-  end;
+  end;   }
 end;
 
 procedure TFRpt_BukuHarianPembelian.FormClose(Sender: TObject;
@@ -574,10 +606,16 @@ end;
 end;
 
 procedure TFRpt_BukuHarianPembelian.dxBarLargeButton1Click(Sender: TObject);
+var
+  Kategori: string;
 begin
+  Kategori := Trim(VarToStr(CbKategori.EditValue));
     queryreport;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DK2.Fr3');
-    SetMemo(Rpt,'jns_hutang',' BUKU HARIAN PEMBELIAN '+CbKategori.EditValue);
+    if CbKategori.EditValue = null then
+      SetMemo(Rpt, 'jns_hutang', 'BUKU HARIAN PEMBELIAN')
+    else
+      SetMemo(Rpt,'jns_hutang',' BUKU HARIAN PEMBELIAN '+CbKategori.EditValue);
     SetMemo(Rpt,'MPeriode',' Tanggal  : '+FormatDateTime('dd mmmm yyyy',DtMulai.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTSelesai.EditValue));
     Rpt.ShowReport();
 end;
@@ -657,7 +695,10 @@ procedure TFRpt_BukuHarianPembelian.dxBarLargeButton3Click(Sender: TObject);
 begin
     queryreport;
     Rpt.LoadFromFile(ExtractFilePath(Application.ExeName)+'Report\Rpt_Buku_Harian_Pembelian_DKExport.Fr3');
-    SetMemo(Rpt,'jns_hutang',' BUKU HARIAN PEMBELIAN '+CbKategori.EditValue);
+    if CbKategori.EditValue = null then
+      SetMemo(Rpt, 'jns_hutang', 'BUKU HARIAN PEMBELIAN')
+    else
+      SetMemo(Rpt,'jns_hutang',' BUKU HARIAN PEMBELIAN '+CbKategori.EditValue);
     SetMemo(Rpt,'MPeriode',' Tanggal  : '+FormatDateTime('dd mmmm yyyy',DtMulai.EditValue)+' '+'S/D'+' '+FormatDateTime('dd mmmm yyyy',DTSelesai.EditValue));
     rpt.PrepareReport(True);
       // Baru export

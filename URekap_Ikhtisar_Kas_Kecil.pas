@@ -210,7 +210,7 @@ begin
       DTPick2.SetFocus;
       Exit;
     end;
-    subqueryadm:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10)+sum(b11)+sum(b12)+sum(b13)+sum(b14)+sum(b15) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
+    {subqueryadm:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10)+sum(b11)+sum(b12)+sum(b13)+sum(b14)+sum(b15) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
                 'sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10,sum(b11)as b11,sum(b12)as b12,sum(b13)as b13,sum(b14)as b14,sum(b15)as b15 from '+
                 '(select a.tanggal,a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
                 '(case when b1.amount is null then 0 else b1.amount end)b1, '+
@@ -305,8 +305,8 @@ begin
                 '0 as "b3", 0 as "b4", 0 as "b5", 0 as "b6", 0 as "b7", 0 as "b8", '+
                 '0 as "b9", 0 as "b10", 0 as "b11", 0 as "b12", 0 as "b13", '+
                 '0 as "b14", 0 as "b15" '+
-                'order by tanggal ';
-    subquerypenj:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
+                'order by tanggal '; }
+    {subquerypenj:='select tanggal,sum(b1)+sum(b2)+sum(b3)+sum(b4)+sum(b5)+sum(b6)+sum(b7)+sum(b8)+sum(b9)+sum(b10) as total, sum(b1)as b1,sum(b2)as b2,sum(b3)as b3,sum(b4)as b4,sum(b5)as b5,sum(b6)as b6, '+
                 'sum(b7)as b7,sum(b8)as b8,sum(b9)as b9,sum(b10)as b10 from '+
                 '(select a.tanggal,a.actors_name,a.voucher_no,a.description,a."name",b.total, '+
                 '(case when b1.amount is null then 0 else b1.amount end)b1, '+
@@ -367,9 +367,75 @@ begin
                 ' select null as "tanggal", 0 as "total", 0 as "b1", 0 as "b2", '+
                 ' 0 as "b3", 0 as "b4", 0 as "b5", 0 as "b6", 0 as "b7", 0 as "b8", '+
                 ' 0 as "b9", 0 as "b10" '+
-                ' order by tanggal ';
+                ' order by tanggal ';}
 
+    subqueryadm:=' WITH tbl_tanggal AS ( '+
+                ' SELECT generate_series('+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick1.EditValue))+'::date, '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick2.EditValue))+'::date, '+
+                ' ''1 day''::interval)::date AS tanggal ),rekap_kategori AS ( '+
+                ' SELECT t.tanggal, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2GAJ'' THEN header.amount END), 0) AS b1, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2SUM'' THEN header.amount END), 0) AS b2, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2ASU'' THEN header.amount END), 0) AS b3, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2MRA'' THEN header.amount END), 0) AS b4, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2ALA'' THEN header.amount END), 0) AS b5, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2LIS'' THEN header.amount END), 0) AS b6, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2PTT'' THEN header.amount END), 0) AS b7, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2PER'' THEN header.amount END), 0) AS b8, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2PEN'' THEN header.amount END), 0) AS b9, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2PAJ'' THEN header.amount END), 0) AS b10, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2MRK'' THEN header.amount END), 0) AS b11, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2ADM'' THEN header.amount END), 0) AS b12, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2JAM'' THEN header.amount END), 0) AS b13, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2MAN'' THEN header.amount END), 0) AS b14, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''2KEP'' THEN header.amount END), 0) AS b15 '+
+                ' FROM tbl_tanggal t '+
+                ' LEFT JOIN t_petty_cash header '+
+                ' ON t.tanggal = header.trans_date '+
+                ' AND header.deleted_at IS NULL '+
+                ' LEFT JOIN t_petty_cash_det det '+
+                ' ON header.voucher_no = det.voucher_no '+
+                ' AND det.position = ''D'' '+
+                ' LEFT JOIN t_ak_account acc '+
+                ' ON det.code_account = acc.code '+
+                ' AND acc.type_id = 2 '+
+                ' GROUP BY t.tanggal) '+
+                ' SELECT tanggal, (b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 '+
+                ' + b11 + b12 + b13 + b14 + b15) AS total, '+
+                ' b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15 '+
+                ' FROM rekap_kategori '+
+                ' ORDER BY tanggal ';
 
+    subquerypenj:=' WITH tbl_tanggal AS ( '+
+                ' SELECT generate_series('+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick1.EditValue))+'::date, '+
+                ' '+QuotedStr(formatdatetime('yyyy-mm-dd', DTPick2.EditValue))+'::date, '+
+                ' ''1 day''::interval)::date AS tanggal ), rekap_kategori AS ( '+
+                ' SELECT t.tanggal, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4GAJ'' THEN header.amount END), 0) AS b1, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4SUM'' THEN header.amount END), 0) AS b2, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4ANG'' THEN header.amount END), 0) AS b3, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4DIS'' THEN header.amount END), 0) AS b4, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4MRK'' THEN header.amount END), 0) AS b5, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4PRO'' THEN header.amount END), 0) AS b6, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4PER'' THEN header.amount END), 0) AS b7, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4ALA'' THEN header.amount END), 0) AS b8, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4ADM'' THEN header.amount END), 0) AS b9, '+
+                ' COALESCE(SUM(CASE WHEN acc.category_code = ''4PEN'' THEN header.amount END), 0) AS b10 '+
+                ' FROM tbl_tanggal t '+
+                ' LEFT JOIN t_petty_cash header '+
+                ' ON t.tanggal = header.trans_date '+
+                ' AND header.deleted_at IS NULL '+
+                ' LEFT JOIN t_petty_cash_det det '+
+                ' ON header.voucher_no = det.voucher_no '+
+                ' AND det.position = ''D'' '+
+                ' LEFT JOIN t_ak_account acc '+
+                ' ON det.code_account = acc.code '+
+                ' AND acc.type_id = 4 '+
+                ' GROUP BY t.tanggal) '+
+                ' SELECT tanggal, (b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10) AS total, '+
+                ' b1, b2, b3, b4, b5, b6, b7, b8, b9, b10 '+
+                ' FROM rekap_kategori '+
+                ' ORDER BY tanggal ';
     with QRekap_KasKecil_ADM2 do
     begin
       close;

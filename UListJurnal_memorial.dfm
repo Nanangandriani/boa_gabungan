@@ -292,7 +292,6 @@ object FList_jurnal_memorial: TFList_jurnal_memorial
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 1011
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Caption = 'Home'

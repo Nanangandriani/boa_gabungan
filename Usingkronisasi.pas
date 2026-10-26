@@ -211,14 +211,15 @@ begin
           close;
           sql.Clear;
           sql.Text:='INSERT INTO t_employee (nik, name, sbu, position_code, position_name, updated_at,updated_by, status) '+
-                    'SELECT a.nik,a.name,a.sbu,b.position_code,b.position,b.updated_at,'+QuotedStr(Nm)+',a.status '+
+                    'SELECT a.nik,a.name,a.sbu,b.position_code,b.position,a.updated_at,'+QuotedStr(Nm)+',a.status '+
                     'FROM t_employee_temp a '+
-                    'INNER JOIN t_position b ON b.position = a.position_name '+
+                    'INNER JOIN t_position b ON LOWER(TRIM(b.position)) = LOWER(TRIM(a.position_name)) '+
                     'ON CONFLICT (nik)'+
                     'DO UPDATE SET '+
                     'name = EXCLUDED.name, '+
                     'sbu = EXCLUDED.sbu, '+
                     'position_code = EXCLUDED.position_code, '+
+                    'position_name = EXCLUDED.position_name, '+
                     'updated_at = EXCLUDED.updated_at, '+
                     'updated_by = EXCLUDED.updated_by, '+
                     'status = EXCLUDED.status;';

@@ -80,6 +80,8 @@ type
     dxBarLargeButton5: TdxBarLargeButton;
     frxDBDPerintahMuat2: TfrxDBDataset;
     QCetak2: TUniQuery;
+    QListPerintahMuatdeleted_at: TDateTimeField;
+    QListPerintahMuatdeleted_by: TStringField;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -91,6 +93,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure dxBarLargeButton5Click(Sender: TObject);
     procedure dxBarLargeButton4Click(Sender: TObject);
+    procedure DBGridListAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
+      AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+      var Params: TColCellParamsEh; var Processed: Boolean);
   private
     { Private declarations }
   public
@@ -107,7 +112,8 @@ implementation
 
 {$R *.dfm}
 
-uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin, UNoteCancel;
+uses UDataPerintahMuat, UDataModule, UMy_Function, UHomeLogin, UNoteCancel,
+  UKoreksi;
 
 procedure TFListPerintahMuat.Refresh;
 var mm: Integer;
@@ -122,10 +128,16 @@ begin
        sql.Text:='select * from "public"."t_spm" '+
 //                 'where EXTRACT(YEAR FROM loading_date)='+edTahun.Text+' AND '+
 //                 'EXTRACT(MONTH FROM loading_date)='+(IntToStr(mm))+' '+
-                  'WHERE (loading_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
-                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') AND  '+
-                 'deleted_at is null order by loading_date Desc, notrans Desc ';
-       open;
+                 'WHERE (loading_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
+                 ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+')  '+
+                 'order by loading_date Desc, notrans Desc ';
+       try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   finally
   DBGridList.FinishLoadingStatus();
@@ -141,7 +153,13 @@ begin
       sql.add(' SELECT *  '+
               ' FROM "public"."t_spm_stock_details"  a '+
               ' WHERE "trans_spm_no"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' ' );
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if  Dm.Qtemp.RecordCount<>0 then
@@ -157,7 +175,13 @@ begin
         sql.Text:=' UPDATE "public"."t_item_stock_det" SET '+
                   ' "qtyout"=qtyout-'+(FloatToStr(Dm.Qtemp.FieldByName('qty').Value))+' '+
                   ' WHERE "stock_code"='+QuotedStr(Dm.Qtemp.FieldByName('stock_code').Value)+'; ';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
       with dm.Qtemp1 do
       begin
@@ -165,7 +189,13 @@ begin
         sql.clear;
         sql.Text:=' delete from "public"."t_spm_stock_details" '+
                   ' WHERE "trans_id"='+QuotedStr(Dm.Qtemp.FieldByName('trans_id').Value)+' ; ';
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
 
      Dm.Qtemp.next;
@@ -188,12 +218,46 @@ end;
 
 procedure TFListPerintahMuat.ActDelExecute(Sender: TObject);
 begin
-  if MessageDlg('Apakah anda yakin ingin Membatalkan Muatan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+//  if MessageDlg('Apakah anda yakin ingin Membatalkan Muatan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+//  begin
+//    FNoteCancel.vtbl:='t_spm';
+//    FNoteCancel.vfieldtransno:='notrans';
+//    FNoteCancel.edNoTransaksi.Text:=QListPerintahMuat.FieldByName('notrans').AsString;
+//    FNoteCancel.ShowModal;
+//  end;
+  with dm.Qtemp2 do
   begin
-    FNoteCancel.vtbl:='t_spm';
-    FNoteCancel.vfieldtransno:='notrans';
-    FNoteCancel.edNoTransaksi.Text:=QListPerintahMuat.FieldByName('notrans').AsString;
-    FNoteCancel.ShowModal;
+    close;
+    sql.Clear;
+    sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
+              'no_transaksi='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' and status=0 and deleted_at is null';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+
+  if not QListPerintahMuat.FieldByName('deleted_at').IsNull then
+  begin
+    MessageDlg('Surat Perintah Muat sudah pernah dihapus..!!', mtWarning, [mbOK], 0);
+  end else
+  if dm.Qtemp2.RecordCount>0 then
+  begin
+    MessageDlg('Surat Perintah Muat ada pengajuan koreksi atau pengajuan hapus..!!',mtInformation,[mbRetry],0);
+  end else begin
+    if MessageDlg('Apakah Anda Yakin Ingin Membatalkan Tagihan ini?',mtConfirmation,[mbYes,mbNo],0)=mrYes then
+    begin
+      FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
+                      'where link='+QuotedStr('FListPerintahMuat'));
+      FKoreksi.Status:=0;
+      FKoreksi.AksiTipe:='DELETE';
+      FKoreksi.vnotransaksi:=QListPerintahMuat.FieldByName('notrans').AsString;
+      FKoreksi.ShowModal;
+
+    end;
   end;
 end;
 
@@ -217,8 +281,14 @@ begin
        sql.Clear;
        sql.Text:=' select * from "public"."t_spm" a '+
                  ' WHERE "notrans"='+QuotedSTr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
-                 ' AND deleted_at is null order by created_at Desc ';
-       open;
+                 ' order by created_at Desc ';
+       try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
   if Dm.Qtemp.RecordCount=0 then
   begin
@@ -229,6 +299,18 @@ begin
   begin
   with FDataPerintahMuat do
   begin
+    if (Dm.Qtemp.FindField('deleted_at') <> nil) and (not Dm.Qtemp.FieldByName('deleted_at').IsNull) then
+    begin
+      isCancel := 1;
+    end else begin
+      isCancel:=0;
+    end;
+
+
+    if Dm.Qtemp.FieldByName('is_no_replacement').AsBoolean=True then chkNomorPengganti.Checked:=True
+    else chkNomorPengganti.Checked:=False;
+
+
     edKodeMuat.Text:=Dm.Qtemp.FieldByName('notrans').AsString;
     dtKirim.Date:=Dm.Qtemp.FieldByName('delivery_date').AsDateTime;
     dtMuat.Date:=Dm.Qtemp.FieldByName('loading_date').AsDateTime;
@@ -252,7 +334,13 @@ begin
        sql.Text:=' select * from "public"."t_spm_det" a '+
                  ' WHERE "notrans"='+QuotedSTr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
                  ' order by notrans Desc ';
-       open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
 
     if Dm.Qtemp1.RecordCount<>0 then
@@ -290,6 +378,25 @@ end;
 end;
 
 
+procedure TFListPerintahMuat.DBGridListAdvDrawDataCell(Sender: TCustomDBGridEh;
+  Cell, AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
+  var Params: TColCellParamsEh; var Processed: Boolean);
+var
+  DS: TDataSet;
+  F: TField;
+begin
+  if (Column = nil) or (Column.Field = nil) then Exit;
+
+  DS := Column.Field.DataSet;
+
+  if (DS = nil) or (not DS.Active) or DS.IsEmpty then Exit;
+
+  F := DS.FindField('deleted_at');
+  if F = nil then Exit;
+  if not F.IsNull then
+    Params.Font.Color := clRed;
+end;
+
 procedure TFListPerintahMuat.dxBarLargeButton2Click(Sender: TObject);
 begin
     with QCetak do
@@ -306,7 +413,13 @@ begin
 //             ' LEFT JOIN t_spm c on c.notrans=a.notrans '+
 //             ' WHERE a."notrans"='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString)+' '+
 //             ' order by a."notrans" Desc');
-     open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
 
@@ -325,7 +438,13 @@ begin
     sql.Text:='SELECT DISTINCT string_agg(DISTINCT b.kabupaten, '', '') kabupaten from t_spm_det a '+
               'left join get_selling(NULL) b on a."notrans_sale" = b."trans_no"  '+
               'where notrans='+QuotedStr(QListPerintahMuat.FieldByName('notrans').AsString);
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
    cLocation := ExtractFilePath(Application.ExeName);
 

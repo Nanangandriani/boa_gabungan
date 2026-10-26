@@ -53,6 +53,7 @@ type
     KoneksiPusatMysql: TUniConnection;
     MySQLUniProvider2: TMySQLUniProvider;
     QtempPusatMysql: TUniQuery;
+    QCekDPPHarmoni: TUniQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure KoneksiError(Sender: TObject; E: EDAError; var Fail: Boolean);
   private
@@ -110,8 +111,8 @@ end;
 procedure tdm.linktest1;
 var myclass:TClass;
 begin
-   QLink.Close;
-   QLink.Open;
+  QLink.Close;
+  QLink.Open;
  //  while not QLink.Eof do
 //    begin
      // RegisterClass('t',FindClass(QLink.FieldByName('link1').AsString));
@@ -119,20 +120,20 @@ begin
    ///   qlink.Next;
   //  end
   while not qlink.Eof do
+  begin
+    MyClass := GetClass(qlink.FieldByName('link1').AsString);
+    if Assigned(MyClass) then
     begin
-      MyClass := GetClass(qlink.FieldByName('link1').AsString);
-      if Assigned(MyClass) then
-      begin
-        // If class exists, create an instance
-        MyClass.Create;
-      end
-      else
-      begin
-        // Handle error if class not found
-        raise Exception.Create('Class not found: ' + qlink.FieldByName('link1').AsString);
-      end;
-      qlink.Next;
+      // If class exists, create an instance
+      MyClass.Create;
+    end
+    else
+    begin
+      // Handle error if class not found
+      raise Exception.Create('Class not found: ' + qlink.FieldByName('link1').AsString);
     end;
+    qlink.Next;
+  end;
 end;
 
 // cr ds 13-06-2024

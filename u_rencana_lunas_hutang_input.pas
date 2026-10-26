@@ -202,6 +202,10 @@ procedure TFRencana_Lunas_Hutang.simpan;
 var
 uuid_master : string;
 begin
+  if dm.QPerusahaan.Active=false then
+    dm.QPerusahaan.Active:=true;
+  dm.QPerusahaan.Close;
+  dm.QPerusahaan.Open;
     //if vcall='Data_Hutang' then
     vcall:='Data_Hutang';
     //begin
@@ -356,6 +360,7 @@ begin
     FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FList_Rencana_Lunas_Hutang.Name)); //Mendapatkan nama Menu
 
+    FKoreksi.AksiTipe:='KOREKSI';
     FKoreksi.Status:=0;
     FKoreksi.vnotransaksi:=edNoTrans; //Mendapatkan Nomor Transaksi
     FKoreksi.ShowModal;

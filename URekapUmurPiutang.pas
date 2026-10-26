@@ -132,7 +132,13 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT * FROM rekap_umur_piutang('+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal2.Date))+')';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 end;
 

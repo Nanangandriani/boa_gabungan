@@ -178,7 +178,7 @@ begin
 //            open;
 //          end;
 
-          if dm.Qtemp1.RecordCount=0 then
+          if (dm.Qtemp1.RecordCount=0) AND (TRIM(WorkSheet.Cells[Row, 1].Value)<>'') then
           begin
 //            with dm.Qtemp1 do
 //            begin
@@ -192,6 +192,7 @@ begin
 //                        ' status=True';
 //              ExecSQL;
 //            end;
+
             with dm.Qtemp1 do
             begin
               close;
@@ -205,6 +206,7 @@ begin
                       'NOW(),'+QuotedStr(Nm)+',True,'+QuotedStr(strSBU)+')';
               ExecSQL;
             end;
+
           end else begin
             with dm.Qtemp1 do
             begin
@@ -218,7 +220,6 @@ begin
                         'status=True';
               ExecSQL;
             end;
-
           end;
 
           if FHomeLogin.vStatOffice=0 then
@@ -232,7 +233,6 @@ begin
           begin
             close;
             sql.Clear;
-//            sql.Text:='SELECT id_customer_sales_target FROM t_customer_sales_target ORDER BY created_at desc limit 1  ';
             sql.Text:='SELECT id_customer_sales_target FROM t_customer_sales_target WHERE customer_code='+QuotedStr(WorkSheet.Cells[Row, 1].Value)+' AND'+
                       ' year='+QuotedStr(WorkSheet.Cells[2, 2].Value)+' AND'+
                       ' month='+QuotedStr(WorkSheet.Cells[3, 2].Value)+' AND'+
@@ -317,38 +317,8 @@ begin
                   end;
               end;
           end;
-
-
-//          for Col := 4 to LastCol do // Mulai dari baris kedua untuk data
-//          begin
-//            if (WorkSheet.Cells[7, Col].Value<>'') AND (WorkSheet.Cells[Row, Col].Value<>'') then
-//            begin
-//              with dm.Qtemp1 do
-//              begin
-//                close;
-//                sql.clear;
-//                sql.Text:='INSERT INTO t_customer_sales_target_det_temp (id_customer_sales_target,'+
-//                          'item_code,qty,value,status) '+
-//                          'VALUES('+
-//                        ' '+QuotedStr(dm.Qtemp.FieldValues['id_customer_sales_target'])+', '+
-//                        ' '+QuotedStr(WorkSheet.Cells[7, Col].Value)+' ,'+
-//                        ' '+QuotedStr(WorkSheet.Cells[Row, Col].Value)+' ,'+
-//                        ' '+QuotedStr(WorkSheet.Cells[Row, Col+1].Value)+' ,'+
-//                        'True)';
-//                ExecSQL;
-//              end;
-//            end;
-//          end;
-
-
         end;
-
-
-
         FMainMenu.Load.Percent:=100;
-
-
-        // 7. Menutup workbook dan Excel
         WorkBook.Close(False);
       finally
         ExcelApp.Quit;
@@ -381,14 +351,12 @@ begin
   ExcelApp.Workbooks.Add;
   ExcelApp.ActiveWorkBook.WorkSheets[1].Activate;
 
-
   C := 1;
   for I := 0 to DataSet.FieldCount - 1 do
   begin
     ExcelApp.Cells[1, C].Value := DataSet.Fields[I].FieldName;
     Inc(C);
   end;
-
 
   R := 2;
   DataSet.DisableControls;
@@ -401,7 +369,6 @@ begin
   finally
     DataSet.EnableControls;
   end;
-
 
   ExcelApp.Range['A:A'].Select;
   ExcelApp.ActiveWindow.FreezePanes := True;

@@ -2,8 +2,8 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   Left = 0
   Top = 0
   Caption = 'Data PeLaku Biaya'
-  ClientHeight = 308
-  ClientWidth = 558
+  ClientHeight = 325
+  ClientWidth = 715
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,12 +30,14 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 558
-    Height = 276
+    Width = 715
+    Height = 293
     Align = alClient
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 709
+    ExplicitHeight = 284
     object Label1: TLabel
       Left = 25
       Top = 75
@@ -93,29 +95,29 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       Caption = ':'
     end
     object Label11: TLabel
-      Left = 25
+      Left = 369
       Top = 135
       Width = 38
       Height = 15
       Caption = 'Alamat'
     end
     object Label12: TLabel
-      Left = 106
+      Left = 450
       Top = 135
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label13: TLabel
-      Left = 25
-      Top = 227
+      Left = 369
+      Top = 103
       Width = 42
       Height = 15
       Caption = 'Wilayah'
     end
     object Label14: TLabel
-      Left = 106
-      Top = 227
+      Left = 450
+      Top = 103
       Width = 3
       Height = 15
       Caption = ':'
@@ -134,6 +136,76 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       Width = 21
       Height = 15
       Caption = 'SBU'
+    end
+    object Label15: TLabel
+      Left = 24
+      Top = 133
+      Width = 73
+      Height = 15
+      Caption = 'No. NIK / KTP'
+    end
+    object Label16: TLabel
+      Left = 105
+      Top = 133
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label17: TLabel
+      Left = 24
+      Top = 162
+      Width = 71
+      Height = 15
+      Caption = 'No. Rekening'
+    end
+    object Label18: TLabel
+      Left = 105
+      Top = 162
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label19: TLabel
+      Left = 24
+      Top = 190
+      Width = 63
+      Height = 15
+      Caption = 'Status PTKP'
+    end
+    object Label20: TLabel
+      Left = 105
+      Top = 190
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label21: TLabel
+      Left = 107
+      Top = 219
+      Width = 3
+      Height = 15
+      Caption = ':'
+    end
+    object Label22: TLabel
+      Left = 24
+      Top = 219
+      Width = 71
+      Height = 15
+      Caption = 'Jenis Kelamin'
+    end
+    object Label23: TLabel
+      Left = 25
+      Top = 248
+      Width = 56
+      Height = 15
+      Caption = 'Jenis Biaya'
+    end
+    object Label24: TLabel
+      Left = 108
+      Top = 248
+      Width = 3
+      Height = 15
+      Caption = ':'
     end
     object edNama: TEdit
       Left = 115
@@ -168,15 +240,15 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       TabOrder = 3
     end
     object memAlamat: TMemo
-      Left = 115
+      Left = 459
       Top = 130
       Width = 240
       Height = 89
       TabOrder = 4
     end
     object EdKaresidenan: TRzButtonEdit
-      Left = 115
-      Top = 225
+      Left = 459
+      Top = 101
       Width = 240
       Height = 23
       Text = ''
@@ -186,8 +258,8 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       OnButtonClick = EdKaresidenanButtonClick
     end
     object kd_karesidenan: TEdit
-      Left = 361
-      Top = 225
+      Left = 705
+      Top = 101
       Width = 56
       Height = 23
       TabOrder = 6
@@ -203,23 +275,75 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
       OnSelect = Cb_sbuSelect
     end
     object Ed_serial: TEdit
-      Left = 514
-      Top = 13
+      Left = 522
+      Top = 12
       Width = 34
       Height = 23
       TabOrder = 8
       Visible = False
     end
+    object ednik_ktp: TEdit
+      Left = 114
+      Top = 130
+      Width = 240
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 9
+    end
+    object edno_rek: TEdit
+      Left = 114
+      Top = 159
+      Width = 240
+      Height = 23
+      CharCase = ecUpperCase
+      TabOrder = 10
+    end
+    object ednm_ptkp: TRzButtonEdit
+      Left = 114
+      Top = 188
+      Width = 240
+      Height = 23
+      Text = ''
+      TabOrder = 11
+      AltBtnNumGlyphs = 1
+      ButtonNumGlyphs = 1
+      OnButtonClick = ednm_ptkpButtonClick
+    end
+    object edkd_ptkp: TEdit
+      Left = 369
+      Top = 187
+      Width = 56
+      Height = 23
+      TabOrder = 12
+      Visible = False
+      OnChange = kd_karesidenanChange
+    end
+    object cbjenis_kelamin: TRzComboBox
+      Left = 115
+      Top = 217
+      Width = 239
+      Height = 23
+      TabOrder = 13
+    end
+    object cbjenis_biaya: TRzComboBox
+      Left = 116
+      Top = 246
+      Width = 239
+      Height = 23
+      TabOrder = 14
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 276
-    Width = 558
+    Top = 293
+    Width = 715
     Height = 32
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 284
+    ExplicitWidth = 709
     object btSimpan: TRzBitBtn
-      Left = 413
+      Left = 564
       Top = 1
       Height = 30
       Align = alRight
@@ -278,10 +402,10 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
         090909090909090909E8E88181818181818181818181818181E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 407
+      ExplicitLeft = 558
     end
     object btBatal: TRzBitBtn
-      Left = 488
+      Left = 639
       Top = 1
       Height = 30
       Align = alRight
@@ -340,7 +464,7 @@ object FDataPeLakuBiaya: TFDataPeLakuBiaya
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 482
+      ExplicitLeft = 633
     end
   end
 end

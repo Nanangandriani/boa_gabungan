@@ -537,6 +537,7 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
         Align = alClient
         DataSource = DSDetail
         DynProps = <>
+        FrozenCols = 7
         HorzScrollBar.ExtraPanel.Visible = True
         SearchPanel.Enabled = True
         TabOrder = 0
@@ -697,9 +698,27 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
             CellButtons = <>
             DynProps = <>
             EditButtons = <>
+            FieldName = 'no_counter_bill'
+            Footers = <>
+            Title.Caption = 'No Kontra Bon'
+            Width = 131
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
+            FieldName = 'date_counter_bill'
+            Footers = <>
+            Title.Caption = 'Tanggal Kontra Bon'
+            Width = 92
+          end
+          item
+            CellButtons = <>
+            DynProps = <>
+            EditButtons = <>
             FieldName = 'kontra_bon'
             Footers = <>
-            Title.Caption = 'Kontrabon'
+            Title.Caption = 'Kontra Bon'
             Width = 100
           end>
         object RowDetailData: TRowDetailPanelControlEh
@@ -772,6 +791,13 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
     end
     object MemDetailisdpp_prev: TSmallintField
       FieldName = 'isdpp_prev'
+    end
+    object MemDetailno_counter_bill: TStringField
+      FieldName = 'no_counter_bill'
+      Size = 100
+    end
+    object MemDetaildate_counter_bill: TDateField
+      FieldName = 'date_counter_bill'
     end
     object MemTableData: TMemTableDataEh
       object DataStruct: TMTDataStructEh
@@ -883,6 +909,17 @@ object FDataPenagihanPiutang: TFDataPenagihanPiutang
           DisplayWidth = 20
           currency = False
           Precision = 15
+        end
+        object no_counter_bill: TMTStringDataFieldEh
+          FieldName = 'no_counter_bill'
+          StringDataType = fdtStringEh
+          DisplayWidth = 100
+          Size = 100
+        end
+        object date_counter_bill: TMTDateTimeDataFieldEh
+          FieldName = 'date_counter_bill'
+          DateTimeDataType = fdtDateEh
+          DisplayWidth = 20
         end
       end
       object RecordsList: TRecordsListEh

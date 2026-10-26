@@ -50,6 +50,7 @@ type
     frxReport1: TfrxReport;
     procedure FormShow(Sender: TObject);
     procedure DxRefreshClick(Sender: TObject);
+    procedure dxBarLargeButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,8 +69,31 @@ implementation
 
 uses UMy_Function, UDataModule, UPengajuanApproval_JurnalTrans;
 
+procedure TFRpt_Tutup_Buku.dxBarLargeButton1Click(Sender: TObject);
+begin
+  with dm.Qtemp do
+  begin
+    close;
+    sql.Clear;
+    sql.Text:='select trans_year,trans_month from t_ak_account_balance  where trans_year='+QuotedStr(spTahun.EditValue)+' '+
+    ' and trans_month <'+QuotedStr(inttostr(cbBulan.ItemIndex))+' GROUP BY trans_year,trans_month order by trans_month desc limit 1';
+    Open;
+  end;
+  with dm.Qtemp1 do
+           begin
+             Close;
+             sql.Clear;
+             SQL.Text:=' SELECT SUM(kdend - dbend)::numeric AS total FROM    '+
+                      ' (SELECT * FROM public.get_closing_account('+QuotedStr(dm.Qtemp['trans_year'])+','+QuotedStr(dm.Qtemp['trans_month'])+',  '+
+                      ''+QuotedStr(sptahun.EditValue)+', '+QuotedStr(inttostr(cbBulan.ItemIndex))+' ) where balance_status=2 )tb ';
+             open;
+           end;
+end;
+
 procedure TFRpt_Tutup_Buku.DxRefreshClick(Sender: TObject);
-var q:TUniQuery;
+var akun:string;
+    lr,sd:real;
+    q:TUniQuery;
 begin
   mm:=cbBulan.ItemIndex;
   yy:=spTahun.EditValue;
@@ -122,7 +146,8 @@ begin
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
           ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
           ' )x  where dbend>0 or kdend>0 ';      }
-           sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
+         { off ds 19-09-2026
+          sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
           ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp2['trans_year'])+''+
@@ -140,7 +165,11 @@ begin
           ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+'  and a.deleted_at ISNULL'+
           ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
-          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2 where dbend>0 or kdend>0  ORDER BY tb2.account_code';
+          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2 '+
+          //where dbend>0 or kdend>0
+          ' ORDER BY tb2.account_code';      }
+          sql.Text:='SELECT * FROM public.fn_tutup_buku2('+QuotedStr(dm.Qtemp2['trans_year'])+','+QuotedStr(dm.Qtemp2['trans_month'])+','+
+                    ''+QuotedStr(sptahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+')';
 
           open;
         end;
@@ -161,6 +190,49 @@ begin
           end;
           dm.Qtemp3.Next;
         end;
+        with dm.Qtemp1 do
+           begin
+             Close;
+             sql.Clear;
+             SQL.Text:=' SELECT SUM(kdend - dbend)::numeric AS total FROM    '+
+                      ' (SELECT * FROM public.get_closing_account('+QuotedStr(dm.Qtemp2['trans_year'])+','+QuotedStr(dm.Qtemp2['trans_month'])+',  '+
+                      ''+QuotedStr(sptahun.EditValue)+', '+QuotedStr(inttostr(cbBulan.ItemIndex))+' ) where balance_status=2 )tb ';
+             open;
+           end;
+           lr:=dm.Qtemp1['total'];
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select account_code from t_ak_account_master  WHERE master_id=''5''';
+        open;
+      end;
+      akun:=dm.Qtemp3['account_code'];
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select balance from t_ak_account_balance  WHERE  trans_year ='+QuotedStr(spTahun.EditValue-1)+' ' +
+          'AND trans_month = ''12'' and account_code='+QuotedStr(akun)+'';
+        open;
+      end;
+      sd:=lr;
+      with dm.Qtemp3 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text :=
+          'UPDATE t_ak_account_balance ' +
+          'SET balance = balance + (:total) ' +
+          'WHERE trans_year = :tahun ' +
+          'AND trans_month = :bulan and account_code=:account';
+
+        ParamByName('total').Value := sd;
+        ParamByName('tahun').Value := spTahun.EditValue;
+        ParamByName('bulan').Value := CbBulan.ItemIndex ;
+        ParamByName('account').Value := akun;
+        ExecSQL;
+      end;
       with QTutup_Buku do
          begin
            Close;
@@ -178,7 +250,7 @@ begin
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
           ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
           ' )x GROUP BY account_code,account_name,trans_year,trans_month order by account_code asc ';            }
-          sql.Text:='select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
+       {   sql.Text:='select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
           ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp2['trans_year'])+''+
@@ -196,8 +268,9 @@ begin
           ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
           ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
-          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';
-
+          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';      }
+                       SQL.Text:='SELECT * FROM public.get_closing_account('+QuotedStr(dm.Qtemp2['trans_year'])+','+QuotedStr(dm.Qtemp2['trans_month'])+',  '+
+                      ''+QuotedStr(sptahun.EditValue)+', '+QuotedStr(inttostr(cbBulan.ItemIndex))+' ) ';
            open;
          end;
     end;
@@ -222,7 +295,7 @@ begin
         begin
           close;
           sql.Clear;
-      {    sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
+        {  sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend'+
           ' from (SELECT case when taa.posisi_dk=''D'' then  coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_d, case when taa.posisi_dk=''K'' then coalesce(sum(balance)::NUMERIC, 0) else 0 end saldo_k,'+
           ' taa.account_code2, case when status_dk=''D'' then sum(gl.amount) else 0 end  trdb,case when status_dk=''K''  then sum(gl.amount) else 0 end trkd, taa.account_name,trans_year,'+
           ' trans_month,taa.account_code,taa.posisi_dk,gl.status_dk FROM (select * from t_ak_account_balance WHERE trans_year='+QuotedStr(dm.Qtemp['trans_year'])+' and '+
@@ -232,7 +305,9 @@ begin
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
           ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
           ' )x  where dbend>0 or kdend>0 ';       }
-              sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
+
+          { off ds 19-09-2026
+           sql.Text:='select * from (select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
           ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp['trans_year'])+''+
@@ -250,8 +325,12 @@ begin
           ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
           ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
-          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2 where dbend>0 or kdend>0  ORDER BY tb2.account_code';
+          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb )tb2'+
+          // where dbend>0 or kdend>0
+          ' ORDER BY tb2.account_code';  }
 
+          sql.Text:='SELECT * FROM public.fn_tutup_buku2('+QuotedStr(dm.Qtemp['trans_year'])+','+QuotedStr(dm.Qtemp['trans_month'])+','+
+                    ''+QuotedStr(sptahun.EditValue)+','+QuotedStr(inttostr(cbBulan.ItemIndex))+')';
           open;
         end;
         dm.Qtemp3.First;
@@ -273,6 +352,49 @@ begin
           end;
           dm.Qtemp3.Next;
         end;
+         with dm.Qtemp1 do
+           begin
+             Close;
+             sql.Clear;
+             SQL.Text:=' SELECT SUM(kdend - dbend)::numeric AS total FROM    '+
+                      ' (SELECT * FROM public.get_closing_account('+QuotedStr(dm.Qtemp['trans_year'])+','+QuotedStr(dm.Qtemp['trans_month'])+',  '+
+                      ''+QuotedStr(sptahun.EditValue)+', '+QuotedStr(inttostr(cbBulan.ItemIndex))+' ) where balance_status=2 )tb ';
+             open;
+           end;
+           lr:=dm.Qtemp1['total'];
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select account_code from t_ak_account_master  WHERE master_id=''5''';
+        open;
+      end;
+      akun:=dm.Qtemp2['account_code'];
+      with dm.Qtemp2 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='select balance from t_ak_account_balance  WHERE  trans_year ='+QuotedStr(spTahun.EditValue)+' ' +
+          'AND trans_month = '+QuotedStr(floattostr(CbBulan.ItemIndex-1))+' and account_code='+QuotedStr(akun)+'';
+        open;
+      end;
+      sd:=lr;
+      with dm.Qtemp3 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Text :=
+          'UPDATE t_ak_account_balance ' +
+          'SET balance = balance + (:total) ' +
+          'WHERE trans_year = :tahun ' +
+          'AND trans_month = :bulan and account_code=:account';
+
+        ParamByName('total').Value := sd;
+        ParamByName('tahun').Value := spTahun.EditValue;
+        ParamByName('bulan').Value := CbBulan.ItemIndex ;
+        ParamByName('account').Value := akun;
+        ExecSQL;
+      end;
         with QTutup_Buku do
            begin
              Close;
@@ -290,7 +412,7 @@ begin
             ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+') gl on taa.account_code2=gl.account_code  '+
             ' GROUP BY taa.account_code2,taa.account_name,trans_year,trans_month,taa.posisi_dk,gl.status_dk,taa.account_code)a  '+
             ' )x GROUP BY account_code,account_name,trans_year,trans_month order by account_code asc';             }
-             sql.Text:='select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
+           { off ds 21-08-2026  sql.Text:='select *,case when posisi_dk=''D'' then saldo_d+trdb-trkd else 0 end dbend,case when posisi_dk=''K'' then '+
           ' coalesce(saldo_k+trkd-trdb::NUMERIC,0) else 0 end kdend  from (select ab2.*,case when trdb isnull then 0 else trdb end trdb,'+
           ' case when trkd isnull then 0 else trkd end trkd from (SELECT ab.account_code,ab.account_name,posisi_dk,trans_year,trans_month,sum(saldo_d) saldo_d,'+
           ' sum(saldo_k) saldo_k  from (SELECT taa.account_code,taa.account_name,case when taab.trans_year isnull then '+QuotedStr(dm.Qtemp['trans_year'])+''+
@@ -308,7 +430,9 @@ begin
           ' where extract(year from trans_date) = '+QuotedStr(sptahun.EditValue)+''+
           ' and extract(month from trans_date) = '+QuotedStr(inttostr(cbBulan.ItemIndex))+' and a.deleted_at ISNULL '+
           ' GROUP BY b.account_code,status_dk,extract(year from trans_date),extract(month from trans_date))gl '+
-          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';
+          ' GROUP BY gl.account_code)gl2 on ab2.account_code=gl2.account_code) tb ORDER BY tb.account_code';     }
+            SQL.Text:='SELECT * FROM public.get_closing_account('+QuotedStr(dm.Qtemp['trans_year'])+','+QuotedStr(dm.Qtemp['trans_month'])+',  '+
+                      ''+QuotedStr(sptahun.EditValue)+', '+QuotedStr(inttostr(cbBulan.ItemIndex))+' ) ';
              open;
            end;
       end;

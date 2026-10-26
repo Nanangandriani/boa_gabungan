@@ -3127,7 +3127,7 @@ object FLap_Buku_Kas_Kecil: TFLap_Buku_Kas_Kecil
   end
   object ActMenu: TActionManager
     Left = 647
-    Top = 37
+    Top = 53
     StyleName = 'Platform Default'
     object ActBaru: TAction
       Caption = 'Baru  '

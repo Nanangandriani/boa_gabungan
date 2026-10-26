@@ -70,6 +70,7 @@ object FMasterData: TFMasterData
   end
   object MemMasterData: TMemTableEh
     Params = <>
+    SortOrder = 'NM_MASTER'
     Left = 488
     Top = 256
     object MemMasterDataKD_MASTER: TStringField

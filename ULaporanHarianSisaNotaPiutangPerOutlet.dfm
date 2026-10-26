@@ -32,7 +32,6 @@ object FLaporanHarianSisaNotaPiutangPerOutlet: TFLaporanHarianSisaNotaPiutangPer
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 833
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

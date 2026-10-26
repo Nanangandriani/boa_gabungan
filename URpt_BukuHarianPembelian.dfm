@@ -599,7 +599,7 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44169.465120821800000000
-    ReportOptions.LastChange = 46211.666857986110000000
+    ReportOptions.LastChange = 46211.666857986100000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
@@ -2117,7 +2117,6 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
         '_supplier sp on pi.supplier_code=sp.supplier_code where um_value' +
         ' >0 )yy on xx.trans_no=yy.trans_no ORDER BY trans_date,trans_no,' +
         'grandtotal  ASC')
-    Active = True
     Left = 179
     Top = 109
   end
@@ -2888,5 +2887,34 @@ object FRpt_BukuHarianPembelian: TFRpt_BukuHarianPembelian
     SuppressPageHeadersFooters = False
     Left = 944
     Top = 280
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EmbedFontsIfProtected = False
+    InteractiveFormsFontSubset = 'A-Z,a-z,0-9,#43-#47 '
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    Creator = 'FastReport'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
+    Left = 1024
+    Top = 232
   end
 end

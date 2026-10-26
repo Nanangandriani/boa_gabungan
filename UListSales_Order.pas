@@ -132,7 +132,13 @@ begin
                  'WHERE (order_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                  ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+strKaresidenan+' '+
                   'order by order_date Desc,notrans Desc ';
-       open;
+       try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
    end;
    Qdetail.Close;
    Qdetail.Open;
@@ -182,7 +188,13 @@ begin
      sql.Text:=' select * from "public"."t_selling"   '+
                ' where no_reference='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' '+
                ' AND deleted_at is null order by created_at Desc ';
-     open;
+     try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
   end;
 
   with dm.Qtemp2 do
@@ -191,7 +203,13 @@ begin
     sql.Clear;
     sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
               'no_transaksi='+QuotedStr(QSalesOrder.FieldByName('notrans').AsString)+' and status=0 and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.RecordCount>0 then
@@ -235,11 +253,17 @@ begin
   FNew_SalesOrder.Clear;
   with Dm.Qtemp2 do
   begin
-       close;
-       sql.Clear;
-       sql.Text:= 'SELECT * FROM get_sales_order()'+
-                  'WHERE notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString);
-       open;
+     close;
+     sql.Clear;
+     sql.Text:= 'SELECT * FROM get_sales_order()'+
+                'WHERE notrans='+QuotedSTr(QSalesOrder.FieldByName('notrans').AsString);
+       try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
   end;
   if Dm.Qtemp2.RecordCount=0 then
   begin

@@ -778,8 +778,8 @@ object FRencana_Lunas_Hutang: TFRencana_Lunas_Hutang
       OnClick = rbbankClick
     end
     object Bdaftar: TRzBitBtn
-      Left = 645
-      Top = 93
+      Left = 600
+      Top = 116
       Width = 185
       Height = 34
       Caption = 'Daftar Hutang'

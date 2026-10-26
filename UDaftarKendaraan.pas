@@ -351,6 +351,7 @@ begin
             if jsonArray.Items[i] is TJSONObject then
             begin
               dataItem := jsonArray.Items[i] as TJSONObject;
+
               begin
                 MemMasterData.Insert;
                 MemMasterData['code']        := dataItem.GetValue('code').Value;

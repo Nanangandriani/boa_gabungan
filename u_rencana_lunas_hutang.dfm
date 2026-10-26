@@ -667,7 +667,7 @@ object FList_Rencana_Lunas_Hutang: TFList_Rencana_Lunas_Hutang
     end
   end
   object ActMenu: TActionManager
-    Left = 545
+    Left = 489
     Top = 40
     StyleName = 'Platform Default'
     object ActBaru: TAction

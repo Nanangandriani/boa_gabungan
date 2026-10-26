@@ -3,7 +3,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
   Top = 0
   Caption = 'List Target Penjualan'
   ClientHeight = 494
-  ClientWidth = 741
+  ClientWidth = 1348
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,7 +23,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 741
+    Width = 1348
     Height = 127
     BarManager = dxBarManager1
     Style = rs2010
@@ -31,6 +31,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 741
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <
@@ -48,12 +49,14 @@ object FListTargetPenjualan: TFListTargetPenjualan
   object DBGrid: TDBGridEh
     Left = 0
     Top = 168
-    Width = 741
+    Width = 1348
     Height = 326
     Align = alClient
     AllowedOperations = []
     DataSource = DsTargetPenjualan
+    DrawMemoText = True
     DynProps = <>
+    FrozenCols = 4
     EmptyDataInfo.Active = True
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     RowDetailPanel.Active = True
@@ -79,7 +82,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Pelanggan'
-        Width = 450
+        Width = 286
       end
       item
         CellButtons = <>
@@ -89,7 +92,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Bulan'
-        Width = 100
+        Width = 63
       end
       item
         CellButtons = <>
@@ -99,7 +102,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
         Footers = <>
         ReadOnly = True
         Title.Caption = 'Tahun'
-        Width = 156
+        Width = 62
       end
       item
         CellButtons = <>
@@ -140,13 +143,49 @@ object FListTargetPenjualan: TFListTargetPenjualan
         FieldName = 'id_customer_sales_target'
         Footers = <>
         Visible = False
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'karesidenan'
+        Footers = <>
+        Title.Caption = 'Karesidenan'
+        Width = 135
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'tp'
+        Footers = <>
+        Title.Caption = 'TP'
+        Width = 130
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kabupaten'
+        Footers = <>
+        Title.Caption = 'Kabupaten'
+        Width = 100
+      end
+      item
+        CellButtons = <>
+        DynProps = <>
+        EditButtons = <>
+        FieldName = 'kecamatan'
+        Footers = <>
+        Title.Caption = 'Kecamatan'
+        Width = 176
       end>
     object RowDetailData: TRowDetailPanelControlEh
       object DBGridKelompok: TDBGridEh
         Left = 0
         Top = 0
-        Width = 704
-        Height = 232
+        Width = 1059
+        Height = 248
         Align = alClient
         AllowedOperations = []
         DataSource = DataSource1
@@ -265,7 +304,7 @@ object FListTargetPenjualan: TFListTargetPenjualan
   object RzPanel1: TRzPanel
     Left = 0
     Top = 127
-    Width = 741
+    Width = 1348
     Height = 41
     Align = alTop
     Color = 15987699
@@ -1097,8 +1136,10 @@ object FListTargetPenjualan: TFListTargetPenjualan
   object QTargetPenjualan: TUniQuery
     Connection = dm.Koneksi
     SQL.Strings = (
-      'SELECT aa.*,bb.customer_name FROM t_customer_sales_target aa '
-      'LEFT JOIN t_customer bb on bb.customer_code=aa.customer_code')
+      
+        'SELECT aa.*,bb.customer_name,bb.karesidenan,bb.tp,bb.kabupaten,b' +
+        'b.kecamatan FROM t_customer_sales_target aa '
+      'LEFT JOIN get_customer() bb on bb.customer_code=aa.customer_code')
     Left = 476
     Top = 40
     object QTargetPenjualancustomer_code: TStringField
@@ -1143,10 +1184,30 @@ object FListTargetPenjualan: TFListTargetPenjualan
       FieldName = 'sbu_code'
       Size = 10
     end
-    object QTargetPenjualancustomer_name: TStringField
+    object QTargetPenjualankaresidenan: TMemoField
+      FieldName = 'karesidenan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QTargetPenjualantp: TMemoField
+      FieldName = 'tp'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QTargetPenjualankabupaten: TMemoField
+      FieldName = 'kabupaten'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QTargetPenjualankecamatan: TMemoField
+      FieldName = 'kecamatan'
+      ReadOnly = True
+      BlobType = ftMemo
+    end
+    object QTargetPenjualancustomer_name: TMemoField
       FieldName = 'customer_name'
       ReadOnly = True
-      Size = 255
+      BlobType = ftMemo
     end
   end
   object DsTargetPenjualan: TDataSource
@@ -1207,8 +1268,8 @@ object FListTargetPenjualan: TFListTargetPenjualan
   object MemTargetPenjualan: TMemTableEh
     Params = <>
     DataDriver = DataSetDriverEh1
-    Left = 656
-    Top = 160
+    Left = 648
+    Top = 120
   end
   object DataSetDriverEh1: TDataSetDriverEh
     ProviderDataSet = QTargetPenjualan

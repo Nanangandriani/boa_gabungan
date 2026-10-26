@@ -1602,13 +1602,30 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 45916.397006238400000000
-    ReportOptions.LastChange = 46209.643390370370000000
+    ReportOptions.LastChange = 46262.405722858800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       
         'var no,CountSisaNotaAwal,CountNotaPenjualan,CountPelunasan,Count' +
         'SaldoNota  : Int;'
       '    TotPelunasan : Currency;'
+      '    PageRowCount: Integer;'
+      ''
+      'procedure SetLinesVisible(Value: Boolean);'
+      'begin'
+      '  Line6.Visible  := Value;'
+      '  Line8.Visible  := Value;'
+      '  Line9.Visible  := Value;'
+      '  Line10.Visible := Value;'
+      '  Line11.Visible := Value;'
+      '  Line12.Visible := Value;'
+      '  Line13.Visible := Value;'
+      '  Line14.Visible := Value;'
+      '  Line15.Visible := Value;'
+      '  Line16.Visible := Value;'
+      '  Line17.Visible := Value;'
+      '  Line18.Visible := Value;'
+      'end;'
       ''
       'procedure Memo33OnBeforePrint(Sender: TfrxComponent);'
       'var PreviousValue:String;'
@@ -1654,7 +1671,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      ''
+      '  PageRowCount := PageRowCount + 1;'
       'end;'
       ''
       'procedure Memo36OnBeforePrint(Sender: TfrxComponent);'
@@ -1933,9 +1950,10 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure Memo35OnAfterPrint(Sender: TfrxComponent);'
       'begin'
+      '  if (<frxDBDatasetLapHarianSisaNota."trans_no"> <> '#39#39') AND'
       
-        '  if (<frxDBDatasetLapHarianSisaNota."trans_no"> <> '#39#39') then Cou' +
-        'ntSisaNotaAwal:=CountSisaNotaAwal+1;'
+        '  (<frxDBDatasetLapHarianSisaNota."amount_nota_awal"><>0) then C' +
+        'ountSisaNotaAwal:=CountSisaNotaAwal+1;'
       'end;'
       ''
       'procedure Memo50OnBeforePrint(Sender: TfrxComponent);'
@@ -1946,8 +1964,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo38OnAfterPrint(Sender: TfrxComponent);'
       'begin'
       
-        '   if (<frxDBDatasetLapHarianSisaNota."no_nota_penjualan"> <> '#39#39 +
-        ') then CountNotaPenjualan:=CountNotaPenjualan+1;'
+        '  if (<frxDBDatasetLapHarianSisaNota."no_nota_penjualan"> <> '#39#39')' +
+        ' then CountNotaPenjualan:=CountNotaPenjualan+1;'
       'end;'
       ''
       'procedure Memo53OnBeforePrint(Sender: TfrxComponent);'
@@ -1958,8 +1976,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo55OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        ' Memo55.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasan' +
-        ');'
+        '  Memo55.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasa' +
+        'n);'
       
         '// Memo55.Text := FormatFloat('#39'#,#0;(CountPelunasan#,#0);0'#39', Rou' +
         'nd(TotPelunasan));'
@@ -2072,8 +2090,11 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo43OnAfterPrint(Sender: TfrxComponent);'
       'begin'
       
-        ' if (<frxDBDatasetLapHarianSisaNota."no_nota_saldo_nota"> <> '#39#39')' +
-        ' then CountSaldoNota:=CountSaldoNota+1;'
+        '  if (<frxDBDatasetLapHarianSisaNota."no_nota_saldo_nota"> <> '#39#39 +
+        ')'
+      
+        '  AND (<frxDBDatasetLapHarianSisaNota."amount_saldo_nota"><>0) t' +
+        'hen CountSaldoNota:=CountSaldoNota+1;'
       'end;'
       ''
       'procedure Memo57OnBeforePrint(Sender: TfrxComponent);'
@@ -2098,8 +2119,8 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       'procedure Memo87OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '   Memo87.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunas' +
-        'an+<frxDBDatasetLapHarianSisaNotaPrev."total_paid_amount">);'
+        '  Memo87.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotPelunasa' +
+        'n+<frxDBDatasetLapHarianSisaNotaPrev."total_paid_amount">);'
       'end;'
       ''
       'procedure Memo39OnBeforePrint(Sender: TfrxComponent);'
@@ -2114,70 +2135,68 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
       ''
       'procedure Page1OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      ''
+      '  PageRowCount := 0;'
+      '  SetLinesVisible(False);'
       'end;'
       ''
       'procedure ColumnFooter1OnBeforePrint(Sender: TfrxComponent);'
       'var'
       '  IsVisible: Boolean;'
       'begin'
-      '  IsVisible := MasterData1.RowCount <5;'
+      '{  IsVisible := MasterData1.RowCount <5;'
+      ' IsVisible := PageRowCount < 5; }'
       ''
-      '{  Line6.Visible  := IsVisible;'
-      '  Line8.Visible  := IsVisible;'
-      '  Line9.Visible  := IsVisible;'
-      '  Line10.Visible := IsVisible;'
-      '   Line11.Visible := IsVisible;'
-      '    Line12.Visible := IsVisible;'
-      '    Line13.Visible := IsVisible;'
-      '    Line14.Visible := IsVisible;'
-      '    Line15.Visible := IsVisible;'
-      '    Line16.Visible := IsVisible;'
-      '    Line17.Visible := IsVisible;'
-      '  Line18.Visible := IsVisible;   }'
       ''
-      ' { if MasterData1.RowCount < 2 then'
-      '  begin'
-      '    Line6 .Visible := False;'
-      '    Line8.Visible := False;'
-      '    Line9.Visible := False;'
-      '    Line10.Visible := False;'
-      '    Line11.Visible := False;'
-      '    Line12.Visible := False;'
-      '    Line13.Visible := False;'
-      '    Line14.Visible := False;'
-      '    Line15.Visible := False;'
-      '    Line16.Visible := False;'
-      '    Line17.Visible := False;'
-      '    Line18.Visible := False;'
-      '  end else'
-      '  begin'
-      '    Line6.Visible := True;'
-      '    Line8.Visible := True;'
-      '    Line9.Visible := True;'
-      '    Line10.Visible := True;'
-      '    Line11.Visible := True;'
-      '    Line12.Visible := True;'
-      '    Line13.Visible := True;'
-      '    Line14.Visible := True;'
-      '    Line15.Visible := True;'
-      '    Line16.Visible := True;'
-      '    Line17.Visible := True;'
-      '    Line18.Visible := True;'
-      '  end; }'
+      '  if PageRowCount > 5 then'
+      '    SetLinesVisible(True)'
+      '  else'
+      '    SetLinesVisible(False);'
+      ' {if PageRowCount<5 then'
+      ' begin'
+      '  Line6.Visible:=False;'
+      '  Line8.Visible:=False;'
+      '  Line9.Visible:=False;'
+      '  Line10.Visible:=False;'
+      '  Line11.Visible:=False;'
+      '  Line12.Visible:=False;'
+      '  Line13.Visible:=False;'
+      '  Line14.Visible:=False;'
+      '  Line15.Visible:=False;'
+      '  Line16.Visible:=False;'
+      '  Line17.Visible:=False;'
+      '  Line18.Visible:=False;'
+      ' end else begin'
+      '  Line6.Visible:=True;'
+      '  Line8.Visible:=True;'
+      '  Line9.Visible:=True;'
+      '  Line10.Visible:=True;'
+      '  Line11.Visible:=True;'
+      '  Line12.Visible:=True;'
+      '  Line13.Visible:=True;'
+      '  Line14.Visible:=True;'
+      '  Line15.Visible:=True;'
+      '  Line16.Visible:=True;'
+      '  Line17.Visible:=True;'
+      ' end;                }'
+      'end;'
+      ''
+      'procedure PageHeader1OnBeforePrint(Sender: TfrxComponent);'
+      'begin'
+      '  PageRowCount := 0;'
       'end;'
       ''
       'begin'
       '  no:=1;'
-      '  CountSisaNotaAwal:= 0; //'
+      '  CountSisaNotaAwal:= 0;'
       '  CountNotaPenjualan:=0;'
       '  CountPelunasan:=0;'
       '  CountSaldoNota:=0;'
       '  TotPelunasan:=0;'
+      '  PageRowCount := 0;'
       'end.')
     OnGetValue = ReportGetValue
-    Left = 480
-    Top = 304
+    Left = 576
+    Top = 192
     Datasets = <
       item
         DataSet = frxDBDatasetLapHarianSisaNota
@@ -2215,6 +2234,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         Height = 22.230983330000000000
         Top = 279.685220000000000000
         Width = 1171.654300000000000000
+        OnAfterPrint = 'MasterData1OnAfterPrint'
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = frxDBDatasetLapHarianSisaNota
         DataSetName = 'frxDBDatasetLapHarianSisaNota'
@@ -2281,7 +2301,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
-          Left = 316.833333340000000000
+          Left = 317.885964920000000000
           Width = 79.916010500000000000
           Height = 22.230983330000000000
           OnAfterPrint = 'Memo35OnAfterPrint'
@@ -2498,6 +2518,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
         Height = 177.269016670000000000
         Top = 18.897650000000000000
         Width = 1171.654300000000000000
+        OnBeforePrint = 'PageHeader1OnBeforePrint'
         object Memo2: TfrxMemoView
           AllowVectorExport = True
           Top = 0.269016670000000000
@@ -3520,8 +3541,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           Memo.UTF8W = (
             
               '[SUM(<frxDBDatasetLapHarianSisaNota."amount_penjualan">,MasterDa' +
-              'ta1,2)+<frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount">]'
-            '')
+              'ta1,2)+<frxDBDatasetLapHarianSisaNotaPrev."grand_total_amount">]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3608,7 +3628,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 30.614173230000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795280000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3617,7 +3637,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 256.542757740000000000
           Width = -0.235712470000000000
-          Height = -102.692405380000000000
+          Height = -178.393700790000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3626,7 +3646,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 397.209302330000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3635,7 +3655,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 506.046511630000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3644,16 +3664,16 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 566.046511630000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line12: TfrxLineView
           AllowVectorExport = True
-          Left = 645.921259842520000000
+          Left = 645.921259840000000000
           Width = -0.055667460000000000
-          Height = -102.047244090000000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3662,7 +3682,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 756.279069770000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3671,7 +3691,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 815.348837210000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3680,7 +3700,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 922.790697670000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795280000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3689,7 +3709,7 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 982.325581400000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
@@ -3698,17 +3718,17 @@ object FLaporanHarianSisaNota: TFLaporanHarianSisaNota
           AllowVectorExport = True
           Left = 1061.860465120000000000
           Width = -0.055667460000000000
-          Height = -102.047244094488000000
+          Height = -177.637795275591000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True
         end
         object Line18: TfrxLineView
           AllowVectorExport = True
-          Left = 316.774193540000000000
+          Left = 317.858267720000000000
           Top = 0.100603870000000000
           Width = 0.086868180000000000
-          Height = -102.692405380000000000
+          Height = -178.393700790000000000
           Color = clBlack
           Frame.Typ = []
           Diagonal = True

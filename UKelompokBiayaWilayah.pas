@@ -195,7 +195,8 @@ begin
     close;
     sql.clear;
     sql.add(' SELECT * from t_cost_detail '+
-            ' where voucher_no='+QuotedStr(edNoTrans.Text)+' ');
+            ' where voucher_no='+QuotedStr(edNoTrans.Text)+' '+
+            ' and deleted_at is null ');
     open;
   end;
 
@@ -293,9 +294,6 @@ begin
       begin
       if application.MessageBox('Apa Anda Yakin Memperbarui Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
       begin
-        MemTP.first;
-        while not MemTP.Eof do
-        begin
         //Clear Data
         with dm.Qtemp do
         begin
@@ -310,6 +308,9 @@ begin
         end;
 
         //Insert Dengan User Update
+        MemTP.first;
+        while not MemTP.Eof do
+        begin
           with dm.Qtemp do
           begin
             close;
@@ -372,12 +373,12 @@ begin
   begin
     close;
     sql.clear;
-    sql.add(' SELECT COALESCE(type_id, 0) AS type_id FROM t_ak_account '+
+    sql.add(' SELECT COALESCE(cost_st_id, 0) AS cost_st_id FROM t_ak_account '+
             ' where code='+QuotedStr(MemDetailAkun['kd_akun'])+' ');
     open;
   end;
 
-  if Dm.Qtemp.FieldByName('type_id').AsString='0' then
+  if Dm.Qtemp.FieldByName('cost_st_id').AsString='0' then
   begin
     ShowMessage('Data Tidak Dapat Diproses, Karena Akun Belum Setting Kelompok !!!');
     Exit;

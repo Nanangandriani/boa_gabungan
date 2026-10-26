@@ -245,9 +245,11 @@ begin
 end;
 
 procedure TFList_jurnal_memorial.ActUpdateExecute(Sender: TObject);
+var strAkunPiutang:String;
 begin
   Status:=1;
   FNewJurnal_memo.Enabled:=true;
+  strAkunPiutang := SelectRow('SELECT value_parameter FROM public.t_parameter WHERE key_parameter = ''akun_piutang_dagang''');
 
   with dm.Qtemp do
   begin
@@ -328,6 +330,12 @@ begin
         FNewJurnal_memo.MemTableEh1['kredit']:=FieldByName('kredit').AsString;
         FNewJurnal_memo.MemTableEh1.Post;
       end;
+      if Qjurnal_detail.FieldByName('account_code').AsString=strAkunPiutang then
+      begin
+        FNewJurnal_memo.curOldGrandTot:=Qjurnal_detail.FieldValues['kredit'];
+      end;
+
+
       Qjurnal_detail.Next;
     end;
   end

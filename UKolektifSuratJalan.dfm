@@ -1210,7 +1210,7 @@ object FKolektifSuratJalan: TFKolektifSuratJalan
     BCDToCurrency = False
     DataSetOptions = []
     Left = 72
-    Top = 71
+    Top = 31
   end
   object QSuratJalan: TUniQuery
     Connection = dm.Koneksi

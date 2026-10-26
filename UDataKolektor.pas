@@ -67,7 +67,13 @@ begin
     Close;
     SQL.Clear;
     Sql.Text :=' select * from t_collector ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if  Dm.Qtemp.RecordCount = 0 then urut := 1 else
@@ -153,7 +159,13 @@ begin
                     ' '+QuotedStr(edKodeKab.Text)+', '+
                     ' '+QuotedStr(edNameKab.Text)+', '+
                     ' '+QuotedStr(FHomeLogin.Eduser.Text)+' );';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
         MessageDlg('Simpan Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;
@@ -179,7 +191,13 @@ begin
                     ' "updated_at"=now(), '+
                     ' "updated_by"='+QuotedStr(FHomeLogin.Eduser.Text)+' '+
                     ' WHERE "code"='+QuotedStr(Edkode.Text)+';';
-          ExecSQL;
+          try
+            ExecSQL;
+          except
+            Connection.Close;
+            Connection.Open;
+            ExecSQL;
+          end;
         end;
         MessageDlg('Update Berhasil..!!',mtInformation,[MBOK],0);
         Dm.Koneksi.Commit;

@@ -47,13 +47,15 @@ type
     RzBitBtn1: TRzBitBtn;
     Label18: TLabel;
     Label19: TLabel;
-    Edvls: TRzNumericEdit;
     ednilai_vls: TRzNumericEdit;
     DtTh: TRzDateTimeEdit;
     DtBln: TRzDateTimeEdit;
     DtHr: TRzDateTimeEdit;
     Edppnrp: TRzNumericEdit;
     Edgrandtotal: TRzNumericEdit;
+    Edvls: TEdit;
+    Edit1: TEdit;
+    Edit2: TEdit;
     procedure Ednm_suppButtonClick(Sender: TObject);
     procedure Ednm_suppChange(Sender: TObject);
     procedure edno_terimaChange(Sender: TObject);
@@ -462,7 +464,9 @@ begin
     end;
       EdNoFaktur.Text:=Dm.Qtemp['faktur_no'];
       DtFaktur.text:=Dm.Qtemp['faktur_date'];
+      edno_terimaSelect(Sender);
 end;
+
 procedure TFNew_ReturnPemb.edno_terimaSelect(Sender: TObject);
 begin
     with dm.Qtemp do
@@ -479,6 +483,8 @@ begin
       edvls.text:=Dm.Qtemp['valas'];
       AkunHut:=Dm.Qtemp['account_code'];
       AkunRetur:=Dm.Qtemp['account_return'];
+      edit1.Text:=Dm.Qtemp['account_code'];
+      edit2.Text:=Dm.Qtemp['account_return'];
       ednilai_vls.text:='1';
       //showmessage(AkunHut);
       //showmessage(AkunRetur);

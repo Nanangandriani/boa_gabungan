@@ -79,6 +79,8 @@ type
     Edhari: TEdit;
     RzPanel1: TRzPanel;
     DBGridDetailpo: TDBGridEh;
+    ckno_penganti: TCheckBox;
+    Btn_no: TSpeedButton;
     procedure DtterimaChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure EdjenisSelect(Sender: TObject);
@@ -93,10 +95,13 @@ type
     procedure DBGridDetailpoCellClick(Column: TColumnEh);
     procedure DBGridDetailpoColExit(Sender: TObject);
     procedure BEditClick(Sender: TObject);
+    procedure ckno_pengantiClick(Sender: TObject);
+    procedure Btn_noClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    strNoTransaksiDiGanti:string;
     Procedure Load;
     Procedure Load2; // cr ds 20-01-2025 loadpo
     Procedure LoadPO;
@@ -118,7 +123,7 @@ implementation
 {$R *.dfm}
 
 uses UMainMenu, UTerima_Material, UDataModule, UMy_Function, USupp_Pembelian,
-  Usearch_MatTerima;
+  Usearch_MatTerima, UListNoTransaksi;
 
 
 procedure TFNew_TerimaMaterial.Autonumber;
@@ -518,7 +523,7 @@ begin
       Exit;
     end;
     DtterimaChange(sender);
-    Autonumber;
+    if ckno_penganti.Checked=False then Autonumber;
     if messageDlg ('Anda Yakin Simpan Penerimaan No. '+EdNo.Text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
 	  begin
         MemterimaDet.First;
@@ -698,6 +703,19 @@ begin
                 ExecSQL;
               end;
             end;
+              // CR DS 23-07-2026
+            If ckno_penganti.Checked=True then
+              begin
+                with dm.Qtemp do
+                begin
+                  close;
+                  sql.clear;
+                  sql.Text:='UPDATE "public"."t_item_receive" SET'+
+                            ' trans_no_replacement='+QuotedStr(EdNo.Text)+
+                            ' Where receive_no='+QuotedStr(strNoTransaksiDiGanti);
+                  ExecSQL;
+                end;
+              end;
             SimpanStok;
             dm.koneksi.Commit;
             Messagedlg('Data Berhasil di Simpan',MtInformation,[Mbok],0);
@@ -713,12 +731,25 @@ begin
     end;
 end;
 
+procedure TFNew_TerimaMaterial.Btn_noClick(Sender: TObject);
+begin
+  FListNoTransaksi.vcall:='Terima_barang';
+  FListNoTransaksi.update_grid('receive_no','order_no','t_item_receive','WHERE receive_date='+QuotedStr(formatdatetime('yyyy-mm-dd',Dtterima.Date))+' and deleted_at is NOT NULL '+
+  'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY receive_no ASC');
+  FListNoTransaksi.ShowModal;
+end;
+
 procedure TFNew_TerimaMaterial.Button2Click(Sender: TObject);
 begin
    if EdNilai_um.Value<>edum.Value then
    begin
       ShowMessage('Maaf Uang Muka Belum Lunas, Silahkan di lunasin terlebih dahulu');
    end;
+end;
+
+procedure TFNew_TerimaMaterial.ckno_pengantiClick(Sender: TObject);
+begin
+  if ckno_penganti.Checked=true then Btn_no.Enabled:=true else Btn_no.Enabled:=false;
 end;
 
 procedure TFNew_TerimaMaterial.Clear;
@@ -848,6 +879,12 @@ begin
      Open;
    end;
    Edbln.Text:=dm.Qtemp1.FieldByName('bulan').AsString;  }
+   if ckno_penganti.Checked=true then
+   begin
+      strday:=FormatDateTime('DD',Dtterima.date);
+      strbulan:=FormatDateTime('MM',Dtterima.date);
+      strtahun:=FormatDateTime('YYYY',Dtterima.date);
+   end;
 end;
 
 procedure TFNew_TerimaMaterial.EdjenisSelect(Sender: TObject);

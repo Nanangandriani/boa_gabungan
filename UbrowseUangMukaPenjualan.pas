@@ -52,7 +52,13 @@ begin
               'a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',DTTanggal1.Date)) +'AND '+
               ' '+QuotedStr(FormatDateTime('yyyy-mm-dd',DTTanggal2.Date)) +' '+
               'AND NOT (a.no_trans::text IN ( SELECT no_trans_down_payment FROM t_cash_bank_acceptance_down_payment))';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 end;
 

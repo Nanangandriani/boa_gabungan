@@ -25,7 +25,7 @@ uses
   dxRibbonCustomizationForm, DBGridEhGrouping, ToolCtrlsEh, DBGridEhToolCtrls,
   DynVarsEh, Data.DB, MemDS, DBAccess, Uni, dxBar, cxClasses, System.Actions,
   Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, EhLibVCL,
-  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems;
+  GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, dxBarExtItems, frxClass, frxDBSet;
 
 type
   TFListPenagihanPiutang = class(TForm)
@@ -71,6 +71,13 @@ type
     dtTanggal1: TdxBarDateCombo;
     dtTanggal2: TdxBarDateCombo;
     dxBarLargeButton1: TdxBarLargeButton;
+    dxBarManager1Bar3: TdxBar;
+    dxBarLargeButton2: TdxBarLargeButton;
+    Qdppbelumditagih: TUniQuery;
+    Report: TfrxReport;
+    QdppSudahTagih: TUniQuery;
+    frxDBDatasetDPPBlmDitagih: TfrxDBDataset;
+    frxDBDatasetDpp: TfrxDBDataset;
     procedure ActBaruExecute(Sender: TObject);
     procedure ActUpdateExecute(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -82,6 +89,8 @@ type
     procedure dtTanggal1Change(Sender: TObject);
     procedure dtTanggal2Change(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dxBarLargeButton2Click(Sender: TObject);
+    procedure ReportGetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
   public
@@ -96,7 +105,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDataModule, UDataPenagihanPiutang, UHomeLogin;
+uses UDataModule, UDataPenagihanPiutang, UHomeLogin, UMy_Function;
 
 procedure TFListPenagihanPiutang.ActBaruExecute(Sender: TObject);
 begin
@@ -133,6 +142,25 @@ begin
   finally
   DBGridOrder.FinishLoadingStatus();
   end;
+end;
+
+procedure TFListPenagihanPiutang.ReportGetValue(const VarName: string;
+  var Value: Variant);
+var
+  tgl,bulan,tahun: STRING;
+begin
+  tgl:=FormatDateTime('DD', QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime);
+  bulan:=convbulanInd(StrToInt(FormatDateTime('M', QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime)));
+  tahun:=FormatDateTime('YYYY', QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime);
+
+  if CompareText(VarName, 'parSBU') = 0 then
+  Value := FHomeLogin.vKodePRSH;
+
+  if CompareText(VarName, 'parNmKolektor') = 0 then
+  Value := QListPenagihanPiutang.FieldByName('name_collector').AsString;
+
+  if CompareText(VarName, 'parTglDppCetak') = 0 then
+  Value := tgl+' '+bulan+' '+tahun ;
 end;
 
 procedure TFListPenagihanPiutang.ActDelExecute(Sender: TObject);
@@ -211,6 +239,70 @@ procedure TFListPenagihanPiutang.dxBarLargeButton1Click(Sender: TObject);
 begin
   DBGridOrder.SearchPanel.SearchingText:='';
   Refresh;
+end;
+
+procedure TFListPenagihanPiutang.dxBarLargeButton2Click(Sender: TObject);
+begin
+  if not QListPenagihanPiutang.FieldByName('code_collector').IsNull and
+     (QListPenagihanPiutang.FieldByName('code_collector').AsString <> '') then
+  begin
+
+    with QdppSudahTagih do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT b.customer_code,b.customer_name_pkp customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
+              'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
+              'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
+              'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+              'LEFT JOIN (SELECT *  FROM "public".get_piutang_invoice(NOW()::date)) c '+
+              'on c.trans_no=a.no_invoice '+
+              'WHERE "code_collector"='+QuotedStr(QListPenagihanPiutang.FieldByName('code_collector').AsString)+' AND '+
+              ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime))+' '+
+              'and isdpp_prev=True  Order By "date_dpp", "no_invoice" desc');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+
+    with Qdppbelumditagih do
+    begin
+      close;
+      sql.clear;
+      sql.add('SELECT b.customer_code,b.customer_name_pkp customer_name,COALESCE(c.sisa_piutang,0) total_receivables,a.no_invoice,a.date_dpp,'+
+              'a.date_trans,a.date_tempo,a.paid_amount,a.cash,a.receipt,case when a.bank_receipt=''0'' then '''' else a.bank_receipt end bank_receipt,a.date_receipt,'+
+              'a.name_bank_cheque,a.no_cheque,a.cheque_amount1,a.cheque_amount2,a.date_tempo_cheque from "public"."t_dpp" a  '+
+              'LEFT JOIN t_customer b ON a."code_cust"=b.customer_code '+
+              'LEFT JOIN (SELECT *  FROM "public".get_piutang_invoice(NOW()::date)) c '+
+              'on c.trans_no=a.no_invoice '+
+              'WHERE "code_collector"='+QuotedStr(QListPenagihanPiutang.FieldByName('code_collector').AsString)+' AND '+
+              ' "date_dpp"='+QuotedStr(FormatDateTime('yyyy-mm-dd',QListPenagihanPiutang.FieldByName('date_dpp').AsDateTime))+' '+
+              'and isdpp_prev=False Order By "date_dpp", "no_invoice" desc');
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+
+    cLocation := ExtractFilePath(Application.ExeName);
+
+    Report.LoadFromFile(cLocation +'report/rpt_daftar_penagihan_piutang'+ '.fr3');
+
+    if Report.FindObject('Page2') <> nil then
+      TfrxReportPage(Report.FindObject('Page2')).Visible := (QdppSudahTagih.RecordCount > 0);
+    if Report.FindObject('Page1') <> nil then
+      TfrxReportPage(Report.FindObject('Page1')).Visible := (Qdppbelumditagih.RecordCount > 0);
+
+      Report.ShowReport();
+
+  end;
 end;
 
 procedure TFListPenagihanPiutang.FormClose(Sender: TObject;

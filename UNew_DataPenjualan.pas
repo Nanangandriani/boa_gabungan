@@ -206,7 +206,7 @@ type
     { Public declarations }
     stat_menej_fee_jual, stat_proses,is_ppn_pajak : Boolean;
     vFormSumber,vHasilGetFakturPajak, kd_kares, kd_perkiraan_pel, get_uuid: string;
-    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang,strNoTransaksiDiGanti: string;
+    strtgl, strbulan, strtahun, trans_id_link, trans_id_link_det,StrAccPPN,strKodeGudang,strNoTransaksiDiGanti,strNoFaktur: string;
     Year, Month, Day: Word;
     status,StatusCekKasifikasi,IntStatusKoreksi,iserror,isCancel: integer;
     procedure Clear;
@@ -601,7 +601,14 @@ begin
     close;
     sql.Clear;
     sql.Text:='DELETE FROM t_selling_piece WHERE trans_no='+QuotedStr(edNomorTrans.Text);
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   MemDetail.First;
   while not MemDetail.Eof do
@@ -626,7 +633,13 @@ begin
                 ' '+QuotedStr(MemDetail['POTONGAN3'])+', '+
                 ' '+QuotedStr(MemDetail['POTONGAN4'])+', '+
                 ' '+QuotedStr(MemDetail['POTONGAN_ADD_ON'])+' );';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemDetail.Next;
   end;
@@ -634,6 +647,7 @@ end;
 
 procedure TFNew_Penjualan.check_stock;
 begin
+
   if FNew_Penjualan.Status = 0  then //kondisi baru
   begin
     with dm.Qtemp1 do
@@ -672,7 +686,13 @@ begin
       sql.Text:=' update "public"."t_selling_stock_details" set '+
                 ' "trans_no"='+QuotedStr(edNomorTrans.Text)+' '+
                 ' WHERE "trans_id"='+QuotedStr(FNew_Penjualan.trans_id_link)+' ; ';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 end;
@@ -720,6 +740,7 @@ end;
 
 procedure TFNew_Penjualan.chkNomorPenggantiClick(Sender: TObject);
 begin
+
   if chkNomorPengganti.Checked=True then btnNoTransaksi.Visible:=True
   else btnNoTransaksi.Visible:=False;
   edNomorTrans.Clear;
@@ -752,15 +773,16 @@ var no_uang_muka: String;
 begin
   no_uang_muka:=MemUangMuka['no_trans_down_payment'];
 //  ShowMessage(no_uang_muka);
+
   with QUangMuka do
   begin
     close;
     sql.Clear;
     sql.Text:='SELECT a.trans_no,b.trans_date,a.trans_no_down_payment,a.voucher_no,'+
               'a.paid_amount,b.code_cust,b.customer_name_pkp customer_name, '+
-              'concat(''Uang Muka Untuk Nota '',a.trans_no) as description from t_selling_down_payment a '+
+              'concat(''Uang Muka Untuk Nota '',a.trans_no,'', Bukti Terima: '',a.voucher_no,'', No. UM: '',a.trans_no_down_payment) as description from t_selling_down_payment a '+
               'LEFT JOIN get_selling(false) b on b.trans_no=a.trans_no AND b.deleted_at IS NULL '+
-              'WHERE a.trans_no_down_payment='+QuotedStr(no_uang_muka);
+              'WHERE a.trans_no='+QuotedStr(edNomorTrans.Text);
     Open;
   end;
 
@@ -789,6 +811,7 @@ begin
                     'left join t_menu_sub b on b.menu_code=a.menu_code '+
                     'where link='+QuotedStr(FDataListPenjualan.Name)); //Mendapatkan nama Menu
     FKoreksi.Status:=0;
+    FKoreksi.AksiTipe:='KOREKSI';
     FKoreksi.vnotransaksi:=edNomorTrans.Text; //Mendapatkan Nomor Transaksi
     FKoreksi.ShowModal;
   end;
@@ -841,7 +864,13 @@ begin
           'DELETE FROM "public"."t_selling_temp" ' +
           'WHERE "trans_no" = ' + QuotedStr(edNomorTrans.Text) + ';';
 
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
     end;
     with dm.Qtemp do
@@ -852,7 +881,13 @@ begin
         'DELETE FROM "public"."t_selling_temp" ' +
         'WHERE "id_master" = ' + QuotedStr(get_uuid) + ';';
 
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
 
     MemDetail.First;
@@ -878,7 +913,13 @@ begin
           QuotedStr(MemDetail['NM_SATUAN']) +
           ' );';
 
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
 
       MemDetail.Next;
@@ -923,7 +964,13 @@ begin
     sql.clear;
     sql.Text:=' DELETE FROM  "public"."t_selling_det" '+
               ' WHERE "trans_no"='+QuotedStr(edNomorTrans.Text)+';';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   ppncortex:=StrToFloat(Selectrow('select value_parameter from t_parameter where key_parameter=''persen_ppn_cortex'' '));
@@ -1030,7 +1077,13 @@ begin
 //              ' '+QuotedStr(MemDetail['MENEJ_FEE_PERSEN'])+', '+
 //              ' '+QuotedStr(MemDetail['MENEJ_FEE_NILAI'])+', '+
 //              ' '+QuotedStr(MemDetail['GRAND_TOTAL'])+' );';
-    ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemDetail.Next;
   end;
@@ -1153,26 +1206,34 @@ begin
       sql.Clear;
       sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
                 'no_transaksi='+QuotedStr(edNoReff.Text)+' and status=0 and deleted_at is null';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if dm.Qtemp.RecordCount>0 then
     begin
       strStatusPengajuanSalesOrder:=1;
     end;
-
   end;
-
-
 
   with dm.Qtemp do
   begin
     Close;
     sql.Clear;
     sql.Text:='select value_parameter from t_parameter where key_parameter=''stat_klasifikasi_jual''';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
-
 
   if cbUangMuka.Checked=False then
   begin
@@ -1191,7 +1252,13 @@ begin
       sql.clear;
       sql.text:='SELECT * FROM get_down_payment_sales()'+
                 'WHERE '+strWhereUangMuka+' sisa_uang_muka>0';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     if FbrowseUangMukaDibayarkan.Qdetail.RecordCount>0 then
@@ -1258,7 +1325,13 @@ begin
           close;
           sql.Clear;
           sql.Text:='select * from stock_card_end('+QuotedStr(strKodeGudang)+','+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTanggal.Date))+','+QuotedStr(MemDetail['KD_ITEM'])+','+QuotedStr(MemDetail['KD_SATUAN'])+') ';
-          Open;
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
 
         if dm.Qtemp3.RecordCount=0 then
@@ -1347,7 +1420,13 @@ begin
               close;
               sql.Clear;
               sql.Text:='SELECT * FROM t_selling WHERE trans_no='+QuotedStr(edNomorTrans.Text);
-              open;
+              try
+                Open;
+              except
+                Connection.Close;
+                Connection.Open;
+                Open;
+              end;
             end;
           end;
 
@@ -1399,6 +1478,31 @@ begin
             Exit
           end;
 //          ShowMessage(inttostr(strLanjutUangMuka));
+        end;
+
+        strNoFaktur := Trim(edNomorFaktur.Text);
+        if strNoFaktur <> '' then
+        begin
+          with dm.Qtemp2 do
+          begin
+            Close;
+            SQL.Clear;
+            SQL.Text := 'SELECT trans_no FROM t_selling WHERE no_inv_tax = ' + QuotedStr(strNoFaktur);
+            if Status = 1 then
+              SQL.Text := SQL.Text + ' AND trans_no <> ' + QuotedStr(edNomorTrans.Text);
+            try
+              Open;
+            except
+              Connection.Close;
+              Connection.Open;
+              Open;
+            end;
+          end;
+          if dm.Qtemp2.RecordCount > 0 then
+          begin
+            MessageDlg('No Faktur Pajak "' + strNoFaktur + '" sudah pernah digunakan pada transaksi lain!', mtWarning, [mbOK], 0);
+            Exit;
+          end;
         end;
 
         if (FNew_Penjualan.Status=0) AND (strLanjutUangMuka=1) then
@@ -1540,6 +1644,7 @@ begin
   FListNoTransaksi.vcall:='penjualan';
   FListNoTransaksi.update_grid('trans_no','order_no','t_selling','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTanggal.Date))+' and deleted_at is NOT NULL '+
   'AND (trans_no_replacement is NULL OR trans_no_replacement='''') ORDER BY trans_no ASC');
+  if  FListNoTransaksi.QListTransNo.RecordCount>0 then
   FListNoTransaksi.ShowModal;
 end;
 
@@ -1561,6 +1666,7 @@ begin
   edKodeSumber.Clear;
   edNamaSumber.Clear;
   edPOOrder.ReadOnly:=True;
+//  edPOOrder.ReadOnly:=False;
   edNoReff.Text:='-';
   vFormSumber:='0';
   kd_kares:='0';
@@ -1612,7 +1718,13 @@ begin
                 ' left join t_ak_header c on b.header_code=c.header_code'+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;
@@ -1849,6 +1961,30 @@ begin
       Label27.Visible:=True;
       Label28.Visible:=True;
     end;
+
+    with dm.Qtemp3 do
+    begin
+      close;
+      sql.Clear;
+      sql.Text:='SELECT code,name,form_target from t_selling_source '+
+                'WHERE code=(SELECT value_parameter FROM t_parameter '+
+                'WHERE key_parameter=''sumber_penjualan'')';
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
+    end;
+
+    if dm.Qtemp3.RecordCount>0 then
+    begin
+      edKodeSumber.Text:=dm.Qtemp3.FieldValues['code'];
+      edNamaSumber.Text:=dm.Qtemp3.FieldValues['name'];
+      vFormSumber:=dm.Qtemp3.FieldValues['form_target'];
+    end;
+
     btnNoTransaksi.Visible:=False;
     chkNomorPengganti.Enabled:=True;
   end;
@@ -2006,7 +2142,14 @@ begin
             parambyname('paris_no_replacement').Value:=True
             else parambyname('paris_no_replacement').Value:=False;
             parambyname('parno_ppbj').Value:=edNoPPBJ.Text;
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   if chkNomorPengganti.Checked=True then
@@ -2018,7 +2161,13 @@ begin
       sql.Text:='UPDATE "public"."t_selling" SET'+
                 ' trans_no_replacement='+QuotedStr(edNomorTrans.Text)+
                 ' Where trans_no='+QuotedStr(strNoTransaksiDiGanti);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -2031,7 +2180,14 @@ begin
     close;
     sql.Clear;
     sql.Text:='SELECT value_parameter FROM t_parameter WHERE key_parameter=''statusdso'' ';
-    Open;
+
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   if (dm.Qtemp2.RecordCount>0) AND (dm.Qtemp2.FieldValues['value_parameter']='1') then
   begin
@@ -2127,7 +2283,7 @@ begin
             'FROM  public.t_selling_det  a left join t_selling_piece b on b.trans_no=a.trans_no '+
             'AND b.code_item=a.code_item '+
             'LEFT JOIN t_item c on c.item_code=a.code_item '+
-            'LEFT JOIN t_wh d on d.wh_code=a.wh_code '+
+            'LEFT JOIN t_wh d on d.wh_code=a.wh_code WHERE a.deleted_at is null '+
             ') aa  '+
             'WHERE aa.trans_no='+QuotedStr(edNomorTrans.Text)+' Order By aa.trans_no, aa.code_item desc;');
 

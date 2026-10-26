@@ -203,7 +203,8 @@ implementation
 
 {$R *.dfm}
 
-uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UDataModule;
+uses UMasterWilayah, UMasterData, UHomeLogin, UMy_Function, UDataModule,
+  UMainMenu;
 var
   realfbhpretur : TFBHReturPenjualan;
 // implementasi function
@@ -241,7 +242,13 @@ begin
   begin
     close;
     sql.Text:='SELECT * FROM get_bh_retur_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if QCetakBHRetur.RecordCount=0 then
@@ -250,11 +257,11 @@ begin
 //    exit;
   end;
 
-//  if QCetakBHRetur.RecordCount<>0 then
-//  begin
+  if QCetakBHRetur.RecordCount<>0 then
+  begin
 
     cLocation := ExtractFilePath(Application.ExeName);
-    Report.LoadFromFile(cLocation +'report/rpt_BukuHarianReturPenjualanNew'+ '.fr3');
+    Report.LoadFromFile(cLocation +'report/rpt_BukuHarianReturPenjualanNew2'+ '.fr3');
     SetMemo(Report,'kodeprsh',FHomeLogin.vNamaPRSH);
     SetMemo(Report,'periode',UpperCase(formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' S/D '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue)));
 
@@ -273,7 +280,7 @@ begin
 
     Report.ShowReport();
 
-//  end;
+  end;
 
 //////////////////////SCRIPT LAMA////////////////////////////
    {with QCetak do
@@ -392,7 +399,13 @@ begin
           sql.add(' AND b.code_kabupaten='+QuotedStr(vkd_kab)+' ');
          end;
        sql.add(' ORDER BY a.trans_date, a.trans_no');
-       open;
+       try
+          Open;
+       except
+          Connection.Close;
+          Connection.Open;
+          Open;
+       end;
    end;
   finally
   DBGrid.FinishLoadingStatus();
@@ -513,6 +526,82 @@ begin
   tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
   bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
   tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
+
+  strKab := 'NULL';
+  strKaresidenan := 'NULL';
+  strTP := 'NULL';
+  if edKabupaten.EditValue<>'' then
+  strKab:=QuotedStr(vkd_kab)+' ';
+
+  if edKaresidenan.EditValue<>'' then strKaresidenan:=QuotedStr(vkd_kares);
+
+  if edTp.EditValue<>'' then strTP:=QuotedStr(vkd_tp);
+
+  FMainMenu.Load.Visible := True;
+  FMainMenu.Load.Percent := 10;
+  Application.ProcessMessages;
+
+  with QCetakBHRetur do
+  begin
+    close;
+    sql.Text:='SELECT * FROM get_bh_retur_penjualan('+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+','+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+','+strTP+','+strKaresidenan+','+strKab+')';
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
+  end;
+
+  FMainMenu.Load.Percent := 30;
+  Application.ProcessMessages;
+
+  if QCetakBHRetur.RecordCount=0 then
+  begin
+    FMainMenu.Load.Visible := False;
+    showmessage('Tidak ada data yang bisa dicetak !');
+    exit;
+  end;
+
+  cLocation := ExtractFilePath(Application.ExeName);
+  Report.LoadFromFile(cLocation +'report/rpt_BukuHarianReturPenjualanNew2Export'+ '.fr3');
+  SetMemo(Report,'kodeprsh',FHomeLogin.vNamaPRSH);
+  SetMemo(Report,'periode',UpperCase(formatdatetime('dd mmmm yyyy',dtAwal.EditValue)+' S/D '+formatdatetime('dd mmmm yyyy',dtAkhir.EditValue)));
+
+  if edTP.EditValue<>'' then
+  begin
+    SetMemo(Report,'karesidenan',+edTP.EditValue);
+  end else begin
+    SetMemo(Report,'karesidenan','SEMUA TP');
+  end;
+  if (edKabupaten.EditValue<>'') then
+  begin
+    SetMemo(Report,'kabupaten',+edKabupaten.EditValue);
+  end else begin
+    SetMemo(Report,'kabupaten','SEMUA KABUPATEN');
+  end;
+
+  FMainMenu.Load.Percent := 70;
+  Application.ProcessMessages;
+
+  Report.PrepareReport;
+
+  FMainMenu.Load.Percent := 100;
+  Application.ProcessMessages;
+  ExportToExcel;
+
+  FMainMenu.Load.Visible := False;
+
+
+
+{  tgl1:=FormatDateTime('DD', dtAwal.EditValue);
+  bulan1:=convbulanInd(StrToInt(FormatDateTime('M', dtAwal.EditValue)));
+  tahun1:=FormatDateTime('YYYY', dtAwal.EditValue);
+
+  tgl2:=FormatDateTime('DD', dtAkhir.EditValue);
+  bulan2:=convbulanInd(StrToInt(FormatDateTime('M', dtAkhir.EditValue)));
+  tahun2:=FormatDateTime('YYYY', dtAkhir.EditValue);
 //  if edKaresidenan.EditValue='' then
 //  begin
 //    MessageDlg('TP wajib diisi ..!!',mtInformation,[mbRetry],0);
@@ -530,7 +619,8 @@ begin
     with QBHReturPenjualanExport do
     begin
       close;
-      sql.Text:='SELECT a.trans_no,a.no_inv_tax,a.trans_date,a.code_cust,a.customer_name_pkp name_cust '+
+      sql.Text:='SELECT a.trans_no,a.no_inv_tax,a.trans_date,a.code_cust,'+
+                'a.customer_name_pkp name_cust '+
                 ',b.account_code akun_returns, '+
                 'b.account_name akun_returns_name,b.db amount_returns '+
                 ',c.account_code akun_piutang, '+
@@ -538,10 +628,18 @@ begin
                 'from get_sales_returns() a '+
                 'left join public."VTrans_Journal" b ON b.trans_no=a.trans_no AND b.account_code=''4202.01'' '+
                 'left join public."VTrans_Journal" c on c.trans_no=a.trans_no AND c.account_code=''1104.01'' '+
+
+
                 'WHERE a.trans_date BETWEEN '+QuotedStr(formatdatetime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+
                 ''+QuotedStr(formatdatetime('yyyy-mm-dd',dtAkhir.EditValue))+' AND a.deleted_at IS NULL '+strTP+strKaresidenan+strKab+' '+
                 'order by a.trans_date asc,trans_no asc';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
 //    with QBHPenjualanExport do
@@ -584,7 +682,6 @@ begin
                   'AND a.deleted_at IS NULL '+strTP+strKaresidenan+' '+
                   'GROUP BY a.trans_no, a.trans_date '+
                   'ORDER BY a.trans_date ASC, a.trans_no ASC '+
-                  'LIMIT 3 '+
                   ') '+
                   'SELECT '+
                   'SUM(retur_penjualan) AS total_retur_penjualan, '+
@@ -592,7 +689,13 @@ begin
                   'SUM(piutang) AS total_piutang, '+
                   'SUM(k_lain) AS total_kredit_lain '+
                   'FROM detail_trans;';
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       QBHReturPenjualanExportBarang.Close;
@@ -656,7 +759,7 @@ begin
       ExportToExcel;
     end;
  
-//  end;
+//  end;     }
 end;
 
 procedure TFBHReturPenjualan.edKabupatenPropertiesButtonClick(Sender: TObject;
@@ -673,7 +776,7 @@ procedure TFBHReturPenjualan.edKaresidenanPropertiesButtonClick(Sender: TObject;
 begin
   FMasterData.Caption:='Master Data Karesidenan';
   FMasterData.vcall:='bhreturpenjualan_kares';
-  FMasterData.update_grid('DISTINCT code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
+  FMasterData.update_grid('code','name','description','t_region_karesidenan','WHERE	deleted_at IS NULL');
   FMasterData.ShowModal;
 end;
 

@@ -686,7 +686,7 @@ object FSuratKonfirmasiPiutang: TFSuratKonfirmasiPiutang
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40907.381461944500000000
-    ReportOptions.LastChange = 46072.403179212960000000
+    ReportOptions.LastChange = 46072.403179213000000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'

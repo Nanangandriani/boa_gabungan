@@ -191,7 +191,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
   object DBGridEh3: TDBGridEh
     Left = 0
     Top = 140
-    Width = 929
+    Width = 917
     Height = 226
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = DsDetail
@@ -507,20 +507,12 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     TabOrder = 10
     Visible = False
   end
-  object Edvls: TRzNumericEdit
-    Left = 655
-    Top = 82
-    Width = 120
-    Height = 23
-    TabOrder = 11
-    DisplayFormat = ',0;(,0)'
-  end
   object ednilai_vls: TRzNumericEdit
     Left = 781
     Top = 82
     Width = 139
     Height = 23
-    TabOrder = 12
+    TabOrder = 11
     DisplayFormat = ',0;(,0)'
   end
   object DtTh: TRzDateTimeEdit
@@ -531,7 +523,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'yyyy'
     CharCase = ecUpperCase
-    TabOrder = 13
+    TabOrder = 12
     Visible = False
   end
   object DtBln: TRzDateTimeEdit
@@ -542,7 +534,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'mm'
     CharCase = ecUpperCase
-    TabOrder = 14
+    TabOrder = 13
     Visible = False
   end
   object DtHr: TRzDateTimeEdit
@@ -553,7 +545,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     EditType = etDate
     Format = 'dd'
     CharCase = ecUpperCase
-    TabOrder = 15
+    TabOrder = 14
     Visible = False
   end
   object Edppnrp: TRzNumericEdit
@@ -563,7 +555,7 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 23
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 16
+    TabOrder = 15
     DisplayFormat = ',0;(,0)'
   end
   object Edgrandtotal: TRzNumericEdit
@@ -573,8 +565,35 @@ object FNew_ReturnPemb: TFNew_ReturnPemb
     Height = 23
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 17
+    TabOrder = 16
     DisplayFormat = '#,##0.00'
+  end
+  object Edvls: TEdit
+    Left = 655
+    Top = 82
+    Width = 121
+    Height = 23
+    Enabled = False
+    TabOrder = 17
+    Text = 'IDR'
+  end
+  object Edit1: TEdit
+    Left = 387
+    Top = 111
+    Width = 121
+    Height = 23
+    TabOrder = 18
+    Text = 'Edit1'
+    Visible = False
+  end
+  object Edit2: TEdit
+    Left = 527
+    Top = 111
+    Width = 121
+    Height = 23
+    TabOrder = 19
+    Text = 'Edit1'
+    Visible = False
   end
   object DsDetail: TDataSource
     DataSet = MemDetail

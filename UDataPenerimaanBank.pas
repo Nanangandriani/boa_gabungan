@@ -173,10 +173,10 @@ type
     WAIT_TIME_MS = 1000; // 1 detik
     { Private declarations }
   public
-    Status,KetemuCekPosisiDK,iserror,IntStatusKoreksi,isCancel : Integer;
-    akun_d, akun_k, kd_ak_pelanggan, vid_modul : String;
+    Status,KetemuCekPosisiDK,iserror,IntStatusKoreksi,isCancel,FoundUangMuka : Integer;
+    akun_d, akun_k, kd_ak_pelanggan, vid_modul,vcall : String;
     additional_code1, additional_code2, additional_code3, additional_code4, additional_code5,kd_kares : String;
-    strtgl, strbulan, strtahun, strNoTransaksiDiGanti: string;
+    strtgl, strbulan, strtahun, strNoTransaksiDiGanti,akun_piutang: string;
     Year, Month, Day: Word;
     next_proses:boolean;
     UangMuka: Currency;
@@ -201,6 +201,7 @@ type
     procedure SimpanPelanggan;
     procedure GetKeterangan;
     procedure UpdateDPPPembayaranCek;
+    procedure RefreshGridAkunBankPiutang;
   end;
 
 var
@@ -215,6 +216,58 @@ uses UDaftarTagihan, Ubrowse_pelanggan, UMasterData, UDataModule, UMy_Function,
   UHomeLogin, UListPenerimaanBank, UMainMenu, UKoreksi,
   UbrowseUangMukaPenjualan, UListNoTransaksi;
 
+
+procedure TFDataPenerimaanBank.RefreshGridAkunBankPiutang;
+var
+  piutang: Currency;
+begin
+  piutang := 0;
+
+  if MemDetailPiutang.RecordCount > 0 then
+  begin
+    MemDetailPiutang.DisableControls;
+    try
+      MemDetailPiutang.First;
+      while not MemDetailPiutang.Eof do
+      begin
+        if not MemDetailPiutang.FieldByName('jum_piutang').IsNull then
+          piutang := piutang + MemDetailPiutang.FieldByName('jum_piutang').AsCurrency;
+
+        MemDetailPiutang.Next;
+      end;
+    finally
+      MemDetailPiutang.EnableControls;
+    end;
+  end;
+
+  if MemDetailAkun.RecordCount > 0 then
+  begin
+    MemDetailAkun.DisableControls;
+    try
+      MemDetailAkun.First;
+      while not MemDetailAkun.Eof do
+      begin
+        if Pos('PIUTANG', UpperCase(MemDetailAkun.FieldByName('nm_akun').AsString)) > 0 then
+        begin
+          MemDetailAkun.Edit;
+          MemDetailAkun.FieldByName('kredit').AsCurrency := piutang;
+          MemDetailAkun.Post;
+        end
+        else if Pos('BANK', UpperCase(MemDetailAkun.FieldByName('nm_akun').AsString)) > 0 then
+        begin
+          MemDetailAkun.Edit;
+          MemDetailAkun.FieldByName('debit').AsCurrency := piutang;
+          MemDetailAkun.Post;
+        end;
+
+        MemDetailAkun.Next;
+      end;
+    finally
+      MemDetailAkun.EnableControls;
+    end;
+  end;
+end;
+
 procedure TFDataPenerimaanBank.GetKeterangan;
 var ket: String;
 begin
@@ -225,10 +278,10 @@ begin
     MemDetailPiutang.First;
     while not MemDetailPiutang.Eof do
     begin
-      if MemDetailPiutang['jum_piutang_real']=MemDetailPiutang['jum_piutang'] then
+      if MemDetailPiutang['jum_piutang']>=MemDetailPiutang['jum_piutang_real'] then
       begin
         ket:=ket+'PELUNASAN PIUTANG '+edNamaPKP.Text+' ('+MemDetailPiutang['no_tagihan']+' Tgl.'+FormatDateTime('dd-mm-yyyy',MemDetailPiutang['tgl_faktur'])+')' + SLineBreak + '';
-      end else if MemDetailPiutang['jum_piutang_real']<>MemDetailPiutang['jum_piutang'] then
+      end else if MemDetailPiutang['jum_piutang']<MemDetailPiutang['jum_piutang_real'] then
       begin
         ket:=ket+'ANGSURAN '+edNamaPKP.Text+' ('+MemDetailPiutang['no_tagihan']+' Tgl.'+FormatDateTime('dd-mm-yyyy',MemDetailPiutang['tgl_faktur'])+')' + SLineBreak + '';
       end;
@@ -247,7 +300,13 @@ begin
     SQL.Clear;
     SQL.Text := 'select name from t_cash_bank_acceptance_source WHERE deleted_at IS NULL order by name ASC';
     // Use Open() for SELECT statement
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   cbSumberPenerimaan.Items.Add('TIDAK ADA SUMBER');
   // Fill the TdxBarCombo
@@ -287,8 +346,6 @@ begin
     end;
     if edKodeSumberTagihan.Text='2' then
     begin
-//    ShowMessage('PenagihanPiutang')  ;
-
       FDaftarPenagihanPiutang.vcall:='PenagihanPiutang';
       FDaftarPenagihanPiutang.kd_outlet:=edKode_Pelanggan.Text;
       FDaftarPenagihanPiutang.tglTagih1:=dtPeriode1.Date;
@@ -366,7 +423,13 @@ begin
       sql.Text:='SELECT  COALESCE(cash,0) cash,COALESCE(receipt,0) receipt, '+
                 'COALESCE(cheque_amount1,0) cheque_amount1 '+
                 'FROM t_dpp WHERE id='+QuotedStr(MemDetailPiutang['id_dpp']);
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     curCash:=curCash+dm.Qtemp3.FieldValues['cash'];
     curReceipt:=curReceipt+dm.Qtemp3.FieldValues['receipt'];
@@ -394,13 +457,16 @@ begin
                   ')';
 
 
-//                  ( SELECT id FROM ( no_invoice='+QuotedStr(MemDetailPiutang['no_tagihan'])+' and '+
-//                  'date_dpp<'+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
-//                  'ORDER BY date_dpp DESC LIMIT 1';
-//                  id='+QuotedStr(MemDetailPiutang['id_dpp'])
-
-        ExecSQL;
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
       end;
+
+
     end else begin
       with dm.Qtemp2 do
       begin
@@ -422,6 +488,34 @@ begin
 //                  'date_dpp<'+QuotedStr(FormatDateTime('yyyy-mm-dd',dtTrans.Date))+' '+
 //                  'ORDER BY date_dpp DESC LIMIT 1';
 //                  id='+QuotedStr(MemDetailPiutang['id_dpp']);
+        try
+          ExecSQL;
+        except
+          Connection.Close;
+          Connection.Open;
+          ExecSQL;
+        end;
+      end;
+    end;
+
+    with dm.Qtemp2 do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Text := 'UPDATE t_dpp_temp SET status = 2 ' +
+                  ' WHERE id_dpp IN ( ' +
+                  ' SELECT id FROM t_dpp ' +
+                  ' WHERE no_invoice = ' + QuotedStr(MemDetailPiutang['no_tagihan']) + ' ' +
+                  ' AND date_dpp <= ' + QuotedStr(FormatDateTime('yyyy-mm-dd', dtTrans.Date)) + ' ' +
+                  ' ORDER BY date_dpp DESC ' +
+                  ' LIMIT 1 ) '+
+                  ' AND status = 1 ';
+
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
         ExecSQL;
       end;
     end;
@@ -454,7 +548,13 @@ begin
       sql.Text:='UPDATE t_register_cek SET code_bank_chanel='+strCodeDitunaikanDiBank+','+
                 'bank_chanel='+strNameDitunaikanDiBank+',disbursment_date='+strTglDitunaikan+' '+
                 'WHERE id_dpp='+QuotedStr(MemDetailPiutang['id_dpp']);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemDetailPiutang.Next;
   end;
@@ -475,7 +575,14 @@ begin
               ' SELECT * from t_master_trans_account  '+
               ' where name_module='+QuotedStr(cbTransaksi.Text)+' '+
               ' and status_bill='+IntToStr(cbJenisTransaksi.ItemIndex-1)+' ) a ');
-      open;
+
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
 
     edKaresidenan.Text:='';
@@ -604,6 +711,8 @@ begin
       Panel5.Visible:=true;
       gbDataPiutang.Visible:=false;
       TabDetailFaktur.TabVisible:=false;
+      RzPageControl1.ActivePage :=TabDetailAkun;
+      RzPageControl1.Repaint;
     end;
   end;
   if SelectRow('select status_bill from t_master_trans_account where code_trans='+QuotedStr(Dm.Qtemp1.FieldByName('code_trans').AsString)+' ')= '1' then
@@ -614,6 +723,8 @@ begin
       gbDataPiutang.Visible:=true;
       gbDataSumberPenerimaan.Visible:=False;
       TabDetailFaktur.TabVisible:=true;
+      RzPageControl1.ActivePage := TabDetailFaktur;
+      RzPageControl1.Repaint;
     end;
 
     if (FDataPenerimaanBank.gbDataPiutang.Visible=false) and (FDataPenerimaanBank.gbDataBank.Visible=false) then
@@ -626,7 +737,6 @@ begin
     strNoTransaksiDiGanti:='';
   end;
 
-  FDataPenerimaanBank.RzPageControl1.ActivePage:=FDataPenerimaanBank.TabDetailAkun;
   RefreshGridDetailAkun;
 //  FDataPenerimaanBank.Autonumber;
   vid_modul:=SelectRow('select code_module from t_master_trans_account where code_trans='+QuotedStr(edKodeJenisTrans.Text)+' ');
@@ -664,7 +774,13 @@ begin
                   ' SELECT position from "t_master_trans_account_det"'+
                   ' WHERE "code_trans"='+QuotedStr(edKodeJenisTrans.Text)+' and '+
                   ' code_account='+QuotedStr(MemDetailAkun['kd_header_akun'])+') a ');
-          open;
+          try
+            Open;
+          except
+            Connection.Close;
+            Connection.Open;
+            Open;
+          end;
         end;
 
       if Dm.Qtemp1.RecordCount<>0 then
@@ -744,7 +860,14 @@ begin
 //            ' word_amount='+QuotedStr(terbilang)+', '+
             ' code_karesidenan='+QuotedStr(kd_kares)+' '+
             ' Where voucher_no='+QuotedStr(edNoTrans.Text)+'');
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
   if MemDetailAkun.RecordCount<>0 then
   begin
@@ -753,6 +876,21 @@ begin
 
   if MemDetailPiutang.RecordCount<>0 then
   begin
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM "public"."t_cash_bank_acceptance_down_payment" '+
+                ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
+
     InsertDetailPiutang;
     SimpanPelanggan;
     if edKodeSumberTagihan.Text='2' then
@@ -761,7 +899,8 @@ begin
     UpdateDPPPembayaranCek;
   end;
 //  ShowMessage(cbSumberPenerimaan.Text);
-  if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
+
+  if ((cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'')) OR(FoundUangMuka=1) then
   begin
     InsertDetailUangMuka;
     SimpanPelanggan;
@@ -782,19 +921,31 @@ begin
             ' SELECT * from "public"."t_cash_bank_acceptance_det"'+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
   begin
-  with dm.Qtemp do
-  begin
-  close;
-  sql.clear;
-  sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_det" '+
-            ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
-  ExecSQL;
-  end;
+    with dm.Qtemp do
+    begin
+      close;
+      sql.clear;
+      sql.Text:=' DELETE FROM  "public"."t_cash_bank_acceptance_det" '+
+                ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
+    end;
   end;
 
   MemDetailAkun.First;
@@ -802,35 +953,41 @@ begin
   begin
     with dm.Qtemp do
     begin
-    close;
-    sql.clear;
-    sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_det" ("voucher_no", '+
-            ' "code_account", "name_account", "module_id", "trans_date", "position", '+
-            ' "paid_amount", "amount_rate_results", "description", '+
-            ' "code_account_header") '+
-            ' Values( '+
-            ' '+QuotedStr(edNoTrans.Text)+', '+
-            ' '+QuotedStr(MemDetailAkun['kd_akun'])+', '+
-            ' '+QuotedStr(MemDetailAkun['nm_akun'])+', '+
-            ' '+QuotedStr(vid_modul)+', '+
-            ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', ' );
-            if MemDetailAkun['debit']<>0 then
-            begin
-              sql.Add(' '+QuotedStr('D')+', ');
-//              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['debit']))+', ');
-              sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['debit'],',','.',[]))+',');
-            end;
-            if MemDetailAkun['kredit']<>0 then
-            begin
-              sql.Add(' '+QuotedStr('K')+', ');
-//              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['kredit']))+', ');
-              sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['kredit'],',','.',[]))+',');
-            end;
-//    sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['jumlah_hasil_kurs']))+', '+
-    sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['jumlah_hasil_kurs'],',','.',[]))+', '+
-            ' '+QuotedStr(MemDetailAkun['keterangan'])+', '+
-            ' '+QuotedStr(MemDetailAkun['kd_header_akun'])+'  );');
-    ExecSQL;
+      close;
+      sql.clear;
+      sql.Add(' INSERT INTO "public"."t_cash_bank_acceptance_det" ("voucher_no", '+
+              ' "code_account", "name_account", "module_id", "trans_date", "position", '+
+              ' "paid_amount", "amount_rate_results", "description", '+
+              ' "code_account_header") '+
+              ' Values( '+
+              ' '+QuotedStr(edNoTrans.Text)+', '+
+              ' '+QuotedStr(MemDetailAkun['kd_akun'])+', '+
+              ' '+QuotedStr(MemDetailAkun['nm_akun'])+', '+
+              ' '+QuotedStr(vid_modul)+', '+
+              ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+', ' );
+              if MemDetailAkun['debit']<>0 then
+              begin
+                sql.Add(' '+QuotedStr('D')+', ');
+  //              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['debit']))+', ');
+                sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['debit'],',','.',[]))+',');
+              end;
+              if MemDetailAkun['kredit']<>0 then
+              begin
+                sql.Add(' '+QuotedStr('K')+', ');
+  //              sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['kredit']))+', ');
+                sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['kredit'],',','.',[]))+',');
+              end;
+  //    sql.Add(' '+QuotedStr(FloatToStr(MemDetailAkun['jumlah_hasil_kurs']))+', '+
+      sql.Add(' '+QuotedStr(StringReplace(MemDetailAkun['jumlah_hasil_kurs'],',','.',[]))+', '+
+              ' '+QuotedStr(MemDetailAkun['keterangan'])+', '+
+              ' '+QuotedStr(MemDetailAkun['kd_header_akun'])+'  );');
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   MemDetailAkun.Next;
   end;
@@ -849,7 +1006,13 @@ begin
             ' SELECT * from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
@@ -860,7 +1023,13 @@ begin
       sql.clear;
       sql.Text:=' DELETE FROM "public"."t_cash_bank_acceptance_receivable" '+
                 ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -902,7 +1071,13 @@ begin
             ' '+QuotedStr(StringReplace(MemDetailPiutang['jum_piutang_real'],',','.',[]))+','+
 //            ' '+QuotedStr(FloatToStr(MemDetailPiutang['jum_piutang_real']))+', '+
             ' '+QuotedStr(strDescription)+') ');
-    ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
     MemDetailPiutang.Next;
   end;
@@ -921,11 +1096,17 @@ begin
   begin
     close;
     sql.clear;
-    sql.Text:=' SELECT * from ('+
+    sql.Text:='SELECT * from ('+
             ' SELECT * from "public"."t_cash_bank_acceptance_down_payment" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' ) a '+
             ' Order By voucher_no desc';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if Dm.Qtemp1.RecordCount>0 then
@@ -936,7 +1117,13 @@ begin
       sql.clear;
       sql.Text:=' DELETE FROM "public"."t_cash_bank_acceptance_down_payment" '+
                 ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+';';
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -955,7 +1142,13 @@ begin
               ' '+QuotedStr(strDescription)+', '+
               ' '+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+','+
               ' '+QuotedStr(edNamaPelangganSumber.Text)+' ) ';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
 end;
@@ -989,7 +1182,6 @@ begin
   end;
 
   if chkNomorPengganti.Checked=True then strIsNoReplacement:='True' else strIsNoReplacement:='False';
-
 
   with dm.Qtemp do
   begin
@@ -1036,7 +1228,13 @@ begin
 //            ''+QuotedStr(terbilang)+','+
             ' '+QuotedStr(kd_kares)+', '+
             ' '+QuotedStr(strIsNoReplacement)+'  );');
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   if chkNomorPengganti.Checked=True then
@@ -1048,7 +1246,13 @@ begin
       sql.Text:='UPDATE "public"."t_cash_bank_acceptance" SET'+
                 ' trans_no_replacement='+QuotedStr(edNoTrans.Text)+
                 ' Where voucher_no='+QuotedStr(strNoTransaksiDiGanti);
-      ExecSQL;
+      try
+        ExecSQL;
+      except
+        Connection.Close;
+        Connection.Open;
+        ExecSQL;
+      end;
     end;
   end;
 
@@ -1066,7 +1270,7 @@ begin
     if (edKodeSumberTagihan.Text='2') AND (edKodeJenisBayar.Text='3') then
     UpdateDPPPembayaranCek;
   end;
-  if (cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'') then
+  if ((cbSumberPenerimaan.Text='UANG MUKA PENJUALAN') AND (edNoRefSumberPenerimaan.Text<>'')) OR(FoundUangMuka=1) then
   begin
     InsertDetailUangMuka;
     SimpanPelanggan;
@@ -1168,7 +1372,13 @@ begin
             ' from "public"."t_cash_bank_acceptance_receivable" '+
             ' WHERE "voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
             ' Order BY no_invoice_tax asc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemDetailPiutang.active:=false;
   MemDetailPiutang.active:=true;
@@ -1209,7 +1419,13 @@ begin
             ' FROM  "public"."t_master_trans_account_det") a  '+
             ' WHERE code_trans='+QuotedStr(edKodeJenisTrans.Text)+'  '+
             ' Order By "code_account", "name_account" desc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   MemDetailAkun.active:=false;
   MemDetailAkun.active:=true;
@@ -1240,7 +1456,13 @@ begin
                 ' WHERE a."voucher_no"='+QuotedStr(edNoTrans.Text)+' '+
                 ' AND a."voucher_no"='+QuotedStr(Dm.Qtemp1.fieldbyname('code_account').value)+''+
                 ' ORDER BY "position" desc ');
-        open;
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
       end;
 
       //ShowMessage(Dm.Qtemp1.fieldbyname('position').Value);
@@ -1313,6 +1535,7 @@ begin
     FKoreksi.vcall:=SelectRow('select Upper(submenu) menu from t_menu_sub '+
                 'where link='+QuotedStr(FListPenerimaanBank.Name));
     FKoreksi.Status:=0;
+    FKoreksi.AksiTipe:='KOREKSI';
     FKoreksi.vnotransaksi:=edNoTrans.Text;
     FKoreksi.ShowModal;
   end;
@@ -1321,24 +1544,69 @@ end;
 procedure TFDataPenerimaanBank.BSaveClick(Sender: TObject);
 var
   Year, Month, Day: Word;
-  FoundUangMuka: Integer;
   TsUangMuka: Currency;
+  AkunUangMuka:String;
 begin
   UangMuka:=0;
-  //Rferesh hasil Kurs, cek posisi DK
+//Rferesh hasil Kurs, cek posisi DK
 //  if (cbJenisTransaksi.Text='PIUTANG') AND (MemDetailPiutang.RecordCount>0) then
 //  begin
 //    GetKeterangan;
 //  end;
   FoundUangMuka:=0;
   KetemuCekPosisiDK:=0;
+
+  AkunUangMuka:=SelectRow('select value_parameter from t_parameter where key_parameter=''akun_uang_muka_penjualan'' ');
+
   MemDetailAkun.First;
   while not MemDetailAkun.Eof do
   begin
-    if MemDetailAkun['kd_akun'] = '2102.08' then
+    if MemDetailAkun['kd_akun'] = AkunUangMuka then
     begin
       FoundUangMuka:=1;
       UangMuka:=MemDetailAkun['kredit'];
+    end;
+
+    if (edNoRek.Text <> '') and (Pos('BANK', UpperCase(MemDetailAkun.FieldByName('nm_akun').AsString)) > 0) then
+    begin
+
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT a.account_no,b.account_name from t_bank a '+
+                  'INNER JOIN t_ak_account b on b.code=a.account_no '+
+                  'WHERE rekening_no='+QuotedStr(edNoRek.Text);
+        open;
+      end;
+
+      if MemDetailAkun['kd_akun']<>dm.Qtemp3.FieldValues['account_no'] then
+      begin
+        MemDetailAkun.Edit;
+        MemDetailAkun.FieldByName('kd_akun').AsString := dm.Qtemp3.FieldByName('account_no').AsString;
+        MemDetailAkun.FieldByName('nm_akun').AsString := dm.Qtemp3.FieldByName('account_name').AsString;
+        MemDetailAkun.Post;
+      end;
+
+    end;
+
+    if (cbJenisTransaksi.Text='PIUTANG') and (Pos('PIUTANG', UpperCase(MemDetailAkun.FieldByName('nm_akun').AsString))> 0)  then
+    begin
+      with dm.Qtemp3 do
+      begin
+        close;
+        sql.Clear;
+        sql.Text:='SELECT account_code from t_customer '+
+                  'WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' AND deleted_at is null';
+        open;
+      end;
+
+      if MemDetailAkun['kd_akun']<>dm.Qtemp3.FieldValues['account_code'] then
+      begin
+        MemDetailAkun.Edit;
+        MemDetailAkun.FieldByName('kd_akun').AsString := dm.Qtemp3.FieldByName('account_code').AsString;
+        MemDetailAkun.Post;
+      end;
     end;
 
     HitungKurs;
@@ -1369,7 +1637,13 @@ begin
       close;
       sql.Clear;
       sql.Text:='SELECT grand_tot FROM t_down_payment_sales WHERE no_trans='+QuotedStr(edNoRefSumberPenerimaan.Text)+' AND deleted_at IS NULL';
-      open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     TsUangMuka:=dm.Qtemp3.FieldValues['grand_tot'];
   end;
@@ -1428,11 +1702,10 @@ begin
     end
     else if FDataPenerimaanBank.Status = 0 then
     begin
-      if chkNomorPengganti.Checked=False then FDataPenerimaanBank.Autonumber;
-
       //if application.MessageBox('Data Anda Akan Tersimpan Dengan Nomor '+edKodeOrder.text+' Apa Anda Yakin Menyimpan Data ini ?','confirm',mb_yesno or mb_iconquestion)=id_yes then
-      if MessageDlg ('Anda Yakin Disimpan Dengan No . '+edNoTrans.text+' '+ '?', mtInformation,  [mbYes]+[mbNo],0) = mrYes then
+      if MessageDlg('Anda Yakin Ingin Menyimpan Data Ini?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
+        if chkNomorPengganti.Checked=False then FDataPenerimaanBank.Autonumber;
         Save;
         Dm.Koneksi.Commit;
       end;
@@ -1485,6 +1758,7 @@ begin
     FListNoTransaksi.update_grid('voucher_no','order_no','t_cash_bank_acceptance','WHERE trans_date='+QuotedStr(formatdatetime('yyyy-mm-dd',dtTrans.Date))+' and deleted_at is NOT NULL '+
     'AND (trans_no_replacement is NULL OR trans_no_replacement='''') '+
     'AND additional_code='+QuotedStr(additional_code1)+' AND '+Stradditional_code3+' ORDER BY voucher_no ASC');
+    if  FListNoTransaksi.QListTransNo.RecordCount>0 then
     FListNoTransaksi.ShowModal;
   end;
 end;
@@ -1507,7 +1781,14 @@ begin
     close;
     sql.Clear;
     sql.Text:='UPDATE t_cash_bank_acceptance_customer SET deleted_at=NOW() where trans_no ='+QuotedStr(edNoTrans.Text) ;
-    ExecSQL;
+
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 
   with dm.Qtemp1 do
@@ -1529,7 +1810,13 @@ begin
                'cust_type_code_tax, cust_type_name_tax, country_code_tax, country_name_tax, no_nitku, no_passport,va_name,company_code_bank ' +
                 'FROM t_customer ' +
                 'WHERE customer_code = '+QuotedStr(KodePelanggan)+' ';
-    ExecSQL;
+    try
+      ExecSQL;
+    except
+      Connection.Close;
+      Connection.Open;
+      ExecSQL;
+    end;
   end;
 end;
 
@@ -1640,7 +1927,13 @@ begin
     close;
     sql.clear;
     sql.add('SELECT * from "public"."t_ak_module" where id IN (''3'',''4'')  ORDER BY id asc');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
     first;
   end;
 
@@ -1659,7 +1952,13 @@ begin
     sql.Text:='select a.value_parameter code,b.name from t_parameter a '+
               'left join t_payment_source b on b.code=a.value_parameter '+
               'where key_parameter=''default_jenis_pembayaran'' ';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
   kd_kares:='';
   edKaresidenan.Text:='';
@@ -1735,7 +2034,13 @@ begin
                 ' left join t_ak_header c on b.header_code=c.header_code'+
                 ' GROUP BY b.code,b.account_name,c.header_name '+
                 ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   end;
 end;
@@ -1743,20 +2048,30 @@ end;
 procedure TFDataPenerimaanBank.DBGridAkunColumns5EditButtons0Click(
   Sender: TObject; var Handled: Boolean);
 begin
-  with FCari_DaftarPerk do
+  if vid_modul<>'' then
   begin
-    Show;
-    vpanggil:='terima_bank';
-    with QDaftar_Perk do
+    with FCari_DaftarPerk do
     begin
-      close;
-      sql.Clear;
-      SQL.Text:=' SELECT b.code,b.account_name,c.header_name FROM t_ak_account_det a '+
-                ' left join t_ak_account b on a.account_code=b.code '+
-                ' left join t_ak_header c on b.header_code=c.header_code'+
-                ' GROUP BY b.code,b.account_name,c.header_name '+
-                ' ORDER BY b.code,b.account_name,c.header_name';
-      Execute;
+      Show;
+      vpanggil:='terima_bank';
+      with QDaftar_Perk do
+      begin
+        close;
+        sql.Clear;
+        SQL.Text:=' SELECT a.account_code code,b.account_name,c.header_name FROM t_ak_account_det a '+
+                  ' left join t_ak_account b on a.account_code=b.code '+
+                  ' left join t_ak_header c on b.header_code=c.header_code'+
+                  ' WHERE a.module_id='+vid_modul+' and b.account_name is not null '+
+                  ' GROUP BY a.account_code,b.account_name,c.header_name '+
+                  ' ORDER BY a.account_code,b.account_name,c.header_name';
+        try
+          Open;
+        except
+          Connection.Close;
+          Connection.Open;
+          Open;
+        end;
+      end;
     end;
   end;
 end;
@@ -1776,11 +2091,13 @@ end;
 procedure TFDataPenerimaanBank.DBGridTagihanColEnter(Sender: TObject);
 begin
   GetKeterangan;
+  RefreshGridAkunBankPiutang
 end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanColExit(Sender: TObject);
 begin
   GetKeterangan;
+  RefreshGridAkunBankPiutang
 end;
 
 procedure TFDataPenerimaanBank.DBGridTagihanColumns0EditButtons0Click(
@@ -1837,6 +2154,7 @@ end;
 procedure TFDataPenerimaanBank.DBGridTagihanExit(Sender: TObject);
 begin
   GetKeterangan;
+  RefreshGridAkunBankPiutang
 end;
 
 procedure TFDataPenerimaanBank.dtPeriode1Change(Sender: TObject);
@@ -1919,7 +2237,13 @@ begin
       Close;
       Sql.Clear;
       SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(karesidenan,'''') karesidenan FROM get_customer() WHERE customer_code='+QuotedStr(edKodePelangganSumber.Text)+' ';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
     if dm.Qtemp3.FieldValues['karesidenan']='' then
     begin
@@ -1958,8 +2282,15 @@ begin
       Close;
       Sql.Clear;
       SQl.Text:='SELECT COALESCE(code_karesidenan,'''') code_karesidenan,COALESCE(karesidenan,'''') karesidenan FROM get_customer() WHERE customer_code='+QuotedStr(edKode_Pelanggan.Text)+' ';
-      Open;
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
+
     if dm.Qtemp1.FieldValues['karesidenan']='' then
     begin
       edNama_Pelanggan.Text:='';
@@ -1970,6 +2301,10 @@ begin
       kd_kares:=dm.Qtemp1.FieldValues['code_karesidenan'];
       edKaresidenan.Text:=dm.Qtemp1.FieldValues['karesidenan'];
     end;
+    MemDetailPiutang.EmptyTable;
+    if MemDetailAkun.RecordCount>0 then RefreshGridAkunBankPiutang;
+
+
 //    RefreshGridDetailAkun;
   end;
 end;
@@ -2068,66 +2403,104 @@ begin
 end;
 
 procedure TFDataPenerimaanBank.edNoTransChange(Sender: TObject);
+var
+  vHeaderBank, vAkunBank, vNmAkunBank: string;
+  vHeaderPelanggan, vAkunPelanggan: string;
+  hasBankData, hasPelangganData: Boolean;
 begin
-  if (chkNomorPengganti.Checked=True) AND (edNoTrans.Text<>'') then
+
+  if (chkNomorPengganti.Checked = True) AND (edNoTrans.Text <> '') AND (status=0) then
   begin
-//    if cbJenisTransaksi.Text='PIUTANG' then
-//    begin
-//       kd_kares:=SelectRow('SELECT code_karesidenan from t_cash_bank_acceptance WHERE voucher_no='+QuotedStr(strNoTransaksiDiGanti)+';');
-//    end;
-//    edKode_Pelanggan.Text:='';
-//    edNama_Pelanggan.Text:='';
-//    edNamaPKP.Text:='';
-//    edNamaBank.Text:='';
-//    edNoRek.Text:='';
-//    kd_kares:='';
-//    edKaresidenan.Text:='';
-    if cbJenisTransaksi.Text='PIUTANG' then
+    if cbJenisTransaksi.Text = 'PIUTANG' then
     begin
       RefreshGridDetailAkun;
-
-      MemDetailPiutang.Active:=False;
-      MemDetailPiutang.Active:=True;
+      hasBankData := False;
+      if Trim(edNoRek.Text) <> '' then
+      begin
+        vHeaderBank := VarToStr(SelectRow('SELECT header_account_no from t_bank where rekening_no=' + QuotedStr(edNoRek.Text)));
+        vAkunBank   := VarToStr(SelectRow('SELECT account_no from t_bank where rekening_no=' + QuotedStr(edNoRek.Text)));
+        vNmAkunBank := VarToStr(SelectRow('SELECT account_name from t_ak_account a LEFT JOIN t_bank b ON a.code=b.account_no where rekening_no=' + QuotedStr(edNoRek.Text)));
+        hasBankData := True;
+      end;
+      hasPelangganData := False;
+      if Trim(edKode_Pelanggan.Text) <> '' then
+      begin
+        vHeaderPelanggan := VarToStr(SelectRow('SELECT header_code from t_customer where customer_code=' + QuotedStr(edKode_Pelanggan.Text)));
+        vAkunPelanggan   := VarToStr(SelectRow('SELECT account_code from t_customer where customer_code=' + QuotedStr(edKode_Pelanggan.Text)));
+        hasPelangganData := True;
+      end;
+      MemDetailAkun.DisableControls;
+      try
+        MemDetailAkun.First;
+        while not MemDetailAkun.Eof do
+        begin
+          if hasBankData and (MemDetailAkun.FieldByName('kd_header_akun').AsString = vHeaderBank) then
+          begin
+            MemDetailAkun.Edit;
+            MemDetailAkun.FieldByName('kd_akun').AsString := vAkunBank;
+            MemDetailAkun.FieldByName('nm_akun').AsString := vNmAkunBank;
+            MemDetailAkun.Post;
+          end;
+          if hasPelangganData and (MemDetailAkun.FieldByName('kd_header_akun').AsString = vHeaderPelanggan) then
+          begin
+            MemDetailAkun.Edit;
+            MemDetailAkun.FieldByName('kd_akun').AsString := vAkunPelanggan;
+            kd_ak_pelanggan := MemDetailAkun.FieldByName('kd_akun').AsString;
+            MemDetailAkun.Post;
+          end;
+          MemDetailAkun.Next;
+        end;
+      finally
+        MemDetailAkun.EnableControls;
+      end;
+      MemDetailPiutang.Active := False;
+      MemDetailPiutang.Active := True;
       MemDetailPiutang.EmptyTable;
-    end;
-    with dm.Qtemp2 do
-    begin
-      close;
-      sql.Clear;
-      sql.Text:='SELECT a.code_karesidenan, b.name karesidenan from t_cash_bank_acceptance a '+
-                'left join t_region_karesidenan b on b.code=a.code_karesidenan WHERE voucher_no='+QuotedStr(strNoTransaksiDiGanti)+';';
-      open;
-    end;
-    if dm.Qtemp2.RecordCount>0 then
-    begin
-      kd_kares:=dm.Qtemp2.FieldValues['code_karesidenan'];
-      edKaresidenan.Text:=dm.Qtemp2.FieldValues['karesidenan'];
     end;
   end;
 end;
 
 procedure TFDataPenerimaanBank.FormShow(Sender: TObject);
 begin
-  if Status = 0 then
+
+  if (Status = 0) AND (FDataPenerimaanBank.vcall<>'APPROVEDPP') then
   begin
     Panel5.Visible := False;
     gbDataPiutang.Visible := False;
     TabDetailFaktur.TabVisible := False;
 
+
     BSave.Enabled := True;
     BCorrection.Visible := False;
-
     dtTrans.Enabled := True;
     edKaresidenan.Enabled := True;
     btnNoTransaksi.Visible:=False;
     chkNomorPengganti.Enabled:=True;
+    RzPageControl1.ActivePage := TabDetailAkun;
+    RzPageControl1.Repaint;
   end
   else if (Status = 1) and (IntStatusKoreksi = 2) then
   begin
     BSave.Enabled := True;
     BCorrection.Visible := True;
     BCorrection.Enabled := False;
+  end else if (FDataPenerimaanBank.vcall='APPROVEDPP') then
+  begin
+    Panel5.Visible := True;
+    gbDataPiutang.Visible := True;
+    TabDetailFaktur.TabVisible := True;
+    gbDataSumberPenerimaan.Visible:=False;
+
+    BSave.Enabled := True;
+    BCorrection.Visible := False;
+    dtTrans.Enabled := True;
+    edKaresidenan.Enabled := False;
+    btnNoTransaksi.Visible:=False;
+    chkNomorPengganti.Enabled:=True;
+    RzPageControl1.ActivePage := TabDetailAkun;
+    RzPageControl1.Repaint;
   end
+
   else
   begin
     BSave.Enabled := False;

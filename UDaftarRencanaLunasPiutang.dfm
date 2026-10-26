@@ -21,7 +21,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1027
+    ExplicitWidth = 1029
     object Label8: TLabel
       Left = 21
       Top = 74
@@ -168,13 +168,13 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     UseColoredTabs = True
     TabIndex = 0
     TabOrder = 1
-    ExplicitWidth = 1027
-    ExplicitHeight = 413
+    ExplicitWidth = 1029
+    ExplicitHeight = 421
     FixedDimension = 21
     object TabDetailFaktur: TRzTabSheet
       Caption = 'Data Rencana'
-      ExplicitWidth = 1023
-      ExplicitHeight = 388
+      ExplicitWidth = 1025
+      ExplicitHeight = 396
       object DBGridEh1: TDBGridEh
         Left = 0
         Top = 0
@@ -261,8 +261,8 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
     Height = 32
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 518
-    ExplicitWidth = 1027
+    ExplicitTop = 526
+    ExplicitWidth = 1029
     object BBatal: TRzBitBtn
       Left = 957
       Top = 1
@@ -323,7 +323,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 951
+      ExplicitLeft = 953
     end
     object BSave: TRzBitBtn
       Left = 882
@@ -385,7 +385,7 @@ object FDaftarRencanaLunasPiutang: TFDaftarRencanaLunasPiutang
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8
         E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8E8}
       NumGlyphs = 2
-      ExplicitLeft = 876
+      ExplicitLeft = 878
     end
   end
   object MemDetailPiutang: TMemTableEh

@@ -69,11 +69,12 @@ uses UDataModule, UMy_Function, UNew_SalesOrder, UHomeLogin,
   ULaporanPenjualan, UKartuUangMukaPenjualan;
 
 procedure TFbrowse_data_pelanggan.RefreshGrid;
-var strWhere,strKares,strKabupaten: String;
+var strWhere,strKares,strKabupaten,strAktifJual: String;
 begin
   strKares:='';
   strWhere:='';
   strKabupaten:='';
+  strAktifJual:='';
 
   if (vcall='penjualan') or (vcall='sumber_order') or (vcall='terima_bank') then
   begin
@@ -96,12 +97,12 @@ begin
     strWhere:=' and '+strKodeKaresTP+'='+QuotedStr(FNew_SalesOrder.kd_kares);
 //    strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FNew_SalesOrder.edKode_Pelanggan.Text)+'');
 //    strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
-  end else if (vcall='terima_bank') AND (FDataPenerimaanBank.edNoTrans.Text<>'') then
-  begin
-//    strKares:= SelectRow('SELECT code_karesidenan FROM get_customer() where customer_code='+QuotedStr(FDataPenerimaanBank.edKode_Pelanggan.Text)+'');
-//    strWhere:=' and getkares.code_karesidenan='+QuotedStr(strKares) ;
-    strWhere:=' and '+strKodeKaresTP+'='+QuotedStr(FDataPenerimaanBank.kd_kares);
-  end else if vcall='kartupiutang' then
+  end
+//  else if (vcall='terima_bank') AND (FDataPenerimaanBank.edNoTrans.Text<>'') then
+//  begin
+//    strWhere:=' and '+strKodeKaresTP+'='+QuotedStr(FDataPenerimaanBank.kd_kares);
+//  end
+  else if vcall='kartupiutang' then
   begin
     strWhere:=' and getkares.code='+QuotedStr(FKartuPiutang.vkd_kab);
   end else if vcall='amplop_pelanggan' then
@@ -147,8 +148,15 @@ begin
         sql.add(' AND a.code_region='+QuotedStr(Edkodewilayah.Text)+' ');
       end;
     end;
+    sql.add(' GROUP BY a.customer_code, customer_name,customer_name_pkp, email, address, contact_person1,  code_region, name_region, payment_term,  code_karesidenan,tp.code,tp.name,   karesidenan.name,getkares.name,kecamatan,a.created_at ');
     sql.add(' ORDER BY a.created_at Desc ');
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   Fbrowse_data_pelanggan.MemMasterData.active:=false;
@@ -256,6 +264,14 @@ begin
   end;
   if vcall='terima_bank' then
   begin
+    if (FDataPenerimaanBank.edNoTrans.Text<>'') AND (FDataPenerimaanBank.Status=0) then
+    begin
+      FDataPenerimaanBank.kd_kares:=MemMasterData['KD_KARES'];
+      FDataPenerimaanBank.edKaresidenan.Text:=MemMasterData['KARESIDENAN'];
+      FDataPenerimaanBank.edNoTrans.Text:=FDataPenerimaanBank.edNoTrans.Text;
+      FDataPenerimaanBank.edNoTrans.Text:=Copy(FDataPenerimaanBank.edNoTrans.Text, 1, Pos(FHomeLogin.vKodePRSH + '/', FDataPenerimaanBank.edNoTrans.Text) + Length(FHomeLogin.vKodePRSH))+MemMasterData['KD_KARES']+'/'+FDataPenerimaanBank.additional_code3;
+    end;
+
     FDataPenerimaanBank.edNama_Pelanggan.Text:=MemMasterData['NM_PELANGGAN'];
     FDataPenerimaanBank.edNamaPKP.Text:=MemMasterData['NM_PKP'];
     FDataPenerimaanBank.edKode_Pelanggan.Text:=MemMasterData['KD_PELANGGAN'];
@@ -273,7 +289,7 @@ begin
         kd_ak_pelanggan:=MemDetailAkun['kd_akun'];
         MemDetailAkun.post;
       end;
-    MemDetailAkun.Next;
+      MemDetailAkun.Next;
     end;
     end;
   end;
@@ -417,8 +433,12 @@ begin
   begin
     if (vcall='penjualan') AND (FNew_Penjualan.chkNomorPengganti.Checked=True) AND (FNew_Penjualan.edNomorTrans.Text<>'') then
     begin
-      pnlfilter.Visible:=false; 
-      RefreshGrid;   
+      pnlfilter.Visible:=false;
+      RefreshGrid;
+    end else if (vcall='sumber_order') OR (vcall='uang_muka_penjualan') OR (vcall='terima_bank') OR (vcall='retur_penjualan') then
+    begin
+      RefreshGrid;
+      GBType2.Visible:=false;
     end else begin
       pnlFilter.Visible:=true;
       GBType1.Visible:=true;

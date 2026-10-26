@@ -597,8 +597,8 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
   end
   object DSMemTP: TDataSource
     DataSet = MemTP
-    Left = 784
-    Top = 275
+    Left = 752
+    Top = 315
   end
   object MemTP: TMemTableEh
     FieldDefs = <
@@ -636,7 +636,7 @@ object FKelompokBiayaWilayah: TFKelompokBiayaWilayah
     Params = <>
     StoreDefs = True
     Left = 680
-    Top = 331
+    Top = 307
     object MemTPkd_akun: TStringField
       FieldName = 'kd_akun'
     end

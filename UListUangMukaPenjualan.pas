@@ -29,7 +29,7 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, RzButton, Vcl.StdCtrls,
   Vcl.Mask, RzEdit, RzSpnEdt, RzCmboBx, Vcl.ExtCtrls, RzPanel, EhLibVCL,
   GridsEh, DBAxisGridsEh, DBGridEh, dxRibbon, RzLabel, frxExportXLSX, frxClass,
-  frxExportBaseDialog, frxExportXLS, frxDBSet, ShellAPI;
+  frxExportBaseDialog, frxExportXLS, frxDBSet, ShellAPI, cxCalendar;
 
 type
   TFListUangMukaPenjualan = class(TForm)
@@ -68,8 +68,6 @@ type
     ActSearch: TdxBarLargeButton;
     cxBarEditItem3: TcxBarEditItem;
     dxBarCombo2: TdxBarCombo;
-    cbBulan: TdxBarCombo;
-    edTahun: TdxBarSpinEdit;
     cbSBU: TdxBarCombo;
     QUangMukaPenjualan: TUniQuery;
     DsUangMukaPenjualan: TDataSource;
@@ -80,6 +78,9 @@ type
     frxDBDataset1: TfrxDBDataset;
     dxBarManager1Bar2: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
+    dtAwal: TcxBarEditItem;
+    dtAkhir: TcxBarEditItem;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure ActBaruExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ActROExecute(Sender: TObject);
@@ -90,6 +91,7 @@ type
     procedure DBGridAdvDrawDataCell(Sender: TCustomDBGridEh; Cell,
       AreaCell: TGridCoord; Column: TColumnEh; const ARect: TRect;
       var Params: TColCellParamsEh; var Processed: Boolean);
+    procedure dxBarLargeButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -117,7 +119,13 @@ begin
     sql.Text:='SELECT a.* from t_cash_bank_acceptance_down_payment a '+
               'left join t_cash_bank_acceptance b on b.voucher_no=a.voucher_no '+
               'WHERE a.no_trans_down_payment='+QuotedStr(QUangMukaPenjualan.FieldByName('trans_no').AsString)+' and b.deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   with dm.Qtemp2 do
@@ -126,7 +134,13 @@ begin
     sql.Clear;
     sql.Text:='SELECT * from t_correction_trans WHERE is_delete =true and '+
               'no_transaksi='+QuotedStr(QUangMukaPenjualan.FieldByName('no_trans').AsString)+' and status=0 and deleted_at is null';
-    open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.RecordCount>0 then
@@ -187,13 +201,10 @@ begin
 end;
 
 procedure TFListUangMukaPenjualan.ActROExecute(Sender: TObject);
-var month,year:String;
 begin
   DBGrid.SearchPanel.SearchingText:='';
-  year :=FormatDateTime('yyyy', NOW());
-  month :=FormatDateTime('m', NOW());
-  edTahun.Text:=(year);
-  cbBulan.ItemIndex:=StrToInt(month)-1;
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
   Refresh;
 end;
 
@@ -233,7 +244,13 @@ begin
     sql.Clear;
     sql.Text:='select a.* from t_cash_bank_acceptance_down_payment a '+
               'where no_trans_down_payment='+QuotedStr(QUangMukaPenjualan.FieldValues['no_trans']);
-    Open;
+    try
+      Open;
+    except
+      Connection.Close;
+      Connection.Open;
+      Open;
+    end;
   end;
 
   if dm.Qtemp2.RecordCount>0 then
@@ -370,10 +387,18 @@ begin
     //ShowMessage(cLocation);
     Report.LoadFromFile(cLocation +'report/rpt_listuangmukapenjualan'+ '.fr3');
     SetMemo(Report,'nama_pt',FHomeLogin.vNamaPRSH);
-    SetMemo(Report,'periode',Uppercase('BULAN :'+cbBulan.Text+' TAHUN :'+edTahun.Text));
+    SetMemo(Report,'periode',Uppercase('PERIODE :'+FormatDateTime('dd-mm-yyyy',dtAwal.EditValue)+' S/D '+FormatDateTime('dd-mm-yyyy',dtAkhir.EditValue)));
     Report.PrepareReport(True);
     ExportToExcel;
   end;
+end;
+
+procedure TFListUangMukaPenjualan.dxBarLargeButton2Click(Sender: TObject);
+begin
+  DBGrid.SearchPanel.SearchingText:='';
+  dtAwal.EditValue := Date;
+  dtAkhir.EditValue := Date;
+  FillSBUBarCombo(cbSBU);
 end;
 
 procedure TFListUangMukaPenjualan.FormShow(Sender: TObject);
@@ -395,7 +420,7 @@ begin
     strSBU:=FHomeLogin.vKodePRSH;
   end;
 
-  mm:=cbBulan.ItemIndex+1;
+//  mm:=cbBulan.ItemIndex+1;
   DBGrid.StartLoadingStatus();
   try
     with QUangMukaPenjualan do
@@ -410,9 +435,15 @@ begin
                 'LEFT JOIN t_ak_account_sub c ON c.account_code2=a.account_code '+
 //                'LEFT JOIN t_selling_down_payment d on d.trans_no_down_payment=a.no_trans '+
                 'LEFT JOIN get_down_payment_sales() e on e.no_trans_down_payment=a.no_trans '+
-                'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND EXTRACT(YEAR FROM a.trans_date)='+edTahun.Text+' AND '+
-                'EXTRACT(MONTH FROM a.trans_date)='+(IntToStr(mm))+' ORDER BY a.trans_date DESC, a.no_trans DESC;';
-      Open;
+                'WHERE a.sbu_code='+QuotedStr(strSBU)+' AND (a.trans_date BETWEEN '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAwal.EditValue))+' AND '+QuotedStr(FormatDateTime('yyyy-mm-dd',dtAkhir.EditValue))+') '+
+                'ORDER BY a.trans_date DESC, a.no_trans DESC;';
+      try
+        Open;
+      except
+        Connection.Close;
+        Connection.Open;
+        Open;
+      end;
     end;
   finally
   DBGrid.FinishLoadingStatus();

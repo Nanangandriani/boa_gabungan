@@ -1,7 +1,7 @@
 object dm: Tdm
   OnCreate = DataModuleCreate
-  Height = 301
-  Width = 419
+  Height = 316
+  Width = 453
   object Koneksi: TUniConnection
     AutoCommit = False
     ProviderName = 'PostgreSQL'
@@ -16,7 +16,7 @@ object dm: Tdm
     EncryptedPassword = 'B7FFAFFFACFF9BFF9DFF9EFF9BFF92FF96FF91FFBFFFCDFFCFFFCDFFCAFF'
   end
   object PostgreSQLUniProvider1: TPostgreSQLUniProvider
-    Left = 253
+    Left = 269
     Top = 13
   end
   object Qtemp: TUniQuery
@@ -56,8 +56,8 @@ object dm: Tdm
   end
   object dsQtemp3: TDataSource
     DataSet = Qtemp3
-    Left = 251
-    Top = 136
+    Left = 267
+    Top = 120
   end
   object Qtemp3: TUniQuery
     Connection = Koneksi
@@ -71,8 +71,8 @@ object dm: Tdm
     Database = 'db_boa_hps'
     Username = 'postgres'
     Server = '10.10.10.110'
-    Left = 253
-    Top = 69
+    Left = 269
+    Top = 61
     EncryptedPassword = 'BDFF96FF91FF90FF91FF98FFCDFFCFFFCDFFCCFF'
   end
   object QLink: TUniQuery
@@ -220,21 +220,26 @@ object dm: Tdm
     AutoCommit = False
     ProviderName = 'MySQL'
     Port = 3306
-    Database = 'db_hk_dev'
+    Database = 'db_hk'
     Username = 'programmer'
     Server = 'boa.hastaprimasolusi.com'
     LoginPrompt = False
-    Left = 240
-    Top = 200
+    Left = 264
+    Top = 184
     EncryptedPassword = 'CBFF90FF8AFFD2FF9DFF9AFFACFFABFF'
   end
   object MySQLUniProvider2: TMySQLUniProvider
-    Left = 328
-    Top = 200
+    Left = 344
+    Top = 184
   end
   object QtempPusatMysql: TUniQuery
     Connection = KoneksiPusatMysql
-    Left = 251
-    Top = 261
+    Left = 283
+    Top = 240
+  end
+  object QCekDPPHarmoni: TUniQuery
+    Connection = Koneksi
+    Left = 2
+    Top = 320
   end
 end

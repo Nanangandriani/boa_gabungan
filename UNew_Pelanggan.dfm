@@ -20,10 +20,10 @@ object FNew_Pelanggan: TFNew_Pelanggan
     Width = 1276
     Height = 456
     Hint = ''
-    ActivePage = TabPajak
+    ActivePage = TabMasterPelanggan
     Align = alClient
     UseColoredTabs = True
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 0
     ExplicitWidth = 1272
     ExplicitHeight = 455
@@ -288,15 +288,15 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Caption = 'Kode Inisial'
         end
         object Label45: TLabel
-          Left = 443
-          Top = 14
+          Left = 483
+          Top = 44
           Width = 3
           Height = 15
           Caption = ':'
         end
         object Label46: TLabel
-          Left = 408
-          Top = 14
+          Left = 448
+          Top = 44
           Width = 21
           Height = 15
           Caption = 'SBU'
@@ -482,8 +482,8 @@ object FNew_Pelanggan: TFNew_Pelanggan
           OnKeyPress = EdkodeKeyPress
         end
         object edSBU: TEdit
-          Left = 458
-          Top = 11
+          Left = 498
+          Top = 41
           Width = 85
           Height = 23
           CharCase = ecUpperCase
@@ -519,6 +519,15 @@ object FNew_Pelanggan: TFNew_Pelanggan
           Height = 23
           TabOrder = 18
           OnChange = EdnomorvaChange
+        end
+        object cbAktifJual: TCheckBox
+          Left = 363
+          Top = 11
+          Width = 142
+          Height = 17
+          Caption = 'Aktif Jual'
+          TabOrder = 19
+          OnClick = cbpkpClick
         end
       end
     end

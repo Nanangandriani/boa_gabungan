@@ -25,7 +25,6 @@ object FRekapReturPenjualan: TFRekapReturPenjualan
     Contexts = <>
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1134
     object dxRibbon1Tab1: TdxRibbonTab
       Active = True
       Groups = <

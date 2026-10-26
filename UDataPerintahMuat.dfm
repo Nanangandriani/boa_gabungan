@@ -28,28 +28,28 @@ object FDataPerintahMuat: TFDataPerintahMuat
     ExplicitHeight = 263
     object LabelPelanggan: TLabel
       Left = 20
-      Top = 19
+      Top = 25
       Width = 69
       Height = 15
       Caption = 'No. Transaksi'
     end
     object Label3: TLabel
       Left = 117
-      Top = 19
+      Top = 25
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label39: TLabel
       Left = 20
-      Top = 99
+      Top = 105
       Width = 73
       Height = 15
       Caption = 'Jasa Transport'
     end
     object Label38: TLabel
       Left = 117
-      Top = 99
+      Top = 105
       Width = 3
       Height = 15
       Caption = ':'
@@ -63,63 +63,63 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object Label10: TLabel
       Left = 20
-      Top = 72
+      Top = 78
       Width = 72
       Height = 15
       Caption = 'Tanggal Kirim'
     end
     object Label11: TLabel
       Left = 118
-      Top = 72
+      Top = 78
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label12: TLabel
       Left = 20
-      Top = 45
+      Top = 51
       Width = 72
       Height = 15
       Caption = 'Tanggal Muat'
     end
     object Label13: TLabel
       Left = 118
-      Top = 45
+      Top = 51
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label55: TLabel
       Left = 20
-      Top = 154
+      Top = 160
       Width = 60
       Height = 15
       Caption = 'Keterangan'
     end
     object Label54: TLabel
       Left = 117
-      Top = 154
+      Top = 160
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label36: TLabel
       Left = 117
-      Top = 127
+      Top = 133
       Width = 3
       Height = 15
       Caption = ':'
     end
     object Label37: TLabel
       Left = 20
-      Top = 127
+      Top = 133
       Width = 56
       Height = 15
       Caption = 'Kendaraan'
     end
     object edKodeMuat: TEdit
       Left = 132
-      Top = 16
+      Top = 22
       Width = 185
       Height = 23
       CharCase = ecUpperCase
@@ -128,7 +128,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object edNama_Vendor_Kend: TRzButtonEdit
       Left = 132
-      Top = 96
+      Top = 102
       Width = 344
       Height = 23
       Text = ''
@@ -139,7 +139,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object edKode_Vendor_Kend: TEdit
       Left = 482
-      Top = 96
+      Top = 102
       Width = 200
       Height = 23
       TabOrder = 2
@@ -147,7 +147,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object dtKirim: TRzDateTimePicker
       Left = 132
-      Top = 69
+      Top = 75
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -157,7 +157,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object dtMuat: TRzDateTimePicker
       Left = 132
-      Top = 42
+      Top = 48
       Width = 186
       Height = 23
       Date = 45405.000000000000000000
@@ -168,7 +168,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object MemKeterangan: TMemo
       Left = 132
-      Top = 151
+      Top = 157
       Width = 419
       Height = 66
       ScrollBars = ssVertical
@@ -176,7 +176,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object edNoKendMuatan: TRzButtonEdit
       Left = 132
-      Top = 124
+      Top = 130
       Width = 250
       Height = 23
       Text = ''
@@ -188,7 +188,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object btAddDetail: TRzBitBtn
       Left = 566
-      Top = 187
+      Top = 193
       Width = 116
       Height = 30
       Align = alCustom
@@ -250,7 +250,7 @@ object FDataPerintahMuat: TFDataPerintahMuat
     end
     object BDelete: TRzBitBtn
       Left = 20
-      Top = 223
+      Top = 233
       Width = 116
       Height = 30
       Align = alCustom
@@ -310,6 +310,24 @@ object FDataPerintahMuat: TFDataPerintahMuat
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
+    end
+    object btnNoTransaksi: TRzBitBtn
+      Left = 323
+      Top = 20
+      Width = 30
+      Caption = '...'
+      TabOrder = 9
+      OnClick = btnNoTransaksiClick
+    end
+    object chkNomorPengganti: TRzCheckBox
+      Left = 132
+      Top = 1
+      Width = 118
+      Height = 19
+      Caption = 'Nomor Pengganti'
+      State = cbUnchecked
+      TabOrder = 10
+      OnClick = chkNomorPenggantiClick
     end
   end
   object Panel2: TPanel

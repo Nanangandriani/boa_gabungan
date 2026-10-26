@@ -626,7 +626,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44931.582494618100000000
-    ReportOptions.LastChange = 46197.400421053240000000
+    ReportOptions.LastChange = 46317.654462650460000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'var'
@@ -635,7 +635,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       
         '  PreviousValue5,PreviousValue6,PreviousValue7,PreviousValue8: S' +
         'tring;'
-      '       '
+      ''
       
         '  FirstSaldoAwal,FirstInsentifPencapaianNominal,FirstInsentifNot' +
         'aNominal,'
@@ -653,15 +653,13 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       'procedure Memo31OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e) then'
       '  begin'
       '    if Engine.FinalPass then'
       '      no := no + 1;'
       ''
-      
-        '    PreviousValue := <frxDBCetakTagihanKolektor."code_collector"' +
-        '>;'
+      '    PreviousValue := <frxDBCetakTagihanKolektor."nik_employee">;'
       '  end;'
       '  Memo31.Text := IntToStr(no);'
       'end;'
@@ -676,8 +674,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
         'Component);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue2) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e2) then'
       '  begin'
       
         '    MemInsentivePencapaianPersen.Text := <frxDBCetakTagihanKolek' +
@@ -685,7 +683,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    MemInsentivePencapaianPersen.Frame.Typ := 7;'
       
         '    FirstInsentifPencapaianPersen :=  <frxDBCetakTagihanKolektor' +
-        '."persen_insentif">;                      '
+        '."persen_insentif">;'
       '  end'
       '  else'
       '  begin'
@@ -693,9 +691,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '     MemInsentivePencapaianPersen.Frame.Typ := 3;'
       '  end;'
       ''
-      
-        '  PreviousValue2 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';'
+      '  PreviousValue2 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       'procedure ReportOnStartReport(Sender: TfrxComponent);'
@@ -703,8 +699,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  no := 0;'
       '  FirstSaldoAwal:=0;'
       '  FirstLembarSaldoAwal:=0;'
-      '  FirstInsentifPencapaianNominal:=0;              '
-      '  FirstInsentifNotaNominal:=0;              '
+      '  FirstInsentifPencapaianNominal:=0;'
+      '  FirstInsentifNotaNominal:=0;'
       '  FirstTotInsentif:=0;'
       '  FirstInsentifPencapaianPersen:=0;'
       '  FirstInsentifNotaPersen:=0;'
@@ -714,9 +710,9 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  TotSaldoAkhirLembar:=0;'
       '  TotInsentifPencapaianNominal:=0;'
       '  TotInsentifNotaNominal:=0;'
-      '  TotInsentifNotaLembar:=0;                          '
-      '  TotInsentif:=0;  '
-      '    '
+      '  TotInsentifNotaLembar:=0;'
+      '  TotInsentif:=0;'
+      ''
       '  PreviousValue := '#39#39';'
       '  PreviousValue := '#39#39';'
       '  PreviousValue2 := '#39#39';'
@@ -725,7 +721,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  PreviousValue5 := '#39#39';'
       '  PreviousValue6 := '#39#39';'
       '  PreviousValue7 := '#39#39';'
-      '  PreviousValue8 := '#39#39';             '
+      '  PreviousValue8 := '#39#39';'
       'end;'
       ''
       
@@ -733,8 +729,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
         'xComponent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue3) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e3) then'
       '  begin'
       
         '    MemInsentivePencapaianNominal.Text := FormatFloat('#39'#,#0.00;(' +
@@ -747,7 +743,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    if not Engine.FinalPass then'
       
         '      TotInsentifPencapaianNominal := TotInsentifPencapaianNomin' +
-        'al + <frxDBCetakTagihanKolektor."nominal_insentif">;        '
+        'al + <frxDBCetakTagihanKolektor."nominal_insentif">;'
       '  end'
       '  else'
       '  begin'
@@ -755,9 +751,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    MemInsentivePencapaianNominal.Frame.Typ:=3;'
       '  end;'
       ''
-      
-        '  PreviousValue3 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';'
+      '  PreviousValue3 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       
@@ -765,8 +759,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
         'ent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue4) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e4) then'
       '  begin'
       
         '    MemInsentiveNotaPersen.Text := <frxDBCetakTagihanKolektor."l' +
@@ -774,11 +768,11 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    MemInsentiveNotaPersen.Frame.Typ := 7;'
       
         '    FirstInsentifNotaPersen:=<frxDBCetakTagihanKolektor."lembar_' +
-        'insentif_nota_tertagih">;        '
+        'insentif_nota_tertagih">;'
       '    if not Engine.FinalPass then'
       
         '      TotInsentifNotaLembar := TotInsentifNotaLembar + <frxDBCet' +
-        'akTagihanKolektor."lembar_insentif_nota_tertagih">;          '
+        'akTagihanKolektor."lembar_insentif_nota_tertagih">;'
       '  end'
       '  else'
       '  begin'
@@ -786,9 +780,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '     MemInsentiveNotaPersen.Frame.Typ := 3;'
       '  end;'
       ''
-      
-        '  PreviousValue4 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';'
+      '  PreviousValue4 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       
@@ -796,8 +788,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
         'nent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue5) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e5) then'
       '  begin'
       
         '    MemInsentiveNotaNominal.Text := FormatFloat('#39'#,#0.00;(#,#0.0' +
@@ -806,11 +798,11 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    MemInsentiveNotaNominal.Frame.Typ := 5;'
       
         '    FirstInsentifNotaNominal:=<frxDBCetakTagihanKolektor."nomina' +
-        'l_insentif_nota_tertagih">;                '
+        'l_insentif_nota_tertagih">;'
       '    if not Engine.FinalPass then'
       
         '      TotInsentifNotaNominal := TotInsentifNotaNominal + <frxDBC' +
-        'etakTagihanKolektor."nominal_insentif_nota_tertagih">;          '
+        'etakTagihanKolektor."nominal_insentif_nota_tertagih">;'
       '  end'
       '  else'
       '  begin'
@@ -818,16 +810,14 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '     MemInsentiveNotaNominal.Frame.Typ := 1;'
       '  end;'
       ''
-      
-        '  PreviousValue5 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';'
+      '  PreviousValue5 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       'procedure MemTotInsentiveOnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue6) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e6) then'
       '  begin'
       
         '    MemTotInsentive.Text := FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39 +
@@ -839,8 +829,8 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    if not Engine.FinalPass then'
       
         '      TotInsentif := TotInsentif + <frxDBCetakTagihanKolektor."t' +
-        'otal_insentif">;  '
-      '      '
+        'otal_insentif">;'
+      ''
       '  end'
       '  else'
       '  begin'
@@ -848,25 +838,19 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '     MemTotInsentive.Frame.Typ := 3;'
       '  end;'
       ''
-      
-        '  PreviousValue6 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';'
+      '  PreviousValue6 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       'procedure Memo41OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      
-        '  Memo41.Text:=IntToStr(FirstInsentifPencapaianPersen);         ' +
-        '                                         '
+      '  Memo41.Text:=IntToStr(FirstInsentifPencapaianPersen);'
       'end;'
       ''
       'procedure Memo43OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       '  Memo43.Text:=Memo32.Text;'
       '  if not Engine.FinalPass then'
-      
-        '      TotSaldoAkhirLembar := TotSaldoAkhirLembar + Memo32.Value;' +
-        '      '
+      '      TotSaldoAkhirLembar := TotSaldoAkhirLembar + Memo32.Value;'
       'end;'
       ''
       'procedure Memo44OnBeforePrint(Sender: TfrxComponent);'
@@ -875,7 +859,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  if not Engine.FinalPass then'
       
         '      TotSaldoAkhirNominal := TotSaldoAkhirNominal + Memo34.Valu' +
-        'e;      '
+        'e;'
       'end;'
       ''
       'procedure Memo42OnBeforePrint(Sender: TfrxComponent);'
@@ -888,38 +872,36 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       'procedure Memo52OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue7) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e7) then'
       '  begin'
       '    FirstSaldoAwal:=<frxDBCetakTagihanKolektor."saldo_awal">;'
       '    if not Engine.FinalPass then'
       
         '      TotSaldoAwalNominal := TotSaldoAwalNominal + <frxDBCetakTa' +
-        'gihanKolektor."saldo_awal">;                  '
+        'gihanKolektor."saldo_awal">;'
       '  end;'
       ''
-      
-        '  PreviousValue7 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';  '
+      '  PreviousValue7 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       'procedure Memo51OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '  Memo51.Text:= FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', FirstSaldo' +
-        'Awal);                      '
+        'Awal);'
       'end;'
       ''
       'procedure Memo46OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '  Memo46.Text:=IntToStr(FirstLembarSaldoAwal);      '
+      '  Memo46.Text:=IntToStr(FirstLembarSaldoAwal);'
       'end;'
       ''
       'procedure Memo36OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
-        '  if (<frxDBCetakTagihanKolektor."code_collector"> <> PreviousVa' +
-        'lue8) then'
+        '  if (<frxDBCetakTagihanKolektor."nik_employee"> <> PreviousValu' +
+        'e8) then'
       '  begin'
       
         '    FirstLembarSaldoAwal:=<frxDBCetakTagihanKolektor."jumlah_lem' +
@@ -928,47 +910,41 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '    if not Engine.FinalPass then'
       
         '      TotSaldoAwalLembar := TotSaldoAwalLembar + <frxDBCetakTagi' +
-        'hanKolektor."jumlah_lembar_saldo_awal">;        '
+        'hanKolektor."jumlah_lembar_saldo_awal">;'
       '  end;'
       ''
-      
-        '  PreviousValue8 := <frxDBCetakTagihanKolektor."code_collector">' +
-        ';  '
+      '  PreviousValue8 := <frxDBCetakTagihanKolektor."nik_employee">;'
       'end;'
       ''
       'procedure Memo54OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '   Memo54.Text := FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', FirstIns' +
-        'entifNotaNominal);  '
+        'entifNotaNominal);'
       'end;'
       ''
       'procedure Memo53OnBeforePrint(Sender: TfrxComponent);'
-      'begin                                   '
-      
-        '   Memo53.Text := IntToStr(FirstInsentifNotaPersen);            ' +
-        '            '
+      'begin'
+      '   Memo53.Text := IntToStr(FirstInsentifNotaPersen);'
       'end;'
       ''
       'procedure Memo45OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '  Memo45.Text:= FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', FirstTotIn' +
-        'sentif);                    '
+        'sentif);'
       'end;'
       ''
       'procedure Memo70OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '  Memo70.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotSaldoAwa' +
-        'lNominal);                    '
+        'lNominal);'
       'end;'
       ''
       'procedure Memo69OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      
-        '  Memo69.Text:=IntToStr(TotSaldoAwalLembar);                    ' +
-        '        '
+      '  Memo69.Text:=IntToStr(TotSaldoAwalLembar);'
       'end;'
       ''
       'procedure Memo44OnAfterPrint(Sender: TfrxComponent);'
@@ -980,38 +956,38 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       'begin'
       
         '  Memo68.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotSaldoAkh' +
-        'irNominal);                              '
+        'irNominal);'
       'end;'
       ''
       'procedure Memo67OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '  Memo67.Text:=FormatFloat('#39'#,##'#39', TotSaldoAkhirLembar);    '
+      '  Memo67.Text:=FormatFloat('#39'#,##'#39', TotSaldoAkhirLembar);'
       'end;'
-      '                                                        '
+      ''
       'procedure Memo82OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '  Memo82.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotInsentif' +
-        ');                            '
+        ');'
       'end;'
       ''
       'procedure Memo81OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '  Memo81.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotInsentif' +
-        'NotaNominal);  '
+        'NotaNominal);'
       'end;'
       ''
       'procedure Memo80OnBeforePrint(Sender: TfrxComponent);'
       'begin'
-      '  Memo80.Text:=IntToStr(TotInsentifNotaLembar);      '
+      '  Memo80.Text:=IntToStr(TotInsentifNotaLembar);'
       'end;'
       ''
       'procedure Memo64OnBeforePrint(Sender: TfrxComponent);'
       'begin'
       
         '   Memo64.Text:=FormatFloat('#39'#,#0.00;(#,#0.00);#,#0'#39', TotInsenti' +
-        'fPencapaianNominal);  '
+        'fPencapaianNominal);'
       'end;'
       ''
       'procedure Memo63OnBeforePrint(Sender: TfrxComponent);'
@@ -1038,15 +1014,15 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  else'
       '  begin'
       '    Memo63.Text := '#39'0.00'#39';'
-      '  end;                                                     '
+      '  end;'
       'end;'
       ''
       'begin'
       '  no := 0;'
       '  FirstSaldoAwal:=0;'
-      '  FirstLembarSaldoAwal:=0;                                 '
-      '  FirstInsentifPencapaianNominal:=0;              '
-      '  FirstInsentifNotaNominal:=0;              '
+      '  FirstLembarSaldoAwal:=0;'
+      '  FirstInsentifPencapaianNominal:=0;'
+      '  FirstInsentifNotaNominal:=0;'
       '  FirstTotInsentif:=0;'
       '  FirstInsentifPencapaianPersen:=0;'
       '  FirstInsentifNotaPersen:=0;'
@@ -1057,7 +1033,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
       '  TotInsentifPencapaianNominal:=0;'
       '  TotInsentifNotaNominal:=0;'
       '  TotInsentifNotaLembar:=0;'
-      '  TotInsentif:=0;                                    '
+      '  TotInsentif:=0;'
       '  PreviousValue := '#39#39';'
       '  PreviousValue2 := '#39#39';'
       '  PreviousValue3 := '#39#39';'
@@ -1892,7 +1868,7 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
         Frame.Typ = []
         Top = 192.756030000000000000
         Width = 1209.449600000000000000
-        Condition = 'frxDBCetakTagihanKolektor."code_collector"'
+        Condition = 'frxDBCetakTagihanKolektor."nik_employee"'
         KeepTogether = True
       end
       object GroupFooter1: TfrxGroupFooter
@@ -3461,6 +3437,12 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haCenter
+          Memo.UTF8W = (
+            
+              '[Format('#39'%2.2f'#39', [SUM(<frxDBCetakTagihanKolektor2."total_bayar">' +
+              ',MasterData2) / (SUM(<frxDBCetakTagihanKolektor2."total_jual">,M' +
+              'asterData2) + SUM(<frxDBCetakTagihanKolektor2."saldo_awal">,Mast' +
+              'erData2))])]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -5107,9 +5089,10 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
     CloseDataSource = False
     FieldAliases.Strings = (
       'minggu_ke=minggu_ke'
-      'code_collector=code_collector'
       'nik_employee=nik_employee'
       'name=name'
+      'code_karesidenan=code_karesidenan'
+      'karesidenan=karesidenan'
       'jumlah_lembar_saldo_awal=jumlah_lembar_saldo_awal'
       'saldo_awal=saldo_awal'
       'jumlah_lembar_jual=jumlah_lembar_jual'
@@ -5142,8 +5125,10 @@ object FRekapTagihanKolektor2: TFRekapTagihanKolektor2
     UserName = 'frxDBCetakTagihanKolektor2'
     CloseDataSource = False
     FieldAliases.Strings = (
-      'code_collector=code_collector'
+      'nik_employee=nik_employee'
       'name=name'
+      'code_karesidenan=code_karesidenan'
+      'karesidenan=karesidenan'
       'jumlah_lembar_saldo_awal=jumlah_lembar_saldo_awal'
       'saldo_awal=saldo_awal'
       'lembar_jual=lembar_jual'

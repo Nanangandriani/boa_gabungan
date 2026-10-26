@@ -24,6 +24,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
     Color = clGradientInactiveCaption
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 846
     object GBType1: TGroupBox
       Left = 1
       Top = 1
@@ -207,7 +208,7 @@ object FListOrderTelemarketing: TFListOrderTelemarketing
         end
       end
       object Memo1: TMemo
-        Left = 311
+        Left = 247
         Top = -54
         Width = 369
         Height = 89
